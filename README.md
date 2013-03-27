@@ -40,4 +40,11 @@ words, you can easily wire it up in a pre-commit hook.
 * You will need to create a settings file. Copy config/settings-default.json
 to config/settings.json
 
-* Spin up the server: `$ npm start` and navigate to http://localhost:4201 
+* Spin up the server: `$ npm start` and navigate to http://localhost:4201 (make
+sure you've run grunt at least once!)
+
+* Check out how AngularShrub has generated a lot of Angular boilerplate for
+you. Particularly app/js/{controllers,directives,filters,services}.js will
+be of interest.
+
+## Enjoy!
