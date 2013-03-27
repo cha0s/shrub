@@ -28,3 +28,11 @@ configuration, debugging, and more.
 
 * Robust system for mocking every aspect of your application, including during
 E2E tests, which Angular is a bit difficult about, out of the box.
+
+## Get rolling
+
+*Get yourself a clone: `$ git clone git://github.com/cha0s/angular-shrub.git`
+
+*Get in the new directory and then `$ scripts/good-to-go`. This script will
+return 0 if the project builds, and the tests run successfully. In other
+words, you can easily wire it up in a pre-commit hook.
