@@ -36,3 +36,8 @@ E2E tests, which Angular is a bit difficult about, out of the box.
 * Get in the new directory and then `$ scripts/good-to-go`. This script will
 return 0 if the project builds, and the tests run successfully. In other
 words, you can easily wire it up in a pre-commit hook.
+
+* You will need to create a settings file. Copy config/settings-default.json
+to config/settings.json
+
+* Spin up the server: `$ npm start` and navigate to http://localhost:4201 
