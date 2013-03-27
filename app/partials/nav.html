@@ -1,0 +1,21 @@
+<div class="navbar" data-bs-navbar>
+	<div class="navbar-inner">
+		
+		<h1 class="title muted"><span data-ng-bind="title()"></span></h1>
+		
+		<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</a>
+		
+		<div class="nav-collapse collapse">
+			<ul class="nav pull-right">
+				<li data-ng-class="link.active" data-match-route="{[link.pattern]}" data-ng-repeat="link in links()">
+					<a data-ng-href="{[link.href]}" data-ng-bind="link.name"></a>
+				</li>
+			</ul>
+		</div>
+		
+	</div>
+</div>

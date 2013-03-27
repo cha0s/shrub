@@ -1,0 +1,1 @@
+grunt && scripts/test.sh --single-run && scripts/e2e-test.sh

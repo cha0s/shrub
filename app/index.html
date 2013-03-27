@@ -1,0 +1,80 @@
+<!doctype html>
+<html
+	lang="en"
+	data-ng-app="AngularShrub"
+>
+<head>
+
+	<title
+		data-ng-controller="WindowTitleCtrl"
+		data-ng-bind="title()"
+	></title>
+	
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+	
+	<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"></link>
+	<link rel="stylesheet" href="/css/bootstrap-middle.css"></link>
+	<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap-responsive.min.css"></link>
+	
+	<link rel="stylesheet" href="/css/style.css"></link>
+	
+</head>
+<body>
+
+	<div class="container-narrow">
+	
+		<div data-as-nav></div>
+		
+		<noscript>
+	
+			<div class="navbar" data-bs-navbar>
+				<div class="navbar-inner">
+					<h1 class="title muted"><span>Home</span></h1>
+				</div>
+			</div>
+		
+		</noscript>
+		
+		<hr class="top">
+		
+		<noscript>
+			
+			<div class="main">
+		
+				<div class="jumbotron">
+					
+					<h1>Angular Strap</h1>
+					
+					<p class="lead">You need to enable JavaScript for this site to work. It's very JavaScript-heavy since it's using AngularJS, a JavaScript web application framework.</p>
+					
+					<hr>
+				
+				</div>
+				
+			</div>
+		
+		</noscript>
+		
+		<div data-as-notifications></div>
+		
+		<div class="main" data-ng-view></div>
+		
+	</div>
+	
+	<script>window.AngularShrubConfig = {{{Config}}};</script>
+
+	<script src="{{underscoreUrl}}"></script>
+{{#each jQueryUrls}}
+	<script src="{{this}}"></script>{{/each}}
+	
+	<script src="/lib/bootstrap/js/bootstrap.min.js"></script>
+	
+	<script src="{{socketIoUrl}}"></script>
+{{#each angularUrls}}
+	<script src="{{this}}"></script>{{/each}}
+	
+	<script src="{{modulesUrl}}"></script>
+	
+</body>
+</html>
