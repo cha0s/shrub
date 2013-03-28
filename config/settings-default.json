@@ -1,14 +1,14 @@
 {
 	"port": 4201,
-	"sessionOptions": {
-		"secret": "Create a cookie encryption password here",
+	"redis": {
+		"host": "127.0.0.1",
+		"post": 6379
+	},
+	"sessions": {
+		"secret": "cha0sLovesYou",
 		"key": "connect.sid",
 		"cookie": {
 			"maxAge": 1209600000
 		}
-	},
-	"redisSessionOptions": {
-		"host": "127.0.0.1",
-		"post": 6379
 	}
 }
