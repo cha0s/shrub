@@ -1,15 +1,15 @@
 'use strict'
 
-angular.module('AngularShrub', [
+angular.module('Shrub', [
 	'ngSanitize'
 	
-	'AngularShrub.controllers'
-	'AngularShrub.filters'
-	'AngularShrub.services'
-	'AngularShrub.directives'
-	'AngularShrub.mocks'
+	'Shrub.controllers'
+	'Shrub.filters'
+	'Shrub.services'
+	'Shrub.directives'
+	'Shrub.mocks'
 	
-	'AngularShrub.require'
+	'Shrub.require'
 	
 	'$strap.directives'
 ]).
@@ -42,7 +42,7 @@ angular.module('AngularShrub', [
 		'$location', '$rootScope', '$window', 'config', 'nav', 'notifications', 'socket', 'title', 'window'
 		($location, $rootScope, $window, config, nav, notifications, socket, title, window) ->
 			
-			title.setSite 'Angular Shrub'
+			title.setSite 'Shrub'
 
 			nav.setLinks [
 				pattern: '/home', href: '#/home', name: 'Home'

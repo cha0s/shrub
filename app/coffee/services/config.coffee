@@ -4,8 +4,8 @@ $module.service 'config', [
 
 # We'll get a package of configuration from the server, in window.ReddiChat
 # In testing, we won't receive that, so we'll also provide some defaults.
-		_config = if $window.AngularShrubConfig?
-			angular.copy $window.AngularShrubConfig
+		_config = if $window.ShrubConfig?
+			angular.copy $window.ShrubConfig
 		else
 			debugging: true
 

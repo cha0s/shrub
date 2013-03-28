@@ -141,7 +141,7 @@ module.exports = (grunt, config) ->
 (function() {
   'use strict';
 
-  angular.module('AngularShrub.#{moduleType}', #{moduleNames});
+  angular.module('Shrub.#{moduleType}', #{moduleNames});
 
 """						
 					"""

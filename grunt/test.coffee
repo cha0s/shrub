@@ -66,12 +66,12 @@ module.exports = (grunt, config) ->
 describe('#{moduleType}', function() {
 
   beforeEach(function() {
-    module('AngularShrub.controllers');
-    module('AngularShrub.directives');
-    module('AngularShrub.filters');
-    module('AngularShrub.services');
-    module('AngularShrub.require');
-    module('AngularShrub.mocks');
+    module('Shrub.controllers');
+    module('Shrub.directives');
+    module('Shrub.filters');
+    module('Shrub.services');
+    module('Shrub.require');
+    module('Shrub.mocks');
   });
 
 

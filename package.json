@@ -1,5 +1,5 @@
 {
-  "name": "angular-shrub",
+  "name": "shrub",
   "version": "0.0.1",
   "scripts": {
     "start": "coffee app.coffee"
