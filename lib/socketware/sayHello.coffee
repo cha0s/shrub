@@ -5,7 +5,9 @@ module.exports = (req, report) ->
 	
 	setTimeout(
 		->
-			req.injectSession (session) ->
+			req.loadSession (error, session) ->
+				throw error if error?
+				
 				req.socket.emit(
 					'notifications'
 					notifications: [
