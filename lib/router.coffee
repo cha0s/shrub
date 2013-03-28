@@ -22,4 +22,4 @@ module.exports = new class
 		for route in [
 			'index'
 		]
-			app.use require(path.join routesDirectory, route) app
+			require(path.join routesDirectory, route) app
