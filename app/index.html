@@ -24,42 +24,31 @@
 
 	<div class="container-narrow">
 	
-		<div data-as-nav></div>
-		
-		<noscript>
-	
-			<div class="navbar" data-bs-navbar>
-				<div class="navbar-inner">
-					<h1 class="title muted"><span>Home</span></h1>
+		<div data-as-nav>
+			<noscript>
+				<div class="navbar" data-bs-navbar>
+					<div class="navbar-inner">
+						<h1 class="title muted"><span>Home</span></h1>
+					</div>
 				</div>
-			</div>
-		
-		</noscript>
+			</noscript>
+		</div>
 		
 		<hr class="top">
 		
-		<noscript>
-			
-			<div class="main">
-		
-				<div class="jumbotron">
-					
-					<h1>Angular Strap</h1>
-					
-					<p class="lead">You need to enable JavaScript for this site to work. It's very JavaScript-heavy since it's using AngularJS, a JavaScript web application framework.</p>
-					
-					<hr>
-				
-				</div>
-				
-			</div>
-		
-		</noscript>
-		
 		<div data-as-notifications></div>
 		
-		<div class="main" data-ng-view></div>
-		
+		<div class="main" data-ng-view>
+			<noscript>
+				<div class="main">
+					<div class="jumbotron">
+						<h1>Angular Strap</h1>
+						<p class="lead">You need to enable JavaScript for this site to work. It's very JavaScript-heavy since it's using AngularJS, a JavaScript web application framework.</p>
+						<hr>
+					</div>
+				</div>
+			</noscript>
+		</div>
 	</div>
 	
 	<script>window.AngularShrubConfig = {{{config}}};</script>
