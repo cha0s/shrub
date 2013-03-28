@@ -6,7 +6,6 @@ module.exports = (req, report) ->
 	session = req.socket.handshake.session
 
 	req.loadSession = (callback) ->
-		console.log req.socket.handshake.session.id
 		sessions.store.load session.id, (error, session) ->
 			return callback error if error?
 			callback null, session
