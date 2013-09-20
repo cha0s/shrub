@@ -5,7 +5,12 @@ module.exports = (grunt, config) ->
 	angularCoffees = [
 		'app/coffee/app.coffee'
 	]
-	for directory in ['controllers', 'directives', 'filters', 'mocks', 'services']
+	
+	directories = [
+		'controllers', 'directives', 'filters', 'mocks', 'services'
+	]
+	
+	for directory in directories
 		angularCoffees.push "app/coffee/#{directory}/*.coffee"
 	angularCoffeeMapping = grunt.file.expandMapping angularCoffees, 'app/js/',
 		rename: (destBase, destPath) ->
@@ -24,16 +29,17 @@ module.exports = (grunt, config) ->
 		
 	angularModules = []
 	angularModulesByType = {}
+	
+	search = new RegExp "^app\/js\/(#{directories.join '|'})"
 	for mapping in angularCoffeeMapping
-		
-		matches = mapping.dest.match /^app\/js\/(controllers|directives|filters|mocks|services)/
+		matches = mapping.dest.match search
 		continue unless matches?.length
 		
 		(angularModulesByType[matches[1]] ?= []).push mapping.dest
 		
 		angularModules.push mapping.dest
 	
-	angularModuleConcat = for directory in ['controllers', 'directives', 'filters', 'mocks', 'services']
+	angularModuleConcat = for directory in directories
 		src: "app/js/#{directory}/*.js"
 		dest: "app/js/#{directory}.js"
 	
@@ -44,16 +50,14 @@ module.exports = (grunt, config) ->
 	config.watch ?= {}
 	config.wrap ?= {}
 	
+	directoryEmissions = directories.map (directory) ->
+		"app/js/#{directory}.js"
+	
 	config.clean.angular = [
 		'app/js/app.js'
-		'app/js/controllers.js'
-		'app/js/directives.js'
-		'app/js/filters.js'
-		'app/js/services.js'
-		'app/js/mocks.js'
 		'app/js/empty-mocks.js'
 		'app/js/angular.min.js'
-	]
+	].concat directoryEmissions
 	
 	angularBuildClean = angularCoffeeMapping.map (file) -> file.dest
 	angularBuildClean.push '!app/js/app.js'
@@ -63,16 +67,16 @@ module.exports = (grunt, config) ->
 	
 	config.concat.angularModules = files: angularModuleConcat
 	
+	uglifiedEmissions = directoryEmissions.map (file) ->
+		if file is 'app/js/mocks.js'
+			'app/js/empty-mocks.js'
+		else
+			file
 	config.uglify.angular =
 		files:
 			'app/js/angular.min.js': [
 				'app/js/app.js'
-				'app/js/controllers.js'
-				'app/js/directives.js'
-				'app/js/filters.js'
-				'app/js/services.js'
-				'app/js/empty-mocks.js'
-			]
+			].concat uglifiedEmissions
 				
 	config.watch.angular =
 		files: angularCoffees
@@ -108,11 +112,8 @@ module.exports = (grunt, config) ->
 """						
 				]
 
-	angularParentModuleFiles = ("app/js/#{type}.js" for type in [
-		'controllers', 'directives', 'filters', 'mocks', 'services'
-	])
 	config.wrap.angularParentModules =
-		files: angularParentModuleFiles.map (file) -> src: file, dest: file
+		files: directoryEmissions.map (file) -> src: file, dest: file
 		options:
 			indent: '  '
 			wrapper: (filepath) ->

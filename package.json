@@ -2,15 +2,26 @@
   "name": "shrub",
   "version": "0.0.1",
   "scripts": {
-    "start": "coffee app.coffee"
+    "start": "coffee server.coffee"
   },
   "dependencies": {
     "express": "3.1.0",
     "hbs": "~2.0.2",
     "socket.io": "~0.9.13",
     "connect-redis": "~1.4.5",
+    "passport": "~0.1.17",
+    "passport-local": "~0.1.6",
+    "passport-oauth": "~0.1.15",
+    "passport-facebook": "~0.1.5",
+    "passport-github": "~0.1.5",
+    "passport-twitter": "~0.1.5",
     "socket.io-express": "0.0.1",
-    "underscore": "~1.4.4"
+    "underscore": "~1.4.4",
+    "q": "~0.9.6",
+    "nconf": "~0.6.7",
+    "winston": "~0.7.2",
+    "walk": "~2.2.1",
+    "jsdom": "~0.8.4"
   },
   "devDependencies": {
     "grunt-contrib-coffee": "~0.6.0",

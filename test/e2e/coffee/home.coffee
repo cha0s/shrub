@@ -2,7 +2,7 @@ describe 'home', ->
 
 	beforeEach ->
 		
-		browser().navigateTo '#/home'
+		browser().navigateTo '/home'
 
 	it 'should render home when user navigates to /home', ->
 		

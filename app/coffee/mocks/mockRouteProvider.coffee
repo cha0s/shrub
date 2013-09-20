@@ -1,7 +1,7 @@
 $module.provider 'mockRoute', [
 	->
 		
-		test: ($routeProvider) ->
+		when: ($routeProvider) ->
 		$get: ->
 
 ]

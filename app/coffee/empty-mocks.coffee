@@ -8,7 +8,7 @@ angular.module 'Shrub.mocks', [
 angular.module('Shrub.mocks.mockRouteProvider', []).provider 'mockRoute', [
 	->
 		
-		test: ($routeProvider) ->
+		when: ($routeProvider) ->
 		$get: ->
 
 ]

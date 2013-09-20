@@ -2,7 +2,7 @@ describe 'about', ->
 
 	beforeEach ->
 		
-		browser().navigateTo '#/about'
+		browser().navigateTo '/about'
 
 	it 'should render about when user navigates to /about', ->
 		
