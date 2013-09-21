@@ -66,3 +66,4 @@ framework include:
 * Using standardized solutions to UI and Bootstrap interface, instead of the hackish half-hand-rolled solutions currently in place
 * Better abstraction of the RPC interface, allowing other systems beside Socket.IO
 * Research into whether the http server interface (currently using Express) is worth abstracting
+* There is a rudimentary working form API, but research should be done as to how to DRY it up and make sure it's secure and resistant to attack
