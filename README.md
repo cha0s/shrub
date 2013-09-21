@@ -44,9 +44,6 @@ navigate Angular to the new page, render it, and serve it to the client. Nice!
 the tests run successfully. In other words, you can easily wire it up in a
 pre-commit hook.
 
-* You will need to create a settings file. Copy config/settings-default.json
-to config/settings.json
-
 * Spin up the server: `$ npm start` and navigate to http://localhost:4201 (make
 sure you've run grunt at least once!)
 
