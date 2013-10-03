@@ -1,9 +1,9 @@
 
 express = require 'express'
 
-module.exports.middleware = [
+module.exports.middleware = -> [
 
-	-> (req, res, next) ->
+	(req, res, next) ->
 		
 		return next() unless req and req.headers and req.headers.cookie
 		

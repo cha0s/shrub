@@ -39,8 +39,8 @@ angular.module('Shrub', [
 # by doing this, we are making sure that each of these is injected as soon as
 # the application runs. This is desirable for many things.
 	.run([
-		'$injector', '$timeout', '$window', 'config', 'nav', 'notifications', 'socket', 'title', 'window'
-		($injector, $timeout, $window, config, nav, notifications, socket, title, window) ->
+		'$injector', '$window', 'config', 'nav', 'notifications', 'socket', 'title', 'window'
+		($injector, $window, config, nav, notifications, socket, title, window) ->
 			
 			$window.shrubInjector? $injector
 			

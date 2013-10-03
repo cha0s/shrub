@@ -47,6 +47,7 @@ nconf.defaults
 
 			middleware: [
 				'session'
+				'jugglingdb'
 				'rpc'
 			]
 

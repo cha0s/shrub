@@ -2,7 +2,7 @@
   "name": "shrub",
   "version": "0.0.1",
   "scripts": {
-    "start": "coffee server.coffee"
+    "start": "NODE_PATH=app/coffee/modules coffee server.coffee"
   },
   "dependencies": {
     "express": "3.1.0",
@@ -21,7 +21,10 @@
     "nconf": "~0.6.7",
     "winston": "~0.7.2",
     "walk": "~2.2.1",
-    "jsdom": "~0.8.4"
+    "jsdom": "~0.8.4",
+    "activerecord": "git://github.com/cha0s/node-activerecord.git",
+    "jugglingdb": "~0.2.0-40",
+    "jugglingdb-redis": "0.0.2-2"
   },
   "devDependencies": {
     "grunt-contrib-coffee": "~0.6.0",

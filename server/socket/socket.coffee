@@ -13,9 +13,9 @@ module.exports = class Rpc
 		
 		# Middleware.
 		list = for name in @_config.middleware
-			list = (require "./middleware/#{name}").middleware
+			list = (require "./middleware/#{name}").middleware()
 			list = [list] unless Array.isArray list
-			middleware() for middleware in list
+			middleware for middleware in list
 		list = (_.flatten list).reverse()
 		
 		@_middlewareRegistration = (req, res, next) ->

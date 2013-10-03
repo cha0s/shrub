@@ -25,9 +25,9 @@ walker.on 'file', (root, fileStats, next) ->
 	
 walker.on 'end', -> winston.info 'RPC endpoints loaded'
 
-module.exports.middleware = [
-
-	-> (req, res, next) ->
+module.exports.middleware = -> [
+	
+	(req, res, next) ->
 		
 		touchSessionIfExists = ->
 			deferred = Q.defer()

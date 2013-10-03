@@ -41,9 +41,6 @@ $module.service 'socket', [
 				
 			socket.emit eventName, data, ->
 				
-				if config.get 'debugging'
-					console.debug "ping back for: #{eventName}"
-					
 				return unless callback?
 				
 				if config.get 'debugging'
