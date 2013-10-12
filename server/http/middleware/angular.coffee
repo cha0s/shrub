@@ -29,20 +29,18 @@ module.exports.middleware = (http) ->
 				domain: get: -> 'localhost'
 			)
 			
-			# Set up a DOM starting with our entry point.
+			# Set up a DOM, forwarding our cookie and navigating to the entry
+			# point.
 			document = jsdom(
-				index
-				null
+				index, jsdom.defaultLevel
+				
+				cookie: cookie
+				cookieDomain: 'localhost'
 				url: "http://localhost:#{http.port()}/shrub-entry-point"
 			)
-			
-			# Hax for XMLHttpRequest
-			document.cookie = cookie
-			document._cookieDomain = 'localhost'
-			
 			window = document.createWindow()
 			
-			# Capture console logs.
+			# Capture "client" console logs.
 			window.console = logger
 			
 			# Hack in WebSocket.
@@ -51,7 +49,8 @@ module.exports.middleware = (http) ->
 			# Inject Angular services so we can get up in its guts.
 			shrub = window.shrub = {}
 			injected = [
-				'$location', '$rootScope', '$route', '$sniffer', 'forms', 'socket'
+				'$location', '$rootScope', '$route', '$sniffer'
+				'forms', 'socket'
 			]
 			invocation = injected.concat [
 				-> shrub[inject] = arguments[i] for inject, i in injected
@@ -135,7 +134,7 @@ module.exports.middleware = (http) ->
 			
 			# Give a few extra ms for form logic.
 			delay + WINDOW_RENDER_TIME
-				
+		
 	(req, res, next) ->
 		{path} = url.parse req.url
 		
@@ -146,32 +145,73 @@ module.exports.middleware = (http) ->
 		locals = res.locals
 		body = req.body
 		
-		# Get a DOM window.
-		angularWindow(id, req.headers.cookie, locals).done (window) ->
+		# Uncomment to bypass the server-side Angular.		
+#		return http.renderApp(locals).done (index) -> res.end index
+
+		extractCookie = ->
 			
-			shrub = window.shrub
+			deferred = Q.defer()
 			
-			routes = shrub.$route.routes
-			if routes[path]?
-			
-				# Does this path redirect? Do an HTTP redirect.
-				if routes[path].redirectTo?
-					return res.redirect routes[path].redirectTo
+			# If the client is in sync, awesome!
+			if req.signedCookies[http.sessionKey()] is req.sessionID
 				
+				deferred.resolve req.headers.cookie
+				
+			# Otherwise, stimulate the session middleware to create the cookie.
 			else
+				res.emit 'header'
 				
-				# Is there no path entry? Check for a default.
-				if routes[null]?
-					return res.redirect routes[null].redirectTo
+				# Yank it out of the response headers and map it.
+				setCookie = res._headers['set-cookie']
+				cookieObject = {}
+				for kv in setCookie.split ';'
+					[key, value] = kv.split '='
+					cookieObject[key.trim()] = value
+				
+				# Pull out junk that only makes sense en route to client.
+				delete cookieObject['Path']
+				delete cookieObject['HttpOnly']
+				
+				# Rebuild the cookie string.
+				cookie = ''
+				for k, v of cookieObject
+					cookie += '; ' if cookie
+					cookie += k + '=' + v
+					
+				# Commit the session before offering the cookie, otherwise it
+				# wouldn't actually be pointing at anything yet.
+				req.session.save -> deferred.resolve cookie
+				
+			deferred.promise
+
+		extractCookie().then (cookie) ->
 			
-			# Navigate the Angular system to the new path.
-			navigate(window, path, body).done (delay) ->
+			# Get a DOM window.
+			angularWindow(id, cookie, locals).done (window) ->
 				
-				# I'm not sure how to synchronize this.
-				setTimeout(
-					->
+				shrub = window.shrub
+				
+				routes = shrub.$route.routes
+				if routes[path]?
+				
+					# Does this path redirect? Do an HTTP redirect.
+					if routes[path].redirectTo?
+						return res.redirect routes[path].redirectTo
+					
+				else
+					
+					# Is there no path entry? Check for a default.
+					if routes[null]?
+						return res.redirect routes[null].redirectTo
+				
+				# Navigate the Angular system to the new path.
+				navigate(window, path, body).done (delay) ->
+					
+					# I'm not sure how to synchronize this.
+					setTimeout(
 						
 						# Emit the HTML as it appears.
-						res.end window.document.innerHTML
-					delay
-				)
+						-> res.end window.document.innerHTML
+						
+						delay
+					)
