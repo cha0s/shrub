@@ -43,9 +43,11 @@ module.exports.middleware = -> [
 			deferred.promise
 		
 		for route, endpoint of endpoints
-			req.socket.on route, (data) ->
-				touchSessionIfExists().then ->
-					endpoint req, data
+			do (endpoint) ->
+				req.socket.on route, ->
+					args = [req].concat (arg for arg in arguments)
+					touchSessionIfExists().then ->
+						endpoint.apply null, args
 					
 		next()
 
