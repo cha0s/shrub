@@ -1,18 +1,41 @@
 
 $module.service 'schema', [
-	'require', 'socket'
-	(require, socket) ->
+	'$rootScope', '$q', 'require', 'socket'
+	($rootScope, $q, require, socket) ->
 
-		Schema = require('jugglingdb').Schema
-		
-		adapter = require 'jugglingdb-socket'
-		require('schema').define(
-			Schema
-			schema = new Schema adapter, socket: socket
+		{models} = require('schema').define(
+			require('jugglingdb').Schema
+			require 'jugglingdb-socket'
+			socket: socket
 		)
 		
-		@models = schema.models
-		
+		for name, Model of models
+			
+			@[name] = Model
+				
+			# Override methods to promise-ify then.
+			do (Model) =>
+				for method in [
+					'all', 'count', 'create', 'destroyAll', 'exists', 'find'
+					'findOne', 'findOrCreate'
+				]				
+					do (method) =>
+						originalMethod = Model[method]
+						Model[method] = =>
+										
+							deferred = $q.defer()
+							
+							originalMethod.apply(
+								Model
+								(arg for arg in arguments).concat [
+									(error, result) ->
+										deferred.reject error if error?
+										deferred.resolve result
+								]
+							)
+							
+							deferred.promise
+						
 		return
 		
 ]
