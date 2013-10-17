@@ -42,8 +42,6 @@ angular.module('Shrub', [
 		'$injector', '$window', 'config', 'nav', 'notifications', 'socket', 'title', 'window'
 		($injector, $window, config, nav, notifications, socket, title, window) ->
 			
-			$window.shrubInjector? $injector
-			
 			title.setSite 'Shrub'
 			
 			socket.on 'initialized', ->

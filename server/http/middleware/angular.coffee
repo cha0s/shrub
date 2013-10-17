@@ -46,18 +46,19 @@ module.exports.middleware = (http) ->
 			# Hack in WebSocket.
 			window.WebSocket = require 'socket.io/node_modules/socket.io-client/node_modules/ws/lib/WebSocket'
 			
-			# Inject Angular services so we can get up in its guts.
-			shrub = window.shrub = {}
-			injected = [
-				'$location', '$rootScope', '$route', '$sniffer'
-				'forms', 'socket'
-			]
-			invocation = injected.concat [
-				-> shrub[inject] = arguments[i] for inject, i in injected
-			]
-			window.shrubInjector = ($injector) -> $injector.invoke invocation
-				
 			window.onload = ->
+				
+				# Inject Angular services so we can get up in its guts.
+				shrub = window.shrub = {}
+				injected = [
+					'$location', '$rootScope', '$route', '$sniffer'
+					'forms', 'socket'
+				]
+				invocation = injected.concat [
+					-> shrub[inject] = arguments[i] for inject, i in injected
+				]
+				injector = window.angular.element(window.document).injector()
+				injector.invoke invocation
 				
 				# Don't even try HTML 5 history on the server side.
 				shrub.$sniffer.history = false
