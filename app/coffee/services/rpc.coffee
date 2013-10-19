@@ -3,13 +3,9 @@ $module.service 'rpc', [
 	'$q', 'require', 'socket'
 	($q, require, socket) ->
 		
-		@call = (route, data, fn) ->
+		@call = (route, data) ->
 			
 			deferred = $q.defer()
-			
-			unless fn?
-				fn = data
-				data = null
 			
 			socket.emit "rpc://#{route}", data, ({errors, result}) ->
 				return deferred.reject new Error(
