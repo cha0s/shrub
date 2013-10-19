@@ -5,7 +5,7 @@ module.exports = (req, data, fn) ->
 	
 	req.user (error, user) ->
 		return fn error if error?
-		if user.uid
+		if user.id
 			fn null, user
 		else
 			fn null, new User()
