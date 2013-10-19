@@ -11,7 +11,7 @@ module.exports = (grunt, config) ->
 	]
 	
 	for directory in directories
-		angularCoffees.push "app/coffee/#{directory}/*.coffee"
+		angularCoffees.push "app/coffee/#{directory}/**/*.coffee"
 	angularCoffeeMapping = grunt.file.expandMapping angularCoffees, 'app/js/',
 		rename: (destBase, destPath) ->
 			destPath = destPath.replace 'app/coffee/', ''
@@ -20,13 +20,6 @@ module.exports = (grunt, config) ->
 		src: 'app/coffee/empty-mocks.coffee'
 		dest: 'app/js/empty-mocks.js'
 	
-	parseAngularModuleTypeAndName = (filepath) ->
-	
-		matches = filepath.match /^app\/js\/(.*)\/(.*\.js)$/
-		
-		moduleType: matches[1]
-		moduleName: path.basename filepath, path.extname matches[2]
-		
 	angularModules = []
 	angularModulesByType = {}
 	
@@ -89,6 +82,13 @@ module.exports = (grunt, config) ->
 			''
 		]
 			
+	parseAngularModuleTypeAndName = (filepath) ->
+	
+		matches = filepath.match /^app\/js\/(.*)\/(.*\.js)$/
+		
+		moduleType: matches[1]
+		moduleName: path.basename filepath, path.extname matches[2]
+		
 	config.wrap.angularModules =
 		files: angularModules.map (file) -> src: file, dest: file
 		options:
@@ -142,7 +142,7 @@ module.exports = (grunt, config) ->
 (function() {
   'use strict';
 
-  angular.module('Shrub.#{moduleType}', #{moduleNames});
+  angular.module('shrub.#{moduleType}', #{moduleNames});
 
 """						
 					"""

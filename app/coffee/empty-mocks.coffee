@@ -1,11 +1,11 @@
 
 # Stubs for the systems that are mocked out when running tests.
 
-angular.module 'Shrub.mocks', [
-	'Shrub.mocks.mockRouteProvider'
+angular.module 'shrub.mocks', [
+	'shrub.mocks.mockRouteProvider'
 ]
 
-angular.module('Shrub.mocks.mockRouteProvider', []).provider 'mockRoute', [
+angular.module('shrub.mocks.mockRouteProvider', []).provider 'mockRoute', [
 	->
 		
 		when: ($routeProvider) ->

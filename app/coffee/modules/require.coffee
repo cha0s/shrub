@@ -1,6 +1,6 @@
 # Implement require in the spirit of NodeJS.
 
-angular.module('Shrub.require', [])
+angular.module('shrub.require', [])
 	
 	.factory 'require', ->
 	

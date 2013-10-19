@@ -4,13 +4,13 @@ angular.module('Shrub', [
 	'ngRoute'
 	'ngSanitize'
 	
-	'Shrub.controllers'
-	'Shrub.filters'
-	'Shrub.services'
-	'Shrub.directives'
-	'Shrub.mocks'
+	'shrub.controllers'
+	'shrub.filters'
+	'shrub.services'
+	'shrub.directives'
+	'shrub.mocks'
 	
-	'Shrub.require'
+	'shrub.require'
 	
 	'$strap.directives'
 ]).
