@@ -14,7 +14,7 @@ $module.service 'title', [
 			@setWindow [_page, _site].join _separator if setWindow
 		
 # Get and set the token that separates the page and window title.
-		_separator = ' | '
+		_separator = ' · '
 
 		@separator = -> _separator
 		@setSeparator = (separator) -> _separator = separator
