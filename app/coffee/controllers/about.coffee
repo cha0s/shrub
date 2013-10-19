@@ -1,5 +1,5 @@
 
-$module.controller 'AboutCtrl', [
+$module.controller 'about', [
 	'$http', '$scope', 'title'
 	($http, $scope, title) ->
 		

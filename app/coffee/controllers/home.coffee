@@ -1,5 +1,5 @@
 
-$module.controller 'HomeCtrl', [
+$module.controller 'home', [
 	'$scope', 'title'
 	($scope, title) ->
 		

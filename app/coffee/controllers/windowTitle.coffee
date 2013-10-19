@@ -1,5 +1,5 @@
 
-$module.controller 'WindowTitleCtrl', [
+$module.controller 'windowTitle', [
 	'$scope', 'title'
 	($scope, title) ->
 		

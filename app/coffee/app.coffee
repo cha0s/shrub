@@ -20,8 +20,8 @@ angular.module('Shrub', [
 		($routeProvider, $locationProvider, $interpolateProvider, mockRouteProvider) ->
 		
 # Set up our routes.
-			$routeProvider.when '/home', templateUrl: '/partials/home.html', controller: 'HomeCtrl'
-			$routeProvider.when '/about', templateUrl: '/partials/about.html', controller: 'AboutCtrl'
+			$routeProvider.when '/home', templateUrl: '/partials/home.html', controller: 'home'
+			$routeProvider.when '/about', templateUrl: '/partials/about.html', controller: 'about'
 
 # Create a unique entry point.
 			$routeProvider.when '/shrub-entry-point', {}
