@@ -8,6 +8,12 @@ $module.service 'socket', [
 	
 		socket = io.connect()
 		
+# We have to queue emits while not initialized to keep things robust.
+	
+		initializedQueue = []
+		socket.on 'initialized', ->
+			socket.emit.apply socket, args for args in initializedQueue
+		
 # Might as well make sure everything's working fine.
 		
 		debugListeners = {}
@@ -15,6 +21,8 @@ $module.service 'socket', [
 # Connection and disconnection.
 		
 		@connect = -> socket.socket.connect()
+		
+		@connected = -> socket.socket.connected
 
 		@disconnect = -> socket.disconnect()
 		
@@ -27,7 +35,7 @@ $module.service 'socket', [
 					console.debug "received: #{eventName}, #{JSON.stringify data, null, '  '}"
 			)() if config.get 'debugging'
 				
-			socket.on eventName, (data) ->
+			socket.on eventName, ->
 				
 				onArguments = arguments
 				$rootScope.$apply -> callback.apply socket, onArguments
@@ -35,6 +43,7 @@ $module.service 'socket', [
 # Proxy for Socket::emit, handles invocation of Scope::$apply.
 
 		@emit = (eventName, data, callback) ->
+			return initializedQueue.push arguments unless @connected()
 			
 			if config.get 'debugging'
 				console.debug "sent: #{eventName}, #{JSON.stringify data, null, '  '}"

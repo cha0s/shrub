@@ -16,13 +16,11 @@ module.exports.middleware = (http) ->
 	
 	windows = {}
 	
-	WINDOW_RENDER_TIME = 50
-	
-	newWindow = (cookie, locals) ->
-		deferred = Q.defer()
+	newWindow = (cookie, locals, fn) ->
 		
-		http.renderApp(locals).done (index) ->
-			
+		http.renderApp locals, (error, index) ->
+			return fn error if error?
+		
 			# Hax: Fix document.domain since jsdom has a stub here.
 			Object.defineProperties(
 				(require 'jsdom/lib/jsdom/level2/html').dom.level2.html.HTMLDocument.prototype
@@ -38,6 +36,7 @@ module.exports.middleware = (http) ->
 				cookieDomain: 'localhost'
 				url: "http://localhost:#{http.port()}/shrub-entry-point"
 			)
+			
 			window = document.createWindow()
 			
 			# Capture "client" console logs.
@@ -47,6 +46,11 @@ module.exports.middleware = (http) ->
 			window.WebSocket = require 'socket.io/node_modules/socket.io-client/node_modules/ws/lib/WebSocket'
 			
 			window.onload = ->
+				
+				# Catch any errors in the client.
+				for error in window.document.errors
+					if error.data?.error?
+						return fn error.data.error
 				
 				# Inject Angular services so we can get up in its guts.
 				shrub = window.shrub = {}
@@ -60,33 +64,30 @@ module.exports.middleware = (http) ->
 				injector = window.angular.element(window.document).injector()
 				injector.invoke invocation
 				
+				{$sniffer, socket} = shrub
+				
 				# Don't even try HTML 5 history on the server side.
-				shrub.$sniffer.history = false
+				$sniffer.history = false
 				
 				# Windows expire after 5 minutes.
-				_keepalive = _.debounce(
-					-> window.close()
-					1000 * 60 * 5
-				)
+				_keepalive = _.debounce (-> window.close()), 1000 * 60 * 5
 				window.touch = ->
 					_keepalive()
 					window
 				
 				# Let the socket finish initialization.						
-				shrub.socket.on 'initialized', -> deferred.resolve window
+				socket.on 'initialized', -> process.nextTick -> fn null, window
 			
-		deferred.promise
-		
-	angularWindow = (id, cookie, locals) ->
-		deferred = Q.defer()
+	angularWindow = (id, cookie, locals, fn) ->
 		
 		# Already exists?
 		if (window = windows[id])?
-			deferred.resolve window
+			fn null, window
 			
 		# Create one otherwise.
 		else
-			deferred.resolve newWindow(cookie, locals).then (window) ->
+			newWindow cookie, locals, (error, window) ->
+				return fn error if error?
 				
 				proxyClose = window.close
 				window.close = ->
@@ -100,32 +101,16 @@ module.exports.middleware = (http) ->
 					
 					windows[id] = null
 				
-				windows[id] = window
+				fn null, windows[id] = window
 		
-		# Touch the window to keep it alive.	
-		deferred.promise.then (window) -> window.touch()
-	
-	navigate = (window, path, body) ->
-		deferred = Q.defer()
+	navigate = (window, path, body, fn) ->
 		
-		shrub = window.shrub
-
-		# If the path has changed, navigate Angular to it.			
-		if path isnt url.parse(window.location.href).path
-			unlisten = shrub.$rootScope.$on '$routeChangeSuccess', ->
-				unlisten()
-				deferred.resolve WINDOW_RENDER_TIME
-				
-			shrub.$rootScope.$apply -> shrub.$location.path path
-		
-		# Otherwise, we're already there.
-		else
-			deferred.resolve 0
+		{$location, $rootScope, forms} = window.shrub
 		
 		# Process any forms.
-		deferred.promise.then (delay) ->
-			return delay unless body.formKey?
-			return delay unless (form = shrub.forms.lookup body.formKey)?
+		formFn = ->
+			return fn() unless body.formKey?
+			return fn() unless (form = forms.lookup body.formKey)?
 			
 			for named in form.$element.find '[name]'
 				continue unless (value = body[named.name])?
@@ -134,9 +119,23 @@ module.exports.middleware = (http) ->
 			form.$scope.$apply -> form.submit()
 			
 			# Give a few extra ms for form logic.
-			delay + WINDOW_RENDER_TIME
+			fn()
+
+		# If the path has changed, navigate Angular to it.			
+		if path isnt url.parse(window.location.href).path
+			
+			unlisten = $rootScope.$on 'shrubFinishedRendering', ->
+				unlisten()
+				formFn()
+				
+			$rootScope.$apply -> $location.path path
+		
+		# Otherwise, we're already there.
+		else
+			formFn()
 		
 	(req, res, next) ->
+	
 		{path} = url.parse req.url
 		
 		# e2e entry point hax.
@@ -148,15 +147,13 @@ module.exports.middleware = (http) ->
 		
 		# Uncomment to bypass the server-side Angular.		
 #		return http.renderApp(locals).done (index) -> res.end index
-
-		extractCookie = ->
-			
-			deferred = Q.defer()
+		
+		extractCookie = (fn) ->
 			
 			# If the client is in sync, awesome!
 			if req.signedCookies[http.sessionKey()] is req.sessionID
 				
-				deferred.resolve req.headers.cookie
+				fn req.headers.cookie
 				
 			# Otherwise, stimulate the session middleware to create the cookie.
 			else
@@ -181,18 +178,22 @@ module.exports.middleware = (http) ->
 					
 				# Commit the session before offering the cookie, otherwise it
 				# wouldn't actually be pointing at anything yet.
-				req.session.save -> deferred.resolve cookie
-				
-			deferred.promise
-
-		extractCookie().then (cookie) ->
+				req.session.save -> fn cookie
+			
+		extractCookie (cookie) ->
 			
 			# Get a DOM window.
-			angularWindow(id, cookie, locals).done (window) ->
+			angularWindow id, cookie, locals, (error, window) ->
+				if error?
+					logger.error error.stack
+					return next new Error "Client error."
 				
-				shrub = window.shrub
+				# Touch the window to keep it alive.
+				window.touch()	
 				
-				routes = shrub.$route.routes
+				{$route} = window.shrub
+				
+				routes = $route.routes
 				if routes[path]?
 				
 					# Does this path redirect? Do an HTTP redirect.
@@ -206,13 +207,6 @@ module.exports.middleware = (http) ->
 						return res.redirect routes[null].redirectTo
 				
 				# Navigate the Angular system to the new path.
-				navigate(window, path, body).done (delay) ->
-					
-					# I'm not sure how to synchronize this.
-					setTimeout(
-						
-						# Emit the HTML as it appears.
-						-> res.end window.document.innerHTML
-						
-						delay
-					)
+				navigate window, path, body, (delay) ->
+					process.nextTick ->
+						res.end window.document.innerHTML

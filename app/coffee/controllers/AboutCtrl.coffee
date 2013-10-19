@@ -13,5 +13,7 @@ $module.controller 'AboutCtrl', [
 		
 		promise.error (data, status, headers, config) ->
 			$scope.about = "Weird, loading the about page failed. Try refreshing."
+			
+		promise.finally -> $scope.$emit 'shrubFinishedRendering'
 		
 ]

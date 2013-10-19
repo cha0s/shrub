@@ -1,8 +1,3 @@
-module.exports = (req, data) ->
+module.exports = (req, data, fn) ->
 	
-	req.socket.emit(
-		'notifications'
-		notifications: [
-			text: "Welcome! Your session ID is #{req.session.id}"
-		]
-	)
+	fn null, req.session.id

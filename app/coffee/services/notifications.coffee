@@ -7,15 +7,15 @@ $module.service 'notifications', [
 		
 # Add a notification to be displayed.
 		
-		@addNotification = (notification) -> _notifications.push notification
+		@add = (notification) -> _notifications.push notification
 		
 # Get the top notification.
 		
-		@topNotification = -> _notifications[0]
+		@top = -> _notifications[0]
 		
 # Remove the top notification.
 		
-		@removeTopNotification = -> _notifications.shift()
+		@removeTop = -> _notifications.shift()
 		
 # The number of notifications to show.
 		

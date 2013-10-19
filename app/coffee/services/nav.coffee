@@ -1,10 +1,11 @@
 
-$module.service 'nav', ->
+$module.service 'nav', [
+	->
 	
 # This API allows you to dynamically change the navigation links.
-	
-	_links = []
-	
+		
+		_links = []
+		
 # Get and set the navigation links. The links are objects structured like so:
 # 
 # * pattern: A string or regex containing the path to match to set this item
@@ -18,8 +19,10 @@ $module.service 'nav', ->
 #         pattern: '/home'
 #         href: '#/home'
 #         name: 'Home'
-	
-	@links = -> _links
-	@setLinks = (links) -> _links = links
-	
-	return
+		
+		@links = -> _links
+		@setLinks = (links) -> _links = links
+		
+		return
+		
+]

@@ -34,7 +34,7 @@ module.exports.middleware = -> [
 			
 			if req.session?
 				req.session.touch().save (error) ->
-					return deferred.reject  error if error?
+					return deferred.reject error if error?
 					deferred.resolve()
 				
 			else
@@ -44,10 +44,16 @@ module.exports.middleware = -> [
 		
 		for route, endpoint of endpoints
 			do (endpoint) ->
-				req.socket.on route, ->
-					args = [req].concat (arg for arg in arguments)
+				req.socket.on "rpc://#{route}", (data, fn) ->
 					touchSessionIfExists().then ->
-						endpoint.apply null, args
+						endpoint.apply null, [
+							req, data
+							(errors, result) ->
+								return fn result: result unless errors?
+								
+								errors = [errors] unless Array.isArray errors
+								fn errors: errors, result: result
+						]
 					
 		next()
 

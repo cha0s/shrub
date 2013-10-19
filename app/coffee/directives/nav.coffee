@@ -1,5 +1,5 @@
 
-$module.directive 'asNav', [
+$module.directive 'shrubNav', [
 	'$location', 'nav', 'socket', 'title'
 	($location, nav, socket, title) ->
 	

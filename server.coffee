@@ -30,9 +30,11 @@ nconf.defaults
 						maxAge: 1209600000
 						
 			middleware: [
-				'session'
-				'favicon'
 				'form'
+				'session'
+				'user'
+				'jugglingdb'
+				'favicon'
 				'logger'
 				'static'
 				'locals'
@@ -47,7 +49,8 @@ nconf.defaults
 
 			middleware: [
 				'session'
-				'jugglingdb'
+				'user'
+#				'jugglingdb'
 				'rpc'
 			]
 

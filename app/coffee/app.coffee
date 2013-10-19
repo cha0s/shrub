@@ -39,14 +39,13 @@ angular.module('Shrub', [
 # by doing this, we are making sure that each of these is injected as soon as
 # the application runs. This is desirable for many things.
 	.run([
-		'$injector', '$window', 'config', 'nav', 'notifications', 'socket', 'title', 'window'
-		($injector, $window, config, nav, notifications, socket, title, window) ->
+		'$injector', '$window', 'config', 'me', 'nav', 'notifications', 'require', 'rpc', 'schema', 'socket', 'title', 'window'
+		($injector, $window, config, me, nav, notifications, require, rpc, schema, socket, title, window) ->
 			
 			title.setSite 'Shrub'
 			
-			socket.on 'initialized', ->
-				
-				socket.emit 'session.id'
+			me.then (user) ->
+				notifications.add text: "Welcome, #{user.name}!" 
 			
 			nav.setLinks [
 				pattern: '/home', href: '/home', name: 'Home'

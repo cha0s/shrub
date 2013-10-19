@@ -4,7 +4,7 @@ angular.module('Shrub.require', [])
 	
 	.factory 'require', ->
 	
-		(name) ->
+		require = (name) ->
 	
 			throw new Error "Module #{name} not found!" unless requires_[name]?
 			
@@ -15,6 +15,6 @@ angular.module('Shrub.require', [])
 				f = requires_[name]
 				requires_[name] = module: module
 				
-				f.call null, module, exports
+				f.call null, module, exports, require
 				
 			requires_[name].module.exports

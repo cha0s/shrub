@@ -1,8 +1,10 @@
 
 $module.controller 'HomeCtrl', [
-	'title'
-	(title) ->
+	'$scope', 'title'
+	($scope, title) ->
 		
 		title.setPage 'Home'
+		
+		$scope.$emit 'shrubFinishedRendering'
 		
 ]

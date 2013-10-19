@@ -48,15 +48,12 @@ module.exports = class Express extends (require './http')
 			
 		deferred.promise
 			
-	renderApp: (locals) ->
-		deferred = Q.defer()
+	renderApp: (locals, fn) ->
 		
 		@_app.render 'app', _locals: locals, (error, index) ->
-			return deferred.reject error if error?
+			return fn error if error?
 			
-			deferred.resolve index
-		
-		deferred.promise
+			fn null, index
 	
 	server: -> @_server
 	

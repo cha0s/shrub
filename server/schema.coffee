@@ -10,4 +10,7 @@ exports.define = (adapter, options = {}) ->
 		options
 	)
 	
+	# Hax.
+	schema.adapter.own = schema.adapter.all
+	
 	schema
