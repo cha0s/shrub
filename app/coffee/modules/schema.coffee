@@ -20,7 +20,11 @@ exports.define = (Schema, adapter, options = {}) ->
 	
 	User = access.wrapModel schema.define 'User',
 		
-		name: type: String, length: 255, default: 'Anonymous', index: true
+		name:
+			type: String
+			default: 'Anonymous'
+			length: 255
+			index: true
 		
 	User::hasPermission = (perm) -> true
 		
