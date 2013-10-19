@@ -44,9 +44,6 @@ angular.module('Shrub', [
 			
 			title.setSite 'Shrub'
 			
-			me.then (user) ->
-				notifications.add text: "Welcome, #{user.name}!" 
-			
 			nav.setLinks [
 				pattern: '/home', href: '/home', name: 'Home'
 			,
