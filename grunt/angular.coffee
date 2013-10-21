@@ -16,6 +16,7 @@ module.exports = (grunt, config) ->
 		rename: (destBase, destPath) ->
 			destPath = destPath.replace 'app/coffee/', ''
 			destBase + destPath.replace /\.coffee$/, '.js'
+			
 	angularEmptyMock =
 		src: 'app/coffee/empty-mocks.coffee'
 		dest: 'app/js/empty-mocks.js'
@@ -31,11 +32,11 @@ module.exports = (grunt, config) ->
 		(angularModulesByType[matches[1]] ?= []).push mapping.dest
 		
 		angularModules.push mapping.dest
-	
+		
 	angularModuleConcat = for directory in directories
-		src: "app/js/#{directory}/*.js"
+		src: "app/js/#{directory}/**/*.js"
 		dest: "app/js/#{directory}.js"
-	
+		
 	config.clean ?= {}
 	config.concat ?= {}
 	config.coffee ?= {}
@@ -75,24 +76,18 @@ module.exports = (grunt, config) ->
 		files: angularCoffees
 		tasks: 'compile-angular'
 		
-	config.wrap.angularControllers =
-		files: ['app/js/controllers.js'].map (file) -> src: file, dest: file
-		wrapper: [
-			"'use strict';\n\n"
-			''
-		]
-			
 	parseAngularModuleTypeAndName = (filepath) ->
-	
-		matches = filepath.match /^app\/js\/(.*)\/(.*\.js)$/
 		
-		moduleType: matches[1]
-		moduleName: path.basename filepath, path.extname matches[2]
+		parts = path.dirname(filepath).split path.sep
+		parts.push path.basename filepath, '.js'
+		
+		moduleType: parts[2]
+		moduleName: parts.slice(3).join '.'
 		
 	config.wrap.angularModules =
 		files: angularModules.map (file) -> src: file, dest: file
 		options:
-			indent: '    '
+			indent: '  '
 			wrapper: (filepath) ->
 				
 				{moduleType, moduleName} = parseAngularModuleTypeAndName filepath
@@ -123,7 +118,6 @@ module.exports = (grunt, config) ->
 				
 				moduleNames = []
 				for module in angularModulesByType[moduleType] ? []
-					
 					{moduleName} = parseAngularModuleTypeAndName module
 					moduleNames.push moduleName
 				
@@ -158,7 +152,6 @@ module.exports = (grunt, config) ->
 		'wrap:angularModules'
 		'concat:angularModules'
 		'wrap:angularParentModules'
-		'wrap:angularControllers'
 		'clean:angularBuild'
 	]
 	
