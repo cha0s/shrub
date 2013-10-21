@@ -1,7 +1,7 @@
 
 $module.directive 'shrubNav', [
-	'$location', 'me', 'nav', 'socket', 'title'
-	($location, me, nav, socket, title) ->
+	'$location', 'nav', 'socket', 'title', 'user'
+	($location, nav, socket, title, user) ->
 	
 		templateUrl: '/partials/nav.html'
 		
@@ -9,7 +9,7 @@ $module.directive 'shrubNav', [
 		
 			scope.title = title.page
 			scope.links = nav.links
-			scope.me = me
+			scope.user = user
 			
 # Make sure we set active the first time, since angular-strap won't be ready.
 

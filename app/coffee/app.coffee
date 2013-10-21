@@ -35,12 +35,10 @@ angular.module('Shrub', [
 			$locationProvider.html5Mode true
 	])
 	
-# Looks like we're injecting a lot of unnecessary stuff, doesn't it? However
-# by doing this, we are making sure that each of these is injected as soon as
-# the application runs. This is desirable for many things.
+# Application initialization.
 	.run([
-		'$injector', '$window', 'config', 'me', 'nav', 'notifications', 'require', 'rpc', 'schema', 'socket', 'title', 'window'
-		($injector, $window, config, me, nav, notifications, require, rpc, schema, socket, title, window) ->
+		'nav', 'title'
+		(nav, title) ->
 			
 			title.setSite 'Shrub'
 			
