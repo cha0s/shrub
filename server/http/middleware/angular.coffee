@@ -146,7 +146,7 @@ module.exports.middleware = (http) ->
 		body = req.body
 		
 		# Uncomment to bypass the server-side Angular.		
-#		return http.renderApp(locals).done (index) -> res.end index
+#		return http.renderApp locals, (error, index) -> res.end index
 		
 		extractCookie = (fn) ->
 			
