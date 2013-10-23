@@ -209,4 +209,6 @@ module.exports.middleware = (http) ->
 				# Navigate the Angular system to the new path.
 				navigate window, path, body, (delay) ->
 					process.nextTick ->
-						res.end window.document.innerHTML
+						
+						# Don't forget the doctype!
+						res.end '<!doctype html>' + window.document.innerHTML
