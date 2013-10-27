@@ -36,7 +36,7 @@ $module.service 'db', [
 			do (Model) =>
 				access = Model.access
 				Model.access = promiseify Model, (perm, args...) ->
-					user.then (user) ->
+					user.promise.then (user) ->
 						access.apply Model, [perm, user].concat args
 		
 		schema

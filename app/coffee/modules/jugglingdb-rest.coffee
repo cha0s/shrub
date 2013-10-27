@@ -14,6 +14,12 @@ class SocketAdapter
 	
 	constructor: (@schema, @$http) ->
 	
+	# DRY.
+	promiseCallback = (fn, promise) -> promise.then(
+		({data}) -> fn null, data
+		({data}) -> fn new Error data.message
+	)
+		
 	# Translate model names to REST resource/collection paths.
 	# 'CatalogEntry' -> ['catalog-entry', 'catalog-entries']
 	resourcePaths: (name) ->
@@ -24,6 +30,7 @@ class SocketAdapter
 		resource: resource
 		collection: i8n.pluralize resource
 	
+	# Translate a query object into a REST query.
 	translateQuery = (query) ->
 		
 		params = []
@@ -55,65 +62,44 @@ class SocketAdapter
 		{collection} = @resourcePaths model
 		query = translateQuery query
 		
-		@$http.get("#{@schema.root}/#{collection}?#{query}").then(
-			({data}) -> fn null, data
-			({data}) -> fn new Error data.message
-		)
+		promiseCallback fn, @$http.get "#{@schema.root}/#{collection}?#{query}"
 	
 	own: (model, query, fn) ->
 		
 		{collection} = @resourcePaths model
 		query = translateQuery query
 		
-		@$http.get("#{@schema.root}/#{collection}/own?#{query}").then(
-			({data}) -> fn null, data
-			({data}) -> fn new Error data.message
-		)
+		promiseCallback fn, @$http.get "#{@schema.root}/#{collection}/own?#{query}"
 	
 	count: (model, fn) ->
 	
 		{collection} = @resourcePaths model
 		
-		@$http.get("#{@schema.root}/#{collection}/count").then(
-			({data}) -> fn null, data.count
-			({data}) -> fn new Error data.message
-		)
+		promiseCallback fn, @$http.get "#{@schema.root}/#{collection}/count"
 	
 	create: (model, data, fn) ->
 	
 		{collection} = @resourcePaths model
 		
-		@$http.post("#{@schema.root}/#{collection}", data).then(
-			({data}) -> fn null, data
-			({data}) -> fn new Error data.message
-		)
+		promiseCallback fn, @$http.post "#{@schema.root}/#{collection}", data
 	
 	destroy: (model, id, fn) ->
 		
 		{resource} = @resourcePaths model
 		
-		@$http.delete("#{@schema.root}/#{resource}/#{id}").then(
-			({data}) -> fn null, data
-			({data}) -> fn new Error data.message
-		)
+		promiseCallback fn, @$http.delete "#{@schema.root}/#{resource}/#{id}"
 	
 	destroyAll: (model, fn) ->
 	
 		{collection} = @resourcePaths model
 		
-		@$http.delete("#{@schema.root}/#{collection}").then(
-			({data}) -> fn null, data
-			({data}) -> fn new Error data.message
-		)
+		promiseCallback fn, @$http.delete "#{@schema.root}/#{collection}"
 	
 	exists: (model, id, fn) ->
 	
 		{resource} = @resourcePaths model
 		
-		@$http.get("#{@schema.root}/#{resource}/#{id}/exists").then(
-			({data}) -> fn null, data
-			({data}) -> fn new Error data.message
-		)
+		promiseCallback fn, @$http.get "#{@schema.root}/#{resource}/#{id}/exists"
 	
 	find: ->
 	
@@ -123,10 +109,7 @@ class SocketAdapter
 		{resource} = @resourcePaths model
 		
 		if id?
-			@$http.put("#{@schema.root}/#{resource}/#{id}", data).then(
-				({data}) -> fn null, data
-				({data}) -> fn new Error data.message
-			)
+			promiseCallback fn, @$http.put "#{@schema.root}/#{resource}/#{id}", data
 		else
 			@create model, data, fn
 	

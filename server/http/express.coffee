@@ -37,12 +37,13 @@ module.exports = class Express extends (require './http')
 		@cookieParser() req, {}, (error) =>
 			deferred.reject error if error?
 			
-			@sessionStore().load(
+			(req.sessionStore = @sessionStore()).load(
 				req.signedCookies[@sessionKey()]
 				(error, session) ->
 					deferred.reject error if error?
 					deferred.reject new Error 'No session!' unless session?
 					
+					session.req = session
 					deferred.resolve session
 			)
 			

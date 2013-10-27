@@ -22,6 +22,9 @@ angular.module('Shrub', [
 # Set up our routes.
 			$routeProvider.when '/home', templateUrl: '/partials/home.html', controller: 'home'
 			$routeProvider.when '/about', templateUrl: '/partials/about.html', controller: 'about'
+			
+			$routeProvider.when '/user/login', templateUrl: '/partials/user/login.html', controller: 'user/login'
+			$routeProvider.when '/user/logout', template: '-', controller: 'user/logout'
 
 # Create a unique entry point.
 			$routeProvider.when '/shrub-entry-point', {}
@@ -46,5 +49,9 @@ angular.module('Shrub', [
 				pattern: '/home', href: '/home', name: 'Home'
 			,
 				pattern: '/about', href: '/about', name: 'About'
+			,
+				pattern: '/user/login', href: '/user/login', name: 'Sign in'
+			,
+				pattern: '/user/logout', href: '/user/logout', name: 'Sign out'
 			]
 	])

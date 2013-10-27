@@ -24,6 +24,8 @@ module.exports.middleware = (http) ->
 					'/lib/socket.io/socket.io.min.js'
 					
 					'/js/modules.min.js'
+					
+					'/js/before-angular.js'
 				
 					'//ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js'
 					'//ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular-sanitize.min.js'
@@ -41,6 +43,8 @@ module.exports.middleware = (http) ->
 					'/lib/bootstrap/js/bootstrap.js'
 			
 					'/lib/socket.io/socket.io.js'
+					
+					'/js/before-angular.js'
 					
 					'/lib/angular/angular.js'
 					'/lib/angular/angular-route.js'

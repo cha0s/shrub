@@ -29,31 +29,27 @@ module.exports.middleware = -> [
 	
 	(req, res, next) ->
 		
-		touchSessionIfExists = ->
-			deferred = Q.defer()
-			
-			if req.session?
-				req.session.touch().save (error) ->
-					return deferred.reject error if error?
-					deferred.resolve()
-				
-			else
-				deferred.resolve()
-			
-			deferred.promise
-		
 		for route, endpoint of endpoints
 			do (endpoint) ->
 				req.socket.on "rpc://#{route}", (data, fn) ->
-					touchSessionIfExists().then ->
-						endpoint.apply null, [
-							req, data
-							(errors, result) ->
+					
+					req.session?.touch()
+					
+					endpoint(
+						req, data
+						(errors, result) ->
+							reply = ->
 								return fn result: result unless errors?
 								
 								errors = [errors] unless Array.isArray errors
 								fn errors: errors, result: result
-						]
+							
+							session = req.session
+							if session?
+								session.save reply
+							else
+								reply()
+					)
 					
 		next()
 

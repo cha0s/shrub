@@ -2,13 +2,35 @@ $module.service 'user', [
 	'$q', 'rpc', 'schema'
 	($q, rpc, schema) ->
 		
-		deferred = $q.defer()
+		user = new schema.User
 		
-		rpc.call('user').then(
-			(user) -> deferred.resolve new schema.User user
-			(error) -> deferred.reject error
+		login: (method, username, password) ->
+			
+			rpc.call(
+				'user.login'
+				method: method
+				username: username
+				password: password
+			).then(
+				(O) ->
+					user.fromObject O
+					user
+			)
+
+		logout: ->
+			
+			rpc.call(
+				'user.logout'
+			).then(
+				(O) ->
+					user.fromObject O
+					user
+			)
+
+		promise: rpc.call('user').then(
+			(O) ->
+				user.fromObject O
+				user
 		)
-		
-		deferred.promise
 		
 ]

@@ -7,6 +7,8 @@ module.exports = class Http
 		
 		@_config = nconf.get 'services:http'
 		
+	config: -> @_config
+		
 	port: -> @_config.port
 		
 	registerMiddleware: ->

@@ -9,7 +9,7 @@ $module.directive 'shrubNav', [
 		
 			scope.title = title.page
 			scope.links = nav.links
-			scope.user = user
+			scope.user = user.promise
 			
 # Make sure we set active the first time, since angular-strap won't be ready.
 

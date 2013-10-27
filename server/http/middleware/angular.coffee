@@ -8,7 +8,7 @@ winston = require 'winston'
 
 logger = new winston.Logger
 	transports: [
-		new winston.transports.Console level: 'error', colorize: true
+		new winston.transports.Console level: 'silly', colorize: true
 		new winston.transports.File level: 'debug', filename: 'logs/client.log'
 	]
 
@@ -109,18 +109,19 @@ module.exports.middleware = (http) ->
 		
 		# Process any forms.
 		formFn = ->
+			
 			return fn() unless body.formKey?
 			return fn() unless (form = forms.lookup body.formKey)?
 			
-			for named in form.$element.find '[name]'
-				continue unless (value = body[named.name])?
-				form.$scope[named.name] = value
-				
-			form.$scope.$apply -> form.submit()
+			scope = form.scope.$$childHead
 			
-			# Give a few extra ms for form logic.
-			fn()
-
+			for named in form.element.find '[name]'
+				continue unless (value = body[named.name])?
+				scope[named.name] = value
+				
+			# Submit handlers return promises.
+			scope.$apply -> scope.submit().finally -> fn()
+			
 		# If the path has changed, navigate Angular to it.			
 		if path isnt url.parse(window.location.href).path
 			
@@ -208,7 +209,12 @@ module.exports.middleware = (http) ->
 				
 				# Navigate the Angular system to the new path.
 				navigate window, path, body, (delay) ->
+					
 					process.nextTick ->
 						
-						# Don't forget the doctype!
-						res.end '<!doctype html>' + window.document.innerHTML
+						# Reload the session, server-side JS socket stuff could
+						# have changed it!
+						req.session.reload ->
+						
+							# Don't forget the doctype!
+							res.end '<!doctype html>' + window.document.innerHTML

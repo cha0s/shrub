@@ -1,8 +1,8 @@
 
 exports.errorTemplates = (code) -> (
 	
-	null: "Unknown error: :attempted"
 	401: "Not authorized to :attempted"
+	420: "No such username/password."
 
 )[code]
 	
@@ -18,7 +18,7 @@ exports.formatErrors = (errors) ->
 
 exports.formatError = (error) ->
 	
-	template = exports.errorTemplates error.code
+	template = exports.errorTemplates(error.code) ? "Unknown error: :attempted"
 	
 	for key, value of error
 		template = template.replace ":#{key}", value

@@ -32,7 +32,7 @@ nconf.defaults
 			middleware: [
 				'form'
 				'session'
-				'user'
+				'passport'
 				'jugglingdb'
 				'favicon'
 				'logger'
@@ -49,7 +49,7 @@ nconf.defaults
 
 			middleware: [
 				'session'
-				'user'
+				'passport'
 				'rpc'
 			]
 

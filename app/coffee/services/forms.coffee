@@ -4,14 +4,15 @@ $module.service 'forms', [
 		
 		forms = {}
 		
-		$rootScope.registerForm = ($element, key, form) ->
-			
-			form.$element = $element
-			form.$scope = this
-			
-			forms[form.key = key] = form
-			
-		@lookup = (key) -> forms[key]
+		@create = (key, scope, element) ->
+			forms[key] =
+				scope: scope
+				element: element
+					
+		@lookup = (key) ->
+			console.log key
+			console.log forms
+			forms[key]
 		
 		return
 
