@@ -1,36 +1,4 @@
 
-<div
-	class="login-form"
-	data-shrub-form="formUserLogin"
->
-	<form
-		data-ng-controller="formUserLogin"
-		data-ng-submit="submit()"
-	>
-		
-		<label>Username:</label>
-		<input
-			type="text"
-			name="username"
-			required
-			data-ng-model="username"
-		/>
-		
-		<label>Password:</label>
-		<input
-			type="password"
-			name="password"
-			required
-			data-ng-model="password"
-		/>
-		
-		<input
-			type="submit"
-			class="btn"
-			value="Sign in"
-		/>
-		
-		<a href="/user/forgot">Forgot your password?</a>
-		
-	</form>
-</div>
+<div data-shrub-form="user-login"></div>
+
+<a class="forgot" href="/user/forgot">Forgot your password?</a>

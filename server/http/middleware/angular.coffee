@@ -113,14 +113,14 @@ module.exports.middleware = (http) ->
 			return fn() unless body.formKey?
 			return fn() unless (form = forms.lookup body.formKey)?
 			
-			scope = form.scope.$$childHead
+			scope = form.scope
 			
 			for named in form.element.find '[name]'
 				continue unless (value = body[named.name])?
 				scope[named.name] = value
 				
 			# Submit handlers return promises.
-			scope.$apply -> scope.submit().finally -> fn()
+			scope.$apply -> scope.form.submit.handler().finally -> fn()
 			
 		# If the path has changed, navigate Angular to it.			
 		if path isnt url.parse(window.location.href).path
@@ -204,7 +204,7 @@ module.exports.middleware = (http) ->
 						
 						# Check for any regexs.
 						for key, route of routes
-							if route.regexp.test path
+							if route.regexp?.test path
 								
 								# TODO need to extract params to build
 								# redirectTo, small enough mismatch to ignore
