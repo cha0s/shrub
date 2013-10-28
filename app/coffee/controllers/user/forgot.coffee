@@ -6,8 +6,8 @@ $module.controller 'form-user-forgot', [
 		$scope.form =
 			
 			usernameOrEmail:
-				title: "Username or Email"
 				type: 'text'
+				title: "Username or Email"
 				required: true
 			
 			submit:

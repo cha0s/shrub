@@ -6,13 +6,13 @@ $module.controller 'form-user-login', [
 		$scope.form =
 			
 			username:
-				title: "Username"
 				type: 'text'
+				title: "Username"
 				required: true
 			
 			password:
-				title: "Password"
 				type: 'password'
+				title: "Password"
 				required: true
 			
 			submit:

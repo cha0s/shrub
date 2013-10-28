@@ -6,13 +6,13 @@ $module.controller 'form-user-register', [
 		$scope.form =
 			
 			username:
-				title: "Username"
 				type: 'text'
+				title: "Username"
 				required: true
 			
 			email:
-				title: "Email"
 				type: 'email'
+				title: "Email"
 				required: true
 			
 			submit:

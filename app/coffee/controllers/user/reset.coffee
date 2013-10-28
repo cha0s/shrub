@@ -6,8 +6,8 @@ $module.controller 'form-user-reset', [
 		$scope.form =
 			
 			password:
-				title: "New password"
 				type: 'password'
+				title: "New password"
 				required: true
 			
 			submit:
