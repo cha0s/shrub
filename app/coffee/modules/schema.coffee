@@ -20,14 +20,59 @@ exports.define = (Schema, adapter, options = {}) ->
 	
 	User = access.wrapModel schema.define 'User',
 		
+		email:
+			type: String
+			index: true
+		
 		name:
 			type: String
 			default: 'Anonymous'
-			length: 255
+			length: 24
+			index: true
+			
+		passwordHash:
+			type: String
+		
+		resetPasswordToken:
+			type: String
+			length: 128
 			index: true
 		
-	User::hasPermission = (perm) -> true
+		salt:
+			type: String
+			length: 128
+			
+	User.randomHash = (fn) ->
+		return fn new Error(
+			"No crypto support."
+		) unless options.cryptoKey?
 		
+		require('crypto').randomBytes 24, (error, buffer) ->
+			return fn error if error?
+			
+			fn null, require('crypto').createHash('sha512').update(
+				options.cryptoKey
+			).update(
+				buffer.toString()
+			).digest 'hex'
+	
+	User.hashPassword = (password, salt, fn) ->
+		return fn new Error(
+			"No crypto support."
+		) unless options.cryptoKey?
+		
+		require('crypto').pbkdf2 password, salt, 20000, 512, fn
+	
+	User::hasPermission = (perm) -> true
+	
+	User::redact = ->
+		
+		@passwordHash = null
+		@resetPasswordToken = null
+		@salt = null
+		
+		this
+	
 	# TODO should be config, not hardcoded...	
 	schema.root = '/api'
 

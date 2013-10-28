@@ -14,6 +14,8 @@ nconf.argv().env().file path.join __dirname, 'config', 'settings.json'
 # away.
 nconf.defaults
 	
+	cryptoKey: 'WeDemandShrubbery'
+	
 	path: __dirname
 		
 	services:
@@ -24,7 +26,6 @@ nconf.defaults
 			express:
 				sessions:
 					db: 'redis'
-					secret: 'WeDemandShrubbery'
 					key: 'connect.sid'
 					cookie:
 						maxAge: 1209600000

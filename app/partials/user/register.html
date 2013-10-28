@@ -1,10 +1,10 @@
 
 <div
-	class="login-form"
-	data-shrub-form="formUserLogin"
+	class="register-form"
+	data-shrub-form="formUserRegister"
 >
 	<form
-		data-ng-controller="formUserLogin"
+		data-ng-controller="formUserRegister"
 		data-ng-submit="submit()"
 	>
 		
@@ -16,21 +16,19 @@
 			data-ng-model="username"
 		/>
 		
-		<label>Password:</label>
+		<label>Email:</label>
 		<input
-			type="password"
-			name="password"
+			type="email"
+			name="email"
 			required
-			data-ng-model="password"
+			data-ng-model="email"
 		/>
 		
 		<input
 			type="submit"
 			class="btn"
-			value="Sign in"
+			value="Sign up"
 		/>
-		
-		<a href="/user/forgot">Forgot your password?</a>
 		
 	</form>
 </div>

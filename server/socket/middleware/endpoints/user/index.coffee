@@ -3,7 +3,7 @@
 
 module.exports = (req, data, fn) ->
 	
-	if req.user?
-		fn null, req.user
+	fn null, if req.user?
+		req.user
 	else
-		fn null, new User()
+		new User()

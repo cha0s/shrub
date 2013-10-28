@@ -1,10 +1,11 @@
 
+crypto = require 'server/crypto'
 passport = require 'passport'
 {models: User: User} = require 'server/jugglingdb'
 
 LocalStrategy = require("passport-local").Strategy
 
-passport.use new LocalStrategy((username, password, done) ->
+passport.use new LocalStrategy (username, password, done) ->
 	
 	filter = where: name: username
 	
@@ -13,15 +14,20 @@ passport.use new LocalStrategy((username, password, done) ->
 		
 		if user?
 			
-			return done() unless true#user.passwordHash is User.hashPassword password
-			
-			done null, user
+			User.hashPassword password, user.salt, (error, passwordHash) ->
+				return done error if error?
+				return done() unless user.passwordHash is passwordHash
+				
+				crypto.decrypt user.email, (error, decryptedEmail) ->
+					return done error if error?
+					
+					user.email = decryptedEmail
+				
+				done null, user.redact()
 		
 		else
 			
 			done()
-	
-)
 
 passport.serializeUser (user, done) -> done null, user.id
 
@@ -29,7 +35,13 @@ passport.deserializeUser (id, done) ->
 	
 	User.find id, (error, user) ->
 		return done error if error?
-		done null, user
+		
+		crypto.decrypt user.email, (error, decryptedEmail) ->
+			return done error if error?
+			
+			user.email = decryptedEmail
+		
+		done null, user.redact()
 
 module.exports.middleware = (http) -> [
 	passport.initialize()

@@ -1,0 +1,26 @@
+
+<div
+	class="forgot-form"
+	data-shrub-form="formUserForgot"
+>
+	<form
+		data-ng-controller="formUserForgot"
+		data-ng-submit="submit()"
+	>
+		
+		<label>Username or email:</label>
+		<input
+			type="text"
+			name="usernameOrEmail"
+			required
+			data-ng-model="usernameOrEmail"
+		/>
+		
+		<input
+			type="submit"
+			class="btn"
+			value="Email me a reset link"
+		/>
+		
+	</form>
+</div>

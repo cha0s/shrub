@@ -25,7 +25,7 @@ module.exports = class Express extends (require './http')
 	
 	path: -> @_path
 	
-	cookieParser: -> express.cookieParser @_config.express.sessions.secret
+	cookieParser: -> express.cookieParser nconf.get 'cryptoKey'
 
 	listen: (fn) ->
 		
@@ -40,8 +40,8 @@ module.exports = class Express extends (require './http')
 			(req.sessionStore = @sessionStore()).load(
 				req.signedCookies[@sessionKey()]
 				(error, session) ->
-					deferred.reject error if error?
-					deferred.reject new Error 'No session!' unless session?
+					return deferred.reject error if error?
+					return deferred.reject new Error 'No session!' unless session?
 					
 					session.req = session
 					deferred.resolve session

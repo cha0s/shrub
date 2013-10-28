@@ -11,8 +11,8 @@ $module.service 'socket', [
 # We have to queue emits while not initialized to keep things robust.
 	
 		initializedQueue = []
-		socket.on 'initialized', ->
-			socket.emit.apply socket, args for args in initializedQueue
+		socket.on 'initialized', =>
+			@emit.apply this, args for args in initializedQueue
 		
 # Might as well make sure everything's working fine.
 		
