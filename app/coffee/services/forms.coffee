@@ -4,7 +4,7 @@ $module.service 'forms', [
 		
 		forms = {}
 		
-		@create = (key, scope, element) ->
+		@register = (key, scope, element) ->
 			forms[key] =
 				scope: scope
 				element: element
