@@ -23,7 +23,7 @@ passport.use new LocalStrategy (username, password, done) ->
 					
 					user.email = decryptedEmail
 				
-				done null, user.redact()
+					done null, user.redact()
 		
 		else
 			
@@ -41,7 +41,7 @@ passport.deserializeUser (id, done) ->
 			
 			user.email = decryptedEmail
 		
-		done null, user.redact()
+			done null, user.redact()
 
 module.exports.middleware = (http) -> [
 	passport.initialize()
