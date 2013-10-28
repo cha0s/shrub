@@ -185,16 +185,12 @@ module.exports.middleware = (http) ->
 			
 			# Get a DOM window.
 			angularWindow id, cookie, locals, (error, window) ->
-				if error?
-					logger.error error.stack
-					return next new Error "Client error."
+				return next new Error error.stack if error?
 				
 				# Touch the window to keep it alive.
 				window.touch()	
 				
-				{$route} = window.shrub
-				
-				routes = $route.routes
+				{$route: routes: routes} = window.shrub
 				if routes[path]?
 				
 					# Does this path redirect? Do an HTTP redirect.
@@ -203,10 +199,22 @@ module.exports.middleware = (http) ->
 					
 				else
 					
-					# Is there no path entry? Check for a default.
-					if routes[null]?
-						return res.redirect routes[null].redirectTo
-				
+					# GOTO, not gonna lie.
+					do ->
+						
+						# Check for any regexs.
+						for key, route of routes
+							if route.regexp.test path
+								
+								# TODO need to extract params to build
+								# redirectTo, small enough mismatch to ignore
+								# for now.
+								return
+						
+						# Otherwise.
+						if routes[null]?
+							return res.redirect routes[null].redirectTo
+							
 				# Navigate the Angular system to the new path.
 				navigate window, path, body, (delay) ->
 					
