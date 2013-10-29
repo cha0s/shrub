@@ -66,7 +66,6 @@ module.exports.middleware = (http) ->
 				]
 				injector = window.angular.element(window.document).injector()
 				injector.invoke invocation
-				
 				{$sniffer, socket} = shrub
 				
 				# Don't even try HTML 5 history on the server side.
@@ -86,9 +85,12 @@ module.exports.middleware = (http) ->
 			return fn error if error?
 			fn null, contexts.add id, context
 		
-	navigate = ({shrub, window}, path, body, fn) ->
+	navigate = (context, path, body, fn) ->
 		
+		{shrub, window} = context
 		{$location, $rootScope, forms} = shrub
+		
+		originalUrl = $location.url()
 		
 		# Process any forms.
 		formFn = ->
@@ -110,6 +112,11 @@ module.exports.middleware = (http) ->
 			
 			unlisten = $rootScope.$on 'shrubFinishedRendering', ->
 				unlisten()
+				
+				# Catch any path changes.
+				if path isnt $location.url()
+					context.redirect = $location.url()
+					
 				formFn()
 				
 			$rootScope.$apply -> $location.path path
@@ -176,6 +183,12 @@ module.exports.middleware = (http) ->
 				# Touch the context to keep it alive.
 				context.touch()
 				
+				# Emit the last HTML generated before the redirect.
+				if context.redirect
+					return process.nextTick ->
+						res.end context.redirect
+						context.redirect = null
+				
 				# Prevent a possible race condition that would hang up the
 				# context in between now and render.
 				deferred = Q.defer()
@@ -190,19 +203,20 @@ module.exports.middleware = (http) ->
 					
 				else
 					
-					# GOTO, not gonna lie.
-					do ->
-						
-						# Check for any regexs.
-						for key, route of routes
-							if route.regexp?.test path
-								
-								# TODO need to extract params to build
-								# redirectTo, small enough mismatch to ignore
-								# for now.
-								return
-						
-						# Otherwise.
+					match = false
+					
+					# Check for any regexs.
+					for key, route of routes
+						if route.regexp?.test path
+							
+							# TODO need to extract params to build
+							# redirectTo, small enough mismatch to ignore
+							# for now.
+							match = true
+							break
+					
+					# Otherwise.
+					unless match
 						if routes[null]?
 							return res.redirect routes[null].redirectTo
 							
@@ -210,16 +224,31 @@ module.exports.middleware = (http) ->
 				navigate context, path, body, (delay) ->
 					
 					process.nextTick ->
-						
+					
 						# Reload the session, server-side JS socket stuff could
 						# have changed it!
 						req.session.reload ->
 							
 							# Don't forget the doctype!
-							res.end """
+							emission = """
 <!doctype html>
 #{window.document.innerHTML}
 """
 							
+							# If a redirect happened on the context, actually
+							# redirect the browser and save the emission for
+							# the next request.
+							if context.redirect
+								res.redirect context.redirect
+								context.redirect = emission
+							
+							# Otherwise, just emit.	
+							else
+								
+								# Emit.
+								res.end emission
+							
+							# Let any context expirations take place now that
+							# we've emitted.
 							deferred.resolve()
 							context.promise = null
