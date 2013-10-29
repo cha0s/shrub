@@ -3,6 +3,8 @@ $module.controller 'form-user-login', [
 	'$location', '$scope', 'notifications', 'user'
 	($location, $scope, notifications, user) ->
 		
+		user.promise.then (user) -> unless user.id? $location.path '/'
+		
 		$scope.form =
 			
 			username:
