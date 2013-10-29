@@ -37,11 +37,16 @@ $module.controller 'form-user-register', [
 ]
 
 $module.controller 'user/register', [
-	'$scope', 'title'
-	($scope, title) ->
+	'$location', '$scope', 'title', 'user'
+	($location, $scope, title, user) ->
 		
 		title.setPage 'Sign up'
 		
-		$scope.$emit 'shrubFinishedRendering'
+		user.promise.then (user) -> 
+		
+			if user.id?
+				$location.path '/'
+			else
+				$scope.$emit 'shrubFinishedRendering'
 		
 ]

@@ -3,8 +3,6 @@ $module.controller 'form-user-login', [
 	'$location', '$scope', 'notifications', 'user'
 	($location, $scope, notifications, user) ->
 		
-		user.promise.then (user) -> unless user.id? $location.path '/'
-		
 		$scope.form =
 			
 			username:
@@ -40,11 +38,16 @@ $module.controller 'form-user-login', [
 ]
 
 $module.controller 'user/login', [
-	'$scope', 'title'
-	($scope, title) ->
+	'$location', '$scope', 'title', 'user'
+	($location, $scope, title, user) ->
 		
 		title.setPage 'Sign in'
 		
-		$scope.$emit 'shrubFinishedRendering'
+		user.promise.then (user) -> 
+		
+			if user.id?
+				$location.path '/'
+			else
+				$scope.$emit 'shrubFinishedRendering'
 		
 ]
