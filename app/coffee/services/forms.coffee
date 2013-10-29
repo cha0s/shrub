@@ -9,10 +9,7 @@ $module.service 'forms', [
 				scope: scope
 				element: element
 					
-		@lookup = (key) ->
-			console.log key
-			console.log forms
-			forms[key]
+		@lookup = (key) -> forms[key]
 		
 		return
 
