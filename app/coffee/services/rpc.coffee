@@ -1,7 +1,7 @@
 
 $module.service 'rpc', [
-	'$q', 'require', 'socket'
-	($q, require, socket) ->
+	'$q', '$window', 'require', 'socket'
+	($q, $window, require, socket) ->
 		
 		@call = (route, data) ->
 			
@@ -14,6 +14,9 @@ $module.service 'rpc', [
 				deferred.resolve result
 				
 			deferred.promise
+		
+		# Hang up the socket unless it's the local (Node.js) client.
+		@call 'hangup' unless $window.navigator.userAgent.match /^Node\.js .*$/
 		
 		return
 		

@@ -1,5 +1,5 @@
 
-_ = require 'underscore'
+contexts = require 'server/contexts'
 jsdom = require('jsdom').jsdom
 nconf = require 'nconf'
 Q = require 'q'
@@ -14,9 +14,7 @@ logger = new winston.Logger
 
 module.exports.middleware = (http) ->
 	
-	windows = {}
-	
-	newWindow = (cookie, locals, fn) ->
+	newContext = (cookie, locals, fn) ->
 		
 		http.renderApp locals, (error, index) ->
 			return fn error if error?
@@ -37,10 +35,15 @@ module.exports.middleware = (http) ->
 				url: "http://localhost:#{http.port()}/shrub-entry-point"
 			)
 			
-			window = document.createWindow()
+			context = window: window = document.createWindow()
 			
 			# Capture "client" console logs.
-			window.console = logger
+			window.console =
+				info: logger.info.bind logger
+				log: logger.info.bind logger
+				debug: logger.debug.bind logger
+				warn: logger.warn.bind logger
+				error: logger.error.bind logger
 			
 			# Hack in WebSocket.
 			window.WebSocket = require 'socket.io/node_modules/socket.io-client/node_modules/ws/lib/WebSocket'
@@ -53,7 +56,7 @@ module.exports.middleware = (http) ->
 						return fn error.data.error
 				
 				# Inject Angular services so we can get up in its guts.
-				shrub = window.shrub = {}
+				shrub = context.shrub = {}
 				injected = [
 					'$location', '$rootScope', '$route', '$sniffer'
 					'forms', 'socket'
@@ -69,43 +72,23 @@ module.exports.middleware = (http) ->
 				# Don't even try HTML 5 history on the server side.
 				$sniffer.history = false
 				
-				# Windows expire after 5 minutes.
-				_keepalive = _.debounce (-> window.close()), 1000 * 60 * 5
-				window.touch = ->
-					_keepalive()
-					window
-				
 				# Let the socket finish initialization.						
-				socket.on 'initialized', -> process.nextTick -> fn null, window
-			
-	angularWindow = (id, cookie, locals, fn) ->
+				socket.on 'initialized', ->
+					process.nextTick -> fn null, context
+				
+	angularContext = (id, cookie, locals, fn) ->
 		
 		# Already exists?
-		if (window = windows[id])?
-			fn null, window
+		return fn null, context if (context = contexts.lookup id)?
 			
 		# Create one otherwise.
-		else
-			newWindow cookie, locals, (error, window) ->
-				return fn error if error?
-				
-				proxyClose = window.close
-				window.close = ->
-					
-					# Temporary workaround for Contextify:
-					# 
-					# https://github.com/brianmcd/contextify/issues/89
-					window.shrub.socket.disconnect()
-					
-					proxyClose.call this
-					
-					windows[id] = null
-				
-				fn null, windows[id] = window
+		newContext cookie, locals, (error, context) ->
+			return fn error if error?
+			fn null, contexts.add id, context
 		
-	navigate = (window, path, body, fn) ->
+	navigate = ({shrub, window}, path, body, fn) ->
 		
-		{$location, $rootScope, forms} = window.shrub
+		{$location, $rootScope, forms} = shrub
 		
 		# Process any forms.
 		formFn = ->
@@ -136,7 +119,7 @@ module.exports.middleware = (http) ->
 			formFn()
 		
 	(req, res, next) ->
-	
+		
 		{path} = url.parse req.url
 		
 		# e2e entry point hax.
@@ -146,8 +129,9 @@ module.exports.middleware = (http) ->
 		locals = res.locals
 		body = req.body
 		
-		# Uncomment to bypass the server-side Angular.		
-#		return http.renderApp locals, (error, index) -> res.end index
+		# Skip render in a local context?
+		unless nconf.get 'contexts:render'
+			return http.renderApp locals, (error, index) -> res.end index
 		
 		extractCookie = (fn) ->
 			
@@ -184,13 +168,20 @@ module.exports.middleware = (http) ->
 		extractCookie (cookie) ->
 			
 			# Get a DOM window.
-			angularWindow id, cookie, locals, (error, window) ->
+			angularContext id, cookie, locals, (error, context) ->
 				return next new Error error.stack if error?
 				
-				# Touch the window to keep it alive.
-				window.touch()	
+				{shrub, window} = context
 				
-				{$route: routes: routes} = window.shrub
+				# Touch the context to keep it alive.
+				context.touch()
+				
+				# Prevent a possible race condition that would hang up the
+				# context in between now and render.
+				deferred = Q.defer()
+				context.promise = deferred.promise
+				
+				{$route: routes: routes} = shrub
 				if routes[path]?
 				
 					# Does this path redirect? Do an HTTP redirect.
@@ -216,13 +207,19 @@ module.exports.middleware = (http) ->
 							return res.redirect routes[null].redirectTo
 							
 				# Navigate the Angular system to the new path.
-				navigate window, path, body, (delay) ->
+				navigate context, path, body, (delay) ->
 					
 					process.nextTick ->
 						
 						# Reload the session, server-side JS socket stuff could
 						# have changed it!
 						req.session.reload ->
-						
+							
 							# Don't forget the doctype!
-							res.end '<!doctype html>' + window.document.innerHTML
+							res.end """
+<!doctype html>
+#{window.document.innerHTML}
+"""
+							
+							deferred.resolve()
+							context.promise = null

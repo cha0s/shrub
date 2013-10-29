@@ -17,7 +17,17 @@ nconf.defaults
 	cryptoKey: 'WeDemandShrubbery'
 	
 	path: __dirname
+	
+	
+	# Server-side render context configuration.
+	contexts:
 		
+		# Should we render on the server-side?
+		render: true
+		
+		# Context timeout in milliseconds.
+		timeout: 1000 * 60 * 5
+	
 	services:
 	
 		http:
