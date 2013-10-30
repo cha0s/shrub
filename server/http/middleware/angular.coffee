@@ -200,14 +200,14 @@ module.exports.middleware = (http) ->
 						res.end context.redirect
 						context.redirect = null
 				
+				# Handle redirection.
+				if redirect = context.pathRedirect path
+					return res.redirect redirect
+				
 				# Prevent a possible race condition that would hang up the
 				# context in between now and render.
 				deferred = Q.defer()
 				context.promise = deferred.promise
-				
-				# Handle redirection.
-				if redirect = context.pathRedirect path
-					return res.redirect redirect
 				
 				# Navigate the Angular system to the new path.
 				navigate context, path, body, (delay) ->
