@@ -29,8 +29,8 @@ $module.service 'user', [
 			rpc.call(
 				'user.logout'
 			).then(
-				(O) ->
-					user.fromObject O
+				->
+					user.fromObject (new schema.User).toObject()
 					user
 			)
 		

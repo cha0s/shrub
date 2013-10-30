@@ -4,4 +4,4 @@
 module.exports = (req, data, fn) ->
 	
 	req.logout()
-	fn null, new User()
+	fn()
