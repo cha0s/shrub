@@ -17,6 +17,32 @@ exports.add = (id, context, fn) ->
 		nconf.get 'contexts:timeout'
 	)
 	
+	context.pathRedirect = (path) ->
+	
+		{$route: routes: routes} = shrub
+		if routes[path]?
+		
+			# Does this path redirect? Do an HTTP redirect.
+			if routes[path].redirectTo?
+				return routes[path].redirectTo
+			
+		else
+			
+			match = false
+			
+			# Check for any regexs.
+			for key, route of routes
+				if route.regexp?.test path
+					
+					# TODO need to extract params to build
+					# redirectTo, small enough mismatch to ignore
+					# for now.
+					return
+			
+			# Otherwise.
+			if routes[null]?
+				return routes[null].redirectTo
+	
 	# Close the context.
 	context.close = (fn) ->
 		Q.when(context.promise).then ->

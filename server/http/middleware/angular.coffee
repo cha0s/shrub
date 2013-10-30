@@ -94,7 +94,6 @@ module.exports.middleware = (http) ->
 		
 		# Process any forms.
 		formFn = ->
-			
 			return fn() unless body.formKey?
 			return fn() unless (form = forms.lookup body.formKey)?
 			
@@ -105,7 +104,16 @@ module.exports.middleware = (http) ->
 				scope[named.name] = value
 				
 			# Submit handlers return promises.
-			scope.$apply -> scope.form.submit.handler().finally -> fn()
+			scope.$apply -> scope.form.submit.handler().finally ->
+				
+				# Catch any path changes.
+				if path isnt $location.url()
+					if redirect = context.pathRedirect $location.url()
+						context.redirect = redirect
+					else
+						context.redirect = $location.url()
+					
+				fn()
 			
 		# If the path has changed, navigate Angular to it.			
 		if path isnt url.parse(window.location.href).path
@@ -115,7 +123,10 @@ module.exports.middleware = (http) ->
 				
 				# Catch any path changes.
 				if path isnt $location.url()
-					context.redirect = $location.url()
+					if redirect = context.pathRedirect $location.url()
+						context.redirect = redirect
+					else
+						context.redirect = $location.url()
 					
 				formFn()
 				
@@ -194,32 +205,10 @@ module.exports.middleware = (http) ->
 				deferred = Q.defer()
 				context.promise = deferred.promise
 				
-				{$route: routes: routes} = shrub
-				if routes[path]?
+				# Handle redirection.
+				if redirect = context.pathRedirect path
+					return res.redirect redirect
 				
-					# Does this path redirect? Do an HTTP redirect.
-					if routes[path].redirectTo?
-						return res.redirect routes[path].redirectTo
-					
-				else
-					
-					match = false
-					
-					# Check for any regexs.
-					for key, route of routes
-						if route.regexp?.test path
-							
-							# TODO need to extract params to build
-							# redirectTo, small enough mismatch to ignore
-							# for now.
-							match = true
-							break
-					
-					# Otherwise.
-					unless match
-						if routes[null]?
-							return res.redirect routes[null].redirectTo
-							
 				# Navigate the Angular system to the new path.
 				navigate context, path, body, (delay) ->
 					
