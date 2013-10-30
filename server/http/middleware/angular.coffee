@@ -223,32 +223,30 @@ module.exports.middleware = (http) ->
 				# Navigate the Angular system to the new path.
 				navigate context, path, body, (delay) ->
 					
-					process.nextTick ->
-					
-						# Reload the session, server-side JS socket stuff could
-						# have changed it!
-						req.session.reload ->
-							
-							# Don't forget the doctype!
-							emission = """
+					# Reload the session, server-side JS socket stuff could
+					# have changed it!
+					req.session.reload ->
+						
+						# Don't forget the doctype!
+						emission = """
 <!doctype html>
 #{window.document.innerHTML}
 """
+						
+						# If a redirect happened on the context, actually
+						# redirect the browser and save the emission for
+						# the next request.
+						if context.redirect
+							res.redirect context.redirect
+							context.redirect = emission
+						
+						# Otherwise, just emit.	
+						else
 							
-							# If a redirect happened on the context, actually
-							# redirect the browser and save the emission for
-							# the next request.
-							if context.redirect
-								res.redirect context.redirect
-								context.redirect = emission
-							
-							# Otherwise, just emit.	
-							else
-								
-								# Emit.
-								res.end emission
-							
-							# Let any context expirations take place now that
-							# we've emitted.
-							deferred.resolve()
-							context.promise = null
+							# Emit.
+							res.end emission
+						
+						# Let any context expirations take place now that
+						# we've emitted.
+						deferred.resolve()
+						context.promise = null
