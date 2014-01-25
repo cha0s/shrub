@@ -4,13 +4,6 @@ $module.service 'user', [
 		
 		user = new schema.User
 		
-		forgot: (usernameOrEmail) ->
-			
-			rpc.call(
-				'user.forgot'
-				usernameOrEmail: usernameOrEmail
-			)
-
 		login: (method, username, password) ->
 			
 			rpc.call(
@@ -34,22 +27,6 @@ $module.service 'user', [
 					user
 			)
 		
-		register: (username, email) ->
-
-			rpc.call(
-				'user.register'
-				username: username
-				email: email
-			)
-			
-		reset: (token, password) ->
-
-			rpc.call(
-				'user.reset'
-				token: token
-				password: password
-			)
-			
 		promise: rpc.call('user').then(
 			(O) ->
 				user.fromObject O

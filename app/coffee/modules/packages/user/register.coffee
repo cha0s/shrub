@@ -8,7 +8,7 @@ module.exports =
 				
 				title.setPage 'Sign up'
 				
-				$scope.userRegisterForm =
+				$scope.userRegister =
 					
 					username:
 						type: 'text'
@@ -23,22 +23,16 @@ module.exports =
 					submit:
 						type: 'submit'
 						title: "Register"
-						handler: ->
+						rpc: true
+						handler: (error, result) ->
 							
-							user.register(
-								$scope.username
-								$scope.email
-							).then(
-		
-								->
-									notifications.add text: "Registered successfully."
-									$location.path '/'
-									
-								(error) -> notifications.add(
-									class: 'error', text: error.message
-								)
-							)
-				
+							return notifications.add(
+								class: 'error', text: error.message
+							) if error?
+					
+							notifications.add text: "Registered successfully."
+							$location.path '/'
+						
 				user.promise.then (user) -> 
 				
 					if user.id?
@@ -53,7 +47,7 @@ module.exports =
 		
 		template: """
 	
-<div data-shrub-form="userRegisterForm"></div>
+<div data-shrub-form="userRegister"></div>
 
 """
 

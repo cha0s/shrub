@@ -3,12 +3,12 @@ module.exports =
 	$route:
 		
 		controller: [
-			'$location', '$routeParams', '$scope', 'notifications', 'title', 'user'
-			($location, $routeParams, $scope, notifications, title, user) ->
+			'$location', '$scope', 'notifications', 'title'
+			($location, $scope, notifications, title) ->
 				
 				title.setPage 'Reset your password'
 				
-				$scope.userResetForm =
+				$scope.userReset =
 					
 					password:
 						type: 'password'
@@ -18,31 +18,27 @@ module.exports =
 					submit:
 						type: 'submit'
 						title: "Reset password"
-						handler: ->
+						rpc: true
+						handler: (error, result) ->
+							
+							return notifications.add(
+								class: 'error', text: error.message
+							) if error?
 					
-							user.reset(
-								$routeParams.token
-								$scope.password
-							).then(
-		
-								->
-									notifications.add text: "Password reset."
-									$location.path '/'
-									
-								(error) -> notifications.add(
-									class: 'error', text: error.message
-								)
-							)
-				
+							notifications.add text: "Password reset."
+							$location.path '/'
+
 				$scope.$emit 'shrubFinishedRendering'
 				
 		]
 		
 		template: """
 	
-<div data-shrub-form="userResetForm"></div>
+<div data-shrub-form="userReset"></div>
 
 """
+
+		params: ['token']
 
 	$endpoint: (req, data, fn) ->
 		

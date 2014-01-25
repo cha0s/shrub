@@ -9,7 +9,7 @@ module.exports =
 				
 				title.setPage 'Sign in'
 				
-				$scope.userLoginForm =
+				$scope.userLogin =
 					
 					username:
 						type: 'text'
@@ -55,7 +55,7 @@ module.exports =
 		
 		template: """
 	
-<div data-shrub-form="userLoginForm"></div>
+<div data-shrub-form="userLogin"></div>
 
 <a class="forgot" href="/user/forgot">Forgot your password?</a>
 

@@ -5,12 +5,12 @@ module.exports =
 	$route:
 		
 		controller: [
-			'$location', '$scope', 'notifications', 'title', 'user'
-			($location, $scope, notifications, title, user) ->
+			'$location', '$scope', 'notifications', 'title'
+			($location, $scope, notifications, title) ->
 				
 				title.setPage 'Forgot password'
 				
-				$scope.userForgotForm =
+				$scope.userForgot =
 					
 					usernameOrEmail:
 						type: 'text'
@@ -20,27 +20,22 @@ module.exports =
 					submit:
 						type: 'submit'
 						title: "Email reset link"
-						handler: ->
+						rpc: true
+						handler: (error, result) ->
+							
+							return notifications.add(
+								class: 'error', text: error.message
+							) if error?
 					
-							user.forgot(
-								$scope.usernameOrEmail
-							).then(
-		
-								->
-									notifications.add text: "You will be emailed a reset link."
-									$location.path '/'
-									
-								(error) -> notifications.add(
-									class: 'error', text: error.message
-								)
-							)
-				
+							notifications.add text: "You will be emailed a reset link."
+							$location.path '/'
+							
 				$scope.$emit 'shrubFinishedRendering'
 		]
 		
 		template: """
 	
-<div data-shrub-form="userForgotForm"></div>
+<div data-shrub-form="userForgot"></div>
 
 """
 

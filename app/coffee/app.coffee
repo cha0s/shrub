@@ -25,7 +25,13 @@ angular.module('Shrub', [
 			
 			requireProvider.require('packageManager').loadRoutes (
 				(packageName, packageKey, route) ->
-					$routeProvider.when "/#{packageName}", route
+
+					params = if route.params?
+						"/:#{route.params.join '/:'}"
+					else
+						''
+					
+					$routeProvider.when "/#{packageName}#{params}", route
 			)
 			
 # Create a unique entry point.

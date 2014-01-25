@@ -1,6 +1,7 @@
+
 $module.directive 'shrubForm', [
-	'$compile', '$q', 'forms', 'require'
-	($compile, $q, forms, require) ->
+	'$compile', '$q', 'forms', 'require', 'rpc'
+	($compile, $q, forms, require, rpc) ->
 		
 		link: (scope, element, attrs) ->
 			
@@ -46,6 +47,30 @@ $module.directive 'shrubForm', [
 						
 					when 'submit'
 					
+						if field.rpc?
+							field.handler ?= ->
+							handler = field.handler
+							field.handler = ->
+								
+								i8n = require 'inflection'
+
+								dottedFormKey = i8n.underscore formKey
+								dottedFormKey = i8n.dasherize dottedFormKey.toLowerCase()
+								dottedFormKey = dottedFormKey.replace '-', '.'
+								
+								fields = {}
+								for name, field of form
+									continue if field.type is 'submit'
+									fields[name] = scope[name]
+								
+								rpc.call(
+									dottedFormKey
+									fields
+								).then(
+									(result) -> handler null, result
+									(error) -> handler error
+								)
+						
 						$input = angular.element(
 							'<input type="submit">'
 						)
