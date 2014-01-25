@@ -2,19 +2,24 @@
 
 angular.module('shrub.require', [])
 	
-	.factory 'require', ->
-	
-		require = (name) ->
-	
-			throw new Error "Module #{name} not found!" unless requires_[name]?
+	.provider 'require', [
+		->
+			require: require = (name) ->
 			
-			unless requires_[name].module?
-				exports = {}
-				module = exports: exports
+				unless requires_[name]?
+					throw new Error "Module #{name} not found!"
 				
-				f = requires_[name]
-				requires_[name] = module: module
+				unless requires_[name].module?
+					exports = {}
+					module = exports: exports
+					
+					f = requires_[name]
+					requires_[name] = module: module
+					
+					f.call null, module, exports, require
+					
+				requires_[name].module.exports
 				
-				f.call null, module, exports, require
-				
-			requires_[name].module.exports
+			$get: -> (name) => @require name
+			
+	]

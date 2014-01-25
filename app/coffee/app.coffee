@@ -16,19 +16,18 @@ angular.module('Shrub', [
 ]).
 
 	config([
-		'$routeProvider', '$locationProvider', '$interpolateProvider', 'mockRouteProvider'
-		($routeProvider, $locationProvider, $interpolateProvider, mockRouteProvider) ->
-		
+		'$routeProvider', '$locationProvider', '$interpolateProvider', 'mockRouteProvider', 'requireProvider'
+		($routeProvider, $locationProvider, $interpolateProvider, mockRouteProvider, requireProvider) ->
+			
 # Set up our routes.
 			$routeProvider.when '/home', templateUrl: '/partials/home.html', controller: 'home'
 			$routeProvider.when '/about', templateUrl: '/partials/about.html', controller: 'about'
 			
-			$routeProvider.when '/user/forgot', templateUrl: '/partials/user/forgot.html', controller: 'user/forgot'
-			$routeProvider.when '/user/login', templateUrl: '/partials/user/login.html', controller: 'user/login'
-			$routeProvider.when '/user/logout', template: '-', controller: 'user/logout'
-			$routeProvider.when '/user/register', templateUrl: '/partials/user/register.html', controller: 'user/register'
-			$routeProvider.when '/user/reset/:token', templateUrl: '/partials/user/reset.html', controller: 'user/reset'
-
+			requireProvider.require('packageManager').loadRoutes (
+				(packageName, packageKey, route) ->
+					$routeProvider.when "/#{packageName}", route
+			)
+			
 # Create a unique entry point.
 			$routeProvider.when '/shrub-entry-point', {}
 			

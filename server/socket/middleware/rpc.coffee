@@ -1,4 +1,5 @@
 
+packageManager = require 'packageManager'
 path = require 'path'
 walk = require 'walk'
 Q = require 'q'
@@ -23,7 +24,12 @@ walker.on 'file', (root, fileStats, next) ->
 	
 	next()
 	
-walker.on 'end', -> winston.info 'RPC endpoints loaded'
+walker.on 'end', ->
+	
+	packageManager.loadEndpoints (packageName, packageKey, endpoint) ->
+		endpoints["#{packageName.replace '/', '.'}"] = endpoint
+		
+	winston.info 'RPC endpoints loaded'
 
 module.exports.middleware = -> [
 	

@@ -1,4 +1,19 @@
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 unauthorized = ->
 	error = new Error "Unauthorized access attempt"
 	error.code = 401

@@ -2,32 +2,26 @@ $module.directive 'shrubForm', [
 	'$compile', '$q', 'forms', 'require'
 	($compile, $q, forms, require) ->
 		
-		link: (scope, element, attrs, controller) ->
+		link: (scope, element, attrs) ->
 			
-			formName = "form-#{attrs['shrubForm']}"
+			formKey = attrs['shrubForm']
+			form = scope[formKey]
 			
 			# Hacking out the scope, gotta be a nicer way to do this.
 			$form = angular.element '<form>'
-			$form.attr 'ng-controller', formName
-			$compile($form) scope
-			{form} = $form.scope()
-			return unless form?
 			
 			# Create the form element.
 			$form = angular.element(
 				'<form>'
 			).attr(
 				
-				# Hook up controller.
-				'data-ng-controller': formName
-				
 				# Set submit handler, if any
-				'data-ng-submit': 'form.submit.handler()'
+				'data-ng-submit': "#{formKey}.submit.handler()"
 				
 				# Default method to POST.
 				method: $form.attr('method') ? 'POST'
 			
-			).addClass formName
+			).addClass formKey
 			
 			# Build the form fields.
 			for name, field of form
@@ -62,7 +56,7 @@ $module.directive 'shrubForm', [
 			
 			# Add hidden form key to allow server-side interception/processing.
 			$formKeyElement = angular.element '<input type="hidden"/>'
-			$formKeyElement.attr name: 'formKey', value: attrs['shrubForm']
+			$formKeyElement.attr name: 'formKey', value: formKey
 			$form.append $formKeyElement
 			
 			# Insert and compile the form element.
@@ -70,7 +64,7 @@ $module.directive 'shrubForm', [
 			$compile($form) scope
 			
 			# Register the form in the system.
-			forms.register attrs['shrubForm'], {form} = $form.scope(), $form
+			forms.register formKey, scope, $form
 			
 			# Guarantee a submit handler.
 			(form.submit ?= {}).handler ?= -> $q.when true

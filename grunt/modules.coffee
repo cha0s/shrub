@@ -44,7 +44,7 @@ module.exports = (grunt, config) ->
 	config.wrap.modules =
 		files:
 			'app/js/modules.js': [
-				'app/js/modules/*.js'
+				'app/js/modules/**/*.js'
 				'!app/js/modules/require.js'
 			]
 		options:

@@ -9,10 +9,6 @@ logger = new winston.Logger
 
 module.exports.middleware = (http) -> [
 	
-	(error, req, res, next) ->
-		logger.error error.stack
-		next error
-			
 	if 'development' isnt process.env.NODE_ENV
 		(err, req, res, next) -> next err
 	else

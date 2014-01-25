@@ -95,16 +95,17 @@ module.exports.middleware = (http) ->
 		# Process any forms.
 		formFn = ->
 			return fn() unless body.formKey?
-			return fn() unless (form = forms.lookup body.formKey)?
+			return fn() unless (formSpec = forms.lookup body.formKey)?
 			
-			scope = form.scope
+			scope = formSpec.scope
+			form = scope[body.formKey]
 			
-			for named in form.element.find '[name]'
+			for named in formSpec.element.find '[name]'
 				continue unless (value = body[named.name])?
 				scope[named.name] = value
 				
 			# Submit handlers return promises.
-			scope.$apply -> scope.form.submit.handler().finally ->
+			scope.$apply -> form.submit.handler().finally ->
 				
 				# Catch any path changes.
 				if path isnt $location.url()
