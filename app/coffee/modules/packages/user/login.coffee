@@ -13,17 +13,17 @@ module.exports =
 					
 					username:
 						type: 'text'
-						title: "Username"
+						label: "Username"
 						required: true
 					
 					password:
 						type: 'password'
-						title: "Password"
+						label: "Password"
 						required: true
 					
 					submit:
 						type: 'submit'
-						title: "Sign in"
+						label: "Sign in"
 						handler: ->
 					
 							user.login(

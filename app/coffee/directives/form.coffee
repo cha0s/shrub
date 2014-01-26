@@ -33,8 +33,8 @@ $module.directive 'shrubForm', [
 					
 					when 'email', 'password', 'text'
 						$wrapper.append(
-							angular.element('<label>').text field.title
-						) if field.title?
+							angular.element('<label>').text field.label
+						) if field.label?
 						
 						$input = angular.element(
 							'<input type="' + field.type + '">'
@@ -74,7 +74,7 @@ $module.directive 'shrubForm', [
 						$input = angular.element(
 							'<input type="submit">'
 						)
-						$input.attr 'value', field.title ? "Submit"
+						$input.attr 'value', field.label ? "Submit"
 						$input.addClass 'btn'
 						
 				$form.append $wrapper

@@ -14,12 +14,12 @@ module.exports =
 					
 					usernameOrEmail:
 						type: 'text'
-						title: "Username or Email"
+						label: "Username or Email"
 						required: true
 					
 					submit:
 						type: 'submit'
-						title: "Email reset link"
+						label: "Email reset link"
 						rpc: true
 						handler: (error, result) ->
 							

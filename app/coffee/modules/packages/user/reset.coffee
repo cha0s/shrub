@@ -12,12 +12,12 @@ module.exports =
 					
 					password:
 						type: 'password'
-						title: "New password"
+						label: "New password"
 						required: true
 					
 					submit:
 						type: 'submit'
-						title: "Reset password"
+						label: "Reset password"
 						rpc: true
 						handler: (error, result) ->
 							

@@ -12,17 +12,17 @@ module.exports =
 					
 					username:
 						type: 'text'
-						title: "Username"
+						label: "Username"
 						required: true
 					
 					email:
 						type: 'email'
-						title: "Email"
+						label: "Email"
 						required: true
 					
 					submit:
 						type: 'submit'
-						title: "Register"
+						label: "Register"
 						rpc: true
 						handler: (error, result) ->
 							
