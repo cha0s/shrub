@@ -15,4 +15,11 @@ module.exports.middleware = (http) -> [
 		
 	passport.initialize()
 	passport.session()
+	
+	(req, res, next) ->
+		
+		req.passport = req._passport.instance
+		
+		next()
+	
 ]
