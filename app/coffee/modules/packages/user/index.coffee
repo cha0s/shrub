@@ -10,8 +10,6 @@ exports.$endpoint =
 		else
 			new User()
 
-exports.forgot = require 'packages/user/forgot'
-exports.login = require 'packages/user/login'
-exports.logout = require 'packages/user/logout'
-exports.register = require 'packages/user/register'
-exports.reset = require 'packages/user/reset'
+exports[path] = require "packages/user/#{path}" for path in [
+	'forgot', 'login', 'logout', 'register', 'reset'
+]
