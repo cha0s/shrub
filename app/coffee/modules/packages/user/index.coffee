@@ -1,7 +1,7 @@
 
 exports.$endpoint = 
 
-	(req, data, fn) ->
+	(req, fn) ->
 		
 		{models: User: User} = require 'server/jugglingdb'
 	
