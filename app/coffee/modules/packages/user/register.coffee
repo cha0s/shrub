@@ -2,11 +2,11 @@ module.exports =
 
 	$route:
 		
+		title: 'Sign up'
+		
 		controller: [
-			'$location', '$scope', 'notifications', 'title', 'user'
-			($location, $scope, notifications, title, user) ->
-				
-				title.setPage 'Sign up'
+			'$location', '$scope', 'notifications', 'user'
+			($location, $scope, notifications, user) ->
 				
 				$scope.userRegister =
 					
@@ -51,15 +51,15 @@ module.exports =
 
 """
 
-	$endpoint: (req, data, fn) ->
+	$endpoint: (req, fn) ->
 		
 		crypto = require 'server/crypto'
 		{models: User: User} = require 'server/jugglingdb'
 		
-		user = new User name: data.username
+		user = new User name: req.body.username
 		
 		# Encrypt the email.	
-		crypto.encrypt data.email, (error, encryptedEmail) ->
+		crypto.encrypt req.body.email, (error, encryptedEmail) ->
 			fn error if error?
 		
 			user.email = encryptedEmail

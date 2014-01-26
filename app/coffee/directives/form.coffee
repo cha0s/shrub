@@ -6,7 +6,7 @@ $module.directive 'shrubForm', [
 		link: (scope, element, attrs) ->
 			
 			formKey = attrs['shrubForm']
-			form = scope[formKey]
+			return unless (form = scope[formKey])?
 			
 			# Hacking out the scope, gotta be a nicer way to do this.
 			$form = angular.element '<form>'

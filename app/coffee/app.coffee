@@ -24,14 +24,27 @@ angular.module('Shrub', [
 			$routeProvider.when '/about', templateUrl: '/partials/about.html', controller: 'about'
 			
 			requireProvider.require('packageManager').loadRoutes (
-				(packageName, packageKey, route) ->
+				(path, packageKey, route) ->
 
-					params = if route.params?
-						"/:#{route.params.join '/:'}"
-					else
-						''
+					if route.params?
+						path += "/:#{route.params.join '/:'}"
 					
-					$routeProvider.when "/#{packageName}#{params}", route
+					routeController = route.controller
+					route.controller = [
+						'$injector', '$scope', 'title'
+						($injector, $scope, title) ->
+							
+							title.setPage route.title ? ''
+							
+							$injector.invoke(
+								routeController
+								null
+								$scope: $scope
+							)
+						
+					]
+					
+					$routeProvider.when "/#{path}", route
 			)
 			
 # Create a unique entry point.

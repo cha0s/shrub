@@ -4,11 +4,11 @@ module.exports =
 
 	$route:
 		
+		title: 'Forgot password'
+		
 		controller: [
-			'$location', '$scope', 'notifications', 'title'
-			($location, $scope, notifications, title) ->
-				
-				title.setPage 'Forgot password'
+			'$location', '$scope', 'notifications'
+			($location, $scope, notifications) ->
 				
 				$scope.userForgot =
 					
@@ -39,7 +39,7 @@ module.exports =
 
 """
 
-	$endpoint: (req, data, fn) ->
+	$endpoint: (req, fn) ->
 		
 		crypto = require 'server/crypto'
 		Q = require 'q'
@@ -49,10 +49,10 @@ module.exports =
 		deferred = Q.defer()
 		
 		# Search for username or encrypted email.
-		if -1 is data.usernameOrEmail.indexOf '@'
-			deferred.resolve where: name: data.usernameOrEmail
+		if -1 is req.body.usernameOrEmail.indexOf '@'
+			deferred.resolve where: name: req.body.usernameOrEmail
 		else
-			crypto.encrypt data.usernameOrEmail, (error, encryptedEmail) ->
+			crypto.encrypt req.body.usernameOrEmail, (error, encryptedEmail) ->
 				deferred.reject error if error?
 				deferred.resolve where: email: encryptedEmail
 		

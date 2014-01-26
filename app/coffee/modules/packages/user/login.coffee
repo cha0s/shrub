@@ -3,11 +3,11 @@ module.exports =
 
 	$route:
 		
+		title: 'Sign in'
+		
 		controller: [
-			'$location', '$scope', 'notifications', 'title', 'user'
-			($location, $scope, notifications, title, user) ->
-				
-				title.setPage 'Sign in'
+			'$location', '$scope', 'notifications', 'user'
+			($location, $scope, notifications, user) ->
 				
 				$scope.userLogin =
 					
@@ -61,14 +61,13 @@ module.exports =
 
 """
 
-	$endpoint: (req, data, fn) ->
+	$endpoint: (req, fn) ->
 		
 		{models: User: User} = require 'server/jugglingdb'
 		
 		passport = req._passport.instance
-		req.body = data
 				
-		switch data.method
+		switch req.body.method
 			
 			when 'local'
 				

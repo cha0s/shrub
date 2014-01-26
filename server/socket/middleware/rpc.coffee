@@ -40,10 +40,10 @@ module.exports.middleware = -> [
 				req.socket.on "rpc://#{route}", (data, fn) ->
 					
 					req.session?.touch()
+					req.body = data
 					
 					endpoint(
-						req, data
-						(errors, result) ->
+						req, (errors, result) ->
 							reply = ->
 								return fn result: result unless errors?
 								

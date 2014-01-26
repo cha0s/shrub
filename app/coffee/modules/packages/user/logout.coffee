@@ -13,7 +13,7 @@ module.exports =
 		
 		template: '-'
 
-	$endpoint: (req, data, fn) ->
+	$endpoint: (req, fn) ->
 		
 		{models: User: User} = require 'server/jugglingdb'
 	

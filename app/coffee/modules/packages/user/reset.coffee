@@ -2,11 +2,11 @@ module.exports =
 
 	$route:
 		
+		title: 'Reset your password'
+		
 		controller: [
-			'$location', '$scope', 'notifications', 'title'
-			($location, $scope, notifications, title) ->
-				
-				title.setPage 'Reset your password'
+			'$location', '$scope', 'notifications'
+			($location, $scope, notifications) ->
 				
 				$scope.userReset =
 					
@@ -40,12 +40,12 @@ module.exports =
 
 		params: ['token']
 
-	$endpoint: (req, data, fn) ->
+	$endpoint: (req, fn) ->
 		
 		crypto = require 'server/crypto'
 		{models: User: User} = require 'server/jugglingdb'
 		
-		filter = where: resetPasswordToken: data.token
+		filter = where: resetPasswordToken: req.body.token
 		
 		# It may seem strange that we merely invoke fn() instead of sending
 		# useful data to the client, but the reasoning behind this is to make it
@@ -54,7 +54,7 @@ module.exports =
 			return fn() if error?
 			return fn() unless user
 			
-			User.hashPassword data.password, user.salt, (error, passwordHash) ->
+			User.hashPassword req.body.password, user.salt, (error, passwordHash) ->
 				return fn() if error?
 				
 				user.passwordHash = passwordHash
