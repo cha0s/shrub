@@ -32,15 +32,10 @@ exports.$route =
 						notifications.add text: "Registered successfully."
 						$location.path '/'
 					
-			user.promise.then (user) -> 
-			
-				if user.id?
+			user.isLoggedIn (isLoggedIn) ->
+				return $location.path '/' if isLoggedIn
 					
-					$location.path '/'
-				
-				else
-				
-					$scope.$emit 'shrubFinishedRendering'
+				$scope.$emit 'shrubFinishedRendering'
 			
 	]
 	

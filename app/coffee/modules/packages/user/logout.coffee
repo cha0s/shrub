@@ -2,10 +2,13 @@
 exports.$route =
 	
 	controller: [
-		'$location', 'user'
-		($location, user) ->
-			
-			user.logout().finally -> $location.path '/'
+		'$location', '$q', 'user'
+		($location, $q, user) ->
+
+			user.isLoggedIn (isLoggedIn) ->
+				
+				(if isLoggedIn then user.logout() else $q.when()).finally ->
+					$location.path '/'
 			
 	]
 	

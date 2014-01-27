@@ -4,6 +4,8 @@ $module.service 'user', [
 		
 		user = new schema.User
 		
+		isLoggedIn: (fn) -> @promise.then (user) -> fn user.id? 
+			
 		login: (method, username, password) ->
 			
 			rpc.call(

@@ -5,8 +5,8 @@ exports.$route =
 	title: 'Forgot password'
 	
 	controller: [
-		'$location', '$scope', 'notifications'
-		($location, $scope, notifications) ->
+		'$location', '$scope', 'notifications', 'user'
+		($location, $scope, notifications, user) ->
 			
 			$scope.userForgot =
 				
@@ -28,7 +28,10 @@ exports.$route =
 						notifications.add text: "You will be emailed a reset link."
 						$location.path '/'
 						
-			$scope.$emit 'shrubFinishedRendering'
+			user.isLoggedIn (isLoggedIn) ->
+				return $location.path '/' if isLoggedIn
+					
+				$scope.$emit 'shrubFinishedRendering'
 	]
 	
 	template: """

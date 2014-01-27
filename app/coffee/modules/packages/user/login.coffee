@@ -40,15 +40,10 @@ exports.$route =
 							)
 						)
 			
-			user.promise.then (user) -> 
-			
-				# Already logged in?
-				if user.id?
-					$location.path '/'
-				
-				else
-				
-					$scope.$emit 'shrubFinishedRendering'
+			user.isLoggedIn (isLoggedIn) ->
+				return $location.path '/' if isLoggedIn
+					
+				$scope.$emit 'shrubFinishedRendering'
 			
 	]
 	
