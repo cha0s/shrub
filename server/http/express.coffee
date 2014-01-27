@@ -22,6 +22,8 @@ module.exports = class Express extends (require './http')
 		@_server = http.createServer @_app
 		
 		@registerMiddleware()
+		
+		@_app.use (req, res, next) => @_middleware.dispatch req, res, next
 	
 	path: -> @_path
 	
@@ -71,5 +73,3 @@ module.exports = class Express extends (require './http')
 		
 				RedisStore = require('connect-redis') express
 				new RedisStore client: module.createClient()
-	
-	use: (fn) -> @_app.use fn

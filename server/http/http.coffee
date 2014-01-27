@@ -1,11 +1,13 @@
 
 nconf = require 'nconf'
+Middleware = (require 'middleware').Middleware
 
 module.exports = class Http
 
 	constructor: ->
 		
 		@_config = nconf.get 'services:http'
+		@_middleware = new Middleware()
 		
 	config: -> @_config
 		
@@ -16,4 +18,4 @@ module.exports = class Http
 		for name in @_config.middleware
 			middleware = (require "./middleware/#{name}").middleware this
 			middleware = [middleware] unless Array.isArray middleware
-			middleware.forEach (middleware) => @use middleware
+			middleware.forEach (middleware) => @_middleware.use middleware
