@@ -26,6 +26,9 @@ exports.middleware = (http) ->
 	root = schema.root
 	routes = {}
 	
+	# Gross...
+	app._usedRouter = true
+	
 	for name, Model of schema.models
 		
 		do (Model) ->
