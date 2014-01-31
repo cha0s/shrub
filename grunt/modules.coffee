@@ -29,8 +29,8 @@ module.exports = (grunt, config) ->
 	
 	config.concat.modules =
 		src: [
-			'app/js/modules/require.js'
 			'app/js/modules.js'
+			'app/js/modules/require.js'
 		]
 		dest: 'app/js/modules.js'
 	

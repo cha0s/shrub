@@ -9,6 +9,7 @@ angular.module('Shrub', [
 	'shrub.services'
 	'shrub.directives'
 	'shrub.mocks'
+	'shrub.packages'
 	
 	'shrub.require'
 	
