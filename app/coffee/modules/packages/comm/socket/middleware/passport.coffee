@@ -1,6 +1,8 @@
 
 passport = require 'passport'
 
+{models: User: User} = require 'server/jugglingdb'
+
 module.exports.middleware = (http) -> [
 	
 	(req, res, next) ->
@@ -19,6 +21,8 @@ module.exports.middleware = (http) -> [
 	(req, res, next) ->
 		
 		req.passport = req._passport.instance
+		
+		req.user ?= new User()
 		
 		next()
 	

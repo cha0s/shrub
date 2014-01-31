@@ -46,4 +46,10 @@ passport.deserializeUser (id, done) ->
 module.exports.middleware = (http) -> [
 	passport.initialize()
 	passport.session()
+	(req, res, next) ->
+	
+		req.user ?= new User()
+		
+		next()
+	
 ]
