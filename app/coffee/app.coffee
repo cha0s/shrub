@@ -23,11 +23,11 @@ angular.module('Shrub', [
 			$routeProvider.when '/home', templateUrl: '/partials/home.html', controller: 'home'
 			$routeProvider.when '/about', templateUrl: '/partials/about.html', controller: 'about'
 			
-			requireProvider.require('packageManager').loadRoutes (
+			requireProvider.require('packageManager').loadAttribute(
+				'route'
 				(path, packageKey, route) ->
 
-					if route.params?
-						path += "/:#{route.params.join '/:'}"
+					path += "/:#{route.params.join '/:'}" if route.params?
 					
 					routeController = route.controller
 					route.controller = [
@@ -37,8 +37,7 @@ angular.module('Shrub', [
 							title.setPage route.title ? ''
 							
 							$injector.invoke(
-								routeController
-								null
+								routeController, null
 								$scope: $scope
 							)
 						

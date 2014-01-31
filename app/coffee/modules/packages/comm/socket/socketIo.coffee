@@ -39,7 +39,10 @@ module.exports = class SocketIo extends (require './socket')
 			req.http = http
 			req.socket = socket
 			
-			@registerMiddleware req, {}
+			@_socketMiddleware.dispatch req, null, (error) ->
+				return logger.error error if error?
+				
+				req.socket.emit 'initialized'
 			
 	store: ->
 

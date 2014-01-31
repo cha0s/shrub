@@ -3,6 +3,9 @@ nconf = require 'nconf'
 path = require 'path'
 winston = require 'winston'
 
+Middleware = (require 'middleware').Middleware
+packageManager = require 'packageManager'
+
 # Log errors to the console, the rest will go into logs/shrub.log by default.
 winston.remove winston.transports.Console
 winston.add winston.transports.Console, level: 'error'
@@ -17,7 +20,6 @@ nconf.defaults
 	cryptoKey: 'WeDemandShrubbery'
 	
 	path: __dirname
-	
 	
 	# Server-side render context configuration.
 	contexts:
@@ -66,6 +68,13 @@ nconf.defaults
 
 http = new (require './server/http/express') path.join __dirname, 'app'
 
-socket = new (require './server/socket/socketIo') http
+middleware = new Middleware()
+packageManager.loadAttribute 'httpInitializer', (_, __, initializer) ->
+	middleware.use initializer
 
-http.listen -> console.info "Shrub server listening on port #{http.port()}..."
+request = http: http
+response = null
+middleware.dispatch request, response, (error) ->
+	return logger.error error if error?
+	
+	console.info "Shrub server up and running!"

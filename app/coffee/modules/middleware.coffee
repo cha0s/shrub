@@ -8,7 +8,7 @@ exports.Middleware = Middleware = class
 	
 	use: (fn) -> @_middleware.push fn
 	
-	dispatch: (req, res, fn) ->
+	dispatch: (request, response, fn) ->
 		
 		index = 0
 		
@@ -22,7 +22,7 @@ exports.Middleware = Middleware = class
 				
 				if error?
 					
-					current error, req, res, (error) -> invoke error
+					current error, request, response, (error) -> invoke error
 					
 				else
 					
@@ -36,6 +36,6 @@ exports.Middleware = Middleware = class
 				
 				else
 				
-					current req, res, (error) -> invoke error
+					current request, response, (error) -> invoke error
 				
 		invoke null

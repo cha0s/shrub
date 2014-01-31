@@ -29,9 +29,7 @@ module.exports = class Express extends (require './http')
 	
 	cookieParser: -> express.cookieParser nconf.get 'cryptoKey'
 
-	listen: (fn) ->
-		
-		@_server.listen @port(), fn
+	listen: (fn) -> @_server.listen @port(), fn
 	
 	loadSessionFromRequest: (req) ->
 		deferred = Q.defer()

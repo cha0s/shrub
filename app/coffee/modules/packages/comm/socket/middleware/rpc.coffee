@@ -26,8 +26,8 @@ walker.on 'file', (root, fileStats, next) ->
 	
 walker.on 'end', ->
 	
-	packageManager.loadEndpoints (packageName, packageKey, endpoint) ->
-		endpoints["#{packageName.replace '/', '.'}"] = endpoint
+	packageManager.loadAttribute 'endpoint', (path, packageKey, endpoint) ->
+		endpoints["#{path.replace '/', '.'}"] = endpoint
 		
 	winston.info 'RPC endpoints loaded'
 

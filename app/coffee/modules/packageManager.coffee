@@ -2,7 +2,7 @@
 # TODO actually discover packages.
 exports.discoverPackages = ->
 	
-	['user']
+	['core', 'comm', 'user']
 
 recursiveLoad = (packageName, key, fn) ->
 
@@ -23,18 +23,7 @@ recursiveLoad = (packageName, key, fn) ->
 			
 			recursiveLoad "#{packageName}/#{packageKey}", key, fn
 		
-exports.loadEndpoints = (fn) ->
-	
+exports.loadAttribute = (name, fn) ->
+		
 	packageList = exports.discoverPackages()
-	
-	# Load package endpoints.
-	for packageName in packageList
-		recursiveLoad packageName, 'endpoint', fn
-
-exports.loadRoutes = (fn) ->
-	
-	packageList = exports.discoverPackages()
-	
-	# Load package endpoints.
-	for packageName in packageList
-		recursiveLoad packageName, 'route', fn
+	recursiveLoad packageName, name, fn for packageName in packageList
