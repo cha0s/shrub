@@ -1,12 +1,14 @@
 
-$module.controller 'about', [
-	'$http', '$scope', 'title'
-	($http, $scope, title) ->
-		
-		title.setPage 'About'
-		
-		# Load the about page asynchronously.
-		$scope.about = """
+exports.$route =
+
+	path: 'about'
+	title: 'About'
+	
+	controller: [
+		'$scope'
+		($scope) ->
+			
+			$scope.about = """
 Shrub
 =====
 
@@ -77,6 +79,16 @@ framework include:
 * Research into whether the http server interface (currently using Express) is worth abstracting
 * There is a rudimentary working form API, but research should be done as to how to DRY it up and make sure it's secure and resistant to attack
 """
+	
+			$scope.$emit 'shrubFinishedRendering'
+	]
+	
+	template: """
 
-		$scope.$emit 'shrubFinishedRendering'
-]
+<span
+	class="about"
+	data-ng-bind-html="about | md:false"
+></span>
+
+"""
+

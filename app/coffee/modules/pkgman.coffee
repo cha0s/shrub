@@ -29,7 +29,7 @@ exports.rebuildPackageCache = ->
 # TODO actually discover packages.
 exports.discoverPackages = ->
 	
-	['core', 'comm', 'user']
+	['core', 'comm', 'example', 'user']
 
 exports.invoke = (hook, fn) ->
 	exports.rebuildPackageCache() unless packageCache?

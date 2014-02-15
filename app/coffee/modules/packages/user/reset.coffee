@@ -1,6 +1,7 @@
 
 exports.$route =
-		
+	
+	path: 'user/reset/:token'
 	title: 'Reset your password'
 	
 	controller: [
@@ -36,8 +37,6 @@ exports.$route =
 <div data-shrub-form="userReset"></div>
 
 """
-
-	params: ['token']
 
 exports.$endpoint = (req, fn) ->
 	

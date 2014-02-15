@@ -1,0 +1,27 @@
+
+exports.$route =
+
+	path: 'home'
+	title: 'Home'
+	
+	controller: [
+		'$scope'
+		($scope) ->
+			
+			$scope.$emit 'shrubFinishedRendering'
+			
+	]
+	
+	template: """
+
+<div class="jumbotron">
+	
+	<h1>Shrub</h1>
+	
+	<p class="lead">Welcome to the example application for Shrub!</p>
+	
+	<hr>
+
+</div>
+
+"""
