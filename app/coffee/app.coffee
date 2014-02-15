@@ -24,28 +24,26 @@ angular.module('Shrub', [
 			$routeProvider.when '/home', templateUrl: '/partials/home.html', controller: 'home'
 			$routeProvider.when '/about', templateUrl: '/partials/about.html', controller: 'about'
 			
-			requireProvider.require('pkgman').loadAttribute(
-				'route'
-				(path, packageKey, route) ->
+			pkgman = requireProvider.require 'pkgman'
+			pkgman.invoke 'route', (path, route) ->
 
-					path += "/:#{route.params.join '/:'}" if route.params?
-					
-					routeController = route.controller
-					route.controller = [
-						'$injector', '$scope', 'title'
-						($injector, $scope, title) ->
-							
-							title.setPage route.title ? ''
-							
-							$injector.invoke(
-								routeController, null
-								$scope: $scope
-							)
+				path += "/:#{route.params.join '/:'}" if route.params?
+				
+				routeController = route.controller
+				route.controller = [
+					'$injector', '$scope', 'title'
+					($injector, $scope, title) ->
 						
-					]
+						title.setPage route.title ? ''
+						
+						$injector.invoke(
+							routeController, null
+							$scope: $scope
+						)
 					
-					$routeProvider.when "/#{path}", route
-			)
+				]
+				
+				$routeProvider.when "/#{path}", route
 			
 # Create a unique entry point.
 			$routeProvider.when '/shrub-entry-point', {}

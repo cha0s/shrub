@@ -1,29 +1,58 @@
 
+invocationCache = {}
+packageCache = null
+
+exports.clearInvocationCache = (hook) ->
+	
+	if hook?
+		invocationCache[hook] = null
+	else
+		invocationCache = {}
+		
+	return
+
+exports.rebuildPackageCache = ->
+	packageCache = {}
+	
+	for name in exports.discoverPackages()
+	
+		# TODO only until I improve require()
+		package_ = try
+			require "packages/#{name}"
+		catch error
+			require "packages/#{name}/index"
+			
+		packageCache[name] = package_
+		
+	return
+
 # TODO actually discover packages.
 exports.discoverPackages = ->
 	
 	['core', 'comm', 'user']
 
-recursiveLoad = (packageName, key, fn) ->
-
-	# TODO only until I improve require()
-	try
-		packageComponents = require "packages/#{packageName}"
-	catch error
-		packageComponents = require "packages/#{packageName}/index"
+exports.invoke = (hook, fn) ->
+	exports.rebuildPackageCache() unless packageCache?
 	
-	for packageKey, packageSpec of packageComponents
+	unless invocationCache[hook]?
+		invocationCache[hook] = {}
 		
-		if packageKey.charCodeAt(0) is '$'.charCodeAt(0)
+		invokeRecursive = (path, parent) ->
 			
-			if packageKey is "$#{key}"
-				fn packageName, packageKey, packageSpec
+			for key, spec of parent
 				
-		else
-			
-			recursiveLoad "#{packageName}/#{packageKey}", key, fn
+				if key.charCodeAt(0) is '$'.charCodeAt(0)
 		
-exports.loadAttribute = (name, fn) ->
-		
-	packageList = exports.discoverPackages()
-	recursiveLoad packageName, name, fn for packageName in packageList
+					if key is "$#{hook}"
+						
+						invocationCache[hook][path] = spec
+						
+				else
+					
+					invokeRecursive "#{path}/#{key}", spec
+					
+		invokeRecursive name, package_ for name, package_ of packageCache
+	
+	fn path, spec for path, spec of invocationCache[hook]
+	
+	return

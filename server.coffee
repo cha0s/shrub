@@ -69,8 +69,8 @@ nconf.defaults
 http = new (require './server/http/express') path.join __dirname, 'app'
 
 middleware = new Middleware()
-pkgman.loadAttribute 'httpInitializer', (_, __, initializer) ->
-	middleware.use initializer
+
+pkgman.invoke 'httpInitializer', (_, initializer) -> middleware.use initializer
 
 request = http: http
 response = null

@@ -16,14 +16,9 @@ require = (name) ->
 		
 	requires_[name].module.exports
 
-angular.module('shrub.require', [])
-	
-	.provider 'require', [
-		->
-			require: require
-			$get: -> (name) -> require name
-			
-	]
+angular.module('shrub.require', []).provider 'require', ->
+	require: require
+	$get: -> require
 
 # Package automation.
 pkgman = require 'pkgman'
@@ -33,7 +28,7 @@ for type in types
 	
 	names = []
 	
-	pkgman.loadAttribute type, (path, packageKey, spec) ->
+	pkgman.invoke type, (path, spec) ->
 		
 		names.push name = "shrub.packages.#{type}.#{path}"
 		$module = angular.module name, []
