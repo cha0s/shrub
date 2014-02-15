@@ -23,14 +23,14 @@ module.exports.middleware = (http) ->
 					
 					'/lib/socket.io/socket.io.min.js'
 					
-					'/js/modules.min.js'
-					
 					'/js/before-angular.js'
 				
 					'//ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js'
 					'//ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular-sanitize.min.js'
 					'/lib/angular-strap/angular-strap.min.js'
 					'/js/angular.min.js'
+					
+					'/js/modules.min.js'
 				]
 	
 			else
@@ -51,10 +51,6 @@ module.exports.middleware = (http) ->
 					'/lib/angular/angular-sanitize.js'
 					'/lib/angular-strap/angular-strap.js'
 					'/js/app.js'
-					'/js/services.js'
-					'/js/controllers.js'
-					'/js/filters.js'
-					'/js/directives.js'
 					if process.env['E2E']
 						'/js/mocks.js'
 					else

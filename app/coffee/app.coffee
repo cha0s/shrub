@@ -4,10 +4,6 @@ angular.module('Shrub', [
 	'ngRoute'
 	'ngSanitize'
 	
-	'shrub.controllers'
-	'shrub.filters'
-	'shrub.services'
-	'shrub.directives'
 	'shrub.mocks'
 	'shrub.packages'
 	

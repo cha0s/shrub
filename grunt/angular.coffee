@@ -7,7 +7,7 @@ module.exports = (grunt, config) ->
 	]
 	
 	directories = [
-		'controllers', 'directives', 'filters', 'mocks', 'services'
+		'mocks'
 	]
 	
 	for directory in directories

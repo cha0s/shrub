@@ -1,5 +1,5 @@
 
-$module.service 'schema', [
+exports.$service = [
 	'$http', 'require'
 	($http, require) ->
 
@@ -13,8 +13,8 @@ $module.service 'schema', [
 		
 ]
 
-$module.service 'db', [
-	'$q', 'schema', 'user'
+exports.db = $service: [
+	'$q', 'core/schema', 'user'
 	($q, schema, user) ->
 
 		promiseify = (holder, method) -> ->
