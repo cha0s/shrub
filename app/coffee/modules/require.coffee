@@ -21,9 +21,10 @@ angular.module('shrub.require', []).provider 'require', ->
 	$get: -> require
 
 # Package automation.
+i8n = require 'inflection'
 pkgman = require 'pkgman'
 
-types = ['service']
+types = ['directive', 'service']
 for type in types
 	
 	names = []
@@ -33,6 +34,12 @@ for type in types
 		names.push name = "shrub.packages.#{type}.#{path}"
 		$module = angular.module name, []
 		
+		# Use camelized names for directives:
+		# 'core/foo/bar' -> 'coreFooBar'
+		if type is 'directive'
+			path = path.replace '/', '_'
+			path = i8n.camelize path.toLowerCase(), true
+			
 		$module[type] path, spec
 		
 	angular.module "shrub.packages.#{type}", names

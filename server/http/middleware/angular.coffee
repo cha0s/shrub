@@ -59,7 +59,7 @@ module.exports.middleware = (http) ->
 				shrub = context.shrub = {}
 				injected = [
 					'$location', '$rootScope', '$route', '$sniffer'
-					'forms', 'comm/socket'
+					'core/form', 'comm/socket'
 				]
 				invocation = injected.concat [
 					-> shrub[inject] = arguments[i] for inject, i in injected
@@ -87,14 +87,15 @@ module.exports.middleware = (http) ->
 	navigate = (context, path, body, fn) ->
 		
 		{shrub, window} = context
-		{$location, $rootScope, forms} = shrub
+		{$location, $rootScope} = shrub
+		form = shrub['core/form']
 		
 		originalUrl = $location.url()
 		
 		# Process any forms.
 		formFn = ->
 			return fn() unless body.formKey?
-			return fn() unless (formSpec = forms.lookup body.formKey)?
+			return fn() unless (formSpec = form.lookup body.formKey)?
 			
 			scope = formSpec.scope
 			form = scope[body.formKey]

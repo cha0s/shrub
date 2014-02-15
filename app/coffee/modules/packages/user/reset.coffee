@@ -34,7 +34,7 @@ exports.$route =
 	
 	template: """
 	
-<div data-shrub-form="userReset"></div>
+<div data-core-form="userReset"></div>
 
 """
 

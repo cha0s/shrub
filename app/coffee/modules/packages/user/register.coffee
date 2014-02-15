@@ -41,7 +41,7 @@ exports.$route =
 	
 	template: """
 
-<div data-shrub-form="userRegister"></div>
+<div data-core-form="userRegister"></div>
 
 """
 

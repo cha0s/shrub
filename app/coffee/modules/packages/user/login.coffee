@@ -49,7 +49,7 @@ exports.$route =
 	
 	template: """
 
-<div data-shrub-form="userLogin"></div>
+<div data-core-form="userLogin"></div>
 
 <a class="forgot" href="/user/forgot">Forgot your password?</a>
 

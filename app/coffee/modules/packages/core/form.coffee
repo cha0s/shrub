@@ -1,12 +1,12 @@
 
-$module.directive 'shrubForm', [
-	'$compile', '$q', 'forms', 'require', 'comm/rpc'
-	($compile, $q, forms, require, rpc) ->
+exports.$directive = [
+	'$compile', '$q', 'core/form', 'require', 'comm/rpc'
+	($compile, $q, form, require, rpc) ->
 		
 		link: (scope, element, attrs) ->
 			
-			formKey = attrs['shrubForm']
-			return unless (form = scope[formKey])?
+			formKey = attrs['coreForm']
+			return unless (formSpec = scope[formKey])?
 			
 			# Hacking out the scope, gotta be a nicer way to do this.
 			$form = angular.element '<form>'
@@ -25,7 +25,7 @@ $module.directive 'shrubForm', [
 			).addClass formKey
 			
 			# Build the form fields.
-			for name, field of form
+			for name, field of formSpec
 				continue unless field.type?
 				
 				$wrapper = angular.element '<div>'
@@ -59,7 +59,7 @@ $module.directive 'shrubForm', [
 								dottedFormKey = dottedFormKey.replace '-', '.'
 								
 								fields = {}
-								for name, field of form
+								for name, field of formSpec
 									continue if field.type is 'submit'
 									fields[name] = scope[name]
 								
@@ -89,10 +89,27 @@ $module.directive 'shrubForm', [
 			$compile($form) scope
 			
 			# Register the form in the system.
-			forms.register formKey, scope, $form
+			form.register formKey, scope, $form
 			
 			# Guarantee a submit handler.
-			(form.submit ?= {}).handler ?= -> $q.when true
+			(formSpec.submit ?= {}).handler ?= -> $q.when true
 			
+]
+
+exports.$service = [
+	'$rootScope', 'config'
+	($rootScope, config) ->
+		
+		forms = {}
+		
+		@register = (key, scope, element) ->
+			forms[key] =
+				scope: scope
+				element: element
+					
+		@lookup = (key) -> forms[key]
+		
+		return
+
 ]
 
