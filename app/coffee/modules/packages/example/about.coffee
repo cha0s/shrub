@@ -87,7 +87,7 @@ framework include:
 
 <span
 	class="about"
-	data-ng-bind-html="about | md:false"
+	data-ng-bind-html="about | uiMarkdown:false"
 ></span>
 
 """

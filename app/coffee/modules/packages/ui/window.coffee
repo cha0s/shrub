@@ -1,5 +1,5 @@
 
-$module.service 'window', [
+exports.$service = [
 	'$rootScope', '$window'
 	($rootScope, $window) ->
 		

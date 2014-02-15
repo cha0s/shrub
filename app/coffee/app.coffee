@@ -26,10 +26,10 @@ angular.module('Shrub', [
 
 				routeController = route.controller
 				route.controller = [
-					'$injector', '$scope', 'title'
+					'$injector', '$scope', 'ui/title'
 					($injector, $scope, title) ->
 						
-						title.setPage route.title if route.title?
+						title.setPage route.title ? ''
 						
 						$injector.invoke(
 							routeController, null
@@ -54,7 +54,7 @@ angular.module('Shrub', [
 	
 # Application initialization.
 	.run([
-		'nav', 'title'
+		'ui/nav', 'ui/title'
 		(nav, title) ->
 			
 			title.setSite 'Shrub'

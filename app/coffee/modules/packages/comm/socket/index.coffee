@@ -6,7 +6,7 @@ exports.$httpInitializer = (req, res, next) ->
 	next()
 
 exports.$service = [
-	'$rootScope', 'config'
+	'$rootScope', 'core/config'
 	($rootScope, config) ->
 		
 # Be aware: this will throw in unit tests because [global].io won't be

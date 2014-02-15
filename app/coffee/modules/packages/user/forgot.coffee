@@ -5,7 +5,7 @@ exports.$route =
 	title: 'Forgot password'
 	
 	controller: [
-		'$location', '$scope', 'notifications', 'user'
+		'$location', '$scope', 'ui/notifications', 'user'
 		($location, $scope, notifications, user) ->
 			
 			$scope.userForgot =

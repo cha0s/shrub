@@ -5,7 +5,7 @@ exports.$route =
 	title: 'Sign in'
 	
 	controller: [
-		'$location', '$scope', 'notifications', 'user'
+		'$location', '$scope', 'ui/notifications', 'user'
 		($location, $scope, notifications, user) ->
 			
 			$scope.userLogin =

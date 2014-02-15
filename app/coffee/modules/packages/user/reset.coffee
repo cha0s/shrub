@@ -5,7 +5,7 @@ exports.$route =
 	title: 'Reset your password'
 	
 	controller: [
-		'$location', '$scope', 'notifications'
+		'$location', '$scope', 'ui/notifications'
 		($location, $scope, notifications) ->
 			
 			$scope.userReset =

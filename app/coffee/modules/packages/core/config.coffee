@@ -1,4 +1,4 @@
-$module.service 'config', [
+exports.$service = [
 	'$window'
 	($window) ->
 

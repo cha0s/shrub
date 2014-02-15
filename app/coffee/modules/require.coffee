@@ -24,7 +24,7 @@ angular.module('shrub.require', []).provider 'require', ->
 i8n = require 'inflection'
 pkgman = require 'pkgman'
 
-types = ['directive', 'service']
+types = ['controller', 'directive', 'filter', 'service']
 for type in types
 	
 	names = []
@@ -34,9 +34,9 @@ for type in types
 		names.push name = "shrub.packages.#{type}.#{path}"
 		$module = angular.module name, []
 		
-		# Use camelized names for directives:
+		# Use camelized names for directives and filters:
 		# 'core/foo/bar' -> 'coreFooBar'
-		if type is 'directive'
+		unless -1 is ['directive', 'filter'].indexOf type
 			path = path.replace '/', '_'
 			path = i8n.camelize path.toLowerCase(), true
 			

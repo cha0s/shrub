@@ -1,5 +1,5 @@
-$module.service 'debug', [
-	'$rootScope', 'config'
+exports.$service = [
+	'$rootScope', 'core/config'
 	($rootScope, config) ->
 		
 # Catch and log errors.

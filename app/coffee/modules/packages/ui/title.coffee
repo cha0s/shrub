@@ -1,5 +1,13 @@
 
-$module.service 'title', [
+exports.$controller = [
+	'$scope', 'ui/title'
+	($scope, title) ->
+		
+		$scope.title = title.window
+		
+]
+
+exports.$service = [
 	'$rootScope', '$timeout'
 	($rootScope, $timeout) ->
 			

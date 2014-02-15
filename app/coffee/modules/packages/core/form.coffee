@@ -97,7 +97,7 @@ exports.$directive = [
 ]
 
 exports.$service = [
-	'$rootScope', 'config'
+	'$rootScope', 'core/config'
 	($rootScope, config) ->
 		
 		forms = {}
