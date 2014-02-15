@@ -1,6 +1,6 @@
 
 $module.directive 'shrubForm', [
-	'$compile', '$q', 'forms', 'require', 'rpc'
+	'$compile', '$q', 'forms', 'require', 'comm/rpc'
 	($compile, $q, forms, require, rpc) ->
 		
 		link: (scope, element, attrs) ->

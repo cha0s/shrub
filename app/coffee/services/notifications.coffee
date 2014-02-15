@@ -1,6 +1,6 @@
 
 $module.service 'notifications', [
-	'socket'
+	'comm/socket'
 	(socket) ->
 	
 		_notifications = []

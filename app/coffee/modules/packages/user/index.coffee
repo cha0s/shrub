@@ -1,6 +1,6 @@
 
 exports.$service = [
-	'$q', 'rpc', 'schema'
+	'$q', 'comm/rpc', 'schema'
 	($q, rpc, schema) ->
 		
 		user = new schema.User

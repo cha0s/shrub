@@ -1,6 +1,6 @@
 
-$module.service 'rpc', [
-	'$q', '$window', 'require', 'socket'
+exports.$service = [
+	'$q', '$window', 'require', 'comm/socket'
 	($q, $window, require, socket) ->
 		
 		@call = (route, data) ->

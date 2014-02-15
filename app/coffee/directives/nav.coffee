@@ -1,6 +1,6 @@
 
 $module.directive 'shrubNav', [
-	'$location', 'nav', 'socket', 'title', 'user'
+	'$location', 'nav', 'comm/socket', 'title', 'user'
 	($location, nav, socket, title, user) ->
 	
 		templateUrl: '/partials/nav.html'
