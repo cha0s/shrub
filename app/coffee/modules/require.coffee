@@ -26,7 +26,7 @@ angular.module('shrub.require', [])
 	]
 
 # Package automation.
-pkgman = require 'packageManager'
+pkgman = require 'pkgman'
 
 types = ['service']
 for type in types

@@ -24,7 +24,7 @@ angular.module('Shrub', [
 			$routeProvider.when '/home', templateUrl: '/partials/home.html', controller: 'home'
 			$routeProvider.when '/about', templateUrl: '/partials/about.html', controller: 'about'
 			
-			requireProvider.require('packageManager').loadAttribute(
+			requireProvider.require('pkgman').loadAttribute(
 				'route'
 				(path, packageKey, route) ->
 

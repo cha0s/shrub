@@ -1,5 +1,5 @@
 
-packageManager = require 'packageManager'
+pkgman = require 'pkgman'
 path = require 'path'
 walk = require 'walk'
 Q = require 'q'
@@ -26,7 +26,7 @@ walker.on 'file', (root, fileStats, next) ->
 	
 walker.on 'end', ->
 	
-	packageManager.loadAttribute 'endpoint', (path, packageKey, endpoint) ->
+	pkgman.loadAttribute 'endpoint', (path, packageKey, endpoint) ->
 		endpoints["#{path.replace '/', '.'}"] = endpoint
 		
 	winston.info 'RPC endpoints loaded'

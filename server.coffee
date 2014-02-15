@@ -4,7 +4,7 @@ path = require 'path'
 winston = require 'winston'
 
 Middleware = (require 'middleware').Middleware
-packageManager = require 'packageManager'
+pkgman = require 'pkgman'
 
 # Log errors to the console, the rest will go into logs/shrub.log by default.
 winston.remove winston.transports.Console
@@ -69,7 +69,7 @@ nconf.defaults
 http = new (require './server/http/express') path.join __dirname, 'app'
 
 middleware = new Middleware()
-packageManager.loadAttribute 'httpInitializer', (_, __, initializer) ->
+pkgman.loadAttribute 'httpInitializer', (_, __, initializer) ->
 	middleware.use initializer
 
 request = http: http
