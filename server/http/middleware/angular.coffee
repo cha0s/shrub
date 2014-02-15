@@ -18,7 +18,7 @@ module.exports.middleware = (http) ->
 		
 		http.renderApp locals, (error, index) ->
 			return fn error if error?
-		
+			
 			# Hax: Fix document.domain since jsdom has a stub here.
 			Object.defineProperties(
 				(require 'jsdom/lib/jsdom/level2/html').dom.level2.html.HTMLDocument.prototype
@@ -59,27 +59,26 @@ module.exports.middleware = (http) ->
 				shrub = context.shrub = {}
 				injected = [
 					'$location', '$rootScope', '$route', '$sniffer'
-					'forms', 'socket'
+					'forms', 'comm/socket'
 				]
 				invocation = injected.concat [
 					-> shrub[inject] = arguments[i] for inject, i in injected
 				]
 				injector = window.angular.element(window.document).injector()
 				injector.invoke invocation
-				{$sniffer, socket} = shrub
 				
 				# Don't even try HTML 5 history on the server side.
-				$sniffer.history = false
+				shrub['$sniffer'].history = false
 				
 				# Let the socket finish initialization.						
-				socket.on 'initialized', ->
+				shrub['comm/socket'].on 'initialized', ->
 					process.nextTick -> fn null, context
 				
 	angularContext = (id, cookie, locals, fn) ->
 		
 		# Already exists?
 		return fn null, context if (context = contexts.lookup id)?
-			
+		
 		# Create one otherwise.
 		newContext cookie, locals, (error, context) ->
 			return fn error if error?
@@ -188,6 +187,7 @@ module.exports.middleware = (http) ->
 			
 			# Get a DOM window.
 			angularContext id, cookie, locals, (error, context) ->
+				
 				return next new Error error.stack if error?
 				
 				{shrub, window} = context
