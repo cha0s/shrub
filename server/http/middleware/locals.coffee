@@ -51,12 +51,14 @@ module.exports.middleware = (http) ->
 					'/lib/angular/angular-sanitize.js'
 					'/lib/angular-strap/angular-strap.js'
 					'/js/app.js'
+					
+					'/js/modules.js'
+					
 					if process.env['E2E']
 						'/js/mocks.js'
 					else
 						'/js/empty-mocks.js'
 					
-					'/js/modules.js'
 				]
 				
 		

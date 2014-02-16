@@ -3,6 +3,7 @@ path = require 'path'
 module.exports = (grunt, config) ->
 
 	moduleCoffees = [
+		'app/coffee/require.coffee'
 		'app/coffee/modules/**/*.coffee'
 	]
 	moduleCoffeeMapping = grunt.file.expandMapping moduleCoffees, 'app/js/',
@@ -30,7 +31,7 @@ module.exports = (grunt, config) ->
 	config.concat.modules =
 		src: [
 			'app/js/modules.js'
-			'app/js/modules/require.js'
+			'app/js/require.js'
 		]
 		dest: 'app/js/modules.js'
 	
@@ -45,7 +46,6 @@ module.exports = (grunt, config) ->
 		files:
 			'app/js/modules.js': [
 				'app/js/modules/**/*.js'
-				'!app/js/modules/require.js'
 			]
 		options:
 			indent: '  '

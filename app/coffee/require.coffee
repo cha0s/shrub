@@ -24,23 +24,28 @@ angular.module('shrub.require', []).provider 'require', ->
 i8n = require 'inflection'
 pkgman = require 'pkgman'
 
+defineAngularModule = (group, type, path, spec) ->
+
+	name = "shrub.#{group}.#{type}.#{path}"
+	$module = angular.module name, []
+	
+	# Use camelized names for directives and filters:
+	# 'core/foo/bar' -> 'coreFooBar'
+	unless -1 is ['directive', 'filter'].indexOf type
+		path = path.replace '/', '_'
+		path = i8n.camelize path.toLowerCase(), true
+		
+	$module[type] path, spec
+	
+	name
+
 types = ['controller', 'directive', 'filter', 'service']
 for type in types
 	
 	names = []
 	
 	pkgman.invoke type, (path, spec) ->
-		
-		names.push name = "shrub.packages.#{type}.#{path}"
-		$module = angular.module name, []
-		
-		# Use camelized names for directives and filters:
-		# 'core/foo/bar' -> 'coreFooBar'
-		unless -1 is ['directive', 'filter'].indexOf type
-			path = path.replace '/', '_'
-			path = i8n.camelize path.toLowerCase(), true
-			
-		$module[type] path, spec
+		names.push defineAngularModule 'packages', type, path, spec
 		
 	angular.module "shrub.packages.#{type}", names
 		
