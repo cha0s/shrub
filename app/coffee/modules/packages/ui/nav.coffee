@@ -22,9 +22,13 @@ exports.$directive = [
 	
 		link: (scope, elm, attr) ->
 		
-			scope.title = title.page
 			scope.links = nav.links
 			scope.user = user.promise
+			
+			scope.$watch(
+				-> title.page()
+				-> scope.title = title.page()
+			)
 			
 # Make sure we set active the first time, since angular-strap won't be ready.
 
@@ -45,7 +49,7 @@ exports.$directive = [
 	<div class="navbar-inner">
 		
 		<h1 class="title muted">
-			<span data-ng-bind="title()"></span>
+			<span data-ng-bind="title"></span>
 		</h1>
 		<span class="identity">
 			You are
