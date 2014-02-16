@@ -1,17 +1,33 @@
 
 exports.$appRun = [
 	'ui/title'
-	(title) ->
-		
-		title.setSite 'Shrub'
-
+	(title) -> title.setSite 'Shrub'
 ]
 
-exports.$controller = [
-	'$scope', 'ui/title'
-	($scope, title) ->
+exports.$directive = [
+	'ui/title'
+	(title) ->
+	
+		link: (scope, elm, attr) ->
 		
-		$scope.title = title.window
+			scope.$watch(
+				-> title.window()
+				-> scope.title = title.window()
+			)
+		
+		replace: true
+		
+		# Restrict it to a comment because all other variations would generate
+		# invalid markup.
+		restrict: 'M'
+		
+		template: """
+
+<title
+	data-ng-bind="title"
+></title>
+
+"""
 		
 ]
 
