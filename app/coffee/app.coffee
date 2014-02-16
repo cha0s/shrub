@@ -13,8 +13,8 @@ angular.module('Shrub', [
 ]).
 
 	config([
-		'$routeProvider', '$locationProvider', '$interpolateProvider', 'mockRouteProvider', 'requireProvider'
-		($routeProvider, $locationProvider, $interpolateProvider, mockRouteProvider, requireProvider) ->
+		'$routeProvider', '$locationProvider', 'mockRouteProvider', 'requireProvider'
+		($routeProvider, $locationProvider, mockRouteProvider, requireProvider) ->
 			
 # Set up package routes.
 			pkgman = requireProvider.require 'pkgman'
