@@ -13,57 +13,21 @@ angular.module('Shrub', [
 ]).
 
 	config([
-		'$routeProvider', '$locationProvider', 'mockRouteProvider', 'requireProvider'
-		($routeProvider, $locationProvider, mockRouteProvider, requireProvider) ->
+		'$injector', 'requireProvider'
+		($injector, requireProvider) ->
 			
-# Set up package routes.
 			pkgman = requireProvider.require 'pkgman'
-			pkgman.invoke 'route', (path, route) ->
-
-				routeController = route.controller
-				route.controller = [
-					'$injector', '$scope', 'ui/title'
-					($injector, $scope, title) ->
-						
-						title.setPage route.title ? ''
-						
-						$injector.invoke(
-							routeController, null
-							$scope: $scope
-						)
-					
-				]
-				
-				$routeProvider.when "/#{route.path ? path}", route
+			pkgman.invoke 'appConfig', (_, fn) -> $injector.invoke fn
 			
-# Create a unique entry point.
-			$routeProvider.when '/shrub-entry-point', {}
-			
-# Mock routes for testing, in development or production mode, this will be
-# empty.
-			mockRouteProvider.when $routeProvider
-			
-			$routeProvider.otherwise redirectTo: '/home'
-			
-			$locationProvider.html5Mode true
 	])
 	
 # Application initialization.
 	.run([
-		'ui/nav', 'ui/title'
-		(nav, title) ->
+	
+		'$injector', 'require'
+		($injector, require) ->
 			
-			title.setSite 'Shrub'
-			
-			nav.setLinks [
-				pattern: '/home', href: '/home', name: 'Home'
-			,
-				pattern: '/about', href: '/about', name: 'About'
-			,
-				pattern: '/user/register', href: '/user/register', name: 'Sign up'
-			,
-				pattern: '/user/login', href: '/user/login', name: 'Sign in'
-			,
-				pattern: '/user/logout', href: '/user/logout', name: 'Sign out'
-			]
+			pkgman = require 'pkgman'
+			pkgman.invoke 'appRun', (_, fn) -> $injector.invoke fn
+
 	])

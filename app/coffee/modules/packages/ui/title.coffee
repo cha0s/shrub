@@ -1,4 +1,12 @@
 
+exports.$appRun = [
+	'ui/title'
+	(title) ->
+		
+		title.setSite 'Shrub'
+
+]
+
 exports.$controller = [
 	'$scope', 'ui/title'
 	($scope, title) ->
