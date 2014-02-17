@@ -25,7 +25,7 @@ nconf.defaults
 	contexts:
 		
 		# Should we render on the server-side?
-		render: true
+		render: not process.env['E2E']?
 		
 		# Context timeout in milliseconds.
 		timeout: 1000 * 60 * 5
