@@ -47,7 +47,7 @@ module.exports = (grunt, config) ->
 	
 	config.watch ?= {}
 	
-	config.watch.modules =
+	config.watch.tests =
 		files: testCoffees.concat testE2eCoffees
 		tasks: 'compile-test'
 	

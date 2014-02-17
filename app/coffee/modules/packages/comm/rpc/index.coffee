@@ -16,6 +16,7 @@ exports.$service = [
 			deferred.promise
 		
 		# Hang up the socket unless it's the local (Node.js) client.
+		# TODO do this through config, from server-side
 		@call 'hangup' unless $window.navigator.userAgent.match /^Node\.js .*$/
 		
 		return

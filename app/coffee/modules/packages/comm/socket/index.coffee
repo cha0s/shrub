@@ -117,18 +117,6 @@ exports.$serviceMock = [
 			
 			return
 		
-		@stimulateUserLogin = (name, friends = {}, friendRequests = [], blocklist = []) ->
-			
-			@stimulateOn(
-				'authorizationUpdate'
-				status: 'authorized'
-				user:
-					name: name
-					friends: friends
-					friendRequests: friendRequests
-					blocklist: blocklist
-			)
-		
 		return
 		
 ]
