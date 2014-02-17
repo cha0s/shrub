@@ -31,3 +31,10 @@ describe 'user', ->
 			browser().navigateTo "/e2e/user/login/#{destination}"
 			sleep .2
 			expect(browser().location().url()).toBe '/home'
+
+	it 'should log in and log out', ->
+		
+		browser().navigateTo "/e2e/user/login-logout"
+		sleep .2
+		expect(browser().location().url()).toBe '/user/login'
+			

@@ -40,11 +40,8 @@ exports.$serviceMock = [
 	'$delegate', 'comm/socket'
 	($delegate, socket) ->
 	
-		socket.catchEmit(
-			'rpc://user'
-			(data, fn) ->
-				fn result: name: 'Anonymous'
-		)
+		socket.catchEmit 'rpc://user', (data, fn) ->
+			fn result: name: 'Anonymous'
 		
 		$delegate
 		
