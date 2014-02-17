@@ -74,9 +74,11 @@ exports.$serviceMock = [
 	'$q', '$rootScope', '$timeout'
 	($q, $rootScope, $timeout) ->
 		
+		service = {}
+		
 		onMap = {}
-		@on = (type, callback) -> (onMap[type] ?= []).push callback
-		@stimulateOn = (type, data) ->
+		service.on = (type, callback) -> (onMap[type] ?= []).push callback
+		service.stimulateOn = (type, data) ->
 		
 			defer = $q.defer()
 
@@ -94,30 +96,18 @@ exports.$serviceMock = [
 			defer.promise
 				
 		emitMap = {}
-		@catchEmit = (type, callback) ->
+		service.catchEmit = (type, callback) ->
+			(emitMap[type] ?= []).push callback
 			
-			defer = $q.defer()
-			
-			$timeout(
-				->
-					
-					(emitMap[type] ?= []).push callback
-					
-					defer.resolve()
-					
-				0
-			)
-			
-			defer.promise
-			
-		@emit = (type, data) ->
-			
-			for callback in emitMap[type] ?= []
-				callback data
+		service.emit = (type, data, fn) ->
+		
+			for callback in emitMap[type] ? []
+				
+				callback data, fn
 			
 			return
 		
-		return
+		service
 		
 ]
 

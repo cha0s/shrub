@@ -23,7 +23,7 @@ exports.$directive = [
 		link: (scope, elm, attr) ->
 		
 			scope.links = nav.links
-			scope.user = user.promise
+			scope.user = user.load()
 			
 			scope.$watch(
 				-> title.page()

@@ -15,18 +15,14 @@ angular.module('shrub.pkgman', [
 			
 			service.invoke = (hook, fn) ->
 				
-				results = {}
-				
-				pkgman.invoke hook, (path, spec) -> results[path] = spec
+				pkgman.invoke hook, (path, spec) -> fn path, spec, false
 				
 				if configProvider.get 'useMocks'
 					pkgman.invoke "#{hook}Mock", (path, spec) ->
-						results[path] = spec
-				
-				fn path, spec for path, spec of results
-			
+						fn path, spec, true
+
 			service.undoMock = (hook, path) ->
-			
+				
 				pkgman.invoke hook, (_path_, spec) ->
 					$provide.decorator path, spec if path is _path_ 
 				
@@ -62,8 +58,11 @@ angular.module('shrub.packages', [
 			pkgmanProvider.invoke 'filter', (path, spec) ->
 				$filterProvider.register (camelize path), spec
 
-			pkgmanProvider.invoke 'service', (path, spec) ->
-				$provide.service path, spec
+			pkgmanProvider.invoke 'service', (path, spec, isMock) ->
+				if isMock
+					$provide.decorator path, spec
+				else
+					$provide.service path, spec
 			
 	]
 	

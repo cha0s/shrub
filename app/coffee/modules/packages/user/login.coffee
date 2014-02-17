@@ -1,5 +1,20 @@
 
-
+exports.e2eLogin = $routeMock:
+	
+	path: 'e2e/user/login/:destination'
+	
+	controller: [
+		'$location', '$routeParams', '$scope', 'comm/socket', 'user'
+		($location, $routeParams, $scope, socket, user) ->
+			
+			socket.catchEmit 'rpc://user.login', (data, fn) ->
+				fn result: id: 1, name: 'cha0s'
+				
+			user.login('local', 'cha0s', 'password').then (user) ->
+				$location.path "/user/#{$routeParams.destination}"
+				
+	]
+	
 exports.$route =
 	
 	title: 'Sign in'

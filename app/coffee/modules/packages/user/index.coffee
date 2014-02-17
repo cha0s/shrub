@@ -5,7 +5,7 @@ exports.$service = [
 		
 		user = new schema.User
 		
-		isLoggedIn: (fn) -> @promise.then (user) -> fn user.id? 
+		isLoggedIn: (fn) -> @load().then (user) -> fn user.id? 
 			
 		login: (method, username, password) ->
 			
@@ -30,11 +30,23 @@ exports.$service = [
 					user
 			)
 		
-		promise: rpc.call('user').then(
-			(O) ->
-				user.fromObject O
-				user
+		load: -> rpc.call('user').then (O) ->
+			user.fromObject O
+			user
+		
+]
+
+exports.$serviceMock = [
+	'$delegate', 'comm/socket'
+	($delegate, socket) ->
+	
+		socket.catchEmit(
+			'rpc://user'
+			(data, fn) ->
+				fn result: name: 'Anonymous'
 		)
+		
+		$delegate
 		
 ]
 

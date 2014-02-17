@@ -5,7 +5,7 @@ exports.$appConfig = [
 	
 # Set up routes.
 		pkgmanProvider.invoke 'route', (path, route) ->
-
+			
 			routeController = route.controller
 			route.controller = [
 				'$injector', '$scope', 'ui/title'
@@ -18,6 +18,8 @@ exports.$appConfig = [
 						$scope: $scope
 					)
 			]
+			
+			route.template ?= ' '
 			
 			$routeProvider.when "/#{route.path ? path}", route
 		

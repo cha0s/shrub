@@ -11,6 +11,7 @@ exports.$service = [
 				return deferred.reject new Error(
 					require('errors').formatErrors errors
 				) if errors?
+				
 				deferred.resolve result
 				
 			deferred.promise
