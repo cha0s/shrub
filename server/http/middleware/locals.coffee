@@ -96,12 +96,6 @@ angular.module('shrub.config', []).provider('config', function() {
 					
 					'/js/modules.js'
 					'/js/config.js'
-					
-#					if process.env['E2E']
-#						'/js/mocks.js'
-#					else
-#						'/js/empty-mocks.js'
-					
 				]
 				
 		
