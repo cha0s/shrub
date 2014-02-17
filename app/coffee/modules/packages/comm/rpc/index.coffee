@@ -1,9 +1,21 @@
 
+exports.$appRun = [
+	'$window', 'comm/rpc'
+	($window, rpc) ->
+	
+		# Hang up the socket unless it's the local (Node.js) client.
+		# TODO do this through config, from server-side
+		unless $window.navigator.userAgent.match /^Node\.js .*$/
+			rpc.call 'hangup'
+]
+
 exports.$service = [
-	'$q', '$window', 'require', 'comm/socket'
-	($q, $window, require, socket) ->
+	'$q', 'require', 'comm/socket'
+	($q, require, socket) ->
 		
-		@call = (route, data) ->
+		service = {}
+		
+		service.call = (route, data) ->
 			
 			deferred = $q.defer()
 			
@@ -16,10 +28,6 @@ exports.$service = [
 				
 			deferred.promise
 		
-		# Hang up the socket unless it's the local (Node.js) client.
-		# TODO do this through config, from server-side
-		@call 'hangup' unless $window.navigator.userAgent.match /^Node\.js .*$/
-		
-		return
+		service
 		
 ]
