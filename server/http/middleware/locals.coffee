@@ -8,15 +8,11 @@ module.exports.middleware = (http) -> [
 	(req, res, next) ->
 		return next() unless req.url is '/js/config.js'
 		
-		config =
-			
-			useMocks: false
+		config = {}
 		
-		if 'production' isnt nconf.get 'NODE_ENV'
+		config.useMocks = process.env['E2E']?
+		config.debugging = 'production' isnt nconf.get 'NODE_ENV'
 			
-			config.debugging = true
-			config.useMocks = true if process.env['E2E']
-		
 		pkgman.invoke 'config', (path, spec) ->
 			
 			_.extend config, spec

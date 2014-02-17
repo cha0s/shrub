@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('Shrub', [
+angular.module('shrub', [
 	'ngRoute'
 	'ngSanitize'
 	

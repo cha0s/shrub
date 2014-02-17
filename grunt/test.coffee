@@ -2,32 +2,26 @@ path = require 'path'
 
 module.exports = (grunt, config) ->
 	
-	testCoffees = for directory in ['controllers', 'directives', 'filters', 'services']
-		"test/unit/coffee/#{directory}/*.coffee"
-	testCoffeeMapping = grunt.file.expandMapping testCoffees, 'test/unit/js/',
+	testCoffees = [
+		'app/coffee/**/test-unit.coffee'
+	]
+	testCoffeeMapping = grunt.file.expandMapping testCoffees, 'app/js/',
 		rename: (destBase, destPath) ->
-			destPath = destPath.replace 'test/unit/coffee/', ''
+			destPath = destPath.replace 'app/coffee/', ''
 			destBase + destPath.replace /\.coffee$/, '.js'
-	
-	testConcat = for directory in ['controllers', 'directives', 'filters', 'services']
-		src: "test/unit/js/#{directory}/*.js"
-		dest: "test/unit/js/#{directory}.js"
 	
 	testE2eCoffees = [
-		'test/e2e/**/*.coffee'
+		'app/coffee/**/test-e2e.coffee'
 	]
-	testE2eCoffeeMapping = grunt.file.expandMapping testE2eCoffees, 'test/e2e/js/',
+	testE2eCoffeeMapping = grunt.file.expandMapping testE2eCoffees, 'app/js/',
 		rename: (destBase, destPath) ->
-			destPath = destPath.replace 'test/e2e/coffee/', ''
+			destPath = destPath.replace 'app/coffee/', ''
 			destBase + destPath.replace /\.coffee$/, '.js'
-	
+			
 	config.coffee ?= {}
 	
 	config.clean.test = [
-		'test/unit/js/controllers.js'
-		'test/unit/js/directives.js'
-		'test/unit/js/filters.js'
-		'test/unit/js/services.js'
+		'test/unit/tests.js'
 	]
 	
 	config.clean.testBuild = testCoffeeMapping.map (file) -> file.dest
@@ -43,44 +37,43 @@ module.exports = (grunt, config) ->
 	config.coffee.testE2e =
 		files: testE2eCoffeeMapping
 	
-	config.concat.test = files: testConcat
+	config.concat.test =
+		src: testCoffeeMapping.map (file) -> file.dest
+		dest: 'test/unit/tests.js'
 	
 	config.concat.testE2e =
 		src: testE2eCoffeeMapping.map (file) -> file.dest
 		dest: 'test/e2e/scenarios.js'
 	
-	wrappedTestFiles = ['controllers', 'directives', 'filters', 'services'].map (directory) -> "test/unit/js/#{directory}.js"
+	config.watch ?= {}
+	
+	config.watch.modules =
+		files: testCoffees.concat testE2eCoffees
+		tasks: 'compile-test'
 	
 	config.wrap.test =
-		files: wrappedTestFiles.map (file) -> src: file, dest: file
+		files: ['test/unit/tests.js'].map (file) -> src: file, dest: file
 		options:
-			wrapper: (filepath) ->
-				
-				extname = path.extname filepath
-				moduleType = path.basename filepath, extname
-				
-				[
-					"""
+			indent: '  '
+			wrapper: [
+				"""
 'use strict';
 
-describe('#{moduleType}', function() {
+describe('#{config.pkg.name}', function() {
 
   beforeEach(function() {
-    module('shrub.controllers');
-    module('shrub.directives');
-    module('shrub.filters');
-    module('shrub.services');
+    module('shrub.config');
+    module('shrub.packages');
     module('shrub.require');
-    module('shrub.mocks');
   });
 
 
 """
-					"""
+				"""
 
 });
 """
-				]
+			]
 	
 	config.wrap.testE2e =
 		files: ['test/e2e/scenarios.js'].map (file) -> src: file, dest: file

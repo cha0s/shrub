@@ -32,7 +32,7 @@ angular.module('shrub.packages', [
 	.config [
 		'$compileProvider', '$controllerProvider', '$filterProvider', '$provide', 'pkgmanProvider', 'requireProvider'
 		($compileProvider, $controllerProvider, $filterProvider, $provide, pkgmanProvider, requireProvider) ->
-	
+			
 			require = requireProvider.require
 			
 			_ = require 'underscore'

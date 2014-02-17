@@ -8,8 +8,8 @@ files = [
   'test/lib/angular/angular-mocks.js',
   'app/js/app.js',
   'app/js/modules.js',
-  'app/js/mocks.js',
-  'test/unit/**/*.js'
+  'test/unit/config.js',
+  'test/unit/tests.js'
 ];
 
 autoWatch = true;
