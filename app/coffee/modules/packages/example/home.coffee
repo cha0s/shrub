@@ -1,4 +1,12 @@
 
+exports.$appConfig = [
+	'$routeProvider'
+	($routeProvider) ->
+		
+		# We'll gank the default route.
+		$routeProvider.otherwise redirectTo: '/home'
+]
+
 exports.$route =
 
 	path: 'home'

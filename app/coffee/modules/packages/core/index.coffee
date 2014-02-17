@@ -26,8 +26,6 @@ exports.$appConfig = [
 # Create a unique entry point.
 		$routeProvider.when '/shrub-entry-point', {}
 			
-		$routeProvider.otherwise redirectTo: '/home'
-		
 		$locationProvider.html5Mode true
 ]
 
