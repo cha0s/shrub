@@ -71,8 +71,8 @@ exports.$service = [
 ]
 
 exports.$serviceMock = [
-	'$q', '$rootScope', '$timeout'
-	($q, $rootScope, $timeout) ->
+	'$q', '$rootScope', '$timeout', 'config'
+	($q, $rootScope, $timeout, config) ->
 		
 		service = {}
 		
@@ -80,33 +80,24 @@ exports.$serviceMock = [
 		service.on = (type, callback) -> (onMap[type] ?= []).push callback
 		service.stimulateOn = (type, data) ->
 		
-			defer = $q.defer()
-
-			$timeout(
-				->
-					
-					for callback in onMap[type] ?= []
-						callback data
-						
-					defer.resolve()
-						
-				0
-			)
+			$timeout ->
+				for callback in onMap[type] ?= []
+					callback data
 			
-			defer.promise
-				
+			$timeout.flush() if 'unit' is config.get 'testMode'
+			
 		emitMap = {}
 		service.catchEmit = (type, callback) ->
 			(emitMap[type] ?= []).push callback
 			
 		service.emit = (type, data, fn) ->
 		
-			for callback in emitMap[type] ? []
-				
-				callback data, fn
-			
-			return
-		
+			$timeout ->
+				for callback in emitMap[type] ?= []
+					callback data, fn
+					
+			$timeout.flush() if 'unit' is config.get 'testMode'
+						
 		service
 		
 ]
