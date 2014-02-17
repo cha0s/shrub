@@ -1,7 +1,7 @@
 angular.module('shrub.config', []).provider('config', function() {
 
 	var _config = {
-		"useMocks": true
+		testMode: 'unit'
 	};
 	
 	var get = function(key) { return _config[key]; };

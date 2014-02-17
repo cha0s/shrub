@@ -10,7 +10,7 @@ module.exports.middleware = (http) -> [
 		
 		config = {}
 		
-		config.useMocks = process.env['E2E']?
+		config.testMode = if process.env['E2E']? then 'e2e' else false
 		config.debugging = 'production' isnt nconf.get 'NODE_ENV'
 			
 		pkgman.invoke 'config', (path, spec) ->

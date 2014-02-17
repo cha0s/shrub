@@ -17,7 +17,7 @@ angular.module('shrub.pkgman', [
 				
 				pkgman.invoke hook, (path, spec) -> fn path, spec, false
 				
-				if configProvider.get 'useMocks'
+				if configProvider.get 'testMode'
 					pkgman.invoke "#{hook}Mock", (path, spec) ->
 						fn path, spec, true
 
@@ -37,8 +37,8 @@ angular.module('shrub.packages', [
 ])
 
 	.config [
-		'$compileProvider', '$controllerProvider', '$filterProvider', '$provide', 'pkgmanProvider', 'requireProvider'
-		($compileProvider, $controllerProvider, $filterProvider, $provide, pkgmanProvider, requireProvider) ->
+		'$compileProvider', '$controllerProvider', '$filterProvider', '$provide', 'configProvider', 'pkgmanProvider', 'requireProvider'
+		($compileProvider, $controllerProvider, $filterProvider, $provide, configProvider, pkgmanProvider, requireProvider) ->
 			
 			require = requireProvider.require
 			
@@ -59,7 +59,7 @@ angular.module('shrub.packages', [
 				$filterProvider.register (camelize path), spec
 
 			pkgmanProvider.invoke 'service', (path, spec, isMock) ->
-				if isMock
+				if isMock and 'e2e' is configProvider.get 'testMode'
 					$provide.decorator path, spec
 				else
 					$provide.service path, spec
