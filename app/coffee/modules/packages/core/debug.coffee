@@ -1,6 +1,6 @@
 exports.$service = [
-	'$rootScope', 'config'
-	($rootScope, config) ->
+	'$rootScope'
+	($rootScope) ->
 		
 # Catch and log errors.
 		
