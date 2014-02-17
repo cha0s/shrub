@@ -3,6 +3,7 @@ path = require 'path'
 module.exports = (grunt, config) ->
 
 	moduleCoffees = [
+		'app/coffee/packages.coffee'
 		'app/coffee/require.coffee'
 		'app/coffee/modules/**/*.coffee'
 	]
@@ -31,6 +32,7 @@ module.exports = (grunt, config) ->
 	config.concat.modules =
 		src: [
 			'app/js/modules.js'
+			'app/js/packages.js'
 			'app/js/require.js'
 		]
 		dest: 'app/js/modules.js'

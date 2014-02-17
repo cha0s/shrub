@@ -1,3 +1,5 @@
+###
+
 exports.$service = [
 	'$window'
 	($window) ->
@@ -19,3 +21,5 @@ exports.$service = [
 		return
 
 ]
+
+###

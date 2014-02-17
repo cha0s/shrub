@@ -1,8 +1,53 @@
 
+_ = require 'underscore'
 nconf = require 'nconf'
+pkgman = require 'pkgman'
 
-module.exports.middleware = (http) ->
+module.exports.middleware = (http) -> [
 	
+	(req, res, next) ->
+		return next() unless req.url is '/js/config.js'
+		
+		config =
+			
+			useMocks: false
+		
+		if 'production' isnt nconf.get 'NODE_ENV'
+			
+			config.debugging = true
+			config.useMocks = true if process.env['E2E']
+		
+		pkgman.invoke 'config', (path, spec) ->
+			
+			_.extend config, spec
+		
+		prettyPrintConfig = ->
+			[first, rest...] = (JSON.stringify config, null, '\t').split '\n'
+			([first].concat rest.map (line) -> '\t' + line).join '\n'
+			
+		res.setHeader 'Content-Type', 'text/javascript'
+		
+		res.send """
+angular.module('shrub.config', []).provider('config', function() {
+
+	var _config = #{prettyPrintConfig()};
+	
+	var get = function(key) { return _config[key]; };
+	var has = function(key) { return _config[key] != null; };
+	var set = function(key, value) { return _config[key] = value; };
+	
+	return {
+		
+		get: get,
+		has: has,
+		set: set,
+		
+		$get: function() { return {get: get, has: has, set: set}; }
+	}
+	
+});
+"""
+		
 	(req, res, next) ->
 		
 		config =
@@ -31,6 +76,7 @@ module.exports.middleware = (http) ->
 					'/js/angular.min.js'
 					
 					'/js/modules.min.js'
+					'/js/config.js'
 				]
 	
 			else
@@ -53,13 +99,16 @@ module.exports.middleware = (http) ->
 					'/js/app.js'
 					
 					'/js/modules.js'
+					'/js/config.js'
 					
-					if process.env['E2E']
-						'/js/mocks.js'
-					else
-						'/js/empty-mocks.js'
+#					if process.env['E2E']
+#						'/js/mocks.js'
+#					else
+#						'/js/empty-mocks.js'
 					
 				]
 				
 		
 		next()
+
+]
