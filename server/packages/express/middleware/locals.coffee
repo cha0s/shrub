@@ -39,7 +39,7 @@ angular.module('shrub.config', []).provider('config', function() {
 		set: set,
 		
 		$get: function() { return {get: get, has: has, set: set}; }
-	}
+	};
 	
 });
 """
