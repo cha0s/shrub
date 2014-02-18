@@ -1,7 +1,7 @@
 
 exports.$directive = [
-	'$compile', '$q', 'core/form', 'require', 'comm/rpc'
-	($compile, $q, form, require, rpc) ->
+	'$compile', '$injector', '$q', 'core/form', 'require'
+	($compile, $injector, $q, form, require) ->
 		
 		link: (scope, element, attrs) ->
 			
@@ -68,14 +68,19 @@ exports.$directive = [
 									continue if field.type is 'submit'
 									fields[name] = scope[name]
 								
-								rpc.call(
-									dottedFormKey
-									fields
-								).then(
-									(result) -> handler null, result
-									(error) -> handler error
-								)
-						
+								$injector.invoke [
+									'comm/rpc'
+									(rpc) ->
+										
+										rpc.call(
+											dottedFormKey
+											fields
+										).then(
+											(result) -> handler null, result
+											(error) -> handler error
+										)
+								]
+								
 						$input = angular.element(
 							'<input type="submit">'
 						)
