@@ -4,7 +4,8 @@ exports.$appRun = [
 	($window, config, rpc) ->
 	
 		# Hang up the socket unless it's the local (Node.js) client.
-		rpc.call 'hangup' unless config.userAgent.match /^Node\.js .*$/
+		unless $window.navigator.userAgent.match /^Node\.js .*$/
+			rpc.call 'hangup'
 
 ]
 
