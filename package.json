@@ -2,7 +2,7 @@
   "name": "shrub",
   "version": "0.0.1",
   "scripts": {
-    "start": "NODE_PATH=.:app/coffee/modules:app/js/modules:server coffee server.coffee"
+    "start": "NODE_PATH=.:client/modules:server coffee server.coffee"
   },
   "dependencies": {
     "express": "3.1.0",
@@ -34,6 +34,7 @@
     "grunt-contrib-less": "~0.5.0",
     "grunt-contrib-uglify": "~0.2.0",
     "grunt-contrib-clean": "~0.4.0",
-    "grunt-wrap": "git://github.com/cha0s/grunt-wrap.git"
+    "grunt-wrap": "git://github.com/cha0s/grunt-wrap.git",
+    "grunt-contrib-copy": "~0.5.0"
   }
 }

@@ -6,7 +6,8 @@ module.exports = (grunt) ->
 	config =
 		pkg: grunt.file.readJSON 'package.json'
 		
-		shrub: 
+		shrub:
+			
 			tasks:
 				'compile-coffee': []
 				'compile-less': ['less']
@@ -21,7 +22,11 @@ module.exports = (grunt) ->
 			(require path.join __dirname, 'grunt', name) grunt, config
 	
 	grunt.shrub.loadModule name for name in [
-		'angular', 'less', 'modules', 'test'
+		'angular'
+		'less'
+		'modules'
+		'shrub'
+		'test'
 	]
 	
 	grunt.initConfig config
@@ -29,6 +34,7 @@ module.exports = (grunt) ->
 	grunt.loadNpmTasks 'grunt-contrib-clean'
 	grunt.loadNpmTasks 'grunt-contrib-coffee'
 	grunt.loadNpmTasks 'grunt-contrib-concat'
+	grunt.loadNpmTasks 'grunt-contrib-copy'
 	grunt.loadNpmTasks 'grunt-contrib-less'
 	grunt.loadNpmTasks 'grunt-contrib-uglify'
 	grunt.loadNpmTasks 'grunt-contrib-watch'

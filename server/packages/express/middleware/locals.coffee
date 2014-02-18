@@ -62,9 +62,9 @@ angular.module('shrub.config', []).provider('config', function() {
 					'//ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js'
 					'//ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular-sanitize.min.js'
 					'/lib/angular-strap/angular-strap.min.js'
-					'/js/angular.min.js'
 					
-					'/js/modules.min.js'
+					'/shrub.min.js'
+					
 					'/js/config.js'
 				]
 	
@@ -83,9 +83,9 @@ angular.module('shrub.config', []).provider('config', function() {
 					'/lib/angular/angular-route.js'
 					'/lib/angular/angular-sanitize.js'
 					'/lib/angular-strap/angular-strap.js'
-					'/js/app.js'
 					
-					'/js/modules.js'
+					'/shrub.js'
+					
 					'/js/config.js'
 				]
 				

@@ -3,57 +3,71 @@ path = require 'path'
 module.exports = (grunt, config) ->
 
 	moduleCoffees = [
-		'app/coffee/packages.coffee'
-		'app/coffee/require.coffee'
-		'app/coffee/modules/**/*.coffee'
+		'client/packages.coffee'
+		'client/require.coffee'
+		'client/modules/**/*.coffee'
 	]
-	moduleCoffeeMapping = grunt.file.expandMapping moduleCoffees, 'app/js/',
+	moduleCoffeeMapping = grunt.file.expandMapping moduleCoffees, 'build/js/',
 		rename: (destBase, destPath) ->
-			destPath = destPath.replace 'app/coffee/', ''
+			destPath = destPath.replace 'client/', ''
 			destBase + destPath.replace /\.coffee$/, '.js'
 	
 	config.clean ?= {}
 	config.coffee ?= {}
 	config.concat ?= {}
+	config.copy ?= {}
 	config.uglify ?= {}
 	config.watch ?= {}
 	config.wrap ?= {}
 	
 	config.clean.modules = [
-		'app/js/modules.js'
-		'app/js/modules.min.js'
+		'build/js/modules.js'
+		'build/js/modules.min.js'
 	]
 	
-	config.clean.modulesBuild = moduleCoffeeMapping.map (file) -> file.dest
+	config.clean.modulesBuild = [
+		'build/js/modules/**/*.js'
+	]
 	
 	config.coffee.modules =
 		files: moduleCoffeeMapping
 	
 	config.concat.modules =
 		src: [
-			'app/js/modules.js'
-			'app/js/packages.js'
-			'app/js/require.js'
+			'build/js/modules.js'
+			'build/js/packages.js'
+			'build/js/require.js'
 		]
-		dest: 'app/js/modules.js'
+		dest: 'build/js/modules.js'
+	
+	config.copy.modules =
+		expand: true
+		cwd: 'client/modules'
+		src: ['**/*.js']
+		dest: 'build/js/modules'
 	
 	config.uglify.modules =
-		files: 'app/js/modules.min.js': ['app/js/modules.js']
+		files: 'build/js/modules.min.js': ['build/js/modules.js']
 	
 	config.watch.modules =
-		files: moduleCoffees
+		files: moduleCoffees.concat [
+			'client/modules/**/*.js'
+			
+			'!client/modules/**/test-e2e.coffee'
+			'!client/modules/**/test-unit.coffee'
+		]
 		tasks: 'compile-modules'
 	
 	config.wrap.modules =
 		files:
-			'app/js/modules.js': [
-				'app/js/modules/**/*.js'
+			'build/js/modules.js': [
+				'build/js/modules/**/*.js'
 			]
 		options:
 			indent: '  '
 			wrapper: (filepath) ->
 				
-				moduleName = filepath.substr 15
+				moduleName = filepath.substr 'build/js/modules/'.length
 				
 				dirname = path.dirname moduleName
 				extname = path.extname moduleName
@@ -65,7 +79,7 @@ module.exports = (grunt, config) ->
 					['', '']
 	
 	config.wrap.modulesAll =
-		files: ['app/js/modules.js'].map (file) -> src: file, dest: file
+		files: ['build/js/modules.js'].map (file) -> src: file, dest: file
 		options:
 			indent: '  '
 			wrapper: [
@@ -85,6 +99,7 @@ module.exports = (grunt, config) ->
 
 	grunt.registerTask 'compile-modules', [
 		'coffee:modules'
+		'copy:modules'
 		'wrap:modules'
 		'concat:modules'
 		'wrap:modulesAll'

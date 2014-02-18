@@ -3,31 +3,24 @@ path = require 'path'
 module.exports = (grunt, config) ->
 	
 	angularCoffees = [
-		'app/coffee/app.coffee'
+		'client/app.coffee'
 	]
 	
-	angularCoffeeMapping = grunt.file.expandMapping angularCoffees, 'app/js/',
+	angularCoffeeMapping = grunt.file.expandMapping angularCoffees, 'build/js/',
 		rename: (destBase, destPath) ->
-			destPath = destPath.replace 'app/coffee/', ''
+			destPath = destPath.replace 'client/', ''
 			destBase + destPath.replace /\.coffee$/, '.js'
 			
 	config.clean ?= {}
 	config.coffee ?= {}
-	config.uglify ?= {}
 	config.watch ?= {}
 	
 	config.clean.angular = [
-		'app/js/app.js'
+		'build/js/app.js'
 	]
 	
 	config.coffee.angular = files: angularCoffeeMapping
 	
-	config.uglify.angular =
-		files:
-			'app/js/angular.min.js': [
-				'app/js/app.js'
-			]
-				
 	config.watch.angular =
 		files: angularCoffees
 		tasks: 'compile-angular'
