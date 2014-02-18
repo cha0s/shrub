@@ -13,8 +13,8 @@ describe 'rpc', ->
 	it 'should send and receive data back from rpc calls', ->
 
 		inject [
-			'$rootScope', 'comm/socket'
-			($rootScope, socket) ->
+			'$rootScope', '$timeout', 'comm/socket'
+			($rootScope, $timeout, socket) ->
 				
 				socket.catchEmit 'rpc://test', (data, fn) -> fn result: 420
 				
@@ -25,6 +25,7 @@ describe 'rpc', ->
 				promise.then (_) -> result = _
 				promise.catch (_) -> error = _
 				
+				$timeout.flush()
 				$rootScope.$apply()
 				
 				expect(result).toBe 420

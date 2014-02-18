@@ -43,8 +43,8 @@ describe 'notifications', ->
 	it 'should accept notification batches from the socket', ->
 		
 		inject [
-			'comm/socket'
-			(socket) ->
+			'$timeout', 'comm/socket'
+			($timeout, socket) ->
 			
 				socket.stimulateOn(
 					'notifications'
@@ -58,6 +58,8 @@ describe 'notifications', ->
 						text: 'Testing'
 					]
 				)
+				
+				$timeout.flush()
 				
 				expect(notifications.count()).toBe 4
 		]

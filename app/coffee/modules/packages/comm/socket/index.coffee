@@ -71,8 +71,8 @@ exports.$service = [
 ]
 
 exports.$serviceMock = [
-	'$q', '$rootScope', '$timeout', 'config'
-	($q, $rootScope, $timeout, config) ->
+	'$q', '$rootScope', '$timeout'
+	($q, $rootScope, $timeout) ->
 		
 		service = {}
 		
@@ -84,8 +84,6 @@ exports.$serviceMock = [
 				for callback in onMap[type] ?= []
 					callback data
 			
-			$timeout.flush() if 'unit' is config.get 'testMode'
-			
 		emitMap = {}
 		service.catchEmit = (type, callback) ->
 			(emitMap[type] ?= []).push callback
@@ -96,8 +94,6 @@ exports.$serviceMock = [
 				for callback in emitMap[type] ?= []
 					callback data, fn
 					
-			$timeout.flush() if 'unit' is config.get 'testMode'
-						
 		service
 		
 ]
