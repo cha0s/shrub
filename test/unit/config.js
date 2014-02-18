@@ -1,7 +1,15 @@
 angular.module('shrub.config', []).provider('config', function() {
 
 	var _config = {
-		testMode: 'unit'
+		testMode: 'unit',
+		packageList: [
+			"core",
+			"comm",
+			"example",
+			"socket.io",
+			"ui",
+			"user"
+		]
 	};
 	
 	var get = function(key) { return _config[key]; };

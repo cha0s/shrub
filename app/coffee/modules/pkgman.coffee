@@ -1,6 +1,7 @@
 
 invocationCache = {}
 packageCache = null
+_packages = []
 
 exports.clearInvocationCache = (hook) ->
 	
@@ -14,22 +15,29 @@ exports.clearInvocationCache = (hook) ->
 exports.rebuildPackageCache = ->
 	packageCache = {}
 	
-	for name in exports.discoverPackages()
+	for name in _packages
 	
 		# TODO only until I improve require()
-		package_ = try
-			require "packages/#{name}"
+		try
+			package_ = require "packages/#{name}"
 		catch error
-			require "packages/#{name}/index"
+			
+			try
+				package_ = require "packages/#{name}/index"
+			catch error
+				
+				# Best course of action?
+				continue
 			
 		packageCache[name] = package_
 		
 	return
 
-# TODO actually discover packages.
-exports.discoverPackages = ->
+exports.registerPackages = (packages) ->
 	
-	['core', 'comm', 'example', 'ui', 'user']
+	_packages.push.apply _packages, packages
+	
+	exports.rebuildPackageCache()
 
 exports.invoke = (hook, fn) ->
 	exports.rebuildPackageCache() unless packageCache?

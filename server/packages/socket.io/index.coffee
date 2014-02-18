@@ -1,4 +1,5 @@
 
+
 path = require 'path'
 winston = require 'winston'
 
@@ -8,7 +9,7 @@ logger = new winston.Logger
 		new winston.transports.File level: 'debug', filename: 'logs/socket.io.log'
 	]
 
-module.exports = class SocketIo extends (require './socket')
+class SocketIo extends (require 'socket-abstract')
 	
 	constructor: (http) ->
 		super
@@ -60,3 +61,9 @@ module.exports = class SocketIo extends (require './socket')
 					redisSub: module.createClient()
 					redisClient: module.createClient()
 				)
+
+exports.$httpInitializer = (req, res, next) ->
+	
+	socket = new SocketIo req.http
+	
+	next()

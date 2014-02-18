@@ -2,20 +2,19 @@
 express = require 'express'
 fs = require 'fs'
 http = require 'http'
-nconf = require 'nconf'
 path = require 'path'
 Q = require 'q'
 winston = require 'winston'
 
-module.exports = class Express extends (require './http')
+module.exports = class Express extends (require 'http-abstract')
 	
-	constructor: (@_path) ->
+	constructor: ->
 		super
 		
 		@_app = express()
 		
 		# Handlebars!
-		@_app.set 'views', @_path
+		@_app.set 'views', @_config.path
 		@_app.set 'view engine', 'html'
 		@_app.engine 'html', require('hbs').__express
 		
@@ -25,9 +24,9 @@ module.exports = class Express extends (require './http')
 		
 		@_app.use (req, res, next) => @_middleware.dispatch req, res, next
 	
-	path: -> @_path
+	path: -> @_config.path
 	
-	cookieParser: -> express.cookieParser nconf.get 'cryptoKey'
+	cookieParser: -> express.cookieParser @_config.express.sessions.cookie.cryptoKey
 
 	listen: (fn) -> @_server.listen @port(), fn
 	

@@ -11,6 +11,8 @@ angular.module('shrub.pkgman', [
 			
 			pkgman = require 'pkgman'
 			
+			pkgman.registerPackages configProvider.get 'packageList'
+			
 			service = {}
 			
 			service.invoke = (hook, fn) ->

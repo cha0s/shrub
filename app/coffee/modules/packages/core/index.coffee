@@ -3,6 +3,7 @@ exports.$config = (req) ->
 	
 	testMode: if (req.nconf.get 'E2E')? then 'e2e' else false
 	debugging: 'production' isnt req.nconf.get 'NODE_ENV'
+	packageList: req.nconf.get 'packageList'
 
 exports.$appConfig = [
 	'$injector', '$routeProvider', '$locationProvider', 'pkgmanProvider'
