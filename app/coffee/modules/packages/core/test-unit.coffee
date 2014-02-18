@@ -134,3 +134,56 @@ describe 'form', ->
 				expect(submissionCleared).toBe true
 				
 		]
+
+	it 'should handle rpc submission', ->
+
+		inject [
+			'$compile', '$rootScope', '$timeout', 'comm/socket'
+			($compile, $rootScope, $timeout, socket) ->
+				
+				tpl = $compile '<div data-core-form="test"></div>'
+				
+				scope = $rootScope.$new()
+				
+				rpcSubmission = ''
+				submissionCleared = false
+				
+				socket.catchEmit 'rpc://test', (data, fn) ->
+					rpcSubmission = data.text
+					
+					fn result: 420
+				
+				scope.test =
+					text:
+						type: 'text'
+						label: "text"
+					submit:
+						rpc: true
+						type: 'submit'
+						label: "Submit"
+						handler: (error, result) ->
+							submissionCleared = result is 420
+					
+				elm = tpl scope
+				
+				scope.text = 'test'
+				
+				scope.$digest()
+				
+				$form = elm.find 'form'
+				
+				for input in $form.find 'input'
+					$input = angular.element input
+					
+					input.click() if 'submit' is input.type
+				
+				$timeout.flush()
+				$rootScope.$apply()
+				
+				# RPC received correct data.
+				expect(rpcSubmission).toBe 'test'
+				
+				# Form was submitted with correct values.
+				expect(submissionCleared).toBe true
+				
+		]
