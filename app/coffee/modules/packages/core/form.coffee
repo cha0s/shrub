@@ -43,7 +43,12 @@ exports.$directive = [
 							'data-ng-model': name
 						)
 						
+						if field.defaultValue?
+							$input.attr 'value', field.defaultValue
+						
 						$input.attr 'required', 'required' if field.required
+						
+						$input
 						
 					when 'submit'
 					
