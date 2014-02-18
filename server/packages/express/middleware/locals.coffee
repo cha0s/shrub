@@ -59,8 +59,6 @@ angular.module('shrub.config', []).provider('config', function() {
 					
 					'/lib/socket.io/socket.io.min.js'
 					
-					'/js/before-angular.js'
-				
 					'//ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js'
 					'//ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular-sanitize.min.js'
 					'/lib/angular-strap/angular-strap.min.js'
@@ -80,8 +78,6 @@ angular.module('shrub.config', []).provider('config', function() {
 					'/lib/bootstrap/js/bootstrap.js'
 			
 					'/lib/socket.io/socket.io.js'
-					
-					'/js/before-angular.js'
 					
 					'/lib/angular/angular.js'
 					'/lib/angular/angular-route.js'
