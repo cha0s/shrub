@@ -1,12 +1,11 @@
 
 exports.$appRun = [
-	'$window', 'comm/rpc'
-	($window, rpc) ->
+	'$window', 'config', 'comm/rpc'
+	($window, config, rpc) ->
 	
 		# Hang up the socket unless it's the local (Node.js) client.
-		# TODO do this through config, from server-side
-		unless $window.navigator.userAgent.match /^Node\.js .*$/
-			rpc.call 'hangup'
+		rpc.call 'hangup' unless config.userAgent.match /^Node\.js .*$/
+
 ]
 
 exports.$service = [

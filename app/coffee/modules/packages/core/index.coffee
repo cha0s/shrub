@@ -1,4 +1,10 @@
 
+exports.$config = (req) ->
+	
+	testMode: if (req.nconf.get 'E2E')? then 'e2e' else false
+	debugging: 'production' isnt req.nconf.get 'NODE_ENV'
+	userAgent: req.headers['user-agent']
+
 exports.$appConfig = [
 	'$injector', '$routeProvider', '$locationProvider', 'pkgmanProvider'
 	($injector, $routeProvider, $locationProvider, pkgmanProvider) ->

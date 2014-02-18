@@ -4,18 +4,18 @@ nconf = require 'nconf'
 pkgman = require 'pkgman'
 
 module.exports.middleware = (http) -> [
+
+	(req, res, next) ->
+		
+		req.nconf = nconf
+		
+		next()
 	
 	(req, res, next) ->
 		return next() unless req.url is '/js/config.js'
 		
 		config = {}
-		
-		config.testMode = if process.env['E2E']? then 'e2e' else false
-		config.debugging = 'production' isnt nconf.get 'NODE_ENV'
-			
-		pkgman.invoke 'config', (path, spec) ->
-			
-			_.extend config, spec
+		pkgman.invoke 'config', (path, fn) -> _.extend config, fn req
 		
 		prettyPrintConfig = ->
 			[first, rest...] = (JSON.stringify config, null, '\t').split '\n'
@@ -45,11 +45,6 @@ angular.module('shrub.config', []).provider('config', function() {
 """
 		
 	(req, res, next) ->
-		
-		config =
-			debugging: 'production' isnt req.app.get 'env'
-		
-		res.locals.configJson = JSON.stringify config
 		
 		res.locals.assets =
 		
