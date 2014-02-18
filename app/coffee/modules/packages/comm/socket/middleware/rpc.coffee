@@ -1,35 +1,14 @@
 
+_ = require 'underscore'
 pkgman = require 'pkgman'
-path = require 'path'
-walk = require 'walk'
-Q = require 'q'
-winston = require 'winston'
 
 # Gather all endpoints.
 endpoints = {}
-base = path.join __dirname, 'endpoints'
-
-walker = walk.walk base 
-walker.on 'file', (root, fileStats, next) ->
+pkgman.invoke 'endpoint', (path, endpoint) ->
 	
-	extname = path.extname fileStats.name
-	basename = path.basename fileStats.name, extname
-	basename = '' if basename is 'index'
-	relativeBase = root.substr base.length + 1
+	endpoint = receiver: endpoint if _.isFunction endpoint
 	
-	key = (path.join relativeBase, basename).replace /[\/\\]/, '.'
-	endpoint = require path.join base, relativeBase, basename
-	
-	endpoints[key] = endpoint
-	
-	next()
-	
-walker.on 'end', ->
-	
-	pkgman.invoke 'endpoint', (path, endpoint) ->
-		endpoints["#{path.replace '/', '.'}"] = endpoint
-		
-	winston.info 'RPC endpoints loaded'
+	endpoints["#{endpoint.route ? path.replace '/', '.'}"] = endpoint
 
 module.exports.middleware = -> [
 	
@@ -42,7 +21,7 @@ module.exports.middleware = -> [
 					req.session?.touch()
 					req.body = data
 					
-					endpoint(
+					endpoint.receiver(
 						req, (errors, result) ->
 							reply = ->
 								return fn result: result unless errors?

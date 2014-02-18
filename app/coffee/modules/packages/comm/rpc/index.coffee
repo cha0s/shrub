@@ -1,4 +1,14 @@
 
+exports.$endpoint =
+	
+	route: 'hangup'
+	receiver: (req, fn) ->
+		
+		contexts = require 'server/contexts'
+		
+		return fn() unless (context = contexts.lookup req.session.id)?
+		context.close fn
+
 exports.$appRun = [
 	'$window', 'config', 'comm/rpc'
 	($window, config, rpc) ->
