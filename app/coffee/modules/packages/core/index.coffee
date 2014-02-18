@@ -34,6 +34,8 @@ exports.$appConfig = [
 		$locationProvider.html5Mode true
 ]
 
+exports.$routeMock = path: 'e2e/sanity-check'
+
 exports[path] = require "packages/core/#{path}" for path in [
 	'debug', 'form', 'schema', 'server'
 ]
