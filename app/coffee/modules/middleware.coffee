@@ -12,8 +12,18 @@ exports.Middleware = Middleware = class
 		
 		index = 0
 		
+		domain = (require 'domain').create()
+		domain.enter()
+		domain.on 'error', fn
+		
 		invoke = (error) =>
-			return fn error if index is @_middleware.length
+			
+			if index is @_middleware.length
+				
+				domain.exit()
+				domain.dispose()
+				
+				return fn error
 			
 			current = @_middleware[index]
 			index += 1
