@@ -15,26 +15,6 @@ exports.e2eLogin = $routeMock:
 				
 	]
 	
-exports.e2eLoginLogout = $routeMock:
-	
-	path: 'e2e/user/login-logout'
-	
-	controller: [
-		'$location', '$scope', 'comm/socket', 'user'
-		($location, $scope, socket, user) ->
-			
-			socket.catchEmit 'rpc://user.login', (data, fn) ->
-				fn result: id: 1, name: 'cha0s'
-				
-			socket.catchEmit 'rpc://user.logout', (data, fn) ->
-				fn result: null
-			
-			user.login('local', 'cha0s', 'password').then ->
-				user.logout().then ->
-					$location.path "/user/login"
-				
-	]
-	
 exports.$route =
 	
 	title: 'Sign in'
