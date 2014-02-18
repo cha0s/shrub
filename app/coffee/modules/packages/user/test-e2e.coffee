@@ -1,20 +1,15 @@
 
 describe 'user', ->
 	
-	it 'should show a login page', ->
+	it 'should show user pages', ->
 		
-		browser().navigateTo '/user/login'
-		expect(element('form.userLogin').count()).toBe 1
-		
-	it 'should show a forgot password page', ->
-		
-		browser().navigateTo '/user/forgot'
-		expect(element('form.userForgot').count()).toBe 1
-		
-	it 'should show a registration page', ->
-		
-		browser().navigateTo '/user/register'
-		expect(element('form.userRegister').count()).toBe 1
+		for [route, form] in [
+			['/user/login', 'userLogin']
+			['/user/forgot', 'userForgot']
+			['/user/register', 'userRegister']
+		]
+			browser().navigateTo route
+			expect(element("form.#{form}").count()).toBe 1
 		
 	it 'should show a password reset page, but only if a token is provided', ->
 		
