@@ -66,7 +66,7 @@ nconf.defaults
 				'rpc'
 			]
 
-http = new (require './server/http/express') path.join __dirname, 'app'
+http = new (require 'server/http/express') path.join __dirname, 'app'
 
 middleware = new Middleware()
 
@@ -75,6 +75,6 @@ pkgman.invoke 'httpInitializer', (_, initializer) -> middleware.use initializer
 request = http: http
 response = null
 middleware.dispatch request, response, (error) ->
-	return logger.error error if error?
+	return winston.error error.stack if error?
 	
 	console.info "Shrub server up and running!"

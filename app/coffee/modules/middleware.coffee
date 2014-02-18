@@ -19,10 +19,7 @@ exports.Middleware = Middleware = class
 		invoke = (error) =>
 			
 			if index is @_middleware.length
-				
 				domain.exit()
-				domain.dispose()
-				
 				return fn error
 			
 			current = @_middleware[index]
