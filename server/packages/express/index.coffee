@@ -6,7 +6,7 @@ path = require 'path'
 Q = require 'q'
 winston = require 'winston'
 
-module.exports = class Express extends (require 'http-abstract')
+module.exports = class Express extends (require 'AbstractHttp')
 	
 	constructor: ->
 		super

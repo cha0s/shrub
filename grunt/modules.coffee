@@ -2,15 +2,11 @@ path = require 'path'
 
 module.exports = (grunt, config) ->
 
-	moduleCoffees = [
+	moduleCoffeeMapping = grunt.shrub.coffeeMapping moduleCoffees = [
 		'client/packages.coffee'
 		'client/require.coffee'
 		'client/modules/**/*.coffee'
 	]
-	moduleCoffeeMapping = grunt.file.expandMapping moduleCoffees, 'build/js/',
-		rename: (destBase, destPath) ->
-			destPath = destPath.replace 'client/', ''
-			destBase + destPath.replace /\.coffee$/, '.js'
 	
 	config.clean ?= {}
 	config.coffee ?= {}
@@ -26,7 +22,9 @@ module.exports = (grunt, config) ->
 	]
 	
 	config.clean.modulesBuild = [
-		'build/js/modules/**/*.js'
+		'build/js/packages.js'
+		'build/js/require.js'
+		'build/js/modules'
 	]
 	
 	config.coffee.modules =
@@ -56,7 +54,7 @@ module.exports = (grunt, config) ->
 			'!client/modules/**/test-e2e.coffee'
 			'!client/modules/**/test-unit.coffee'
 		]
-		tasks: 'compile-modules'
+		tasks: ['compile-modules', 'clean:modulesBuild']
 	
 	config.wrap.modules =
 		files:
@@ -103,8 +101,9 @@ module.exports = (grunt, config) ->
 		'wrap:modules'
 		'concat:modules'
 		'wrap:modulesAll'
-		'clean:modulesBuild'
 	]
+	
+	config.shrub.tasks['compile-clean'].push 'clean:modulesBuild'
 	
 	config.shrub.tasks['compile-coffee'].push 'compile-modules'
 	

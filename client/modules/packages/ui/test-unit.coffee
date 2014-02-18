@@ -43,7 +43,7 @@ describe 'notifications', ->
 	it 'should accept notification batches from the socket', ->
 		
 		inject [
-			'$timeout', 'comm/socket'
+			'$timeout', 'socket'
 			($timeout, socket) ->
 			
 				socket.stimulateOn(

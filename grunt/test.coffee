@@ -2,21 +2,13 @@ path = require 'path'
 
 module.exports = (grunt, config) ->
 	
-	unitCoffees = [
+	unitCoffeeMapping = grunt.shrub.coffeeMapping unitCoffees = [
 		'client/**/test-unit.coffee'
-	]
-	unitCoffeeMapping = grunt.file.expandMapping unitCoffees, 'build/js/',
-		rename: (destBase, destPath) ->
-			destPath = destPath.replace 'client/', ''
-			destBase + destPath.replace /\.coffee$/, '.js'
+	], 'build/js/test'
 	
-	e2eCoffees = [
+	e2eCoffeeMapping = grunt.shrub.coffeeMapping e2eCoffees = [
 		'client/**/test-e2e.coffee'
-	]
-	e2eCoffeeMapping = grunt.file.expandMapping e2eCoffees, 'build/js/',
-		rename: (destBase, destPath) ->
-			destPath = destPath.replace 'client/', ''
-			destBase + destPath.replace /\.coffee$/, '.js'
+	], 'build/js/test'
 			
 	config.clean ?= {}
 	config.coffee ?= {}
@@ -25,50 +17,67 @@ module.exports = (grunt, config) ->
 	config.watch ?= {}
 	config.wrap ?= {}
 	
-	config.clean.unit = [
-		'test/unit/tests.js'
-	]
-	
-	config.clean.unitBuild = unitCoffeeMapping.map (file) -> file.dest
-	
 	config.clean.e2e = [
 		'test/e2e/scenarios.js'
 	]
 	
-	config.clean.e2eBuild = e2eCoffeeMapping.map (file) -> file.dest
+	config.clean.unit = [
+		'test/unit/tests.js'
+	]
+	
+	config.clean.testsBuild = [
+		'build/js/test'
+	]
+	
+	config.coffee.e2e = files: e2eCoffeeMapping
 	
 	config.coffee.unit = files: unitCoffeeMapping
-	
-	config.coffee.e2e =
-		files: e2eCoffeeMapping
-	
-	config.concat.unit =
-		src: unitCoffeeMapping.map (file) -> file.dest
-		dest: 'test/unit/tests.js'
 	
 	config.concat.e2e =
 		src: e2eCoffeeMapping.map (file) -> file.dest
 		dest: 'test/e2e/scenarios.js'
 	
+	config.concat.unit =
+		src: unitCoffeeMapping.map (file) -> file.dest
+		dest: 'test/unit/tests.js'
+	
 	config.copy.e2e =
 		expand: true
 		cwd: 'client'
 		src: ['**/test-e2e.js']
-		dest: 'build/js'
+		dest: 'build/js/test'
 	
 	config.copy.unit =
 		expand: true
 		cwd: 'client'
 		src: ['**/test-unit.js']
-		dest: 'build/js'
+		dest: 'build/js/test'
 	
 	config.watch.e2e =
 		files: e2eCoffees.concat ['client/**/test-e2e.js']
-		tasks: 'compile-tests-e2e'
+		tasks: ['compile-tests-e2e', 'clean:testsBuild']
 	
 	config.watch.unit =
 		files: unitCoffees.concat ['client/**/test-unit.js']
-		tasks: 'compile-tests-unit'
+		tasks: ['compile-tests-unit', 'clean:testsBuild']
+	
+	config.wrap.e2e =
+		files: ['test/e2e/scenarios.js'].map (file) -> src: file, dest: file
+		options:
+			indent: '  '
+			wrapper: [
+				"""
+'use strict';
+
+describe('#{config.pkg.name}', function() {
+
+
+"""
+				"""
+
+});
+"""
+			]
 	
 	config.wrap.unit =
 		files: ['test/unit/tests.js'].map (file) -> src: file, dest: file
@@ -94,30 +103,11 @@ describe('#{config.pkg.name}', function() {
 """
 			]
 	
-	config.wrap.e2e =
-		files: ['test/e2e/scenarios.js'].map (file) -> src: file, dest: file
-		options:
-			indent: '  '
-			wrapper: [
-				"""
-'use strict';
-
-describe('#{config.pkg.name}', function() {
-
-
-"""
-				"""
-
-});
-"""
-			]
-	
 	grunt.registerTask 'compile-tests-e2e', [
 		'coffee:e2e'
 		'copy:e2e'
 		'concat:e2e'
 		'wrap:e2e'
-		'clean:e2eBuild'
 	]
 	
 	grunt.registerTask 'compile-tests-unit', [
@@ -125,7 +115,6 @@ describe('#{config.pkg.name}', function() {
 		'copy:unit'
 		'concat:unit'
 		'wrap:unit'
-		'clean:unitBuild'
 	]
 	
 	grunt.registerTask 'compile-tests', [
@@ -133,5 +122,7 @@ describe('#{config.pkg.name}', function() {
 		'compile-tests-unit'
 	]
 	
+	config.shrub.tasks['compile-clean'].push 'clean:testsBuild'
+
 	config.shrub.tasks['compile-coffee'].push 'compile-tests'
 	

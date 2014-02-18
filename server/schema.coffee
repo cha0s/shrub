@@ -8,9 +8,9 @@ exports.define = (adapter, options = {}) ->
 	{
 		models:
 			User: User
-	} = schema = require('schema').define(
-		require('jugglingdb').Schema
-		adapter
+	} = schema = require('schema-client').define(
+		require('jugglingdb-client').Schema
+		require "jugglingdb-#{adapter}"
 		options
 	)
 	

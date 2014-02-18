@@ -4,9 +4,11 @@ angular.module('shrub.config', []).provider('config', function() {
 		testMode: 'unit',
 		packageList: [
 			"core",
-			"comm",
 			"example",
-			"socket.io",
+			"form",
+			"rpc",
+			"schema",
+			"socket",
 			"ui",
 			"user"
 		]

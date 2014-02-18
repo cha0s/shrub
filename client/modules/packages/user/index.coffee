@@ -1,6 +1,6 @@
 
 exports.$service = [
-	'$q', 'comm/rpc', 'core/schema'
+	'$q', 'rpc', 'schema'
 	($q, rpc, schema) ->
 		
 		user = new schema.User
@@ -37,7 +37,7 @@ exports.$service = [
 ]
 
 exports.$serviceMock = [
-	'$delegate', 'comm/socket'
+	'$delegate', 'socket'
 	($delegate, socket) ->
 	
 		socket.catchEmit 'rpc://user', (data, fn) ->
@@ -46,8 +46,6 @@ exports.$serviceMock = [
 		$delegate
 		
 ]
-
-exports.$endpoint = (req, fn) -> fn null, req.user
 
 exports[path] = require "packages/user/#{path}" for path in [
 	'forgot', 'login', 'logout', 'register', 'reset'

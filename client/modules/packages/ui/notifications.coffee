@@ -61,7 +61,7 @@ exports.$directive = [
 ]
 
 exports.$service = [
-	'comm/socket'
+	'socket'
 	(socket) ->
 	
 		_notifications = []

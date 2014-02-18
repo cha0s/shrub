@@ -2,14 +2,9 @@ path = require 'path'
 
 module.exports = (grunt, config) ->
 	
-	angularCoffees = [
+	angularCoffeeMapping = grunt.shrub.coffeeMapping angularCoffees = [
 		'client/app.coffee'
 	]
-	
-	angularCoffeeMapping = grunt.file.expandMapping angularCoffees, 'build/js/',
-		rename: (destBase, destPath) ->
-			destPath = destPath.replace 'client/', ''
-			destBase + destPath.replace /\.coffee$/, '.js'
 			
 	config.clean ?= {}
 	config.coffee ?= {}

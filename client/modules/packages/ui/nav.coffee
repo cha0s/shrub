@@ -17,7 +17,7 @@ exports.$appRun = [
 ]
 
 exports.$directive = [
-	'$location', 'ui/nav', 'comm/socket', 'ui/title', 'user'
+	'$location', 'ui/nav', 'socket', 'ui/title', 'user'
 	($location, nav, socket, title, user) ->
 	
 		link: (scope, elm, attr) ->

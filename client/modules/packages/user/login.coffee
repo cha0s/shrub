@@ -4,7 +4,7 @@ exports.e2eLogin = $routeMock:
 	path: 'e2e/user/login/:destination'
 	
 	controller: [
-		'$location', '$routeParams', '$scope', 'comm/socket', 'user'
+		'$location', '$routeParams', '$scope', 'socket', 'user'
 		($location, $routeParams, $scope, socket, user) ->
 			
 			socket.catchEmit 'rpc://user.login', (data, fn) ->
@@ -64,26 +64,8 @@ exports.$route =
 	
 	template: """
 
-<div data-core-form="userLogin"></div>
+<div data-form="userLogin"></div>
 
 <a class="forgot" href="/user/forgot">Forgot your password?</a>
 
 """
-
-exports.$endpoint = (req, fn) ->
-	
-	{models: User: User} = require 'server/jugglingdb'
-	
-	switch req.body.method
-		
-		when 'local'
-			
-			(req.passport.authenticate 'local', (error, user, info) ->
-				return fn attempted: error.message if error?
-				return fn code: 420 unless user
-				
-				req.login user, (error) ->
-					return fn attempted: error.message if error?
-					fn null, user
-			
-			) req, res = {}

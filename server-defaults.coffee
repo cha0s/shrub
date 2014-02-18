@@ -27,10 +27,19 @@ nconf.defaults
 		timeout: 1000 * 60 * 5
 	
 	packageList: [
+		'angular'
+		'assets'
+		'config'
 		'core'
-		'comm'
+		'errors'
 		'example'
-		'socket.io'
+		'files'
+		'form'
+		'logger'
+		'rpc'
+		'schema'
+		'session'
+		'socket'
 		'ui'
 		'user'
 	]
@@ -62,12 +71,12 @@ nconf.defaults
 			middleware: [
 				'form'
 				'session'
-				'passport'
-				'jugglingdb'
-				'favicon'
+				'user'
+				'schema'
 				'logger'
-				'static'
-				'locals'
+				'files/static'
+				'config'
+				'assets'
 				'angular'
 				'errors'
 			]
@@ -80,7 +89,7 @@ nconf.defaults
 
 			middleware: [
 				'session'
-				'passport'
+				'user'
 				'rpc'
 			]
 

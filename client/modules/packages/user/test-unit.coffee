@@ -27,7 +27,7 @@ describe 'user', ->
 	it 'should log in a user through RPC', ->
 		
 		inject [
-			'$rootScope', '$timeout', 'comm/socket'
+			'$rootScope', '$timeout', 'socket'
 			($rootScope, $timeout, socket) ->
 				
 				userIsLoggedIn = false
@@ -48,7 +48,7 @@ describe 'user', ->
 	it 'should log out a user through RPC', ->
 		
 		inject [
-			'$rootScope', '$timeout', 'comm/socket'
+			'$rootScope', '$timeout', 'socket'
 			($rootScope, $timeout, socket) ->
 				
 				userIsLoggedIn = true

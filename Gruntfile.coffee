@@ -1,6 +1,4 @@
 
-path = require 'path'
-
 module.exports = (grunt) ->
 	
 	config =
@@ -9,18 +7,25 @@ module.exports = (grunt) ->
 		shrub:
 			
 			tasks:
+				'compile-clean': []
 				'compile-coffee': []
 				'compile-less': ['less']
-				'compile': ['compile-coffee', 'compile-less']
+				'compile': ['compile-coffee', 'compile-less', 'compile-clean']
 				'default': ['compile']
 				'production': ['compile', 'uglify']
 		
 		uglify: options: report: 'min'
 	
 	grunt.shrub =
-		loadModule: (name) ->
-			(require path.join __dirname, 'grunt', name) grunt, config
-	
+		
+		loadModule: (name) -> (require "./grunt/#{name}") grunt, config
+			
+		coffeeMapping: (coffees, output = 'build/js') ->
+			grunt.file.expandMapping coffees, "#{output}/",
+				rename: (destBase, destPath) ->
+					destPath = destPath.replace 'client/', ''
+					destBase + destPath.replace /\.coffee$/, '.js'
+		
 	grunt.shrub.loadModule name for name in [
 		'angular'
 		'less'
