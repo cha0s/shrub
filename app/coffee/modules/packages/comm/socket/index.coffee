@@ -9,16 +9,19 @@ exports.$service = [
 	'$rootScope', 'config'
 	($rootScope, config) ->
 		
+		service = {}
+		
 # Be aware: this will throw in unit tests because [global].io won't be
 # available. It must be mocked out.
-	
+		
+		return service if 'unit' is config.get 'testMode'
 		socket = io.connect()
 		
 # We have to queue emits while not initialized to keep things robust.
 	
 		initializedQueue = []
 		socket.on 'initialized', =>
-			@emit.apply this, args for args in initializedQueue
+			service.emit.apply this, args for args in initializedQueue
 		
 # Might as well make sure everything's working fine.
 		
@@ -26,15 +29,15 @@ exports.$service = [
 
 # Connection and disconnection.
 		
-		@connect = -> socket.socket.connect()
+		service.connect = -> socket.socket.connect()
 		
-		@connected = -> socket.socket.connected
+		service.connected = -> socket.socket.connected
 
-		@disconnect = -> socket.disconnect()
+		service.disconnect = -> socket.disconnect()
 		
 # Proxy for Socket::on, handles invocation of Scope::$apply.
 		
-		@on = (eventName, callback) ->
+		service.on = (eventName, callback) ->
 			
 			debugListeners["on-#{eventName}"] ?= (->
 				socket.on eventName, (data) ->
@@ -48,8 +51,8 @@ exports.$service = [
 		
 # Proxy for Socket::emit, handles invocation of Scope::$apply.
 
-		@emit = (eventName, data, callback) ->
-			return initializedQueue.push arguments unless @connected()
+		service.emit = (eventName, data, callback) ->
+			return initializedQueue.push arguments unless service.connected()
 			
 			if config.get 'debugging'
 				console.debug "sent: #{eventName}, #{JSON.stringify data, null, '  '}"
@@ -64,9 +67,9 @@ exports.$service = [
 				emitArguments = arguments
 				$rootScope.$apply -> callback.apply socket, emitArguments
 		
-		$rootScope.$on 'debugLog', (error) => @emit 'debugLog', error
+		$rootScope.$on 'debugLog', (error) -> service.emit 'debugLog', error
 		
-		return
+		service
 		
 ]
 
