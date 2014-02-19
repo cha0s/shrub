@@ -70,9 +70,6 @@ exports.$models = (schema, options) ->
 	User = schema.models['User']
 	
 	User.randomHash = (fn) ->
-		return fn new Error(
-			"No crypto support."
-		) unless options.cryptoKey?
 		
 		require('crypto').randomBytes 24, (error, buffer) ->
 			return fn error if error?
@@ -84,9 +81,6 @@ exports.$models = (schema, options) ->
 			).digest 'hex'
 	
 	User.hashPassword = (password, salt, fn) ->
-		return fn new Error(
-			"No crypto support."
-		) unless options.cryptoKey?
 		
 		require('crypto').pbkdf2 password, salt, 20000, 512, fn
 		
