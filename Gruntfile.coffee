@@ -27,6 +27,7 @@ module.exports = (grunt) ->
 					destBase + destPath.replace /\.coffee$/, '.js'
 		
 	grunt.shrub.loadModule name for name in [
+		'dependencies'
 		'angular'
 		'less'
 		'modules'
@@ -36,6 +37,7 @@ module.exports = (grunt) ->
 	
 	grunt.initConfig config
 	
+	grunt.loadNpmTasks 'grunt-browserify'
 	grunt.loadNpmTasks 'grunt-contrib-clean'
 	grunt.loadNpmTasks 'grunt-contrib-coffee'
 	grunt.loadNpmTasks 'grunt-contrib-concat'

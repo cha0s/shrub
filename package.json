@@ -23,7 +23,9 @@
     "jugglingdb-redis": "0.0.2-2"
   },
   "devDependencies": {
+    "browserify": "~3.30.1",
     "grunt": "~0.4.2",
+    "grunt-browserify": "~1.3.1",
     "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-coffee": "~0.10.1",
     "grunt-contrib-concat": "~0.3.0",
@@ -31,6 +33,7 @@
     "grunt-contrib-less": "~0.9.0",
     "grunt-contrib-uglify": "~0.3.2",
     "grunt-contrib-watch": "~0.5.3",
-    "grunt-wrap": "git://github.com/cha0s/grunt-wrap.git"
+    "grunt-wrap": "git://github.com/cha0s/grunt-wrap.git",
+    "jugglingdb": "~0.2.12"
   }
 }
