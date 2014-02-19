@@ -1,4 +1,3 @@
-path = require 'path'
 
 module.exports = (grunt, config) ->
 	
