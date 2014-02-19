@@ -20,16 +20,6 @@ class SocketAdapter
 		({data}) -> fn new Error data.message
 	)
 		
-	# Translate model names to REST resource/collection paths.
-	# 'CatalogEntry' -> ['catalog-entry', 'catalog-entries']
-	resourcePaths: (name) ->
-
-		resource = i8n.underscore name
-		resource = i8n.dasherize resource.toLowerCase()
-		
-		resource: resource
-		collection: i8n.pluralize resource
-	
 	# Translate a query object into a REST query.
 	translateQuery = (query) ->
 		
@@ -59,57 +49,57 @@ class SocketAdapter
 	
 	all: (model, query, fn) ->
 		
-		{collection} = @resourcePaths model
+		{collection} = @schema.resourcePaths model
 		query = translateQuery query
 		
-		promiseCallback fn, @$http.get "#{@schema.root}/#{collection}?#{query}"
+		promiseCallback fn, @$http.get "#{@schema.settings.apiRoot}/#{collection}?#{query}"
 	
 	own: (model, query, fn) ->
 		
-		{collection} = @resourcePaths model
+		{collection} = @schema.resourcePaths model
 		query = translateQuery query
 		
-		promiseCallback fn, @$http.get "#{@schema.root}/#{collection}/own?#{query}"
+		promiseCallback fn, @$http.get "#{@schema.settings.apiRoot}/#{collection}/own?#{query}"
 	
 	count: (model, fn) ->
 	
-		{collection} = @resourcePaths model
+		{collection} = @schema.resourcePaths model
 		
-		promiseCallback fn, @$http.get "#{@schema.root}/#{collection}/count"
+		promiseCallback fn, @$http.get "#{@schema.settings.apiRoot}/#{collection}/count"
 	
 	create: (model, data, fn) ->
 	
-		{collection} = @resourcePaths model
+		{collection} = @schema.resourcePaths model
 		
-		promiseCallback fn, @$http.post "#{@schema.root}/#{collection}", data
+		promiseCallback fn, @$http.post "#{@schema.settings.apiRoot}/#{collection}", data
 	
 	destroy: (model, id, fn) ->
 		
-		{resource} = @resourcePaths model
+		{resource} = @schema.resourcePaths model
 		
-		promiseCallback fn, @$http.delete "#{@schema.root}/#{resource}/#{id}"
+		promiseCallback fn, @$http.delete "#{@schema.settings.apiRoot}/#{resource}/#{id}"
 	
 	destroyAll: (model, fn) ->
 	
-		{collection} = @resourcePaths model
+		{collection} = @schema.resourcePaths model
 		
-		promiseCallback fn, @$http.delete "#{@schema.root}/#{collection}"
+		promiseCallback fn, @$http.delete "#{@schema.settings.apiRoot}/#{collection}"
 	
 	exists: (model, id, fn) ->
 	
-		{resource} = @resourcePaths model
+		{resource} = @schema.resourcePaths model
 		
-		promiseCallback fn, @$http.get "#{@schema.root}/#{resource}/#{id}/exists"
+		promiseCallback fn, @$http.get "#{@schema.settings.apiRoot}/#{resource}/#{id}/exists"
 	
 	find: ->
 	
 	save: (model, data, fn) ->
 	
 		{id} = data
-		{resource} = @resourcePaths model
+		{resource} = @schema.resourcePaths model
 		
 		if id?
-			promiseCallback fn, @$http.put "#{@schema.root}/#{resource}/#{id}", data
+			promiseCallback fn, @$http.put "#{@schema.settings.apiRoot}/#{resource}/#{id}", data
 		else
 			@create model, data, fn
 	

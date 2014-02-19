@@ -19,8 +19,6 @@ exports.define = (adapter, options = {}) ->
 	
 	schema = new Schema adapter, options
 	
-	schema.apiRoot = -> options.apiRoot
-	
 	pkgman.invoke 'models', (_, spec) -> spec schema, options
 	
 	for name, Model of schema.models

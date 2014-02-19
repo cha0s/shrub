@@ -69,7 +69,7 @@ exports.$httpMiddleware = (http) ->
 						else
 							serveJson res, 404, message: "Collection not found."
 			
-			collectionPath = "#{schema.apiRoot()}/#{collection}"
+			collectionPath = "#{schema.settings.apiRoot}/#{collection}"
 			
 			app.get collectionPath, (req, res) -> get req, res, 'all'
 				
@@ -90,7 +90,7 @@ exports.$httpMiddleware = (http) ->
 					Model.destroyAll interceptErrors res, ->
 						serveJson res, 200, message: "Collection deleted."
 			
-			resourcePath = "#{schema.apiRoot()}/#{resource}/:id"
+			resourcePath = "#{schema.settings.apiRoot}/#{resource}/:id"
 			
 			app.get resourcePath, (req, res) ->
 				Model.find req.params.id, interceptErrors res, (model) ->
