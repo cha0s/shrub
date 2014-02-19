@@ -6,8 +6,8 @@ exports.$config = (req) ->
 	
 	user: req.user
 
-exports.$httpMiddleware = (http) ->
-
+exports.$httpInitializer = (req, res, next) ->
+	
 	{models: User: User} = require 'server/jugglingdb'
 	
 	LocalStrategy = require("passport-local").Strategy
@@ -46,6 +46,10 @@ exports.$httpMiddleware = (http) ->
 				
 				done null, user
 				
+	next()
+				
+exports.$httpMiddleware = (http) ->
+
 	label: 'Load user using passport'
 	middleware: [
 	
