@@ -1,6 +1,4 @@
 
-_ = require 'underscore'
-
 exports.$models = (schema) ->
 	
 	User = schema.define 'User',
@@ -147,8 +145,8 @@ exports.$modelsAlter = (models) ->
 	augmentModel models.User, Model, name for name, Model of models
 		
 exports.$service = [
-	'$q', 'core', 'rpc', 'schema'
-	($q, core, rpc, schema) ->
+	'$q', 'config', 'core', 'rpc', 'schema'
+	($q, config, core, rpc, schema) ->
 		
 		service = {}
 		
@@ -179,10 +177,14 @@ exports.$service = [
 					user
 			)
 		
-		service.load = -> rpc.call('user').then (O) ->
-			user.fromObject O
-			user
+		isLoaded = false
+		service.load = ->
 			
+			unless isLoaded
+				isLoaded = true
+				user.fromObject config.get 'user'
+			
+			$q.when user
 		
 		promiseifyModelMethods = (Model, methodName) =>
 			method = Model[methodName]

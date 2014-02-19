@@ -2,7 +2,9 @@
 crypto = require 'server/crypto'
 passport = require 'passport'
 
-exports.$endpoint = (req, fn) -> fn null, req.user
+exports.$config = (req) ->
+	
+	user: req.user
 
 exports.$httpMiddleware = (http) ->
 

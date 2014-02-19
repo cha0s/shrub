@@ -11,7 +11,10 @@ angular.module('shrub.config', []).provider('config', function() {
 			"socket",
 			"ui",
 			"user"
-		]
+		],
+		user: {
+			"name": "Anonymous"
+		}
 	};
 	
 	var get = function(key) { return _config[key]; };
