@@ -49,7 +49,9 @@ exports.$httpInitializer = (req, res, next) ->
 	next()
 				
 exports.$httpMiddleware = (http) ->
-
+	
+	{models: User: User} = require 'server/jugglingdb'
+	
 	label: 'Load user using passport'
 	middleware: [
 	
@@ -63,7 +65,7 @@ exports.$httpMiddleware = (http) ->
 		
 	]
 
-exports.$models = (schema, options) ->
+exports.$models = (schema) ->
 	
 	(require 'client/modules/packages/user').$models schema
 	
@@ -75,7 +77,7 @@ exports.$models = (schema, options) ->
 			return fn error if error?
 			
 			fn null, require('crypto').createHash('sha512').update(
-				options.cryptoKey
+				schema.settings.cryptoKey
 			).update(
 				buffer.toString()
 			).digest 'hex'
