@@ -1,6 +1,6 @@
 
-# Set up defaults.
-config = require 'server-defaults'
+# Set up config.
+config = require 'config'
 
 # Register packages.
 (require 'pkgman').registerPackages config.get 'packageList'

@@ -7,7 +7,7 @@ winston.remove winston.transports.Console
 winston.add winston.transports.Console, level: 'silly'
 winston.add winston.transports.File, filename: 'logs/shrub.log'
 
-nconf.argv().env().file "#{__dirname}/config/settings.json"
+nconf.argv().env().file "../config/settings.json"
 
 # A bunch of temporary bootstrappy nonsense that will (mostly) be abstracted
 # away.
@@ -17,7 +17,7 @@ nconf.defaults
 	
 	cryptoKey: 'WeDemandShrubbery'
 	
-	path: __dirname
+	path: "#{__dirname}/.."
 	
 	# Server-side render context configuration.
 	contexts:
@@ -25,8 +25,8 @@ nconf.defaults
 		# Should we render on the server-side?
 		render: not process.env['E2E']?
 		
-		# Context timeout in milliseconds.
-		timeout: 1000 * 60 * 5
+		# Context time-to-live in milliseconds.
+		ttl: 1000 * 60 * 5
 	
 	packageList: [
 		'angular'
@@ -50,7 +50,7 @@ nconf.defaults
 	
 		http:
 			
-			path: "#{__dirname}/app"
+			path: "#{__dirname}/../app"
 			
 			port: 4201
 			

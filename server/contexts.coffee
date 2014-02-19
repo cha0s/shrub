@@ -11,10 +11,10 @@ exports.add = (id, context, fn) ->
 	
 	{shrub, window} = context
 	
-	# Reset the context timeout.
+	# Reset the context time-to-live.
 	context.touch = _.debounce(
 		-> context.close()
-		nconf.get 'contexts:timeout'
+		nconf.get 'contexts:ttl'
 	)
 	
 	context.pathRedirect = (path) ->
