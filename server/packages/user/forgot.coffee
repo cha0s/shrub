@@ -2,9 +2,9 @@
 crypto = require 'server/crypto'
 Q = require 'q'
 
-{models: User: User} = require 'server/jugglingdb'
-
 exports.$endpoint = (req, fn) ->
+	
+	{models: User: User} = require 'server/jugglingdb'
 	
 	deferred = Q.defer()
 	

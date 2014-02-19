@@ -1,8 +1,9 @@
 
 crypto = require 'server/crypto'
-{models: User: User} = require 'server/jugglingdb'
 
 exports.$endpoint = (req, fn) ->
+	
+	{models: User: User} = require 'server/jugglingdb'
 	
 	user = new User name: req.body.username
 	

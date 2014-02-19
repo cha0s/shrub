@@ -26,8 +26,9 @@ exports.rebuildPackageCache = ->
 				package_ = require "packages/#{name}/index"
 			catch error
 				
-				# Best course of action?
-				continue
+				continue if error.toString() is "Error: Cannot find module 'packages/#{name}/index'"
+				
+				throw error
 			
 		packageCache[name] = package_
 		

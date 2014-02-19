@@ -1,15 +1,6 @@
 
 _ = require 'underscore'
-contexts = require 'contexts'
 pkgman = require 'pkgman'
-
-exports.$endpoint =
-	
-	route: 'hangup'
-	receiver: (req, fn) ->
-		
-		return fn() unless (context = contexts.lookup req.session.id)?
-		context.close fn
 
 exports.$socketMiddleware = (http) ->
 	

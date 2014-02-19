@@ -1,7 +1,7 @@
 
-{models: User: User} = require 'server/jugglingdb'
-
 exports.$endpoint = (req, fn) ->
+	
+	{models: User: User} = require 'server/jugglingdb'
 	
 	req.logout()
 	

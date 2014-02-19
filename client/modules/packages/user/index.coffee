@@ -1,4 +1,42 @@
 
+exports.$models = (schema) ->
+	
+	User = schema.define 'User',
+		
+		email:
+			type: String
+			index: true
+		
+		name:
+			type: String
+			default: 'Anonymous'
+			length: 24
+			index: true
+			
+		passwordHash:
+			type: String
+		
+		resetPasswordToken:
+			type: String
+			length: 128
+			index: true
+		
+		salt:
+			type: String
+			length: 128
+			
+	# Temporary... secure by default.
+	User::hasPermission = (perm) -> false
+	User::isAccessibleBy = -> false
+	
+	User::redactFor = (user) ->
+		
+		@passwordHash = null
+		@resetPasswordToken = null
+		@salt = null
+		
+		this
+	
 exports.$service = [
 	'$q', 'rpc', 'schema'
 	($q, rpc, schema) ->

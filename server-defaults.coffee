@@ -4,7 +4,7 @@ winston = require 'winston'
 
 # Log errors to the console, the rest will go into logs/shrub.log by default.
 winston.remove winston.transports.Console
-winston.add winston.transports.Console, level: 'error'
+winston.add winston.transports.Console, level: 'silly'
 winston.add winston.transports.File, filename: 'logs/shrub.log'
 
 nconf.argv().env().file "#{__dirname}/config/settings.json"
@@ -12,6 +12,8 @@ nconf.argv().env().file "#{__dirname}/config/settings.json"
 # A bunch of temporary bootstrappy nonsense that will (mostly) be abstracted
 # away.
 nconf.defaults
+	
+	apiRoot: '/api'
 	
 	cryptoKey: 'WeDemandShrubbery'
 	

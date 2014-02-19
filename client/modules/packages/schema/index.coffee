@@ -1,12 +1,12 @@
 
 exports.$service = [
-	'$http', 'require'
-	($http, require) ->
+	'$http', 'config', 'require'
+	($http, config, require) ->
 
 		{models} = require('schema-client').define(
-			require('jugglingdb-client').Schema
 			require 'jugglingdb-rest'
 			$http: $http
+			apiRoot: config.get 'apiRoot'
 		)
 		
 		models

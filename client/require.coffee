@@ -3,7 +3,7 @@
 require = (name) ->
 
 	unless requires_[name]?
-		throw new Error "Module #{name} not found!"
+		throw new Error "Cannot find module '#{name}'"
 	
 	unless requires_[name].module?
 		exports = {}

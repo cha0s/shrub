@@ -1,50 +1,33 @@
 
 ## The database schema
 
-access = require 'access'
 i8n = require 'inflection'
+pkgman = require 'pkgman'
+Schema = (require 'jugglingdb-client').Schema
 
-exports.define = (Schema, adapter, options = {}) ->
+# Translate model names to REST resource/collection paths.
+# 'CatalogEntry' -> ['catalog-entry', 'catalog-entries']
+Schema::resourcePaths = (name) ->
+
+	resource = i8n.underscore name
+	resource = i8n.dasherize resource.toLowerCase()
+	
+	resource: resource
+	collection: i8n.pluralize resource
+
+exports.define = (adapter, options = {}) ->
 	
 	schema = new Schema adapter, options
 	
-	# Translate model names to REST resource/collection paths.
-	# 'CatalogEntry' -> ['catalog-entry', 'catalog-entries']
-	schema.resourcePaths = (name) ->
+	schema.apiRoot = -> options.apiRoot
 	
-		resource = i8n.underscore name
-		resource = i8n.dasherize resource.toLowerCase()
-		
-		resource: resource
-		collection: i8n.pluralize resource
+	pkgman.invoke 'models', (_, spec) -> spec schema, options
 	
-	User = access.wrapModel schema.define 'User',
+	for name, Model of schema.models
 		
-		email:
-			type: String
-			index: true
-		
-		name:
-			type: String
-			default: 'Anonymous'
-			length: 24
-			index: true
-			
-		passwordHash:
-			type: String
-		
-		resetPasswordToken:
-			type: String
-			length: 128
-			index: true
-		
-		salt:
-			type: String
-			length: 128
-			
-	User::hasPermission = (perm) -> true
+		Model::isAccessibleBy ?= (user) -> true
+		Model::isEditableBy ?= (user) -> false
+		Model::isDeletableBy ?= (user) -> false
+		Model::redactFor ?= (user) -> this
 	
-	# TODO should be config, not hardcoded...	
-	schema.root = '/api'
-
 	schema

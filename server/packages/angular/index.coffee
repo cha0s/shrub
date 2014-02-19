@@ -12,6 +12,14 @@ logger = new winston.Logger
 		new winston.transports.File level: 'debug', filename: 'logs/client.log'
 	]
 
+exports.$endpoint =
+	
+	route: 'hangup'
+	receiver: (req, fn) ->
+		
+		return fn() unless (context = contexts.lookup req.session.id)?
+		context.close fn
+
 exports.$httpMiddleware = (http) ->
 	
 	newContext = (cookie, locals, fn) ->

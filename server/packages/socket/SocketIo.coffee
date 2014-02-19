@@ -32,7 +32,6 @@ module.exports = class SocketIo extends (require 'AbstractSocket')
 		@io.configure 'production', => @io.set 'log level', 'error'
 		
 		@io.sockets.on 'connection', (socket) =>
-			
 			req = socket.handshake
 			
 			req.http = http
