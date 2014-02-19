@@ -11,5 +11,3 @@ exports.$route =
 					$location.path '/'
 			
 	]
-	
-	template: '-'
