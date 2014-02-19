@@ -206,17 +206,6 @@ exports.$service = [
 		
 ]
 
-exports.$serviceMock = [
-	'$delegate', 'socket'
-	($delegate, socket) ->
-	
-		socket.catchEmit 'rpc://user', (data, fn) ->
-			fn result: name: 'Anonymous'
-		
-		$delegate
-		
-]
-
 exports[path] = require "packages/user/#{path}" for path in [
 	'forgot', 'login', 'logout', 'register', 'reset'
 ]
