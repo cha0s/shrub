@@ -1,8 +1,6 @@
 
 exports.$endpoint = (req, fn) ->
 	
-	{models: User: User} = require 'server/jugglingdb'
-	
 	switch req.body.method
 		
 		when 'local'

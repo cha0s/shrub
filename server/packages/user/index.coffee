@@ -23,13 +23,11 @@ exports.$httpMiddleware = (http) ->
 					return done error if error?
 					return done() unless user.passwordHash is passwordHash
 					
-					crypto.decrypt user.email, (error, decryptedEmail) ->
+					user.redactFor user, (error, fn) ->
 						return done error if error?
 						
-						user.email = decryptedEmail
-					
-						done null, user.redactFor user
-			
+						done null, user
+						
 			else
 				
 				done()
@@ -41,13 +39,11 @@ exports.$httpMiddleware = (http) ->
 		User.find id, (error, user) ->
 			return done error if error?
 			
-			crypto.decrypt user.email, (error, decryptedEmail) ->
+			user.redactFor user, (error, fn) ->
 				return done error if error?
 				
-				user.email = decryptedEmail
-			
-				done null, user.redactFor user
-	
+				done null, user
+				
 	label: 'Load user using passport'
 	middleware: [
 	
@@ -87,7 +83,22 @@ exports.$models = (schema, options) ->
 		) unless options.cryptoKey?
 		
 		require('crypto').pbkdf2 password, salt, 20000, 512, fn
+		
+	redactFor = User::redactFor
+	User::redactFor = (user, fn) ->
+		redactFor.call this, user, (error, redactedUser) =>
+			return fn error if error?
+			return fn null, redactedUser unless user.id is redactedUser.id
+			
+			crypto.decrypt redactedUser.email, (error, decryptedEmail) ->
+				return fn error if error?
+				
+				redactedUser.email = decryptedEmail
+				
+				fn null, redactedUser
 	
+exports.$modelsAlter = (require 'client/modules/packages/user').$modelsAlter
+
 exports.$socketMiddleware = (http) ->
 	
 	{models: User: User} = require 'server/jugglingdb'

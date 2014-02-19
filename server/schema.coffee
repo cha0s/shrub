@@ -9,7 +9,4 @@ exports.define = (adapter) ->
 		cryptoKey: nconf.get 'cryptoKey'
 	)
 	
-	# Hax.
-	schema.adapter.own = schema.adapter.all
-	
 	schema

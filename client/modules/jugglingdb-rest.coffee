@@ -54,13 +54,6 @@ class SocketAdapter
 		
 		promiseCallback fn, @$http.get "#{@schema.settings.apiRoot}/#{collection}?#{query}"
 	
-	own: (model, query, fn) ->
-		
-		{collection} = @schema.resourcePaths model
-		query = translateQuery query
-		
-		promiseCallback fn, @$http.get "#{@schema.settings.apiRoot}/#{collection}/own?#{query}"
-	
 	count: (model, fn) ->
 	
 		{collection} = @schema.resourcePaths model

@@ -20,12 +20,6 @@ exports.define = (adapter, options = {}) ->
 	schema = new Schema adapter, options
 	
 	pkgman.invoke 'models', (_, spec) -> spec schema, options
-	
-	for name, Model of schema.models
-		
-		Model::isAccessibleBy ?= (user) -> true
-		Model::isEditableBy ?= (user) -> false
-		Model::isDeletableBy ?= (user) -> false
-		Model::redactFor ?= (user) -> this
+	pkgman.invoke 'modelsAlter', (_, spec) -> spec schema.models, options, schema
 	
 	schema

@@ -1,4 +1,6 @@
 
+_ = require 'underscore'
+
 exports.$models = (schema) ->
 	
 	User = schema.define 'User',
@@ -27,25 +29,134 @@ exports.$models = (schema) ->
 			
 	# Temporary... secure by default.
 	User::hasPermission = (perm) -> false
-	User::isAccessibleBy = -> false
+	User::isAccessibleBy = (user) -> false
 	
-	User::redactFor = (user) ->
+	User::redactFor = (user, fn) ->
 		
 		@passwordHash = null
 		@resetPasswordToken = null
 		@salt = null
 		
-		this
+		fn null, this
+
+augmentModel = (User, Model, name) ->
 	
+	validateUser = (next) -> (user) ->
+		return next.apply null, arguments if user instanceof User
+		
+		error = new Error "Invalid user."
+		error.code = 500
+		fn error
+	
+	checkPermission = (user, perm, fn, next) ->
+		return next() if user.hasPermission perm
+		
+		error = new Error "Access denied."
+		error.code = 403
+		fn error
+		
+	interceptError = (fn, next) -> (error, result) ->
+		return fn error if error?
+		
+		next result
+
+	Model.authenticatedAll = validateUser (user, params, fn) ->
+		unless fn?
+			fn = params
+			params = {}
+		
+		checkPermission user, "schema:#{name}:all", fn, ->
+			Model.all params, interceptError fn, (models) ->
+				models = models.filter (model) -> model.isAccessibleBy user
+				
+				if models.length
+					redactedModelCount = 0
+					redactedModels = []
+					for model, i in models
+						do (model, i) ->
+							model.redactFor user, interceptError fn, (redactedModel) ->
+								redactedModels[i] = redactedModel
+								redactedModelCount += 1
+								if redactedModelCount is models.length
+									fn null, redactedModels
+				else
+					error = new Error "Collection not found."
+					error.code = 404
+					fn error
+	
+	Model.authenticatedCount = validateUser (user, fn) ->
+		checkPermission user, "schema:#{name}:count", fn, ->
+			Model.count interceptError fn, (count) ->
+				fn null, count
+	
+	Model.authenticatedCreate = validateUser (user, properties, fn) ->
+		checkPermission user, "schema:#{name}:create", fn, ->
+			Model.create properties, interceptError fn, (model) ->
+				fn null, model
+
+	Model.authenticatedDestroy = validateUser (user, id, fn) ->				
+		Model.authenticatedFind user, id, interceptError fn, (model) ->
+			if model.isDeletableBy user
+				schema.adapter.destroy name, id, interceptError fn, (result) ->
+					fn()
+			else
+				if model.isAccessibleBy user
+					error = new Error "Access denied."
+					error.code = 403
+				else
+					error = new Error "Resource not found."
+					error.code = 404
+				fn error
+
+	Model.authenticatedDestroyAll = validateUser (user, fn) ->
+		checkPermission user, "schema:#{name}:destroyAll", fn, ->
+			Model.destroyAll interceptError fn, ->
+				fn()
+	
+	Model.authenticatedFind = validateUser (user, id, fn) ->
+		Model.find id, interceptError fn, (model) ->
+			if model? and model.isAccessibleBy user
+				model.redactFor user, interceptError fn, (redactedModel) ->
+					fn null, redactedModel
+			else
+				error = new Error "Resource not found."
+				error.code = 404
+				fn error
+
+	Model.authenticatedUpdate = validateUser (user, id, properties, fn) ->
+		Model.authenticatedFind user, id, interceptError fn, (model) ->
+			if model.isEditableBy user
+				model.updateAttributes properties, interceptError fn, (model) ->
+					fn()
+			else
+				if model.isAccessibleBy user
+					error = new Error "Access denied."
+					error.code = 403
+				else
+					error = new Error "Resource not found."
+					error.code = 404
+				fn error
+	
+	Model::isAccessibleBy ?= (user) -> true
+	Model::isEditableBy ?= (user) -> false
+	Model::isDeletableBy ?= (user) -> false
+	Model::redactFor ?= (user, fn) -> fn null, this
+
+exports.$modelsAlter = (models) ->
+	
+	augmentModel models.User, Model, name for name, Model of models
+		
 exports.$service = [
-	'$q', 'rpc', 'schema'
-	($q, rpc, schema) ->
+	'$q', 'core', 'rpc', 'schema'
+	($q, core, rpc, schema) ->
 		
-		user = new schema.User
+		service = {}
 		
-		isLoggedIn: (fn) -> @load().then (user) -> fn user.id? 
+		user = new schema.models.User
+		
+		service.isLoggedIn = (fn) -> service.load().then (user) -> fn user.id? 
 			
-		login: (method, username, password) ->
+		service.login = (method, username, password) ->
 			
 			rpc.call(
 				'user.login'
@@ -58,19 +169,38 @@ exports.$service = [
 					user
 			)
 
-		logout: ->
+		service.logout = ->
 			
 			rpc.call(
 				'user.logout'
 			).then(
 				->
-					user.fromObject (new schema.User).toObject()
+					user.fromObject (new schema.models.User).toObject()
 					user
 			)
 		
-		load: -> rpc.call('user').then (O) ->
+		service.load = -> rpc.call('user').then (O) ->
 			user.fromObject O
 			user
+			
+		
+		promiseifyModelMethods = (Model, methodName) =>
+			method = Model[methodName]
+			Model[methodName] = core.promiseify Model, (args...) ->
+				service.load().then (user) ->
+					method.apply Model, [user].concat args
+			
+		promiseifyModelMethods methodName for methodName in [
+			'all', 'authenticatedAll'
+			'count', 'authenticatedCount'
+			'create', 'authenticatedCreate'
+			'destroy', 'authenticatedDestroy'
+			'destroyAll', 'authenticatedDestroyAll'
+			'find', 'authenticatedFind'
+			'update', 'authenticatedUpdate'
+		] for name, Model of schema.models
+		
+		service
 		
 ]
 
