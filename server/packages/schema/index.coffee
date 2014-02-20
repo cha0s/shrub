@@ -1,13 +1,11 @@
 
-i8n = require 'jugglingdb/node_modules/inflection'
 nconf = require 'nconf'
-url = require 'url'
 
 exports.$config = (req) ->
 	
 	apiRoot: nconf.get 'apiRoot'
 
-exports.$httpMiddleware = (http) ->
+exports.$httpInitializer = (req, res, next) ->
 	
 	schema = require 'server/jugglingdb'
 	
@@ -35,7 +33,7 @@ exports.$httpMiddleware = (http) ->
 			
 		res.json code, data
 	
-	app = http._app # Yeah, this is hackish. NFG
+	app = req.http._app # Yeah, this is hackish. NFG
 	routes = {}
 	
 	# Gross...
@@ -91,10 +89,5 @@ exports.$httpMiddleware = (http) ->
 			app.delete resourcePath, (req, res) ->
 				Model.authenticatedDestroy req.user, req.params.idinterceptError res, (model) ->
 					serveJson res, 200, message: "Resource deleted."
-				
-	label: 'Serve schema API'
-	middleware: [
 
-		app.router
-		
-	]
+	next()

@@ -73,15 +73,15 @@ nconf.defaults
 						
 			middleware: [
 				'form'
-				'session'
+				'express/session'
 				'user'
-				'schema'
-				'logger'
-				'files/static'
+				'express/logger'
+				'express/routes'
+				'express/static'
 				'config'
 				'assets'
 				'angular'
-				'errors'
+				'express/errors'
 			]
 						
 		socket:

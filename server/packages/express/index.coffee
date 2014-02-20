@@ -2,7 +2,6 @@
 express = require 'express'
 fs = require 'fs'
 http = require 'http'
-path = require 'path'
 Q = require 'q'
 winston = require 'winston'
 
@@ -66,7 +65,11 @@ exports.$http = class Express extends (require 'AbstractHttp')
 		switch @_config.express.sessions.db
 			when 'redis'
 				
-				module = require path.join 'connect-redis', 'node_modules', 'redis'
+				module = require 'connect-redis/node_modules/redis'
 		
 				RedisStore = require('connect-redis') express
 				new RedisStore client: module.createClient()
+
+exports[path] = require "./#{path}" for path in [
+	'errors', 'logger', 'routes', 'session', 'static'
+]

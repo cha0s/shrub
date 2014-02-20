@@ -1,15 +1,4 @@
 
-express = require 'express'
-winston = require 'winston'
-
-exports.$httpMiddleware = (http) ->
-	
-	label: 'Load session from cookie'
-	middleware: [
-		http.cookieParser()
-		express.session key: http.sessionKey(), store: http.sessionStore()
-	]
-
 exports.$socketMiddleware = (http) ->
 
 	label: 'Load session'
@@ -30,3 +19,6 @@ exports.$socketMiddleware = (http) ->
 			)
 			
 	]
+
+
+	
