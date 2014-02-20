@@ -7,7 +7,7 @@ config = require 'config'
 
 # Spin up the HTTP server and go!
 Http = require "packages/#{config.get 'services:http:package'}"
-http = new Http config.get 'services:http'
+http = new Http.$http config.get 'services:http'
 http.initialize (error) ->
 	return (require 'winston').error error.stack if error?
 	

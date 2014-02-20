@@ -35,6 +35,7 @@ nconf.defaults
 		'core'
 		'errors'
 		'example'
+		'express'
 		'files'
 		'form'
 		'logger'
