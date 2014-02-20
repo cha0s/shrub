@@ -1,5 +1,4 @@
-(function(e){if("function"==typeof bootstrap)bootstrap("inflection",e);else if("object"==typeof exports)module.exports=e();else if("function"==typeof define&&define.amd)define(e);else if("undefined"!=typeof ses){if(!ses.ok())return;ses.makeInflection=e}else"undefined"!=typeof window?window.inflection=e():global.inflection=e()})(function(){var define,ses,bootstrap,module,exports;
-return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+!function(e){if("object"==typeof exports)module.exports=e();else if("function"==typeof define&&define.amd)define(e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.inflection=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /*!
  * inflection
  * Copyright(c) 2011 Ben Lin <ben@dreamerslab.com>
@@ -243,7 +242,7 @@ return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof requi
    *     var inflection = require( 'inflection' );
    *
    *     inflection.pluralize( 'person' ); // === 'people'
-   *     inflection.pluralize( 'octopus' ); // === "octopi"
+   *     inflection.pluralize( 'octopus' ); // === 'octopi'
    *     inflection.pluralize( 'Hat' ); // === 'Hats'
    *     inflection.pluralize( 'person', 'guys' ); // === 'guys'
    */
@@ -265,7 +264,7 @@ return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof requi
    *     var inflection = require( 'inflection' );
    *
    *     inflection.singularize( 'people' ); // === 'person'
-   *     inflection.singularize( 'octopi' ); // === "octopus"
+   *     inflection.singularize( 'octopi' ); // === 'octopus'
    *     inflection.singularize( 'Hats' ); // === 'Hat'
    *     inflection.singularize( 'guys', 'person' ); // === 'person'
    */
@@ -292,18 +291,25 @@ return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof requi
    *     inflection.camelize( 'message_properties', true ); // === 'messageProperties'
    */
     camelize : function ( str, lowFirstLetter ){
-      var str_path = str.toLowerCase().split( '/' );
+      var str_path = str.split( '/' );
       var i        = 0;
       var j        = str_path.length;
+      var str_arr, init_x, k, l, first;
 
       for( ; i < j; i++ ){
-        var str_arr = str_path[ i ].split( '_' );
-        var initX   = (( lowFirstLetter && i + 1 === j ) ? ( 1 ) : ( 0 ));
-        var k       = initX;
-        var l       = str_arr.length;
+        str_arr = str_path[ i ].split( '_' );
+        k       = 0;
+        l       = str_arr.length;
 
         for( ; k < l; k++ ){
-          str_arr[ k ] = str_arr[ k ].charAt( 0 ).toUpperCase() + str_arr[ k ].substring( 1 );
+          if( k !== 0 ){
+            str_arr[ k ] = str_arr[ k ].toLowerCase();
+          }
+
+          first = str_arr[ k ].charAt( 0 );
+          first = lowFirstLetter && i === 0 && k === 0
+            ? first.toLowerCase() : first.toUpperCase();
+          str_arr[ k ] = first + str_arr[ k ].substring( 1 );
         }
 
         str_path[ i ] = str_arr.join( '' );
@@ -435,11 +441,12 @@ return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof requi
       var str_arr = str.split(' ');
       var i       = 0;
       var j       = str_arr.length;
+      var d, k, l;
 
       for( ; i < j; i++ ){
-        var d = str_arr[ i ].split( '-' );
-        var k = 0;
-        var l = d.length;
+        d = str_arr[ i ].split( '-' );
+        k = 0;
+        l = d.length;
 
         for( ; k < l; k++){
           if( inflector.indexOf( non_titlecased_words, d[ k ].toLowerCase()) < 0 ){
@@ -549,7 +556,7 @@ return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof requi
    * @public
    * @function
    * @param {String} str The subject string.
-   * @returns {String} Return all found numbers their sequence like "22nd".
+   * @returns {String} Return all found numbers their sequence like '22nd'.
    * @example
    *
    *     var inflection = require( 'inflection' );
@@ -584,15 +591,57 @@ return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof requi
       }
 
       return str_arr.join( ' ' );
+    },
+
+  /**
+   * This function performs multiple inflection methods on a string
+   * @public
+   * @function
+   * @param {String} str The subject string.
+   * @param {Array} arr An array of inflection methods.
+   * @returns {String}
+   * @example
+   *
+   *     var inflection = require( 'inflection' );
+   *
+   *     inflection.transform( 'all job', [ 'pluralize', 'capitalize', 'dasherize' ]); // === 'All-jobs'
+   */
+    transform : function ( str, arr ){
+      var i = 0;
+      var j = arr.length;
+
+      for( ;i < j; i++ ){
+        var method = arr[ i ];
+
+        if( this.hasOwnProperty( method )){
+          str = this[ method ]( str );
+        }
+      }
+
+      return str;
     }
   };
-
-  if( typeof exports === 'undefined' ) return root.inflection = inflector;
 
 /**
  * @public
  */
-  inflector.version = "1.2.5";
+  inflector.version = '1.3.5';
+
+  // browser support
+  // requirejs
+  if( typeof define !== 'undefined' ){
+    return define( function ( require, exports, module ){
+      module.exports = inflector;
+    });
+  }
+
+  // browser support
+  // normal usage
+  if( typeof exports === 'undefined' ){
+    root.inflection = inflector;
+    return;
+  }
+
 /**
  * Exports module.
  */
@@ -602,4 +651,3 @@ return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof requi
 },{}]},{},[1])
 (1)
 });
-;
