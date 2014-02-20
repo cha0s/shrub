@@ -5,22 +5,22 @@
     "start": "NODE_PATH=.:server:client/modules coffee server.coffee"
   },
   "dependencies": {
+    "connect-redis": "~1.4.7",
     "express": "3.1.0",
     "hbs": "~2.0.2",
-    "socket.io": "~0.9.16",
-    "connect-redis": "~1.4.7",
+    "jsdom": "~0.8.11",
+    "jugglingdb-redis": "0.0.2-2",
+    "nconf": "~0.6.9",
     "passport": "~0.1.18",
     "passport-local": "~0.1.6",
     "passport-oauth": "~0.1.15",
     "passport-facebook": "~0.1.6",
     "passport-github": "~0.1.5",
     "passport-twitter": "~0.1.5",
-    "underscore": "~1.4.4",
     "q": "~0.9.7",
-    "nconf": "~0.6.9",
-    "winston": "~0.7.2",
-    "jsdom": "~0.8.11",
-    "jugglingdb-redis": "0.0.2-2"
+    "socket.io": "~0.9.16",
+    "underscore": "~1.4.4",
+    "winston": "~0.7.2"
   },
   "devDependencies": {
     "browserify": "~3.30.1",
