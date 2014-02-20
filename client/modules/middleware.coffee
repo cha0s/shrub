@@ -1,5 +1,7 @@
 
-exports.Middleware = Middleware = class
+pkgman = require 'pkgman'
+
+exports.Middleware = class Middleware
 	
 	constructor: ->
 		
@@ -46,3 +48,17 @@ exports.Middleware = Middleware = class
 					current request, response, (error) -> invoke error
 				
 		invoke null
+
+exports.fromHook = (hook, paths, fn) ->
+
+	hookResults = {}
+	pkgman.invoke hook, (path, spec) -> hookResults[path] = spec
+		
+	middleware = new Middleware
+	
+	for path in paths
+		continue unless (spec = fn path, hookResults[path])?
+		
+		middleware.use _ for _ in spec.middleware
+	
+	middleware

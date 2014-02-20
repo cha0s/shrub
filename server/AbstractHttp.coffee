@@ -1,18 +1,19 @@
 
 nconf = require 'nconf'
-Middleware = (require 'middleware').Middleware
 pkgman = require 'pkgman'
 winston = require 'winston'
+
+middleware = require 'middleware'
 
 module.exports = class AbstractHttp
 
 	constructor: (@_config) ->
 		
-		@_middleware = new Middleware()
+		@_middleware = null
 		
 	initialize: (fn) ->
 	
-		middleware = new Middleware()
+		middleware = new middleware.Middleware()
 		
 		pkgman.invoke 'httpInitializer', (_, initializer) ->
 			middleware.use initializer
@@ -30,20 +31,15 @@ module.exports = class AbstractHttp
 		
 	registerMiddleware: ->
 		
-		httpMiddleware = {}
-		pkgman.invoke 'httpMiddleware', (path, spec) =>
-			httpMiddleware[path] = spec this
-			
-		@_middleware = new Middleware
-		
 		winston.info 'BEGIN loading HTTP middleware:'
 		
-		for path in @_config.middleware
-			return unless (list = httpMiddleware[path].middleware)?
-			list = [list] unless Array.isArray list
-			
-			winston.info httpMiddleware[path].label
-			
-			@_middleware.use middleware for middleware in list
+		@_middleware = middleware.fromHook(
+			'httpMiddleware'
+			@_config.middleware
+			(_, spec) =>
+				spec = spec this
+				winston.info spec.label
+				spec
+		)
 		
 		winston.info 'END loading HTTP middleware.'

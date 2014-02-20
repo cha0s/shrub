@@ -3,7 +3,7 @@ nconf = require 'nconf'
 pkgman = require 'pkgman'
 winston = require 'winston'
 
-Middleware = (require 'middleware').Middleware
+middleware = require 'middleware'
 
 module.exports = class AbstractSocket
 	
@@ -11,20 +11,16 @@ module.exports = class AbstractSocket
 		
 		@_config = nconf.get 'services:socket'
 		
-		socketMiddleware = {}
-		pkgman.invoke 'socketMiddleware', (path, spec) =>
-			socketMiddleware[path] = spec @http
-			
 		winston.info 'BEGIN loading socket middleware:'
 		
-		@_middleware = new Middleware
-		for path in @_config.middleware
-			return unless (list = socketMiddleware[path].middleware)?
-			list = [list] unless Array.isArray list
-			
-			winston.info socketMiddleware[path].label
-			
-			@_middleware.use middleware for middleware in list
-
+		@_middleware = middleware.fromHook(
+			'socketMiddleware'
+			@_config.middleware
+			(_, spec) =>
+				spec = spec @http
+				winston.info spec.label
+				spec
+		)
+		
 		winston.info 'END loading socket middleware:'
 		
