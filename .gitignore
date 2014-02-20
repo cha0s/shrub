@@ -10,5 +10,5 @@ build.xml
 node_modules
 npm-debug.log
 
-app/angular.js
+angular.js
 config/settings.json

@@ -23,7 +23,7 @@ exports.$directive = [
 		link: (scope, elm, attr) ->
 		
 			scope.links = nav.links
-			scope.user = user.load()
+			user.load().then (user) -> scope.user = user
 			
 			scope.$watch(
 				-> title.page()
@@ -51,6 +51,7 @@ exports.$directive = [
 		<h1 class="title muted">
 			<span data-ng-bind="title"></span>
 		</h1>
+		
 		<span class="identity">
 			You are
 			<span class="username" data-ng-bind="user.name"></span>.
