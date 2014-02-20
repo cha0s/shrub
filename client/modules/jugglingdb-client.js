@@ -2198,7 +2198,7 @@ AbstractClass.upsert = AbstractClass.updateOrCreate = function upsert(data, call
 /**
  * Find one record, same as `all`, limited by 1 and return object, not collection,
  * if not found, create using data provided as second argument
- * 
+ *
  * @param {Object} query - search conditions: {where: {test: 'me'}}.
  * @param {Object} data - object to create.
  * @param {Function} cb - callback called with (err, instance)
@@ -2403,7 +2403,7 @@ AbstractClass.iterate = function map(filter, iterator, callback) {
 
 /**
  * Find one record, same as `all`, limited by 1 and return object, not collection
- * 
+ *
  * @param {Object} params - search conditions: {where: {test: 'me'}}
  * @param {Function} cb - callback called with (err, instance)
  */
@@ -2491,7 +2491,7 @@ AbstractClass.prototype.save = function (options, callback) {
 
     if (!this.id) {
         // Pass options and this to create
-        var data = { 
+        var data = {
             data: this,
             options: options
         };
@@ -2552,11 +2552,11 @@ AbstractClass.prototype._adapter = function () {
  * Convert instance to Object
  *
  * @param {Boolean} onlySchema - restrict properties to schema only, default false
- * when onlySchema == true, only properties defined in schema returned, 
+ * when onlySchema == true, only properties defined in schema returned,
  * otherwise all enumerable properties returned
  * @returns {Object} - canonical object representation (no getters and setters)
  */
-AbstractClass.prototype.toObject = function (onlySchema) {
+AbstractClass.prototype.toObject = function (onlySchema, cachedRelations) {
     var data = {};
     var ds = this.constructor.schema.definitions[this.constructor.modelName];
     var properties = ds.properties;
@@ -2578,6 +2578,15 @@ AbstractClass.prototype.toObject = function (onlySchema) {
                 data[attr] = self[attr];
             }
         });
+
+        if (cachedRelations === true && this.__cachedRelations) {
+            var relations = this.__cachedRelations;
+            Object.keys(relations).forEach(function (attr) {
+                if (!data.hasOwnProperty(attr)) {
+                    data[attr] = relations[attr];
+                }
+            });
+        }
     }
 
     return data;
@@ -2588,9 +2597,10 @@ AbstractClass.prototype.toObject = function (onlySchema) {
 //         Object.getOwnPropertyNames(this).indexOf(prop) !== -1;
 // };
 
-AbstractClass.prototype.toJSON = function () {
-    return this.toObject();
+AbstractClass.prototype.toJSON = function (cachedRelations) {
+    return this.toObject(false, cachedRelations);
 };
+
 
 /**
  * Delete object from persistence
