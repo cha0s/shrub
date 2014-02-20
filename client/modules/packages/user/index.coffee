@@ -152,7 +152,7 @@ exports.$service = [
 		
 		user = new schema.models.User
 		
-		service.isLoggedIn = (fn) -> service.load().then (user) -> fn user.id? 
+		service.isLoggedIn = (fn) -> service.instance().id? 
 			
 		service.login = (method, username, password) ->
 			
@@ -178,19 +178,18 @@ exports.$service = [
 			)
 		
 		isLoaded = false
-		service.load = ->
+		service.instance = ->
 			
 			unless isLoaded
 				isLoaded = true
 				user.fromObject config.get 'user'
 			
-			$q.when user
+			user
 		
 		promiseifyModelMethods = (Model, methodName) =>
 			method = Model[methodName]
 			Model[methodName] = core.promiseify Model, (args...) ->
-				service.load().then (user) ->
-					method.apply Model, [user].concat args
+				method.apply Model, [service.instance()].concat args
 			
 		promiseifyModelMethods methodName for methodName in [
 			'all', 'authenticatedAll'

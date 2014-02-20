@@ -22,7 +22,8 @@ exports.$route =
 	controller: [
 		'$location', '$scope', 'ui/notifications', 'user'
 		($location, $scope, notifications, user) ->
-			
+			return $location.path '/' if user.isLoggedIn()
+				
 			$scope.userLogin =
 				
 				username:
@@ -55,10 +56,7 @@ exports.$route =
 							)
 						)
 			
-			user.isLoggedIn (isLoggedIn) ->
-				return $location.path '/' if isLoggedIn
-					
-				$scope.$emit 'shrubFinishedRendering'
+			$scope.$emit 'shrubFinishedRendering'
 			
 	]
 	
