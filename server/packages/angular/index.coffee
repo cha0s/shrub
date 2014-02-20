@@ -2,7 +2,7 @@
 contexts = require 'server/contexts'
 jsdom = require('jsdom').jsdom
 nconf = require 'nconf'
-Q = require 'q'
+Q = require 'bluebird'
 url = require 'url'
 winston = require 'winston'
 

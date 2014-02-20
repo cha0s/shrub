@@ -2,7 +2,7 @@
 express = require 'express'
 fs = require 'fs'
 http = require 'http'
-Q = require 'q'
+Q = require 'bluebird'
 winston = require 'winston'
 
 class Express extends (require 'AbstractHttp')

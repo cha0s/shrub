@@ -1,7 +1,7 @@
 
 _ = require 'underscore'
 nconf = require 'nconf'
-Q = require 'q'
+Q = require 'bluebird'
 
 contexts = {}
 

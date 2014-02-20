@@ -1,6 +1,6 @@
 
 crypto = require 'server/crypto'
-Q = require 'q'
+Q = require 'bluebird'
 
 exports.$endpoint = (req, fn) ->
 	

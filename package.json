@@ -5,6 +5,7 @@
     "start": "NODE_PATH=.:server:client/modules coffee server.coffee"
   },
   "dependencies": {
+    "bluebird": "~1.0.5",
     "connect-redis": "~1.4.7",
     "express": "3.1.0",
     "hbs": "~2.0.2",
@@ -17,7 +18,6 @@
     "passport-facebook": "~0.1.6",
     "passport-github": "~0.1.5",
     "passport-twitter": "~0.1.5",
-    "q": "~0.9.7",
     "socket.io": "~0.9.16",
     "underscore": "~1.4.4",
     "winston": "~0.7.2"
