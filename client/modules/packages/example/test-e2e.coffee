@@ -1,20 +1,22 @@
 
 describe 'home', ->
-
+	
 	beforeEach ->
 		
-		browser().navigateTo '/home'
+		browser.get '/home'
 
 	it 'should render home when user navigates to /home', ->
 		
-		expect(element('[data-ng-view] h1:first').text()).toBe 'Shrub'
+		tag = (element `by`.css '[data-ng-view] h1')
+		expect(tag.getText()).toBe 'Shrub'
 
 describe 'about', ->
-
+	
 	beforeEach ->
 		
-		browser().navigateTo '/about'
+		browser.get '/about'
 
 	it 'should render about when user navigates to /about', ->
 		
-		expect(element('[data-ng-view] h1:first').text()).toBe 'Shrub'
+		tag = (element `by`.css '[data-ng-view] h1')
+		expect(tag.getText()).toBe 'Shrub'
