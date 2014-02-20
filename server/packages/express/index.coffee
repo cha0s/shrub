@@ -5,7 +5,7 @@ http = require 'http'
 Q = require 'q'
 winston = require 'winston'
 
-exports.$http = class Express extends (require 'AbstractHttp')
+class Express extends (require 'AbstractHttp')
 	
 	constructor: ->
 		super
@@ -69,6 +69,13 @@ exports.$http = class Express extends (require 'AbstractHttp')
 		
 				RedisStore = require('connect-redis') express
 				new RedisStore client: module.createClient()
+
+exports.$genesis = (config) ->
+
+	http = new Express config.get 'services:http'
+	http.initialize (error) ->
+		return winston.error error.stack if error?
+		console.info "Shrub Express HTTP server up and running!"
 
 exports[path] = require "./#{path}" for path in [
 	'errors', 'logger', 'routes', 'session', 'static'
