@@ -1,4 +1,6 @@
 
+Q = require 'bluebird'
+
 exports.$models = (schema) ->
 	
 	User = schema.define 'User',
@@ -29,116 +31,179 @@ exports.$models = (schema) ->
 	User::hasPermission = (perm) -> false
 	User::isAccessibleBy = (user) -> false
 	
-	User::redactFor = (user, fn) ->
+	User::redactFor = (user) ->
 		
 		@passwordHash = null
 		@resetPasswordToken = null
 		@salt = null
 		
-		fn null, this
+		Q.resolve this
 
 augmentModel = (User, Model, name) ->
 	
-	validateUser = (next) -> (user) ->
-		return next.apply null, arguments if user instanceof User
+	validateUser = (user) ->
 		
-		error = new Error "Invalid user."
-		error.code = 500
-		fn error
+		deferred = Q.defer()
+			
+		if user instanceof User
+			
+			deferred.resolve()
+		
+		else
+		
+			error = new Error "Invalid user."
+			error.code = 500
+			deferred.reject error
+		
+		deferred.promise
 	
-	checkPermission = (user, perm, fn, next) ->
-		return next() if user.hasPermission perm
+	checkPermission = (user, perm) ->
+	
+		deferred = Q.defer()
+			
+		if user.hasPermission perm
+			
+			deferred.resolve()
+			
+		else
 		
-		error = new Error "Access denied."
-		error.code = 403
-		fn error
+			error = new Error "Access denied."
+			error.code = 403
+			deferred.reject error
 		
-	interceptError = (fn, next) -> (error, result) ->
-		return fn error if error?
-		
-		next result
+		deferred.promise
 
-	Model.authenticatedAll = validateUser (user, params, fn) ->
-		unless fn?
-			fn = params
-			params = {}
+	Model.authenticatedAll = (user, params) ->
 		
-		checkPermission user, "schema:#{name}:all", fn, ->
-			Model.all params, interceptError fn, (models) ->
-				models = models.filter (model) -> model.isAccessibleBy user
+		(validateUser user).then(->
+
+			checkPermission user, "schema:#{name}:all"
+		
+		).then(->
+			
+			Model.all params
+		
+		).then((models) ->
+			
+			models.filter (model) -> model.isAccessibleBy user
+		
+		).then((models) ->
+			
+			Q.all models.map (model) -> model.redactFor user
+		
+		).then (models) ->
+			
+			if models.length is 0
+			
+				error = new Error "Collection not found."
+				error.code = 404
 				
-				if models.length
-					redactedModelCount = 0
-					redactedModels = []
-					for model, i in models
-						do (model, i) ->
-							model.redactFor user, interceptError fn, (redactedModel) ->
-								redactedModels[i] = redactedModel
-								redactedModelCount += 1
-								if redactedModelCount is models.length
-									fn null, redactedModels
-				else
-					error = new Error "Collection not found."
-					error.code = 404
-					fn error
-	
-	Model.authenticatedCount = validateUser (user, fn) ->
-		checkPermission user, "schema:#{name}:count", fn, ->
-			Model.count interceptError fn, (count) ->
-				fn null, count
-	
-	Model.authenticatedCreate = validateUser (user, properties, fn) ->
-		checkPermission user, "schema:#{name}:create", fn, ->
-			Model.create properties, interceptError fn, (model) ->
-				fn null, model
-
-	Model.authenticatedDestroy = validateUser (user, id, fn) ->				
-		Model.authenticatedFind user, id, interceptError fn, (model) ->
-			if model.isDeletableBy user
-				schema.adapter.destroy name, id, interceptError fn, (result) ->
-					fn()
+				Q.reject error
+			
 			else
+				
+				models
+	
+	Model.authenticatedCount = (user) ->
+		
+		(validateUser user).then(->
+			
+			checkPermission user, "schema:#{name}:count"
+		
+		).then -> Model.count()
+		
+	Model.authenticatedCreate = (user, properties) ->
+
+		(validateUser user).then(->
+			
+			checkPermission user, "schema:#{name}:create"
+		
+		).then -> Model.create properties
+
+	Model.authenticatedDestroy = (user, id) ->
+	
+		(validateUser user).then(->
+			
+			checkPermission user, "schema:#{name}:create"
+		
+		).then(->
+			
+			Model.authenticatedFind user, id
+		
+		).then (model) ->
+		
+			if model.isDeletableBy user
+				
+				model.destroy()
+				
+			else
+				
 				if model.isAccessibleBy user
 					error = new Error "Access denied."
 					error.code = 403
 				else
 					error = new Error "Resource not found."
 					error.code = 404
-				fn error
-
-	Model.authenticatedDestroyAll = validateUser (user, fn) ->
-		checkPermission user, "schema:#{name}:destroyAll", fn, ->
-			Model.destroyAll interceptError fn, ->
-				fn()
+				
+				Q.reject error
 	
-	Model.authenticatedFind = validateUser (user, id, fn) ->
-		Model.find id, interceptError fn, (model) ->
+	Model.authenticatedDestroyAll = (user) ->
+	
+		(validateUser user).then(->
+			
+			checkPermission "schema:#{name}:destroyAll"
+		
+		).then ->
+			
+			Model.destroyAll()
+		
+	Model.authenticatedFind = (user, id) ->
+
+		(validateUser user).then(->
+			
+			Model.find id
+	
+		).then (model) ->
+			
 			if model? and model.isAccessibleBy user
-				model.redactFor user, interceptError fn, (redactedModel) ->
-					fn null, redactedModel
+				
+				model.redactFor user
+			
 			else
+				
 				error = new Error "Resource not found."
 				error.code = 404
-				fn error
+				Q.reject error
+	
+	Model.authenticatedUpdate = (user, id, properties) ->
 
-	Model.authenticatedUpdate = validateUser (user, id, properties, fn) ->
-		Model.authenticatedFind user, id, interceptError fn, (model) ->
+		(validateUser user).then(->
+			
+			Model.authenticatedFind user, id
+		
+		).then (model) ->
+			
 			if model.isEditableBy user
-				model.updateAttributes properties, interceptError fn, (model) ->
-					fn()
+				
+				model.updateAttributes properties
+				
 			else
+				
 				if model.isAccessibleBy user
 					error = new Error "Access denied."
 					error.code = 403
 				else
 					error = new Error "Resource not found."
 					error.code = 404
-				fn error
-	
+				
+				Q.reject error
+			
+			Model.authenticatedFind user, id
+		
 	Model::isAccessibleBy ?= (user) -> true
 	Model::isEditableBy ?= (user) -> false
 	Model::isDeletableBy ?= (user) -> false
-	Model::redactFor ?= (user, fn) -> fn null, this
+	Model::redactFor ?= (user) -> Q.resolve this
 
 exports.$modelsAlter = (models) ->
 	
@@ -152,7 +217,7 @@ exports.$service = [
 		
 		user = new schema.models.User
 		
-		service.isLoggedIn = (fn) -> service.instance().id? 
+		service.isLoggedIn = -> service.instance().id? 
 			
 		service.login = (method, username, password) ->
 			
@@ -185,21 +250,6 @@ exports.$service = [
 				user.fromObject config.get 'user'
 			
 			user
-		
-		promiseifyModelMethods = (Model, methodName) =>
-			method = Model[methodName]
-			Model[methodName] = core.promiseify Model, (args...) ->
-				method.apply Model, [service.instance()].concat args
-			
-		promiseifyModelMethods methodName for methodName in [
-			'all', 'authenticatedAll'
-			'count', 'authenticatedCount'
-			'create', 'authenticatedCreate'
-			'destroy', 'authenticatedDestroy'
-			'destroyAll', 'authenticatedDestroyAll'
-			'find', 'authenticatedFind'
-			'update', 'authenticatedUpdate'
-		] for name, Model of schema.models
 		
 		service
 		

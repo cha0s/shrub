@@ -50,7 +50,7 @@ class SocketAdapter
 	all: (model, query, fn) ->
 		
 		{collection} = @schema.resourcePaths model
-		query = translateQuery query
+		query = translateQuery query ? {}
 		
 		promiseCallback fn, @$http.get "#{@schema.settings.apiRoot}/#{collection}?#{query}"
 	
@@ -106,3 +106,4 @@ class SocketAdapter
 exports.initialize = (schema) ->
 	{$http, inflection} = schema.settings
 	schema.adapter = new SocketAdapter schema, $http, inflection
+	schema.connected = true

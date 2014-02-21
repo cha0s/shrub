@@ -45,7 +45,7 @@ exports.add = (id, context, fn) ->
 	
 	# Close the context.
 	context.close = (fn) ->
-		Q.when(context.promise).then ->
+		Q.resolve(context.promise).then ->
 			return unless contexts[id]?
 			contexts[id] = null
 			

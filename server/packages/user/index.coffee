@@ -1,10 +1,17 @@
 
 crypto = require 'server/crypto'
 passport = require 'passport'
+Q = require 'bluebird'
 
 exports.$config = (req) ->
 	
 	user: req.user
+
+exports.loadByName = (name) ->
+	
+	{models: User: User} = require 'server/jugglingdb'
+	
+	User.findOne where: name: name
 
 exports.$httpInitializer = (req, res, next) ->
 	
@@ -14,38 +21,32 @@ exports.$httpInitializer = (req, res, next) ->
 	
 	passport.use new LocalStrategy (username, password, done) ->
 		
-		filter = where: name: username
-		
-		User.findOne filter, (error, user) ->
-			return done error if error?
+		(exports.loadByName username).then((user)->
+			return Q.resolve() unless user?
 			
 			if user?
 				
-				User.hashPassword password, user.salt, (error, passwordHash) ->
-					return done error if error?
-					return done() unless user.passwordHash is passwordHash
+				(User.hashPassword password, user.salt).then (passwordHash) ->
+					return Q.resolve() unless user.passwordHash is passwordHash
 					
-					user.redactFor user, (error, fn) ->
-						return done error if error?
-						
-						done null, user
-						
+					user.redactFor user
+				
 			else
 				
-				done()
-	
+				Q.resolve()
+			
+		).nodeify done
+		
 	passport.serializeUser (user, done) -> done null, user.id
 	
 	passport.deserializeUser (id, done) ->
 		
-		User.find id, (error, user) ->
-			return done error if error?
+		(User.find id).then((user)->
 			
-			user.redactFor user, (error, fn) ->
-				return done error if error?
-				
-				done null, user
-				
+			user.redactFor user
+		
+		).nodeify done
+		
 	next()
 				
 exports.$httpMiddleware = (http) ->
@@ -71,34 +72,38 @@ exports.$models = (schema) ->
 	
 	User = schema.models['User']
 	
-	User.randomHash = (fn) ->
+	User.randomHash = ->
+		
+		deferred = Q.defer()
 		
 		require('crypto').randomBytes 24, (error, buffer) ->
-			return fn error if error?
+			return deferred.reject error if error?
 			
-			fn null, require('crypto').createHash('sha512').update(
+			deferred.resolve require('crypto').createHash('sha512').update(
 				schema.settings.cryptoKey
 			).update(
 				buffer.toString()
 			).digest 'hex'
+			
+		deferred.promise
 	
-	User.hashPassword = (password, salt, fn) ->
+	User.hashPassword = (password, salt) ->
 		
-		require('crypto').pbkdf2 password, salt, 20000, 512, fn
+		(Q.promisify require('crypto').pbkdf2) password, salt, 20000, 512
 		
 	redactFor = User::redactFor
-	User::redactFor = (user, fn) ->
-		redactFor.call this, user, (error, redactedUser) =>
-			return fn error if error?
-			return fn null, redactedUser unless user.id is redactedUser.id
+	User::redactFor = (user) ->
+		
+		# Decrypt the e-mail if redacting for the same user.
+		redactFor.call(this).bind({}).then((@redactedUser) ->
+			return @redactedUser.email unless user.id is @redactedUser.id
 			
-			crypto.decrypt redactedUser.email, (error, decryptedEmail) ->
-				return fn error if error?
-				
-				redactedUser.email = decryptedEmail
-				
-				fn null, redactedUser
-	
+			crypto.decrypt @redactedUser.email
+		
+		).then((email) -> @redactedUser.email = email
+		
+		).then -> @redactedUser
+		
 exports.$modelsAlter = (require 'client/modules/packages/user').$modelsAlter
 
 exports.$socketMiddleware = (http) ->

@@ -6,34 +6,33 @@ exports.$endpoint = (req, fn) ->
 	
 	{models: User: User} = require 'server/jugglingdb'
 	
-	deferred = Q.defer()
+	Q.resolve().then(->
 	
-	# Search for username or encrypted email.
-	if -1 is req.body.usernameOrEmail.indexOf '@'
-		deferred.resolve where: name: req.body.usernameOrEmail
-	else
-		crypto.encrypt req.body.usernameOrEmail, (error, encryptedEmail) ->
-			deferred.reject error if error?
-			deferred.resolve where: email: encryptedEmail
-	
-	# fn() won't reveal anything.
-	# Find the user.
-	deferred.promise.then (filter) ->
-		User.findOne filter, (error, user) ->
-			return fn() if error?
-			return fn() unless user
+		# Search for username or encrypted email.
+		if -1 is req.body.usernameOrEmail.indexOf '@'
 			
-			# Generate a one-time login token.
-			User.randomHash (error, hash) ->
-				return fn() if error?
+			where: name: req.body.usernameOrEmail
+		
+		else
+			
+			(crypto.encrypt req.body.usernameOrEmail).then (encryptedEmail) ->
 				
-				user.resetPasswordToken = hash
-				user.save ->
-					
-					# This would be where we send an email to the user
-					# notifying them of the URL they can visit to reset
-					# their password.
-					
-					fn()
-					
-	deferred.promise.fail (error) -> fn()				
+				where: email: encryptedEmail
+	
+	).then((filter) ->
+		
+		# Find the user.
+		User.findOne filter
+		
+	).then((@user) ->
+		
+		# Generate a one-time login token.
+		User.randomHash()
+		
+	).then((hash) ->
+		return Q.resolve() unless @user?
+		
+		user.resetPasswordToken = hash
+		user.save()
+
+	).nodeify fn

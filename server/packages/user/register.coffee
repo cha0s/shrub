@@ -7,17 +7,18 @@ exports.$endpoint = (req, fn) ->
 	
 	user = new User name: req.body.username
 	
-	# Encrypt the email.	
-	crypto.encrypt req.body.email, (error, encryptedEmail) ->
-		fn error if error?
+	# Encrypt the email.
+	(crypto.encrypt req.body.email).then((encryptedEmail) ->
 	
 		user.email = encryptedEmail
 		
-		# Generate hash salt.
-		User.randomHash (error, salt) ->
-			fn error if error?
-			
-			user.salt = salt
-			
-			# Don't reveal anything beyond any error.
-			user.save (error, user) -> fn error
+		User.randomHash()
+	
+	# Generate hash salt.
+	).then((salt) ->
+
+		user.salt = salt
+		
+		user.save()
+	
+	).nodeify fn

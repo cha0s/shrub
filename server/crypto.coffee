@@ -1,34 +1,49 @@
 
 crypto = require 'crypto'
 nconf = require 'nconf'
+Q = require 'bluebird'
 
-exports.encrypt = (message, password, fn) ->
-	unless fn?
-		fn = password
-		password = null
+exports.encrypt = (message, password) ->
+	
+	deferred = Q.defer()
+	
+	try
 		
-	cipher = crypto.createCipher 'aes256', password ? nconf.get 'cryptoKey'
+		cipher = crypto.createCipher 'aes256', password ? nconf.get 'cryptoKey'
+		
+		cipherText = []
+		cipherText.push cipher.update message, 'binary', 'hex'
+		cipherText.push cipher.final 'hex'
+		deferred.resolve cipherText.join ''
+		
+	catch error
+		
+		deferred.reject error
 	
-	cipherText = []
-	cipherText.push cipher.update message, 'binary', 'hex'
-	cipherText.push cipher.final 'hex'
-	fn null, cipherText.join ''
+	deferred.promise
 	
-exports.decrypt = (message, password, fn) ->
-	unless fn?
-		fn = password
-		password = null
+exports.decrypt = (message, password) ->
 
-	decipher = crypto.createDecipher 'aes256', password ? nconf.get 'cryptoKey'
-	decipher.setAutoPadding false
+	deferred = Q.defer()
 	
-	decipherText = []
-	decipherText.push decipher.update message, 'hex', 'binary'
-	decipherText.push decipher.final 'binary'
-	decipherText = decipherText.join ''
+	try
 	
-	# Slice off the padding.
-	if 16 > code = decipherText.charCodeAt decipherText.length - 1
-		decipherText = decipherText.slice 0, -code
+		decipher = crypto.createDecipher 'aes256', password ? nconf.get 'cryptoKey'
+		decipher.setAutoPadding false
 		
-	fn null, decipherText
+		decipherText = []
+		decipherText.push decipher.update message, 'hex', 'binary'
+		decipherText.push decipher.final 'binary'
+		decipherText = decipherText.join ''
+		
+		# Slice off the padding.
+		if 16 > code = decipherText.charCodeAt decipherText.length - 1
+			decipherText = decipherText.slice 0, -code
+			
+		deferred.resolve decipherText
+		
+	catch error
+		
+		deferred.reject error
+	
+	deferred.promise

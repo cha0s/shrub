@@ -10,19 +10,8 @@ exports.$httpInitializer = (req, res, next) ->
 	schema = require 'server/jugglingdb'
 	
 	# DRY.
-	interceptError = (res, fn) ->
-		(error, result) ->
-			if error?
-				serveJson res, error.code ? 500, message: error.message
-			else
-				fn result
-	
-	checkPermission = (req, res, perm, fn) ->
-		
-		if req.user.hasPermission perm
-			fn()
-		else
-			serveJson res, 403, message: 'Access denied.'
+	interceptError = (res) ->
+		(error) -> serveJson res, error.code ? 500, message: error.message
 	
 	serveJson = (res, code, data) ->
 		
@@ -48,46 +37,82 @@ exports.$httpInitializer = (req, res, next) ->
 			collectionPath = "#{schema.settings.apiRoot}/#{collection}"
 			
 			app.get collectionPath, (req, res) ->
+				
 				Model.authenticatedAll(
 					req.user
 					if Object.keys(req.query).length
 						req.query
 					else
 						null
-					interceptError res, (models) ->
-						if models.length
-							serveJson res, 200, models
-						else
-							serveJson res, 404, message: "Collection not found."
-				)
+				
+				).then(
+					(models) -> serveJson res, 200, models
+					interceptError res
+				).done()
 				
 			app.get "#{collectionPath}/count", (req, res) ->
-				Model.authenticatedCount req.user, interceptError res, (count) ->
-					serveJson res, 200, count: count
+				
+				Model.authenticatedCount(
+					req.user
+
+				).then(
+					(count) -> serveJson res, 200, count: count
+					interceptError res
+				).done()
 			
 			app.post collectionPath, (req, res) ->
-				Model.authenticatedCreate req.user, req.body, interceptError res, (model) ->
-					serveJson res, 201, model
+
+				Model.authenticatedCreate(
+					req.user
+					req.body
+
+				).then(
+					(model) -> serveJson res, 201, model
+					interceptError res
+				).done()
 
 			app.delete collectionPath, (req, res) ->
-				Model.authenticatedDestroyAll req.user, interceptError res, ->
-					serveJson res, 200, message: "Collection deleted."
+				
+				Model.authenticatedDestroyAll(
+					req.user
+				
+				).then(
+					-> serveJson res, 200, message: "Collection deleted."
+					interceptError res
+				).done()
 			
 			resourcePath = "#{schema.settings.apiRoot}/#{resource}/:id"
 			
 			app.get resourcePath, (req, res) ->
-				Model.authenticatedFind req.user, req.params.id, interceptError res, (model) ->
-					if model? and model.isAccessibleBy req.user
-						serveJson res, 200, model
-					else
-						serveJson res, 404, message: "Resource not found."
+				
+				Model.authenticatedFind(
+					req.user
+					req.params.id
+				
+				).then(
+					(model) -> serveJson res, 200, model
+					interceptError res
+				).done()
 	
 			app.put resourcePath, (req, res) ->
-				Model.authenticatedUpdate req.params.id, req.body, interceptError res, (model) ->
-					serveJson res, 200, message: "Resource updated."
+				
+				Model.authenticatedUpdate(
+					req.user
+					req.params.id
+					req.body
+				).then(
+					-> serveJson res, 200, message: "Resource updated."
+					interceptError res
+				).done()
 							
 			app.delete resourcePath, (req, res) ->
-				Model.authenticatedDestroy req.user, req.params.idinterceptError res, (model) ->
-					serveJson res, 200, message: "Resource deleted."
+				
+				Model.authenticatedDestroy(
+					req.user
+					req.params.id
+				).then(
+					-> serveJson res, 200, message: "Resource deleted."
+					interceptError res
+				).done()
 
 	next()
