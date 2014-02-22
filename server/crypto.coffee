@@ -37,7 +37,7 @@ exports.decrypt = (message, password) ->
 		decipherText = decipherText.join ''
 		
 		# Slice off the padding.
-		if 16 > code = decipherText.charCodeAt decipherText.length - 1
+		if 16 >= code = decipherText.charCodeAt decipherText.length - 1
 			decipherText = decipherText.slice 0, -code
 			
 		deferred.resolve decipherText
