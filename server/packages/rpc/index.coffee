@@ -2,7 +2,7 @@
 _ = require 'underscore'
 pkgman = require 'pkgman'
 
-exports.$socketMiddleware = (http) ->
+exports.$socketMiddleware = ->
 	
 	# Gather all endpoints.
 	endpoints = {}

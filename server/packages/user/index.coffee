@@ -106,7 +106,7 @@ exports.$models = (schema) ->
 		
 exports.$modelsAlter = (require 'client/modules/packages/user').$modelsAlter
 
-exports.$socketMiddleware = (http) ->
+exports.$socketMiddleware = ->
 	
 	{models: User: User} = require 'server/jugglingdb'
 	

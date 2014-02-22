@@ -7,13 +7,22 @@ logger = new winston.Logger
 		new winston.transports.File level: 'debug', filename: 'logs/socket.io.log'
 	]
 
-module.exports = class SocketIo extends (require 'AbstractSocket')
+module.exports = class SocketIo extends (require 'AbstractSocketFactory')
 	
-	constructor: (http) ->
+	constructor: ->
 		super
 		
+	emitToChannel: (channel, type, data, fn) =>
+	
+		@io.sockets.in(channel).emit type, data, (data) ->
+			return unless fn?
+			
+			fn data
+			
+	listen: (http) ->
+	
 		# Set up the socket.io server.
-		@io = require('socket.io').listen(
+		@io = (require 'socket.io').listen(
 			http.server()
 			
 			'log level': 'debug'
@@ -40,20 +49,20 @@ module.exports = class SocketIo extends (require 'AbstractSocket')
 			@_middleware.dispatch req, null, (error) ->
 				return logger.error error if error?
 				
-				req.socket.emit 'initialized'
+				socket.emit 'initialized'
 			
 	store: ->
 
-		# Should this be dynamic?
-		switch @_config.socketIo.db
+		switch @_config.options.store
 			
 			when 'redis'
 				
-				module = require 'connect-redis/node_modules/redis'
+				redis = require 'connect-redis/node_modules/redis'
+				RedisStore = require 'socket.io/lib/stores/redis'
 				
-				new (require 'socket.io/lib/stores/redis')(
-					redis: module
-					redisPub: module.createClient()
-					redisSub: module.createClient()
-					redisClient: module.createClient()
+				new RedisStore(
+					redis: redis
+					redisPub: redis.createClient()
+					redisSub: redis.createClient()
+					redisClient: redis.createClient()
 				)

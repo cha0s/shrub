@@ -1,15 +1,16 @@
 
-nconf = require 'nconf'
+{EventEmitter} = require 'events'
 pkgman = require 'pkgman'
 winston = require 'winston'
 
 middleware = require 'middleware'
 
-module.exports = class AbstractSocket
+module.exports = class AbstractSocketFactory extends EventEmitter
 	
-	constructor: (@http) ->
-		
-		@_config = nconf.get 'services:socket'
+	constructor: (@_config) ->
+		super
+	
+	loadMiddleware: ->
 		
 		winston.info 'BEGIN loading socket middleware:'
 		
@@ -17,10 +18,16 @@ module.exports = class AbstractSocket
 			'socketMiddleware'
 			@_config.middleware
 			(_, spec) =>
-				spec = spec @http
+				spec = spec()
 				winston.info spec.label
 				spec
 		)
 		
 		winston.info 'END loading socket middleware:'
-		
+
+	for method in [
+		'emitToChannel', 'listen'
+	]
+		@::[method] = -> throw new ReferenceError(
+			"AbstractSocket#{method} is a pure virtual method!"
+		)

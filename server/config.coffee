@@ -72,6 +72,7 @@ nconf.defaults
 						maxAge: 1209600000
 						
 			middleware: [
+				'socket/factory'
 				'form'
 				'express/session'
 				'user'
@@ -86,14 +87,17 @@ nconf.defaults
 						
 		socket:
 			
-			socketIo:
-				
-				db: 'redis'
-
+			module: 'packages/socket/SocketIo'
+			
 			middleware: [
+				'socket/factory'
 				'session'
 				'user'
 				'rpc'
 			]
+
+			options:
+			
+				store: 'redis'
 
 module.exports = nconf

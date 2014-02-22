@@ -1,5 +1,5 @@
 
-exports.$socketMiddleware = (http) ->
+exports.$socketMiddleware = ->
 
 	label: 'Load session'
 	middleware: [
