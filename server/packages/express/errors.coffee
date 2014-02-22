@@ -1,5 +1,6 @@
 
 express = require 'express'
+nconf = require 'nconf'
 winston = require 'winston'
 
 logger = new winston.Logger
@@ -11,8 +12,8 @@ exports.$httpMiddleware = (http) ->
 	
 	label: 'Error handling'
 	middleware: [
-
-		if 'development' isnt process.env.NODE_ENV
+		
+		if 'production' is nconf.get 'NODE_ENV'
 			(err, req, res, next) -> next err
 		else
 			express.errorHandler.title = 'Shrub'

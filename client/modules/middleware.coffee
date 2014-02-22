@@ -14,15 +14,9 @@ exports.Middleware = class Middleware
 		
 		index = 0
 		
-		domain = (require 'domain').create()
-		domain.enter()
-		domain.on 'error', fn
-		
 		invoke = (error) =>
 			
-			if index is @_middleware.length
-				domain.exit()
-				return fn error
+			return fn error if index is @_middleware.length
 			
 			current = @_middleware[index]
 			index += 1
@@ -31,7 +25,13 @@ exports.Middleware = class Middleware
 				
 				if error?
 					
-					current error, request, response, (error) -> invoke error
+					try
+					
+						current error, request, response, (error) -> invoke error
+					
+					catch error
+					
+						invoke error
 					
 				else
 					
@@ -45,8 +45,14 @@ exports.Middleware = class Middleware
 				
 				else
 				
-					current request, response, (error) -> invoke error
-				
+					try
+					
+						current request, response, (error) -> invoke error
+					
+					catch error
+					
+						invoke error
+
 		invoke null
 
 exports.fromHook = (hook, paths, fn) ->
