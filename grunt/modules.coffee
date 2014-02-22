@@ -6,6 +6,7 @@ module.exports = (grunt, config) ->
 		'client/packages.coffee'
 		'client/require.coffee'
 		'client/modules/**/*.coffee'
+		'!client/modules/**/*.spec.coffee'
 	]
 	
 	config.clean ?= {}
