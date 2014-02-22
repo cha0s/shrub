@@ -30,28 +30,3 @@ exports.$appConfig = [
 ]
 
 exports.$routeMock = path: 'e2e/sanity-check'
-
-exports.$service = [
-	'$q'
-	($q) ->
-		
-		service = {}
-		
-		service.promiseify = (holder, method) -> ->
-			
-			deferred = $q.defer()
-			
-			method.apply(
-				holder
-				(arg for arg in arguments).concat [
-					(error, result) ->
-						return deferred.reject error if error?
-						deferred.resolve result
-				]
-			)
-			
-			deferred.promise
-			
-		service
-		
-]

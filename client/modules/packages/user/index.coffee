@@ -210,8 +210,8 @@ exports.$modelsAlter = (models) ->
 	augmentModel models.User, Model, name for name, Model of models
 		
 exports.$service = [
-	'$q', 'config', 'core', 'rpc', 'schema'
-	($q, config, core, rpc, schema) ->
+	'$q', 'config', 'rpc', 'schema'
+	($q, config, rpc, schema) ->
 		
 		service = {}
 		
