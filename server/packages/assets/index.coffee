@@ -15,8 +15,6 @@ exports.$httpMiddleware = (http) ->
 				js: if 'production' is nconf.get 'NODE_ENV'
 					
 					[
-						'/lib/underscore/underscore-min.js'
-		
 						'//code.jquery.com/jquery-1.9.1.min.js'
 						
 						'/lib/bootstrap/js/bootstrap.min.js'
@@ -37,8 +35,6 @@ exports.$httpMiddleware = (http) ->
 				else
 					
 					[
-						'/lib/underscore/underscore.js'
-						
 						'/lib/jquery/jquery-1.9.js'
 		
 						'/lib/bootstrap/js/bootstrap.js'
