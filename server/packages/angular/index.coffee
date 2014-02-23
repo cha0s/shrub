@@ -151,9 +151,6 @@ exports.$httpMiddleware = (http) ->
 			
 			{path} = url.parse req.url
 			
-			# e2e entry point hax.
-			path = '/' if path is '/app/index.html'
-			
 			id = req.session.id
 			locals = res.locals
 			body = req.body
