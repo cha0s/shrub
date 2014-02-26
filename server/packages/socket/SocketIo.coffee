@@ -11,14 +11,11 @@ module.exports = class SocketIo extends (require 'AbstractSocketFactory')
 	
 	constructor: ->
 		super
-		
-	emitToChannel: (channel, type, data, fn) =>
 	
-		@io.sockets.in(channel).emit type, data, (data) ->
-			return unless fn?
-			
-			fn data
-			
+	channelsSocketIsIn: (socket) -> @io.sockets.manager.roomClients[socket.id]
+		
+	socketsInChannel: (channel) -> @io.sockets.clients channel
+		
 	listen: (http) ->
 	
 		# Set up the socket.io server.
