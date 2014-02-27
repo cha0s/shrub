@@ -1,5 +1,6 @@
 
 _ = require 'underscore'
+errors = require 'errors'
 pkgman = require 'pkgman'
 
 exports.$socketMiddleware = ->
@@ -25,12 +26,12 @@ exports.$socketMiddleware = ->
 						req.body = data
 						
 						endpoint.receiver(
-							req, (errors, result) ->
-								reply = ->
-									return fn result: result unless errors?
+							req, (error, result) ->
+								reply = (sError) ->
+									return fn error: errors.serialize sError if sError?
+									return fn error: errors.serialize error if error?
 									
-									errors = [errors] unless Array.isArray errors
-									fn errors: errors, result: result
+									fn result: result
 								
 								session = req.session
 								if session?

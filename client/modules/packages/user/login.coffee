@@ -1,4 +1,11 @@
 
+errors = require 'errors'
+
+LoginError = class LoginError extends errors.BaseError
+
+	key: 'login'
+	template: "No such username/password."
+		
 exports.e2eLogin = $routeMock:
 	
 	path: 'e2e/user/login/:destination'
@@ -15,6 +22,8 @@ exports.e2eLogin = $routeMock:
 				
 	]
 	
+exports.$errorType = LoginError
+
 exports.$route =
 	
 	title: 'Sign in'
@@ -52,7 +61,7 @@ exports.$route =
 								$location.path '/'
 								
 							(error) -> notifications.add(
-								class: 'error', text: error.message
+								class: 'error', text: errors.message error
 							)
 						)
 			

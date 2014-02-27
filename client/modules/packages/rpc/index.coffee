@@ -1,4 +1,6 @@
 
+errors = require 'errors'
+
 exports.$appRun = [
 	'$window', 'config', 'rpc'
 	($window, config, rpc) ->
@@ -19,12 +21,15 @@ exports.$service = [
 			
 			deferred = $q.defer()
 			
-			socket.emit "rpc://#{route}", data, ({errors, result}) ->
-				return deferred.reject new Error(
-					require('errors').formatErrors errors
-				) if errors?
+			socket.emit "rpc://#{route}", data, ({error, result}) ->
 				
-				deferred.resolve result
+				if error?
+				
+					deferred.reject errors.unserialize errors.caught error
+					
+				else
+					
+					deferred.resolve result
 				
 			deferred.promise
 		

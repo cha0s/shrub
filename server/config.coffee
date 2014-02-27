@@ -33,7 +33,6 @@ nconf.defaults
 		'assets'
 		'config'
 		'core'
-		'errors'
 		'example'
 		'express'
 		'files'

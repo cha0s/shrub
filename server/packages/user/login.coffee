@@ -1,4 +1,6 @@
 
+LoginError = (require 'client/modules/packages/user/login').$errorType
+
 exports.$endpoint = (req, fn) ->
 	
 	switch req.body.method
@@ -6,8 +8,8 @@ exports.$endpoint = (req, fn) ->
 		when 'local'
 			
 			(req.passport.authenticate 'local', (error, user, info) ->
-				return fn attempted: error.message if error?
-				return fn code: 420 unless user
+				return fn error if error?
+				return fn new LoginError() unless user
 				
 				req.login user, (error) ->
 					return fn attempted: error.message if error?

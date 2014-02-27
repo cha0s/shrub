@@ -1,4 +1,6 @@
 
+errors = require 'errors'
+
 exports.$route =
 	
 	path: 'user/reset/:token'
@@ -22,7 +24,7 @@ exports.$route =
 					handler: (error, result) ->
 						
 						return notifications.add(
-							class: 'error', text: error.message
+							class: 'error', text: errors.message error
 						) if error?
 				
 						notifications.add text: "Password reset."

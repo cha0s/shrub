@@ -39,7 +39,7 @@ describe 'rpc', ->
 			($rootScope, socket) ->
 				
 				socket.catchEmit 'rpc://test', (data, fn) ->
-					fn errors: [code: 420]
+					fn error: new Error()
 					
 				result = 'invalid'
 				error = null

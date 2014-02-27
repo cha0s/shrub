@@ -1,4 +1,6 @@
 
+errors = require 'errors'
+
 exports.$route =
 	
 	title: 'Sign up'
@@ -27,7 +29,7 @@ exports.$route =
 					handler: (error, result) ->
 						
 						return notifications.add(
-							class: 'error', text: error.message
+							class: 'error', text: errors.message error
 						) if error?
 				
 						notifications.add text: "Registered successfully."
