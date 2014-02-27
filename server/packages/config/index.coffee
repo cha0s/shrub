@@ -1,10 +1,14 @@
 
+url = require 'url'
+
 _ = require 'underscore'
 nconf = require 'nconf'
+
 pkgman = require 'pkgman'
 
 exports.$config = (req) ->
 	
+	baseUrl: "//#{req.headers.host}"
 	testMode: if (req.nconf.get 'E2E')? then 'e2e' else false
 	debugging: 'production' isnt req.nconf.get 'NODE_ENV'
 	packageList: req.nconf.get 'packageList'
