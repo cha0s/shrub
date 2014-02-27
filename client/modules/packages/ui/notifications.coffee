@@ -15,6 +15,8 @@ exports.$directive = [
 				$timeout.cancel activeNotification
 				$notificationWrapper.fadeOut '2000', -> scope.$apply ->
 					notifications.removeTop()
+					
+				return
 			
 			scope.$watch(
 				-> notifications.top()
@@ -23,7 +25,6 @@ exports.$directive = [
 # When we get a new notification, make it our active notification.
 
 					scope.notification = notifications.top()
-					
 					return if notifications.count() is 0
 					
 # Fade it in and keep it on the screen for 15 seconds.
@@ -68,7 +69,11 @@ exports.$service = [
 		
 # Add a notification to be displayed.
 		
-		@add = (notification) -> _notifications.push notification
+		@add = (notification) ->
+			
+			notification.class ?= 'alert-info'
+			
+			_notifications.push notification
 		
 # Get the top notification.
 		

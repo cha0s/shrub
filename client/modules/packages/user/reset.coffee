@@ -24,7 +24,7 @@ exports.$route =
 					handler: (error, result) ->
 						
 						return notifications.add(
-							class: 'error', text: errors.message error
+							class: 'alert-danger', text: errors.message error
 						) if error?
 				
 						notifications.add text: "Password reset."

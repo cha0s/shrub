@@ -14,9 +14,10 @@ exports.$httpMiddleware = (http) ->
 			
 				js: if 'production' is nconf.get 'NODE_ENV'
 					
+
 					[
 						'//code.jquery.com/jquery-1.9.1.min.js'
-						
+
 						'/lib/bootstrap/js/bootstrap.min.js'
 						
 						'/lib/socket.io/socket.io.min.js'
@@ -25,10 +26,11 @@ exports.$httpMiddleware = (http) ->
 						
 						'//ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js'
 						'//ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular-sanitize.min.js'
-						'/lib/angular-strap/angular-strap.min.js'
+
+						'/lib/angular-ui/bootstrap/ui-bootstrap-tpls-0.10.0.min.js'
 						
 						'/shrub.min.js'
-						
+
 						'/js/config.js'
 					]
 		
@@ -36,9 +38,9 @@ exports.$httpMiddleware = (http) ->
 					
 					[
 						'/lib/jquery/jquery-1.9.js'
-		
+						
 						'/lib/bootstrap/js/bootstrap.js'
-				
+		
 						'/lib/socket.io/socket.io.js'
 						
 						'/before-angular.js'
@@ -46,7 +48,8 @@ exports.$httpMiddleware = (http) ->
 						'/lib/angular/angular.js'
 						'/lib/angular/angular-route.js'
 						'/lib/angular/angular-sanitize.js'
-						'/lib/angular-strap/angular-strap.js'
+
+						'/lib/angular-ui/bootstrap/ui-bootstrap-tpls-0.10.0.js'
 						
 						'/shrub.js'
 						

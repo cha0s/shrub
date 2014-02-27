@@ -4,11 +4,11 @@ angular.module('shrub', [
 	'ngRoute'
 	'ngSanitize'
 	
+	'ui.bootstrap'
+	
 	'shrub.config'
 	'shrub.packages'
 	'shrub.require'
-	
-	'$strap.directives'
 ]).
 
 	config([

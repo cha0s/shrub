@@ -21,6 +21,8 @@ exports.$directive = [
 	($location, nav, socket, title, user) ->
 	
 		link: (scope, elm, attr) ->
+			
+			scope.navClass = if attr['uiNav'] then attr['uiNav'] else 'ui-nav'
 		
 			scope.links = nav.links
 			scope.user = user.instance()
@@ -30,41 +32,52 @@ exports.$directive = [
 				-> scope.title = title.page()
 			)
 			
+			(navActiveLinks = ->
+			
+				path = $location.path()
+				for link in scope.links()
+				
+					regexp = new RegExp "^#{link.pattern}$", ['i']
+					link.active = if regexp.test path then 'active'
+					
+			)()
+			
 # Make sure we set active the first time, since angular-strap won't be ready.
 
 			scope.$watch(
 				-> scope.links()
-				->
-					path = $location.path()
-					for link in scope.links()
-					
-						regexp = new RegExp "^#{link.pattern}$", ['i']
-						link.active = if regexp.test path then 'active'
-					
+				navActiveLinks	
+			)
+
+			scope.$watch(
+				-> $location.path()
+				navActiveLinks	
 			)
 			
 		template: """
 
-<div class="navbar" data-bs-navbar>
-	<div class="navbar-inner">
+<nav class="navbar navbar-default" role="navigation">
+	<div class="container-fluid">
 		
-		<h1 class="title muted">
-			<span data-ng-bind="title"></span>
-		</h1>
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".{{navClass}}">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+
+			<a class="navbar-brand" href="#"><span data-ng-bind="title"></span></a>
+			
+		</div>
 		
-		<span class="identity">
-			You are
-			<span class="username" data-ng-bind="user.name"></span>.
-		</span>
-		
-		<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-		</a>
-		
-		<div class="nav-collapse collapse">
-			<ul class="nav pull-right">
+		<div class="navbar-collapse collapse" data-ng-class="navClass">
+			<p class="navbar-text">
+				<span class="identity">
+					You are <span class="username" data-ng-bind="user.name"></span>
+				</span>
+			</p>
+			<ul class="nav navbar-nav navbar-right">
 				<li data-ng-class="link.active" data-match-route="{{link.pattern}}" data-ng-repeat="link in links()">
 					<a data-ng-href="{{link.href}}" data-ng-bind="link.name"></a>
 				</li>
@@ -72,7 +85,7 @@ exports.$directive = [
 		</div>
 		
 	</div>
-</div>
+</nav>
 
 """
 		

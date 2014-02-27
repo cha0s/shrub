@@ -29,10 +29,10 @@ exports.$route =
 					handler: (error, result) ->
 						
 						return notifications.add(
-							class: 'error', text: errors.message error
+							class: 'alert-danger', text: errors.message error
 						) if error?
 				
-						notifications.add text: "Registered successfully."
+						notifications.add class: 'alert-success', text: "Registered successfully."
 						$location.path '/'
 					
 			$scope.$emit 'shrubFinishedRendering'

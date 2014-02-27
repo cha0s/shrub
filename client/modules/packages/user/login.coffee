@@ -57,11 +57,11 @@ exports.$route =
 						).then(
 							
 							->
-								notifications.add text: "Logged in successfully."
+								notifications.add class: 'alert-success', text: "Logged in successfully."
 								$location.path '/'
 								
 							(error) -> notifications.add(
-								class: 'error', text: errors.message error
+								class: 'alert-danger', text: errors.message error
 							)
 						)
 			

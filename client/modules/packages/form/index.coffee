@@ -28,7 +28,7 @@ exports.$directive = [
 			for name, field of formSpec
 				continue unless field.type?
 				
-				$wrapper = angular.element '<div>'
+				$wrapper = angular.element '<div class="form-group">'
 				$wrapper.append $field = switch field.type
 					
 					when 'email', 'password', 'text'
@@ -41,6 +41,8 @@ exports.$directive = [
 						).attr(
 							name: name
 							'data-ng-model': name
+						).addClass(
+							'form-control'
 						)
 						
 						if field.defaultValue?
@@ -85,7 +87,7 @@ exports.$directive = [
 							'<input type="submit">'
 						)
 						$input.attr 'value', field.label ? "Submit"
-						$input.addClass 'btn'
+						$input.addClass 'btn btn-default'
 						
 				$form.append $wrapper
 			
