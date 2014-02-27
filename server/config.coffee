@@ -106,16 +106,15 @@ exports.Config = -> class Config
 	constructor: (@config) ->
 	
 	get: (key) ->
-		parts = key.split ':'
+	
 		current = @config
-		for part in parts
-			current = current?[part]
+		current = current?[part] for part in key.split ':'
 		current
 	
 	has: (key) ->
-		parts = key.split ':'
+	
 		current = @config
-		for part in parts
+		for part in key.split ':'
 			return false unless part of current
 			current = current[part]
 		
@@ -128,7 +127,7 @@ exports.Config = -> class Config
 		for part in parts
 			current = (current[part] ?= {})
 		
-		current?[last] = value
+		current[last] = value
 		
 	$get: -> this
 	

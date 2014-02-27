@@ -40,6 +40,8 @@ exports.$httpMiddleware = (http) ->
 			res.send """
 angular.module('shrub.config', []).provider('config', function() {
 
+  var __slice = [].slice;
+  
   return new ((#{Config.toString()})())(#{prettyPrintConfig()});
 
 });
