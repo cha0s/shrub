@@ -4,6 +4,7 @@ url = require 'url'
 _ = require 'underscore'
 nconf = require 'nconf'
 
+Config = (require 'config').Config
 pkgman = require 'pkgman'
 
 exports.$config = (req) ->
@@ -31,29 +32,16 @@ exports.$httpMiddleware = (http) ->
 			pkgman.invoke 'config', (path, fn) -> _.extend config, fn req
 			
 			prettyPrintConfig = ->
-				[first, rest...] = (JSON.stringify config, null, '\t').split '\n'
-				([first].concat rest.map (line) -> '\t' + line).join '\n'
+				[first, rest...] = (JSON.stringify config, null, '  ').split '\n'
+				([first].concat rest.map (line) -> '  ' + line).join '\n'
 				
 			res.setHeader 'Content-Type', 'text/javascript'
 			
 			res.send """
 angular.module('shrub.config', []).provider('config', function() {
 
-	var _config = #{prettyPrintConfig()};
-	
-	var get = function(key) { return _config[key]; };
-	var has = function(key) { return _config[key] != null; };
-	var set = function(key, value) { return _config[key] = value; };
-	
-	return {
-		
-		get: get,
-		has: has,
-		set: set,
-		
-		$get: function() { return {get: get, has: has, set: set}; }
-	};
-	
+  return new ((#{Config.toString()})())(#{prettyPrintConfig()});
+
 });
 """
 			

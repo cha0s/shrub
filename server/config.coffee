@@ -99,4 +99,36 @@ nconf.defaults
 			
 				store: 'redis'
 
-module.exports = nconf
+exports.config = nconf
+
+exports.Config = -> class Config
+	
+	constructor: (@config) ->
+	
+	get: (key) ->
+		parts = key.split ':'
+		current = @config
+		for part in parts
+			current = current?[part]
+		current
+	
+	has: (key) ->
+		parts = key.split ':'
+		current = @config
+		for part in parts
+			return false unless part of current
+			current = current[part]
+		
+		return true
+	
+	set: (key, value) ->
+		
+		[parts..., last] = key.split ':'
+		current = @config
+		for part in parts
+			current = current?[part]
+		
+		current?[last] = value
+		
+	$get: -> this
+	
