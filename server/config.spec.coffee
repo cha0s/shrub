@@ -36,4 +36,7 @@ describe 'config', ->
 		config.set 'another:foo', 421
 		expect(config.get 'another:foo').toBe 421
 		
+		config.set 'another:baz:blah', 311
+		expect(config.get 'another:baz:blah').toBe 311
+		
 		

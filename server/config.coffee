@@ -126,7 +126,7 @@ exports.Config = -> class Config
 		[parts..., last] = key.split ':'
 		current = @config
 		for part in parts
-			current = current?[part]
+			current = (current[part] ?= {})
 		
 		current?[last] = value
 		
