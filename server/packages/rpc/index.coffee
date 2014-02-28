@@ -10,7 +10,7 @@ exports.$socketMiddleware = ->
 	pkgman.invoke 'endpoint', (path, endpoint) ->
 		
 		endpoint = receiver: endpoint if _.isFunction endpoint
-		endpoints["#{endpoint.route ? path.replace '/', '.'}"] = endpoint
+		endpoints["#{endpoint.route ? path.replace /\//g, '.'}"] = endpoint
 	
 	label: 'Receive and dispatch RPC calls'
 	middleware: [

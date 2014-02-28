@@ -49,7 +49,7 @@ angular.module('shrub.packages', [
 			# Use camelized names for directives and filters:
 			# 'core/foo/bar' -> 'coreFooBar'
 			camelize = (path) ->
-				i8n.camelize (path.replace '/', '_'), true
+				i8n.camelize (path.replace /\//g, '_'), true
 			
 			pkgmanProvider.invoke 'controller', (path, spec) ->
 				$controllerProvider.register path, spec
