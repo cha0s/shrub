@@ -7,6 +7,7 @@ exports.BaseError = class BaseError extends Error
 	constructor: (@message) ->
 	@template: "Unknown error: :message"
 	
+	caught: ->
 	key: 'unknown'
 	template: BaseError.template
 		

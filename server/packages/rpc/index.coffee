@@ -25,11 +25,17 @@ exports.$socketMiddleware = ->
 						req.session?.touch()
 						req.body = data
 						
+						catchError = (error) ->
+							errors.caught error
+							fn error: errors.serialize error
+							
 						endpoint.receiver(
 							req, (error, result) ->
-								reply = (sError) ->
-									return fn error: errors.serialize sError if sError?
-									return fn error: errors.serialize error if error?
+								
+								catchError error if error?
+								
+								reply = (error) ->
+									return catchError error if error?
 									
 									fn result: result
 								
