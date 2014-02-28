@@ -97,7 +97,7 @@ exports.$models = (schema) ->
 	User::redactFor = (user) ->
 		
 		# Decrypt the e-mail if redacting for the same user.
-		redactFor.call(this).bind({}).then((@redacted) ->
+		redactFor.call(this, user).bind({}).then((@redacted) ->
 			return @redacted.email unless user.id?
 			return @redacted.email if user.id isnt @redacted.id
 			
