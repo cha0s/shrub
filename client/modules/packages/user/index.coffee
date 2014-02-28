@@ -33,11 +33,12 @@ exports.$models = (schema) ->
 	
 	User::redactFor = (user) ->
 		
-		@passwordHash = null
-		@resetPasswordToken = null
-		@salt = null
+		redacted =
+			name: @name
+			id: @id
+			email: @email
 		
-		Q.resolve this
+		Q.resolve redacted
 
 augmentModel = (User, Model, name) ->
 	

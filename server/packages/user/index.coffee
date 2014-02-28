@@ -5,7 +5,9 @@ Q = require 'bluebird'
 
 exports.$config = (req) ->
 	
-	user: req.user
+	req.user.redactFor(req.user).then (redacted) ->
+	
+		user: redacted
 
 exports.loadByName = (name) ->
 	
@@ -29,7 +31,7 @@ exports.$httpInitializer = (req, res, next) ->
 				(User.hashPassword password, user.salt).then (passwordHash) ->
 					return Q.resolve() unless user.passwordHash is passwordHash
 					
-					user.redactFor user
+					user
 				
 			else
 				
@@ -43,7 +45,7 @@ exports.$httpInitializer = (req, res, next) ->
 		
 		(User.find id).then((user)->
 			
-			user.redactFor user
+			user
 		
 		).nodeify done
 		
@@ -95,14 +97,15 @@ exports.$models = (schema) ->
 	User::redactFor = (user) ->
 		
 		# Decrypt the e-mail if redacting for the same user.
-		redactFor.call(this).bind({}).then((@redactedUser) ->
-			return @redactedUser.email unless user.id is @redactedUser.id
+		redactFor.call(this).bind({}).then((@redacted) ->
+			return @redacted.email unless user.id?
+			return @redacted.email if user.id isnt @redacted.id
 			
-			crypto.decrypt @redactedUser.email
+			crypto.decrypt @redacted.email
 		
-		).then((email) -> @redactedUser.email = email
+		).then((email) -> @redacted.email = email
 		
-		).then -> @redactedUser
+		).then -> @redacted
 		
 exports.$modelsAlter = (require 'client/modules/packages/user').$modelsAlter
 
