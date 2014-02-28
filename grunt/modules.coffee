@@ -6,6 +6,9 @@ module.exports = (grunt, config) ->
 		'client/packages.coffee'
 		'client/require.coffee'
 		'client/modules/**/*.coffee'
+		
+		'!client/modules/**/test-e2e.coffee'
+		'!client/modules/**/test-unit.coffee'
 		'!client/modules/**/*.spec.coffee'
 	]
 	
