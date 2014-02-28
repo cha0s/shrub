@@ -7,8 +7,8 @@ exports.$route =
 	title: 'Reset your password'
 	
 	controller: [
-		'$location', '$scope', 'ui/notifications'
-		($location, $scope, notifications) ->
+		'$location', '$routeParams', '$scope', 'ui/notifications'
+		($location, $routeParams, $scope, notifications) ->
 			
 			$scope.userReset =
 				
@@ -16,6 +16,10 @@ exports.$route =
 					type: 'password'
 					label: "New password"
 					required: true
+				
+				token:
+					type: 'hidden'
+					value: $routeParams.token
 				
 				submit:
 					type: 'submit'
