@@ -67,9 +67,11 @@ exports.$service = [
 	
 		_notifications = []
 		
+		service = {}
+		
 # Add a notification to be displayed.
 		
-		@add = (notification) ->
+		service.add = (notification) ->
 			
 			notification.class ?= 'alert-info'
 			
@@ -77,22 +79,22 @@ exports.$service = [
 		
 # Get the top notification.
 		
-		@top = -> _notifications[0]
+		service.top = -> _notifications[0]
 		
 # Remove the top notification.
 		
-		@removeTop = -> _notifications.shift()
+		service.removeTop = -> _notifications.shift()
 		
 # The number of notifications to show.
 		
-		@count = -> _notifications.length
+		service.count = -> _notifications.length
 
 # Accept notifications from the server.
 		
 		socket.on 'notifications', (data) ->
 			
-			_notifications.push.apply _notifications, data.notifications
+			service.add notification for notification in data.notifications
 			
-		return
+		service
 		
 ]
