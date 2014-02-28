@@ -31,6 +31,16 @@ exports.$directive = [
 				$wrapper = angular.element '<div class="form-group">'
 				$wrapper.append $field = switch field.type
 					
+					when 'hidden'
+						
+						scope[name] = field.value
+						
+						angular.element(
+							'<input type="hidden">'
+						).attr(
+							name: name
+						)
+						
 					when 'email', 'password', 'text'
 						$wrapper.append(
 							angular.element('<label>').text field.label
