@@ -1,7 +1,7 @@
 
 exports.$appRun = [
-	'ui/nav'
-	(nav) ->
+	'ui/nav', 'ui/title'
+	(nav, title) ->
 
 		nav.setLinks [
 			pattern: '/home', href: '/home', name: 'Home'
@@ -14,6 +14,8 @@ exports.$appRun = [
 		,
 			pattern: '/user/logout', href: '/user/logout', name: 'Sign out'
 		]
+		
+		title.setSite 'Shrub'
 ]
 
 exports[path] = require "packages/example/#{path}" for path in [

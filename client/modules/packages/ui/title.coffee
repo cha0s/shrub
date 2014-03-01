@@ -1,9 +1,4 @@
 
-exports.$appRun = [
-	'ui/title'
-	(title) -> title.setSite 'Shrub'
-]
-
 exports.$directive = [
 	'ui/title'
 	(title) ->
