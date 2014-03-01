@@ -135,6 +135,8 @@ exports.$socketMiddleware = ->
 			
 			req.user ?= new User()
 			
+			req.socket.join req.user.name if req.user.id?
+			
 			next()
 	
 	]

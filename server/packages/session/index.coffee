@@ -13,6 +13,9 @@ exports.$socketMiddleware = ->
 				(session) ->
 					
 					req.session = session
+					
+					req.socket.join session.id
+					
 					next()
 				
 				(error) -> next error
