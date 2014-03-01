@@ -1,21 +1,4 @@
 
-exports.$appRun = [
-	'ui/nav'
-	(nav) ->
-
-		nav.setLinks [
-			pattern: '/home', href: '/home', name: 'Home'
-		,
-			pattern: '/about', href: '/about', name: 'About'
-		,
-			pattern: '/user/register', href: '/user/register', name: 'Sign up'
-		,
-			pattern: '/user/login', href: '/user/login', name: 'Sign in'
-		,
-			pattern: '/user/logout', href: '/user/logout', name: 'Sign out'
-		]
-]
-
 exports.$directive = [
 	'$location', 'ui/nav', 'socket', 'ui/title', 'user'
 	($location, nav, socket, title, user) ->
