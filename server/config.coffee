@@ -7,7 +7,7 @@ winston.remove winston.transports.Console
 winston.add winston.transports.Console, level: 'silly'
 winston.add winston.transports.File, filename: 'logs/shrub.log'
 
-nconf.argv().env().file "../config/settings.json"
+nconf.argv().env().file "#{__dirname}/../config/settings.json"
 
 # A bunch of temporary bootstrappy nonsense that will (mostly) be abstracted
 # away.
