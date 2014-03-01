@@ -29,7 +29,7 @@ exports.$directive = [
 			
 			scope.$watch(
 				-> title.page()
-				-> scope.title = title.page()
+				-> scope.pageTitle = title.page()
 			)
 			
 			(navActiveLinks = ->
@@ -67,7 +67,7 @@ exports.$directive = [
 				<span class="icon-bar"></span>
 			</button>
 
-			<a class="navbar-brand" href="#"><span data-ng-bind="title"></span></a>
+			<a class="navbar-brand" href="#"><span data-ng-bind="pageTitle"></span></a>
 			
 		</div>
 		

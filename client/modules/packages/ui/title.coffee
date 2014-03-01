@@ -12,7 +12,7 @@ exports.$directive = [
 		
 			scope.$watch(
 				-> title.window()
-				-> scope.title = title.window()
+				-> scope.windowTitle = title.window()
 			)
 		
 		replace: true
@@ -24,7 +24,7 @@ exports.$directive = [
 		template: """
 
 <title
-	data-ng-bind="title"
+	data-ng-bind="windowTitle"
 ></title>
 
 """
