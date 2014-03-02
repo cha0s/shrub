@@ -25,12 +25,42 @@
 
 .container {
   max-width: 1170px;
-}
-
-form.userForgot, form.userLogin, form.userRegister, form.userReset {
-  max-width: 300px;
+  max-width: 768px;
 }
 
 .muted {
   color: #999999;
+}
+
+nav.navbar {
+  margin-top: 20px;
+  
+  ul {
+    
+    li {
+      
+      &.active > a {
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05) inset;
+      }
+      
+      a {
+      }
+    }
+  }    
+  
+  .navbar-brand {
+    small, .small {
+      font-size: 60%;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .identity-wrapper {
+      margin: 15px 0 15px 40px;
+    }
+  }
+}
+
+form.userForgot, form.userLogin, form.userRegister, form.userReset {
+  max-width: 300px;
 }
