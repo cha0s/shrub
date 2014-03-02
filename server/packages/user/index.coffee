@@ -19,7 +19,7 @@ exports.$httpInitializer = (req, res, next) ->
 	
 	{models: User: User} = require 'server/jugglingdb'
 	
-	LocalStrategy = require("passport-local").Strategy
+	LocalStrategy = require('passport-local').Strategy
 	
 	passport.use new LocalStrategy (username, password, done) ->
 		
@@ -98,6 +98,7 @@ exports.$models = (schema) ->
 		
 		# Decrypt the e-mail if redacting for the same user.
 		redactFor.call(this, user).bind({}).then((@redacted) ->
+			return null unless @redacted.email?
 			return @redacted.email unless user.id?
 			return @redacted.email if user.id isnt @redacted.id
 			
