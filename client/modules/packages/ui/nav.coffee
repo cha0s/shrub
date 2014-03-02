@@ -62,7 +62,7 @@ exports.$directive = [
 			</p>
 			<ul class="nav navbar-nav navbar-right">
 				<li data-ng-class="link.active" data-match-route="{{link.pattern}}" data-ng-repeat="link in links()">
-					<a data-ng-href="{{link.href}}" data-ng-bind="link.name"></a>
+					<a target="{{link.target}}" data-ng-href="{{link.href}}" data-ng-bind="link.name"></a>
 				</li>
 			</ul>
 		</div>
