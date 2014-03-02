@@ -55,7 +55,7 @@ exports.$directive = [
 		</div>
 		
 		<div class="navbar-collapse collapse" data-ng-class="navClass">
-			<p class="navbar-text">
+			<p class="navbar-text navbar-right identity-wrapper">
 				<span class="identity">
 					You are <span class="username" data-ng-bind="user.name"></span>
 				</span>
