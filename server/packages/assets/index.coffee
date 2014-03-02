@@ -23,9 +23,9 @@ exports.$httpMiddleware = (http) ->
 						'/lib/socket.io/socket.io.min.js'
 						
 						'/before-angular.js'
-						
-						'//ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js'
-						'//ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular-sanitize.min.js'
+
+						'//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js'
+						'//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-sanitize.min.js'						
 
 						'/lib/angular-ui/bootstrap/ui-bootstrap-tpls-0.10.0.min.js'
 						
