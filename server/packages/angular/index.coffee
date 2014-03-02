@@ -17,7 +17,9 @@ exports.$endpoint =
 	route: 'hangup'
 	receiver: (req, fn) ->
 		
+		return fn() unless req.session?
 		return fn() unless (context = contexts.lookup req.session.id)?
+		
 		context.close fn
 
 exports.$httpMiddleware = (http) ->
