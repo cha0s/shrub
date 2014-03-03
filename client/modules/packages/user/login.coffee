@@ -14,10 +14,7 @@ exports.e2eLogin = $routeMock:
 		'$location', '$routeParams', '$scope', 'socket', 'user'
 		($location, $routeParams, $scope, socket, user) ->
 			
-			socket.catchEmit 'rpc://user.login', (data, fn) ->
-				fn result: id: 1, name: 'cha0s'
-				
-			user.login('local', 'cha0s', 'password').then (user) ->
+			user.fakeLogin('cha0s').then ->
 				$location.path "/user/#{$routeParams.destination}"
 				
 	]

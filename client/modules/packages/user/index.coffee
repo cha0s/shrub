@@ -256,6 +256,21 @@ exports.$service = [
 		
 ]
 
+exports.$serviceMock = [
+	'$delegate', 'socket'
+	($delegate, socket) ->
+		
+		$delegate.fakeLogin = (username, password = 'password', id = 1) ->
+	
+			socket.catchEmit 'rpc://user.login', (data, fn) ->
+				fn result: id: id, name: username
+				
+			$delegate.login 'local', username, password
+			
+		$delegate
+	
+]
+
 exports[path] = require "packages/user/#{path}" for path in [
 	'forgot', 'login', 'logout', 'register', 'reset'
 ]
