@@ -12,7 +12,7 @@ exports.$initialized = ->
 	replServer = net.createServer (socket) ->
 		
 		s = repl.start(
-			prompt: "reddichat> "
+			prompt: "shrub> "
 			input: socket
 			output: socket
 		)
