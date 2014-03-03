@@ -3287,12 +3287,12 @@ Schema.Text = function Text(s){ return s; };
 Schema.JSON = function JSON(){};
 
 Schema.types = {};
-Schema.registerType = function (type){
-  this.types[type.name] = type;
+Schema.registerType = function (type, name){
+  this.types[name || type.name] = type;
 };
 
-Schema.registerType(Schema.Text);
-Schema.registerType(Schema.JSON);
+Schema.registerType(Schema.Text, 'Text');
+Schema.registerType(Schema.JSON, 'JSON');
 
 /**
  * Schema - adapter-specific classes factory.
@@ -3543,7 +3543,7 @@ Schema.prototype.define = function defineClass(className, properties, settings){
       DataType = function Date(arg){
         return new OrigDate(arg);
       };
-    } else if (DataType.name === 'JSON' || DataType === JSON) {
+    } else if (DataType.name === 'JSON' || DataType === Schema.JSON) {
       DataType = function JSON(s){
         return s;
       };
