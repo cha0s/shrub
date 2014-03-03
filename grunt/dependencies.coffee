@@ -22,8 +22,8 @@ module.exports = (grunt, config) ->
 		files: 'build/js/dependencies/jugglingdb-client.js': [
 			'node_modules/promised-jugglingdb/index.js'
 		]
-		ignore: ['bluebird']
 		options:
+			external: ['bluebird', 'inflection']
 			detectGlobals: false
 			standalone: 'jugglingdb'
 
