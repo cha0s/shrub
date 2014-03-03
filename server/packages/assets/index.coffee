@@ -16,7 +16,7 @@ exports.$httpMiddleware = (http) ->
 					
 
 					[
-						'//code.jquery.com/jquery-1.9.1.min.js'
+						'//code.jquery.com/jquery-1.11.0.min.js'
 
 						'/lib/bootstrap/js/bootstrap.min.js'
 						
@@ -25,6 +25,7 @@ exports.$httpMiddleware = (http) ->
 						'/before-angular.js'
 
 						'//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js'
+						'//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-route.min.js'						
 						'//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-sanitize.min.js'						
 
 						'/lib/angular-ui/bootstrap/ui-bootstrap-tpls-0.10.0.min.js'
@@ -37,7 +38,7 @@ exports.$httpMiddleware = (http) ->
 				else
 					
 					[
-						'/lib/jquery/jquery-1.9.js'
+						'/lib/jquery/jquery-1.11.0.js'
 						
 						'/lib/bootstrap/js/bootstrap.js'
 		
