@@ -23,10 +23,10 @@ module.exports = class AbstractSocketFactory extends EventEmitter
 				spec
 		)
 		
-		winston.info 'END loading socket middleware:'
+		winston.info 'END loading socket middleware.'
 
 	for method in [
-		'emitToChannel', 'listen'
+		'listen', 'socketsInChannel'
 	]
 		@::[method] = -> throw new ReferenceError(
 			"AbstractSocket#{method} is a pure virtual method!"
