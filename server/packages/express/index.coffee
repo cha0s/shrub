@@ -2,7 +2,7 @@
 express = require 'express'
 fs = require 'fs'
 http = require 'http'
-Q = require 'bluebird'
+Promise = require 'bluebird'
 winston = require 'winston'
 
 class Express extends (require 'AbstractHttp')
@@ -30,22 +30,21 @@ class Express extends (require 'AbstractHttp')
 	listen: (fn) -> @_server.listen @port(), fn
 	
 	loadSessionFromRequest: (req) ->
-		deferred = Q.defer()
 		
-		@cookieParser() req, {}, (error) =>
-			deferred.reject error if error?
-			
-			(req.sessionStore = @sessionStore()).load(
-				req.signedCookies[@sessionKey()]
-				(error, session) ->
-					return deferred.reject error if error?
-					return deferred.reject new Error 'No session!' unless session?
-					
-					session.req = session
-					deferred.resolve session
-			)
-			
-		deferred.promise
+		new Promise (resolve, reject) =>
+		
+			@cookieParser() req, {}, (error) =>
+				return reject error if error?
+				
+				(req.sessionStore = @sessionStore()).load(
+					req.signedCookies[@sessionKey()]
+					(error, session) ->
+						return reject error if error?
+						return reject new Error 'No session!' unless session?
+						
+						session.req = session
+						resolve session
+				)
 			
 	renderApp: (locals, fn) ->
 		
@@ -70,12 +69,18 @@ class Express extends (require 'AbstractHttp')
 				RedisStore = require('connect-redis') express
 				new RedisStore client: module.createClient()
 
-exports.$genesis = (config) ->
-
-	http = new Express config.get 'services:http'
-	http.initialize (error) ->
-		return winston.error error.stack if error?
-		console.info "Shrub Express HTTP server up and running!"
+exports.$initialize = (config) ->
+	
+	new Promise (resolve, reject) ->
+	
+		http = new Express config.get 'services:http'
+		http.initialize (error) ->
+			return reject error if error?
+			
+			console.info "Shrub Express HTTP server up and running on port #{
+				config.get 'services:http:port'
+			}!"
+			resolve()
 
 exports[path] = require "./#{path}" for path in [
 	'errors', 'logger', 'routes', 'session', 'static'

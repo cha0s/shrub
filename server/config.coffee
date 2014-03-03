@@ -38,6 +38,7 @@ nconf.defaults
 		'files'
 		'form'
 		'logger'
+		'repl'
 		'rpc'
 		'schema'
 		'session'

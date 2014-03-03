@@ -26,6 +26,10 @@ exports.$httpMiddleware = (http) ->
 			next()
 	]
 
+exports.$replContext = (context) ->
+	
+	context.socketFactory = socketFactory
+
 exports.$socketMiddleware = ->
 	
 	label: 'Register socket factory'
