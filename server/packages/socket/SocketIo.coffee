@@ -12,8 +12,6 @@ module.exports = class SocketIo extends (require 'AbstractSocketFactory')
 	constructor: ->
 		super
 	
-	channelsSocketIsIn: (socket) -> @io.sockets.manager.roomClients[socket.id]
-		
 	socketsInChannel: (channel) -> @io.sockets.clients channel
 		
 	listen: (http) ->
@@ -39,6 +37,8 @@ module.exports = class SocketIo extends (require 'AbstractSocketFactory')
 		
 		@io.sockets.on 'connection', (socket) =>
 			req = socket.handshake
+			
+			socket.join '$global'
 			
 			req.http = http
 			req.socket = socket
