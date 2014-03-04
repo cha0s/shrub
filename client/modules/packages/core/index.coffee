@@ -4,24 +4,30 @@ exports.$appConfig = [
 	($injector, $routeProvider, $locationProvider, pkgmanProvider) ->
 	
 # Set up routes.
-		pkgmanProvider.invoke 'route', (path, route) ->
+		routes = {}
+		pkgmanProvider.invoke 'route', (path, route) -> routes[path] = route
+		pkgmanProvider.invoke 'routeAlter', (_, fn) -> fn routes
+		
+		for path, route of routes
 			
-			routeController = route.controller
-			route.controller = [
-				'$injector', '$scope', 'ui/title'
-				($injector, $scope, title) ->
-					
-					title.setPage route.title ? ''
-					
-					$injector.invoke(
-						routeController, null
-						$scope: $scope
-					)
-			]
+			do (path, route) ->
 			
-			route.template ?= ' '
-			
-			$routeProvider.when "/#{route.path ? path}", route
+				routeController = route.controller
+				route.controller = [
+					'$injector', '$scope', 'ui/title'
+					($injector, $scope, title) ->
+						
+						title.setPage route.title ? ''
+						
+						$injector.invoke(
+							routeController, null
+							$scope: $scope
+						)
+				]
+				
+				route.template ?= ' '
+				
+				$routeProvider.when "/#{route.path ? path}", route
 		
 # Create a unique entry point.
 		$routeProvider.when '/shrub-entry-point', {}
