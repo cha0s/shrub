@@ -36,6 +36,11 @@ exports.$httpInitializer = (req, res, next) ->
 			
 			collectionPath = "#{schema.settings.apiRoot}/#{collection}"
 			
+			keyify = (key, value) ->
+				O = {}
+				O[key] = value
+				O
+			
 			app.get collectionPath, (req, res) ->
 				
 				Model.authenticatedAll(
@@ -46,7 +51,7 @@ exports.$httpInitializer = (req, res, next) ->
 						null
 				
 				).then(
-					(models) -> serveJson res, 200, models
+					(models) -> serveJson res, 200, keyify collection, models
 					interceptError res
 				).done()
 				
@@ -56,7 +61,7 @@ exports.$httpInitializer = (req, res, next) ->
 					req.user
 
 				).then(
-					(count) -> serveJson res, 200, count: count
+					(count) -> serveJson res, 200, keyify 'count', count
 					interceptError res
 				).done()
 			
@@ -67,7 +72,7 @@ exports.$httpInitializer = (req, res, next) ->
 					req.body
 
 				).then(
-					(model) -> serveJson res, 201, model
+					(model) -> serveJson res, 201, keyify resource, model
 					interceptError res
 				).done()
 
@@ -90,7 +95,7 @@ exports.$httpInitializer = (req, res, next) ->
 					req.params.id
 				
 				).then(
-					(model) -> serveJson res, 200, model
+					(model) -> serveJson res, 200, keyify resource, model
 					interceptError res
 				).done()
 	
@@ -116,3 +121,7 @@ exports.$httpInitializer = (req, res, next) ->
 				).done()
 
 	next()
+	
+exports.$replContext = (context) ->
+	
+	context.schema = require 'server/jugglingdb'
