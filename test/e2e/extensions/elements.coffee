@@ -12,3 +12,5 @@ shrub.click = (selector) -> (element `by`.css selector).click()
 shrub.text = (selector) -> (element `by`.css selector).getText()
 
 shrub.count = (selector) -> (element.all `by`.css selector).count()
+
+shrub.get = (selector, index = 0) -> (element.all `by`.css selector).get index
