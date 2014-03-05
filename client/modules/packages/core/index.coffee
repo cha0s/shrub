@@ -6,7 +6,12 @@ exports.$appConfig = [
 # Set up routes.
 		routes = {}
 		pkgmanProvider.invoke 'route', (path, route) -> routes[path] = route
-		pkgmanProvider.invoke 'routeAlter', (_, fn) -> fn routes
+		pkgmanProvider.invoke 'routeAlter', (_, fn) ->
+			
+			$injector.invoke(
+				fn, null
+				routes: routes
+			)
 		
 		for path, route of routes
 			
