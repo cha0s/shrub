@@ -19,7 +19,6 @@
     "passport-github": "~0.1.5",
     "passport-twitter": "~0.1.5",
     "socket.io": "~0.9.16",
-    "underscore": "~1.4.4",
     "winston": "~0.7.2"
   },
   "devDependencies": {
