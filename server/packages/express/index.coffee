@@ -27,7 +27,22 @@ class Express extends (require 'AbstractHttp')
 	
 	cookieParser: -> express.cookieParser @_config.express.sessions.cookie.cryptoKey
 
-	listen: (fn) -> @_server.listen @port(), fn
+	listen: (fn) ->
+		
+		errorCallback = (error) =>
+			return fn error unless 'EADDRINUSE' is error.code
+			
+			winston.info "Address in use... retrying in 2 seconds"
+			
+			setTimeout (=> @_server.listen @port()), 2000
+		
+		@_server.on 'error', errorCallback
+		
+		@_server.once 'listening', =>
+			@_server.removeListener 'error', errorCallback
+			fn()
+		
+		@_server.listen @port()
 	
 	loadSessionFromRequest: (req) ->
 		
