@@ -45,20 +45,26 @@ angular.module('shrub.packages', [
 			require = requireProvider.require
 			
 			i8n = require 'inflection'
-			
-			# Use camelized names for directives and filters:
+
+			# Use normalize names for directives and filters:
 			# 'core/foo/bar' -> 'coreFooBar'
-			camelize = (path) ->
-				i8n.camelize (path.replace /\//g, '_'), true
-			
+			normalize = (path) ->
+				parts = for part, i in path.split '/'
+					i8n.camelize(
+						part.replace /[^\w]/g, '_'
+						0 is i
+					)
+					
+				i8n.camelize (i8n.underscore parts.join ''), true
+
 			pkgmanProvider.invoke 'controller', (path, spec) ->
 				$controllerProvider.register path, spec
 
 			pkgmanProvider.invoke 'directive', (path, spec) ->
-				$compileProvider.directive (camelize path), spec
+				$compileProvider.directive (normalize path), spec
 
 			pkgmanProvider.invoke 'filter', (path, spec) ->
-				$filterProvider.register (camelize path), spec
+				$filterProvider.register (normalize path), spec
 
 			pkgmanProvider.invoke 'service', (path, spec, isMock) ->
 				if isMock
@@ -67,7 +73,3 @@ angular.module('shrub.packages', [
 					$provide.service path, spec
 			
 	])
-	
-	
-	
-	
