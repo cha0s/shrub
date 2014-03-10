@@ -1,4 +1,5 @@
 
+fs = require 'fs'
 nconf = require 'nconf'
 net = require 'net'
 pkgman = require 'pkgman'
@@ -6,8 +7,9 @@ repl = require 'repl'
 
 exports.$initialized = ->
 
+	filename = "#{__dirname}/socket"
 	replServer = null
-
+	
 	# Feed all the goodies into a REPL for ultimate awesome.
 	replServer = net.createServer (socket) ->
 		
@@ -23,8 +25,4 @@ exports.$initialized = ->
 		
 		s.on 'exit', -> socket.end()
 		
-	replServer.listen "#{__dirname}/socket"
-
-	process.on 'SIGINT', ->
-		replServer.close()
-		process.exit 1
+	fs.unlink filename, -> replServer.listen filename
