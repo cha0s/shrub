@@ -18,6 +18,6 @@ exports.$appRun = [
 		title.setSite 'Shrub'
 ]
 
-exports[path] = require "packages/example/#{path}" for path in [
+exports[path] = require "./#{path}" for path in [
 	'about', 'home'
 ]

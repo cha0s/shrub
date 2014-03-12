@@ -1,4 +1,4 @@
 
-exports[path] = require "packages/ui/#{path}" for path in [
+exports[path] = require "./#{path}" for path in [
 	'markdown', 'nav', 'notifications', 'title', 'window'
 ]

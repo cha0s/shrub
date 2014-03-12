@@ -271,6 +271,6 @@ exports.$serviceMock = [
 	
 ]
 
-exports[path] = require "packages/user/#{path}" for path in [
+exports[path] = require "./#{path}" for path in [
 	'forgot', 'login', 'logout', 'register', 'reset'
 ]
