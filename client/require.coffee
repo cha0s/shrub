@@ -10,7 +10,9 @@ _resolveModuleName = (name, parentFilename) ->
 	path = _require 'path'
 	parentDirname = path.dirname parentFilename
 	resolvedPath = (path.resolve parentDirname, name).substr 1
+
 	return resolvedPath if requires_[resolvedPath]
+	return "#{resolvedPath}/index" if requires_["#{resolvedPath}/index"]?
 	
 	throw new Error "Cannot find module '#{name}'"
 
