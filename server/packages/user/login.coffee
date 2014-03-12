@@ -12,7 +12,7 @@ exports.$endpoint = (req, fn) ->
 				return fn new LoginError() unless user
 				
 				req.login user, (error) ->
-					return fn attempted: error.message if error?
-					fn null, user
+					return fn error if error?
+					user.redactFor(user).nodeify fn
 			
 			) req, res = {}
