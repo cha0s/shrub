@@ -1,18 +1,21 @@
 # Implement require in the spirit of NodeJS.
 
 _resolveModuleName = (name, parentFilename) ->
-
-	return name if requires_[name]
 	
-	return "#{name}/index" if requires_["#{name}/index"]?
+	checkModuleName = (name) ->
+		return name if requires_[name]
+		return "#{name}/index" if requires_["#{name}/index"]?
+		
+	return checked if (checked = checkModuleName name)?
 	
 	# Resolve relative paths.
 	path = _require 'path'
-	parentDirname = path.dirname parentFilename
-	resolvedPath = (path.resolve parentDirname, name).substr 1
-
-	return resolvedPath if requires_[resolvedPath]
-	return "#{resolvedPath}/index" if requires_["#{resolvedPath}/index"]?
+	return checked if (checked = checkModuleName(
+		path.resolve(
+			path.dirname parentFilename
+			name
+		).substr 1
+	))?
 	
 	throw new Error "Cannot find module '#{name}'"
 
