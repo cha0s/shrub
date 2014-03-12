@@ -75,10 +75,6 @@ describe 'title', ->
 			(_title_) -> title = _title_
 		]
 		
-	it 'should set window title to site title by default', ->
-		
-		expect(title.window()).toBe title.site()
-
 	it 'should set window title to page title [separator] site title by default when the page title is set', ->
 		
 		title.setPage 'Home'
@@ -89,5 +85,5 @@ describe 'title', ->
 		
 		title.setPage 'Home', false
 		
-		expect(title.window()).toBe title.site()
+		expect(title.site()).not.toContain 'Home'
 		

@@ -29,7 +29,7 @@ exports.$directive = [
 exports.$service = [
 	'$rootScope', '$timeout'
 	($rootScope, $timeout) ->
-			
+		
 # Get and set the page title.
 		_page = ''
 		
@@ -53,7 +53,7 @@ exports.$service = [
 		@setSite = (site) -> _site = site
 		
 # Get and set the window title.		
-		_window = _site
+		_window = ''
 
 		@window = -> _windowWrapper _window
 		@setWindow = (window) -> _window = window

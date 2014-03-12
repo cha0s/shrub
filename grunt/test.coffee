@@ -108,9 +108,7 @@ describe('#{config.pkg.name}', function() {
 describe('#{config.pkg.name}', function() {
 
   beforeEach(function() {
-    module('shrub.config');
-    module('shrub.packages');
-    module('shrub.require');
+    module('shrub.core');
   });
 
 

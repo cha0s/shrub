@@ -1,11 +1,16 @@
 'use strict'
 
 angular.module('shrub', [
-	'ngRoute'
-	'ngSanitize'
 	
 	'ui.bootstrap'
 	
+	'shrub.core'
+])
+
+angular.module('shrub.core', [
+	'ngRoute'
+	'ngSanitize'
+
 	'shrub.config'
 	'shrub.packages'
 	'shrub.require'

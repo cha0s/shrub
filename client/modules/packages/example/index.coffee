@@ -2,7 +2,7 @@
 exports.$appRun = [
 	'ui/nav', 'ui/title'
 	(nav, title) ->
-
+		
 		nav.setLinks [
 			pattern: '/home', href: '/home', name: 'Home'
 		,
