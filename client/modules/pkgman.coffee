@@ -17,18 +17,13 @@ exports.rebuildPackageCache = ->
 	
 	for name in _packages
 	
-		# TODO only until I improve require()
 		try
 			package_ = require "packages/#{name}"
 		catch error
 			
-			try
-				package_ = require "packages/#{name}/index"
-			catch error
+			continue if error.toString() is "Error: Cannot find module 'packages/#{name}'"
 				
-				continue if error.toString() is "Error: Cannot find module 'packages/#{name}/index'"
-				
-				throw error
+			throw error
 			
 		packageCache[name] = package_
 		
