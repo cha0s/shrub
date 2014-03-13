@@ -9,7 +9,8 @@ module.exports = (grunt, config) ->
 			'node_modules/bluebird/js/main/bluebird.js'
 		]
 		options:
-			standalone: 'inflection'
+			detectGlobals: false
+			standalone: 'bluebird'
 
 	config.browserify.inflection =
 		files: 'build/js/dependencies/inflection.js': [
@@ -23,10 +24,16 @@ module.exports = (grunt, config) ->
 			'node_modules/promised-jugglingdb/index.js'
 		]
 		options:
-			external: ['bluebird', 'inflection']
-			detectGlobals: false
+			external: ['bluebird', 'inflection', 'path']
 			standalone: 'jugglingdb'
 
+	config.browserify.path =
+		files: 'build/js/dependencies/path.js': [
+			'node_modules/browserify/node_modules/path-browserify/index.js'
+		]
+		options:
+			standalone: 'path'
+	
 	config.copy.bluebird =
 		expand: true
 		cwd: 'build/js/dependencies'
@@ -45,6 +52,12 @@ module.exports = (grunt, config) ->
 		src: ['**/jugglingdb-client.js']
 		dest: 'client/modules'
 	
+	config.copy.path =
+		expand: true
+		cwd: 'build/js/dependencies'
+		src: ['**/path.js']
+		dest: 'client/modules'
+	
 	grunt.registerTask 'bluebird', [
 		'browserify:bluebird'
 		'copy:bluebird'
@@ -60,8 +73,14 @@ module.exports = (grunt, config) ->
 		'copy:jugglingdb'
 	]
 
+	grunt.registerTask 'path', [
+		'browserify:path'
+		'copy:path'
+	]
+
 	grunt.registerTask 'dependencies', [
 		'bluebird'
 		'inflection'
 		'jugglingdb'
+		'path'
 	]
