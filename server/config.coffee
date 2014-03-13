@@ -37,6 +37,7 @@ nconf.defaults
 		'express'
 		'files'
 		'form'
+		'limiter'
 		'logger'
 		'repl'
 		'rpc'
