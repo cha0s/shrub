@@ -26,11 +26,11 @@ exports.errorTypes = ->
 exports.serialize = (error) ->
 	
 	if error instanceof BaseError
-		error
+		error.toJSON()
 	else if error instanceof Error
-		[null, error.message]
+		[undefined, error.message]
 	else
-		[null, error]
+		[undefined, error]
 	
 exports.unserialize = (data) -> exports.instantiate.apply null, data
 	

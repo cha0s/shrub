@@ -23,21 +23,21 @@ describe 'errors', ->
 	it "serializes (even abstract) errors", ->
 		
 		O = errors.serialize error
-		expect(O.key).toBe error.key
-		expect(O.message).toBe error.message
+		expect(O[0]).toBe error.key
+		expect(O[1]).toBe error.message
 		
 		O = errors.serialize new Error "Foobar"
-		expect(O.key).not.toBeDefined()
-		expect(O.message).toBe "Foobar"
+		expect(O[0]).not.toBeDefined()
+		expect(O[1]).toBe "Foobar"
 
 		O = errors.serialize "Hmm"
-		expect(O.key).not.toBeDefined()
-		expect(O.message).toBe "Hmm"
+		expect(O[0]).not.toBeDefined()
+		expect(O[1]).toBe "Hmm"
 
 	it "unserializes (even abstract) errors", ->
 		
 		O = errors.serialize error
 		expect(errors.message errors.unserialize O).toBe errors.message error
 		
-		O = message: 'Blah'
+		O = [undefined, 'Blah']
 		expect(errors.message errors.unserialize O).toBe "Unknown error: Blah"
