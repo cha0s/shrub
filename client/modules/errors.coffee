@@ -11,9 +11,7 @@ exports.BaseError = class BaseError extends Error
 	key: 'unknown'
 	template: BaseError.template
 		
-	toJSON: ->
-		key: @key
-		message: @message
+	toJSON: -> [@key, @message]
 		
 exports.errorTypes = ->
 	
@@ -22,7 +20,7 @@ exports.errorTypes = ->
 	pkgman.invoke 'errorType', (path, spec) -> collected.push spec
 		
 	types = {}
-	types[(new Type).key] = Type for Type in collected
+	types[Type::key] = Type for Type in collected
 	types
 
 exports.serialize = (error) ->
@@ -30,11 +28,11 @@ exports.serialize = (error) ->
 	if error instanceof BaseError
 		error
 	else if error instanceof Error
-		message: error.message
+		[null, error.message]
 	else
-		message: error
+		[null, error]
 	
-exports.unserialize = (data) -> exports.instantiate data.key, data.message
+exports.unserialize = (data) -> exports.instantiate.apply null, data
 	
 exports.message = (error) ->
 
@@ -48,12 +46,19 @@ exports.message = (error) ->
 	output = output.replace ":#{key}", value for key, value of error
 	output
 	
-exports.instantiate = (key, message) ->
+exports.instantiate = (key, args...) ->
 	
 	Types = exports.errorTypes()
 	Type = if Types[key]? then Types[key] else BaseError
-
-	new Type message
+	
+	Type = do (Type) ->
+		
+		F = (args) -> Type.apply this, args
+		F.prototype = Type.prototype
+		
+		(args) -> new F args
+	
+	Type args
 	
 exports.caught = (error) ->
 	return error unless error instanceof BaseError
