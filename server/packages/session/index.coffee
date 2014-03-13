@@ -1,4 +1,9 @@
 
+exports.$auditKeys = (req) ->
+	keys = []
+	keys.push req.session.id if req.session?
+	keys
+
 exports.$socketMiddleware = ->
 
 	label: 'Load session'

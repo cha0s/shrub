@@ -72,6 +72,7 @@ nconf.defaults
 						maxAge: 1209600000
 						
 			middleware: [
+				'core'
 				'socket/factory'
 				'form'
 				'express/session'
@@ -90,6 +91,7 @@ nconf.defaults
 			module: 'packages/socket/SocketIo'
 			
 			middleware: [
+				'core'
 				'socket/factory'
 				'session'
 				'user'

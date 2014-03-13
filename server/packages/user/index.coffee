@@ -3,6 +3,11 @@ crypto = require 'server/crypto'
 passport = require 'passport'
 Q = require 'bluebird'
 
+exports.$auditKeys = (req) ->
+	keys = []
+	keys.push req.user.id if req.user.id?
+	keys
+
 exports.$config = (req) ->
 	
 	req.user.redactFor(req.user).then (redacted) ->
