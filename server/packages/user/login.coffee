@@ -1,7 +1,7 @@
 
-LoginError = (require 'client/modules/packages/user/login').$errorType
+{threshold} = require 'limits'
 
-exports.$endpoint = (req, fn) ->
+exports.$endpoint =	(req, fn) ->
 	
 	switch req.body.method
 		
@@ -9,7 +9,7 @@ exports.$endpoint = (req, fn) ->
 			
 			(req.passport.authenticate 'local', (error, user, info) ->
 				return fn error if error?
-				return fn new LoginError() unless user
+				return fn errors.instantiate 'login' unless user
 				
 				req.login user, (error) ->
 					return fn error if error?
