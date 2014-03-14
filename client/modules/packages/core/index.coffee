@@ -46,7 +46,17 @@ exports.$appRun = [
 		
 		$rootScope.$watch(
 			-> $location.path()
-			-> $rootScope.urlClass = $location.path().substr(1).replace '/', '-'
+			->
+			
+				# Split the path into the corresponding classes, e.g.
+				#
+				# foo/bar/baz -> class="foo foo-bar foo-bar-baz"
+				parts = $location.path().substr(1).split '/'
+				parts = for i in [1..parts.length]
+					part = parts.slice(0, i).join '-'
+					part.replace /[^_a-zA-Z0-9-]/g, '-'
+					
+				$rootScope.pathClass = parts.join ' '
 		)
 		
 ]
