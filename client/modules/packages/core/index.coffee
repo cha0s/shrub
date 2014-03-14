@@ -40,4 +40,15 @@ exports.$appConfig = [
 		$locationProvider.html5Mode true
 ]
 
+exports.$appRun = [
+	'$rootScope', '$location'
+	($rootScope, $location) ->
+		
+		$rootScope.$watch(
+			-> $location.path()
+			-> $rootScope.urlClass = $location.path().substr(1).replace '/', '-'
+		)
+		
+]
+
 exports.$routeMock = path: 'e2e/sanity-check'
