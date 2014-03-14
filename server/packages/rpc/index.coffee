@@ -49,8 +49,10 @@ exports.$socketMiddleware = ->
 					uri = "rpc://#{route}"
 					req.socket.on uri, (data, fn) ->
 						
-						req.session?.touch()
-						req.body = data
+						routeReq = {}
+						routeReq[key] = value for own key, value of req
+						
+						routeReq.body = data
 						
 						emitError = (error) -> fn error: errors.serialize error
 						
@@ -67,11 +69,11 @@ exports.$socketMiddleware = ->
 							errors.caught error
 							emitError error
 						
-						endpoint.validators.dispatch req, null, (error) ->
+						endpoint.validators.dispatch routeReq, null, (error) ->
 							return sendErrorToClient error if error?
 							
 							endpoint.receiver(
-								req, (error, result) ->
+								routeReq, (error, result) ->
 									return sendErrorToClient error if error?
 									
 									reply = (error) ->
@@ -81,9 +83,8 @@ exports.$socketMiddleware = ->
 										
 										fn result: result
 									
-									session = req.session
-									if session?
-										session.save reply
+									if (session = req.session)?
+										session.touch().save reply
 									else
 										reply()
 							)
