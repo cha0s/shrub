@@ -45,7 +45,7 @@ module.exports = class SocketIo extends (require 'AbstractSocketFactory')
 			req.socket = socket
 			
 			@_middleware.dispatch req, null, (error) ->
-				return logger.error errors.message error if error?
+				return logger.error errors.stack error if error?
 				
 				socket.emit 'initialized'
 			

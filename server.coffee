@@ -18,5 +18,5 @@ pkgman.invoke 'initialize', (_, spec) -> initializePromises.push spec config
 # After initialization.
 Promise.all(initializePromises).done(
 	-> pkgman.invoke 'initialized', (_, spec) -> spec()
-	(error) -> winston.error errors.message error
+	(error) -> winston.error errors.stack error
 )
