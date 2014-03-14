@@ -46,6 +46,12 @@ exports.message = (error) ->
 	output = output.replace ":#{key}", value for key, value of error
 	output
 	
+exports.stack = (error) ->
+	formatStack = error.stack
+	formatStack = formatStack.split '\n'
+	formatStack.shift()
+	"#{@message error}\n#{formatStack.join '\n'}"
+	
 exports.instantiate = (key, args...) ->
 	
 	Types = exports.errorTypes()
