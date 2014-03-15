@@ -1,4 +1,45 @@
 
+angular.module('shrub.packages', [
+	'shrub.require'
+	'shrub.pkgman'
+])
+
+	.config([
+		'$compileProvider', '$controllerProvider', '$filterProvider', '$provide', 'pkgmanProvider', 'requireProvider'
+		($compileProvider, $controllerProvider, $filterProvider, $provide, pkgmanProvider, requireProvider) ->
+			
+			require = requireProvider.require
+			
+			i8n = require 'inflection'
+
+			# Use normalized names for directives and filters:
+			# 'core/foo/bar' -> 'coreFooBar'
+			normalize = (path) ->
+				parts = for part, i in path.split '/'
+					i8n.camelize(
+						part.replace /[^\w]/g, '_'
+						0 is i
+					)
+					
+				i8n.camelize (i8n.underscore parts.join ''), true
+
+			pkgmanProvider.invoke 'controller', (path, spec) ->
+				$controllerProvider.register path, spec
+
+			pkgmanProvider.invoke 'directive', (path, spec) ->
+				$compileProvider.directive (normalize path), spec
+
+			pkgmanProvider.invoke 'filter', (path, spec) ->
+				$filterProvider.register (normalize path), spec
+
+			pkgmanProvider.invoke 'service', (path, spec, isMock) ->
+				if isMock
+					$provide.decorator path, spec
+				else
+					$provide.service path, spec
+			
+	])
+
 angular.module('shrub.pkgman', [
 	'shrub.require'
 ])
@@ -32,44 +73,3 @@ angular.module('shrub.pkgman', [
 			
 			service
 	]
-
-angular.module('shrub.packages', [
-	'shrub.require'
-	'shrub.pkgman'
-])
-
-	.config([
-		'$compileProvider', '$controllerProvider', '$filterProvider', '$provide', 'pkgmanProvider', 'requireProvider'
-		($compileProvider, $controllerProvider, $filterProvider, $provide, pkgmanProvider, requireProvider) ->
-			
-			require = requireProvider.require
-			
-			i8n = require 'inflection'
-
-			# Use normalize names for directives and filters:
-			# 'core/foo/bar' -> 'coreFooBar'
-			normalize = (path) ->
-				parts = for part, i in path.split '/'
-					i8n.camelize(
-						part.replace /[^\w]/g, '_'
-						0 is i
-					)
-					
-				i8n.camelize (i8n.underscore parts.join ''), true
-
-			pkgmanProvider.invoke 'controller', (path, spec) ->
-				$controllerProvider.register path, spec
-
-			pkgmanProvider.invoke 'directive', (path, spec) ->
-				$compileProvider.directive (normalize path), spec
-
-			pkgmanProvider.invoke 'filter', (path, spec) ->
-				$filterProvider.register (normalize path), spec
-
-			pkgmanProvider.invoke 'service', (path, spec, isMock) ->
-				if isMock
-					$provide.decorator path, spec
-				else
-					$provide.service path, spec
-			
-	])
