@@ -1,7 +1,9 @@
 
-crypto = require 'server/crypto'
+nodeCrypto = require 'crypto'
 passport = require 'passport'
-Q = require 'bluebird'
+Promise = require 'bluebird'
+
+crypto = require 'server/crypto'
 
 exports.$auditKeys = (req) ->
 	keys = []
@@ -29,18 +31,12 @@ exports.$httpInitializer = -> (req, res, next) ->
 	passport.use new LocalStrategy (username, password, done) ->
 		
 		(exports.loadByName username).then((user)->
-			return Q.resolve() unless user?
+			return unless user?
 			
-			if user?
+			(User.hashPassword password, user.salt).then (passwordHash) ->
+				return unless user.passwordHash is passwordHash
 				
-				(User.hashPassword password, user.salt).then (passwordHash) ->
-					return Q.resolve() unless user.passwordHash is passwordHash
-					
-					user
-				
-			else
-				
-				Q.resolve()
+				user
 			
 		).nodeify done
 		
@@ -80,23 +76,17 @@ exports.$models = (schema) ->
 	User = schema.models['User']
 	
 	User.randomHash = ->
-		
-		deferred = Q.defer()
-		
-		require('crypto').randomBytes 24, (error, buffer) ->
-			return deferred.reject error if error?
-			
-			deferred.resolve require('crypto').createHash('sha512').update(
+		Promise.promisify(nodeCrypto.randomBytes)(24).then (buffer) ->
+			nodeCrypto.createHash('sha512').update(
 				schema.settings.cryptoKey
 			).update(
 				buffer.toString()
 			).digest 'hex'
-			
-		deferred.promise
 	
 	User.hashPassword = (password, salt) ->
-		
-		(Q.promisify require('crypto').pbkdf2) password, salt, 20000, 512
+		Promise.promisify(nodeCrypto.pbkdf2)(
+			password, salt, 20000, 512
+		)
 		
 	redactFor = User::redactFor
 	User::redactFor = (user) ->

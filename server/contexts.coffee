@@ -1,7 +1,7 @@
 
 _ = require 'underscore'
 nconf = require 'nconf'
-Q = require 'bluebird'
+Promise = require 'bluebird'
 
 contexts = {}
 
@@ -45,7 +45,7 @@ exports.add = (id, context, fn) ->
 	
 	# Close the context.
 	context.close = (fn) ->
-		Q.resolve(context.promise).then ->
+		Promise.cast(context.promise).then ->
 			return unless contexts[id]?
 			contexts[id] = null
 			

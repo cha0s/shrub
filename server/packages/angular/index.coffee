@@ -2,7 +2,7 @@
 contexts = require 'server/contexts'
 jsdom = require('jsdom').jsdom
 nconf = require 'nconf'
-Q = require 'bluebird'
+Promise = require 'bluebird'
 url = require 'url'
 winston = require 'winston'
 
@@ -217,7 +217,7 @@ exports.$httpMiddleware = (http) ->
 					
 					# Prevent a possible race condition that would hang up the
 					# context in between now and render.
-					deferred = Q.defer()
+					deferred = Promise.defer()
 					context.promise = deferred.promise
 					
 					# Navigate the Angular system to the new path.

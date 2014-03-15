@@ -1,6 +1,6 @@
 
 crypto = require 'server/crypto'
-Q = require 'bluebird'
+Promise = require 'bluebird'
 
 {threshold} = require 'limits'
 
@@ -12,7 +12,7 @@ exports.$endpoint = ->
 		
 		{models: User: User} = require 'server/jugglingdb'
 		
-		Q.resolve().then(->
+		Promise.resolve().then(->
 		
 			# Search for username or encrypted email.
 			if -1 is req.body.usernameOrEmail.indexOf '@'
@@ -38,9 +38,13 @@ exports.$endpoint = ->
 			User.randomHash()
 			
 		).then((hash) ->
-			return Q.resolve() unless @user?
+			return unless @user?
 			
-			user.resetPasswordToken = hash
-			user.save()
+			@user.resetPasswordToken = hash
+			@user.save()
 	
+		).then(->
+			
+			return
+			
 		).nodeify fn

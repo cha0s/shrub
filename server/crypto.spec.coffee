@@ -1,6 +1,6 @@
 
 crypto = require 'server/crypto'
-Q = require 'bluebird'
+Promise = require 'bluebird'
 
 cryptoKey = "This should be a sufficiently long encryption key. For testing."
 
@@ -24,7 +24,7 @@ describe 'crypto', ->
 				
 				crypto.encrypt text, cryptoKey
 				
-			ciphertextsPromise = Q.all ciphertexts
+			ciphertextsPromise = Promise.all ciphertexts
 				
 		waitsFor -> ciphertextsPromise.isFulfilled()
 		
@@ -39,7 +39,7 @@ describe 'crypto', ->
 				
 				crypto.decrypt ciphertext, cryptoKey
 				
-			deciphertextsPromise = Q.all deciphertexts
+			deciphertextsPromise = Promise.all deciphertexts
 
 		waitsFor -> deciphertextsPromise.isFulfilled()
 		

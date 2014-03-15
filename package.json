@@ -2,7 +2,7 @@
   "name": "shrub",
   "version": "0.0.1",
   "scripts": {
-    "start": "NODE_PATH=.:server:client/modules coffee server.coffee"
+    "start": "NODE_PATH=.:custom/server:server:custom/client:client/modules coffee server.coffee"
   },
   "dependencies": {
     "bluebird": "~1.0.5",

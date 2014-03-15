@@ -1,5 +1,5 @@
 
-Q = require 'bluebird'
+Promise = require 'bluebird'
 
 exports.$models = (schema) ->
 	
@@ -38,42 +38,30 @@ exports.$models = (schema) ->
 			id: @id
 			email: @email
 		
-		Q.resolve redacted
+		Promise.resolve redacted
 
 augmentModel = (User, Model, name) ->
 	
 	validateUser = (user) ->
 		
-		deferred = Q.defer()
-			
-		if user instanceof User
-			
-			deferred.resolve()
+		new Promise (resolve, reject) ->
 		
-		else
-		
-			error = new Error "Invalid user."
-			error.code = 500
-			deferred.reject error
-		
-		deferred.promise
+			unless user instanceof User
+				
+				error = new Error "Invalid user."
+				error.code = 500
+				reject error
 	
 	checkPermission = (user, perm) ->
 	
-		deferred = Q.defer()
-			
-		if user.hasPermission perm
-			
-			deferred.resolve()
-			
-		else
-		
-			error = new Error "Access denied."
-			error.code = 403
-			deferred.reject error
-		
-		deferred.promise
+		new Promise (resolve, reject) ->
 
+			unless user.hasPermission perm
+				
+				error = new Error "Access denied."
+				error.code = 403
+				reject error
+			
 	Model.authenticatedAll = (user, params) ->
 		
 		(validateUser user).then(->
@@ -90,7 +78,7 @@ augmentModel = (User, Model, name) ->
 		
 		).then((models) ->
 			
-			Q.all models.map (model) -> model.redactFor user
+			Promise.all models.map (model) -> model.redactFor user
 		
 		).then (models) ->
 			
@@ -98,8 +86,7 @@ augmentModel = (User, Model, name) ->
 			
 				error = new Error "Collection not found."
 				error.code = 404
-				
-				Q.reject error
+				Promise.reject error
 			
 			else
 				
@@ -146,7 +133,7 @@ augmentModel = (User, Model, name) ->
 					error = new Error "Resource not found."
 					error.code = 404
 				
-				Q.reject error
+				Promise.reject error
 	
 	Model.authenticatedDestroyAll = (user) ->
 	
@@ -174,7 +161,7 @@ augmentModel = (User, Model, name) ->
 				
 				error = new Error "Resource not found."
 				error.code = 404
-				Q.reject error
+				Promise.reject error
 	
 	Model.authenticatedUpdate = (user, id, properties) ->
 
@@ -197,14 +184,14 @@ augmentModel = (User, Model, name) ->
 					error = new Error "Resource not found."
 					error.code = 404
 				
-				Q.reject error
+				Promise.reject error
 			
 			Model.authenticatedFind user, id
 		
 	Model::isAccessibleBy ?= (user) -> true
 	Model::isEditableBy ?= (user) -> false
 	Model::isDeletableBy ?= (user) -> false
-	Model::redactFor ?= (user) -> Q.resolve this
+	Model::redactFor ?= (user) -> Promise.resolve this
 
 exports.$modelsAlter = (models) ->
 	
