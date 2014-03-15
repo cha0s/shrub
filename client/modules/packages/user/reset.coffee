@@ -1,7 +1,7 @@
 
 errors = require 'errors'
 
-exports.$route =
+exports.$route = ->
 	
 	path: 'user/reset/:token'
 	title: 'Reset your password'

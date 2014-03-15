@@ -1,6 +1,6 @@
 
 marked = require 'marked'
 
-exports.$filter = ->
-
+exports.$filter = -> ->
+	
 	(input, sanitize = true) -> marked input, sanitize: sanitize

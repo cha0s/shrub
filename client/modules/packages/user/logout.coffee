@@ -1,5 +1,5 @@
 
-exports.$route =
+exports.$route = ->
 	
 	controller: [
 		'$location', '$q', 'user'

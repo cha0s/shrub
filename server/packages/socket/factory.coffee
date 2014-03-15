@@ -3,7 +3,7 @@ nconf = require 'nconf'
 
 socketFactory = null
 
-exports.$httpInitializer = (req, res, next) ->
+exports.$httpInitializer = -> (req, res, next) ->
 	
 	config = nconf.get 'services:socket'
 	

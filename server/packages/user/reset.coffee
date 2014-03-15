@@ -3,7 +3,7 @@ crypto = require 'server/crypto'
 
 {threshold} = require 'limits'
 
-exports.$endpoint =
+exports.$endpoint = ->
 
 	limiter: threshold: threshold(1).every(5).minutes()
 

@@ -1,7 +1,7 @@
 
 errors = require 'errors'
 
-exports.$appRun = [
+exports.$appRun = -> [
 	'$window', 'config', 'rpc'
 	($window, config, rpc) ->
 	
@@ -11,7 +11,7 @@ exports.$appRun = [
 
 ]
 
-exports.$service = [
+exports.$service = -> [
 	'$q', 'require', 'socket'
 	($q, require, socket) ->
 		

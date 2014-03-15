@@ -1,7 +1,7 @@
 
 errors = require 'errors'
 
-exports.$route =
+exports.$route = ->
 	
 	title: 'Sign up'
 	

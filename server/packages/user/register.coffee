@@ -3,7 +3,7 @@ crypto = require 'server/crypto'
 
 {threshold} = require 'limits'
 
-exports.$endpoint =
+exports.$endpoint = ->
 
 	limiter:
 		message: "You are trying to register too much."

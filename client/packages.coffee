@@ -5,8 +5,8 @@ angular.module('shrub.packages', [
 ])
 
 	.config([
-		'$compileProvider', '$controllerProvider', '$filterProvider', '$provide', 'pkgmanProvider', 'requireProvider'
-		($compileProvider, $controllerProvider, $filterProvider, $provide, pkgmanProvider, requireProvider) ->
+		'$compileProvider', '$controllerProvider', '$filterProvider', '$provide', 'configProvider', 'pkgmanProvider', 'requireProvider'
+		($compileProvider, $controllerProvider, $filterProvider, $provide, configProvider, pkgmanProvider, requireProvider) ->
 			
 			require = requireProvider.require
 			
@@ -23,20 +23,21 @@ angular.module('shrub.packages', [
 					
 				i8n.camelize (i8n.underscore parts.join ''), true
 
-			pkgmanProvider.invoke 'controller', (path, spec) ->
-				$controllerProvider.register path, spec
+			for path, injected of pkgmanProvider.invokeWithMocks 'controller'
+				$controllerProvider.register path, injected
 
-			pkgmanProvider.invoke 'directive', (path, spec) ->
-				$compileProvider.directive (normalize path), spec
+			for path, injected of pkgmanProvider.invokeWithMocks 'directive'
+				$compileProvider.directive (normalize path), injected
 
-			pkgmanProvider.invoke 'filter', (path, spec) ->
-				$filterProvider.register (normalize path), spec
+			for path, injected of pkgmanProvider.invokeWithMocks 'filter'
+				$filterProvider.register (normalize path), injected
 
-			pkgmanProvider.invoke 'service', (path, spec, isMock) ->
-				if isMock
-					$provide.decorator path, spec
-				else
-					$provide.service path, spec
+			for path, injected of pkgmanProvider.invoke 'service'
+				$provide.service path, injected
+			
+			if configProvider.get 'testMode'
+				for path, injected of pkgmanProvider.invoke 'serviceMock'
+					$provide.decorator path, injected
 			
 	])
 
@@ -50,24 +51,29 @@ angular.module('shrub.pkgman', [
 			
 			require = requireProvider.require
 			
+			_ = require 'underscore'
 			pkgman = require 'pkgman'
 			
 			pkgman.registerPackages configProvider.get 'packageList'
 			
 			service = {}
 			
-			service.invoke = (hook, fn) ->
+			service.invoke = (hook, args...) ->
 				
-				pkgman.invoke hook, (path, spec) -> fn path, spec, false
+				args.unshift hook
+				pkgman.invoke args...
+				
+			service.invokeWithMocks = (hook, args...) ->
+				
+				args.unshift hook
+				results = @invoke args...
 				
 				if configProvider.get 'testMode'
-					pkgman.invoke "#{hook}Mock", (path, spec) ->
-						fn path, spec, true
-
-			service.undoMock = (hook, path) ->
-				
-				pkgman.invoke hook, (_path_, spec) ->
-					$provide.decorator path, spec if path is _path_ 
+					
+					args[0] = "#{hook}Mock"
+					_.extend results, pkgman.invoke args...
+					
+				results
 				
 			service.$get = -> service
 			

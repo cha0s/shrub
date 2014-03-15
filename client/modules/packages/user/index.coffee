@@ -210,7 +210,7 @@ exports.$modelsAlter = (models) ->
 	
 	augmentModel models.User, Model, name for name, Model of models
 		
-exports.$service = [
+exports.$service = -> [
 	'$q', 'config', 'rpc', 'schema'
 	($q, config, rpc, schema) ->
 		
@@ -256,7 +256,7 @@ exports.$service = [
 		
 ]
 
-exports.$serviceMock = [
+exports.$serviceMock = -> [
 	'$delegate', 'socket'
 	($delegate, socket) ->
 		

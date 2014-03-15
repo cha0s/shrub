@@ -1,7 +1,7 @@
 
 {threshold} = require 'limits'
 
-exports.$endpoint =
+exports.$endpoint = ->
 
 	limiter:
 		message: "You are logging in too much."

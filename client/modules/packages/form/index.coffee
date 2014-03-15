@@ -1,5 +1,5 @@
 
-exports.$directive = [
+exports.$directive = -> [
 	'$compile', '$injector', '$q', 'form', 'require'
 	($compile, $injector, $q, form, require) ->
 		
@@ -118,7 +118,7 @@ exports.$directive = [
 			
 ]
 
-exports.$service = [
+exports.$service = -> [
 	
 	->
 		

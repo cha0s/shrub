@@ -1,15 +1,14 @@
 
-exports.$appConfig = [
+exports.$appConfig = -> [
 	'$injector', '$routeProvider', '$locationProvider', 'pkgmanProvider'
 	($injector, $routeProvider, $locationProvider, pkgmanProvider) ->
 	
 # Set up routes.
-		routes = {}
-		pkgmanProvider.invoke 'route', (path, route) -> routes[path] = route
-		pkgmanProvider.invoke 'routeAlter', (_, fn) ->
+		routes = pkgmanProvider.invokeWithMocks 'route'
+		for _, injected of pkgmanProvider.invokeWithMocks 'routeAlter'
 			
 			$injector.invoke(
-				fn, null
+				injected, null
 				routes: routes
 			)
 		
@@ -40,7 +39,7 @@ exports.$appConfig = [
 		$locationProvider.html5Mode true
 ]
 
-exports.$appRun = [
+exports.$appRun = -> [
 	'$rootScope', '$location'
 	($rootScope, $location) ->
 		
@@ -61,4 +60,4 @@ exports.$appRun = [
 		
 ]
 
-exports.$routeMock = path: 'e2e/sanity-check'
+exports.$routeMock = -> path: 'e2e/sanity-check'

@@ -20,7 +20,7 @@ exports.loadByName = (name) ->
 	
 	User.findOne where: name: name
 
-exports.$httpInitializer = (req, res, next) ->
+exports.$httpInitializer = -> (req, res, next) ->
 	
 	{models: User: User} = require 'server/jugglingdb'
 	

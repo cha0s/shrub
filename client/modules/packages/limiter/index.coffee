@@ -1,7 +1,7 @@
 
 errors = require 'errors'
 
-exports.$errorType = class LimiterThresholdError extends errors.BaseError
+exports.$errorType = -> class LimiterThresholdError extends errors.BaseError
 	
 	constructor: (message, @time) -> super
 	

@@ -29,8 +29,8 @@ exports.$httpMiddleware = (http) ->
 		(req, res, next) ->
 			return next() unless req.url is '/js/config.js'
 			
-			promises = []
-			pkgman.invoke 'config', (path, fn) -> promises.push fn req
+			promises = for path, promise of pkgman.invoke 'config', req
+				promise
 			
 			config = {}
 			Promise.all(promises).then((subconfigs) ->

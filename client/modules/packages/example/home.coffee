@@ -1,5 +1,5 @@
 
-exports.$appConfig = [
+exports.$appConfig = -> [
 	'$routeProvider'
 	($routeProvider) ->
 		
@@ -7,7 +7,7 @@ exports.$appConfig = [
 		$routeProvider.otherwise redirectTo: '/home'
 ]
 
-exports.$route =
+exports.$route = ->
 
 	path: 'home'
 	title: 'Home'

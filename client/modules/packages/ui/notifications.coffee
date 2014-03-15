@@ -1,5 +1,5 @@
 
-exports.$directive = [
+exports.$directive = -> [
 	'$timeout', 'ui/notifications'
 	($timeout, notifications) ->
 	
@@ -61,7 +61,7 @@ exports.$directive = [
 		
 ]
 
-exports.$service = [
+exports.$service = -> [
 	'socket'
 	(socket) ->
 	

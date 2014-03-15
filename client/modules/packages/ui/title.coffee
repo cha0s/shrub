@@ -1,5 +1,5 @@
 
-exports.$directive = [
+exports.$directive = -> [
 	'ui/title'
 	(title) ->
 	
@@ -26,7 +26,7 @@ exports.$directive = [
 		
 ]
 
-exports.$service = [
+exports.$service = -> [
 	'$rootScope', '$timeout'
 	($rootScope, $timeout) ->
 		

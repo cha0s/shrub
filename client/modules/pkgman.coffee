@@ -1,16 +1,6 @@
 
-invocationCache = {}
 packageCache = null
 _packages = []
-
-exports.clearInvocationCache = (hook) ->
-	
-	if hook?
-		invocationCache[hook] = null
-	else
-		invocationCache = {}
-		
-	return
 
 exports.rebuildPackageCache = ->
 	packageCache = {}
@@ -35,28 +25,25 @@ exports.registerPackages = (packages) ->
 	
 	exports.rebuildPackageCache()
 
-exports.invoke = (hook, fn) ->
+exports.invoke = (hook, args...) ->
 	exports.rebuildPackageCache() unless packageCache?
 	
-	unless invocationCache[hook]?
-		invocationCache[hook] = {}
+	results = {}
+	
+	invokeRecursive = (path, parent) ->
 		
-		invokeRecursive = (path, parent) ->
+		for key, objectOrFunction of parent
 			
-			for key, spec of parent
+			if key.charCodeAt(0) is '$'.charCodeAt(0)
+	
+				if key is "$#{hook}"
+					
+					results[path] = objectOrFunction args...
+					
+			else
 				
-				if key.charCodeAt(0) is '$'.charCodeAt(0)
-		
-					if key is "$#{hook}"
-						
-						invocationCache[hook][path] = spec
-						
-				else
-					
-					invokeRecursive "#{path}/#{key}", spec
-					
-		invokeRecursive name, package_ for name, package_ of packageCache
+				invokeRecursive "#{path}/#{key}", objectOrFunction
+				
+	invokeRecursive name, package_ for name, package_ of packageCache
 	
-	fn path, spec for path, spec of invocationCache[hook]
-	
-	return
+	results

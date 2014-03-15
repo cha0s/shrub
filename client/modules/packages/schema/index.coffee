@@ -1,5 +1,5 @@
 
-exports.$service = [
+exports.$service = -> [
 	'$http', 'config', 'require'
 	($http, config, require) ->
 

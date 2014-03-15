@@ -23,7 +23,7 @@ nconf.defaults
 	contexts:
 		
 		# Should we render on the server-side?
-		render: not process.env['E2E']?
+		render: false#not process.env['E2E']?
 		
 		# Context time-to-live in milliseconds.
 		ttl: 1000 * 60 * 5

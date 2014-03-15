@@ -1,5 +1,5 @@
 
-exports.$service = [
+exports.$service = -> [
 	'$rootScope', 'config'
 	($rootScope, config) ->
 		
@@ -79,7 +79,7 @@ exports.$service = [
 		
 ]
 
-exports.$serviceMock = [
+exports.$serviceMock = -> [
 	'$q', '$rootScope', '$timeout'
 	($q, $rootScope, $timeout) ->
 		

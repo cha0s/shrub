@@ -5,7 +5,7 @@ exports.$config = (req) ->
 	
 	apiRoot: nconf.get 'apiRoot'
 
-exports.$httpInitializer = (req, res, next) ->
+exports.$httpInitializer = -> (req, res, next) ->
 	
 	schema = require 'server/jugglingdb'
 	

@@ -1,5 +1,5 @@
 
-exports.$service = [
+exports.$service = -> [
 	'$rootScope', '$window'
 	($rootScope, $window) ->
 		

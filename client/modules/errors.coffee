@@ -16,8 +16,7 @@ exports.BaseError = class BaseError extends Error
 exports.errorTypes = ->
 	
 	collected = [BaseError]
-	
-	pkgman.invoke 'errorType', (path, spec) -> collected.push spec
+	collected.push Type for _, Type of pkgman.invoke 'errorType'
 		
 	types = {}
 	types[Type::key] = Type for Type in collected

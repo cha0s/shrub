@@ -12,11 +12,11 @@ config = (require 'config').config
 pkgman.registerPackages config.get 'packageList'
 
 # Initialize.
-initializePromises = []
-pkgman.invoke 'initialize', (_, spec) -> initializePromises.push spec config
+initializePromises = for _, promise of pkgman.invoke 'initialize', config
+	promise
 
 # After initialization.
 Promise.all(initializePromises).done(
-	-> pkgman.invoke 'initialized', (_, spec) -> spec()
+	-> pkgman.invoke 'initialized'
 	(error) -> winston.error errors.stack error
 )

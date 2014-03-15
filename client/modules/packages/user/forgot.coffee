@@ -2,7 +2,7 @@
 errors = require 'errors'
 
 # User forgot password.
-exports.$route =
+exports.$route = ->
 	
 	title: 'Forgot password'
 	

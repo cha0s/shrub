@@ -20,7 +20,8 @@ angular.module('shrub.core', [
 		'$injector', 'pkgmanProvider'
 		($injector, pkgmanProvider) ->
 			
-			pkgmanProvider.invoke 'appConfig', (_, fn) -> $injector.invoke fn
+			for _, injected of pkgmanProvider.invokeWithMocks 'appConfig'
+				$injector.invoke injected
 			
 	])
 	
@@ -29,6 +30,7 @@ angular.module('shrub.core', [
 		'$injector', 'pkgman'
 		($injector, pkgman) ->
 			
-			pkgman.invoke 'appRun', (_, fn) -> $injector.invoke fn
+			for _, injected of pkgman.invokeWithMocks 'appRun'
+				$injector.invoke injected
 
 	])

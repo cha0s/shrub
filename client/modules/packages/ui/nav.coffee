@@ -1,5 +1,5 @@
 
-exports.$directive = [
+exports.$directive = -> [
 	'$location', 'ui/nav', 'socket', 'ui/title', 'user'
 	($location, nav, socket, title, user) ->
 	
@@ -74,7 +74,7 @@ exports.$directive = [
 		
 ]
 
-exports.$service = [
+exports.$service = -> [
 	->
 	
 # This API allows you to dynamically change the navigation links.

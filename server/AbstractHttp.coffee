@@ -14,8 +14,7 @@ module.exports = class AbstractHttp
 	initialize: (fn) ->
 	
 		middleware = new middleware.Middleware()
-		
-		pkgman.invoke 'httpInitializer', (_, initializer) ->
+		for _, initializer of pkgman.invoke 'httpInitializer'
 			middleware.use initializer
 		
 		request = http: this
@@ -36,10 +35,7 @@ module.exports = class AbstractHttp
 		@_middleware = middleware.fromHook(
 			'httpMiddleware'
 			@_config.middleware
-			(_, spec) =>
-				spec = spec this
-				winston.info spec.label
-				spec
+			this
 		)
 		
 		winston.info 'END loading HTTP middleware.'

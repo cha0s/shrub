@@ -4,7 +4,7 @@ Q = require 'bluebird'
 
 {threshold} = require 'limits'
 
-exports.$endpoint =
+exports.$endpoint = ->
 
 	limiter: threshold: threshold(1).every(30).seconds()
 

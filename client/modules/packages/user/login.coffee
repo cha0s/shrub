@@ -6,7 +6,7 @@ LoginError = class LoginError extends errors.BaseError
 	key: 'login'
 	template: "No such username/password."
 		
-exports.e2eLogin = $routeMock:
+exports.e2eLogin = $routeMock: ->
 	
 	path: 'e2e/user/login/:destination'
 	
@@ -19,9 +19,9 @@ exports.e2eLogin = $routeMock:
 				
 	]
 	
-exports.$errorType = LoginError
+exports.$errorType = -> LoginError
 
-exports.$route =
+exports.$route = ->
 	
 	title: 'Sign in'
 	

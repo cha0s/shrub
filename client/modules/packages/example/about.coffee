@@ -1,5 +1,5 @@
 
-exports.$route =
+exports.$route = ->
 
 	path: 'about'
 	title: 'About'

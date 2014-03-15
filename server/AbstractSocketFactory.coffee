@@ -17,10 +17,6 @@ module.exports = class AbstractSocketFactory extends EventEmitter
 		@_middleware = middleware.fromHook(
 			'socketMiddleware'
 			@_config.middleware
-			(_, spec) =>
-				spec = spec()
-				winston.info spec.label
-				spec
 		)
 		
 		winston.info 'END loading socket middleware.'

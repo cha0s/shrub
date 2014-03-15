@@ -1,5 +1,5 @@
 
-exports.$appRun = [
+exports.$appRun = -> [
 	'ui/nav', 'ui/title'
 	(nav, title) ->
 		

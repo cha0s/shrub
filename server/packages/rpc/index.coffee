@@ -20,7 +20,7 @@ exports.$socketMiddleware = ->
 	
 	# Gather all endpoints.
 	endpoints = {}
-	pkgman.invoke 'endpoint', (path, endpoint) ->
+	for path, endpoint of pkgman.invoke 'endpoint'
 		
 		endpoint = receiver: endpoint if _.isFunction endpoint
 		
@@ -29,7 +29,7 @@ exports.$socketMiddleware = ->
 		
 		endpoints[endpoint.route] = endpoint
 	
-	pkgman.invoke 'endpointAlter', (_, fn) -> fn endpoints
+	pkgman.invoke 'endpointAlter', endpoints
 	
 	for route, endpoint of endpoints
 	

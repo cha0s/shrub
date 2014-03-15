@@ -21,7 +21,7 @@ exports.$initialized = ->
 		
 		s.context.config = nconf
 		
-		pkgman.invoke 'replContext', (_, spec) -> spec s.context
+		pkgman.invoke 'replContext', s.context
 		
 		s.on 'exit', -> socket.end()
 		

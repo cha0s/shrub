@@ -19,7 +19,7 @@ exports.define = (adapter, options = {}) ->
 	
 	schema = new Schema adapter, options
 	
-	pkgman.invoke 'models', (_, spec) -> spec schema
-	pkgman.invoke 'modelsAlter', (_, spec) -> spec schema.models, schema
+	pkgman.invoke 'models', schema
+	pkgman.invoke 'modelsAlter', schema.models, schema
 	
 	schema

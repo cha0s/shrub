@@ -12,7 +12,7 @@ logger = new winston.Logger
 		new winston.transports.File level: 'debug', filename: 'logs/client.log'
 	]
 
-exports.$endpoint =
+exports.$endpoint = ->
 	
 	route: 'hangup'
 	receiver: (req, fn) ->
