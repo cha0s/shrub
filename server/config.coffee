@@ -19,13 +19,13 @@ nconf.defaults
 	
 	path: "#{__dirname}/.."
 	
-	# Server-side render context configuration.
-	contexts:
+	# Sandbox configuration.
+	sandboxes:
 		
-		# Should we render on the server-side?
+		# Should we render in the sandbox?
 		render: not process.env['E2E']?
 		
-		# Context time-to-live in milliseconds.
+		# Sandbox time-to-live in milliseconds.
 		ttl: 1000 * 60 * 5
 	
 	packageList: [

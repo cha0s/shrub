@@ -25,7 +25,9 @@ class Express extends (require 'AbstractHttp')
 	
 	path: -> @_config.path
 	
-	cookieParser: -> express.cookieParser @_config.express.sessions.cookie.cryptoKey
+	cookieParser: -> express.cookieParser @cookieSecret()
+	
+	cookieSecret: -> @_config.express.sessions.cookie.cryptoKey
 
 	listen: (fn) ->
 		
@@ -61,12 +63,14 @@ class Express extends (require 'AbstractHttp')
 						resolve session
 				)
 			
-	renderApp: (locals, fn) ->
+	renderAppHtml: (locals) ->
 		
-		@_app.render 'app', _locals: locals, (error, index) ->
-			return fn error if error?
-			
-			fn null, index
+		new Promise (resolve, reject) =>
+		
+			@_app.render 'app', _locals: locals, (error, html) ->
+				return reject error if error?
+				
+				resolve html
 	
 	server: -> @_server
 	

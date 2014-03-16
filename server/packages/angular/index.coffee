@@ -1,110 +1,187 @@
 
-contexts = require 'server/contexts'
-jsdom = require('jsdom').jsdom
 nconf = require 'nconf'
 Promise = require 'bluebird'
 url = require 'url'
-winston = require 'winston'
 
-logger = new winston.Logger
-	transports: [
-		new winston.transports.Console level: 'silly', colorize: true
-		new winston.transports.File level: 'debug', filename: 'logs/client.log'
-	]
+sandboxes = require 'sandboxes'
 
 exports.$endpoint = ->
 	
 	route: 'hangup'
 	receiver: (req, fn) ->
 		
-		return fn() unless req.session?
-		return fn() unless (context = contexts.lookup req.session.id)?
-		
-		context.close fn
+		return fn() unless (sandbox = sandboxes.lookup req.session?.id)?
+		sandbox.close().finally -> fn()
 
 exports.$httpMiddleware = (http) ->
 	
-	newContext = (cookie, locals, fn) ->
-		
-		http.renderApp locals, (error, index) ->
-			return fn error if error?
+	label: 'Render page with Angular'
+	middleware: [
+	
+		(req, res, next) ->
 			
-			# Hax: Fix document.domain since jsdom has a stub here.
-			Object.defineProperties(
-				(require 'jsdom/lib/jsdom/level2/html').dom.level2.html.HTMLDocument.prototype
-				domain: get: -> 'localhost'
-			)
+			# Render app.html
+			htmlPromise = http.renderAppHtml res.locals
 			
-			# Set up a DOM, forwarding our cookie and navigating to the entry
-			# point.
-			document = jsdom(
-				index, jsdom.defaultLevel
+			# Skip render in a sandbox?
+			return htmlPromise.then(
+				(html) -> res.end html
+				(error) -> next error
+			) unless nconf.get 'sandboxes:render'
 				
-				cookie: cookie
-				cookieDomain: 'localhost'
-				url: "http://localhost:#{http.port()}/shrub-entry-point"
-			)
+			# Sort of a hack to conditionally break out of promise flow.
+			class ResponseComplete extends Error
 			
-			context = window: window = document.createWindow()
+			htmlPromise.bind({}).then((html) ->
+				
+				lookupOrCreateAugmentedSandbox(
+					html, req.headers.cookie, req.session.id
+				)
+				
+			).then((@sandbox) ->
+				
+				# Emit the HTML from before the last redirection.
+				if (redirectionHtml = @sandbox.redirectionHtml())?
+					@sandbox.setRedirectionHtml null
+					res.end redirectionHtml
+					throw new ResponseComplete()
+					
+				# Check for any new redirection and handle it.
+				if (redirectionPath = @sandbox.redirectionPath())?
+					@sandbox.setRedirectionPath null
+					res.redirect redirectionPath
+					throw new ResponseComplete()
+					
+				# Prevent a possible race condition that would hang up the
+				# sandbox in between now and render.
+				@deferred = Promise.defer()
+				@sandbox.setBusy @deferred.promise
+				
+				{path} = url.parse req.url
+				@sandbox.navigate path, req.body
+				
+			).then(->
+				
+				# Reload the session, server-side JS socket stuff could
+				# have changed it!
+				Promise.promisify(req.session.reload, req.session)()
+				
+			).then(->
+				
+				emission = @sandbox.emitHtml()
+				
+				# If a redirect happened in the sandbox, actually redirect the
+				# browser and save the emission for the next request.
+				if (redirectionPath = @sandbox.redirectionPath())?
+					@sandbox.setRedirectionPath null
+					@sandbox.setRedirectionHtml emission
+					res.redirect redirectionPath
+				
+				# Otherwise, just emit.	
+				else
+					
+					# Emit.
+					res.end emission
+				
+				# Let any sandbox expirations take place now that we've
+				# emitted.
+				@deferred.resolve()
+				@sandbox.setBusy null
 			
-			# Capture "client" console logs.
-			window.console =
-				info: logger.info.bind logger
-				log: logger.info.bind logger
-				debug: logger.debug.bind logger
-				warn: logger.warn.bind logger
-				error: logger.error.bind logger
+			).catch(ResponseComplete, ->
 			
-			# Hack in WebSocket.
-			window.WebSocket = require 'socket.io/node_modules/socket.io-client/node_modules/ws/lib/WebSocket'
+			).catch (error) ->
+				
+				next error
 			
-			window.onload = ->
-				
-				# Catch any errors in the client.
-				for error in window.document.errors
-					if error.data?.error?
-						return fn error.data.error
-				
-				# Inject Angular services so we can get up in its guts.
-				shrub = context.shrub = {}
-				injected = [
-					'$location', '$rootScope', '$route', '$sniffer'
-					'form', 'socket'
-				]
-				invocation = injected.concat [
-					-> shrub[inject] = arguments[i] for inject, i in injected
-				]
-				injector = window.angular.element(window.document).injector()
-				injector.invoke invocation
-				
-				# Don't even try HTML 5 history on the server side.
-				shrub['$sniffer'].history = false
-				
-				# Let the socket finish initialization.						
-				shrub.socket.on 'initialized', ->
-					process.nextTick -> fn null, context
-				
-	angularContext = (id, cookie, locals, fn) ->
+]
+
+lookupOrCreateAugmentedSandbox = (html, cookie, id) ->
+	
+	sandboxes.lookupOrCreate(
+		html, cookie, id
+	
+	).then (sandbox) -> exports.augmentSandbox sandbox
+	
+exports.augmentSandbox = (sandbox) ->
+	
+	redirectionHtml = null
+	sandbox.redirectionHtml = -> redirectionHtml
+	sandbox.setRedirectionHtml = (html) -> redirectionHtml = html
+	
+	redirectionPath = null
+	sandbox.redirectionPath = -> redirectionPath
+	sandbox.setRedirectionPath = (path) -> redirectionPath = path
+	
+	sandbox.catchAngularRedirection = (path) ->
+	
+		$location = null
 		
-		# Already exists?
-		return fn null, context if (context = contexts.lookup id)?
+		@inject [
+			'$location'
+			(_$location_) -> $location = _$location_
+		]
+
+		if path isnt $location.url()
+			if redirect = @pathRedirectsTo $location.url()
+				@setRedirectionPath redirect
+			else
+				@setRedirectionPath $location.url()
+				
+	sandbox.checkPathChanges = (path) ->
+	
+		$location = null
+		$rootScope = null
 		
-		# Create one otherwise.
-		newContext cookie, locals, (error, context) ->
-			return fn error if error?
-			fn null, contexts.add id, context
+		@inject [
+			'$location', '$rootScope'
+			(_$location_, _$rootScope_) ->
+				$location = _$location_
+				$rootScope = _$rootScope_
+		]
 		
-	navigate = (context, path, body, fn) ->
+		new Promise (resolve) =>
+	
+			# If the request path isn't the Angular path, navigate Angular to
+			# the request path.			
+			if path isnt url.parse(@url()).path
+				
+				unlisten = $rootScope.$on 'shrubFinishedRendering', =>
+					unlisten()
+					
+					@catchAngularRedirection path
+						
+					resolve()
+					
+				$rootScope.$apply -> $location.path path
+			
+			# Otherwise, we're already there.
+			else
+				resolve()
 		
-		{shrub, window} = context
-		{$location, $rootScope} = shrub
+	sandbox.navigate = (path, body) ->
+	
+		$location = null
+		$rootScope = null
+		shrubForm = null
 		
+		@inject [
+			'$location', '$rootScope', 'form'
+			(_$location_, _$rootScope_, form) ->
+				$location = _$location_
+				$rootScope = _$rootScope_
+				shrubForm = form
+		]
+	
 		originalUrl = $location.url()
 		
-		# Process any forms.
-		formFn = ->
-			return fn() unless body.formKey?
-			return fn() unless (formSpec = shrub.form.lookup body.formKey)?
+		@checkPathChanges(
+			path
+			
+		).then =>
+		
+			return unless body.formKey?
+			return unless (formSpec = shrubForm.lookup body.formKey)?
 			
 			scope = formSpec.scope
 			form = scope[body.formKey]
@@ -113,142 +190,82 @@ exports.$httpMiddleware = (http) ->
 				continue unless (value = body[named.name])?
 				scope[named.name] = value
 				
-			# Submit handlers return promises.
-			scope.$apply -> form.submit.handler().finally ->
-				
-				# Catch any path changes.
-				if path isnt $location.url()
-					if redirect = context.pathRedirect $location.url()
-						context.redirect = redirect
-					else
-						context.redirect = $location.url()
-					
-				fn()
+			new Promise (resolve) =>
 			
-		# If the path has changed, navigate Angular to it.			
-		if path isnt url.parse(window.location.href).path
-			
-			unlisten = $rootScope.$on 'shrubFinishedRendering', ->
-				unlisten()
-				
-				# Catch any path changes.
-				if path isnt $location.url()
-					if redirect = context.pathRedirect $location.url()
-						context.redirect = redirect
-					else
-						context.redirect = $location.url()
+				# Submit handlers return promises.
+				scope.$apply => form.submit.handler().finally =>
 					
-				formFn()
-				
-			$rootScope.$apply -> $location.path path
-		
-		# Otherwise, we're already there.
-		else
-			formFn()
-		
-	label: 'Render page with Angular'
-	middleware: [
+					@catchAngularRedirection path
+					
+					resolve()
 	
-		(req, res, next) ->
-			
-			{path} = url.parse req.url
-			
-			id = req.session.id
-			locals = res.locals
-			body = req.body
-			
-			# Skip render in a local context?
-			unless nconf.get 'contexts:render'
-				return http.renderApp locals, (error, index) -> res.end index
-			
-			extractCookie = (fn) ->
+	sandbox.pathRedirectsTo = (path) ->
+		
+		routes = null
+		
+		@inject [
+			'$route'
+			($route) -> routes = $route.routes
+		]
+		
+		# Perfect match.
+		if routes[path]?
+		
+			# Does this path redirect? Do an HTTP redirect.
+			return routes[path].redirectTo if routes[path].redirectTo?
 				
-				# If the client is in sync, awesome!
-				if req.signedCookies[http.sessionKey()] is req.sessionID
+		else
+			
+			match = false
+			
+			# Check for any regexs.
+			for key, route of routes
+				if route.regexp?.test path
 					
-					fn req.headers.cookie
-					
-				# Otherwise, stimulate the session middleware to create the cookie.
-				else
-					res.emit 'header'
-					
-					# Yank it out of the response headers and map it.
-					setCookie = res._headers['set-cookie']
-					cookieObject = {}
-					for kv in setCookie.split ';'
-						[key, value] = kv.split '='
-						cookieObject[key.trim()] = value
-					
-					# Pull out junk that only makes sense en route to client.
-					delete cookieObject['Path']
-					delete cookieObject['HttpOnly']
-					
-					# Rebuild the cookie string.
-					cookie = ''
-					for k, v of cookieObject
-						cookie += '; ' if cookie
-						cookie += k + '=' + v
-						
-					# Commit the session before offering the cookie, otherwise it
-					# wouldn't actually be pointing at anything yet.
-					req.session.save -> fn cookie
+					# TODO need to extract params to build
+					# redirectTo, small enough mismatch to ignore
+					# for now.
+					return
+			
+			# Otherwise.
+			return routes[null].redirectTo if routes[null]?
+	
+	sandbox.inject = (injected) ->
+		
+		# Inject Angular services so we can get up in its guts.
+		injector = @_window.angular.element(@_window.document).injector()
+		injector.invoke injected
+		
+	sandbox.registerCleanupFunction ->
+		
+		new Promise (resolve) ->
+		
+			# Make sure the socket is dead because Contextify will crash if an
+			# object is accessed after it is disposed (and a socket will
+			# continue to communicate and access 'window' unless we close it).
+			sandbox.inject [
+				'socket'
+				(socket) ->
 				
-			extractCookie (cookie) ->
+					socket.on 'disconnect', -> resolve()
+					socket.disconnect()
 				
-				# Get a DOM window.
-				angularContext id, cookie, locals, (error, context) ->
+			]
+	
+	return sandbox unless sandbox.isNew()
+		
+	new Promise (resolve) ->
+		
+		sandbox.on 'ready', ->
+			
+			sandbox.inject [
+				'$sniffer', 'socket'
+				($sniffer, socket) ->
 					
-					return next new Error error.stack if error?
+					# Don't even try HTML 5 history on the server side.
+					$sniffer.history = false
 					
-					{shrub, window} = context
-					
-					# Touch the context to keep it alive.
-					context.touch()
-					
-					# Emit the last HTML generated before the redirect.
-					if context.redirect
-						return process.nextTick ->
-							res.end context.redirect
-							context.redirect = null
-					
-					# Handle redirection.
-					if redirect = context.pathRedirect path
-						return res.redirect redirect
-					
-					# Prevent a possible race condition that would hang up the
-					# context in between now and render.
-					deferred = Promise.defer()
-					context.promise = deferred.promise
-					
-					# Navigate the Angular system to the new path.
-					navigate context, path, body, (delay) ->
-						
-						# Reload the session, server-side JS socket stuff could
-						# have changed it!
-						req.session.reload ->
-							
-							# Don't forget the doctype!
-							emission = """
-<!doctype html>
-#{window.document.innerHTML}
-"""
-							
-							# If a redirect happened on the context, actually
-							# redirect the browser and save the emission for
-							# the next request.
-							if context.redirect
-								res.redirect context.redirect
-								context.redirect = emission
-							
-							# Otherwise, just emit.	
-							else
-								
-								# Emit.
-								res.end emission
-							
-							# Let any context expirations take place now that
-							# we've emitted.
-							deferred.resolve()
-							context.promise = null
-
-	]
+					# Let the socket finish initialization.						
+					socket.on 'initialized', -> resolve sandbox
+			
+			]
