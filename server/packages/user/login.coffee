@@ -1,4 +1,6 @@
 
+errors = require 'errors'
+
 {threshold} = require 'limits'
 
 exports.$endpoint = ->
@@ -22,3 +24,5 @@ exports.$endpoint = ->
 						user.redactFor(user).nodeify fn
 				
 				) req, res = {}
+
+exports.$errorType = (require 'client/modules/packages/user/login').$errorType
