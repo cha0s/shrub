@@ -27,8 +27,8 @@ exports.$directive = -> [
 ]
 
 exports.$service = -> [
-	'$rootScope', '$timeout'
-	($rootScope, $timeout) ->
+	'$rootScope', '$interval'
+	($rootScope, $interval) ->
 		
 # Get and set the page title.
 		_page = ''
@@ -71,26 +71,21 @@ exports.$service = -> [
 # Don't queue up a million timeouts.
 			return if flashInProgress?
 			
-			(flashTimeout = ->
+			flashInProgress = $interval(
+				->
 				
-				if _windowWrapper is _flashUpWrapper
-					_windowWrapper = _flashDownWrapper
-				else
-					_windowWrapper = _flashUpWrapper
-				
-# It seems Angular has a memory leak in $timeout, so we'll use setTimeout
-# unless it isn't available for some reason.
-				flashInProgress = (setTimeout ? $timeout)(
-					-> $rootScope.$apply -> flashTimeout()
-					1200
-				)
-				
-			)()	
+					if _windowWrapper is _flashUpWrapper
+						_windowWrapper = _flashDownWrapper
+					else
+						_windowWrapper = _flashUpWrapper
+					
+				600
+			)
 			
 # Restore the window/tab title to normal again.
 		@stopFlashing = ->
 			
-			(clearTimeout ? $timeout.cancel) flashInProgress
+			$interval.cancel flashInProgress if flashInProgress?
 			flashInProgress = null
 			
 			_windowWrapper = angular.identity
