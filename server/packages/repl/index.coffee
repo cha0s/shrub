@@ -5,24 +5,26 @@ net = require 'net'
 pkgman = require 'pkgman'
 repl = require 'repl'
 
+server = null
+
 exports.$initialized = ->
 
 	filename = "#{__dirname}/socket"
-	replServer = null
 	
 	# Feed all the goodies into a REPL for ultimate awesome.
-	replServer = net.createServer (socket) ->
+	server = net.createServer (socket) ->
 		
-		s = repl.start(
+		repl = repl.start(
 			prompt: "shrub> "
 			input: socket
 			output: socket
 		)
 		
-		s.context.config = nconf
+		pkgman.invoke 'replContext', repl.context
 		
-		pkgman.invoke 'replContext', s.context
+		repl.on 'exit', -> socket.end()
 		
-		s.on 'exit', -> socket.end()
-		
-	fs.unlink filename, -> replServer.listen filename
+	fs.unlink filename, -> server.listen filename
+	
+exports.$processExit = -> server.close()
+	

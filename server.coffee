@@ -20,3 +20,10 @@ Promise.all(initializePromises).done(
 	-> pkgman.invoke 'initialized'
 	(error) -> winston.error errors.stack error
 )
+
+# Signal listeners and process cleanup.
+
+process.on 'SIGINT', -> process.exit()
+process.on 'SIGTERM', -> process.exit()
+
+process.on 'exit', -> pkgman.invoke 'processExit'
