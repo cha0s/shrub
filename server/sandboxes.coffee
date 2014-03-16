@@ -49,7 +49,7 @@ module.exports = new class SandboxFactory
 			
 			@create html, cookie, id
 	
-	remove: (id) -> @_sandboxes = null
+	remove: (id) -> @_sandboxes[id] = null
 
 class Sandbox extends EventEmitter
 	
@@ -114,11 +114,15 @@ class Sandbox extends EventEmitter
 		window.onload = =>
 			
 			# Catch any errors in the client.
-			for error in window.document.errors
-				if error.data?.error?
-					return reject error.data.error
+			for documentError in window.document.errors
+				if documentError.data?.error?
+					error = new Error "#{
+						documentError.message
+					}\n#{
+						errors.stack documentError.data.error
+					}"
 			
-			@emit 'ready'
+			@emit 'ready', error
 			
 	close: ->
 		return Promise.resolve() unless @_window?
@@ -131,7 +135,11 @@ class Sandbox extends EventEmitter
 		
 			Promise.all (fn() for fn in @_cleanupFunctions)
 			
-		).then =>
+		).catch(->
+			
+			# Suppress cleanup errors.
+			
+		).finally ->
 			
 			@_window.close()
 			@_window = null

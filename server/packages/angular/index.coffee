@@ -229,9 +229,12 @@ exports.augmentSandbox = (sandbox) ->
 	
 	return sandbox unless sandbox.isNew()
 		
-	new Promise (resolve) ->
+	new Promise (resolve, reject) ->
 		
-		sandbox.on 'ready', ->
+		sandbox.on 'ready', (error) ->
+			if error?
+				sandbox.close()
+				return reject error
 			
 			sandbox.inject [
 				'$sniffer', 'socket'
