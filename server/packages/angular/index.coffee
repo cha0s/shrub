@@ -72,14 +72,13 @@ exports.$httpMiddleware = (http) ->
 				
 			).then(->
 				
-				# Reload the session, server-side JS socket stuff could
-				# have changed it!
-				Promise.promisify(req.session.reload, req.session)()
-				
-			).then(->
-				
 				emission = @sandbox.emitHtml()
 				
+				# Let any sandbox expirations take place now that we've
+				# emitted.
+				@deferred.resolve()
+				@sandbox.setBusy null
+			
 				# If a redirect happened in the sandbox, actually redirect the
 				# browser and save the emission for the next request.
 				if (redirectionPath = @sandbox.redirectionPath())?
@@ -93,11 +92,6 @@ exports.$httpMiddleware = (http) ->
 					# Emit.
 					res.end emission
 				
-				# Let any sandbox expirations take place now that we've
-				# emitted.
-				@deferred.resolve()
-				@sandbox.setBusy null
-			
 			).catch(ResponseComplete, ->
 			
 			).catch (error) -> next error
