@@ -23,12 +23,12 @@ exports.$route = ->
 					label: "Email reset link"
 					rpc: true
 					handler: (error, result) ->
+						return if error?
 						
-						return notifications.add(
-							class: 'alert-danger', text: errors.message error
-						) if error?
-				
-						notifications.add text: "You will be emailed a reset link."
+						notifications.add(
+							text: "A reset link will be emailed."
+						)
+						
 						$location.path '/'
 						
 			$scope.$emit 'shrubFinishedRendering'

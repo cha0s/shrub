@@ -12,10 +12,22 @@ exports.$appRun = -> [
 ]
 
 exports.$service = -> [
-	'$q', 'require', 'socket'
-	($q, require, socket) ->
+	'$injector', '$q', 'require', 'socket'
+	($injector, $q, require, socket) ->
 		
 		service = {}
+		
+		notifications = null
+		
+		try
+
+			$injector.invoke [
+				'ui/notifications'
+				(_notifications_) -> notifications = _notifications_
+			]
+		
+		# It's fine if this fails. 
+		catch error
 		
 		service.call = (route, data) ->
 			
@@ -24,8 +36,15 @@ exports.$service = -> [
 			socket.emit "rpc://#{route}", data, ({error, result}) ->
 				
 				if error?
-				
-					deferred.reject errors.unserialize errors.caught error
+					
+					error = errors.unserialize errors.caught error
+					
+					notifications.add(
+						class: 'alert-danger'
+						text: errors.message error
+					) if notifications?
+					
+					deferred.reject error
 					
 				else
 					

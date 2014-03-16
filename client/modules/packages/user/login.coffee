@@ -51,16 +51,15 @@ exports.$route = ->
 							'local'
 							$scope.username
 							$scope.password
-						).then(
+
+						).then ->
 							
-							->
-								notifications.add class: 'alert-success', text: "Logged in successfully."
-								$location.path '/'
-								
-							(error) -> notifications.add(
-								class: 'alert-danger', text: errors.message error
+							notifications.add(
+								class: 'alert-success'
+								text: "Logged in successfully."
 							)
-						)
+							
+							$location.path '/'
 			
 			$scope.$emit 'shrubFinishedRendering'
 			

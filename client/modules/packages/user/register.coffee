@@ -27,12 +27,13 @@ exports.$route = ->
 					label: "Register"
 					rpc: true
 					handler: (error, result) ->
-						
-						return notifications.add(
-							class: 'alert-danger', text: errors.message error
-						) if error?
+						return if error?
 				
-						notifications.add class: 'alert-success', text: "Registered successfully."
+						notifications.add(
+							class: 'alert-success'
+							text: "Registered successfully."
+						)
+						
 						$location.path '/'
 					
 			$scope.$emit 'shrubFinishedRendering'

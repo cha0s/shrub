@@ -17,10 +17,10 @@ exports.errorTypes = ->
 	
 	collected = [BaseError]
 	collected.push Type for _, Type of pkgman.invoke 'errorType'
-		
-	types = {}
-	types[Type::key] = Type for Type in collected
-	types
+	
+	Types = {}
+	Types[Type::key] = Type for Type in collected
+	Types
 
 exports.serialize = (error) ->
 	

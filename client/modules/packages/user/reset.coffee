@@ -26,13 +26,9 @@ exports.$route = ->
 					label: "Reset password"
 					rpc: true
 					handler: (error, result) ->
-						
-						return notifications.add(
-							class: 'alert-danger', text: errors.message error
-						) if error?
+						return if error?
 				
-						notifications.add text: "Password reset."
-						$location.path '/'
+						$location.path '/user/login'
 
 			$scope.$emit 'shrubFinishedRendering'
 			
