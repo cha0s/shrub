@@ -40,6 +40,7 @@ exports.$httpMiddleware = (http) ->
 				
 			# Sort of a hack to conditionally break out of promise flow.
 			class ResponseComplete extends Error
+				constructor: (@message) ->
 			
 			htmlPromise.bind({}).then((html) ->
 				
