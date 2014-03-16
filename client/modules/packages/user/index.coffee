@@ -46,25 +46,25 @@ augmentModel = (User, Model, name) ->
 		
 		new Promise (resolve, reject) ->
 		
-			unless user instanceof User
+			return resolve() if user instanceof User
 				
-				error = new Error "Invalid user."
-				error.code = 500
-				reject error
+			error = new Error "Invalid user."
+			error.code = 500
+			reject error
 	
 	checkPermission = (user, perm) ->
 	
 		new Promise (resolve, reject) ->
 
-			unless user.hasPermission perm
+			return resolve() if user.hasPermission perm
 				
-				error = new Error "Access denied."
-				error.code = 403
-				reject error
+			error = new Error "Access denied."
+			error.code = 403
+			reject error
 			
 	Model.authenticatedAll = (user, params) ->
 		
-		(validateUser user).then(->
+		validateUser(user).then(->
 
 			checkPermission user, "schema:#{name}:all"
 		
@@ -82,19 +82,15 @@ augmentModel = (User, Model, name) ->
 		
 		).then (models) ->
 			
-			if models.length is 0
+			return models if models.length > 0
 			
-				error = new Error "Collection not found."
-				error.code = 404
-				Promise.reject error
-			
-			else
-				
-				models
+			error = new Error "Collection not found."
+			error.code = 404
+			Promise.reject error
 	
 	Model.authenticatedCount = (user) ->
 		
-		(validateUser user).then(->
+		validateUser(user).then(->
 			
 			checkPermission user, "schema:#{name}:count"
 		
@@ -102,7 +98,7 @@ augmentModel = (User, Model, name) ->
 		
 	Model.authenticatedCreate = (user, properties) ->
 
-		(validateUser user).then(->
+		validateUser(user).then(->
 			
 			checkPermission user, "schema:#{name}:create"
 		
@@ -110,7 +106,7 @@ augmentModel = (User, Model, name) ->
 
 	Model.authenticatedDestroy = (user, id) ->
 	
-		(validateUser user).then(->
+		validateUser(user).then(->
 			
 			checkPermission user, "schema:#{name}:create"
 		
@@ -120,24 +116,20 @@ augmentModel = (User, Model, name) ->
 		
 		).then (model) ->
 		
-			if model.isDeletableBy user
+			return model.destroy() if model.isDeletableBy user
 				
-				model.destroy()
-				
+			if model.isAccessibleBy user
+				error = new Error "Access denied."
+				error.code = 403
 			else
-				
-				if model.isAccessibleBy user
-					error = new Error "Access denied."
-					error.code = 403
-				else
-					error = new Error "Resource not found."
-					error.code = 404
-				
-				Promise.reject error
+				error = new Error "Resource not found."
+				error.code = 404
+			
+			Promise.reject error
 	
 	Model.authenticatedDestroyAll = (user) ->
 	
-		(validateUser user).then(->
+		validateUser(user).then(->
 			
 			checkPermission "schema:#{name}:destroyAll"
 		
@@ -147,46 +139,38 @@ augmentModel = (User, Model, name) ->
 		
 	Model.authenticatedFind = (user, id) ->
 
-		(validateUser user).then(->
+		validateUser(user).then(->
 			
 			Model.find id
 	
 		).then (model) ->
 			
 			if model? and model.isAccessibleBy user
-				
-				model.redactFor user
+				return model.redactFor user
 			
-			else
-				
-				error = new Error "Resource not found."
-				error.code = 404
-				Promise.reject error
+			error = new Error "Resource not found."
+			error.code = 404
+			Promise.reject error
 	
 	Model.authenticatedUpdate = (user, id, properties) ->
 
-		(validateUser user).then(->
+		validateUser(user).then(->
 			
 			Model.authenticatedFind user, id
 		
 		).then (model) ->
 			
 			if model.isEditableBy user
+				return model.updateAttributes properties
 				
-				model.updateAttributes properties
-				
+			if model.isAccessibleBy user
+				error = new Error "Access denied."
+				error.code = 403
 			else
-				
-				if model.isAccessibleBy user
-					error = new Error "Access denied."
-					error.code = 403
-				else
-					error = new Error "Resource not found."
-					error.code = 404
-				
-				Promise.reject error
+				error = new Error "Resource not found."
+				error.code = 404
 			
-			Model.authenticatedFind user, id
+			Promise.reject error
 		
 	Model::isAccessibleBy ?= (user) -> true
 	Model::isEditableBy ?= (user) -> false
