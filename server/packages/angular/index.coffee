@@ -3,7 +3,10 @@ nconf = require 'nconf'
 Promise = require 'bluebird'
 url = require 'url'
 
+middleware = require 'middleware'
 sandboxes = require 'sandboxes'
+
+navigationMiddleware = []
 
 exports.$endpoint = ->
 	
@@ -14,6 +17,12 @@ exports.$endpoint = ->
 		sandbox.close().finally -> fn()
 
 exports.$httpMiddleware = (http) ->
+	
+	# Load the navigation middleware.
+	navigationMiddleware = middleware.fromHook(
+		'angularNavigationMiddleware'
+		nconf.get 'angular:navigation:middleware'
+	)
 	
 	label: 'Render page with Angular'
 	middleware: [
@@ -90,9 +99,7 @@ exports.$httpMiddleware = (http) ->
 			
 			).catch(ResponseComplete, ->
 			
-			).catch (error) ->
-				
-				next error
+			).catch (error) -> next error
 			
 ]
 
@@ -141,64 +148,37 @@ exports.augmentSandbox = (sandbox) ->
 		]
 		
 		new Promise (resolve) =>
-	
-			# If the request path isn't the Angular path, navigate Angular to
-			# the request path.			
-			if path isnt url.parse(@url()).path
-				
-				unlisten = $rootScope.$on 'shrubFinishedRendering', =>
-					unlisten()
-					
-					@catchAngularRedirection path
-						
-					resolve()
-					
-				$rootScope.$apply -> $location.path path
 			
-			# Otherwise, we're already there.
-			else
+			# Nowhere to go?
+			return resolve() if path is url.parse(@url()).path
+			
+			# Navigate Angular to the request path.			
+			unlisten = $rootScope.$on 'shrubFinishedRendering', =>
+				unlisten()
 				resolve()
+				
+			$rootScope.$apply -> $location.path path
 		
 	sandbox.navigate = (path, body) ->
 	
-		$location = null
-		$rootScope = null
-		shrubForm = null
-		
-		@inject [
-			'$location', '$rootScope', 'form'
-			(_$location_, _$rootScope_, form) ->
-				$location = _$location_
-				$rootScope = _$rootScope_
-				shrubForm = form
-		]
-	
-		originalUrl = $location.url()
-		
 		@checkPathChanges(
 			path
 			
 		).then =>
-		
-			return unless body.formKey?
-			return unless (formSpec = shrubForm.lookup body.formKey)?
 			
-			scope = formSpec.scope
-			form = scope[body.formKey]
+			new Promise (resolve, reject) =>
 			
-			for named in formSpec.element.find '[name]'
-				continue unless (value = body[named.name])?
-				scope[named.name] = value
+				req =
+					body: body
+					path: path
+					sandbox: sandbox
 				
-			new Promise (resolve) =>
-			
-				# Submit handlers return promises.
-				scope.$apply => form.submit.handler().finally =>
+				navigationMiddleware.dispatch req, null, (error) =>
+					return reject error if error?
 					
 					@catchAngularRedirection path
-					
 					resolve()
-	
+
 	sandbox.pathRedirectsTo = (path) ->
 		
 		routes = null

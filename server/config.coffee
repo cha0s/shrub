@@ -48,6 +48,14 @@ nconf.defaults
 		'user'
 	]
 	
+	angular:
+		
+		navigation:
+		
+			middleware: [
+				'form'
+			]
+	
 	services:
 	
 		http:
