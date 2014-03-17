@@ -1,122 +1,38 @@
 
 nconf = require 'nconf'
+fs = require 'fs'
 winston = require 'winston'
+
+pkgman = require 'pkgman'
 
 # Log errors to the console, the rest will go into logs/shrub.log by default.
 winston.remove winston.transports.Console
 winston.add winston.transports.Console, level: 'silly'
 winston.add winston.transports.File, filename: 'logs/shrub.log'
 
-nconf.argv().env().file "#{__dirname}/../config/settings.json"
+exports.loadSettings = ->
 
-# A bunch of temporary bootstrappy nonsense that will (mostly) be abstracted
-# away.
-nconf.defaults
+	settingsFilename = "./config/settings.json"
 	
-	apiRoot: '/api'
+	# Ensure the configuration file exists.
+	unless fs.existsSync settingsFilename
+		throw new Error "Settings file not found! You should copy config/settings.default.json to config/settings.json"
 	
-	cryptoKey: 'WeDemandShrubbery'
+	nconf.argv().env().file settingsFilename
 	
-	path: "#{__dirname}/.."
-	
-	repl:
+	nconf.defaults
 		
-		useCoffee: true
-	
-	# Sandbox configuration.
-	sandboxes:
+		path: "#{__dirname}/.."
 		
-		# Should we render in the sandbox?
-		render: not process.env['E2E']?
+	# Always disable sandbox rendering in end-to-end testing mode.
+	nconf.set 'packageSettings:angular:render', false if nconf.get 'E2E'
 		
-		# Sandbox time-to-live in milliseconds.
-		ttl: 1000 * 60 * 5
-	
-	packageList: [
-		'angular'
-		'assets'
-		'config'
-		'core'
-		'example'
-		'express'
-		'files'
-		'form'
-		'limiter'
-		'logger'
-		'repl'
-		'rpc'
-		'schema'
-		'session'
-		'socket'
-		'ui'
-		'user'
-	]
-	
-	angular:
-		
-		navigation:
-		
-			middleware: [
-				'form'
-			]
-	
-	services:
-	
-		http:
-			
-			path: "#{__dirname}/../app"
-			
-			port: 4201
-			
-			package: 'express'
-			
-			express:
-				
-				sessions:
-					
-					db: 'redis'
-					
-					key: 'connect.sid'
-					
-					cookie:
-						
-						cryptoKey: 'CookiesAreDelicious'
-				
-						maxAge: 1209600000
-						
-			middleware: [
-				'core'
-				'socket/factory'
-				'form'
-				'express/session'
-				'user'
-				'express/logger'
-				'express/routes'
-				'express/static'
-				'config'
-				'assets'
-				'angular'
-				'express/errors'
-			]
-						
-		socket:
-			
-			module: 'packages/socket/SocketIo'
-			
-			middleware: [
-				'core'
-				'socket/factory'
-				'session'
-				'user'
-				'rpc'
-			]
+	# Register packages.
+	pkgman.registerPackages nconf.get 'packageList'
 
-			options:
-			
-				store: 'redis'
-
-exports.config = nconf
-
+exports.loadPackageSettings = ->
+	nconf.defaults packageSettings: pkgman.invoke 'settings'
+		
 exports.Config = -> class Config
 	
 	constructor: (@config) ->

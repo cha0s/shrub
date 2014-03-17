@@ -1,14 +1,75 @@
 {
-	"port": 4201,
-	"redis": {
-		"host": "127.0.0.1",
-		"post": 6379
+	"apiRoot": "/api",
+	"cryptoKey": "***CHANGE THIS***",
+	"sandboxes": {
+		"ttl": 300000
 	},
-	"sessions": {
-		"secret": "cha0sLovesYou",
-		"key": "connect.sid",
-		"cookie": {
-			"maxAge": 1209600000
+	"packageList": [
+		"angular",
+		"assets",
+		"config",
+		"core",
+		"example",
+		"express",
+		"files",
+		"form",
+		"limiter",
+		"logger",
+		"repl",
+		"rpc",
+		"schema",
+		"session",
+		"socket",
+		"ui",
+		"user"
+	],
+	"packageSettings": {
+		"angular": {
+			"navigation": {
+				"middleware": [
+					"form"
+				]
+			},
+			"render": true
+		},
+		"express": {
+			"middleware": [
+				"core",
+				"socket/factory",
+				"form",
+				"express/session",
+				"user",
+				"express/logger",
+				"express/routes",
+				"express/static",
+				"config",
+				"assets",
+				"angular",
+				"express/errors"
+			],
+			"port": 4201,
+			"sessions": {
+				"db": "redis",
+				"key": "connect.sid",
+				"cookie": {
+					"cryptoKey": "***CHANGE THIS***",
+					"maxAge": 1209600000
+				}
+			}
+		},
+		"repl": {
+			"useCoffee": true
+		},
+		"socket": {
+			"middleware": [
+				"core",
+				"socket/factory",
+				"session",
+				"user",
+				"rpc"
+			],
+			"module": "packages/socket/SocketIo",
+			"store": "redis"
 		}
 	}
 }

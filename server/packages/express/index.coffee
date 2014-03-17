@@ -2,6 +2,7 @@
 express = require 'express'
 fs = require 'fs'
 http = require 'http'
+nconf = require 'nconf'
 Promise = require 'bluebird'
 winston = require 'winston'
 
@@ -27,7 +28,7 @@ class Express extends (require 'AbstractHttp')
 	
 	cookieParser: -> express.cookieParser @cookieSecret()
 	
-	cookieSecret: -> @_config.express.sessions.cookie.cryptoKey
+	cookieSecret: -> @_config.sessions.cookie.cryptoKey
 
 	listen: (fn) ->
 		
@@ -76,11 +77,11 @@ class Express extends (require 'AbstractHttp')
 	
 	sessionId: (req) -> req.session.id
 
-	sessionKey: -> @_config.express.sessions.key
+	sessionKey: -> @_config.sessions.key
 	
 	sessionStore: ->
 		
-		switch @_config.express.sessions.db
+		switch @_config.sessions.db
 			when 'redis'
 				
 				module = require 'connect-redis/node_modules/redis'
@@ -92,15 +93,48 @@ exports.$initialize = (config) ->
 	
 	new Promise (resolve, reject) ->
 	
-		http = new Express config.get 'services:http'
+		http = new Express settings = nconf.get 'packageSettings:express'
 		http.initialize (error) ->
 			return reject error if error?
 			
 			console.info "Shrub Express HTTP server up and running on port #{
-				config.get 'services:http:port'
+				settings.port
 			}!"
 			resolve()
 
+exports.$settings = ->
+
+	middleware: [
+		'core'
+		'socket/factory'
+		'form'
+		'express/session'
+		'user'
+		'express/logger'
+		'express/routes'
+		'express/static'
+		'config'
+		'assets'
+		'angular'
+		'express/errors'
+	]
+
+	path: "#{nconf.get 'path'}/app"
+	
+	port: 4201
+	
+	sessions:
+		
+		db: 'redis'
+		
+		key: 'connect.sid'
+		
+		cookie:
+			
+			cryptoKey: 'CookiesAreDelicious'
+	
+			maxAge: 1209600000
+			
 exports[path] = require "./#{path}" for path in [
 	'errors', 'logger', 'routes', 'session', 'static'
 ]

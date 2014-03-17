@@ -51,7 +51,7 @@ module.exports = class SocketIo extends (require 'AbstractSocketFactory')
 			
 	store: ->
 
-		switch @_config.options.store
+		switch @_config.store
 			
 			when 'redis'
 				

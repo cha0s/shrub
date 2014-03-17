@@ -5,7 +5,7 @@ socketFactory = null
 
 exports.$httpInitializer = -> (req, res, next) ->
 	
-	config = nconf.get 'services:socket'
+	config = nconf.get 'packageSettings:socket'
 	
 	socketFactory = new (require config.module) config
 	

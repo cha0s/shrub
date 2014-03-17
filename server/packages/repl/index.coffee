@@ -10,12 +10,14 @@ pkgman = require 'pkgman'
 server = null
 
 exports.$initialized = ->
-
-	filename = "#{__dirname}/socket"
+	
+	settings = nconf.get 'packageSettings:repl'
 	
 	# Feed all the goodies into a REPL for ultimate awesome.
 	server = net.createServer (socket) ->
 		
+		settings = nconf.get 'packageSettings:repl'
+	
 		pkgman.invoke 'replContext', context = {}
 		
 		opts =
@@ -24,7 +26,7 @@ exports.$initialized = ->
 			output: socket
 			ignoreUndefined: true
 		
-		if nconf.get 'repl:useCoffee'
+		if settings.useCoffee
 			
 			opts.prompt = 'shrub (coffee)> '
 			
@@ -48,7 +50,11 @@ exports.$initialized = ->
 		
 		repl.on 'exit', -> socket.end()
 		
-	fs.unlink filename, -> server.listen filename
+	fs.unlink settings.socket, -> server.listen settings.socket
 	
-exports.$processExit = -> server.close()
+exports.$processExit = -> server?.close()
 	
+exports.$settings = ->
+
+	socket: "#{__dirname}/socket"
+	useCoffee: true

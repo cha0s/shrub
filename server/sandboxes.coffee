@@ -90,7 +90,7 @@ class Sandbox extends EventEmitter
 			cookie: cookie
 			cookieDomain: 'localhost'
 			url: "http://localhost:#{
-				nconf.get 'services:http:port'
+				nconf.get 'packageSettings:express:port'
 			}/shrub-entry-point"
 		)
 		@_window = window = document.createWindow()

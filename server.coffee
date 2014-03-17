@@ -6,14 +6,12 @@ errors = require 'errors'
 pkgman = require 'pkgman'
 
 # Set up config.
-config = (require 'config').config
-
-# Register packages.
-pkgman.registerPackages config.get 'packageList'
+config = require 'config'
+config.loadSettings()
 
 # Initialize.
-initializePromises = for _, promise of pkgman.invoke 'initialize', config
-	promise
+initializers = pkgman.invoke 'initialize', config.loadPackageSettings()
+initializePromises = (promise for _, promise of initializers)
 
 # After initialization.
 Promise.all(initializePromises).done(

@@ -21,13 +21,15 @@ exports.$httpMiddleware = (http) ->
 	# Load the navigation middleware.
 	navigationMiddleware = middleware.fromHook(
 		'angularNavigationMiddleware'
-		nconf.get 'angular:navigation:middleware'
+		nconf.get 'packageSettings:angular:navigation:middleware'
 	)
 	
 	label: 'Render page with Angular'
 	middleware: [
 	
 		(req, res, next) ->
+			
+			settings = nconf.get 'packageSettings:angular'
 			
 			# Render app.html
 			htmlPromise = http.renderAppHtml res.locals
@@ -36,7 +38,7 @@ exports.$httpMiddleware = (http) ->
 			return htmlPromise.then(
 				(html) -> res.end html
 				(error) -> next error
-			) unless nconf.get 'sandboxes:render'
+			) unless settings.render
 				
 			# Sort of a hack to conditionally break out of promise flow.
 			class ResponseComplete extends Error
@@ -247,3 +249,14 @@ exports.augmentSandbox = (sandbox) ->
 					socket.on 'initialized', -> resolve sandbox
 			
 			]
+
+exports.$settings = ->
+
+	navigation:
+	
+		middleware: [
+			'form'
+		]
+
+	# Should we render in the sandbox?
+	render: not process.env['E2E']?
