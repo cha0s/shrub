@@ -20,13 +20,15 @@ exports.$endpoint = ->
 		
 			user.email = encryptedEmail
 			
-			User.randomHash()
-		
-		# Generate hash salt.
-		).then((salt) ->
-	
-			user.salt = salt
+			crypto.hasher()
 			
+		).then((opts) ->
+	
+			user.salt = opts.salt.toString 'hex'
+			user.passwordHash = opts.key.toString 'hex'
+			
+			# TODO: email req.body.email with opts.plaintext 
+		
 			user.save()
 		
 		).nodeify fn

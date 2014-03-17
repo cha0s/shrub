@@ -13,17 +13,18 @@ exports.$endpoint = ->
 		
 		filter = where: resetPasswordToken: req.body.token
 		
-		(User.findOne filter).then((user) ->
-			return unless user?
+		(User.findOne filter).bind({}).then((@user) ->
+			return unless @user?
 			
-			User.hashPassword(
-				req.body.password, user.salt
+			crypto.hasher plaintext: req.body.password
 			
-			).then (passwordHash) ->
-				user.passwordHash = passwordHash
-				user.resetPasswordToken = null
-				user.save()
-	
+		).then((opts) ->
+		
+			@user.passwordHash = opts.key.toString 'hex'
+			@user.salt = opts.salt.toString 'hex'
+			@user.resetPasswordToken = null
+			@user.save()
+			
 		).then(->
 			
 			# Make it impossible to tell whether an invalid token was used.

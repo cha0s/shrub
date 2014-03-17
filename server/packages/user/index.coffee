@@ -30,26 +30,26 @@ exports.$httpInitializer = -> (req, res, next) ->
 	
 	passport.use new LocalStrategy (username, password, done) ->
 		
-		(exports.loadByName username).then((user)->
-			return unless user?
+		exports.loadByName(username).bind({}).then((@user)->
+			return unless @user?
 			
-			(User.hashPassword password, user.salt).then (passwordHash) ->
-				return unless user.passwordHash is passwordHash
-				
-				user
+			crypto.hasher(
+				plaintext: password
+				salt: new Buffer @user.salt, 'hex'
+			)
+			
+		).then((opts) ->
+			return unless @user?
+			return unless @user.passwordHash is opts.key.toString 'hex'
+			
+			@user
 			
 		).nodeify done
 		
 	passport.serializeUser (user, done) -> done null, user.id
 	
-	passport.deserializeUser (id, done) ->
-		
-		(User.find id).then((user)->
-			
-			user
-		
-		).nodeify done
-		
+	passport.deserializeUser (id, done) -> User.find(id).nodeify done
+	
 	next()
 				
 exports.$httpMiddleware = (http) ->
@@ -75,19 +75,6 @@ exports.$models = (schema) ->
 	
 	User = schema.models['User']
 	
-	User.randomHash = ->
-		Promise.promisify(nodeCrypto.randomBytes)(24).then (buffer) ->
-			nodeCrypto.createHash('sha512').update(
-				schema.settings.cryptoKey
-			).update(
-				buffer.toString()
-			).digest 'hex'
-	
-	User.hashPassword = (password, salt) ->
-		Promise.promisify(nodeCrypto.pbkdf2)(
-			password, salt, 20000, 512
-		)
-		
 	redactFor = User::redactFor
 	User::redactFor = (user) ->
 		

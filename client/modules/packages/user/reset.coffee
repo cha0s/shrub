@@ -27,7 +27,11 @@ exports.$route = ->
 					rpc: true
 					handler: (error, result) ->
 						return if error?
-				
+						
+						notifications.add(
+							text: "You may now log in with your new password."
+						)
+						
 						$location.path '/user/login'
 
 			$scope.$emit 'shrubFinishedRendering'

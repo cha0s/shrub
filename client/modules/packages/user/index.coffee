@@ -20,7 +20,7 @@ exports.$models = (schema) ->
 		
 		resetPasswordToken:
 			type: String
-			length: 128
+			length: 48
 			index: true
 		
 		salt:

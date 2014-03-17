@@ -35,12 +35,14 @@ exports.$endpoint = ->
 		).then((@user) ->
 			
 			# Generate a one-time login token.
-			User.randomHash()
+			crypto.randomBytes 24
 			
-		).then((hash) ->
+		).then((token) ->
 			return unless @user?
 			
-			@user.resetPasswordToken = hash
+			# TODO: email user their login tokin.
+			
+			@user.resetPasswordToken = token.toString 'hex'
 			@user.save()
 	
 		).then(->
