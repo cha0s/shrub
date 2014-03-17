@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "bluebird": "~1.0.5",
+    "coffee-script": "~1.7.1",
     "connect-redis": "~1.4.7",
     "express": "3.1.0",
     "hbs": "~2.0.2",

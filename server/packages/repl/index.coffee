@@ -1,9 +1,11 @@
 
+CoffeeScript = require 'coffee-script'
 fs = require 'fs'
 nconf = require 'nconf'
 net = require 'net'
-pkgman = require 'pkgman'
 replServer = require 'repl'
+
+pkgman = require 'pkgman'
 
 server = null
 
@@ -16,11 +18,31 @@ exports.$initialized = ->
 		
 		pkgman.invoke 'replContext', context = {}
 		
-		repl = replServer.start(
-			prompt: "shrub> "
+		opts =
+			prompt: 'shrub> '
 			input: socket
 			output: socket
-		)
+			ignoreUndefined: true
+		
+		if nconf.get 'repl:useCoffee'
+			
+			opts.prompt = 'shrub (coffee)> '
+			
+			opts.eval = (cmd, context, filename, callback) ->
+				
+				try
+				
+					callback null, CoffeeScript.eval(
+						cmd
+						sandbox: context
+						filename: filename
+					)
+					
+				catch error
+					
+					callback error
+		
+		repl = replServer.start opts
 		
 		repl.context[key] = value for key, value of context
 		

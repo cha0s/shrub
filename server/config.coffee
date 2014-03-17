@@ -19,6 +19,10 @@ nconf.defaults
 	
 	path: "#{__dirname}/.."
 	
+	repl:
+		
+		useCoffee: true
+	
 	# Sandbox configuration.
 	sandboxes:
 		
