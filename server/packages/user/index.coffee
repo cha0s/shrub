@@ -1,5 +1,4 @@
 
-nodeCrypto = require 'crypto'
 passport = require 'passport'
 Promise = require 'bluebird'
 
@@ -15,12 +14,6 @@ exports.$config = (req) ->
 	req.user.redactFor(req.user).then (redacted) ->
 	
 		user: redacted
-
-exports.loadByName = (name) ->
-	
-	{models: User: User} = require 'server/jugglingdb'
-	
-	User.findOne where: name: name
 
 exports.$httpInitializer = -> (req, res, next) ->
 	
@@ -123,6 +116,12 @@ exports.$socketMiddleware = ->
 			next()
 	
 	]
+
+exports.loadByName = (name) ->
+	
+	{models: User: User} = require 'server/jugglingdb'
+	
+	User.findOne where: name: name
 
 exports[path] = require "packages/user/#{path}" for path in [
 	'forgot', 'login', 'logout', 'register', 'reset'
