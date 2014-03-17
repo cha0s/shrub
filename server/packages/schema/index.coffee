@@ -122,6 +122,4 @@ exports.$httpInitializer = -> (req, res, next) ->
 
 	next()
 	
-exports.$replContext = (context) ->
-	
-	context.schema = require 'server/jugglingdb'
+exports.$replContext = (context) -> context.schema = require 'server/jugglingdb'
