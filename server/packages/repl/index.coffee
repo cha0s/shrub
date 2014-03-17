@@ -3,7 +3,7 @@ fs = require 'fs'
 nconf = require 'nconf'
 net = require 'net'
 pkgman = require 'pkgman'
-repl = require 'repl'
+replServer = require 'repl'
 
 server = null
 
@@ -14,13 +14,15 @@ exports.$initialized = ->
 	# Feed all the goodies into a REPL for ultimate awesome.
 	server = net.createServer (socket) ->
 		
-		repl = repl.start(
+		pkgman.invoke 'replContext', context = {}
+		
+		repl = replServer.start(
 			prompt: "shrub> "
 			input: socket
 			output: socket
 		)
 		
-		pkgman.invoke 'replContext', repl.context
+		repl.context[key] = value for key, value of context
 		
 		repl.on 'exit', -> socket.end()
 		
