@@ -32,10 +32,7 @@ exports.$endpoint = ->
 						
 						(Promise.promisify req.login, req) @user
 						
-					).then(->
-						
-						@user.redactFor @user
-					)
+					).then -> @user.redactFor @user
 					
 # If no user is found, the rejection will happen a lot sooner than if one is;
 # password hashing must be done in the latter case. We'll create an artificial
