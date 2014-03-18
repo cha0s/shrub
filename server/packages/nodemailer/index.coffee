@@ -13,8 +13,13 @@ sandboxes = require 'sandboxes'
 readFile = Promise.promisify fs.readFile, fs
 
 sandbox = null
+templateCache = {}
 transport = null
 
+exports.$clearCaches = ->
+	
+	templateCache = {}
+	
 exports.$httpListening = (http) ->
 	
 	settings = nconf.get 'packageSettings:nodemailer'
@@ -87,14 +92,20 @@ exports.sendMail = (type, mail) ->
 
 	).then((html) ->
 		
-		if html?
-			
-			# Prepare the HTML to be sent as email.
-			html = sandbox.prepareHtmlForEmail html.toString()
+		return unless html?
 		
-			# Compile it with Handlebars.
-			mail.tokens ?= {}
-			html = handlebars.compile(html) mail.tokens
+		html = if templateCache[type]?
+		
+			templateCache[type]
+			
+		else
+		
+			# Prepare the HTML to be sent as email.
+			templateCache[type] = sandbox.prepareHtmlForEmail html.toString()
+	
+		# Compile it with Handlebars.
+		mail.tokens ?= {}
+		html = handlebars.compile(html) mail.tokens
 			
 	).then((html) ->
 		
@@ -172,19 +183,44 @@ augmentSandbox = (sandbox) ->
 						
 						true
 						
-					# Rejoin the selectors, and cache the associated rules.
+					# Rejoin the selectors.
 					selector = parts.join ','
 					
+					# Normalize the rule(s).
 					selectors[selector] ?= ''
-					selectors[selector] += rule.style.cssText
-			
+					selectors[selector] += rule.style.cssText.split(
+					
+						';'
+					
+					).filter((rule) ->
+						
+						rule isnt ''
+					
+					).map((rule) ->
+						
+						rule.trim()
+						
+					).sort().join '; '
+					selectors[selector] += ';'
+				
+			# Merge as many rules as we can, so we'll have less work to do for
+			# each application.
+			cssTextCache = {}
+			for selector, cssText of selectors
+				(cssTextCache[cssText] ?= []).push selector
+				
+			selectors = {}
+			for cssText, selectors_ of cssTextCache
+				selectors[selectors_.join ','] = cssText
+					
 			# CREDIT: http://devintorr.es/blog/2010/05/26/turn-css-rules-into-inline-style-attributes-using-jquery/
 			# With some improvements, of course.
 			sandbox.inlineCss = (html) ->
+				
 				for selector, cssText of selectors
-					$(selector, $(html)).each (i, elm) ->
-						elm.style.cssText += cssText
-			
+					for element in $(selector, $(html))
+						element.style.cssText += cssText
+						
 			# Prepare HTML for email; inject all CSS inline and insert niceties
 			# like a nav on top.
 			sandbox.prepareHtmlForEmail = (html) ->
