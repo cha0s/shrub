@@ -10,20 +10,6 @@ exports.$directive = -> [
 				-> scope.windowTitle = title.window()
 			)
 		
-		replace: true
-		
-		# Restrict it to a comment because all other variations would generate
-		# invalid markup.
-		restrict: 'M'
-		
-		template: """
-
-<title
-	data-ng-bind="windowTitle"
-></title>
-
-"""
-		
 ]
 
 exports.$service = -> [
