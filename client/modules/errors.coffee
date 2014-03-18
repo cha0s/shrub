@@ -46,10 +46,18 @@ exports.message = (error) ->
 	output
 	
 exports.stack = (error) ->
+	try
+		throw new Error
+	catch error
+		console.log error.stack
 	formatStack = error.stack
-	formatStack = formatStack.split '\n'
-	formatStack.shift()
-	"#{@message error}\n#{formatStack.join '\n'}"
+	formatStack = if formatStack?
+		formatStack = formatStack.split '\n'
+		formatStack.shift()
+		'\n' + formatStack.join '\n'
+	else
+		''
+	"#{@message error}#{formatStack}"
 	
 exports.instantiate = (key, args...) ->
 	
