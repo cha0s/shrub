@@ -1,7 +1,9 @@
 
 pkgman = require 'pkgman'
 
-exports.$auditKeys = (req) -> ["ip:#{req.ip}"]
+exports.$auditKeys = (req) ->
+	
+	ip: req.ip
 
 exports.$httpMiddleware = (http) ->
 	

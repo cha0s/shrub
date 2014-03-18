@@ -1,8 +1,7 @@
 
 exports.$auditKeys = (req) ->
-	keys = []
-	keys.push req.session.id if req.session?
-	keys
+	
+	session: req.session.id if req.session?
 
 exports.$socketMiddleware = ->
 
@@ -27,6 +26,3 @@ exports.$socketMiddleware = ->
 			)
 			
 	]
-
-
-	

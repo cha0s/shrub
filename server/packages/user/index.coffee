@@ -5,9 +5,8 @@ Promise = require 'bluebird'
 crypto = require 'server/crypto'
 
 exports.$auditKeys = (req) ->
-	keys = []
-	keys.push req.user.id if req.user.id?
-	keys
+
+	user: req.user.id if req.user.id?
 
 exports.$config = (req) ->
 	

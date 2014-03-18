@@ -16,14 +16,21 @@ exports.$endpointAlter = (endpoints) ->
 					"rpc://#{route}"
 					endpoint.limiter.threshold
 				)
+				
+				endpoint.excludeKeys ?= []
 					
 				endpoint.limiter.message ?= "You are doing that too much."
 				
 				endpoint.validators.push (req, res, next) ->
 					
 					{instance, message, threshold} = endpoint.limiter
-		
-					instance.addAndCheckThreshold(audit.keys req).done(
+					
+					auditKeys = audit.keys req
+					for excludedKey in endpoint.excludeKeys
+						delete auditKeys[excludedKey]
+						
+					keys = ("#{key}:#{value}" for key, value of auditKeys)
+					instance.addAndCheckThreshold(keys).done(
 						
 						(isLimited) ->
 							

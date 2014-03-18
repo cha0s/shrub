@@ -7,7 +7,7 @@ Promise = require 'bluebird'
 {threshold} = require 'limits'
 
 exports.$endpoint = ->
-
+	
 	limiter: threshold: threshold(1).every(30).seconds()
 
 	receiver: (req, fn) ->
