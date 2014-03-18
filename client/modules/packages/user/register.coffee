@@ -30,8 +30,7 @@ exports.$route = ->
 						return if error?
 				
 						notifications.add(
-							class: 'alert-success'
-							text: "Registered successfully."
+							text: "An email has been sent with account registration details. Please check your email."
 						)
 						
 						$location.path '/'

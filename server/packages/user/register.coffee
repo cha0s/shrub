@@ -1,4 +1,7 @@
 
+nconf = require 'nconf'
+nodemailer = require 'server/packages/nodemailer'
+
 crypto = require 'server/crypto'
 
 {threshold} = require 'limits'
@@ -7,7 +10,7 @@ exports.$endpoint = ->
 
 	limiter:
 		message: "You are trying to register too much."
-		threshold: threshold(1).every(2).minutes()
+		threshold: threshold(5).every(2).minutes()
 
 	receiver: (req, fn) ->
 		
@@ -15,10 +18,44 @@ exports.$endpoint = ->
 		{email, password, username} = body
 		
 		exports.register(username, email, password).then((user) ->
+			
+			baseUrl = "http://#{
+				req.headers.host
+			}"
+			
+			siteName = nconf.get 'siteName'
+			
+			tokens =
+				
+				baseUrl: baseUrl
+				
+				email: email
+				
+				loginUrl: "#{
+					baseUrl
+				}/user/reset/#{
+					user.resetPasswordToken
+				}"
+				
+				password: user.plaintext
+				
+				siteName: siteName
+				
+				title: "Account registration details"
+				
+				username: username
+			
+			nodemailer.sendMail(
+				'user/register'
+				to: email
+				subject: "Account registration details for #{siteName}"
+				tokens: tokens
+			)
 		
-			# TODO: email with password ? opts.plaintext 
-		
-		).nodeify fn
+		).then(
+			-> fn()
+			(error) -> fn error
+		)
 		
 exports.$replContext = (context) ->
 	
@@ -45,10 +82,18 @@ _register = (name, email, password, schema) ->
 		crypto.hasher plaintext: password
 		
 	).then((opts) ->
-
+		
+		user.plaintext = opts.plaintext
 		user.salt = opts.salt.toString 'hex'
 		user.passwordHash = opts.key.toString 'hex'
-
+	
+		# Generate a one-time login token.
+		crypto.randomBytes 24
+		
+	).then((token) ->
+		
+		user.resetPasswordToken = token.toString 'hex'
+		
 		user.save()
 	
 	)
