@@ -1,4 +1,6 @@
 
+pkgman = require 'pkgman'
+
 exports.$auditKeys = (req) -> ["ip:#{req.ip}"]
 
 exports.$httpMiddleware = (http) ->
@@ -14,7 +16,12 @@ exports.$httpMiddleware = (http) ->
 		
 	]
 
+exports.$replContext = (context) ->
 
+	context.clearCaches = ->
+		
+		pkgman.invoke 'clearCaches'
+		
 exports.$socketMiddleware = ->
 	
 	label: 'Normalize request variables'
