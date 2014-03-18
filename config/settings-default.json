@@ -4,6 +4,11 @@
 	"sandboxes": {
 		"ttl": 300000
 	},
+	"siteEmail": {
+		"address": "admin@example.com",
+		"name": "Site administrator"
+	},
+	"siteName": "Shrub example application",
 	"packageList": [
 		"angular",
 		"assets",
@@ -15,6 +20,7 @@
 		"form",
 		"limiter",
 		"logger",
+		"nodemailer",
 		"repl",
 		"rpc",
 		"schema",

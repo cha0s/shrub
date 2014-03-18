@@ -13,6 +13,7 @@
     "jsdom": "~0.8.11",
     "jugglingdb-redis": "0.0.2-2",
     "nconf": "~0.6.9",
+    "nodemailer": "~0.6.1",
     "passport": "~0.1.18",
     "passport-local": "~0.1.6",
     "passport-oauth": "~0.1.15",
