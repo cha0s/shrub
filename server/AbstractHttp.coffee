@@ -1,6 +1,7 @@
 
 nconf = require 'nconf'
 pkgman = require 'pkgman'
+Promise = require 'bluebird'
 winston = require 'winston'
 
 middleware = require 'middleware'
@@ -22,7 +23,19 @@ module.exports = class AbstractHttp
 		middleware.dispatch request, response, (error) =>
 			return fn error if error?
 			
-			@listen fn
+			@listen (error) =>
+				return fn error if error?
+				
+				promises = for _, promise of pkgman.invoke(
+					'httpListening', this
+				)
+					promise
+					
+				
+				Promise.all(promises).then(
+					-> fn()
+					(error) -> fn error
+				)
 		
 	config: -> @_config
 		
