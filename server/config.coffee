@@ -31,7 +31,11 @@ exports.loadSettings = ->
 	pkgman.registerPackages nconf.get 'packageList'
 
 exports.loadPackageSettings = ->
-	nconf.defaults packageSettings: pkgman.invoke 'settings'
+	
+	nconf.defaults
+		
+		packageSettings: pkgman.invoke 'settings'
+		path: "#{__dirname}/.."
 		
 exports.Config = -> class Config
 	
