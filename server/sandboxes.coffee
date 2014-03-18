@@ -112,16 +112,16 @@ class Sandbox extends EventEmitter
 		window.WebSocket = WebSocket
 		
 		window.onload = =>
-			
+
 			# Catch any errors in the client.
-			for documentError in window.document.errors
+			for documentError in window.document.errors ? []
 				if documentError.data?.error?
 					error = new Error "#{
 						documentError.message
 					}\n#{
 						errors.stack documentError.data.error
 					}"
-			
+
 			@emit 'ready', error
 			
 	close: ->
