@@ -58,6 +58,4 @@ angular.module('shrub.config', []).provider('config', function() {
 			
 	]
 
-exports.$replContext = (context) ->
-
-	context.config = nconf
+exports.$replContext = (context) -> context.config = nconf
