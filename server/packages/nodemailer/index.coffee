@@ -191,7 +191,7 @@ augmentSandbox = (sandbox) ->
 				
 				# Clone the body and insert the HTML into the main application
 				# area.
-				$body = $(@_window.document.body)
+				$body = $('body').clone()
 				$(html).appendTo $('.main', $body)
 
 				# Inject a minimally-built nav.
