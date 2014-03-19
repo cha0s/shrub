@@ -10,51 +10,47 @@ redback.addStructure(
 	
 	init: (options = {}) ->
 	
-		@bucket_count = options.bucket_count ? 10
-		@bucket_time = options.bucket_time ? 60 * 10
-		@bucket_interval = Math.round @bucket_time / @bucket_count
+		@bucketTime = options.bucketTime ? 60 * 10
 	
-	getBucket: (time) ->
+	add: (subject, increment = 1) ->
 	
-		time = (time ? new Date().getTime()) / 1000
-		Math.floor (time % @bucket_time) / @bucket_interval
+		exists = Promise.promisify @client.exists, @client
+		rpushx = Promise.promisify @client.rpushx, @client
 		
-	add: (subject) ->
-	
-		multi = @client.multi()
-		execute = Promise.promisify multi.exec, multi
-
-		subject = @key + ':' + subject + ':' + @getBucket()
+		subject = @key + ':' + subject
 		
-		multi.incr subject
-		multi.expire subject, @bucket_time
+		exists(subject).bind(this).then (exists) ->
+			
+			if exists
+				
+				rpushx subject, increment
+			
+			else
 		
-		execute()
-		
+				multi = @client.multi()
+				multi.rpush subject, increment
+				multi.expire subject, @bucketTime
+				
+				Promise.promisify(multi.exec, multi)()
+				
 	count: (subject) ->
 	
-		multi = @client.multi()
-		execute = Promise.promisify multi.exec, multi
-
-		bucket = @getBucket()
-		count = @bucket_count
-		subject = @key + ':' + subject
-
-		multi.get subject + ':' + bucket
-		while --count
-			multi.get subject + ':' + (--bucket + @bucket_count) % @bucket_count
-	
-		execute().then (counts) ->
+		lrange = Promise.promisify @client.lrange, @client
+		lrange(@key + ':' + subject, 0, -1).then (counts) ->
 			
 			counts.reduce(
 				(l, r) ->
 					return l unless r?
 					return r unless l?
 					
-					(parseInt l, 10) + (parseInt r, 10)
+					parseInt(l, 10) + parseInt(r, 10)
 				0
 			)
+		
+	ttl: (subject) ->
 				
+		Promise.promisify(@client.ttl, @client) @key + ':' + subject
+		
 )
 
 exports.Limiter = class Limiter
@@ -66,24 +62,32 @@ exports.Limiter = class Limiter
 				"Limiter(#{root}) must be constructed with a valid threshold!"
 			)
 			
-		options.bucket_time ?= @threshold.calculateSeconds()
+		options.bucketTime ?= @threshold.calculateSeconds()
 			
 		@limiter = redback.createBetterRateLimit root, options
 	
-	add: (keys) -> Promise.all(@limiter.add key for key in keys)
-	
-	addAndCheckThreshold: (keys) -> @add(keys).then => @checkThreshold keys
-	
-	count: (keys) ->
+	add: (keys, increment = 1) ->
 		
-		Promise.all(@limiter.count key for key in keys).then(
+		Promise.all(@limiter.add key, increment for key in keys)
+	
+	addAndCheckThreshold: (keys, increment = 1) ->
+		
+		@add(keys, increment).then => @checkThreshold keys
+	
+	_reduction: (keys, index) ->
+	
+		Promise.all(@limiter[index] key for key in keys).then(
 
-			(counts) -> counts.reduce(
+			(reduction) -> reduction.reduce(
 				(l, r) -> if l > r then l else r
 				-Infinity
 			)
 		)
 
+	count: (keys) -> @_reduction keys, 'count'
+		
+	ttl: (keys) -> @_reduction keys, 'ttl'
+		
 	checkThreshold: (keys) ->
 		@count(keys).then (count) => count > @threshold.count()
 		
@@ -110,14 +114,8 @@ class ThresholdTime
 		seconds: 1
 		minutes: 60
 	
-	backwardMultipliers = {}
-	
 	for key, multiplier of multipliers
-		backwardMultipliers[multiplier] = key
-		 			
 		do (key, multiplier) =>
 			@::[key] = ->
 				@_multiplier = multiplier
 				this
-
-	time: -> "#{@_amount} #{backwardMultipliers[@_multiplier]}"

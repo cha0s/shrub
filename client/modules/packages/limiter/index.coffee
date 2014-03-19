@@ -6,6 +6,6 @@ exports.$errorType = -> class LimiterThresholdError extends errors.BaseError
 	constructor: (message, @time) -> super
 	
 	key: 'limiterThreshold'
-	template: ":message Please wait about :time before trying again."
+	template: ":message You may try again :time."
 	
 	toJSON: -> [@key, @message, @time]

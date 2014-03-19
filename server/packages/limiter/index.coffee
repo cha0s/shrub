@@ -1,4 +1,6 @@
 
+moment = require 'moment'
+
 audit = require 'audit'
 errors = require 'errors'
 
@@ -33,14 +35,15 @@ exports.$endpointAlter = (endpoints) ->
 					instance.addAndCheckThreshold(keys).done(
 						
 						(isLimited) ->
+							return next() unless isLimited
 							
-							return next errors.instantiate(
-								'limiterThreshold'
-								message
-								threshold.time()
-							) if isLimited
+							instance.ttl(keys).then (ttl) ->
 							
-							next()
+								next errors.instantiate(
+									'limiterThreshold'
+									message
+									moment().add('seconds', ttl).fromNow()
+								)
 							
 						(error) -> next error
 						
