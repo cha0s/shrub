@@ -38,6 +38,10 @@
 			},
 			"render": true
 		},
+		"core": {
+			"trustedProxies": [
+			]
+		},
 		"express": {
 			"middleware": [
 				"core",
@@ -60,6 +64,13 @@
 				"cookie": {
 					"cryptoKey": "***CHANGE THIS***",
 					"maxAge": 1209600000
+				}
+			}
+		},
+		"nodemailer": {
+			"transport": {
+				"type": "sendmail",
+				"options": {
 				}
 			}
 		},
