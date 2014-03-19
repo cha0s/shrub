@@ -6,7 +6,7 @@ crypto = require 'server/crypto'
 
 exports.$auditKeys = (req) ->
 
-	user: req.user.id if req.user.id?
+	user: req.user.id if req.user?.id?
 
 exports.$config = (req) ->
 	
@@ -56,6 +56,13 @@ exports.$httpMiddleware = (http) ->
 		(req, res, next) ->
 			
 			req.user ?= new User()
+			
+			req.user.logout = ->
+				
+				req.logout()
+				req.user = new User()
+				
+				Promise.resolve req.user
 			
 			next()
 		
@@ -109,6 +116,14 @@ exports.$socketMiddleware = ->
 			req.passport = req._passport.instance
 			
 			req.user ?= new User()
+			
+			req.user.logout = ->
+				
+				req.logout()
+				req.user = new User()
+				
+				new Promise (resolve) ->
+					req.socket.emit 'user.logout', -> resolve req.user
 			
 			req.socket.join req.user.name if req.user.id?
 			

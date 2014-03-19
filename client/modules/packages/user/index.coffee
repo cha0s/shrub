@@ -182,12 +182,16 @@ exports.$modelsAlter = (models) ->
 	augmentModel models.User, Model, name for name, Model of models
 		
 exports.$service = -> [
-	'$q', 'config', 'rpc', 'schema'
-	($q, config, rpc, schema) ->
+	'$q', 'config', 'rpc', 'schema', 'socket'
+	($q, config, rpc, schema, socket) ->
 		
 		service = {}
 		
 		user = new schema.models.User
+		
+		logout = -> user.fromObject (new schema.models.User).toObject()
+		
+		socket.on 'user.logout', logout
 		
 		service.isLoggedIn = -> service.instance().id? 
 			
@@ -198,21 +202,17 @@ exports.$service = -> [
 				method: method
 				username: username
 				password: password
-			).then(
-				(O) ->
-					user.fromObject O
-					user
-			)
+			
+			).then (O) ->
+				user.fromObject O
+				user
 
 		service.logout = ->
 			
 			rpc.call(
 				'user.logout'
-			).then(
-				->
-					user.fromObject (new schema.models.User).toObject()
-					user
-			)
+
+			).then logout
 		
 		isLoaded = false
 		service.instance = ->
