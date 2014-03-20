@@ -60,14 +60,22 @@ exports.instantiate = (key, args...) ->
 	Types = exports.errorTypes()
 	Type = if Types[key]? then Types[key] else BaseError
 	
-	Type = do (Type) ->
+	IType = do (Type) ->
 		
 		F = (args) -> Type.apply this, args
 		F.prototype = Type.prototype
 		
 		(args) -> new F args
 	
-	Type args
+	# Throw so we have a meaningful stack.
+	try
+		throw new Error()
+	catch error
+		stack = error.stack
+	
+	error = IType args
+	error.stack = stack
+	error
 	
 exports.caught = (error) ->
 	return error unless error instanceof BaseError
