@@ -142,7 +142,7 @@ augmentSandbox = (sandbox) ->
 	new Promise (resolve, reject) -> 
 		
 		sandbox.on 'ready', (error) ->
-			return reject error? if error
+			return reject error if error?
 			
 			# Convenience.
 			$ = sandbox._window.$
