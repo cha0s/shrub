@@ -19,12 +19,12 @@ exports.$endpoint = ->
 			# Search for username or encrypted email.
 			if -1 is req.body.usernameOrEmail.indexOf '@'
 				
-				where: name: req.body.usernameOrEmail
+				where: iname: req.body.usernameOrEmail.toLowerCase()
 			
 			else
 				
 				crypto.encrypt(
-					req.body.usernameOrEmail
+					req.body.usernameOrEmail.toLowerCase()
 				
 				).then (encryptedEmail) ->
 					where: email: encryptedEmail

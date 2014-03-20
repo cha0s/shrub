@@ -72,10 +72,10 @@ exports.register = (name, email, password) ->
 _register = (name, email, password, schema) ->
 	
 	{models: User: User} = schema
-	user = new User name: name
+	user = new User name: name, iname: name.toLowerCase()
 	
 	# Encrypt the email.
-	crypto.encrypt(email).then((encryptedEmail) ->
+	crypto.encrypt(email.toLowerCase()).then((encryptedEmail) ->
 
 		user.email = encryptedEmail
 

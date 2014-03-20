@@ -157,7 +157,7 @@ exports.loadByName = (name) ->
 	
 	{models: User: User} = require 'server/jugglingdb'
 	
-	User.findOne where: name: name
+	User.findOne where: iname: name.toLowerCase()
 
 exports[path] = require "packages/user/#{path}" for path in [
 	'forgot', 'login', 'logout', 'register', 'reset'

@@ -9,11 +9,15 @@ exports.$models = (schema) ->
 			type: String
 			index: true
 		
+		iname:
+			type: String
+			length: 24
+			index: true
+			
 		name:
 			type: String
 			default: 'Anonymous'
 			length: 24
-			index: true
 			
 		passwordHash:
 			type: String
