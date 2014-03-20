@@ -43,7 +43,7 @@ exports.$settings = ->
 
 	trustedProxies: []
 		
-exports.$socketMiddleware = ->
+exports.$socketAuthorizationMiddleware = ->
 	
 	label: 'Normalize request variables'
 	middleware: [

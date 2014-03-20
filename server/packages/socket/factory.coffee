@@ -30,7 +30,7 @@ exports.$replContext = (context) ->
 	
 	context.socketFactory = socketFactory
 
-exports.$socketMiddleware = ->
+exports.$socketRequestMiddleware = ->
 	
 	label: 'Register socket factory'
 	middleware : [

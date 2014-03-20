@@ -16,7 +16,7 @@ logger = new winston.Logger
 {Limiter} = require 'limits'
 {Middleware} = require 'middleware'
 
-exports.$socketMiddleware = ->
+exports.$socketRequestMiddleware = ->
 	
 	# Gather all endpoints.
 	endpoints = {}

@@ -1,8 +1,13 @@
 
 exports.$settings = ->
 
-	middleware: [
+	authorizationMiddleware: [
 		'core'
+		'session'
+		'user'
+	]
+
+	requestMiddleware: [
 		'socket/factory'
 		'session'
 		'user'

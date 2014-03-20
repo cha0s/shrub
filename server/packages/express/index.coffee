@@ -58,7 +58,7 @@ class Express extends (require 'AbstractHttp')
 					req.signedCookies[@sessionKey()]
 					(error, session) ->
 						return reject error if error?
-						return reject new Error 'No session!' unless session?
+						return resolve() unless session?
 						
 						session.req = session
 						resolve session

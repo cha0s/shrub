@@ -3,7 +3,7 @@ exports.$auditKeys = (req) ->
 	
 	session: req.session.id if req.session?
 
-exports.$socketMiddleware = ->
+exports.$socketAuthorizationMiddleware = ->
 
 	label: 'Load session'
 	middleware: [
@@ -18,11 +18,23 @@ exports.$socketMiddleware = ->
 					
 					req.session = session
 					
-					req.socket.join session.id
-					
 					next()
 				
 				(error) -> next error
 			)
+			
+	]
+
+
+exports.$socketRequestMiddleware = ->
+
+	label: 'Join channel for socket'
+	middleware: [
+	
+		(req, res, next) ->
+			
+			req.socket.join session.id if session?
+				
+			next()
 			
 	]

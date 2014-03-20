@@ -95,7 +95,7 @@ exports.$models = (schema) ->
 		
 exports.$modelsAlter = (require 'client/modules/packages/user').$modelsAlter
 
-exports.$socketMiddleware = ->
+exports.$socketAuthorizationMiddleware = ->
 	
 	{models: User: User} = require 'server/jugglingdb'
 	
@@ -132,6 +132,19 @@ exports.$socketMiddleware = ->
 			else
 			
 				req.user = new User()
+			
+			next()
+	
+	]
+
+exports.$socketRequestMiddleware = ->
+	
+	{models: User: User} = require 'server/jugglingdb'
+	
+	label: 'Join channel for user'
+	middleware: [
+	
+		(req, res, next) ->
 			
 			req.socket.join req.user.name if req.user.id?
 			
