@@ -107,12 +107,16 @@ reporterMiddleware = (req, res, next) ->
 		
 		auditKeys = audit.keys req
 		
+		# Terminate the chain if not a villian.
+		class NotAVillian extends Error
+			constructor: (@message) ->
+		
 		keys = ("#{key}:#{value}" for key, value of auditKeys)
 		villianyLimiter.addAndCheckThreshold(
 			keys, score
 		
 		).bind({}).then((isVillian) ->
-			return Promise.resolve false unless isVillian
+			throw new NotAVillian unless isVillian
 			
 			logger.error "Logged villiany for #{
 				type
@@ -131,8 +135,9 @@ reporterMiddleware = (req, res, next) ->
 
 			# Kick.
 			req.villianyKick @ttl
-
-		).then -> true
+		
+		).then(-> true
+		).catch NotAVillian, -> false
 		
 	next()
 
