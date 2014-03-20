@@ -42,7 +42,7 @@ exports.$endpointAlter = (endpoints) ->
 							
 								req.reportVilliany(
 									endpoint.villianyScore ? 20
-									"rpc://#{route}"
+									"rpc://#{route}:limiter"
 								)
 								
 							else
