@@ -46,10 +46,6 @@ exports.message = (error) ->
 	output
 	
 exports.stack = (error) ->
-	try
-		throw new Error
-	catch error
-		console.log error.stack
 	formatStack = error.stack
 	formatStack = if formatStack?
 		formatStack = formatStack.split '\n'
