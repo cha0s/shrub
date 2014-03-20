@@ -40,8 +40,8 @@ exports.$appConfig = -> [
 ]
 
 exports.$appRun = -> [
-	'$rootScope', '$location'
-	($rootScope, $location) ->
+	'$rootScope', '$location', '$window', 'socket'
+	($rootScope, $location, $window, socket) ->
 		
 		$rootScope.$watch(
 			-> $location.path()
@@ -57,6 +57,10 @@ exports.$appRun = -> [
 					
 				$rootScope.pathClass = parts.join ' '
 		)
+		
+		socket.on 'core.navigateTo', (href) -> $window.location.href = href
+		
+		socket.on 'core.reload', -> $window.location.reload()
 		
 ]
 
