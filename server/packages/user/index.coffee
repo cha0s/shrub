@@ -55,14 +55,18 @@ exports.$httpMiddleware = (http) ->
 		passport.session()
 		(req, res, next) ->
 			
-			req.user ?= new User()
+			if req.user?
 			
-			req.user.logout = ->
-				
-				req.logout()
+				req.user.logout = ->
+					
+					req.logout()
+					req.user = new User()
+					
+					Promise.resolve req.user
+					
+			else
+			
 				req.user = new User()
-				
-				Promise.resolve req.user
 			
 			next()
 		
@@ -115,15 +119,19 @@ exports.$socketMiddleware = ->
 			
 			req.passport = req._passport.instance
 			
-			req.user ?= new User()
+			if req.user?
 			
-			req.user.logout = ->
-				
-				req.logout()
+				req.user.logout = ->
+					
+					req.logout()
+					req.user = new User()
+					
+					new Promise (resolve) ->
+						req.socket.emit 'user.logout', -> resolve req.user
+			
+			else
+			
 				req.user = new User()
-				
-				new Promise (resolve) ->
-					req.socket.emit 'user.logout', -> resolve req.user
 			
 			req.socket.join req.user.name if req.user.id?
 			
