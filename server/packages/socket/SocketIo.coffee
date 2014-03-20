@@ -61,6 +61,10 @@ module.exports = class SocketIo extends AbstractSocketFactory
 				crypto.randomBytes(24).then (key) ->
 					
 					handshake.requestKey = key.toString 'hex'
+					
+					# Remove the handshake values
+					delete req[key] for key of handshake
+					
 					requestObjects[handshake.requestKey] = req
 					
 					fn null, true
