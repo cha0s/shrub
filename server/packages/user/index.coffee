@@ -127,7 +127,8 @@ exports.$socketAuthorizationMiddleware = ->
 					req.user = new User()
 					
 					new Promise (resolve) ->
-						req.socket.emit 'user.logout', -> resolve req.user
+						
+						req.socket?.emit 'user.logout', null, -> resolve req.user
 			
 			else
 			
