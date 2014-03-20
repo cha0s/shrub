@@ -1,7 +1,7 @@
 
 errors = require 'errors'
 
-exports.$errorType = -> class LimiterThresholdError extends errors.BaseError
+class LimiterThresholdError extends errors.BaseError
 	
 	constructor: (message, @time) -> super
 	
@@ -9,3 +9,5 @@ exports.$errorType = -> class LimiterThresholdError extends errors.BaseError
 	template: ":message You may try again :time."
 	
 	toJSON: -> [@key, @message, @time]
+
+exports.$errorType = -> LimiterThresholdError
