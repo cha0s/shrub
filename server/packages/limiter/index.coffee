@@ -1,5 +1,6 @@
 
 moment = require 'moment'
+Promise = require 'bluebird'
 
 audit = require 'audit'
 errors = require 'errors'
@@ -37,14 +38,28 @@ exports.$endpointAlter = (endpoints) ->
 						(isLimited) ->
 							return next() unless isLimited
 							
-							instance.ttl(keys).then (ttl) ->
+							promise = if req.reportVilliany?
 							
-								next errors.instantiate(
-									'limiterThreshold'
-									message
-									moment().add('seconds', ttl).fromNow()
+								req.reportVilliany(
+									endpoint.villianyScore ? 20
+									"rpc://#{route}"
 								)
+								
+							else
+								
+								Promise.resolve false
 							
+							promise.then (isVillian) ->
+								return if isVillian
+							
+								instance.ttl(keys).then (ttl) ->
+								
+									next errors.instantiate(
+										'limiterThreshold'
+										message
+										moment().add('seconds', ttl).fromNow()
+									)
+								
 						(error) -> next error
 						
 					)
