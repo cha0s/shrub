@@ -14,7 +14,7 @@ audit = require 'audit'
 logger = new winston.Logger
 	transports: [
 		new winston.transports.Console level: 'error', colorize: true
-		new winston.transports.File level: 'debug', filename: 'logs/villiany.log'
+		new winston.transports.File level: 'warn', filename: 'logs/villiany.log'
 	]
 	
 exports.$endpointAlter = (endpoints) ->
@@ -116,13 +116,20 @@ reporterMiddleware = (req, res, next) ->
 			keys, score
 		
 		).bind({}).then((isVillian) ->
-			throw new NotAVillian unless isVillian
-			
-			logger.error "Logged villiany for #{
+		
+			message = "Logged villiany score #{
+				score
+			} for #{
 				type
 			}, audit keys: #{
 				JSON.stringify auditKeys
 			}"
+			
+			message += ", which resulted in a ban." if isVillian
+			
+			logger.warn message 
+			
+			throw new NotAVillian unless isVillian
 			
 			villianyLimiter.ttl keys
 					
