@@ -5,6 +5,7 @@ exports.$settings = ->
 		'core'
 		'session'
 		'user'
+		'villiany'
 	]
 
 	requestMiddleware: [

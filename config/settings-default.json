@@ -27,7 +27,8 @@
 		"session",
 		"socket",
 		"ui",
-		"user"
+		"user",
+		"villiany"
 	],
 	"packageSettings": {
 		"angular": {
@@ -49,6 +50,7 @@
 				"form",
 				"express/session",
 				"user",
+				"villiany",
 				"express/logger",
 				"express/routes",
 				"express/static",
@@ -78,10 +80,14 @@
 			"useCoffee": true
 		},
 		"socket": {
-			"middleware": [
+			"authoriationMiddleware": [
 				"core",
-				"socket/factory",
 				"session",
+				"user",
+				"villiany"
+			],
+			"requestMiddleware": [
+				"socket/factory",
 				"user",
 				"rpc"
 			],
