@@ -67,8 +67,11 @@ module.exports = class SocketIo extends AbstractSocketFactory
 				
 		@io.sockets.on 'connection', (socket) =>
 			
-			req = requestObjects[socket.handshake.requestKey]
+			for key, value of  requestObjects[socket.handshake.requestKey]
+				socket.handshake[key] = value
+			
 			requestObjects[socket.handshake.requestKey] = null
+			req = socket.handshake
 			
 			socket.join '$global'
 			
