@@ -91,7 +91,7 @@ module.exports = new class SandboxFactory
 	# persistent list, allowing it to be GC'd
 	remove: (id) -> @_sandboxes[id] = null
 
-# ## SandboxFactory
+# ## Sandbox
 # This class is responsible for creating and cleaning up DOMs, and provides
 # some methods to inspect the state of the document.
 class Sandbox extends EventEmitter
