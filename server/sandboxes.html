@@ -77,7 +77,7 @@ as a search now.</li>
 </ul>
 
 <p>Note this doesn't actually close the sandbox, just removes it from the
-persistent list, allowing it to be GC'd</p></div></div><div class="code"><div class="wrapper">  <span class="nv">remove: </span><span class="nf">(id) -&gt;</span> <span class="nx">@_sandboxes</span><span class="p">[</span><span class="nx">id</span><span class="p">]</span> <span class="o">=</span> <span class="kc">null</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="sandboxfactory">SandboxFactory</h2>
+persistent list, allowing it to be GC'd</p></div></div><div class="code"><div class="wrapper">  <span class="nv">remove: </span><span class="nf">(id) -&gt;</span> <span class="nx">@_sandboxes</span><span class="p">[</span><span class="nx">id</span><span class="p">]</span> <span class="o">=</span> <span class="kc">null</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="sandbox">Sandbox</h2>
 
 <p>This class is responsible for creating and cleaning up DOMs, and provides
 some methods to inspect the state of the document.</p></div></div><div class="code"><div class="wrapper"><span class="k">class</span> <span class="nx">Sandbox</span> <span class="k">extends</span> <span class="nx">EventEmitter</span>
