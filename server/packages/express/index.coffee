@@ -4,7 +4,8 @@ fs = require 'fs'
 http = require 'http'
 nconf = require 'nconf'
 Promise = require 'bluebird'
-winston = require 'winston'
+
+{defaultLogger} = require 'logging'
 
 class Express extends (require 'AbstractHttp')
 	
@@ -35,7 +36,7 @@ class Express extends (require 'AbstractHttp')
 		errorCallback = (error) =>
 			return fn error unless 'EADDRINUSE' is error.code
 			
-			winston.info "Address in use... retrying in 2 seconds"
+			defaultLogger.info "Address in use... retrying in 2 seconds"
 			
 			setTimeout (=> @_server.listen @port()), 2000
 		
@@ -97,7 +98,7 @@ exports.$initialize = (config) ->
 		http.initialize (error) ->
 			return reject error if error?
 			
-			console.info "Shrub Express HTTP server up and running on port #{
+			defaultLogger.info "Shrub Express HTTP server up and running on port #{
 				settings.port
 			}!"
 			resolve()

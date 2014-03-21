@@ -3,7 +3,6 @@ fs = require 'fs'
 nconf = require 'nconf'
 nodemailer = require 'nodemailer'
 Promise = require 'bluebird'
-winston = require 'winston'
 
 pkgman = require 'pkgman'
 sandboxes = require 'sandboxes'

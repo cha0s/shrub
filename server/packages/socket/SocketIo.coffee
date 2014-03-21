@@ -1,16 +1,12 @@
 
 crypto = require 'server/crypto'
 Promise = require 'bluebird'
-winston = require 'winston'
 
 errors = require 'errors'
+logging = require 'logging'
 pkgman = require 'pkgman'
 
-logger = new winston.Logger
-	transports: [
-		new winston.transports.Console level: 'error', colorize: true
-		new winston.transports.File level: 'debug', filename: 'logs/socket.io.log'
-	]
+logger = new logging.create 'logs/socket.io.log'
 	
 AbstractSocketFactory = require 'AbstractSocketFactory'
 

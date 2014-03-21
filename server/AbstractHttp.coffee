@@ -2,7 +2,8 @@
 nconf = require 'nconf'
 pkgman = require 'pkgman'
 Promise = require 'bluebird'
-winston = require 'winston'
+
+{defaultLogger} = require 'logging'
 
 middleware = require 'middleware'
 
@@ -43,7 +44,7 @@ module.exports = class AbstractHttp
 		
 	registerMiddleware: ->
 		
-		winston.info 'BEGIN loading HTTP middleware:'
+		defaultLogger.info 'BEGIN loading HTTP middleware:'
 		
 		@_middleware = middleware.fromHook(
 			'httpMiddleware'
@@ -51,4 +52,4 @@ module.exports = class AbstractHttp
 			this
 		)
 		
-		winston.info 'END loading HTTP middleware.'
+		defaultLogger.info 'END loading HTTP middleware.'

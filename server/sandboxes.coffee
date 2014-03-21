@@ -3,18 +3,14 @@ _ = require 'underscore'
 nconf = require 'nconf'
 Promise = require 'bluebird'
 WebSocket = require 'socket.io/node_modules/socket.io-client/node_modules/ws/lib/WebSocket'
-winston = require 'winston'
 
 errors = require 'errors'
+logging = require 'logging'
 
 {EventEmitter} = require 'events'
 {jsdom} = require 'jsdom'
 
-logger = new winston.Logger
-	transports: [
-		new winston.transports.Console level: 'silly', colorize: true
-		new winston.transports.File level: 'debug', filename: 'logs/client.log'
-	]
+logger = logging.create 'logs/client.log'
 
 module.exports = new class SandboxFactory
 	

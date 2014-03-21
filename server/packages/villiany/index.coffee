@@ -3,19 +3,14 @@ moment = require 'moment'
 nconf = require 'nconf'
 i8n = require 'inflection'
 Promise = require 'bluebird'
-winston = require 'winston'
 
 audit = require 'audit'
+logging = require 'logging'
 
 {AuthorizationFailure} = require 'AbstractSocketFactory'
-
 {Limiter, threshold} = require 'limits'
 
-logger = new winston.Logger
-	transports: [
-		new winston.transports.Console level: 'error', colorize: true
-		new winston.transports.File level: 'warn', filename: 'logs/villiany.log'
-	]
+logger = logging.create 'logs/villiany.log'
 	
 exports.$endpointAlter = (endpoints) ->
 	

@@ -1,20 +1,12 @@
 
 express = require 'express'
-winston = require 'winston'
 
-clientRequestLogger = new winston.Logger
-	transports: [
-		new winston.transports.Console level: 'error', colorize: true
-		new winston.transports.File level: 'debug', filename: 'logs/express.client.log'
-	]
-
-serverRequestLogger = new winston.Logger
-	transports: [
-		new winston.transports.Console level: 'error', colorize: true
-		new winston.transports.File level: 'debug', filename: 'logs/express.server.log'
-	]
+logging = require 'logging'
 
 exports.$httpMiddleware = (http) ->
+	
+	clientRequestLogger = logging.create 'logs/express.client.log'
+	serverRequestLogger = logging.create 'logs/express.server.log'
 	
 	label: 'Log requests'
 	middleware: [

@@ -1,14 +1,8 @@
 
 nconf = require 'nconf'
 fs = require 'fs'
-winston = require 'winston'
 
 pkgman = require 'pkgman'
-
-# Log errors to the console, the rest will go into logs/shrub.log by default.
-winston.remove winston.transports.Console
-winston.add winston.transports.Console, level: 'silly'
-winston.add winston.transports.File, filename: 'logs/shrub.log'
 
 exports.loadSettings = ->
 

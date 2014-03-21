@@ -1,17 +1,13 @@
 
 _ = require 'underscore'
 Promise = require 'bluebird'
-winston = require 'winston'
 
 audit = require 'audit'
 errors = require 'errors'
+logging = require 'logging'
 pkgman = require 'pkgman'
 
-logger = new winston.Logger
-	transports: [
-		new winston.transports.Console level: 'error', colorize: true
-		new winston.transports.File level: 'debug', filename: 'logs/rpc.log'
-	]
+logger = logging.create 'logs/rpc.log'
 
 {Limiter} = require 'limits'
 {Middleware} = require 'middleware'
@@ -59,15 +55,13 @@ exports.$socketRequestMiddleware = ->
 						logError = (error) -> logger.error errors.stack error
 						
 						concealErrorFromClient = (error) ->
-							errors.caught error
-							emitError new Error(
-								"Please try again later."
-							)
-							logError error
+							
+							emitError new Error "Please try again later."
+							logError errors.caught error
 							
 						sendErrorToClient = (error) ->
-							errors.caught error
-							emitError error
+							
+							emitError errors.caught error
 						
 						endpoint.validators.dispatch routeReq, null, (error) ->
 							return sendErrorToClient error if error?

@@ -1,9 +1,10 @@
 
 {EventEmitter} = require 'events'
 pkgman = require 'pkgman'
-winston = require 'winston'
 
 middleware = require 'middleware'
+
+{defaultLogger} = require 'logging'
 
 module.exports = class AbstractSocketFactory extends EventEmitter
 	
@@ -15,23 +16,23 @@ module.exports = class AbstractSocketFactory extends EventEmitter
 	
 	loadMiddleware: ->
 		
-		winston.info 'BEGIN loading socket authorization middleware:'
+		defaultLogger.info 'BEGIN loading socket authorization middleware:'
 		
 		@_authorizationMiddleware = middleware.fromHook(
 			'socketAuthorizationMiddleware'
 			@_config.authorizationMiddleware
 		)
 		
-		winston.info 'END loading socket authorization middleware.'
+		defaultLogger.info 'END loading socket authorization middleware.'
 
-		winston.info 'BEGIN loading socket middleware:'
+		defaultLogger.info 'BEGIN loading socket middleware:'
 		
 		@_requestMiddleware = middleware.fromHook(
 			'socketRequestMiddleware'
 			@_config.requestMiddleware
 		)
 		
-		winston.info 'END loading socket middleware.'
+		defaultLogger.info 'END loading socket middleware.'
 
 	for method in [
 		'listen', 'socketsInChannel'

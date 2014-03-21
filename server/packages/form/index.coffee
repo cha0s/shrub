@@ -1,6 +1,5 @@
 
 express = require 'express'
-winston = require 'winston'
 
 exports.$angularNavigationMiddleware = ->
 

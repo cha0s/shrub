@@ -1,9 +1,10 @@
 
 Promise = require 'bluebird'
-winston = require 'winston'
 
 errors = require 'errors'
 pkgman = require 'pkgman'
+
+{defaultLogger} = require 'logging'
 
 # Set up config.
 config = require 'config'
@@ -16,7 +17,7 @@ initializePromises = (promise for _, promise of initializers)
 # After initialization.
 Promise.all(initializePromises).done(
 	-> pkgman.invoke 'initialized'
-	(error) -> winston.error errors.stack error
+	(error) -> defaultLogger.error errors.stack error
 )
 
 # Signal listeners and process cleanup.
