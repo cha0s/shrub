@@ -1,0 +1,94 @@
+<!DOCTYPE html><html lang="en"><head><title>server/packages/user/register</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="server/packages/user/register"><meta name="groc-project-path" content="server/packages/user/register.coffee"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path">server/packages/user/register.coffee</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nv">nconf = </span><span class="nx">require</span> <span class="s1">&#39;nconf&#39;</span>
+<span class="nv">nodemailer = </span><span class="nx">require</span> <span class="s1">&#39;server/packages/nodemailer&#39;</span>
+
+<span class="nv">crypto = </span><span class="nx">require</span> <span class="s1">&#39;server/crypto&#39;</span>
+
+<span class="p">{</span><span class="nx">threshold</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;limits&#39;</span>
+
+<span class="nx">exports</span><span class="p">.</span><span class="nv">$endpoint = </span><span class="o">-&gt;</span>
+
+  <span class="nv">limiter:</span>
+    <span class="nv">message: </span><span class="s2">&quot;You are trying to register too much.&quot;</span>
+    <span class="nv">threshold: </span><span class="nx">threshold</span><span class="p">(</span><span class="mi">5</span><span class="p">).</span><span class="nx">every</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span><span class="nx">minutes</span><span class="p">()</span>
+
+  <span class="nv">receiver: </span><span class="nf">(req, fn) -&gt;</span>
+    
+    <span class="p">{</span><span class="nx">body</span><span class="p">}</span> <span class="o">=</span> <span class="nx">req</span>
+    <span class="p">{</span><span class="nx">email</span><span class="p">,</span> <span class="nx">password</span><span class="p">,</span> <span class="nx">username</span><span class="p">}</span> <span class="o">=</span> <span class="nx">body</span>
+    
+    <span class="nx">exports</span><span class="p">.</span><span class="nx">register</span><span class="p">(</span><span class="nx">username</span><span class="p">,</span> <span class="nx">email</span><span class="p">,</span> <span class="nx">password</span><span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="nf">(user) -&gt;</span>
+      
+      <span class="nv">baseUrl = </span><span class="s2">&quot;http://#{</span>
+<span class="s2">        req.headers.host</span>
+<span class="s2">      }&quot;</span>
+      
+      <span class="nv">siteName = </span><span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;siteName&#39;</span>
+      
+      <span class="nv">tokens =</span>
+        
+        <span class="nv">baseUrl: </span><span class="nx">baseUrl</span>
+        
+        <span class="nv">email: </span><span class="nx">email</span>
+        
+        <span class="nv">loginUrl: </span><span class="s2">&quot;#{</span>
+<span class="s2">          baseUrl</span>
+<span class="s2">        }/user/reset/#{</span>
+<span class="s2">          user.resetPasswordToken</span>
+<span class="s2">        }&quot;</span>
+        
+        <span class="nv">password: </span><span class="nx">user</span><span class="p">.</span><span class="nx">plaintext</span>
+        
+        <span class="nv">siteName: </span><span class="nx">siteName</span>
+        
+        <span class="nv">title: </span><span class="s2">&quot;Account registration details&quot;</span>
+        
+        <span class="nv">username: </span><span class="nx">username</span>
+      
+      <span class="nx">nodemailer</span><span class="p">.</span><span class="nx">sendMail</span><span class="p">(</span>
+        <span class="s1">&#39;user/register&#39;</span>
+        <span class="nv">to: </span><span class="nx">email</span>
+        <span class="nv">subject: </span><span class="s2">&quot;Account registration details for #{siteName}&quot;</span>
+        <span class="nv">tokens: </span><span class="nx">tokens</span>
+      <span class="p">)</span>
+    
+    <span class="p">).</span><span class="k">then</span><span class="p">(</span>
+      <span class="o">-&gt;</span> <span class="nx">fn</span><span class="p">()</span>
+      <span class="nf">(error) -&gt;</span> <span class="nx">fn</span> <span class="nx">error</span>
+    <span class="p">)</span>
+    
+<span class="nx">exports</span><span class="p">.</span><span class="nv">$replContext = </span><span class="nf">(context) -&gt;</span>
+  
+  <span class="nv">schema = </span><span class="nx">require</span> <span class="s1">&#39;server/jugglingdb&#39;</span>
+  
+  <span class="nv">context.registerUser = </span><span class="nf">(name, email, password) -&gt;</span>
+  
+    <span class="nx">_register</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">email</span><span class="p">,</span> <span class="nx">password</span><span class="p">,</span> <span class="nx">schema</span>
+
+<span class="nv">exports.register = </span><span class="nf">(name, email, password) -&gt;</span>
+  
+  <span class="nx">_register</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">email</span><span class="p">,</span> <span class="nx">password</span><span class="p">,</span> <span class="nx">require</span> <span class="s1">&#39;server/jugglingdb&#39;</span>
+  
+<span class="nv">_register = </span><span class="nf">(name, email, password, schema) -&gt;</span>
+  
+  <span class="p">{</span><span class="nv">models: User: </span><span class="nx">User</span><span class="p">}</span> <span class="o">=</span> <span class="nx">schema</span>
+  <span class="nv">user = </span><span class="k">new</span> <span class="nx">User</span> <span class="nv">name: </span><span class="nx">name</span><span class="p">,</span> <span class="nv">iname: </span><span class="nx">name</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Encrypt the email.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">crypto</span><span class="p">.</span><span class="nx">encrypt</span><span class="p">(</span><span class="nx">email</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()).</span><span class="k">then</span><span class="p">(</span><span class="nf">(encryptedEmail) -&gt;</span>
+
+    <span class="nv">user.email = </span><span class="nx">encryptedEmail</span>
+
+    <span class="nx">crypto</span><span class="p">.</span><span class="nx">hasher</span> <span class="nv">plaintext: </span><span class="nx">password</span>
+    
+  <span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="nf">(opts) -&gt;</span>
+    
+    <span class="nv">user.plaintext = </span><span class="nx">opts</span><span class="p">.</span><span class="nx">plaintext</span>
+    <span class="nv">user.salt = </span><span class="nx">opts</span><span class="p">.</span><span class="nx">salt</span><span class="p">.</span><span class="nx">toString</span> <span class="s1">&#39;hex&#39;</span>
+    <span class="nv">user.passwordHash = </span><span class="nx">opts</span><span class="p">.</span><span class="nx">key</span><span class="p">.</span><span class="nx">toString</span> <span class="s1">&#39;hex&#39;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Generate a one-time login token.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">crypto</span><span class="p">.</span><span class="nx">randomBytes</span> <span class="mi">24</span>
+    
+  <span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="nf">(token) -&gt;</span>
+    
+    <span class="nv">user.resetPasswordToken = </span><span class="nx">token</span><span class="p">.</span><span class="nx">toString</span> <span class="s1">&#39;hex&#39;</span>
+    
+    <span class="nx">user</span><span class="p">.</span><span class="nx">save</span><span class="p">()</span>
+  
+  <span class="p">)</span></div></div></div></div></body></html>

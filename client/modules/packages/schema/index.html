@@ -1,0 +1,11 @@
+<!DOCTYPE html><html lang="en"><head><title>client/modules/packages/schema/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../../"><meta name="groc-document-path" content="client/modules/packages/schema/index"><meta name="groc-project-path" content="client/modules/packages/schema/index.coffee"><link rel="stylesheet" type="text/css" media="all" href="../../../../assets/style.css"><script type="text/javascript" src="../../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path">client/modules/packages/schema/index.coffee</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$service = </span><span class="o">-&gt;</span> <span class="p">[</span>
+  <span class="s1">&#39;$http&#39;</span><span class="p">,</span> <span class="s1">&#39;config&#39;</span><span class="p">,</span> <span class="s1">&#39;require&#39;</span>
+  <span class="nf">($http, config, require) -&gt;</span>
+
+    <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;schema-client&#39;</span><span class="p">).</span><span class="nx">define</span><span class="p">(</span>
+      <span class="nx">require</span> <span class="s1">&#39;jugglingdb-rest&#39;</span>
+      <span class="nv">$http: </span><span class="nx">$http</span>
+      <span class="nv">apiRoot: </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;apiRoot&#39;</span>
+    <span class="p">)</span>
+    
+<span class="p">]</span></div></div></div></div></body></html>

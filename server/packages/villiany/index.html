@@ -1,0 +1,223 @@
+<!DOCTYPE html><html lang="en"><head><title>server/packages/villiany/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="server/packages/villiany/index"><meta name="groc-project-path" content="server/packages/villiany/index.coffee"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path">server/packages/villiany/index.coffee</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nv">moment = </span><span class="nx">require</span> <span class="s1">&#39;moment&#39;</span>
+<span class="nv">nconf = </span><span class="nx">require</span> <span class="s1">&#39;nconf&#39;</span>
+<span class="nv">i8n = </span><span class="nx">require</span> <span class="s1">&#39;inflection&#39;</span>
+<span class="nv">Promise = </span><span class="nx">require</span> <span class="s1">&#39;bluebird&#39;</span>
+
+<span class="nv">audit = </span><span class="nx">require</span> <span class="s1">&#39;audit&#39;</span>
+<span class="nv">logging = </span><span class="nx">require</span> <span class="s1">&#39;logging&#39;</span>
+
+<span class="p">{</span><span class="nx">AuthorizationFailure</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;AbstractSocketFactory&#39;</span>
+<span class="p">{</span><span class="nx">Limiter</span><span class="p">,</span> <span class="nx">threshold</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;limits&#39;</span>
+
+<span class="nv">logger = </span><span class="nx">logging</span><span class="p">.</span><span class="nx">create</span> <span class="s1">&#39;logs/villiany.log&#39;</span>
+  
+<span class="nx">exports</span><span class="p">.</span><span class="nv">$endpointAlter = </span><span class="nf">(endpoints) -&gt;</span>
+  
+  <span class="k">for</span> <span class="nx">route</span><span class="p">,</span> <span class="nx">endpoint</span> <span class="k">of</span> <span class="nx">endpoints</span>
+  
+    <span class="nx">endpoint</span><span class="p">.</span><span class="nx">villianyScore</span> <span class="o">?=</span> <span class="mi">20</span>
+
+<span class="nx">exports</span><span class="p">.</span><span class="nv">$models = </span><span class="nf">(schema) -&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Bans.
+TODO it'd be nice to be able to generate all of this dynamically from
+audit keys.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">Ban = </span><span class="nx">schema</span><span class="p">.</span><span class="nx">define</span> <span class="s1">&#39;Ban&#39;</span><span class="p">,</span>
+    
+    <span class="nv">ip:</span>
+      <span class="nv">index: </span><span class="kc">true</span>
+      <span class="nv">type: </span><span class="nb">String</span>
+    
+    <span class="nv">session:</span>
+      <span class="nv">index: </span><span class="kc">true</span>
+      <span class="nv">type: </span><span class="nb">String</span>
+    
+    <span class="nv">user:</span>
+      <span class="nv">index: </span><span class="kc">true</span>
+      <span class="nv">type: </span><span class="nb">Number</span>
+    
+    <span class="nv">expires:</span>
+      <span class="nv">type: </span><span class="nb">Number</span>
+
+
+  <span class="nv">banTemplate = </span><span class="nf">(where) -&gt;</span>
+  
+    <span class="nx">Ban</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nv">where: </span><span class="nx">where</span><span class="p">).</span><span class="nx">bind</span><span class="p">({}).</span><span class="k">then</span><span class="p">(</span><span class="nf">(@bans) -&gt;</span>
+      <span class="k">return</span> <span class="kc">false</span> <span class="k">if</span> <span class="nx">@bans</span><span class="p">.</span><span class="nx">length</span> <span class="o">is</span> <span class="mi">0</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Destroy all expired bans.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">expired = </span><span class="nx">@bans</span><span class="p">.</span><span class="nx">filter</span> <span class="nf">(ban) -&gt;</span> <span class="nx">ban</span><span class="p">.</span><span class="nx">expires</span> <span class="o">&lt;=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span>
+      <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span> <span class="nx">expired</span><span class="p">.</span><span class="nx">map</span> <span class="nf">(ban) -&gt;</span> <span class="nx">ban</span><span class="p">.</span><span class="nx">destroy</span><span class="p">()</span>
+      
+    <span class="p">).</span><span class="k">then</span> <span class="nf">(expired) -&gt;</span>
+      
+      <span class="nv">active = </span><span class="nx">@bans</span><span class="p">.</span><span class="nx">filter</span> <span class="nf">(ban) -&gt;</span> <span class="nx">ban</span><span class="p">.</span><span class="nx">expires</span> <span class="o">&gt;</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span>
+      
+      <span class="p">[</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>More bans than those that expired?</p></div></div><div class="code"><div class="wrapper">        <span class="nx">@bans</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="nx">expired</span><span class="p">.</span><span class="nx">length</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Ban ttl.</p></div></div><div class="code"><div class="wrapper">        <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span> <span class="p">(</span><span class="nx">active</span><span class="p">.</span><span class="nx">reduce</span><span class="p">(</span>
+          <span class="nf">(l, r) -&gt;</span>
+            
+            <span class="k">if</span> <span class="nx">l</span><span class="p">.</span><span class="nx">expires</span> <span class="o">&gt;</span> <span class="nx">r</span><span class="p">.</span><span class="nx">expires</span> <span class="k">then</span> <span class="nx">l</span><span class="p">.</span><span class="nx">expires</span> <span class="k">else</span> <span class="nx">r</span><span class="p">.</span><span class="nx">expires</span>
+            
+          <span class="o">-</span><span class="kc">Infinity</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>It's a timestamp, and it's in ms.</p></div></div><div class="code"><div class="wrapper">        <span class="p">)</span> <span class="o">-</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">())</span> <span class="o">/</span> <span class="mi">1000</span>
+      <span class="p">]</span>
+  
+  <span class="nv">Ban.isIpBanned = </span><span class="nf">(ip) -&gt;</span> <span class="nx">banTemplate</span> <span class="nv">ip: </span><span class="nx">ip</span>
+    
+  <span class="nv">Ban.isSessionBanned = </span><span class="nf">(id) -&gt;</span> <span class="nx">banTemplate</span> <span class="nv">session: </span><span class="nx">id</span>
+    
+  <span class="nv">Ban.isUserBanned = </span><span class="nf">(id) -&gt;</span> <span class="nx">banTemplate</span> <span class="nv">user: </span><span class="nx">id</span>
+    
+  <span class="nv">Ban.createFromKeys = </span><span class="nf">(keys, expires) -&gt;</span>
+    <span class="k">return</span> <span class="nx">unless</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">keys</span><span class="p">).</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    
+    <span class="nx">unless</span> <span class="nx">expires</span><span class="o">?</span>
+      <span class="nv">settings = </span><span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:villiany:ban&#39;</span>
+      <span class="nv">expires = </span><span class="nx">settings</span><span class="p">.</span><span class="nx">defaultExpiration</span>
+    
+    <span class="nv">ban = </span><span class="k">new</span> <span class="nx">Ban</span><span class="p">()</span>
+    <span class="nv">ban.expires = </span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span> <span class="o">+</span> <span class="nx">expires</span>
+    <span class="nx">ban</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span> <span class="k">for</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span> <span class="k">of</span> <span class="nx">keys</span>
+    
+    <span class="nx">ban</span><span class="p">.</span><span class="nx">save</span><span class="p">()</span>
+    
+<span class="nv">villianyLimiter = </span><span class="k">new</span> <span class="nx">Limiter</span><span class="p">(</span>
+  <span class="s2">&quot;villiany&quot;</span>
+  <span class="nx">threshold</span><span class="p">(</span><span class="mi">1000</span><span class="p">).</span><span class="nx">every</span><span class="p">(</span><span class="mi">10</span><span class="p">).</span><span class="nx">minutes</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="nv">reporterMiddleware = </span><span class="nf">(req, res, next) -&gt;</span>
+        
+  <span class="p">{</span><span class="nv">models: Ban: </span><span class="nx">Ban</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;server/jugglingdb&#39;</span>
+
+  <span class="nv">req.reportVilliany = </span><span class="nf">(score, type) -&gt;</span>
+    
+    <span class="nv">auditKeys = </span><span class="nx">audit</span><span class="p">.</span><span class="nx">keys</span> <span class="nx">req</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Terminate the chain if not a villian.</p></div></div><div class="code"><div class="wrapper">    <span class="k">class</span> <span class="nx">NotAVillian</span> <span class="k">extends</span> <span class="nb">Error</span>
+      <span class="nv">constructor: </span><span class="nf">(@message) -&gt;</span>
+    
+    <span class="nv">keys = </span><span class="p">(</span><span class="s2">&quot;#{key}:#{value}&quot;</span> <span class="k">for</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span> <span class="k">of</span> <span class="nx">auditKeys</span><span class="p">)</span>
+    <span class="nx">villianyLimiter</span><span class="p">.</span><span class="nx">addAndCheckThreshold</span><span class="p">(</span>
+      <span class="nx">keys</span><span class="p">,</span> <span class="nx">score</span>
+    
+    <span class="p">).</span><span class="nx">bind</span><span class="p">({}).</span><span class="k">then</span><span class="p">(</span><span class="nf">(isVillian) -&gt;</span>
+    
+      <span class="nv">message = </span><span class="s2">&quot;Logged villiany score #{</span>
+<span class="s2">        score</span>
+<span class="s2">      } for #{</span>
+<span class="s2">        type</span>
+<span class="s2">      }, audit keys: #{</span>
+<span class="s2">        JSON.stringify auditKeys</span>
+<span class="s2">      }&quot;</span>
+      
+      <span class="nx">message</span> <span class="o">+=</span> <span class="s2">&quot;, which resulted in a ban.&quot;</span> <span class="k">if</span> <span class="nx">isVillian</span>
+      
+      <span class="nx">logger</span><span class="p">.</span><span class="nx">warn</span> <span class="nx">message</span> 
+      
+      <span class="k">throw</span> <span class="k">new</span> <span class="nx">NotAVillian</span> <span class="nx">unless</span> <span class="nx">isVillian</span>
+      
+      <span class="nx">villianyLimiter</span><span class="p">.</span><span class="nx">ttl</span> <span class="nx">keys</span>
+          
+    <span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="nf">(@ttl) -&gt;</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Ban.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">Ban</span><span class="p">.</span><span class="nx">createFromKeys</span> <span class="nx">auditKeys</span>
+      
+    <span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="o">-&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Kick.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">req</span><span class="p">.</span><span class="nx">villianyKick</span> <span class="nx">@ttl</span>
+    
+    <span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="o">-&gt;</span> <span class="kc">true</span>
+    <span class="p">).</span><span class="k">catch</span> <span class="nx">NotAVillian</span><span class="p">,</span> <span class="o">-&gt;</span> <span class="kc">false</span>
+    
+  <span class="nx">next</span><span class="p">()</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Enforce bans.</p></div></div><div class="code"><div class="wrapper"><span class="nv">enforcementMiddleware = </span><span class="nf">(req, res, next) -&gt;</span>
+
+  <span class="p">{</span><span class="nv">models: Ban: </span><span class="nx">Ban</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;server/jugglingdb&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Terminate the request if a ban is enforced.</p></div></div><div class="code"><div class="wrapper">  <span class="k">class</span> <span class="nx">RequestBanned</span> <span class="k">extends</span> <span class="nb">Error</span>
+    <span class="nv">constructor: </span><span class="nf">(@message) -&gt;</span>
+  
+  <span class="nv">auditKeys = </span><span class="nx">audit</span><span class="p">.</span><span class="nx">keys</span> <span class="nx">req</span>
+
+  <span class="nv">banPromises = </span><span class="k">for</span> <span class="nx">enforced</span> <span class="k">in</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span> <span class="nx">auditKeys</span>
+  
+    <span class="nv">method = </span><span class="nx">i8n</span><span class="p">.</span><span class="nx">camelize</span> <span class="s2">&quot;is_#{enforced}_banned&quot;</span><span class="p">,</span> <span class="kc">true</span>
+    
+    <span class="nx">Ban</span><span class="p">[</span><span class="nx">method</span><span class="p">](</span><span class="nx">auditKeys</span><span class="p">[</span><span class="nx">enforced</span><span class="p">]).</span><span class="nx">spread</span> <span class="nf">(isBanned, ttl) -&gt;</span>
+      <span class="k">return</span> <span class="nx">unless</span> <span class="nx">isBanned</span>
+      
+      <span class="nx">req</span><span class="p">.</span><span class="nx">villianyKick</span><span class="p">(</span><span class="nx">enforced</span><span class="p">,</span> <span class="nx">ttl</span><span class="p">).</span><span class="k">then</span> <span class="o">-&gt;</span>
+        
+        <span class="k">throw</span> <span class="k">new</span> <span class="nx">RequestBanned</span><span class="p">()</span>
+      
+  <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">banPromises</span><span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="o">-&gt;</span>
+    
+    <span class="nx">next</span><span class="p">()</span>
+  
+  <span class="p">).</span><span class="k">catch</span><span class="p">(</span><span class="nx">RequestBanned</span><span class="p">,</span> <span class="o">-&gt;</span>
+
+  <span class="p">).</span><span class="k">catch</span> <span class="nf">(error) -&gt;</span> <span class="nx">next</span> <span class="nx">error</span>
+
+<span class="nv">buildBanMessage = </span><span class="nf">(subject, ttl) -&gt;</span>
+  
+  <span class="nv">message = </span><span class="k">if</span> <span class="nx">subject</span><span class="o">?</span>
+    <span class="s2">&quot;Your #{subject} is banned.&quot;</span>
+  <span class="k">else</span>
+    <span class="s2">&quot;You are banned.&quot;</span>
+    
+  <span class="k">if</span> <span class="nx">ttl</span><span class="o">?</span>
+    
+    <span class="nx">message</span> <span class="o">+=</span> <span class="s2">&quot; The ban will be lifted #{</span>
+<span class="s2">      moment().add(&#39;seconds&#39;, ttl).fromNow()</span>
+<span class="s2">    }.&quot;</span>
+    
+  <span class="nx">message</span>
+
+<span class="nx">exports</span><span class="p">.</span><span class="nv">$httpMiddleware = </span><span class="o">-&gt;</span>
+  
+  <span class="p">{</span><span class="nv">models: User: </span><span class="nx">User</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;server/jugglingdb&#39;</span>
+  
+  <span class="nv">label: </span><span class="s1">&#39;Provide villiany management&#39;</span>
+  <span class="nv">middleware: </span><span class="p">[</span>
+    
+    <span class="nf">(req, res, next) -&gt;</span>
+      
+      <span class="nv">req.villianyKick = </span><span class="nf">(subject, ttl) -&gt;</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Destroy any session.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="o">?</span><span class="p">.</span><span class="nx">destroy</span><span class="p">()</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Log the user out.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">Promise</span><span class="p">.</span><span class="nx">cast</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">logout</span><span class="o">?</span><span class="p">()).</span><span class="k">then</span> <span class="o">-&gt;</span>
+          
+          <span class="nx">res</span><span class="p">.</span><span class="nx">status</span> <span class="mi">401</span>
+          <span class="nx">res</span><span class="p">.</span><span class="nx">end</span> <span class="nx">buildBanMessage</span> <span class="nx">subject</span><span class="p">,</span> <span class="nx">ttl</span>
+          
+      <span class="nx">next</span><span class="p">()</span>
+    
+    <span class="nx">reporterMiddleware</span>
+    
+    <span class="nx">enforcementMiddleware</span>
+      
+  <span class="p">]</span>
+
+<span class="nx">exports</span><span class="p">.</span><span class="nv">$settings = </span><span class="o">-&gt;</span>
+  
+  <span class="nv">ban:</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>10 minute ban time by default.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">defaultExpiration: </span><span class="mi">1000</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">10</span>
+
+<span class="nx">exports</span><span class="p">.</span><span class="nv">$socketAuthorizationMiddleware = </span><span class="o">-&gt;</span>
+  
+  <span class="nv">label: </span><span class="s1">&#39;Provide villiany management&#39;</span>
+  <span class="nv">middleware: </span><span class="p">[</span>
+  
+    <span class="nf">(req, res, next) -&gt;</span>
+      
+      <span class="nv">req.villianyKick = </span><span class="nf">(subject, ttl) -&gt;</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Destroy any session.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="o">?</span><span class="p">.</span><span class="nx">destroy</span><span class="p">()</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Log the user out.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">Promise</span><span class="p">.</span><span class="nx">cast</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">logout</span><span class="o">?</span><span class="p">()).</span><span class="k">then</span> <span class="o">-&gt;</span>
+          
+          <span class="k">new</span> <span class="nx">Promise</span> <span class="nf">(resolve) -&gt;</span>
+            </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Already authorized?</p></div></div><div class="code"><div class="wrapper">            <span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="o">?</span>
+              
+              <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="p">.</span><span class="nx">emit</span> <span class="s1">&#39;core.reload&#39;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">resolve</span>
+            
+            <span class="k">else</span>
+              
+              <span class="k">throw</span> <span class="k">new</span> <span class="nx">AuthorizationFailure</span>
+            
+    
+      <span class="nx">next</span><span class="p">()</span>
+    
+    <span class="nx">reporterMiddleware</span>
+    
+    <span class="nx">enforcementMiddleware</span>
+    
+  <span class="p">]</span></div></div></div></div></body></html>
