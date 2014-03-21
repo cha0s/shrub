@@ -1,0 +1,16 @@
+**/.DS_Store
+nbproject
+manifest.mf
+build.xml
+
+.project
+.settings
+.idea/*
+
+node_modules
+npm-debug.log
+
+angular.js
+config/settings.json
+
+gh-pages
