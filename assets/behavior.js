@@ -13,7 +13,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
           "commentsOnly": true,
           "name": "Markdown"
         },
-        "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/README.md",
+        "sourcePath": "/home/cha0s6983/dev/code/js/shrub/README.md",
         "projectPath": "README.md",
         "targetPath": "index",
         "pageTitle": "index",
@@ -31,8 +31,8 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "type": "heading",
               "data": {
                 "level": 3,
-                "title": "The Twist",
-                "slug": "the-twist"
+                "title": "Awesome example of a package",
+                "slug": "awesome-example-of-a-package"
               },
               "depth": 3
             }, {
@@ -62,8 +62,8 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
           "type": "heading",
           "data": {
             "level": 3,
-            "title": "The Twist",
-            "slug": "the-twist"
+            "title": "Awesome example of a package",
+            "slug": "awesome-example-of-a-package"
           },
           "depth": 3
         }, {
@@ -105,7 +105,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "foldPrefix": "^",
               "name": "CoffeeScript"
             },
-            "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/client/app.coffee",
+            "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/app.coffee",
             "projectPath": "client/app.coffee",
             "targetPath": "client/app",
             "pageTitle": "client/app",
@@ -134,7 +134,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                   "foldPrefix": "^",
                   "name": "CoffeeScript"
                 },
-                "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/client/modules/errors.coffee",
+                "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/modules/errors.coffee",
                 "projectPath": "client/modules/errors.coffee",
                 "targetPath": "client/modules/errors",
                 "pageTitle": "client/modules/errors",
@@ -155,7 +155,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                   "foldPrefix": "^",
                   "name": "CoffeeScript"
                 },
-                "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/client/modules/jugglingdb-rest.coffee",
+                "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/modules/jugglingdb-rest.coffee",
                 "projectPath": "client/modules/jugglingdb-rest.coffee",
                 "targetPath": "client/modules/jugglingdb-rest",
                 "pageTitle": "client/modules/jugglingdb-rest",
@@ -176,7 +176,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                   "foldPrefix": "^",
                   "name": "CoffeeScript"
                 },
-                "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/client/modules/middleware.coffee",
+                "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/modules/middleware.coffee",
                 "projectPath": "client/modules/middleware.coffee",
                 "targetPath": "client/modules/middleware",
                 "pageTitle": "client/modules/middleware",
@@ -213,7 +213,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "CoffeeScript"
                         },
-                        "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/client/modules/packages/core/index.coffee",
+                        "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/modules/packages/core/index.coffee",
                         "projectPath": "client/modules/packages/core/index.coffee",
                         "targetPath": "client/modules/packages/core/index",
                         "pageTitle": "client/modules/packages/core/index",
@@ -244,7 +244,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "CoffeeScript"
                         },
-                        "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/client/modules/packages/example/about.coffee",
+                        "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/modules/packages/example/about.coffee",
                         "projectPath": "client/modules/packages/example/about.coffee",
                         "targetPath": "client/modules/packages/example/about",
                         "pageTitle": "client/modules/packages/example/about",
@@ -265,7 +265,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "CoffeeScript"
                         },
-                        "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/client/modules/packages/example/home.coffee",
+                        "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/modules/packages/example/home.coffee",
                         "projectPath": "client/modules/packages/example/home.coffee",
                         "targetPath": "client/modules/packages/example/home",
                         "pageTitle": "client/modules/packages/example/home",
@@ -286,7 +286,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "CoffeeScript"
                         },
-                        "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/client/modules/packages/example/index.coffee",
+                        "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/modules/packages/example/index.coffee",
                         "projectPath": "client/modules/packages/example/index.coffee",
                         "targetPath": "client/modules/packages/example/index",
                         "pageTitle": "client/modules/packages/example/index",
@@ -317,7 +317,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "CoffeeScript"
                         },
-                        "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/client/modules/packages/form/index.coffee",
+                        "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/modules/packages/form/index.coffee",
                         "projectPath": "client/modules/packages/form/index.coffee",
                         "targetPath": "client/modules/packages/form/index",
                         "pageTitle": "client/modules/packages/form/index",
@@ -348,7 +348,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "CoffeeScript"
                         },
-                        "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/client/modules/packages/limiter/index.coffee",
+                        "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/modules/packages/limiter/index.coffee",
                         "projectPath": "client/modules/packages/limiter/index.coffee",
                         "targetPath": "client/modules/packages/limiter/index",
                         "pageTitle": "client/modules/packages/limiter/index",
@@ -379,7 +379,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "CoffeeScript"
                         },
-                        "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/client/modules/packages/rpc/index.coffee",
+                        "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/modules/packages/rpc/index.coffee",
                         "projectPath": "client/modules/packages/rpc/index.coffee",
                         "targetPath": "client/modules/packages/rpc/index",
                         "pageTitle": "client/modules/packages/rpc/index",
@@ -410,7 +410,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "CoffeeScript"
                         },
-                        "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/client/modules/packages/schema/index.coffee",
+                        "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/modules/packages/schema/index.coffee",
                         "projectPath": "client/modules/packages/schema/index.coffee",
                         "targetPath": "client/modules/packages/schema/index",
                         "pageTitle": "client/modules/packages/schema/index",
@@ -441,7 +441,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "CoffeeScript"
                         },
-                        "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/client/modules/packages/socket/index.coffee",
+                        "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/modules/packages/socket/index.coffee",
                         "projectPath": "client/modules/packages/socket/index.coffee",
                         "targetPath": "client/modules/packages/socket/index",
                         "pageTitle": "client/modules/packages/socket/index",
@@ -472,7 +472,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "CoffeeScript"
                         },
-                        "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/client/modules/packages/ui/index.coffee",
+                        "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/modules/packages/ui/index.coffee",
                         "projectPath": "client/modules/packages/ui/index.coffee",
                         "targetPath": "client/modules/packages/ui/index",
                         "pageTitle": "client/modules/packages/ui/index",
@@ -493,7 +493,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "CoffeeScript"
                         },
-                        "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/client/modules/packages/ui/markdown.coffee",
+                        "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/modules/packages/ui/markdown.coffee",
                         "projectPath": "client/modules/packages/ui/markdown.coffee",
                         "targetPath": "client/modules/packages/ui/markdown",
                         "pageTitle": "client/modules/packages/ui/markdown",
@@ -514,7 +514,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "CoffeeScript"
                         },
-                        "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/client/modules/packages/ui/nav.coffee",
+                        "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/modules/packages/ui/nav.coffee",
                         "projectPath": "client/modules/packages/ui/nav.coffee",
                         "targetPath": "client/modules/packages/ui/nav",
                         "pageTitle": "client/modules/packages/ui/nav",
@@ -535,7 +535,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "CoffeeScript"
                         },
-                        "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/client/modules/packages/ui/notifications.coffee",
+                        "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/modules/packages/ui/notifications.coffee",
                         "projectPath": "client/modules/packages/ui/notifications.coffee",
                         "targetPath": "client/modules/packages/ui/notifications",
                         "pageTitle": "client/modules/packages/ui/notifications",
@@ -556,7 +556,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "CoffeeScript"
                         },
-                        "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/client/modules/packages/ui/title.coffee",
+                        "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/modules/packages/ui/title.coffee",
                         "projectPath": "client/modules/packages/ui/title.coffee",
                         "targetPath": "client/modules/packages/ui/title",
                         "pageTitle": "client/modules/packages/ui/title",
@@ -577,7 +577,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "CoffeeScript"
                         },
-                        "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/client/modules/packages/ui/window.coffee",
+                        "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/modules/packages/ui/window.coffee",
                         "projectPath": "client/modules/packages/ui/window.coffee",
                         "targetPath": "client/modules/packages/ui/window",
                         "pageTitle": "client/modules/packages/ui/window",
@@ -608,7 +608,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "CoffeeScript"
                         },
-                        "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/client/modules/packages/user/forgot.coffee",
+                        "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/modules/packages/user/forgot.coffee",
                         "projectPath": "client/modules/packages/user/forgot.coffee",
                         "targetPath": "client/modules/packages/user/forgot",
                         "pageTitle": "client/modules/packages/user/forgot",
@@ -629,7 +629,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "CoffeeScript"
                         },
-                        "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/client/modules/packages/user/index.coffee",
+                        "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/modules/packages/user/index.coffee",
                         "projectPath": "client/modules/packages/user/index.coffee",
                         "targetPath": "client/modules/packages/user/index",
                         "pageTitle": "client/modules/packages/user/index",
@@ -650,7 +650,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "CoffeeScript"
                         },
-                        "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/client/modules/packages/user/login.coffee",
+                        "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/modules/packages/user/login.coffee",
                         "projectPath": "client/modules/packages/user/login.coffee",
                         "targetPath": "client/modules/packages/user/login",
                         "pageTitle": "client/modules/packages/user/login",
@@ -671,7 +671,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "CoffeeScript"
                         },
-                        "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/client/modules/packages/user/logout.coffee",
+                        "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/modules/packages/user/logout.coffee",
                         "projectPath": "client/modules/packages/user/logout.coffee",
                         "targetPath": "client/modules/packages/user/logout",
                         "pageTitle": "client/modules/packages/user/logout",
@@ -692,7 +692,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "CoffeeScript"
                         },
-                        "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/client/modules/packages/user/register.coffee",
+                        "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/modules/packages/user/register.coffee",
                         "projectPath": "client/modules/packages/user/register.coffee",
                         "targetPath": "client/modules/packages/user/register",
                         "pageTitle": "client/modules/packages/user/register",
@@ -713,7 +713,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "CoffeeScript"
                         },
-                        "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/client/modules/packages/user/reset.coffee",
+                        "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/modules/packages/user/reset.coffee",
                         "projectPath": "client/modules/packages/user/reset.coffee",
                         "targetPath": "client/modules/packages/user/reset",
                         "pageTitle": "client/modules/packages/user/reset",
@@ -738,7 +738,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                   "foldPrefix": "^",
                   "name": "CoffeeScript"
                 },
-                "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/client/modules/pkgman.coffee",
+                "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/modules/pkgman.coffee",
                 "projectPath": "client/modules/pkgman.coffee",
                 "targetPath": "client/modules/pkgman",
                 "pageTitle": "client/modules/pkgman",
@@ -759,7 +759,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                   "foldPrefix": "^",
                   "name": "CoffeeScript"
                 },
-                "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/client/modules/schema-client.coffee",
+                "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/modules/schema-client.coffee",
                 "projectPath": "client/modules/schema-client.coffee",
                 "targetPath": "client/modules/schema-client",
                 "pageTitle": "client/modules/schema-client",
@@ -782,7 +782,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "foldPrefix": "^",
               "name": "CoffeeScript"
             },
-            "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/client/packages.coffee",
+            "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/packages.coffee",
             "projectPath": "client/packages.coffee",
             "targetPath": "client/packages",
             "pageTitle": "client/packages",
@@ -803,7 +803,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "foldPrefix": "^",
               "name": "CoffeeScript"
             },
-            "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/client/require.coffee",
+            "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/require.coffee",
             "projectPath": "client/require.coffee",
             "targetPath": "client/require",
             "pageTitle": "client/require",
@@ -826,7 +826,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
           "foldPrefix": "^",
           "name": "CoffeeScript"
         },
-        "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server.coffee",
+        "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server.coffee",
         "projectPath": "server.coffee",
         "targetPath": "server",
         "pageTitle": "server",
@@ -848,7 +848,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "foldPrefix": "^",
               "name": "CoffeeScript"
             },
-            "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/AbstractHttp.coffee",
+            "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/AbstractHttp.coffee",
             "projectPath": "server/AbstractHttp.coffee",
             "targetPath": "server/AbstractHttp",
             "pageTitle": "server/AbstractHttp",
@@ -869,7 +869,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "foldPrefix": "^",
               "name": "CoffeeScript"
             },
-            "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/AbstractSocketFactory.coffee",
+            "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/AbstractSocketFactory.coffee",
             "projectPath": "server/AbstractSocketFactory.coffee",
             "targetPath": "server/AbstractSocketFactory",
             "pageTitle": "server/AbstractSocketFactory",
@@ -890,7 +890,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "foldPrefix": "^",
               "name": "CoffeeScript"
             },
-            "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/audit.coffee",
+            "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/audit.coffee",
             "projectPath": "server/audit.coffee",
             "targetPath": "server/audit",
             "pageTitle": "server/audit",
@@ -911,7 +911,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "foldPrefix": "^",
               "name": "CoffeeScript"
             },
-            "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/config.coffee",
+            "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/config.coffee",
             "projectPath": "server/config.coffee",
             "targetPath": "server/config",
             "pageTitle": "server/config",
@@ -932,7 +932,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "foldPrefix": "^",
               "name": "CoffeeScript"
             },
-            "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/crypto.coffee",
+            "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/crypto.coffee",
             "projectPath": "server/crypto.coffee",
             "targetPath": "server/crypto",
             "pageTitle": "server/crypto",
@@ -953,7 +953,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "foldPrefix": "^",
               "name": "CoffeeScript"
             },
-            "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/jugglingdb.coffee",
+            "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/jugglingdb.coffee",
             "projectPath": "server/jugglingdb.coffee",
             "targetPath": "server/jugglingdb",
             "pageTitle": "server/jugglingdb",
@@ -974,7 +974,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "foldPrefix": "^",
               "name": "CoffeeScript"
             },
-            "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/limits.coffee",
+            "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/limits.coffee",
             "projectPath": "server/limits.coffee",
             "targetPath": "server/limits",
             "pageTitle": "server/limits",
@@ -995,7 +995,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "foldPrefix": "^",
               "name": "CoffeeScript"
             },
-            "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/logging.coffee",
+            "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/logging.coffee",
             "projectPath": "server/logging.coffee",
             "targetPath": "server/logging",
             "pageTitle": "server/logging",
@@ -1032,7 +1032,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "foldPrefix": "^",
                       "name": "CoffeeScript"
                     },
-                    "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/packages/angular/index.coffee",
+                    "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/packages/angular/index.coffee",
                     "projectPath": "server/packages/angular/index.coffee",
                     "targetPath": "server/packages/angular/index",
                     "pageTitle": "server/packages/angular/index",
@@ -1063,7 +1063,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "foldPrefix": "^",
                       "name": "CoffeeScript"
                     },
-                    "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/packages/assets/index.coffee",
+                    "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/packages/assets/index.coffee",
                     "projectPath": "server/packages/assets/index.coffee",
                     "targetPath": "server/packages/assets/index",
                     "pageTitle": "server/packages/assets/index",
@@ -1094,7 +1094,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "foldPrefix": "^",
                       "name": "CoffeeScript"
                     },
-                    "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/packages/config/index.coffee",
+                    "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/packages/config/index.coffee",
                     "projectPath": "server/packages/config/index.coffee",
                     "targetPath": "server/packages/config/index",
                     "pageTitle": "server/packages/config/index",
@@ -1125,7 +1125,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "foldPrefix": "^",
                       "name": "CoffeeScript"
                     },
-                    "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/packages/core/index.coffee",
+                    "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/packages/core/index.coffee",
                     "projectPath": "server/packages/core/index.coffee",
                     "targetPath": "server/packages/core/index",
                     "pageTitle": "server/packages/core/index",
@@ -1156,7 +1156,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "foldPrefix": "^",
                       "name": "CoffeeScript"
                     },
-                    "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/packages/express/errors.coffee",
+                    "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/packages/express/errors.coffee",
                     "projectPath": "server/packages/express/errors.coffee",
                     "targetPath": "server/packages/express/errors",
                     "pageTitle": "server/packages/express/errors",
@@ -1177,7 +1177,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "foldPrefix": "^",
                       "name": "CoffeeScript"
                     },
-                    "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/packages/express/index.coffee",
+                    "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/packages/express/index.coffee",
                     "projectPath": "server/packages/express/index.coffee",
                     "targetPath": "server/packages/express/index",
                     "pageTitle": "server/packages/express/index",
@@ -1198,7 +1198,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "foldPrefix": "^",
                       "name": "CoffeeScript"
                     },
-                    "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/packages/express/logger.coffee",
+                    "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/packages/express/logger.coffee",
                     "projectPath": "server/packages/express/logger.coffee",
                     "targetPath": "server/packages/express/logger",
                     "pageTitle": "server/packages/express/logger",
@@ -1219,7 +1219,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "foldPrefix": "^",
                       "name": "CoffeeScript"
                     },
-                    "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/packages/express/routes.coffee",
+                    "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/packages/express/routes.coffee",
                     "projectPath": "server/packages/express/routes.coffee",
                     "targetPath": "server/packages/express/routes",
                     "pageTitle": "server/packages/express/routes",
@@ -1240,7 +1240,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "foldPrefix": "^",
                       "name": "CoffeeScript"
                     },
-                    "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/packages/express/session.coffee",
+                    "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/packages/express/session.coffee",
                     "projectPath": "server/packages/express/session.coffee",
                     "targetPath": "server/packages/express/session",
                     "pageTitle": "server/packages/express/session",
@@ -1261,7 +1261,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "foldPrefix": "^",
                       "name": "CoffeeScript"
                     },
-                    "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/packages/express/static.coffee",
+                    "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/packages/express/static.coffee",
                     "projectPath": "server/packages/express/static.coffee",
                     "targetPath": "server/packages/express/static",
                     "pageTitle": "server/packages/express/static",
@@ -1292,7 +1292,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "foldPrefix": "^",
                       "name": "CoffeeScript"
                     },
-                    "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/packages/form/index.coffee",
+                    "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/packages/form/index.coffee",
                     "projectPath": "server/packages/form/index.coffee",
                     "targetPath": "server/packages/form/index",
                     "pageTitle": "server/packages/form/index",
@@ -1323,7 +1323,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "foldPrefix": "^",
                       "name": "CoffeeScript"
                     },
-                    "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/packages/limiter/index.coffee",
+                    "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/packages/limiter/index.coffee",
                     "projectPath": "server/packages/limiter/index.coffee",
                     "targetPath": "server/packages/limiter/index",
                     "pageTitle": "server/packages/limiter/index",
@@ -1354,7 +1354,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "foldPrefix": "^",
                       "name": "CoffeeScript"
                     },
-                    "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/packages/nodemailer/index.coffee",
+                    "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/packages/nodemailer/index.coffee",
                     "projectPath": "server/packages/nodemailer/index.coffee",
                     "targetPath": "server/packages/nodemailer/index",
                     "pageTitle": "server/packages/nodemailer/index",
@@ -1385,7 +1385,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "foldPrefix": "^",
                       "name": "CoffeeScript"
                     },
-                    "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/packages/repl/index.coffee",
+                    "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/packages/repl/index.coffee",
                     "projectPath": "server/packages/repl/index.coffee",
                     "targetPath": "server/packages/repl/index",
                     "pageTitle": "server/packages/repl/index",
@@ -1416,7 +1416,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "foldPrefix": "^",
                       "name": "CoffeeScript"
                     },
-                    "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/packages/rpc/index.coffee",
+                    "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/packages/rpc/index.coffee",
                     "projectPath": "server/packages/rpc/index.coffee",
                     "targetPath": "server/packages/rpc/index",
                     "pageTitle": "server/packages/rpc/index",
@@ -1447,7 +1447,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "foldPrefix": "^",
                       "name": "CoffeeScript"
                     },
-                    "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/packages/schema/index.coffee",
+                    "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/packages/schema/index.coffee",
                     "projectPath": "server/packages/schema/index.coffee",
                     "targetPath": "server/packages/schema/index",
                     "pageTitle": "server/packages/schema/index",
@@ -1478,7 +1478,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "foldPrefix": "^",
                       "name": "CoffeeScript"
                     },
-                    "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/packages/session/index.coffee",
+                    "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/packages/session/index.coffee",
                     "projectPath": "server/packages/session/index.coffee",
                     "targetPath": "server/packages/session/index",
                     "pageTitle": "server/packages/session/index",
@@ -1509,7 +1509,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "foldPrefix": "^",
                       "name": "CoffeeScript"
                     },
-                    "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/packages/socket/SocketIo.coffee",
+                    "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/packages/socket/SocketIo.coffee",
                     "projectPath": "server/packages/socket/SocketIo.coffee",
                     "targetPath": "server/packages/socket/SocketIo",
                     "pageTitle": "server/packages/socket/SocketIo",
@@ -1530,7 +1530,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "foldPrefix": "^",
                       "name": "CoffeeScript"
                     },
-                    "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/packages/socket/factory.coffee",
+                    "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/packages/socket/factory.coffee",
                     "projectPath": "server/packages/socket/factory.coffee",
                     "targetPath": "server/packages/socket/factory",
                     "pageTitle": "server/packages/socket/factory",
@@ -1551,7 +1551,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "foldPrefix": "^",
                       "name": "CoffeeScript"
                     },
-                    "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/packages/socket/index.coffee",
+                    "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/packages/socket/index.coffee",
                     "projectPath": "server/packages/socket/index.coffee",
                     "targetPath": "server/packages/socket/index",
                     "pageTitle": "server/packages/socket/index",
@@ -1582,7 +1582,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "foldPrefix": "^",
                       "name": "CoffeeScript"
                     },
-                    "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/packages/user/forgot.coffee",
+                    "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/packages/user/forgot.coffee",
                     "projectPath": "server/packages/user/forgot.coffee",
                     "targetPath": "server/packages/user/forgot",
                     "pageTitle": "server/packages/user/forgot",
@@ -1603,7 +1603,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "foldPrefix": "^",
                       "name": "CoffeeScript"
                     },
-                    "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/packages/user/index.coffee",
+                    "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/packages/user/index.coffee",
                     "projectPath": "server/packages/user/index.coffee",
                     "targetPath": "server/packages/user/index",
                     "pageTitle": "server/packages/user/index",
@@ -1624,7 +1624,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "foldPrefix": "^",
                       "name": "CoffeeScript"
                     },
-                    "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/packages/user/login.coffee",
+                    "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/packages/user/login.coffee",
                     "projectPath": "server/packages/user/login.coffee",
                     "targetPath": "server/packages/user/login",
                     "pageTitle": "server/packages/user/login",
@@ -1645,7 +1645,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "foldPrefix": "^",
                       "name": "CoffeeScript"
                     },
-                    "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/packages/user/logout.coffee",
+                    "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/packages/user/logout.coffee",
                     "projectPath": "server/packages/user/logout.coffee",
                     "targetPath": "server/packages/user/logout",
                     "pageTitle": "server/packages/user/logout",
@@ -1666,7 +1666,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "foldPrefix": "^",
                       "name": "CoffeeScript"
                     },
-                    "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/packages/user/register.coffee",
+                    "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/packages/user/register.coffee",
                     "projectPath": "server/packages/user/register.coffee",
                     "targetPath": "server/packages/user/register",
                     "pageTitle": "server/packages/user/register",
@@ -1687,7 +1687,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "foldPrefix": "^",
                       "name": "CoffeeScript"
                     },
-                    "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/packages/user/reset.coffee",
+                    "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/packages/user/reset.coffee",
                     "projectPath": "server/packages/user/reset.coffee",
                     "targetPath": "server/packages/user/reset",
                     "pageTitle": "server/packages/user/reset",
@@ -1718,7 +1718,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "foldPrefix": "^",
                       "name": "CoffeeScript"
                     },
-                    "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/packages/villiany/index.coffee",
+                    "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/packages/villiany/index.coffee",
                     "projectPath": "server/packages/villiany/index.coffee",
                     "targetPath": "server/packages/villiany/index",
                     "pageTitle": "server/packages/villiany/index",
@@ -1743,14 +1743,129 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "foldPrefix": "^",
               "name": "CoffeeScript"
             },
-            "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/sandboxes.coffee",
+            "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/sandboxes.coffee",
             "projectPath": "server/sandboxes.coffee",
             "targetPath": "server/sandboxes",
             "pageTitle": "server/sandboxes",
             "title": "sandboxes"
           },
           "depth": 2,
-          "outline": []
+          "outline": [
+            {
+              "type": "heading",
+              "data": {
+                "level": 1,
+                "title": "Sandboxes",
+                "slug": "sandboxes"
+              },
+              "depth": 1,
+              "children": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "SandboxFactory",
+                    "slug": "sandboxfactory"
+                  },
+                  "depth": 2,
+                  "children": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".create",
+                        "slug": "create"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".lookup",
+                        "slug": "lookup"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".lookupOrCreate",
+                        "slug": "lookuporcreate"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".remove",
+                        "slug": "remove"
+                      },
+                      "depth": 3
+                    }
+                  ]
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "SandboxFactory",
+                    "slug": "sandboxfactory"
+                  },
+                  "depth": 2,
+                  "children": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".close",
+                        "slug": "close"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".emitHtml",
+                        "slug": "emithtml"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".isNew",
+                        "slug": "isnew"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".registerCleanupFunction",
+                        "slug": "registercleanupfunction"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".setBusy",
+                        "slug": "setbusy"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".url",
+                        "slug": "url"
+                      },
+                      "depth": 3
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }, {
           "type": "file",
           "data": {
@@ -1764,7 +1879,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "foldPrefix": "^",
               "name": "CoffeeScript"
             },
-            "sourcePath": "/home/cha0s6983/dev/code/js/reddichat/server/schema.coffee",
+            "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/schema.coffee",
             "projectPath": "server/schema.coffee",
             "targetPath": "server/schema",
             "pageTitle": "server/schema",

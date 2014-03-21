@@ -74,16 +74,22 @@
   <span class="o">-&gt;</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>This API allows you to dynamically change the navigation links.</p></div></div><div class="code"><div class="wrapper">    
     <span class="nv">_links = </span><span class="p">[]</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Get and set the navigation links. The links are objects structured like so:
-* pattern: A string or regex containing the path to match to set this item
-active.
-* href: Target navigation path when this item is clicked.
-* name: Human readable name for the item.
-e.g.
-    item =
-        pattern: '/home'
-        href: '#/home'
-        name: 'Home'</p></div></div><div class="code"><div class="wrapper">    
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Get and set the navigation links. The links are objects structured like so:</p>
+
+<ul>
+<li>pattern: A string or regex containing the path to match to set this item
+active.</li>
+<li>href: Target navigation path when this item is clicked.</li>
+<li>name: Human readable name for the item.</li>
+</ul>
+
+<p>e.g.</p>
+
+<pre><code>item =
+    pattern: '/home'
+    href: '#/home'
+    name: 'Home'
+</code></pre></div></div><div class="code"><div class="wrapper">    
     <span class="vi">@links = </span><span class="o">-&gt;</span> <span class="nx">_links</span>
     <span class="vi">@setLinks = </span><span class="nf">(links) -&gt;</span> <span class="nv">_links = </span><span class="nx">links</span>
     

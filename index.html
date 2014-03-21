@@ -3,67 +3,68 @@
 <p>Shrub is a JavaScript (or CoffeeScript if you prefer) application
 framework. <a href="http://angularjs.org/">AngularJS</a> is used on the client-side, as
 well as <a href="http://socket.io/">Socket.IO</a>, enabling real-time communication right
-out of the box. The server is a <a href="http://nodejs.org/">Node.js</a> server using
-<a href="http://redis.io/">Redis</a> for persistence and scalability.</p>
+out of the box. The server is an <a href="http://expressjs.com">Express</a>
+<a href="http://nodejs.org/">Node.js</a> server using
+<a href="https://github.com/1602/jugglingdb">JugglingDB</a> for storage.</p>
 
-<p>Shrub handles generation (using <a href="http://gruntjs.com/">Grunt</a>) of the vast
-majority of Angular boilerplate, to allow you to structure your application in
-a very clean and consistent way.</p>
+<p>Shrub handles generation (using <a href="http://gruntjs.com/">Grunt</a>) of all Angular
+boilerplate, to allow you to structure your application in a very clean and
+consistent way.</p>
 
-<p>Also provided is an Angular service providing a NodeJS-style module framework
-to allow your application to bridge the gap between Angular and the vast
-ecosystem of publically available NodeJS-style modules.</p>
+<p>Shrub is organized into packages which implement hooks. Angular services,
+directives, filters, etc. are specified through package hooks, allowing you to
+achieve the ultimate in clean, elegant structure. No more
+(controllers|directives|filters|services).js blobs.</p>
 
-<h3 id="the-twist">The Twist</h3>
+<h3 id="awesome-example-of-a-package">Awesome example of a package</h3>
 
 <p>JS applications catch flak because they are not impliticly SEO-friendly,
 as well as requiring JS execution, which <a href="http://www.wired.com/threatlevel/2013/09/freedom-hosting-fbi/">some people prefer not to
 allow for untrusted websites</a>.</p>
 
-<p>Shrub does an interesting thing which is possible because both sides of the
-stack have fully featured JS (<a href="http://www.youtube.com/watch?v=lD9FAOPBiDk">well, except for certain older browsers...</a>).
-When a client requests a page from Shrub, it spins up a DOM for the request,
-and renders the entire page, JS and all. Shrub then serves the fully-built page
+<p>Shrub implements the <code>angular</code> server package, which implements 
+hook <code>httpMiddleware</code>. Since both sides of the stack have fully featured JS
+(<a href="http://www.youtube.com/watch?v=lD9FAOPBiDk">well, except for certain older browsers...</a>)
+, when a client requests a page from Shrub, it spins up a
+<a href="http://cha0s.github.io/shrub/server/sandboxes.html">sandbox</a> for the request,
+and renders the entire page -- JS and all. It then serves the fully-built page
 to the client.</p>
 
 <p>If the client has JS enabled, the client-side Angular application takes over
-from here, loading new pages (nearly) instantly and generally benefitting from
-all the lovely things that client-side applications offer.</p>
+from here, loading new pages instantly and generally benefitting from all the
+lovely things that client-side applications offer. The package also implements
+hook <code>endpoint</code>, which allows a JSful client to let the server know it can
+release the sandbox.</p>
 
 <p>However, if the client does not have JS enabled, a new page will hit the server
-again, and Shrub, crafty as it is, will reuse the DOM created for that session,
-navigate Angular to the new page, render it, and serve it to the client. Nice! </p>
+again, and the package, crafty as it is, will reuse the sandbox created for
+that session, navigate the sandboxed Angular to the new page, render it, and
+serve it to the client again. Amazing! </p>
 
 <h3 id="get-rolling">Get rolling</h3>
 
 <ul>
 <li><p>Get yourself a clone: <code>$ git clone git://github.com/cha0s/shrub.git</code></p></li>
-<li><p>Get in the new directory and then the usual <code>npm install</code>, followed by
-<code>$ scripts/good-to-go</code>. This script will return 0 if the project builds, and
-the tests run successfully. In other words, you can easily wire it up in a
-pre-commit hook.</p></li>
-<li><p>Spin up the server: <code>$ npm start</code> and navigate to http://localhost:4201 (make
-sure you've run grunt at least once!)</p></li>
-<li><p>Check out how Shrub has generated a lot of Angular boilerplate for
-you. Particularly app/js/{controllers,directives,filters,services}.js will
-be of interest.</p></li>
+<li><p>Get in the new directory and then the usual <code>npm install</code></p></li>
+<li><p>If you'd like to run the tests, first spin up the server using
+<code>$ E2E=true npm start</code>, to start the server in end-to-end testing mode. Then
+run <code>$ ./scripts/good-to-go</code>. This script will return 0 if the project builds,
+and the tests run successfully. In other words, you could theoretically wire
+it up in a pre-commit hook.</p></li>
+<li><p>Spin up the server in debug mode: <code>$ npm start</code> and navigate to
+http://localhost:4201 (if you didn't run the tests above, you must first run
+<code>$ grunt</code> before navigating to the site in your browser.</p></li>
+<li><p>Enjoy!</p></li>
 </ul>
 
 <h3 id="todo">TODO</h3>
 
-<p>There is much to do, and this project is currently essentially a
-proof-of-concept of some of the ideas outlined here. My plans for this
-framework include:</p>
+<p>There is always more to do! </p>
 
 <ul>
-<li>Integration of a database abstraction layer</li>
-<li>A resource layer (using the aforementioned db layer) for serving Angular $resource requests</li>
-<li>Socket/Session stores based on aforementioned db layer</li>
-<li>Better handling of server-side DOM in the absence of a session/cookie</li>
-<li>Research into whether server-side rendering can be synchronized in a DRY fashion (currently the rendering is given 50 ms to complete, not ideal)</li>
-<li>Better abstraction of assets, instead of (for instance) hardcoding bootstrap/LESS</li>
-<li>Using standardized solutions to UI and Bootstrap interface, instead of the hackish half-hand-rolled solutions currently in place</li>
-<li>Better abstraction of the RPC interface, allowing other systems beside Socket.IO</li>
-<li>Research into whether the http server interface (currently using Express) is worth abstracting</li>
-<li>There is a rudimentary working form API, but research should be done as to how to DRY it up and make sure it's secure and resistant to attack</li>
+<li><p>The main concern at the moment is
+<strong>documentation</strong>. You may view the continuously evolving autogenerated
+documentation at http://cha0s.github.io/shrub</p></li>
+<li><p>Better abstraction of assets, in other words, a theme/skin system</p></li>
+<li>The form API is vulnerable to CSRF at the moment, and maybe other attacks.</li>
 </ul></div></div></div></div></body></html>
