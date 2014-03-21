@@ -1,0 +1,120 @@
+<!DOCTYPE html><html lang="en"><head><title>server/limits</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="server/limits"><meta name="groc-project-path" content="server/limits.coffee"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">server/limits.coffee</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nv">Promise = </span><span class="nx">require</span> <span class="s1">&#39;bluebird&#39;</span>
+<span class="nv">redis = </span><span class="nx">require</span> <span class="s1">&#39;connect-redis/node_modules/redis&#39;</span>
+<span class="nv">redback = </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;redback&#39;</span><span class="p">).</span><span class="nx">use</span> <span class="nx">redis</span><span class="p">.</span><span class="nx">createClient</span><span class="p">()</span>
+
+<span class="nv">pkgman = </span><span class="nx">require</span> <span class="s1">&#39;pkgman&#39;</span>
+
+<span class="nx">redback</span><span class="p">.</span><span class="nx">addStructure</span><span class="p">(</span>
+  <span class="s1">&#39;BetterRateLimit&#39;</span>
+  
+  <span class="nv">init: </span><span class="nf">(options = {}) -&gt;</span>
+  
+    <span class="vi">@bucketTime = </span><span class="nx">options</span><span class="p">.</span><span class="nx">bucketTime</span> <span class="o">?</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">10</span>
+  
+  <span class="nv">add: </span><span class="nf">(subject, increment = 1) -&gt;</span>
+  
+    <span class="nv">exists = </span><span class="nx">Promise</span><span class="p">.</span><span class="nx">promisify</span> <span class="nx">@client</span><span class="p">.</span><span class="nx">exists</span><span class="p">,</span> <span class="nx">@client</span>
+    <span class="nv">rpushx = </span><span class="nx">Promise</span><span class="p">.</span><span class="nx">promisify</span> <span class="nx">@client</span><span class="p">.</span><span class="nx">rpushx</span><span class="p">,</span> <span class="nx">@client</span>
+    
+    <span class="nv">subject = </span><span class="nx">@key</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span> <span class="o">+</span> <span class="nx">subject</span>
+    
+    <span class="nx">exists</span><span class="p">(</span><span class="nx">subject</span><span class="p">).</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="k">then</span> <span class="nf">(exists) -&gt;</span>
+      
+      <span class="k">if</span> <span class="nx">exists</span>
+        
+        <span class="nx">rpushx</span> <span class="nx">subject</span><span class="p">,</span> <span class="nx">increment</span>
+      
+      <span class="k">else</span>
+    
+        <span class="nv">multi = </span><span class="nx">@client</span><span class="p">.</span><span class="nx">multi</span><span class="p">()</span>
+        <span class="nx">multi</span><span class="p">.</span><span class="nx">rpush</span> <span class="nx">subject</span><span class="p">,</span> <span class="nx">increment</span>
+        <span class="nx">multi</span><span class="p">.</span><span class="nx">expire</span> <span class="nx">subject</span><span class="p">,</span> <span class="nx">@bucketTime</span>
+        
+        <span class="nx">Promise</span><span class="p">.</span><span class="nx">promisify</span><span class="p">(</span><span class="nx">multi</span><span class="p">.</span><span class="nx">exec</span><span class="p">,</span> <span class="nx">multi</span><span class="p">)()</span>
+        
+  <span class="nv">count: </span><span class="nf">(subject) -&gt;</span>
+  
+    <span class="nv">lrange = </span><span class="nx">Promise</span><span class="p">.</span><span class="nx">promisify</span> <span class="nx">@client</span><span class="p">.</span><span class="nx">lrange</span><span class="p">,</span> <span class="nx">@client</span>
+    <span class="nx">lrange</span><span class="p">(</span><span class="nx">@key</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span> <span class="o">+</span> <span class="nx">subject</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">).</span><span class="k">then</span> <span class="nf">(counts) -&gt;</span>
+      
+      <span class="nx">counts</span><span class="p">.</span><span class="nx">reduce</span><span class="p">(</span>
+        <span class="nf">(l, r) -&gt;</span>
+          <span class="k">return</span> <span class="nx">l</span> <span class="nx">unless</span> <span class="nx">r</span><span class="o">?</span>
+          <span class="k">return</span> <span class="nx">r</span> <span class="nx">unless</span> <span class="nx">l</span><span class="o">?</span>
+          
+          <span class="nb">parseInt</span><span class="p">(</span><span class="nx">l</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">+</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">r</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="mi">0</span>
+      <span class="p">)</span>
+    
+  <span class="nv">ttl: </span><span class="nf">(subject) -&gt;</span>
+        
+    <span class="nx">Promise</span><span class="p">.</span><span class="nx">promisify</span><span class="p">(</span><span class="nx">@client</span><span class="p">.</span><span class="nx">ttl</span><span class="p">,</span> <span class="nx">@client</span><span class="p">)</span> <span class="nx">@key</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span> <span class="o">+</span> <span class="nx">subject</span>
+    
+<span class="p">)</span>
+
+<span class="nv">exports.Limiter = </span><span class="k">class</span> <span class="nx">Limiter</span>
+  
+  <span class="nv">constructor: </span><span class="nf">(root, @threshold, options = {}) -&gt;</span>
+    
+    <span class="nx">unless</span> <span class="nx">@threshold</span> <span class="k">instanceof</span> <span class="nx">ThresholdTime</span>
+      <span class="k">throw</span> <span class="k">new</span> <span class="nx">TypeError</span><span class="p">(</span>
+        <span class="s2">&quot;Limiter(#{root}) must be constructed with a valid threshold!&quot;</span>
+      <span class="p">)</span>
+      
+    <span class="nx">options</span><span class="p">.</span><span class="nx">bucketTime</span> <span class="o">?=</span> <span class="nx">@threshold</span><span class="p">.</span><span class="nx">calculateSeconds</span><span class="p">()</span>
+      
+    <span class="vi">@limiter = </span><span class="nx">redback</span><span class="p">.</span><span class="nx">createBetterRateLimit</span> <span class="nx">root</span><span class="p">,</span> <span class="nx">options</span>
+  
+  <span class="nv">add: </span><span class="nf">(keys, increment = 1) -&gt;</span>
+    
+    <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">@limiter</span><span class="p">.</span><span class="nx">add</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">increment</span> <span class="k">for</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">keys</span><span class="p">)</span>
+  
+  <span class="nv">addAndCheckThreshold: </span><span class="nf">(keys, increment = 1) -&gt;</span>
+    
+    <span class="nx">@add</span><span class="p">(</span><span class="nx">keys</span><span class="p">,</span> <span class="nx">increment</span><span class="p">).</span><span class="k">then</span> <span class="o">=&gt;</span> <span class="nx">@checkThreshold</span> <span class="nx">keys</span>
+  
+  <span class="nv">_reduction: </span><span class="nf">(keys, index) -&gt;</span>
+  
+    <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">@limiter</span><span class="p">[</span><span class="nx">index</span><span class="p">]</span> <span class="nx">key</span> <span class="k">for</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">keys</span><span class="p">).</span><span class="k">then</span><span class="p">(</span>
+
+      <span class="nf">(reduction) -&gt;</span> <span class="nx">reduction</span><span class="p">.</span><span class="nx">reduce</span><span class="p">(</span>
+        <span class="nf">(l, r) -&gt;</span> <span class="k">if</span> <span class="nx">l</span> <span class="o">&gt;</span> <span class="nx">r</span> <span class="k">then</span> <span class="nx">l</span> <span class="k">else</span> <span class="nx">r</span>
+        <span class="o">-</span><span class="kc">Infinity</span>
+      <span class="p">)</span>
+    <span class="p">)</span>
+
+  <span class="nv">count: </span><span class="nf">(keys) -&gt;</span> <span class="nx">@_reduction</span> <span class="nx">keys</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span>
+    
+  <span class="nv">ttl: </span><span class="nf">(keys) -&gt;</span> <span class="nx">@_reduction</span> <span class="nx">keys</span><span class="p">,</span> <span class="s1">&#39;ttl&#39;</span>
+    
+  <span class="nv">checkThreshold: </span><span class="nf">(keys) -&gt;</span>
+    <span class="nx">@count</span><span class="p">(</span><span class="nx">keys</span><span class="p">).</span><span class="k">then</span> <span class="p">(</span><span class="nx">count</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">count</span> <span class="o">&gt;</span> <span class="nx">@threshold</span><span class="p">.</span><span class="nx">count</span><span class="p">()</span>
+    
+<span class="nv">exports.threshold = </span><span class="nf">(count) -&gt;</span> <span class="k">new</span> <span class="nx">Threshold</span> <span class="nx">count</span>
+        
+<span class="k">class</span> <span class="nx">Threshold</span>
+  
+  <span class="nv">constructor: </span><span class="nf">(@_count) -&gt;</span>
+  
+  <span class="nv">every: </span><span class="nf">(amount) -&gt;</span> <span class="k">new</span> <span class="nx">ThresholdTime</span> <span class="nx">@_count</span><span class="p">,</span> <span class="nx">amount</span>
+  
+<span class="k">class</span> <span class="nx">ThresholdTime</span>
+  
+  <span class="nv">constructor: </span><span class="nf">(@_count, @_amount) -&gt;</span>
+    
+    <span class="vi">@_multiplier = </span><span class="mi">1</span>
+  
+  <span class="nv">calculateSeconds: </span><span class="o">-&gt;</span> <span class="nx">@_amount</span> <span class="o">*</span> <span class="nx">@_multiplier</span>
+  
+  <span class="nv">count: </span><span class="o">-&gt;</span> <span class="nx">@_count</span>
+  
+  <span class="nv">multipliers =</span>
+    <span class="nv">milliseconds: </span><span class="mi">1</span> <span class="o">/</span> <span class="mi">1000</span>
+    <span class="nv">seconds: </span><span class="mi">1</span>
+    <span class="nv">minutes: </span><span class="mi">60</span>
+  
+  <span class="k">for</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">multiplier</span> <span class="k">of</span> <span class="nx">multipliers</span>
+    <span class="nx">do</span> <span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">multiplier</span><span class="p">)</span> <span class="o">=&gt;</span>
+      <span class="err">@</span><span class="o">::</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="o">-&gt;</span>
+        <span class="vi">@_multiplier = </span><span class="nx">multiplier</span>
+        <span class="k">this</span></div></div></div></div></body></html>

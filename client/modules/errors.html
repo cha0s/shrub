@@ -1,0 +1,82 @@
+<!DOCTYPE html><html lang="en"><head><title>client/modules/errors</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="client/modules/errors"><meta name="groc-project-path" content="client/modules/errors.coffee"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path">client/modules/errors.coffee</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nv">_ = </span><span class="nx">require</span> <span class="s1">&#39;underscore&#39;</span>
+<span class="nv">pkgman = </span><span class="nx">require</span> <span class="s1">&#39;pkgman&#39;</span>
+
+<span class="nv">exports.BaseError = </span><span class="k">class</span> <span class="nx">BaseError</span> <span class="k">extends</span> <span class="nb">Error</span>
+  
+  <span class="nv">constructor: </span><span class="nf">(@message) -&gt;</span>
+  <span class="vi">@template: </span><span class="s2">&quot;Unknown error: :message&quot;</span>
+  
+  <span class="nv">caught: </span><span class="o">-&gt;</span>
+  <span class="nv">key: </span><span class="s1">&#39;unknown&#39;</span>
+  <span class="nv">template: </span><span class="nx">BaseError</span><span class="p">.</span><span class="nx">template</span>
+    
+  <span class="nv">toJSON: </span><span class="o">-&gt;</span> <span class="p">[</span><span class="nx">@key</span><span class="p">,</span> <span class="nx">@message</span><span class="p">]</span>
+    
+<span class="nv">exports.errorTypes = </span><span class="o">-&gt;</span>
+  
+  <span class="nv">collected = </span><span class="p">[</span><span class="nx">BaseError</span><span class="p">]</span>
+  <span class="nx">collected</span><span class="p">.</span><span class="nx">push</span> <span class="nx">Type</span> <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">Type</span> <span class="k">of</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s1">&#39;errorType&#39;</span>
+  
+  <span class="nv">Types = </span><span class="p">{}</span>
+  <span class="nx">Types</span><span class="p">[</span><span class="nx">Type</span><span class="o">::</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Type</span> <span class="k">for</span> <span class="nx">Type</span> <span class="k">in</span> <span class="nx">collected</span>
+  <span class="nx">Types</span>
+
+<span class="nv">exports.serialize = </span><span class="nf">(error) -&gt;</span>
+  
+  <span class="k">if</span> <span class="nx">error</span> <span class="k">instanceof</span> <span class="nx">BaseError</span>
+    <span class="nx">error</span><span class="p">.</span><span class="nx">toJSON</span><span class="p">()</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="nx">error</span> <span class="k">instanceof</span> <span class="nb">Error</span>
+    <span class="p">[</span><span class="kc">undefined</span><span class="p">,</span> <span class="nx">error</span><span class="p">.</span><span class="nx">message</span><span class="p">]</span>
+  <span class="k">else</span>
+    <span class="p">[</span><span class="kc">undefined</span><span class="p">,</span> <span class="nx">error</span><span class="p">]</span>
+  
+<span class="nv">exports.unserialize = </span><span class="nf">(data) -&gt;</span> <span class="nx">exports</span><span class="p">.</span><span class="nx">instantiate</span><span class="p">.</span><span class="nx">apply</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">data</span>
+  
+<span class="nv">exports.message = </span><span class="nf">(error) -&gt;</span>
+
+  <span class="nv">output = </span><span class="k">if</span> <span class="nx">error</span> <span class="k">instanceof</span> <span class="nx">BaseError</span>
+    <span class="nx">error</span><span class="p">.</span><span class="nx">template</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="nx">error</span> <span class="k">instanceof</span> <span class="nb">Error</span>
+    <span class="nx">BaseError</span><span class="p">.</span><span class="nx">template</span><span class="p">.</span><span class="nx">replace</span> <span class="s2">&quot;:message&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">.</span><span class="nx">message</span>
+  <span class="k">else</span>
+    <span class="nx">BaseError</span><span class="p">.</span><span class="nx">template</span><span class="p">.</span><span class="nx">replace</span> <span class="s2">&quot;:message&quot;</span><span class="p">,</span> <span class="nx">error</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span>
+  
+  <span class="nv">output = </span><span class="nx">output</span><span class="p">.</span><span class="nx">replace</span> <span class="s2">&quot;:#{key}&quot;</span><span class="p">,</span> <span class="nx">value</span> <span class="k">for</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span> <span class="k">of</span> <span class="nx">error</span>
+  <span class="nx">output</span>
+  
+<span class="nv">exports.stack = </span><span class="nf">(error) -&gt;</span>
+  <span class="nv">formatStack = </span><span class="nx">error</span><span class="p">.</span><span class="nx">stack</span>
+  <span class="nv">formatStack = </span><span class="k">if</span> <span class="nx">formatStack</span><span class="o">?</span>
+    <span class="nv">formatStack = </span><span class="nx">formatStack</span><span class="p">.</span><span class="nx">split</span> <span class="s1">&#39;\n&#39;</span>
+    <span class="nx">formatStack</span><span class="p">.</span><span class="nx">shift</span><span class="p">()</span>
+    <span class="s1">&#39;\n&#39;</span> <span class="o">+</span> <span class="nx">formatStack</span><span class="p">.</span><span class="nx">join</span> <span class="s1">&#39;\n&#39;</span>
+  <span class="k">else</span>
+    <span class="s1">&#39;&#39;</span>
+  <span class="s2">&quot;#{@message error}#{formatStack}&quot;</span>
+  
+<span class="nv">exports.instantiate = </span><span class="nf">(key, args...) -&gt;</span>
+  
+  <span class="nv">Types = </span><span class="nx">exports</span><span class="p">.</span><span class="nx">errorTypes</span><span class="p">()</span>
+  <span class="nv">Type = </span><span class="k">if</span> <span class="nx">Types</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span><span class="o">?</span> <span class="k">then</span> <span class="nx">Types</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="k">else</span> <span class="nx">BaseError</span>
+  
+  <span class="nv">IType = </span><span class="nx">do</span> <span class="nf">(Type) -&gt;</span>
+    
+    <span class="nv">F = </span><span class="nf">(args) -&gt;</span> <span class="nx">Type</span><span class="p">.</span><span class="nx">apply</span> <span class="k">this</span><span class="p">,</span> <span class="nx">args</span>
+    <span class="nv">F.prototype = </span><span class="nx">Type</span><span class="p">.</span><span class="nx">prototype</span>
+    
+    <span class="nf">(args) -&gt;</span> <span class="k">new</span> <span class="nx">F</span> <span class="nx">args</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Throw so we have a meaningful stack.</p></div></div><div class="code"><div class="wrapper">  <span class="k">try</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">()</span>
+  <span class="k">catch</span> <span class="nx">error</span>
+    <span class="nv">stack = </span><span class="nx">error</span><span class="p">.</span><span class="nx">stack</span>
+  
+  <span class="nv">error = </span><span class="nx">IType</span> <span class="nx">args</span>
+  <span class="nv">error.stack = </span><span class="nx">stack</span>
+  <span class="nx">error</span>
+  
+<span class="nv">exports.caught = </span><span class="nf">(error) -&gt;</span>
+  <span class="k">return</span> <span class="nx">error</span> <span class="nx">unless</span> <span class="nx">error</span> <span class="k">instanceof</span> <span class="nx">BaseError</span>
+  
+  <span class="nx">error</span><span class="p">.</span><span class="nx">caught</span> <span class="nx">exports</span><span class="p">.</span><span class="nx">message</span> <span class="nx">error</span>
+  
+  <span class="nx">error</span></div></div></div></div></body></html>

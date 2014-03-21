@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="en"><head><title>server/packages/core/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="server/packages/core/index"><meta name="groc-project-path" content="server/packages/core/index.coffee"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path">server/packages/core/index.coffee</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nv">nconf = </span><span class="nx">require</span> <span class="s1">&#39;nconf&#39;</span>
+
+<span class="nv">pkgman = </span><span class="nx">require</span> <span class="s1">&#39;pkgman&#39;</span>
+
+<span class="nx">exports</span><span class="p">.</span><span class="nv">$auditKeys = </span><span class="nf">(req) -&gt;</span>
+  
+  <span class="nv">ip: </span><span class="nx">req</span><span class="p">.</span><span class="nx">normalizedIp</span>
+
+<span class="nv">resolvedAddress = </span><span class="nf">(trustedProxies, address, forwardedFor) -&gt;</span>
+  <span class="k">return</span> <span class="nx">address</span> <span class="nx">unless</span> <span class="nx">forwardedFor</span><span class="o">?</span>
+  <span class="k">return</span> <span class="nx">address</span> <span class="k">if</span> <span class="nx">trustedProxies</span><span class="p">.</span><span class="nx">length</span> <span class="o">is</span> <span class="mi">0</span>
+  
+  <span class="nv">split = </span><span class="nx">forwardedFor</span><span class="p">.</span><span class="nx">split</span> <span class="sr">/\s*, */</span>
+  <span class="k">return</span> <span class="nx">split</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="o">-</span><span class="mi">1</span> <span class="o">isnt</span> <span class="nx">trustedProxies</span><span class="p">.</span><span class="nx">indexOf</span> <span class="nx">address</span>
+  
+  <span class="nx">address</span>
+    
+<span class="nx">exports</span><span class="p">.</span><span class="nv">$httpMiddleware = </span><span class="nf">(http) -&gt;</span>
+  
+  <span class="nv">label: </span><span class="s1">&#39;Normalize request variables&#39;</span>
+  <span class="nv">middleware: </span><span class="p">[</span>
+  
+    <span class="nf">(req, res, next) -&gt;</span>
+      
+      <span class="nv">req.normalizedIp = </span><span class="nx">resolvedAddress</span><span class="p">(</span>
+        <span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:core:trustedProxies&#39;</span>
+        <span class="nx">req</span><span class="p">.</span><span class="nx">connection</span><span class="p">.</span><span class="nx">remoteAddress</span>
+        <span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">[</span><span class="s1">&#39;x-forwarded-for&#39;</span><span class="p">]</span>
+      <span class="p">)</span>
+        
+      <span class="nx">next</span><span class="p">()</span>
+    
+  <span class="p">]</span>
+
+<span class="nx">exports</span><span class="p">.</span><span class="nv">$replContext = </span><span class="nf">(context) -&gt;</span>
+
+  <span class="nv">context.clearCaches = </span><span class="o">-&gt;</span>
+    
+    <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s1">&#39;clearCaches&#39;</span>
+
+<span class="nx">exports</span><span class="p">.</span><span class="nv">$settings = </span><span class="o">-&gt;</span>
+
+  <span class="nv">trustedProxies: </span><span class="p">[]</span>
+    
+<span class="nx">exports</span><span class="p">.</span><span class="nv">$socketAuthorizationMiddleware = </span><span class="o">-&gt;</span>
+  
+  <span class="nv">label: </span><span class="s1">&#39;Normalize request variables&#39;</span>
+  <span class="nv">middleware: </span><span class="p">[</span>
+  
+    <span class="nf">(req, res, next) -&gt;</span>
+      
+      <span class="nv">req.normalizedIp = </span><span class="nx">resolvedAddress</span><span class="p">(</span>
+        <span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:core:trustedProxies&#39;</span>
+        <span class="nx">req</span><span class="p">.</span><span class="nx">address</span><span class="p">.</span><span class="nx">address</span>
+        <span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">[</span><span class="s1">&#39;x-forwarded-for&#39;</span><span class="p">]</span>
+      <span class="p">)</span>
+        
+      <span class="nx">next</span><span class="p">()</span>
+      
+  <span class="p">]</span></div></div></div></div></body></html>

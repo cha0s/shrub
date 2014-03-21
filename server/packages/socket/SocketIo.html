@@ -1,0 +1,93 @@
+<!DOCTYPE html><html lang="en"><head><title>server/packages/socket/SocketIo</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="server/packages/socket/SocketIo"><meta name="groc-project-path" content="server/packages/socket/SocketIo.coffee"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path">server/packages/socket/SocketIo.coffee</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nv">crypto = </span><span class="nx">require</span> <span class="s1">&#39;server/crypto&#39;</span>
+<span class="nv">Promise = </span><span class="nx">require</span> <span class="s1">&#39;bluebird&#39;</span>
+
+<span class="nv">errors = </span><span class="nx">require</span> <span class="s1">&#39;errors&#39;</span>
+<span class="nv">logging = </span><span class="nx">require</span> <span class="s1">&#39;logging&#39;</span>
+<span class="nv">pkgman = </span><span class="nx">require</span> <span class="s1">&#39;pkgman&#39;</span>
+
+<span class="nv">logger = </span><span class="k">new</span> <span class="nx">logging</span><span class="p">.</span><span class="nx">create</span> <span class="s1">&#39;logs/socket.io.log&#39;</span>
+  
+<span class="nv">AbstractSocketFactory = </span><span class="nx">require</span> <span class="s1">&#39;AbstractSocketFactory&#39;</span>
+
+<span class="nv">module.exports = </span><span class="k">class</span> <span class="nx">SocketIo</span> <span class="k">extends</span> <span class="nx">AbstractSocketFactory</span>
+  
+  <span class="nv">constructor: </span><span class="o">-&gt;</span>
+    <span class="k">super</span>
+  
+  <span class="nv">socketsInChannel: </span><span class="nf">(channel) -&gt;</span> <span class="nx">@io</span><span class="p">.</span><span class="nx">sockets</span><span class="p">.</span><span class="nx">clients</span> <span class="nx">channel</span>
+    
+  <span class="nv">listen: </span><span class="nf">(http) -&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Set up the socket.io server.</p></div></div><div class="code"><div class="wrapper">    <span class="vi">@io = </span><span class="p">(</span><span class="nx">require</span> <span class="s1">&#39;socket.io&#39;</span><span class="p">).</span><span class="nx">listen</span><span class="p">(</span>
+      <span class="nx">http</span><span class="p">.</span><span class="nx">server</span><span class="p">()</span>
+      
+      <span class="s1">&#39;log level&#39;</span><span class="o">:</span> <span class="s1">&#39;debug&#39;</span>
+      <span class="nv">logger: </span><span class="nx">logger</span>
+      <span class="nv">store: </span><span class="nx">@store</span><span class="p">()</span>
+      <span class="nv">transports: </span><span class="p">[</span>
+        <span class="s1">&#39;websocket&#39;</span>
+        <span class="s1">&#39;flashsocket&#39;</span>
+        <span class="s1">&#39;htmlfile&#39;</span>
+        <span class="s1">&#39;xhr-polling&#39;</span>
+        <span class="s1">&#39;jsonp-polling&#39;</span>
+      <span class="p">]</span>
+    <span class="p">)</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Suppress most logs in production</p></div></div><div class="code"><div class="wrapper">    <span class="nx">@io</span><span class="p">.</span><span class="nx">configure</span> <span class="s1">&#39;production&#39;</span><span class="p">,</span> <span class="o">=&gt;</span> <span class="nx">@io</span><span class="p">.</span><span class="nx">set</span> <span class="s1">&#39;log level&#39;</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span>
+    
+    <span class="nv">requestObjects = </span><span class="p">{}</span>
+    
+    <span class="nx">@io</span><span class="p">.</span><span class="nx">set</span> <span class="s1">&#39;authorization&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">handshake</span><span class="p">,</span> <span class="nx">fn</span><span class="p">)</span> <span class="o">=&gt;</span>
+      
+      <span class="nv">req = </span><span class="p">{}</span>
+      <span class="nx">req</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span> <span class="k">for</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span> <span class="k">of</span> <span class="nx">handshake</span>
+
+      <span class="nv">req.http = </span><span class="nx">http</span>
+      
+      <span class="nx">@_authorizationMiddleware</span><span class="p">.</span><span class="nx">dispatch</span> <span class="nx">req</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nf">(error) -&gt;</span>
+        
+        <span class="k">if</span> <span class="nx">error</span> <span class="k">instanceof</span> <span class="nx">AbstractSocketFactory</span><span class="p">.</span><span class="nx">AuthorizationFailure</span>
+          <span class="k">return</span> <span class="nx">fn</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">false</span>
+          
+        <span class="k">return</span> <span class="nx">fn</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
+        
+        <span class="nx">crypto</span><span class="p">.</span><span class="nx">randomBytes</span><span class="p">(</span><span class="mi">24</span><span class="p">).</span><span class="k">then</span> <span class="nf">(key) -&gt;</span>
+          
+          <span class="nv">handshake.requestKey = </span><span class="nx">key</span><span class="p">.</span><span class="nx">toString</span> <span class="s1">&#39;hex&#39;</span>
+          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Remove the handshake values</p></div></div><div class="code"><div class="wrapper">          <span class="k">delete</span> <span class="nx">req</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="k">for</span> <span class="nx">key</span> <span class="k">of</span> <span class="nx">handshake</span>
+          
+          <span class="nx">requestObjects</span><span class="p">[</span><span class="nx">handshake</span><span class="p">.</span><span class="nx">requestKey</span><span class="p">]</span> <span class="o">=</span> <span class="nx">req</span>
+          
+          <span class="nx">fn</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">true</span>
+        
+    <span class="nx">@io</span><span class="p">.</span><span class="nx">sockets</span><span class="p">.</span><span class="kc">on</span> <span class="s1">&#39;connection&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">socket</span><span class="p">)</span> <span class="o">=&gt;</span>
+      
+      <span class="k">for</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span> <span class="k">of</span>  <span class="nx">requestObjects</span><span class="p">[</span><span class="nx">socket</span><span class="p">.</span><span class="nx">handshake</span><span class="p">.</span><span class="nx">requestKey</span><span class="p">]</span>
+        <span class="nx">socket</span><span class="p">.</span><span class="nx">handshake</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span>
+      
+      <span class="nx">requestObjects</span><span class="p">[</span><span class="nx">socket</span><span class="p">.</span><span class="nx">handshake</span><span class="p">.</span><span class="nx">requestKey</span><span class="p">]</span> <span class="o">=</span> <span class="kc">null</span>
+      <span class="nv">req = </span><span class="nx">socket</span><span class="p">.</span><span class="nx">handshake</span>
+      
+      <span class="nx">socket</span><span class="p">.</span><span class="nx">join</span> <span class="s1">&#39;$global&#39;</span>
+      
+      <span class="nv">req.http = </span><span class="nx">http</span>
+      <span class="nv">req.socket = </span><span class="nx">socket</span>
+      
+      <span class="nx">@_requestMiddleware</span><span class="p">.</span><span class="nx">dispatch</span> <span class="nx">req</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nf">(error) -&gt;</span>
+        <span class="k">return</span> <span class="nx">logger</span><span class="p">.</span><span class="nx">error</span> <span class="nx">errors</span><span class="p">.</span><span class="nx">stack</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
+        
+        <span class="nx">socket</span><span class="p">.</span><span class="nx">emit</span> <span class="s1">&#39;initialized&#39;</span>
+      
+  <span class="nv">store: </span><span class="o">-&gt;</span>
+
+    <span class="k">switch</span> <span class="nx">@_config</span><span class="p">.</span><span class="nx">store</span>
+      
+      <span class="k">when</span> <span class="s1">&#39;redis&#39;</span>
+        
+        <span class="nv">redis = </span><span class="nx">require</span> <span class="s1">&#39;connect-redis/node_modules/redis&#39;</span>
+        <span class="nv">RedisStore = </span><span class="nx">require</span> <span class="s1">&#39;socket.io/lib/stores/redis&#39;</span>
+        
+        <span class="k">new</span> <span class="nx">RedisStore</span><span class="p">(</span>
+          <span class="nv">redis: </span><span class="nx">redis</span>
+          <span class="nv">redisPub: </span><span class="nx">redis</span><span class="p">.</span><span class="nx">createClient</span><span class="p">()</span>
+          <span class="nv">redisSub: </span><span class="nx">redis</span><span class="p">.</span><span class="nx">createClient</span><span class="p">()</span>
+          <span class="nv">redisClient: </span><span class="nx">redis</span><span class="p">.</span><span class="nx">createClient</span><span class="p">()</span>
+        <span class="p">)</span></div></div></div></div></body></html>

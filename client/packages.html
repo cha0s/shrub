@@ -1,0 +1,77 @@
+<!DOCTYPE html><html lang="en"><head><title>client/packages</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="client/packages"><meta name="groc-project-path" content="client/packages.coffee"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path">client/packages.coffee</div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;shrub.packages&#39;</span><span class="p">,</span> <span class="p">[</span>
+  <span class="s1">&#39;shrub.require&#39;</span>
+  <span class="s1">&#39;shrub.pkgman&#39;</span>
+<span class="p">])</span>
+
+  <span class="p">.</span><span class="nx">config</span><span class="p">([</span>
+    <span class="s1">&#39;$compileProvider&#39;</span><span class="p">,</span> <span class="s1">&#39;$controllerProvider&#39;</span><span class="p">,</span> <span class="s1">&#39;$filterProvider&#39;</span><span class="p">,</span> <span class="s1">&#39;$provide&#39;</span><span class="p">,</span> <span class="s1">&#39;configProvider&#39;</span><span class="p">,</span> <span class="s1">&#39;pkgmanProvider&#39;</span><span class="p">,</span> <span class="s1">&#39;requireProvider&#39;</span>
+    <span class="nf">($compileProvider, $controllerProvider, $filterProvider, $provide, configProvider, pkgmanProvider, requireProvider) -&gt;</span>
+      
+      <span class="nv">require = </span><span class="nx">requireProvider</span><span class="p">.</span><span class="nx">require</span>
+      
+      <span class="nv">i8n = </span><span class="nx">require</span> <span class="s1">&#39;inflection&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Use normalized names for directives and filters:
+'core/foo/bar' -> 'coreFooBar'</p></div></div><div class="code"><div class="wrapper">      <span class="nv">normalize = </span><span class="nf">(path) -&gt;</span>
+        <span class="nv">parts = </span><span class="k">for</span> <span class="nx">part</span><span class="p">,</span> <span class="nx">i</span> <span class="k">in</span> <span class="nx">path</span><span class="p">.</span><span class="nx">split</span> <span class="s1">&#39;/&#39;</span>
+          <span class="nx">i8n</span><span class="p">.</span><span class="nx">camelize</span><span class="p">(</span>
+            <span class="nx">part</span><span class="p">.</span><span class="nx">replace</span> <span class="sr">/[^\w]/g</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span>
+            <span class="mi">0</span> <span class="o">is</span> <span class="nx">i</span>
+          <span class="p">)</span>
+          
+        <span class="nx">i8n</span><span class="p">.</span><span class="nx">camelize</span> <span class="p">(</span><span class="nx">i8n</span><span class="p">.</span><span class="nx">underscore</span> <span class="nx">parts</span><span class="p">.</span><span class="nx">join</span> <span class="s1">&#39;&#39;</span><span class="p">),</span> <span class="kc">true</span>
+
+      <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span> <span class="k">of</span> <span class="nx">pkgmanProvider</span><span class="p">.</span><span class="nx">invokeWithMocks</span> <span class="s1">&#39;controller&#39;</span>
+        <span class="nx">$controllerProvider</span><span class="p">.</span><span class="nx">register</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span>
+
+      <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span> <span class="k">of</span> <span class="nx">pkgmanProvider</span><span class="p">.</span><span class="nx">invokeWithMocks</span> <span class="s1">&#39;directive&#39;</span>
+        <span class="nx">$compileProvider</span><span class="p">.</span><span class="nx">directive</span> <span class="p">(</span><span class="nx">normalize</span> <span class="nx">path</span><span class="p">),</span> <span class="nx">injected</span>
+
+      <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span> <span class="k">of</span> <span class="nx">pkgmanProvider</span><span class="p">.</span><span class="nx">invokeWithMocks</span> <span class="s1">&#39;filter&#39;</span>
+        <span class="nx">$filterProvider</span><span class="p">.</span><span class="nx">register</span> <span class="p">(</span><span class="nx">normalize</span> <span class="nx">path</span><span class="p">),</span> <span class="nx">injected</span>
+
+      <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span> <span class="k">of</span> <span class="nx">pkgmanProvider</span><span class="p">.</span><span class="nx">invoke</span> <span class="s1">&#39;service&#39;</span>
+        <span class="nx">$provide</span><span class="p">.</span><span class="nx">service</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span>
+      
+      <span class="k">if</span> <span class="nx">configProvider</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;testMode&#39;</span>
+        <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span> <span class="k">of</span> <span class="nx">pkgmanProvider</span><span class="p">.</span><span class="nx">invoke</span> <span class="s1">&#39;serviceMock&#39;</span>
+          <span class="nx">$provide</span><span class="p">.</span><span class="nx">decorator</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span>
+      
+  <span class="p">])</span>
+
+<span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;shrub.pkgman&#39;</span><span class="p">,</span> <span class="p">[</span>
+  <span class="s1">&#39;shrub.require&#39;</span>
+<span class="p">])</span>
+
+  <span class="p">.</span><span class="nx">provider</span> <span class="s1">&#39;pkgman&#39;</span><span class="p">,</span> <span class="p">[</span>
+    <span class="s1">&#39;$provide&#39;</span><span class="p">,</span> <span class="s1">&#39;configProvider&#39;</span><span class="p">,</span> <span class="s1">&#39;requireProvider&#39;</span>
+    <span class="nf">($provide, configProvider, requireProvider) -&gt;</span>
+      
+      <span class="nv">require = </span><span class="nx">requireProvider</span><span class="p">.</span><span class="nx">require</span>
+      
+      <span class="nv">_ = </span><span class="nx">require</span> <span class="s1">&#39;underscore&#39;</span>
+      <span class="nv">pkgman = </span><span class="nx">require</span> <span class="s1">&#39;pkgman&#39;</span>
+      
+      <span class="nx">pkgman</span><span class="p">.</span><span class="nx">registerPackages</span> <span class="nx">configProvider</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageList&#39;</span>
+      
+      <span class="nv">service = </span><span class="p">{}</span>
+      
+      <span class="nv">service.invoke = </span><span class="nf">(hook, args...) -&gt;</span>
+        
+        <span class="nx">args</span><span class="p">.</span><span class="nx">unshift</span> <span class="nx">hook</span>
+        <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="nx">args</span><span class="p">...</span>
+        
+      <span class="nv">service.invokeWithMocks = </span><span class="nf">(hook, args...) -&gt;</span>
+        
+        <span class="nx">args</span><span class="p">.</span><span class="nx">unshift</span> <span class="nx">hook</span>
+        <span class="nv">results = </span><span class="nx">@invoke</span> <span class="nx">args</span><span class="p">...</span>
+        
+        <span class="k">if</span> <span class="nx">configProvider</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;testMode&#39;</span>
+          
+          <span class="nx">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;#{hook}Mock&quot;</span>
+          <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span> <span class="nx">results</span><span class="p">,</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="nx">args</span><span class="p">...</span>
+          
+        <span class="nx">results</span>
+        
+      <span class="nx">service</span><span class="p">.</span><span class="nv">$get = </span><span class="o">-&gt;</span> <span class="nx">service</span>
+      
+      <span class="nx">service</span>
+  <span class="p">]</span></div></div></div></div></body></html>
