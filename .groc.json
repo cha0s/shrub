@@ -7,7 +7,6 @@
 		"server/**/test-e2e.coffee",
 		"server/**/test-unit.coffee"
 	],
-	"github": true,
 	"glob": [
 		"README.md",
 		"server.coffee",
