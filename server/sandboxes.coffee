@@ -58,7 +58,7 @@ module.exports = new class SandboxFactory
 	# * (string) `id` - An ID for looking up this sandbox later.
 	lookup: (id) ->
 		
-		# Mark the sandbox as no longer new (yuck).
+		# } Mark the sandbox as no longer new (yuck).
 		sandbox.isNew = (-> false) if (sandbox = @_sandboxes[id]?.touch())?
 		sandbox
 	
@@ -108,7 +108,7 @@ class Sandbox extends EventEmitter
 	constructor: (html, cookie, @_id = null) ->
 		EventEmitter.call this
 		
-		# Ensure HTML was passed in. 
+		# } Ensure HTML was passed in. 
 		unless html?
 			throw new ReferenceError(
 				"Sandbox expects to be constructed with HTML."
@@ -118,9 +118,9 @@ class Sandbox extends EventEmitter
 		@_cleanupFunctions = []
 		@_window = null
 
-		# Reset the TTL if this sandbox has an ID, otherwise it's a nop.
-		# 
-		# `TODO`: Move to SandboxFactory.
+		# } Reset the TTL if this sandbox has an ID, otherwise it's a nop.
+		# } 
+		# } `TODO`: Move to SandboxFactory.
 		toucher = if @_id?
 			_.debounce (=> @close()), nconf.get 'sandboxes:ttl'
 		else
@@ -130,17 +130,17 @@ class Sandbox extends EventEmitter
 			toucher()
 			this
 		
-		# Hax: Fix document.domain since jsdom has a stub here.
+		# } Hax: Fix document.domain since jsdom has a stub here.
 		level2Html = require 'jsdom/lib/jsdom/level2/html'
 		Object.defineProperties(
 			level2Html.dom.level2.html.HTMLDocument.prototype
 			domain: get: -> 'localhost'
 		)
 		
-		# Set up a DOM, forwarding our cookie and navigating to the entry
-		# point.
-		# 
-		# `TODO`: "Entry point" is an `angular` package-specific idiom.
+		# } Set up a DOM, forwarding our cookie and navigating to the entry
+		# } point.
+		# } 
+		# } `TODO`: "Entry point" is an `angular` package-specific idiom.
 		document = jsdom(
 			html, jsdom.defaultLevel
 			
@@ -152,21 +152,21 @@ class Sandbox extends EventEmitter
 		)
 		@_window = window = document.createWindow()
 		
-		# Capture "client" console logs.
+		# } Capture "client" console logs.
 		for level in ['info', 'log', 'debug', 'warn', 'error']
 			do (level) -> window.console[level] = (args...) ->
 				
-				# Make errors as detailed as possible.
+				# } Make errors as detailed as possible.
 				for arg, i in args
 					if arg instanceof Error
 						args[i] = errors.stack arg
 					else
 						arg
 				
-				# Let our logger log them.
+				# } Let our logger log them.
 				logger[level] args... 
 				
-		# Hack in WebSocket.
+		# } Hack in WebSocket.
 		window.WebSocket = WebSocket
 		
 		# When the window is loaded, we'll capture any errors, and emit the
@@ -188,29 +188,29 @@ class Sandbox extends EventEmitter
 	# *Close a DOM.*
 	close: ->
 		
-		# If the window is already gone, nope out.
+		# } If the window is already gone, nope out.
 		return Promise.resolve() unless @_window?
 		
-		# Remove from persistent list.
-		# 
-		# `TODO`: Move to SandboxFactory.
+		# } Remove from persistent list.
+		# } 
+		# } `TODO`: Move to SandboxFactory.
 		module.exports.remove @_id
 		
-		# Wait if the sandbox is busy.
-		# 
-		# `TODO`: There should be a worker queue, not a single 'busy' promise.
+		# } Wait if the sandbox is busy.
+		# } 
+		# } `TODO`: There should be a worker queue, not a single 'busy' promise.
 		Promise.cast(
 			@_busy
 		
-		# Run all the registered cleanup functions.
+		# } Run all the registered cleanup functions.
 		).bind(this).then(->
 		
 			Promise.all (fn() for fn in @_cleanupFunctions)
 			
-		# Suppress cleanup errors.
+		# } Suppress cleanup errors.
 		).catch(->
 			
-		# Actually close the window and null it out.
+		# } Actually close the window and null it out.
 		).finally ->
 			
 			@_window.close()
