@@ -47,7 +47,9 @@ should probably be moved there and this module should solely provide Sandbox.</p
 <ul>
 <li>(string) <code>id</code> - An ID for looking up this sandbox later.</li>
 </ul></div></div><div class="code"><div class="wrapper">  <span class="nv">lookup: </span><span class="nf">(id) -&gt;</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Mark the sandbox as no longer new (yuck).</p></div></div><div class="code"><div class="wrapper">    <span class="nv">sandbox.isNew = </span><span class="p">(</span><span class="o">-&gt;</span> <span class="kc">false</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="nv">sandbox = </span><span class="nx">@_sandboxes</span><span class="p">[</span><span class="nx">id</span><span class="p">]</span><span class="o">?</span><span class="p">.</span><span class="nx">touch</span><span class="p">())</span><span class="o">?</span>
+    
+    <span class="c1"># Mark the sandbox as no longer new (yuck).</span>
+    <span class="nv">sandbox.isNew = </span><span class="p">(</span><span class="o">-&gt;</span> <span class="kc">false</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="nv">sandbox = </span><span class="nx">@_sandboxes</span><span class="p">[</span><span class="nx">id</span><span class="p">]</span><span class="o">?</span><span class="p">.</span><span class="nx">touch</span><span class="p">())</span><span class="o">?</span>
     <span class="nx">sandbox</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="lookuporcreate">.lookupOrCreate</h3>
 
@@ -93,16 +95,21 @@ some methods to inspect the state of the document.</p></div></div><div class="co
 
 <p><code>TODO</code>: Move ID to SandboxFactory.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">constructor: </span><span class="nf">(html, cookie, @_id = null) -&gt;</span>
     <span class="nx">EventEmitter</span><span class="p">.</span><span class="nx">call</span> <span class="k">this</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Ensure HTML was passed in. </p></div></div><div class="code"><div class="wrapper">    <span class="nx">unless</span> <span class="nx">html</span><span class="o">?</span>
+    
+    <span class="c1"># Ensure HTML was passed in. </span>
+    <span class="nx">unless</span> <span class="nx">html</span><span class="o">?</span>
       <span class="k">throw</span> <span class="k">new</span> <span class="nx">ReferenceError</span><span class="p">(</span>
         <span class="s2">&quot;Sandbox expects to be constructed with HTML.&quot;</span>
       <span class="p">)</span>
       
     <span class="vi">@_busy = </span><span class="kc">null</span>
     <span class="vi">@_cleanupFunctions = </span><span class="p">[]</span>
-    <span class="vi">@_window = </span><span class="kc">null</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Reset the TTL if this sandbox has an ID, otherwise it's a nop.</p>
+    <span class="vi">@_window = </span><span class="kc">null</span>
 
-<p><code>TODO</code>: Move to SandboxFactory.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">toucher = </span><span class="k">if</span> <span class="nx">@_id</span><span class="o">?</span>
+    <span class="c1"># Reset the TTL if this sandbox has an ID, otherwise it&#39;s a nop.</span>
+    <span class="c1"># </span>
+    <span class="c1"># `TODO`: Move to SandboxFactory.</span>
+    <span class="nv">toucher = </span><span class="k">if</span> <span class="nx">@_id</span><span class="o">?</span>
       <span class="nx">_</span><span class="p">.</span><span class="nx">debounce</span> <span class="p">(</span><span class="o">=&gt;</span> <span class="nx">@close</span><span class="p">()),</span> <span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;sandboxes:ttl&#39;</span>
     <span class="k">else</span>
       <span class="o">-&gt;</span>
@@ -110,15 +117,19 @@ some methods to inspect the state of the document.</p></div></div><div class="co
     <span class="vi">@touch = </span><span class="o">-&gt;</span>
       <span class="nx">toucher</span><span class="p">()</span>
       <span class="k">this</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Hax: Fix document.domain since jsdom has a stub here.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">level2Html = </span><span class="nx">require</span> <span class="s1">&#39;jsdom/lib/jsdom/level2/html&#39;</span>
+    
+    <span class="c1"># Hax: Fix document.domain since jsdom has a stub here.</span>
+    <span class="nv">level2Html = </span><span class="nx">require</span> <span class="s1">&#39;jsdom/lib/jsdom/level2/html&#39;</span>
     <span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperties</span><span class="p">(</span>
       <span class="nx">level2Html</span><span class="p">.</span><span class="nx">dom</span><span class="p">.</span><span class="nx">level2</span><span class="p">.</span><span class="nx">html</span><span class="p">.</span><span class="nx">HTMLDocument</span><span class="p">.</span><span class="nx">prototype</span>
       <span class="nv">domain: get: </span><span class="o">-&gt;</span> <span class="s1">&#39;localhost&#39;</span>
     <span class="p">)</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Set up a DOM, forwarding our cookie and navigating to the entry
-point.</p>
-
-<p><code>TODO</code>: "Entry point" is an <code>angular</code> package-specific idiom.</p></div></div><div class="code"><div class="wrapper">    <span class="nb">document</span> <span class="o">=</span> <span class="nx">jsdom</span><span class="p">(</span>
+    
+    <span class="c1"># Set up a DOM, forwarding our cookie and navigating to the entry</span>
+    <span class="c1"># point.</span>
+    <span class="c1"># </span>
+    <span class="c1"># `TODO`: &quot;Entry point&quot; is an `angular` package-specific idiom.</span>
+    <span class="nb">document</span> <span class="o">=</span> <span class="nx">jsdom</span><span class="p">(</span>
       <span class="nx">html</span><span class="p">,</span> <span class="nx">jsdom</span><span class="p">.</span><span class="nx">defaultLevel</span>
       
       <span class="nv">cookie: </span><span class="nx">cookie</span>
@@ -128,15 +139,23 @@ point.</p>
 <span class="s2">      }/shrub-entry-point&quot;</span>
     <span class="p">)</span>
     <span class="vi">@_window = </span><span class="nb">window</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createWindow</span><span class="p">()</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Capture "client" console logs.</p></div></div><div class="code"><div class="wrapper">    <span class="k">for</span> <span class="nx">level</span> <span class="k">in</span> <span class="p">[</span><span class="s1">&#39;info&#39;</span><span class="p">,</span> <span class="s1">&#39;log&#39;</span><span class="p">,</span> <span class="s1">&#39;debug&#39;</span><span class="p">,</span> <span class="s1">&#39;warn&#39;</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">]</span>
+    
+    <span class="c1"># Capture &quot;client&quot; console logs.</span>
+    <span class="k">for</span> <span class="nx">level</span> <span class="k">in</span> <span class="p">[</span><span class="s1">&#39;info&#39;</span><span class="p">,</span> <span class="s1">&#39;log&#39;</span><span class="p">,</span> <span class="s1">&#39;debug&#39;</span><span class="p">,</span> <span class="s1">&#39;warn&#39;</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">]</span>
       <span class="nx">do</span> <span class="nf">(level) -&gt;</span> <span class="nb">window</span><span class="p">.</span><span class="nx">console</span><span class="p">[</span><span class="nx">level</span><span class="p">]</span> <span class="o">=</span> <span class="nf">(args...) -&gt;</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Make errors as detailed as possible.</p></div></div><div class="code"><div class="wrapper">        <span class="k">for</span> <span class="nx">arg</span><span class="p">,</span> <span class="nx">i</span> <span class="k">in</span> <span class="nx">args</span>
+        
+        <span class="c1"># Make errors as detailed as possible.</span>
+        <span class="k">for</span> <span class="nx">arg</span><span class="p">,</span> <span class="nx">i</span> <span class="k">in</span> <span class="nx">args</span>
           <span class="k">if</span> <span class="nx">arg</span> <span class="k">instanceof</span> <span class="nb">Error</span>
             <span class="nx">args</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">errors</span><span class="p">.</span><span class="nx">stack</span> <span class="nx">arg</span>
           <span class="k">else</span>
             <span class="nx">arg</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Let our logger log them.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">logger</span><span class="p">[</span><span class="nx">level</span><span class="p">]</span> <span class="nx">args</span><span class="p">...</span> 
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Hack in WebSocket.</p></div></div><div class="code"><div class="wrapper">    <span class="nb">window</span><span class="p">.</span><span class="nv">WebSocket = </span><span class="nx">WebSocket</span>
+        
+        <span class="c1"># Let our logger log them.</span>
+        <span class="nx">logger</span><span class="p">[</span><span class="nx">level</span><span class="p">]</span> <span class="nx">args</span><span class="p">...</span> 
+        
+    <span class="c1"># Hack in WebSocket.</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nv">WebSocket = </span><span class="nx">WebSocket</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>When the window is loaded, we'll capture any errors, and emit the
 <code>ready</code> event (with any error we caught). </p></div></div><div class="code"><div class="wrapper">    <span class="nb">window</span><span class="p">.</span><span class="nv">onload = </span><span class="o">=&gt;</span>
 
@@ -152,19 +171,31 @@ point.</p>
       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="close">.close</h3>
 
 <p><em>Close a DOM.</em></p></div></div><div class="code"><div class="wrapper">  <span class="nv">close: </span><span class="o">-&gt;</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>If the window is already gone, nope out.</p></div></div><div class="code"><div class="wrapper">    <span class="k">return</span> <span class="nx">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">()</span> <span class="nx">unless</span> <span class="nx">@_window</span><span class="o">?</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Remove from persistent list.</p>
-
-<p><code>TODO</code>: Move to SandboxFactory.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">.</span><span class="nx">remove</span> <span class="nx">@_id</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Wait if the sandbox is busy.</p>
-
-<p><code>TODO</code>: There should be a worker queue, not a single 'busy' promise.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">Promise</span><span class="p">.</span><span class="nx">cast</span><span class="p">(</span>
+    
+    <span class="c1"># If the window is already gone, nope out.</span>
+    <span class="k">return</span> <span class="nx">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">()</span> <span class="nx">unless</span> <span class="nx">@_window</span><span class="o">?</span>
+    
+    <span class="c1"># Remove from persistent list.</span>
+    <span class="c1"># </span>
+    <span class="c1"># `TODO`: Move to SandboxFactory.</span>
+    <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">.</span><span class="nx">remove</span> <span class="nx">@_id</span>
+    
+    <span class="c1"># Wait if the sandbox is busy.</span>
+    <span class="c1"># </span>
+    <span class="c1"># `TODO`: There should be a worker queue, not a single &#39;busy&#39; promise.</span>
+    <span class="nx">Promise</span><span class="p">.</span><span class="nx">cast</span><span class="p">(</span>
       <span class="nx">@_busy</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Run all the registered cleanup functions.</p></div></div><div class="code"><div class="wrapper">    <span class="p">).</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="o">-&gt;</span>
+    
+    <span class="c1"># Run all the registered cleanup functions.</span>
+    <span class="p">).</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="o">-&gt;</span>
     
       <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span> <span class="p">(</span><span class="nx">fn</span><span class="p">()</span> <span class="k">for</span> <span class="nx">fn</span> <span class="k">in</span> <span class="nx">@_cleanupFunctions</span><span class="p">)</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Suppress cleanup errors.</p></div></div><div class="code"><div class="wrapper">    <span class="p">).</span><span class="k">catch</span><span class="p">(</span><span class="o">-&gt;</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Actually close the window and null it out.</p></div></div><div class="code"><div class="wrapper">    <span class="p">).</span><span class="k">finally</span> <span class="o">-&gt;</span>
+      
+    <span class="c1"># Suppress cleanup errors.</span>
+    <span class="p">).</span><span class="k">catch</span><span class="p">(</span><span class="o">-&gt;</span>
+      
+    <span class="c1"># Actually close the window and null it out.</span>
+    <span class="p">).</span><span class="k">finally</span> <span class="o">-&gt;</span>
       
       <span class="nx">@_window</span><span class="p">.</span><span class="nx">close</span><span class="p">()</span>
       <span class="vi">@_window = </span><span class="kc">null</span>
