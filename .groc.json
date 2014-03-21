@@ -1,13 +1,4 @@
 {
-	"glob": [
-		"README.md",
-		"server.coffee",
-		"client/**/*.coffee",
-		"server/**/*.coffee"
-	],
-	"out": "./gh-pages",
-	"strip": [
-	],
 	"except": [
 		"client/**/*.spec.coffee",
 		"client/**/test-e2e.coffee",
@@ -15,5 +6,16 @@
 		"server/**/*.spec.coffee",
 		"server/**/test-e2e.coffee",
 		"server/**/test-unit.coffee"
+	],
+	"github": true,
+	"glob": [
+		"README.md",
+		"server.coffee",
+		"client/**/*.coffee",
+		"server/**/*.coffee"
+	],
+	"out": "./gh-pages",
+	"repository-url": "https://github.com/cha0s/shrub",
+	"strip": [
 	]
 }
