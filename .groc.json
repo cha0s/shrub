@@ -13,6 +13,7 @@
 		"client/**/*.coffee",
 		"server/**/*.coffee"
 	],
+	"index-page-title": "Shrub documentation",
 	"out": "./gh-pages",
 	"repository-url": "https://github.com/cha0s/shrub",
 	"strip": [
