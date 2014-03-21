@@ -10,7 +10,7 @@ logging = require 'logging'
 {EventEmitter} = require 'events'
 {jsdom} = require 'jsdom'
 
-logger = logging.create 'logs/client.log'
+logger = logging.create 'logs/sandbox.log'
 
 module.exports = new class SandboxFactory
 	
