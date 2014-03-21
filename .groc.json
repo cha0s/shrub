@@ -1,0 +1,19 @@
+{
+	"glob": [
+		"README.md",
+		"server.coffee",
+		"client/**/*.coffee",
+		"server/**/*.coffee"
+	],
+	"out": "./gh-pages",
+	"strip": [
+	],
+	"except": [
+		"client/**/*.spec.coffee",
+		"client/**/test-e2e.coffee",
+		"client/**/test-unit.coffee",
+		"server/**/*.spec.coffee",
+		"server/**/test-e2e.coffee",
+		"server/**/test-unit.coffee"
+	]
+}
