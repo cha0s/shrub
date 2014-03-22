@@ -60,6 +60,13 @@ http://localhost:4201 (if you didn't run the tests above, you must first run
 
 * Enjoy!
 
+### Building the docs
+
+If you'd like to build the project documentation, first create a directory
+`$ mkdir gh-pages`, then run `$ npm run-script doc`. The documentation will
+be contained in that directory. Why, you ask? It makes the maintainers' life
+easier! :smiley:
+
 ### TODO
 
 There is always more to do! 
