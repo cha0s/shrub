@@ -17,5 +17,6 @@
 	"out": "./gh-pages",
 	"repository-url": "https://github.com/cha0s/shrub",
 	"strip": [
-	]
+	],
+	"style": "shrub-groc-style"
 }

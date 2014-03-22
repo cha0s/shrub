@@ -28,6 +28,7 @@
     "passport-github": "~0.1.5",
     "passport-twitter": "~0.1.5",
     "redback": "~0.4.0",
+    "shrub-groc-style": "^1.0.0",
     "socket.io": "~0.9.16",
     "winston": "~0.7.2"
   },
