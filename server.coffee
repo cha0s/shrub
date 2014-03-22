@@ -25,10 +25,9 @@ Promise.all(initializePromises).done(
 	(error) -> defaultLogger.error errors.stack error
 )
 
+# Do our best to guarantee that hook `processExit` will always be invoked.
 # } Signal listeners and process cleanup.
-
 process.on 'SIGINT', -> process.exit()
 process.on 'SIGTERM', -> process.exit()
 
-# Do our best to guarantee that hook `processExit` will always be invoked.
 process.on 'exit', -> pkgman.invoke 'processExit'
