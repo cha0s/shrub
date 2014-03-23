@@ -252,6 +252,9 @@ exports.augmentSandbox = (sandbox) ->
 
 exports.$settings = ->
 
+	# Always disable sandbox rendering in end-to-end testing mode.
+	nconf.set 'packageSettings:angular:render', false if nconf.get 'E2E'
+		
 	navigation:
 	
 		middleware: [

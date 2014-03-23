@@ -12,8 +12,7 @@ pkgman = require 'pkgman'
 {defaultLogger} = require 'logging'
 
 # } Set up config.
-config = require 'config'
-config.loadSettings()
+(config = require 'config').loadSettingsFile()
 
 # } Initialize.
 initializers = pkgman.invoke 'initialize', config.loadPackageSettings()
