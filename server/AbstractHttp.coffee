@@ -1,13 +1,5 @@
 
 # # AbstractHttp
-# 
-# This class implements an abstract interface to be implemented by an HTTP
-# server (e.g. [Express](./packages/express/index.html)).
-# 
-# `TODO`: This needs work, it probably wouldn't be able to handle another
-# server in its current state. Move API from Express to here, and use a
-# 'pure virtual' pattern, to allow any other server to extend along reasonable
-# lines.
 
 nconf = require 'nconf'
 pkgman = require 'pkgman'
@@ -17,6 +9,15 @@ Promise = require 'bluebird'
 
 middleware = require 'middleware'
 
+# ## AbstractHttp
+# 
+# An abstract interface to be implemented by an HTTP server (e.g.
+# [Express](./packages/express/index.html)).
+# 
+# `TODO`: This needs work, it probably wouldn't be able to handle another
+# server in its current state. Move API from Express to here, and use a
+# 'pure virtual' pattern, to allow any other server to extend along reasonable
+# lines.
 module.exports = class AbstractHttp
 
 	# ### *constructor*
