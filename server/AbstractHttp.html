@@ -29,7 +29,7 @@ lines.</p></div></div><div class="code"><div class="wrapper"><span class="nv">mo
 </ul></div></div><div class="code"><div class="wrapper">  <span class="nv">initialize: </span><span class="nf">(fn) -&gt;</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>httpInitializer</code>.
 Allows behavior to occur before the server is bound on the listening
-port..</p></div></div><div class="code"><div class="wrapper">    <span class="c1"># TODO: This invocation should probably be middlware.fromHook()&#39;d</span>
+port.</p></div></div><div class="code"><div class="wrapper">    <span class="c1"># TODO: This invocation should probably be middlware.fromHook()&#39;d</span>
     <span class="nv">middleware = </span><span class="k">new</span> <span class="nx">middleware</span><span class="p">.</span><span class="nx">Middleware</span><span class="p">()</span>
     <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">initializer</span> <span class="k">of</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s1">&#39;httpInitializer&#39;</span>
       <span class="nx">middleware</span><span class="p">.</span><span class="nx">use</span> <span class="nx">initializer</span>

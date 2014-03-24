@@ -17,9 +17,89 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
         "projectPath": "README.md",
         "targetPath": "index",
         "pageTitle": "Shrub documentation",
-        "title": "Shrub documentation"
+        "firstHeader": {
+          "type": "heading",
+          "data": {
+            "level": 1,
+            "title": "Shrub",
+            "slug": "shrub",
+            "isFileHeader": true
+          },
+          "depth": 1,
+          "children": [
+            {
+              "type": "heading",
+              "data": {
+                "level": 3,
+                "title": "Awesome example of a package",
+                "slug": "awesome-example-of-a-package"
+              },
+              "depth": 3
+            }, {
+              "type": "heading",
+              "data": {
+                "level": 3,
+                "title": "Get rolling",
+                "slug": "get-rolling"
+              },
+              "depth": 3
+            }, {
+              "type": "heading",
+              "data": {
+                "level": 3,
+                "title": "Building the docs",
+                "slug": "building-the-docs"
+              },
+              "depth": 3
+            }, {
+              "type": "heading",
+              "data": {
+                "level": 3,
+                "title": "TODO",
+                "slug": "todo"
+              },
+              "depth": 3
+            }
+          ]
+        },
+        "title": "Shrub"
       },
-      "depth": 1
+      "depth": 1,
+      "outline": [
+        {
+          "type": "heading",
+          "data": {
+            "level": 3,
+            "title": "Awesome example of a package",
+            "slug": "awesome-example-of-a-package"
+          },
+          "depth": 3
+        }, {
+          "type": "heading",
+          "data": {
+            "level": 3,
+            "title": "Get rolling",
+            "slug": "get-rolling"
+          },
+          "depth": 3
+        }, {
+          "type": "heading",
+          "data": {
+            "level": 3,
+            "title": "Building the docs",
+            "slug": "building-the-docs"
+          },
+          "depth": 3
+        }, {
+          "type": "heading",
+          "data": {
+            "level": 3,
+            "title": "TODO",
+            "slug": "todo"
+          },
+          "depth": 3
+        }
+      ]
     }, {
       "type": "folder",
       "data": {
@@ -720,6 +800,32 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
           "depth": 2
         }
       ]
+    }, {
+      "type": "file",
+      "data": {
+        "language": {
+          "nameMatchers": [".md", ".markdown", ".mkd", ".mkdn", ".mdown"],
+          "commentsOnly": true,
+          "name": "Markdown"
+        },
+        "sourcePath": "/home/cha0s6983/dev/code/js/shrub/documentation/hooks.md",
+        "projectPath": "documentation/hooks.md",
+        "targetPath": "hooks",
+        "pageTitle": "hooks",
+        "firstHeader": {
+          "type": "heading",
+          "data": {
+            "level": 1,
+            "title": "Hooks",
+            "slug": "hooks",
+            "isFileHeader": true
+          },
+          "depth": 1
+        },
+        "title": "Hooks"
+      },
+      "depth": 1,
+      "outline": []
     }, {
       "type": "file",
       "data": {
