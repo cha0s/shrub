@@ -9,6 +9,7 @@
 	],
 	"glob": [
 		"README.md",
+		"documentation/**/*.md",
 		"server.coffee",
 		"client/**/*.coffee",
 		"server/**/*.coffee"
@@ -17,6 +18,7 @@
 	"out": "./gh-pages",
 	"repository-url": "https://github.com/cha0s/shrub",
 	"strip": [
+		"documentation"
 	],
 	"style": "shrub-groc-style"
 }

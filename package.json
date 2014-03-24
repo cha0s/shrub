@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "author": "cha0s <cha0s@cha0s.io>",
   "scripts": {
-    "doc": "node_modules/groc/bin/groc",
+    "doc": "mkdir -p gh-pages && coffee generate-docs.coffee && node_modules/groc/bin/groc",
     "start": "NODE_PATH=.:custom/server:server:custom/client:client/modules coffee server.coffee"
   },
   "repository": {
