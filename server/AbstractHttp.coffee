@@ -37,7 +37,8 @@ module.exports = class AbstractHttp
 		
 		# Invoke hook `httpInitializer`.
 		# Allows behavior to occur before the server is bound on the listening
-		# port..
+		# port.
+		# 
 		# } TODO: This invocation should probably be middlware.fromHook()'d
 		middleware = new middleware.Middleware()
 		for _, initializer of pkgman.invoke 'httpInitializer'
