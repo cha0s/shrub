@@ -29,14 +29,17 @@ authorization just failed.</p></div></div><div class="code"><div class="wrapper"
 
 <p><em>Gather and initialize socket middleware.</em></p></div></div><div class="code"><div class="wrapper">  <span class="nv">loadMiddleware: </span><span class="o">-&gt;</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>socketAuthorizationMiddleware</code>.
-Allows packages to determine whether a socket connection is
-authorized.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s1">&#39;BEGIN loading socket authorization middleware&#39;</span>
+Invoked when a socket connection begins. Packages may throw an
+instance of <code>AbstractSocketFactory.AuthorizationFailure</code> to reject
+the socket connection as unauthorized.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s1">&#39;BEGIN loading socket authorization middleware&#39;</span>
     <span class="vi">@_authorizationMiddleware = </span><span class="nx">middleware</span><span class="p">.</span><span class="nx">fromHook</span><span class="p">(</span>
       <span class="s1">&#39;socketAuthorizationMiddleware&#39;</span>
       <span class="nx">@_config</span><span class="p">.</span><span class="nx">authorizationMiddleware</span>
     <span class="p">)</span>
     <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s1">&#39;END loading socket authorization middleware&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>socketRequestMiddleware</code>.
-Allows packages to run behavior for every socket connection.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s1">&#39;BEGIN loading socket middleware&#39;</span>
+Invoked for every socket connection.</p>
+
+<p><code>TODO</code>: This should be renamed to <code>socketConnectionMiddleware</code>.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s1">&#39;BEGIN loading socket middleware&#39;</span>
     <span class="vi">@_requestMiddleware = </span><span class="nx">middleware</span><span class="p">.</span><span class="nx">fromHook</span><span class="p">(</span>
       <span class="s1">&#39;socketRequestMiddleware&#39;</span>
       <span class="nx">@_config</span><span class="p">.</span><span class="nx">requestMiddleware</span>

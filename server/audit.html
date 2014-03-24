@@ -8,7 +8,8 @@
   
   <span class="nv">auditKeys = </span><span class="p">{}</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>auditKeys</code>.
-Get the unique keys for this request, e.g. IP address, session ID, etc.</p></div></div><div class="code"><div class="wrapper">  <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">keys</span> <span class="k">of</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s1">&#39;auditKeys&#39;</span><span class="p">,</span> <span class="nx">req</span>
+Allows a package to specify unique keys for this request, e.g. IP
+address, session ID, etc.</p></div></div><div class="code"><div class="wrapper">  <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">keys</span> <span class="k">of</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s1">&#39;auditKeys&#39;</span><span class="p">,</span> <span class="nx">req</span>
     <span class="k">continue</span> <span class="nx">unless</span> <span class="nx">keys</span><span class="o">?</span>
     <span class="k">for</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span> <span class="k">of</span> <span class="nx">keys</span>
       <span class="k">continue</span> <span class="nx">unless</span> <span class="nx">value</span><span class="o">?</span>

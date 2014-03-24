@@ -17,17 +17,17 @@ implemented in packages by prefixing a <code>$</code> to the hook name.</p>
 <ul>
 <li><p><a href="./server/AbstractHttp.html">server/AbstractHttp.coffee</a>:</p>
 
-<ul><li><p><code>httpInitializer</code> - Allows behavior to occur before the server is bound on the listening port. </p></li>
-<li><p><code>httpListening</code> - Allows behavior to occur once the server is listening, but before initialization finishes. </p></li>
-<li><p><code>httpMiddleware</code> - Allows behavior to occur every time an HTTP connection is established. </p></li></ul></li>
+<ul><li><p><code>httpInitializer</code> - Invoked before the server is bound on the listening port. </p></li>
+<li><p><code>httpListening</code> - Invoked once the server is listening, but before initialization finishes. </p></li>
+<li><p><code>httpMiddleware</code> - Invoked every time an HTTP connection is established. </p></li></ul></li>
 <li><p><a href="./server/AbstractSocketFactory.html">server/AbstractSocketFactory.coffee</a>:</p>
 
-<ul><li><p><code>socketAuthorizationMiddleware</code> - Allows packages to determine whether a socket connection is authorized. </p></li>
-<li><p><code>socketRequestMiddleware</code> - Allows packages to run behavior for every socket connection. </p></li></ul></li>
+<ul><li><p><code>socketAuthorizationMiddleware</code> - Invoked when a socket connection begins. Packages may throw an instance of <code>AbstractSocketFactory.AuthorizationFailure</code> to reject the socket connection as unauthorized. </p></li>
+<li><p><code>socketRequestMiddleware</code> - Invoked for every socket connection. </p></li></ul></li>
 <li><p><a href="./server/audit.html">server/audit.coffee</a>:</p>
 
-<ul><li><code>auditKeys</code> - Get the unique keys for this request, e.g. IP address, session ID, etc. </li></ul></li>
+<ul><li><code>auditKeys</code> - Allows a package to specify unique keys for this request, e.g. IP address, session ID, etc. </li></ul></li>
 <li><p><a href="./server/config.html">server/config.coffee</a>:</p>
 
-<ul><li><code>settings</code> - Allow packages to define their own default settings. </li></ul></li>
+<ul><li><code>settings</code> - Invoked when the server application is loading configuration. Allows packages to define their own default settings. </li></ul></li>
 </ul></div></div></div></div></body></html>
