@@ -37,7 +37,7 @@ exports.$service = -> [
 				
 				if error?
 					
-					error = errors.unserialize errors.caught error
+					error = errors.caught errors.unserialize error
 					
 					notifications.add(
 						class: 'alert-danger'
