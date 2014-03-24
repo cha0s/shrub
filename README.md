@@ -56,7 +56,7 @@ it up in a pre-commit hook.
 
 * Spin up the server in debug mode: `$ npm start` and navigate to
 http://localhost:4201 (if you didn't run the tests above, you must first run
-`$ grunt` before navigating to the site in your browser.
+`$ grunt` before navigating to the site in your browser).
 
 * Enjoy!
 
@@ -73,4 +73,4 @@ There is always more to do!
 documentation at [http://cha0s.github.io/shrub](http://cha0s.github.io/shrub)
 
 * Better abstraction of assets, in other words, a theme/skin system
-* The form API is vulnerable to CSRF at the moment, and maybe other attacks.
+* CSRF mitigation
