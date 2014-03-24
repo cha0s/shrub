@@ -1,8 +1,16 @@
-<!DOCTYPE html><html lang="en"><head><title>server/crypto</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="server/crypto"><meta name="groc-project-path" content="server/crypto.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/server/crypto.coffee">server/crypto.coffee</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nv">crypto = </span><span class="nx">require</span> <span class="s1">&#39;crypto&#39;</span>
-<span class="nv">nconf = </span><span class="nx">require</span> <span class="s1">&#39;nconf&#39;</span>
-<span class="nv">Promise = </span><span class="nx">require</span> <span class="s1">&#39;bluebird&#39;</span>
+<!DOCTYPE html><html lang="en"><head><title>server/crypto</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="server/crypto"><meta name="groc-project-path" content="server/crypto.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/server/crypto.coffee">server/crypto.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="crypto">Crypto</h1>
 
-<span class="nv">exports.encrypt = </span><span class="nf">(message, password) -&gt;</span>
+<p>Cryptographic helper functions.</p></div></div><div class="code"><div class="wrapper"><span class="nv">crypto = </span><span class="nx">require</span> <span class="s1">&#39;crypto&#39;</span>
+<span class="nv">nconf = </span><span class="nx">require</span> <span class="s1">&#39;nconf&#39;</span>
+<span class="nv">Promise = </span><span class="nx">require</span> <span class="s1">&#39;bluebird&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="encrypt">encrypt</h3>
+
+<p><em>AES encrypt a message with a password.</em></p>
+
+<ul>
+<li><p>(string) <code>message</code> - The message to encrypt.</p></li>
+<li><p>(string) <code>password</code>? - The password to use to encrypt the message. Defaults
+to the site's global crypto key.</p></li>
+</ul></div></div><div class="code"><div class="wrapper"><span class="nv">exports.encrypt = </span><span class="nf">(message, password) -&gt;</span>
   
   <span class="k">new</span> <span class="nx">Promise</span> <span class="nf">(resolve, reject) -&gt;</span>
   
@@ -12,8 +20,15 @@
     <span class="nx">cipherText</span><span class="p">.</span><span class="nx">push</span> <span class="nx">cipher</span><span class="p">.</span><span class="nx">update</span> <span class="nx">message</span><span class="p">,</span> <span class="s1">&#39;binary&#39;</span><span class="p">,</span> <span class="s1">&#39;hex&#39;</span>
     <span class="nx">cipherText</span><span class="p">.</span><span class="nx">push</span> <span class="nx">cipher</span><span class="p">.</span><span class="nx">final</span> <span class="s1">&#39;hex&#39;</span>
     <span class="nx">resolve</span> <span class="nx">cipherText</span><span class="p">.</span><span class="nx">join</span> <span class="s1">&#39;&#39;</span>
-  
-<span class="nv">exports.decrypt = </span><span class="nf">(message, password) -&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="decrypt">decrypt</h3>
+
+<p><em>AES decrypt a message with a password.</em></p>
+
+<ul>
+<li><p>(string) <code>message</code> - The message to decrypt.</p></li>
+<li><p>(string) <code>password</code>? - The password to use to decrypt the message. Defaults
+to the site's global crypto key.</p></li>
+</ul></div></div><div class="code"><div class="wrapper"><span class="nv">exports.decrypt = </span><span class="nf">(message, password) -&gt;</span>
   
   <span class="k">new</span> <span class="nx">Promise</span> <span class="nf">(resolve, reject) -&gt;</span>
   
@@ -24,36 +39,53 @@
     <span class="nx">decipherText</span><span class="p">.</span><span class="nx">push</span> <span class="nx">decipher</span><span class="p">.</span><span class="nx">update</span> <span class="nx">message</span><span class="p">,</span> <span class="s1">&#39;hex&#39;</span><span class="p">,</span> <span class="s1">&#39;binary&#39;</span>
     <span class="nx">decipherText</span><span class="p">.</span><span class="nx">push</span> <span class="nx">decipher</span><span class="p">.</span><span class="nx">final</span> <span class="s1">&#39;binary&#39;</span>
     <span class="nv">decipherText = </span><span class="nx">decipherText</span><span class="p">.</span><span class="nx">join</span> <span class="s1">&#39;&#39;</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Slice off the padding.</p></div></div><div class="code"><div class="wrapper">    <span class="k">if</span> <span class="mi">16</span> <span class="o">&gt;=</span> <span class="nv">code = </span><span class="nx">decipherText</span><span class="p">.</span><span class="nx">charCodeAt</span> <span class="nx">decipherText</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span>
+    
+    <span class="c1"># Slice off the padding.</span>
+    <span class="k">if</span> <span class="mi">16</span> <span class="o">&gt;=</span> <span class="nv">code = </span><span class="nx">decipherText</span><span class="p">.</span><span class="nx">charCodeAt</span> <span class="nx">decipherText</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span>
       <span class="nv">decipherText = </span><span class="nx">decipherText</span><span class="p">.</span><span class="nx">slice</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="nx">code</span>
       
-    <span class="nx">resolve</span> <span class="nx">decipherText</span>
+    <span class="nx">resolve</span> <span class="nx">decipherText</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="hasher">hasher</h3>
 
-<span class="nv">crypto = </span><span class="nx">require</span> <span class="s1">&#39;crypto&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>CREDIT: https://gist.github.com/boronine/3548196
-cha0s promisify'd it.</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.hasher = </span><span class="nf">(opts = {}) -&gt;</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Generate random 8-character base64 password if none provided</p></div></div><div class="code"><div class="wrapper">  <span class="nx">unless</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">plaintext</span><span class="o">?</span>
+<p><em>Cryptographic hash functionality.</em></p>
+
+<p>CREDIT: <a href="https://gist.github.com/boronine/3548196">https://gist.github.com/boronine/3548196</a>
+cha0s promisify'd it.</p>
+
+<ul>
+<li><p>(object) <code>options</code> - The options to use.</p>
+
+<p>The options object may include the following values:</p>
+
+<ul><li><p><code>plaintext</code>: The plaintext password to hash and return as <code>key</code>. If none
+is provided, an 8-character random plaintext password will be generated.</p></li>
+<li><p><code>salt</code>: The salt to hash the password with. If none is provided, a
+512-bit salt will be generated.</p></li>
+<li><p><code>iterations</code>: The number of iterations to use for the PBKDF. Defaults to
+10000.
+<strong>NOTE</strong>: This <strong><em>must</em></strong> be the same number when generating and
+verifying hashes, otherwise verification will fail.</p></li></ul></li>
+</ul></div></div><div class="code"><div class="wrapper"><span class="nv">exports.hasher = </span><span class="nf">(options = {}) -&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Generate random 8-character base64 password if none provided</p></div></div><div class="code"><div class="wrapper">  <span class="nx">unless</span> <span class="nx">options</span><span class="p">.</span><span class="nx">plaintext</span><span class="o">?</span>
     
     <span class="k">return</span> <span class="nx">exports</span><span class="p">.</span><span class="nx">randomBytes</span><span class="p">(</span><span class="mi">6</span><span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="nf">(buffer) -&gt;</span>
-      <span class="nv">opts.plaintext = </span><span class="nx">buffer</span><span class="p">.</span><span class="nx">toString</span> <span class="s1">&#39;base64&#39;</span>
-      <span class="nx">exports</span><span class="p">.</span><span class="nx">hasher</span> <span class="nx">opts</span>
+      <span class="nv">options.plaintext = </span><span class="nx">buffer</span><span class="p">.</span><span class="nx">toString</span> <span class="s1">&#39;base64&#39;</span>
+      <span class="nx">exports</span><span class="p">.</span><span class="nx">hasher</span> <span class="nx">options</span>
     <span class="p">)</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Generate random 512-bit salt if no salt provided</p></div></div><div class="code"><div class="wrapper">  <span class="nx">unless</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">salt</span><span class="o">?</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Generate random 512-bit salt if no salt provided</p></div></div><div class="code"><div class="wrapper">  <span class="nx">unless</span> <span class="nx">options</span><span class="p">.</span><span class="nx">salt</span><span class="o">?</span>
   
     <span class="k">return</span> <span class="nx">exports</span><span class="p">.</span><span class="nx">randomBytes</span><span class="p">(</span><span class="mi">64</span><span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="nf">(buffer) -&gt;</span>
-      <span class="nv">opts.salt = </span><span class="nx">buffer</span>
-      <span class="nx">exports</span><span class="p">.</span><span class="nx">hasher</span> <span class="nx">opts</span>
+      <span class="nv">options.salt = </span><span class="nx">buffer</span>
+      <span class="nx">exports</span><span class="p">.</span><span class="nx">hasher</span> <span class="nx">options</span>
     <span class="p">)</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Node.js PBKDF2 forces sha1</p></div></div><div class="code"><div class="wrapper">  <span class="nv">opts.hash = </span><span class="s1">&#39;sha1&#39;</span>
-  <span class="nv">opts.iterations = </span><span class="nx">opts</span><span class="p">.</span><span class="nx">iterations</span> <span class="o">?</span> <span class="mi">10000</span>
+  
+  <span class="c1"># Node.js PBKDF2 forces sha1</span>
+  <span class="nv">options.hash = </span><span class="s1">&#39;sha1&#39;</span>
+  <span class="nv">options.iterations = </span><span class="nx">options</span><span class="p">.</span><span class="nx">iterations</span> <span class="o">?</span> <span class="mi">10000</span>
   
   <span class="nx">exports</span><span class="p">.</span><span class="nx">pbkdf2</span><span class="p">(</span>
-    <span class="nx">opts</span><span class="p">.</span><span class="nx">plaintext</span><span class="p">,</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">salt</span><span class="p">,</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">iterations</span><span class="p">,</span> <span class="mi">64</span>
+    <span class="nx">options</span><span class="p">.</span><span class="nx">plaintext</span><span class="p">,</span> <span class="nx">options</span><span class="p">.</span><span class="nx">salt</span><span class="p">,</span> <span class="nx">options</span><span class="p">.</span><span class="nx">iterations</span><span class="p">,</span> <span class="mi">64</span>
   
-  <span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="nf">(key) -&gt;</span>
-    <span class="nv">opts.key = </span><span class="k">new</span> <span class="nx">Buffer</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
-    <span class="nx">opts</span>
-  <span class="p">)</span>
-
-<span class="nv">exports.pbkdf2 = </span><span class="nx">Promise</span><span class="p">.</span><span class="nx">promisify</span> <span class="nx">crypto</span><span class="p">.</span><span class="nx">pbkdf2</span><span class="p">,</span> <span class="nx">crypto</span>
-
+  <span class="p">).</span><span class="k">then</span> <span class="nf">(key) -&gt;</span>
+    <span class="nv">options.key = </span><span class="k">new</span> <span class="nx">Buffer</span> <span class="nx">key</span>
+    <span class="nx">options</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Promisify some useful node.js crypto functions.</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.pbkdf2 = </span><span class="nx">Promise</span><span class="p">.</span><span class="nx">promisify</span> <span class="nx">crypto</span><span class="p">.</span><span class="nx">pbkdf2</span><span class="p">,</span> <span class="nx">crypto</span>
 <span class="nv">exports.randomBytes = </span><span class="nx">Promise</span><span class="p">.</span><span class="nx">promisify</span> <span class="nx">crypto</span><span class="p">.</span><span class="nx">randomBytes</span><span class="p">,</span> <span class="nx">crypto</span></div></div></div></div></body></html>

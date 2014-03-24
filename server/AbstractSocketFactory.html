@@ -1,4 +1,10 @@
-<!DOCTYPE html><html lang="en"><head><title>server/AbstractSocketFactory</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="server/AbstractSocketFactory"><meta name="groc-project-path" content="server/AbstractSocketFactory.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/server/AbstractSocketFactory.coffee">server/AbstractSocketFactory.coffee</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="p">{</span><span class="nx">EventEmitter</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;events&#39;</span>
+<!DOCTYPE html><html lang="en"><head><title>server/AbstractSocketFactory</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="server/AbstractSocketFactory"><meta name="groc-project-path" content="server/AbstractSocketFactory.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/server/AbstractSocketFactory.coffee">server/AbstractSocketFactory.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="abstractsocketfactory">AbstractSocketFactory</h1>
+
+<p>This class implements an abstract interface to be implemented by a socket
+server (e.g. <a href="./packages/socket/SocketIo.html">Socket.io</a>).</p>
+
+<p><code>TODO</code>: This needs work, it probably wouldn't be able to handle another
+server in its current state. Move API from SocketIo to here.</p></div></div><div class="code"><div class="wrapper"><span class="p">{</span><span class="nx">EventEmitter</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;events&#39;</span>
 <span class="nv">pkgman = </span><span class="nx">require</span> <span class="s1">&#39;pkgman&#39;</span>
 
 <span class="nv">middleware = </span><span class="nx">require</span> <span class="s1">&#39;middleware&#39;</span>
@@ -6,36 +12,40 @@
 <span class="p">{</span><span class="nx">defaultLogger</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;logging&#39;</span>
 
 <span class="nv">module.exports = </span><span class="k">class</span> <span class="nx">AbstractSocketFactory</span> <span class="k">extends</span> <span class="nx">EventEmitter</span>
-  
-  <span class="nv">constructor: </span><span class="nf">(@_config) -&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="constructor"><em>constructor</em></h3>
+
+<p><em>Create the server.</em></p>
+
+<ul>
+<li>(object) <code>config</code> - The server configuration.
+<code>TODO</code>: Should probably just use <code>nconf</code>, weird interface.</li>
+</ul></div></div><div class="code"><div class="wrapper">  <span class="nv">constructor: </span><span class="nf">(@_config) -&gt;</span>
     <span class="k">super</span>
-  
-  <span class="k">class</span> <span class="nx">@AuthorizationFailure</span> <span class="k">extends</span> <span class="nb">Error</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p><code>AbstractSocketFactory.AuthorizationFailure</code> may be thrown from within
+socket authorization middleware, to denote that no real error occurred,
+authorization just failed.</p></div></div><div class="code"><div class="wrapper">  <span class="k">class</span> <span class="nx">@AuthorizationFailure</span> <span class="k">extends</span> <span class="nb">Error</span>
     <span class="nv">constructor: </span><span class="nf">(@message) -&gt;</span>
-  
-  <span class="nv">loadMiddleware: </span><span class="o">-&gt;</span>
-    
-    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s1">&#39;BEGIN loading socket authorization middleware:&#39;</span>
-    
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="loadmiddleware">.loadMiddleware</h3>
+
+<p><em>Gather and initialize socket middleware.</em></p></div></div><div class="code"><div class="wrapper">  <span class="nv">loadMiddleware: </span><span class="o">-&gt;</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>socketAuthorizationMiddleware</code>.
+Allows packages to determine whether a socket connection is
+authorized.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s1">&#39;BEGIN loading socket authorization middleware&#39;</span>
     <span class="vi">@_authorizationMiddleware = </span><span class="nx">middleware</span><span class="p">.</span><span class="nx">fromHook</span><span class="p">(</span>
       <span class="s1">&#39;socketAuthorizationMiddleware&#39;</span>
       <span class="nx">@_config</span><span class="p">.</span><span class="nx">authorizationMiddleware</span>
     <span class="p">)</span>
-    
-    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s1">&#39;END loading socket authorization middleware.&#39;</span>
-
-    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s1">&#39;BEGIN loading socket middleware:&#39;</span>
-    
+    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s1">&#39;END loading socket authorization middleware&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>socketRequestMiddleware</code>.
+Allows packages to run behavior for every socket connection.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s1">&#39;BEGIN loading socket middleware&#39;</span>
     <span class="vi">@_requestMiddleware = </span><span class="nx">middleware</span><span class="p">.</span><span class="nx">fromHook</span><span class="p">(</span>
       <span class="s1">&#39;socketRequestMiddleware&#39;</span>
       <span class="nx">@_config</span><span class="p">.</span><span class="nx">requestMiddleware</span>
     <span class="p">)</span>
-    
-    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s1">&#39;END loading socket middleware.&#39;</span>
+    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s1">&#39;END loading socket middleware&#39;</span>
 
-  <span class="k">for</span> <span class="nx">method</span> <span class="k">in</span> <span class="p">[</span>
+  <span class="c1"># Ensure any subclass implements these methods.</span>
+  <span class="err">@</span><span class="o">::</span><span class="p">[</span><span class="nx">method</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="o">-&gt;</span> <span class="k">throw</span> <span class="k">new</span> <span class="nx">ReferenceError</span><span class="p">(</span>
+    <span class="s2">&quot;AbstractSocket::#{method} is a pure virtual method!&quot;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>"Pure virtual" methods.</p></div></div><div class="code"><div class="wrapper">  <span class="p">))</span> <span class="k">for</span> <span class="nx">method</span> <span class="k">in</span> <span class="p">[</span>
+    
     <span class="s1">&#39;listen&#39;</span><span class="p">,</span> <span class="s1">&#39;socketsInChannel&#39;</span>
-  <span class="p">]</span>
-    <span class="err">@</span><span class="o">::</span><span class="p">[</span><span class="nx">method</span><span class="p">]</span> <span class="o">=</span> <span class="o">-&gt;</span> <span class="k">throw</span> <span class="k">new</span> <span class="nx">ReferenceError</span><span class="p">(</span>
-      <span class="s2">&quot;AbstractSocket#{method} is a pure virtual method!&quot;</span>
-    <span class="p">)</span></div></div></div></div></body></html>
+  <span class="p">]</span></div></div></div></div></body></html>

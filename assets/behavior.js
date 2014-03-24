@@ -16,74 +16,10 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
         "sourcePath": "/home/cha0s6983/dev/code/js/shrub/README.md",
         "projectPath": "README.md",
         "targetPath": "index",
-        "pageTitle": "index",
-        "firstHeader": {
-          "type": "heading",
-          "data": {
-            "level": 1,
-            "title": "Shrub",
-            "slug": "shrub",
-            "isFileHeader": true
-          },
-          "depth": 1,
-          "children": [
-            {
-              "type": "heading",
-              "data": {
-                "level": 3,
-                "title": "Awesome example of a package",
-                "slug": "awesome-example-of-a-package"
-              },
-              "depth": 3
-            }, {
-              "type": "heading",
-              "data": {
-                "level": 3,
-                "title": "Get rolling",
-                "slug": "get-rolling"
-              },
-              "depth": 3
-            }, {
-              "type": "heading",
-              "data": {
-                "level": 3,
-                "title": "TODO",
-                "slug": "todo"
-              },
-              "depth": 3
-            }
-          ]
-        },
-        "title": "Shrub"
+        "pageTitle": "Shrub documentation",
+        "title": "Shrub documentation"
       },
-      "depth": 1,
-      "outline": [
-        {
-          "type": "heading",
-          "data": {
-            "level": 3,
-            "title": "Awesome example of a package",
-            "slug": "awesome-example-of-a-package"
-          },
-          "depth": 3
-        }, {
-          "type": "heading",
-          "data": {
-            "level": 3,
-            "title": "Get rolling",
-            "slug": "get-rolling"
-          },
-          "depth": 3
-        }, {
-          "type": "heading",
-          "data": {
-            "level": 3,
-            "title": "TODO",
-            "slug": "todo"
-          },
-          "depth": 3
-        }
-      ]
+      "depth": 1
     }, {
       "type": "folder",
       "data": {
@@ -111,8 +47,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "client/app",
             "title": "app"
           },
-          "depth": 2,
-          "outline": []
+          "depth": 2
         }, {
           "type": "folder",
           "data": {
@@ -140,8 +75,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 "pageTitle": "client/modules/errors",
                 "title": "errors"
               },
-              "depth": 3,
-              "outline": []
+              "depth": 3
             }, {
               "type": "file",
               "data": {
@@ -161,8 +95,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 "pageTitle": "client/modules/jugglingdb-rest",
                 "title": "jugglingdb-rest"
               },
-              "depth": 3,
-              "outline": []
+              "depth": 3
             }, {
               "type": "file",
               "data": {
@@ -182,8 +115,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 "pageTitle": "client/modules/middleware",
                 "title": "middleware"
               },
-              "depth": 3,
-              "outline": []
+              "depth": 3
             }, {
               "type": "folder",
               "data": {
@@ -219,8 +151,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/core/index",
                         "title": "index"
                       },
-                      "depth": 5,
-                      "outline": []
+                      "depth": 5
                     }
                   ]
                 }, {
@@ -250,8 +181,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/example/about",
                         "title": "about"
                       },
-                      "depth": 5,
-                      "outline": []
+                      "depth": 5
                     }, {
                       "type": "file",
                       "data": {
@@ -271,8 +201,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/example/home",
                         "title": "home"
                       },
-                      "depth": 5,
-                      "outline": []
+                      "depth": 5
                     }, {
                       "type": "file",
                       "data": {
@@ -292,8 +221,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/example/index",
                         "title": "index"
                       },
-                      "depth": 5,
-                      "outline": []
+                      "depth": 5
                     }
                   ]
                 }, {
@@ -323,8 +251,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/form/index",
                         "title": "index"
                       },
-                      "depth": 5,
-                      "outline": []
+                      "depth": 5
                     }
                   ]
                 }, {
@@ -354,8 +281,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/limiter/index",
                         "title": "index"
                       },
-                      "depth": 5,
-                      "outline": []
+                      "depth": 5
                     }
                   ]
                 }, {
@@ -385,8 +311,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/rpc/index",
                         "title": "index"
                       },
-                      "depth": 5,
-                      "outline": []
+                      "depth": 5
                     }
                   ]
                 }, {
@@ -416,8 +341,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/schema/index",
                         "title": "index"
                       },
-                      "depth": 5,
-                      "outline": []
+                      "depth": 5
                     }
                   ]
                 }, {
@@ -447,8 +371,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/socket/index",
                         "title": "index"
                       },
-                      "depth": 5,
-                      "outline": []
+                      "depth": 5
                     }
                   ]
                 }, {
@@ -478,8 +401,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/ui/index",
                         "title": "index"
                       },
-                      "depth": 5,
-                      "outline": []
+                      "depth": 5
                     }, {
                       "type": "file",
                       "data": {
@@ -499,8 +421,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/ui/markdown",
                         "title": "markdown"
                       },
-                      "depth": 5,
-                      "outline": []
+                      "depth": 5
                     }, {
                       "type": "file",
                       "data": {
@@ -520,8 +441,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/ui/nav",
                         "title": "nav"
                       },
-                      "depth": 5,
-                      "outline": []
+                      "depth": 5
                     }, {
                       "type": "file",
                       "data": {
@@ -541,8 +461,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/ui/notifications",
                         "title": "notifications"
                       },
-                      "depth": 5,
-                      "outline": []
+                      "depth": 5
                     }, {
                       "type": "file",
                       "data": {
@@ -562,8 +481,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/ui/title",
                         "title": "title"
                       },
-                      "depth": 5,
-                      "outline": []
+                      "depth": 5
                     }, {
                       "type": "file",
                       "data": {
@@ -583,8 +501,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/ui/window",
                         "title": "window"
                       },
-                      "depth": 5,
-                      "outline": []
+                      "depth": 5
                     }
                   ]
                 }, {
@@ -614,8 +531,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/user/forgot",
                         "title": "forgot"
                       },
-                      "depth": 5,
-                      "outline": []
+                      "depth": 5
                     }, {
                       "type": "file",
                       "data": {
@@ -635,8 +551,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/user/index",
                         "title": "index"
                       },
-                      "depth": 5,
-                      "outline": []
+                      "depth": 5
                     }, {
                       "type": "file",
                       "data": {
@@ -656,8 +571,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/user/login",
                         "title": "login"
                       },
-                      "depth": 5,
-                      "outline": []
+                      "depth": 5
                     }, {
                       "type": "file",
                       "data": {
@@ -677,8 +591,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/user/logout",
                         "title": "logout"
                       },
-                      "depth": 5,
-                      "outline": []
+                      "depth": 5
                     }, {
                       "type": "file",
                       "data": {
@@ -698,8 +611,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/user/register",
                         "title": "register"
                       },
-                      "depth": 5,
-                      "outline": []
+                      "depth": 5
                     }, {
                       "type": "file",
                       "data": {
@@ -719,8 +631,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/user/reset",
                         "title": "reset"
                       },
-                      "depth": 5,
-                      "outline": []
+                      "depth": 5
                     }
                   ]
                 }
@@ -744,8 +655,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 "pageTitle": "client/modules/pkgman",
                 "title": "pkgman"
               },
-              "depth": 3,
-              "outline": []
+              "depth": 3
             }, {
               "type": "file",
               "data": {
@@ -765,8 +675,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 "pageTitle": "client/modules/schema-client",
                 "title": "schema-client"
               },
-              "depth": 3,
-              "outline": []
+              "depth": 3
             }
           ]
         }, {
@@ -788,8 +697,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "client/packages",
             "title": "packages"
           },
-          "depth": 2,
-          "outline": []
+          "depth": 2
         }, {
           "type": "file",
           "data": {
@@ -809,8 +717,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "client/require",
             "title": "require"
           },
-          "depth": 2,
-          "outline": []
+          "depth": 2
         }
       ]
     }, {
@@ -833,7 +740,6 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
         "title": "server"
       },
       "depth": 1,
-      "outline": [],
       "children": [
         {
           "type": "file",
@@ -854,8 +760,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "server/AbstractHttp",
             "title": "AbstractHttp"
           },
-          "depth": 2,
-          "outline": []
+          "depth": 2
         }, {
           "type": "file",
           "data": {
@@ -875,8 +780,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "server/AbstractSocketFactory",
             "title": "AbstractSocketFactory"
           },
-          "depth": 2,
-          "outline": []
+          "depth": 2
         }, {
           "type": "file",
           "data": {
@@ -896,8 +800,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "server/audit",
             "title": "audit"
           },
-          "depth": 2,
-          "outline": []
+          "depth": 2
         }, {
           "type": "file",
           "data": {
@@ -917,8 +820,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "server/config",
             "title": "config"
           },
-          "depth": 2,
-          "outline": []
+          "depth": 2
         }, {
           "type": "file",
           "data": {
@@ -938,8 +840,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "server/crypto",
             "title": "crypto"
           },
-          "depth": 2,
-          "outline": []
+          "depth": 2
         }, {
           "type": "file",
           "data": {
@@ -959,8 +860,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "server/jugglingdb",
             "title": "jugglingdb"
           },
-          "depth": 2,
-          "outline": []
+          "depth": 2
         }, {
           "type": "file",
           "data": {
@@ -981,7 +881,152 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "title": "limits"
           },
           "depth": 2,
-          "outline": []
+          "outline": [
+            {
+              "type": "heading",
+              "data": {
+                "level": 1,
+                "title": "Limits",
+                "slug": "limits"
+              },
+              "depth": 1,
+              "children": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "Limiter",
+                    "slug": "limiter"
+                  },
+                  "depth": 2,
+                  "children": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".add",
+                        "slug": "add"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".addAndCheckThreshold",
+                        "slug": "addandcheckthreshold"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".count",
+                        "slug": "count"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".ttl",
+                        "slug": "ttl"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".checkThreshold",
+                        "slug": "checkthreshold"
+                      },
+                      "depth": 3,
+                      "children": [
+                        {
+                          "type": "heading",
+                          "data": {
+                            "level": 4,
+                            "title": "._largest",
+                            "slug": "-largest"
+                          },
+                          "depth": 4
+                        }
+                      ]
+                    }
+                  ]
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "ThresholdBase",
+                    "slug": "thresholdbase"
+                  },
+                  "depth": 2,
+                  "children": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".every",
+                        "slug": "every"
+                      },
+                      "depth": 3
+                    }
+                  ]
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "Threshold",
+                    "slug": "threshold"
+                  },
+                  "depth": 2,
+                  "children": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".calculateSeconds",
+                        "slug": "calculateseconds"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".count",
+                        "slug": "count"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".add",
+                        "slug": "add"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".count",
+                        "slug": "count"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".ttl",
+                        "slug": "ttl"
+                      },
+                      "depth": 3
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }, {
           "type": "file",
           "data": {
@@ -1001,8 +1046,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "server/logging",
             "title": "logging"
           },
-          "depth": 2,
-          "outline": []
+          "depth": 2
         }, {
           "type": "folder",
           "data": {
@@ -1038,8 +1082,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/angular/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": []
+                  "depth": 4
                 }
               ]
             }, {
@@ -1069,8 +1112,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/assets/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": []
+                  "depth": 4
                 }
               ]
             }, {
@@ -1100,8 +1142,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/config/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": []
+                  "depth": 4
                 }
               ]
             }, {
@@ -1131,8 +1172,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/core/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": []
+                  "depth": 4
                 }
               ]
             }, {
@@ -1162,8 +1202,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/express/errors",
                     "title": "errors"
                   },
-                  "depth": 4,
-                  "outline": []
+                  "depth": 4
                 }, {
                   "type": "file",
                   "data": {
@@ -1183,8 +1222,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/express/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": []
+                  "depth": 4
                 }, {
                   "type": "file",
                   "data": {
@@ -1204,8 +1242,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/express/logger",
                     "title": "logger"
                   },
-                  "depth": 4,
-                  "outline": []
+                  "depth": 4
                 }, {
                   "type": "file",
                   "data": {
@@ -1225,8 +1262,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/express/routes",
                     "title": "routes"
                   },
-                  "depth": 4,
-                  "outline": []
+                  "depth": 4
                 }, {
                   "type": "file",
                   "data": {
@@ -1246,8 +1282,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/express/session",
                     "title": "session"
                   },
-                  "depth": 4,
-                  "outline": []
+                  "depth": 4
                 }, {
                   "type": "file",
                   "data": {
@@ -1267,8 +1302,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/express/static",
                     "title": "static"
                   },
-                  "depth": 4,
-                  "outline": []
+                  "depth": 4
                 }
               ]
             }, {
@@ -1298,8 +1332,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/form/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": []
+                  "depth": 4
                 }
               ]
             }, {
@@ -1329,8 +1362,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/limiter/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": []
+                  "depth": 4
                 }
               ]
             }, {
@@ -1360,8 +1392,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/nodemailer/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": []
+                  "depth": 4
                 }
               ]
             }, {
@@ -1391,8 +1422,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/repl/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": []
+                  "depth": 4
                 }
               ]
             }, {
@@ -1422,8 +1452,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/rpc/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": []
+                  "depth": 4
                 }
               ]
             }, {
@@ -1453,8 +1482,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/schema/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": []
+                  "depth": 4
                 }
               ]
             }, {
@@ -1484,8 +1512,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/session/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": []
+                  "depth": 4
                 }
               ]
             }, {
@@ -1515,8 +1542,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/socket/SocketIo",
                     "title": "SocketIo"
                   },
-                  "depth": 4,
-                  "outline": []
+                  "depth": 4
                 }, {
                   "type": "file",
                   "data": {
@@ -1536,8 +1562,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/socket/factory",
                     "title": "factory"
                   },
-                  "depth": 4,
-                  "outline": []
+                  "depth": 4
                 }, {
                   "type": "file",
                   "data": {
@@ -1557,8 +1582,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/socket/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": []
+                  "depth": 4
                 }
               ]
             }, {
@@ -1588,8 +1612,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/user/forgot",
                     "title": "forgot"
                   },
-                  "depth": 4,
-                  "outline": []
+                  "depth": 4
                 }, {
                   "type": "file",
                   "data": {
@@ -1609,8 +1632,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/user/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": []
+                  "depth": 4
                 }, {
                   "type": "file",
                   "data": {
@@ -1630,8 +1652,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/user/login",
                     "title": "login"
                   },
-                  "depth": 4,
-                  "outline": []
+                  "depth": 4
                 }, {
                   "type": "file",
                   "data": {
@@ -1651,8 +1672,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/user/logout",
                     "title": "logout"
                   },
-                  "depth": 4,
-                  "outline": []
+                  "depth": 4
                 }, {
                   "type": "file",
                   "data": {
@@ -1672,8 +1692,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/user/register",
                     "title": "register"
                   },
-                  "depth": 4,
-                  "outline": []
+                  "depth": 4
                 }, {
                   "type": "file",
                   "data": {
@@ -1693,8 +1712,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/user/reset",
                     "title": "reset"
                   },
-                  "depth": 4,
-                  "outline": []
+                  "depth": 4
                 }
               ]
             }, {
@@ -1724,8 +1742,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/villiany/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": []
+                  "depth": 4
                 }
               ]
             }
@@ -1749,144 +1766,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "server/sandboxes",
             "title": "sandboxes"
           },
-          "depth": 2,
-          "outline": [
-            {
-              "type": "heading",
-              "data": {
-                "level": 1,
-                "title": "Sandboxes",
-                "slug": "sandboxes"
-              },
-              "depth": 1,
-              "children": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 2,
-                    "title": "SandboxFactory",
-                    "slug": "sandboxfactory"
-                  },
-                  "depth": 2,
-                  "children": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".create",
-                        "slug": "create"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".lookup",
-                        "slug": "lookup"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".lookupOrCreate",
-                        "slug": "lookuporcreate"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".remove",
-                        "slug": "remove"
-                      },
-                      "depth": 3
-                    }
-                  ]
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 2,
-                    "title": "Sandbox",
-                    "slug": "sandbox"
-                  },
-                  "depth": 2,
-                  "children": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".close",
-                        "slug": "close"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".emitHtml",
-                        "slug": "emithtml"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".isNew",
-                        "slug": "isnew"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".registerCleanupFunction",
-                        "slug": "registercleanupfunction"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".setBusy",
-                        "slug": "setbusy"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".url",
-                        "slug": "url"
-                      },
-                      "depth": 3
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }, {
-          "type": "file",
-          "data": {
-            "language": {
-              "nameMatchers": [".coffee", "Cakefile"],
-              "pygmentsLexer": "coffee-script",
-              "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-              "strictMultiLineEnd": false,
-              "singleLineComment": ["#"],
-              "ignorePrefix": "}",
-              "foldPrefix": "^",
-              "name": "CoffeeScript"
-            },
-            "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/schema.coffee",
-            "projectPath": "server/schema.coffee",
-            "targetPath": "server/schema",
-            "pageTitle": "server/schema",
-            "title": "schema"
-          },
-          "depth": 2,
-          "outline": []
+          "depth": 2
         }
       ]
     }
