@@ -1,11 +1,6 @@
 
 errors = require 'errors'
 
-LoginError = class LoginError extends errors.BaseError
-
-	key: 'login'
-	template: "No such username/password."
-		
 exports.e2eLogin = $routeMock: ->
 	
 	path: 'e2e/user/login/:destination'
@@ -19,6 +14,11 @@ exports.e2eLogin = $routeMock: ->
 				
 	]
 	
+LoginError = class LoginError extends errors.BaseError
+
+	key: 'login'
+	template: "No such username/password."
+		
 exports.$errorType = -> LoginError
 
 exports.$route = ->
