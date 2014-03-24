@@ -139,13 +139,13 @@ class Sandbox extends EventEmitter
 		
 		# } Set up a DOM, forwarding our cookie and navigating to the entry
 		# } point.
-		# } 
-		# } `TODO`: "Entry point" is an `angular` package-specific idiom.
 		document = jsdom(
 			html, jsdom.defaultLevel
 			
 			cookie: cookie
 			cookieDomain: 'localhost'
+			
+			# } `TODO`: "Entry point" is an `angular` package-specific idiom.
 			url: "http://localhost:#{
 				nconf.get 'packageSettings:express:port'
 			}/shrub-entry-point"
@@ -197,9 +197,10 @@ class Sandbox extends EventEmitter
 		module.exports.remove @_id
 		
 		# } Wait if the sandbox is busy.
-		# } 
-		# } `TODO`: There should be a worker queue, not a single 'busy' promise.
 		Promise.cast(
+
+			# `TODO`: There should be a worker queue, not a single 'busy'
+			# promise.
 			@_busy
 		
 		# } Run all the registered cleanup functions.

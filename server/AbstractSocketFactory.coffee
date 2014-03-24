@@ -3,9 +3,6 @@
 # 
 # This class implements an abstract interface to be implemented by a socket
 # server (e.g. [Socket.io](./packages/socket/SocketIo.html)).
-# 
-# `TODO`: This needs work, it probably wouldn't be able to handle another
-# server in its current state. Move API from SocketIo to here.
 
 {EventEmitter} = require 'events'
 pkgman = require 'pkgman'
@@ -14,6 +11,8 @@ middleware = require 'middleware'
 
 {defaultLogger} = require 'logging'
 
+# `TODO`: This needs work, it probably wouldn't be able to handle another
+# server in its current state. Move API from SocketIo to here.
 module.exports = class AbstractSocketFactory extends EventEmitter
 	
 	# ### *constructor*
@@ -49,10 +48,10 @@ module.exports = class AbstractSocketFactory extends EventEmitter
 
 		# Invoke hook `socketRequestMiddleware`.
 		# Invoked for every socket connection.
-		# 
-		# `TODO`: This should be renamed to `socketConnectionMiddleware`.
 		defaultLogger.info 'BEGIN loading socket middleware'
+
 		@_requestMiddleware = middleware.fromHook(
+			# } `TODO`: This should be renamed to `socketConnectionMiddleware`.
 			'socketRequestMiddleware'
 			@_config.requestMiddleware
 		)

@@ -19,8 +19,18 @@ for globExpression in grocConfig.except
 
 sources = {}
 for filename of files
-	sources[filename] = fs.readFileSync filename, encoding: 'utf8'
-
+	
+	raw = fs.readFileSync filename, encoding: 'utf8'
+	lines = raw.split('\n').map (line) -> line.trim()
+	
+	commentLines = lines.map (line) ->
+		if line.match /^\#\s.+/ then line else ''
+	
+	sources[filename] =
+		raw: raw
+		lines: lines
+		commentLines: commentLines
+	
 # Generate hook documentation.
 generateHookDocumentation = do ->
 	
@@ -45,12 +55,7 @@ A dynamically generated listing of hooks follows.
 """
 	
 	hookInformation = {}
-	for filename, source of sources
-		
-		commentLines = source.split(
-			'\n'
-		
-		).map (line) -> if line.match /^\s+\#\s.+/ then line.trim() else ''
+	for filename, {commentLines} of sources
 		
 		for commentLine, index in commentLines
 			
@@ -76,7 +81,9 @@ A dynamically generated listing of hooks follows.
 					name: hookName
 	
 	# } Output the hook information.			
-	for filename, hooks of hookInformation
+	alphabetical = Object.keys(hookInformation).sort()
+	for filename in alphabetical
+		hooks = hookInformation[filename]
 		
 		# } Top-level list: filenames
 		markdown += "* [#{
@@ -85,7 +92,7 @@ A dynamically generated listing of hooks follows.
 			filename.replace /(coffee|js)/, 'html'
 		}):\n\n"
 		
-		# } Second-level list: hook name and description.
+		# } Second-level list: hook names and descriptions.
 		for {name, description} in hooks
 			
 			markdown += "\t* `#{
@@ -95,3 +102,69 @@ A dynamically generated listing of hooks follows.
 			}\n\n"
 		
 	fs.writeFileSync "documentation/hooks.md", markdown
+
+# Generate TODO documentation.
+generateHookDocumentation = do ->
+	
+	markdown = """
+
+# TODO
+
+Shrub -- like any project -- always presents a path for improvement. This is
+a dynamically generated listing of TODO items, each with a line of code
+context.
+
+
+"""
+	
+	todoInformation = {}
+	for filename, {lines} of sources
+		
+		for line, index in lines
+			
+			# } Find the comment with the TODO, and retrieve the description.
+			if matches = line.match /^\#\s(?:}\s+)?`TODO`:\s(.*)$/
+			
+				# } Look ahead until we hit an empty line; all following lines
+				# } until then are the TODO description.
+				description = matches[1] + ' '
+				lookaheadIndex = index + 1
+				while lookaheadLine = lines[lookaheadIndex]
+					break unless (matches = lookaheadLine.match /^\#\s(.*)$/)?
+					
+					description += matches[1].trim() + ' '
+					
+					lookaheadIndex += 1
+				
+				# Look ahead until we find a non-comment. We'll use this as
+				# context for the TODO item.
+				while lines[lookaheadIndex].match /^(\#|$)/
+					lookaheadIndex += 1
+				
+				(todoInformation[filename] ?= []).push
+					
+					context: lines[lookaheadIndex]
+					description: description
+				
+	# } Output the TODO information.
+	alphabetical = Object.keys(todoInformation).sort()
+	for filename in alphabetical
+		todos = todoInformation[filename]
+		
+		# } Top-level list: filenames
+		markdown += "* ##[#{
+			filename
+		}](./#{
+			filename.replace /(coffee|js)/, 'html'
+		}):\n\n"
+		
+		# } Second-level list: TODO descriptions.
+		for {context, description} in todos
+			
+			markdown += "\t* #{
+				description
+			}\n\n\t  `#{
+				context
+			}`\n\n"
+		
+	fs.writeFileSync "documentation/todos.md", markdown
