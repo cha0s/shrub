@@ -32,7 +32,10 @@ exports.loadPackageSettings = ->
 	nconf.defaults
 		
 		# Invoke hook `settings`.
-		# Allow packages to define their own default settings.
+		# Invoked when the server application is loading configuration. Allows
+		# packages to define their own default settings.
+		# 
+		# `TODO`: This should be renamed to `defaultSettings`.
 		packageSettings: pkgman.invoke 'settings'
 		
 		path: "#{__dirname}/.."

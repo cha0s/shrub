@@ -36,8 +36,7 @@ module.exports = class AbstractHttp
 	initialize: (fn) ->
 		
 		# Invoke hook `httpInitializer`.
-		# Allows behavior to occur before the server is bound on the listening
-		# port.
+		# Invoked before the server is bound on the listening port.
 		# 
 		# } TODO: This invocation should probably be middlware.fromHook()'d
 		middleware = new middleware.Middleware()
@@ -55,8 +54,8 @@ module.exports = class AbstractHttp
 				return fn error if error?
 				
 				# Invoke hook `httpListening`.
-				# Allows behavior to occur once the server is listening, but
-				# before initialization finishes.
+				# Invoked once the server is listening, but before
+				# initialization finishes.
 				promises = for _, promise of pkgman.invoke(
 					'httpListening', this
 				)
@@ -87,8 +86,7 @@ module.exports = class AbstractHttp
 		defaultLogger.info 'BEGIN loading HTTP middleware'
 		
 		# Invoke hook `httpMiddleware`.
-		# Allows behavior to occur every time an HTTP connection is
-		# established.
+		# Invoked every time an HTTP connection is established.
 		@_middleware = middleware.fromHook(
 			'httpMiddleware'
 			@_config.middleware

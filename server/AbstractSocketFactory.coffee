@@ -37,8 +37,9 @@ module.exports = class AbstractSocketFactory extends EventEmitter
 	loadMiddleware: ->
 		
 		# Invoke hook `socketAuthorizationMiddleware`.
-		# Allows packages to determine whether a socket connection is
-		# authorized.
+		# Invoked when a socket connection begins. Packages may throw an
+		# instance of `AbstractSocketFactory.AuthorizationFailure` to reject
+		# the socket connection as unauthorized.
 		defaultLogger.info 'BEGIN loading socket authorization middleware'
 		@_authorizationMiddleware = middleware.fromHook(
 			'socketAuthorizationMiddleware'
@@ -47,7 +48,9 @@ module.exports = class AbstractSocketFactory extends EventEmitter
 		defaultLogger.info 'END loading socket authorization middleware'
 
 		# Invoke hook `socketRequestMiddleware`.
-		# Allows packages to run behavior for every socket connection.
+		# Invoked for every socket connection.
+		# 
+		# `TODO`: This should be renamed to `socketConnectionMiddleware`.
 		defaultLogger.info 'BEGIN loading socket middleware'
 		@_requestMiddleware = middleware.fromHook(
 			'socketRequestMiddleware'
