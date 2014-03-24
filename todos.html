@@ -1,0 +1,86 @@
+<!DOCTYPE html><html lang="en" class="no-code"><head><title>todos</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content=""><meta name="groc-document-path" content="todos"><meta name="groc-project-path" content="documentation/todos.md"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="assets/style.css"><script type="text/javascript" src="assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/documentation/todos.md">documentation/todos.md</a></div></div><div id="document"><div class="segment"><div class="comments"><div class="wrapper"><h1 id="todo">TODO</h1>
+
+<p>Shrub -- like any project -- always presents a path for improvement. This is
+a dynamically generated listing of TODO items, each with a line of code
+context.</p>
+
+<ul>
+<li><h2 id="serverabstracthttpcoffeeserverabstracthttphtml"><a href="./server/AbstractHttp.html">server/AbstractHttp.coffee</a>:</h2>
+
+<ul><li><p>This needs work, it probably wouldn't be able to handle another server in its current state. Move API from Express to here, and use a 'pure virtual' pattern, to allow any other server to extend along reasonable lines. </p>
+
+<p><code>module.exports = class AbstractHttp</code></p></li></ul></li>
+<li><h2 id="serverabstractsocketfactorycoffeeserverabstractsocketfactoryhtml"><a href="./server/AbstractSocketFactory.html">server/AbstractSocketFactory.coffee</a>:</h2>
+
+<ul><li><p>This needs work, it probably wouldn't be able to handle another server in its current state. Move API from SocketIo to here. </p>
+
+<p><code>module.exports = class AbstractSocketFactory extends EventEmitter</code></p></li>
+<li><p>This should be renamed to <code>socketConnectionMiddleware</code>. </p>
+
+<p><code>'socketRequestMiddleware'</code></p></li></ul></li>
+<li><h2 id="serverconfigcoffeeserverconfightml"><a href="./server/config.html">server/config.coffee</a>:</h2>
+
+<ul><li><p>This should be renamed to <code>defaultSettings</code>. </p>
+
+<p><code>packageSettings: pkgman.invoke 'settings'</code></p></li>
+<li><p>This is Angular-specific. Move it to where it belongs. </p>
+
+<p><code>$get: -&gt; this</code></p></li></ul></li>
+<li><h2 id="serverjugglingdbcoffeeserverjugglingdbhtml"><a href="./server/jugglingdb.html">server/jugglingdb.coffee</a>:</h2>
+
+<ul><li><p>This module currently immediately attempts to gather package models and create the schema: it should provide a function to lookup that information instead of doing it all at require time. </p>
+
+<p><code>module.exports = require('schema-client').define(</code></p></li></ul></li>
+<li><h2 id="serverlimitscoffeeserverlimitshtml"><a href="./server/limits.html">server/limits.coffee</a>:</h2>
+
+<ul><li><p>This goes away. </p>
+
+<p><code>options.bucketTime ?= @threshold.calculateSeconds()</code></p></li>
+<li><p>This should be called <code>accrue</code>. </p>
+
+<p><code>add: (keys, score = 1) -&gt;</code></p></li>
+<li><p>This should be called <code>accrueAndCheckThreshold</code>. </p>
+
+<p><code>addAndCheckThreshold: (keys, score = 1) -&gt;</code></p></li>
+<li><p>This should be named <code>score</code>. </p>
+
+<p><code>count: (keys) -&gt; @_largest keys, 'count'</code></p></li>
+<li><p>This should instantiate a finalized Threshold class } which cannot be chained, nor modified. </p>
+
+<p><code>this</code></p></li>
+<li><p>"bucketTime" is the WRONG symbol name. </p>
+
+<p><code>init: (options = {}) -&gt; @bucketTime = options.bucketTime ? 60 * 10</code></p></li>
+<li><p>This should be called <code>accrue</code>. </p>
+
+<p><code>add: (id, score = 1) -&gt;</code></p></li>
+<li><p>This should be named <code>score</code>. </p>
+
+<p><code>count: (id) -&gt;</code></p></li></ul></li>
+<li><h2 id="serversandboxescoffeeserversandboxeshtml"><a href="./server/sandboxes.html">server/sandboxes.coffee</a>:</h2>
+
+<ul><li><p>This is probably more of an <code>angular</code> package-specific need. It should probably be moved there and this module should solely provide Sandbox. </p>
+
+<p><code>module.exports = new class SandboxFactory</code></p></li>
+<li><p>Move ID to SandboxFactory. </p>
+
+<p><code>constructor: (html, cookie, @_id = null) -&gt;</code></p></li>
+<li><p>Move to SandboxFactory. </p>
+
+<p><code>toucher = if @_id?</code></p></li>
+<li><p>"Entry point" is an <code>angular</code> package-specific idiom. </p>
+
+<p><code>url: "http://localhost:#{</code></p></li>
+<li><p>Move to SandboxFactory. </p>
+
+<p><code>module.exports.remove @_id</code></p></li>
+<li><p>There should be a worker queue, not a single 'busy' promise. </p>
+
+<p><code>@_busy</code></p></li>
+<li><p>Move to SandboxFactory. </p>
+
+<p><code>isNew: -&gt; true</code></p></li>
+<li><p>This is a sloppy interface. </p>
+
+<p><code>setBusy: (@_busy) -&gt;</code></p></li></ul></li>
+</ul></div></div></div></div></body></html>
