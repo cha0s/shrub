@@ -56,6 +56,7 @@ for filename, {commentLines} of sources
 	
 	# } Only do this once for each package.
 	continue if packageInformation[type][name]?
+	continue unless filename.match /\/index\.(coffee|js)$/
 	
 	packageInformation[type][name] = filename: filename
 
