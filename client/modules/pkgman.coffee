@@ -3,6 +3,7 @@ packageCache = null
 _packages = []
 
 exports.rebuildPackageCache = ->
+	moduleCache = {}
 	packageCache = {}
 	
 	for name in _packages
@@ -15,7 +16,23 @@ exports.rebuildPackageCache = ->
 				
 			throw error
 			
-		packageCache[name] = package_
+		moduleCache[name] = package_
+		
+	cacheRecursive = (path, parent) ->
+		
+		for key, objectOrFunction of parent
+			
+			if key.charCodeAt(0) is '$'.charCodeAt(0)
+				
+				(packageCache[key.slice 1] ?= []).push
+					path: path
+					fn: objectOrFunction
+	
+			else
+				
+				cacheRecursive "#{path}/#{key}", objectOrFunction
+				
+	cacheRecursive path, module for path, module of moduleCache
 		
 	return
 
@@ -29,21 +46,5 @@ exports.invoke = (hook, args...) ->
 	exports.rebuildPackageCache() unless packageCache?
 	
 	results = {}
-	
-	invokeRecursive = (path, parent) ->
-		
-		for key, objectOrFunction of parent
-			
-			if key.charCodeAt(0) is '$'.charCodeAt(0)
-	
-				if key is "$#{hook}"
-					
-					results[path] = objectOrFunction args...
-					
-			else
-				
-				invokeRecursive "#{path}/#{key}", objectOrFunction
-				
-	invokeRecursive name, package_ for name, package_ of packageCache
-	
+	results[path] = fn args... for {path, fn} in packageCache[hook] ? []
 	results
