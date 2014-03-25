@@ -38,8 +38,10 @@ module.exports = class AbstractHttp
 		# Invoke hook `httpInitializer`.
 		# Invoked before the server is bound on the listening port.
 		# 
-		# } TODO: This invocation should probably be middleware.fromHook()'d
+		# } `TODO`: This invocation should probably be middleware.fromHook()'d
 		initializerMiddleware = new middleware.Middleware()
+
+		# } `TODO`: Rename to `httpStarting`.
 		for fn_ in pkgman.invokeFlat 'httpInitializer'
 			initializerMiddleware.use fn_
 		

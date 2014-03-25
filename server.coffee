@@ -28,7 +28,7 @@ Promise.all(
 	# Invoke hook `initialized`.
 	# Invoked after the server is initialized.
 	# 
-	# `TODO`: This should be called something like `running`.
+	# `TODO`: Rename to `ready`.
 	-> pkgman.invoke 'initialized'
 	(error) ->
 		

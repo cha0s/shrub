@@ -80,8 +80,6 @@ For instance, if we are implementing a package and want to implement the
 The list below was dynamically generated from the source code. There is a
 description and a list of implementing packages for each hook.
 
----
-
 """
 	
 	packagesImplementingHook = (hookName) ->
@@ -116,7 +114,9 @@ description and a list of implementing packages for each hook.
 				lookaheadIndex = index + 1
 				while lookaheadLine = commentLines[lookaheadIndex]
 					matches = lookaheadLine.match /^\#\s(.*)$/
-					description += matches[1].trim() + ' '
+					description += matches[1].replace(
+						'}', ''
+					).trim() + ' '
 					
 					lookaheadIndex += 1
 				
@@ -147,7 +147,7 @@ description and a list of implementing packages for each hook.
 
 * ## `#{name}`
 
-\t### #{description}
+\t <h5>#{description}</h5>
 
 """
 			
@@ -158,7 +158,7 @@ description and a list of implementing packages for each hook.
 				{filename} = packageInformation[type][package_.name]
 				markdown += """
 
-\t* <h4><a href="./#{
+\t* <a href="./#{
 	filename.replace /\.(js|coffee)$/, '.html'
 }\#implementshook#{
 	name.toLowerCase()
@@ -166,7 +166,7 @@ description and a list of implementing packages for each hook.
 	package_.name
 } (#{
 	package_.type
-})</a></h4>
+})</a>
 
 """
 			
@@ -201,7 +201,9 @@ context.
 				while lookaheadLine = lines[lookaheadIndex]
 					break unless (matches = lookaheadLine.match /^\#\s(.*)$/)?
 					
-					description += matches[1].trim() + ' '
+					description += matches[1].replace(
+						'}', ''
+					).trim() + ' '
 					
 					lookaheadIndex += 1
 				
@@ -221,20 +223,22 @@ context.
 		todos = todoInformation[filename]
 		
 		# } Top-level list: filenames
-		markdown += "* ##[#{
-			filename
-		}](./#{
-			filename.replace /(coffee|js)/, 'html'
-		}):\n\n"
+		markdown += """
+
+[#{filename}](./#{filename.replace /(coffee|js)/, 'html'})
+
+"""
 		
 		# } Second-level list: TODO descriptions.
 		for {context, description} in todos
 			
-			markdown += "\t* #{
-				description
-			}\n\n\t  `#{
-				context
-			}`\n\n"
+			markdown += """
+
+* #### `#{context}`
+
+\t #{description}
+
+"""
 		
 	fs.writeFileSync "documentation/todos.md", markdown
 
@@ -257,6 +261,8 @@ description of the functionality they provide.
 	for type, package_ of packageInformation
 		for name, {filename} of package_
 			{commentLines} = sources[filename]
+			
+			packageInformation[type][name].description = ''
 	
 			# } Nothing to do if there are no comments.
 			continue unless commentLines.length > 0
@@ -276,7 +282,9 @@ description of the functionality they provide.
 				break unless lookaheadLine?
 
 				matches = lookaheadLine.match /^\#\s(.*)$/
-				description += matches[1].trim() + ' '
+				description += matches[1].replace(
+					'}', ''
+				).trim() + ' '
 				
 				index += 1
 			
@@ -289,18 +297,22 @@ description of the functionality they provide.
 		humanizeType = client: 'Client-side', server: 'Server-side'
 		
 		# } Top-level list: type
-		markdown += "* ###{humanizeType[type]}\n\n"
+		markdown += """
+		
+###{humanizeType[type]}
+
+"""
 		
 		for packageName in alphabetical
 			{description, filename} = packageInformation[type][packageName]
 			
 			# } Second-level list: packages with descriptions.
-			markdown += "\t  * ### [`#{
-				packageName
-			}`](./#{
-				filename.replace /(coffee|js)/, 'html'
-			})\n\t #### #{
-				description
-			}\n\n"
+			markdown += """
+
+* ### [`#{packageName}`](./#{filename.replace /(coffee|js)/, 'html'})
+
+\t <h4>#{description}</h4>
+
+"""
 		
 	fs.writeFileSync "documentation/packages.md", markdown
