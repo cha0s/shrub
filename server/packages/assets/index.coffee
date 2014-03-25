@@ -1,8 +1,13 @@
 
+# # Assets
+# 
+# Serve different JS based on whether the server is running in production mode.
+
 _ = require 'underscore'
 nconf = require 'nconf'
 pkgman = require 'pkgman'
 
+# ## Implements hook `httpMiddleware`
 exports.$httpMiddleware = (http) ->
 	
 	label: 'Serve dynamic assets'

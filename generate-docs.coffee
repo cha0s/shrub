@@ -95,11 +95,13 @@ A dynamically generated listing of hooks follows.
 		# } Second-level list: hook names and descriptions.
 		for {name, description} in hooks
 			
-			markdown += "\t* `#{
+			markdown += "\t* ### `#{
 				name
-			}` - #{
+			}`\n\t  #### #{
 				description
-			}\n\n"
+			}\n\t\n"
+			
+		markdown += '\t* ...\n'
 		
 	fs.writeFileSync "documentation/hooks.md", markdown
 
@@ -233,7 +235,7 @@ description of the functionality they provide.
 			index += 1
 			
 		continue if '' is description = description.trim()
-		packageInformation[type][name].description = " - #{description}"
+		packageInformation[type][name].description = description
 			
 	# } Output the package information.
 	for type in ['client', 'server']
@@ -248,11 +250,11 @@ description of the functionality they provide.
 			{description, filename} = packageInformation[type][packageName]
 			
 			# } Second-level list: packages with descriptions.
-			markdown += "\t  * ###[#{
+			markdown += "\t  * ### [`#{
 				packageName
-			}](./#{
+			}`](./#{
 				filename.replace /(coffee|js)/, 'html'
-			})#{
+			})\n\t #### #{
 				description
 			}\n\n"
 		
