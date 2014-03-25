@@ -1,12 +1,17 @@
 
+# # Express logger
+
 express = require 'express'
 
 logging = require 'logging'
 
+# ## Implements hook `httpMiddleware`
+# 
+# Log requests, differentiating between client and sandbox requests.
 exports.$httpMiddleware = (http) ->
 	
 	clientRequestLogger = logging.create 'logs/express.client.log'
-	serverRequestLogger = logging.create 'logs/express.server.log'
+	sandboxRequestLogger = logging.create 'logs/express.sandbox.log'
 	
 	label: 'Log requests'
 	middleware: [
@@ -15,10 +20,10 @@ exports.$httpMiddleware = (http) ->
 			write: (message, encoding) ->
 				
 				logger = if message.match /(http:\/\/localhost:|node-XMLHttpRequest)/
-					serverRequestLogger
+					sandboxRequestLogger
 				else
 					clientRequestLogger
 				
-				logger.info message.slice 0, -1
+				logger.info message
 				
 	]
