@@ -15,6 +15,10 @@ implemented in packages by prefixing a <code>$</code> to the hook name.</p>
 <p>A dynamically generated listing of hooks follows.</p>
 
 <ul>
+<li><p><a href="./server.html">server.coffee</a>:</p>
+
+<ul><li><p><code>initialize</code> - Invoked when the server is just starting. Implementations should return a promise. When all returned promises are fulfilled, initialization continues. </p></li>
+<li><p><code>initialized</code> - Invoked after the server is initialized. </p></li></ul></li>
 <li><p><a href="./server/AbstractHttp.html">server/AbstractHttp.coffee</a>:</p>
 
 <ul><li><p><code>httpInitializer</code> - Invoked before the server is bound on the listening port. </p></li>

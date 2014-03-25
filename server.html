@@ -9,16 +9,25 @@ initialization hooks, and listen for signals and process exit.</p></div></div><d
 <span class="p">{</span><span class="nx">defaultLogger</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;logging&#39;</span>
 
 <span class="c1"># Set up config.</span>
-<span class="p">(</span><span class="nv">config = </span><span class="nx">require</span> <span class="s1">&#39;config&#39;</span><span class="p">).</span><span class="nx">loadSettingsFile</span><span class="p">()</span>
+<span class="nv">config = </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;config&#39;</span><span class="p">).</span><span class="nx">load</span><span class="p">()</span>
 
-<span class="c1"># Initialize.</span>
-<span class="nv">initializers = </span><span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s1">&#39;initialize&#39;</span><span class="p">,</span> <span class="nx">config</span><span class="p">.</span><span class="nx">loadPackageSettings</span><span class="p">()</span>
-<span class="nv">initializePromises = </span><span class="p">(</span><span class="nx">promise</span> <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">promise</span> <span class="k">of</span> <span class="nx">initializers</span><span class="p">)</span>
+<span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>initialize</code>.
+Invoked when the server is just starting. Implementations should return
+a promise. When all returned promises are fulfilled, initialization
+continues.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invokeFlat</span> <span class="s1">&#39;initialize&#39;</span><span class="p">,</span> <span class="nx">config</span>
 
 <span class="c1"># After initialization.</span>
-<span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">initializePromises</span><span class="p">).</span><span class="nx">done</span><span class="p">(</span>
-  <span class="o">-&gt;</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s1">&#39;initialized&#39;</span>
-  <span class="nf">(error) -&gt;</span> <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">error</span> <span class="nx">errors</span><span class="p">.</span><span class="nx">stack</span> <span class="nx">error</span>
+<span class="p">).</span><span class="nx">done</span><span class="p">(</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>initialized</code>.
+Invoked after the server is initialized.</p>
+
+<p><code>TODO</code>: This should be called something like <code>running</code>.</p></div></div><div class="code"><div class="wrapper">  <span class="o">-&gt;</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s1">&#39;initialized&#39;</span>
+  <span class="nf">(error) -&gt;</span>
+    
+    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">error</span> <span class="nx">errors</span><span class="p">.</span><span class="nx">stack</span> <span class="nx">error</span>
+    
+    <span class="c1"># Rethrow any error.</span>
+    <span class="k">throw</span> <span class="nx">error</span>
 <span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Do our best to guarantee that hook <code>processExit</code> will always be invoked.</p></div></div><div class="code"><div class="wrapper"><span class="c1"># Signal listeners and process cleanup.</span>
 <span class="nx">process</span><span class="p">.</span><span class="kc">on</span> <span class="s1">&#39;SIGINT&#39;</span><span class="p">,</span> <span class="o">-&gt;</span> <span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">()</span>
 <span class="nx">process</span><span class="p">.</span><span class="kc">on</span> <span class="s1">&#39;SIGTERM&#39;</span><span class="p">,</span> <span class="o">-&gt;</span> <span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">()</span>

@@ -2,6 +2,7 @@
 <span class="nv">_packages = </span><span class="p">[]</span>
 
 <span class="nv">exports.rebuildPackageCache = </span><span class="o">-&gt;</span>
+  <span class="nv">moduleCache = </span><span class="p">{}</span>
   <span class="nv">packageCache = </span><span class="p">{}</span>
   
   <span class="k">for</span> <span class="nx">name</span> <span class="k">in</span> <span class="nx">_packages</span>
@@ -14,7 +15,23 @@
         
       <span class="k">throw</span> <span class="nx">error</span>
       
-    <span class="nx">packageCache</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="nx">package_</span>
+    <span class="nx">moduleCache</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="nx">package_</span>
+    
+  <span class="nv">cacheRecursive = </span><span class="nf">(path, parent) -&gt;</span>
+    
+    <span class="k">for</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">objectOrFunction</span> <span class="k">of</span> <span class="nx">parent</span>
+      
+      <span class="k">if</span> <span class="nx">key</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">is</span> <span class="s1">&#39;$&#39;</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        
+        <span class="p">(</span><span class="nx">packageCache</span><span class="p">[</span><span class="nx">key</span><span class="p">.</span><span class="nx">slice</span> <span class="mi">1</span><span class="p">]</span> <span class="o">?=</span> <span class="p">[]).</span><span class="nx">push</span>
+          <span class="nv">path: </span><span class="nx">path</span>
+          <span class="nv">fn: </span><span class="nx">objectOrFunction</span>
+  
+      <span class="k">else</span>
+        
+        <span class="nx">cacheRecursive</span> <span class="s2">&quot;#{path}/#{key}&quot;</span><span class="p">,</span> <span class="nx">objectOrFunction</span>
+        
+  <span class="nx">cacheRecursive</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">module</span> <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">module</span> <span class="k">of</span> <span class="nx">moduleCache</span>
     
   <span class="k">return</span>
 
@@ -28,21 +45,11 @@
   <span class="nx">exports</span><span class="p">.</span><span class="nx">rebuildPackageCache</span><span class="p">()</span> <span class="nx">unless</span> <span class="nx">packageCache</span><span class="o">?</span>
   
   <span class="nv">results = </span><span class="p">{}</span>
+  <span class="nx">results</span><span class="p">[</span><span class="nx">path</span><span class="p">]</span> <span class="o">=</span> <span class="nx">fn</span> <span class="nx">args</span><span class="p">...</span> <span class="k">for</span> <span class="p">{</span><span class="nx">path</span><span class="p">,</span> <span class="nx">fn</span><span class="p">}</span> <span class="k">in</span> <span class="nx">packageCache</span><span class="p">[</span><span class="nx">hook</span><span class="p">]</span> <span class="o">?</span> <span class="p">[]</span>
+  <span class="nx">results</span>
+
+<span class="nv">exports.invokeFlat = </span><span class="nf">(hook, args...) -&gt;</span>
+  <span class="nx">exports</span><span class="p">.</span><span class="nx">rebuildPackageCache</span><span class="p">()</span> <span class="nx">unless</span> <span class="nx">packageCache</span><span class="o">?</span>
   
-  <span class="nv">invokeRecursive = </span><span class="nf">(path, parent) -&gt;</span>
-    
-    <span class="k">for</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">objectOrFunction</span> <span class="k">of</span> <span class="nx">parent</span>
-      
-      <span class="k">if</span> <span class="nx">key</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">is</span> <span class="s1">&#39;$&#39;</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-  
-        <span class="k">if</span> <span class="nx">key</span> <span class="o">is</span> <span class="s2">&quot;$#{hook}&quot;</span>
-          
-          <span class="nx">results</span><span class="p">[</span><span class="nx">path</span><span class="p">]</span> <span class="o">=</span> <span class="nx">objectOrFunction</span> <span class="nx">args</span><span class="p">...</span>
-          
-      <span class="k">else</span>
-        
-        <span class="nx">invokeRecursive</span> <span class="s2">&quot;#{path}/#{key}&quot;</span><span class="p">,</span> <span class="nx">objectOrFunction</span>
-        
-  <span class="nx">invokeRecursive</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">package_</span> <span class="k">for</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">package_</span> <span class="k">of</span> <span class="nx">packageCache</span>
-  
-  <span class="nx">results</span></div></div></div></div></body></html>
+  <span class="nx">fn</span> <span class="nx">args</span><span class="p">...</span> <span class="k">for</span> <span class="p">{</span><span class="nx">path</span><span class="p">,</span> <span class="nx">fn</span><span class="p">}</span> <span class="k">in</span> <span class="nx">packageCache</span><span class="p">[</span><span class="nx">hook</span><span class="p">]</span> <span class="o">?</span> <span class="p">[]</span>
+  </div></div></div></div></body></html>

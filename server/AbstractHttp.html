@@ -28,26 +28,24 @@ lines.</p></div></div><div class="code"><div class="wrapper"><span class="nv">mo
 <li>(function) <code>fn</code> - The function to be called upon initialization.</li>
 </ul></div></div><div class="code"><div class="wrapper">  <span class="nv">initialize: </span><span class="nf">(fn) -&gt;</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>httpInitializer</code>.
-Invoked before the server is bound on the listening port.</p></div></div><div class="code"><div class="wrapper">    <span class="c1"># TODO: This invocation should probably be middlware.fromHook()&#39;d</span>
-    <span class="nv">middleware = </span><span class="k">new</span> <span class="nx">middleware</span><span class="p">.</span><span class="nx">Middleware</span><span class="p">()</span>
-    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">initializer</span> <span class="k">of</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s1">&#39;httpInitializer&#39;</span>
-      <span class="nx">middleware</span><span class="p">.</span><span class="nx">use</span> <span class="nx">initializer</span>
+Invoked before the server is bound on the listening port.</p></div></div><div class="code"><div class="wrapper">    <span class="c1"># TODO: This invocation should probably be middleware.fromHook()&#39;d</span>
+    <span class="nv">initializerMiddleware = </span><span class="k">new</span> <span class="nx">middleware</span><span class="p">.</span><span class="nx">Middleware</span><span class="p">()</span>
+    <span class="k">for</span> <span class="nx">fn_</span> <span class="k">in</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invokeFlat</span> <span class="s1">&#39;httpInitializer&#39;</span>
+      <span class="nx">initializerMiddleware</span><span class="p">.</span><span class="nx">use</span> <span class="nx">fn_</span>
     
     <span class="c1"># Dispatch the middleware.</span>
     <span class="nv">request = http: </span><span class="k">this</span>
     <span class="nv">response = </span><span class="kc">null</span>
-    <span class="nx">middleware</span><span class="p">.</span><span class="nx">dispatch</span> <span class="nx">request</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span>
+    <span class="nx">initializerMiddleware</span><span class="p">.</span><span class="nx">dispatch</span> <span class="nx">request</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span>
       <span class="k">return</span> <span class="nx">fn</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Start listening.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">@listen</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span>
         <span class="k">return</span> <span class="nx">fn</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>httpListening</code>.
+        
+        <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span>
+          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>httpListening</code>.
 Invoked once the server is listening, but before
-initialization finishes.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">promises = </span><span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">promise</span> <span class="k">of</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span><span class="p">(</span>
-          <span class="s1">&#39;httpListening&#39;</span><span class="p">,</span> <span class="k">this</span>
-        <span class="p">)</span>
-          <span class="nx">promise</span>
-          
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Finish initialization.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">promises</span><span class="p">).</span><span class="k">then</span><span class="p">(</span>
+initialization finishes.</p></div></div><div class="code"><div class="wrapper">          <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invokeFlat</span> <span class="s1">&#39;httpListening&#39;</span><span class="p">,</span> <span class="k">this</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Finish initialization.</p></div></div><div class="code"><div class="wrapper">        <span class="p">).</span><span class="k">then</span><span class="p">(</span>
           <span class="o">-&gt;</span> <span class="nx">fn</span><span class="p">()</span>
           <span class="nf">(error) -&gt;</span> <span class="nx">fn</span> <span class="nx">error</span>
         <span class="p">)</span>

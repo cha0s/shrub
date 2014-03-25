@@ -53,10 +53,10 @@
   <span class="nv">siteEmail = </span><span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;siteEmail&#39;</span>
   
   <span class="nv">sandboxId = </span><span class="kc">null</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Allow other packages to make changes to the mail.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">promises = </span><span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">promise</span> <span class="k">of</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s1">&#39;mail&#39;</span><span class="p">,</span> <span class="nx">type</span><span class="p">,</span> <span class="nx">mail</span>
-    <span class="nx">promise</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Allow other packages to make changes to the mail.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span>
+    <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invokeFlat</span> <span class="s1">&#39;mail&#39;</span><span class="p">,</span> <span class="nx">type</span><span class="p">,</span> <span class="nx">mail</span>
   
-  <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">promises</span><span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="o">-&gt;</span>
+  <span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="o">-&gt;</span>
     <span class="k">return</span> <span class="nx">mail</span><span class="p">.</span><span class="nx">html</span> <span class="k">if</span> <span class="nx">mail</span><span class="p">.</span><span class="nx">html</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Search for a template filename.</p></div></div><div class="code"><div class="wrapper">    <span class="k">return</span> <span class="nx">unless</span> <span class="nx">mail</span><span class="p">.</span><span class="nx">template</span>
     

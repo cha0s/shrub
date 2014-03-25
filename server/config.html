@@ -3,18 +3,15 @@
 <p>Manages server and package configuration.</p></div></div><div class="code"><div class="wrapper"><span class="nv">nconf = </span><span class="nx">require</span> <span class="s1">&#39;nconf&#39;</span>
 <span class="nv">fs = </span><span class="nx">require</span> <span class="s1">&#39;fs&#39;</span>
 
-<span class="nv">pkgman = </span><span class="nx">require</span> <span class="s1">&#39;pkgman&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="loadsettingsfile">loadSettingsFile</h3>
+<span class="nv">pkgman = </span><span class="nx">require</span> <span class="s1">&#39;pkgman&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="load">load</h3>
 
-<p><em>Load settings from the settings file.</em></p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.loadSettingsFile = </span><span class="o">-&gt;</span>
+<p><em>Load configuration from the settings file and package defaults.</em></p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.load = </span><span class="o">-&gt;</span>
 
   <span class="c1"># Ensure the configuration file exists.</span>
   <span class="nx">unless</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">existsSync</span> <span class="nv">settingsFilename = </span><span class="s2">&quot;./config/settings.json&quot;</span>
     <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span> <span class="s2">&quot;Settings file not found! You should copy config/settings.default.json to config/settings.json&quot;</span>
   
   <span class="nx">nconf</span><span class="p">.</span><span class="nx">argv</span><span class="p">().</span><span class="nx">env</span><span class="p">().</span><span class="nx">file</span> <span class="nx">settingsFilename</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="loadpackagesettings">loadPackageSettings</h3>
-
-<p><em>Collect package settings.</em></p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.loadPackageSettings = </span><span class="o">-&gt;</span>
   
   <span class="nx">nconf</span><span class="p">.</span><span class="nx">defaults</span> <span class="nv">path: </span><span class="s2">&quot;#{__dirname}/..&quot;</span>
     

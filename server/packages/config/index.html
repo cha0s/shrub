@@ -28,21 +28,21 @@
     <span class="nf">(req, res, next) -&gt;</span>
       <span class="k">return</span> <span class="nx">next</span><span class="p">()</span> <span class="nx">unless</span> <span class="nx">req</span><span class="p">.</span><span class="nx">url</span> <span class="o">is</span> <span class="s1">&#39;/js/config.js&#39;</span>
       
-      <span class="nv">promises = </span><span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">promise</span> <span class="k">of</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s1">&#39;config&#39;</span><span class="p">,</span> <span class="nx">req</span>
-        <span class="nx">promise</span>
-      
-      <span class="nv">config = </span><span class="p">{}</span>
-      <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">promises</span><span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="nf">(subconfigs) -&gt;</span>
-        <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span> <span class="nx">config</span><span class="p">,</span> <span class="nx">subconfig</span> <span class="k">for</span> <span class="nx">subconfig</span> <span class="k">in</span> <span class="nx">subconfigs</span>
-      <span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="o">-&gt;</span>
+      <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span>
+        <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invokeFlat</span> <span class="s1">&#39;config&#39;</span><span class="p">,</span> <span class="nx">req</span>
         
-          <span class="nv">prettyPrintConfig = </span><span class="o">-&gt;</span>
-            <span class="p">[</span><span class="nx">first</span><span class="p">,</span> <span class="nx">rest</span><span class="p">...]</span> <span class="o">=</span> <span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span> <span class="nx">config</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="s1">&#39;  &#39;</span><span class="p">).</span><span class="nx">split</span> <span class="s1">&#39;\n&#39;</span>
-            <span class="p">([</span><span class="nx">first</span><span class="p">].</span><span class="nx">concat</span> <span class="nx">rest</span><span class="p">.</span><span class="nx">map</span> <span class="nf">(line) -&gt;</span> <span class="s1">&#39;  &#39;</span> <span class="o">+</span> <span class="nx">line</span><span class="p">).</span><span class="nx">join</span> <span class="s1">&#39;\n&#39;</span>
-            
-          <span class="nx">res</span><span class="p">.</span><span class="nx">setHeader</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/javascript&#39;</span>
+      <span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="nf">(subconfigs) -&gt;</span>
+
+        <span class="nv">config = </span><span class="p">{}</span>
+        <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span> <span class="nx">config</span><span class="p">,</span> <span class="nx">subconfig</span> <span class="k">for</span> <span class="nx">subconfig</span> <span class="k">in</span> <span class="nx">subconfigs</span>        
+      
+        <span class="nv">prettyPrintConfig = </span><span class="o">-&gt;</span>
+          <span class="p">[</span><span class="nx">first</span><span class="p">,</span> <span class="nx">rest</span><span class="p">...]</span> <span class="o">=</span> <span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span> <span class="nx">config</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="s1">&#39;  &#39;</span><span class="p">).</span><span class="nx">split</span> <span class="s1">&#39;\n&#39;</span>
+          <span class="p">([</span><span class="nx">first</span><span class="p">].</span><span class="nx">concat</span> <span class="nx">rest</span><span class="p">.</span><span class="nx">map</span> <span class="nf">(line) -&gt;</span> <span class="s1">&#39;  &#39;</span> <span class="o">+</span> <span class="nx">line</span><span class="p">).</span><span class="nx">join</span> <span class="s1">&#39;\n&#39;</span>
           
-          <span class="nx">res</span><span class="p">.</span><span class="nx">send</span> <span class="s2">&quot;&quot;&quot;</span>
+        <span class="nx">res</span><span class="p">.</span><span class="nx">setHeader</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/javascript&#39;</span>
+        
+        <span class="nx">res</span><span class="p">.</span><span class="nx">send</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">angular.module(&#39;shrub.config&#39;, []).provider(&#39;config&#39;, function() {</span>
 
 <span class="s2">  var __slice = [].slice;</span>
@@ -52,8 +52,7 @@
 <span class="s2">});</span>
 <span class="s2">&quot;&quot;&quot;</span>
         
-        <span class="nf">(error) -&gt;</span> <span class="nx">next</span> <span class="nx">error</span>
-      <span class="p">)</span>
+      <span class="p">).</span><span class="k">catch</span> <span class="nx">next</span>
       
   <span class="p">]</span>
 

@@ -59,6 +59,11 @@
         <span class="nx">args</span><span class="p">.</span><span class="nx">unshift</span> <span class="nx">hook</span>
         <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="nx">args</span><span class="p">...</span>
         
+      <span class="nv">service.invokeFlat = </span><span class="nf">(hook, args...) -&gt;</span>
+        
+        <span class="nx">args</span><span class="p">.</span><span class="nx">unshift</span> <span class="nx">hook</span>
+        <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invokeFlat</span> <span class="nx">args</span><span class="p">...</span>
+        
       <span class="nv">service.invokeWithMocks = </span><span class="nf">(hook, args...) -&gt;</span>
         
         <span class="nx">args</span><span class="p">.</span><span class="nx">unshift</span> <span class="nx">hook</span>

@@ -14,8 +14,7 @@
     
 <span class="nv">exports.errorTypes = </span><span class="o">-&gt;</span>
   
-  <span class="nv">collected = </span><span class="p">[</span><span class="nx">BaseError</span><span class="p">]</span>
-  <span class="nx">collected</span><span class="p">.</span><span class="nx">push</span> <span class="nx">Type</span> <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">Type</span> <span class="k">of</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s1">&#39;errorType&#39;</span>
+  <span class="nv">collected = </span><span class="p">[</span><span class="nx">BaseError</span><span class="p">].</span><span class="nx">concat</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invokeFlat</span> <span class="s1">&#39;errorType&#39;</span>
   
   <span class="nv">Types = </span><span class="p">{}</span>
   <span class="nx">Types</span><span class="p">[</span><span class="nx">Type</span><span class="o">::</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Type</span> <span class="k">for</span> <span class="nx">Type</span> <span class="k">in</span> <span class="nx">collected</span>
