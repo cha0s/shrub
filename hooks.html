@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en" class="no-code"><head><title>hooks</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content=""><meta name="groc-document-path" content="hooks"><meta name="groc-project-path" content="documentation/hooks.md"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="assets/style.css"><script type="text/javascript" src="assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/documentation/hooks.md">documentation/hooks.md</a></div></div><div id="document"><div class="segment"><div class="comments"><div class="wrapper"><h1 id="hooks">Hooks</h1>
+<!DOCTYPE html><html lang="en" class="no-code"><head><title>hooks</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content=""><meta name="groc-document-path" content="hooks"><meta name="groc-project-path" content="documentation/hooks.md"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="assets/style.css"><script type="text/javascript" src="assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/documentation/hooks.md">documentation/hooks.md</a></div></div><div id="document"><div class="segment"><div class="comments"><div class="wrapper"><h1 id="hook-overview">Hook overview</h1>
 
 <p>Shrub implements message passing between packages through a hook system. Hooks
 may be invoked with <a href="./client/modules/pkgman.html">pkgman.invoke()</a>, and are
@@ -12,26 +12,75 @@ implemented in packages by prefixing a <code>$</code> to the hook name.</p>
     # Your code goes here...
 </code></pre>
 
-<p>A dynamically generated listing of hooks follows.</p>
+<p>The list below was dynamically generated from the source code. There is a
+description and a list of implementing packages for each hook.</p>
+
+<p><a href="./server.html">server.coffee</a></p>
 
 <ul>
-<li><p><a href="./server.html">server.coffee</a>:</p>
+<li><h2 id="initialize"><code>initialize</code></h2>
 
-<ul><li><p><code>initialize</code> - Invoked when the server is just starting. Implementations should return a promise. When all returned promises are fulfilled, initialization continues. </p></li>
-<li><p><code>initialized</code> - Invoked after the server is initialized. </p></li></ul></li>
-<li><p><a href="./server/AbstractHttp.html">server/AbstractHttp.coffee</a>:</p>
+<p><h5>Invoked when the server is just starting. Implementations should return a promise. When all returned promises are fulfilled, initialization continues. </h5></p>
 
-<ul><li><p><code>httpInitializer</code> - Invoked before the server is bound on the listening port. </p></li>
-<li><p><code>httpListening</code> - Invoked once the server is listening, but before initialization finishes. </p></li>
-<li><p><code>httpMiddleware</code> - Invoked every time an HTTP connection is established. </p></li></ul></li>
-<li><p><a href="./server/AbstractSocketFactory.html">server/AbstractSocketFactory.coffee</a>:</p>
+<ul><li><a href="./server/packages/angular/index.html#implementshookinitialize">angular (server)</a></li></ul></li>
+<li><h2 id="initialized"><code>initialized</code></h2>
 
-<ul><li><p><code>socketAuthorizationMiddleware</code> - Invoked when a socket connection begins. Packages may throw an instance of <code>AbstractSocketFactory.AuthorizationFailure</code> to reject the socket connection as unauthorized. </p></li>
-<li><p><code>socketRequestMiddleware</code> - Invoked for every socket connection. </p></li></ul></li>
-<li><p><a href="./server/audit.html">server/audit.coffee</a>:</p>
+<p><h5>Invoked after the server is initialized. </h5></p></li>
+</ul>
 
-<ul><li><code>auditKeys</code> - Allows a package to specify unique keys for this request, e.g. IP address, session ID, etc. </li></ul></li>
-<li><p><a href="./server/config.html">server/config.coffee</a>:</p>
+<p><a href="./server/AbstractHttp.html">server/AbstractHttp.coffee</a></p>
 
-<ul><li><code>settings</code> - Invoked when the server application is loading configuration. Allows packages to define their own default settings. </li></ul></li>
+<ul>
+<li><h2 id="httpinitializer"><code>httpInitializer</code></h2>
+
+<p><h5>Invoked before the server is bound on the listening port. </h5></p></li>
+<li><h2 id="httplistening"><code>httpListening</code></h2>
+
+<p><h5>Invoked once the server is listening, but before initialization finishes. </h5></p></li>
+<li><h2 id="httpmiddleware"><code>httpMiddleware</code></h2>
+
+<p><h5>Invoked every time an HTTP connection is established. </h5></p>
+
+<ul><li><p><a href="./server/packages/angular/index.html#implementshookhttpmiddleware">angular (server)</a></p></li>
+<li><p><a href="./server/packages/assets/index.html#implementshookhttpmiddleware">assets (server)</a></p></li>
+<li><p><a href="./server/packages/config/index.html#implementshookhttpmiddleware">config (server)</a></p></li></ul></li>
+</ul>
+
+<p><a href="./server/AbstractSocketFactory.html">server/AbstractSocketFactory.coffee</a></p>
+
+<ul>
+<li><h2 id="socketauthorizationmiddleware"><code>socketAuthorizationMiddleware</code></h2>
+
+<p><h5>Invoked when a socket connection begins. Packages may throw an instance of <code>AbstractSocketFactory.AuthorizationFailure</code> to reject the socket connection as unauthorized. </h5></p></li>
+<li><h2 id="socketrequestmiddleware"><code>socketRequestMiddleware</code></h2>
+
+<p><h5>Invoked for every socket connection. </h5></p></li>
+</ul>
+
+<p><a href="./server/audit.html">server/audit.coffee</a></p>
+
+<ul>
+<li><h2 id="auditkeys"><code>auditKeys</code></h2>
+
+<p><h5>Allows a package to specify unique keys for this request, e.g. IP address, session ID, etc. </h5></p></li>
+</ul>
+
+<p><a href="./server/config.html">server/config.coffee</a></p>
+
+<ul>
+<li><h2 id="settings"><code>settings</code></h2>
+
+<p><h5>Invoked when the server application is loading configuration. Allows packages to define their own default settings. </h5></p>
+
+<ul><li><a href="./server/packages/angular/index.html#implementshooksettings">angular (server)</a></li></ul></li>
+</ul>
+
+<p><a href="./server/packages/config/index.html">server/packages/config/index.coffee</a></p>
+
+<ul>
+<li><h2 id="config"><code>config</code></h2>
+
+<p><h5>Allows packages to specify configuration that will be sent to the client. </h5></p>
+
+<ul><li><a href="./server/packages/config/index.html#implementshookconfig">config (server)</a></li></ul></li>
 </ul></div></div></div></div></body></html>

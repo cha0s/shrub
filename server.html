@@ -21,7 +21,7 @@ continues.</p></div></div><div class="code"><div class="wrapper">  <span class="
 <span class="p">).</span><span class="nx">done</span><span class="p">(</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>initialized</code>.
 Invoked after the server is initialized.</p>
 
-<p><code>TODO</code>: This should be called something like <code>running</code>.</p></div></div><div class="code"><div class="wrapper">  <span class="o">-&gt;</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s1">&#39;initialized&#39;</span>
+<p><code>TODO</code>: Rename to <code>ready</code>.</p></div></div><div class="code"><div class="wrapper">  <span class="o">-&gt;</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s1">&#39;initialized&#39;</span>
   <span class="nf">(error) -&gt;</span>
     
     <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">error</span> <span class="nx">errors</span><span class="p">.</span><span class="nx">stack</span> <span class="nx">error</span>
