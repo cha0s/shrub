@@ -12,7 +12,7 @@ pkgman = require 'pkgman'
 {defaultLogger} = require 'logging'
 
 # } Set up config.
-config = require('config').loadSettingsFile()
+config = require('config').load()
 
 Promise.all(
 	
@@ -20,7 +20,7 @@ Promise.all(
 	# Invoked when the server is just starting. Implementations should return
 	# a promise. When all returned promises are fulfilled, initialization
 	# continues.
-	pkgman.invokeFlat 'initialize', config.loadPackageSettings()
+	pkgman.invokeFlat 'initialize', config
 
 # } After initialization.
 ).done(
