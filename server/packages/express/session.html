@@ -20,8 +20,8 @@ requests.</p></div></div><div class="code"><div class="wrapper">
       
       <span class="nv">cookieObject = </span><span class="p">{}</span>
       <span class="k">for</span> <span class="nx">kv</span> <span class="k">in</span> <span class="nx">cookie</span><span class="p">.</span><span class="nx">split</span> <span class="s1">&#39;;&#39;</span>
-        <span class="p">[</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">]</span> <span class="o">=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">split</span> <span class="s1">&#39;=&#39;</span>
-        <span class="nx">cookieObject</span><span class="p">[</span><span class="nx">key</span><span class="p">.</span><span class="nx">trim</span><span class="p">()]</span> <span class="o">=</span> <span class="nx">value</span>
+        <span class="p">[</span><span class="nx">k</span><span class="p">,</span> <span class="nx">v</span><span class="p">]</span> <span class="o">=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">split</span> <span class="s1">&#39;=&#39;</span>
+        <span class="nx">cookieObject</span><span class="p">[</span><span class="nx">k</span><span class="p">.</span><span class="nx">trim</span><span class="p">()]</span> <span class="o">=</span> <span class="nx">v</span>
       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Pull out junk that only makes sense en route to client.</p></div></div><div class="code"><div class="wrapper">      <span class="k">delete</span> <span class="nx">cookieObject</span><span class="p">[</span><span class="s1">&#39;Path&#39;</span><span class="p">]</span>
       <span class="k">delete</span> <span class="nx">cookieObject</span><span class="p">[</span><span class="s1">&#39;HttpOnly&#39;</span><span class="p">]</span>
       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Rebuild the cookie string.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">cookie = </span><span class="s1">&#39;&#39;</span>
@@ -32,7 +32,7 @@ requests.</p></div></div><div class="code"><div class="wrapper">
 wouldn't actually be pointing at anything yet.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">save</span> <span class="nf">(error) -&gt;</span>
         <span class="nx">next</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
         
-        <span class="nx">req</span><span class="p">.</span><span class="nx">signedCookies</span><span class="p">[</span><span class="nx">http</span><span class="p">.</span><span class="nx">sessionKey</span><span class="p">()]</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">sessionID</span>
+        <span class="nx">req</span><span class="p">.</span><span class="nx">signedCookies</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">sessionID</span>
         <span class="nv">req.headers.cookie = </span><span class="nx">cookie</span>
         <span class="nx">next</span><span class="p">()</span>
   

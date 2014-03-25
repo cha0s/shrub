@@ -22,7 +22,8 @@ description and a list of implementing packages for each hook.</p>
 
 <p><h5>Invoked when the server is just starting. Implementations should return a promise. When all returned promises are fulfilled, initialization continues. </h5></p>
 
-<ul><li><a href="./server/packages/angular/index.html#implementshookinitialize">angular (server)</a></li></ul></li>
+<ul><li><p><a href="./server/packages/angular/index.html#implementshookinitialize">angular (server)</a></p></li>
+<li><p><a href="./server/packages/express/errors.html#implementshookinitialize">express/errors (server)</a></p></li></ul></li>
 <li><h2 id="initialized"><code>initialized</code></h2>
 
 <p><h5>Invoked after the server is initialized. </h5></p></li>
@@ -43,7 +44,9 @@ description and a list of implementing packages for each hook.</p>
 
 <ul><li><p><a href="./server/packages/angular/index.html#implementshookhttpmiddleware">angular (server)</a></p></li>
 <li><p><a href="./server/packages/assets/index.html#implementshookhttpmiddleware">assets (server)</a></p></li>
-<li><p><a href="./server/packages/config/index.html#implementshookhttpmiddleware">config (server)</a></p></li></ul></li>
+<li><p><a href="./server/packages/config/index.html#implementshookhttpmiddleware">config (server)</a></p></li>
+<li><p><a href="./server/packages/core/index.html#implementshookhttpmiddleware">core (server)</a></p></li>
+<li><p><a href="./server/packages/express/errors.html#implementshookhttpmiddleware">express/errors (server)</a></p></li></ul></li>
 </ul>
 
 <p><a href="./server/AbstractSocketFactory.html">server/AbstractSocketFactory.coffee</a></p>
@@ -51,7 +54,9 @@ description and a list of implementing packages for each hook.</p>
 <ul>
 <li><h2 id="socketauthorizationmiddleware"><code>socketAuthorizationMiddleware</code></h2>
 
-<p><h5>Invoked when a socket connection begins. Packages may throw an instance of <code>AbstractSocketFactory.AuthorizationFailure</code> to reject the socket connection as unauthorized. </h5></p></li>
+<p><h5>Invoked when a socket connection begins. Packages may throw an instance of <code>AbstractSocketFactory.AuthorizationFailure</code> to reject the socket connection as unauthorized. </h5></p>
+
+<ul><li><a href="./server/packages/core/index.html#implementshooksocketauthorizationmiddleware">core (server)</a></li></ul></li>
 <li><h2 id="socketrequestmiddleware"><code>socketRequestMiddleware</code></h2>
 
 <p><h5>Invoked for every socket connection. </h5></p></li>
@@ -62,7 +67,9 @@ description and a list of implementing packages for each hook.</p>
 <ul>
 <li><h2 id="auditkeys"><code>auditKeys</code></h2>
 
-<p><h5>Allows a package to specify unique keys for this request, e.g. IP address, session ID, etc. </h5></p></li>
+<p><h5>Allows a package to specify unique keys for this request, e.g. IP address, session ID, etc. </h5></p>
+
+<ul><li><a href="./server/packages/core/index.html#implementshookauditkeys">core (server)</a></li></ul></li>
 </ul>
 
 <p><a href="./server/config.html">server/config.coffee</a></p>
@@ -72,7 +79,9 @@ description and a list of implementing packages for each hook.</p>
 
 <p><h5>Invoked when the server application is loading configuration. Allows packages to define their own default settings. </h5></p>
 
-<ul><li><a href="./server/packages/angular/index.html#implementshooksettings">angular (server)</a></li></ul></li>
+<ul><li><p><a href="./server/packages/angular/index.html#implementshooksettings">angular (server)</a></p></li>
+<li><p><a href="./server/packages/core/index.html#implementshooksettings">core (server)</a></p></li>
+<li><p><a href="./server/packages/express/errors.html#implementshooksettings">express/errors (server)</a></p></li></ul></li>
 </ul>
 
 <p><a href="./server/packages/config/index.html">server/packages/config/index.coffee</a></p>

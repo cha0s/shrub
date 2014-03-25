@@ -116,6 +116,20 @@ context.</p>
 <p>Should probably just remove this and <code>require 'nconf'</code>. </p></li>
 </ul>
 
+<p><a href="./server/packages/express/index.html">server/packages/express/index.coffee</a></p>
+
+<ul>
+<li><h4 id="_appsetviews_configpath"><code>@_app.set 'views', @_config.path</code></h4>
+
+<p>Do we really need to use Express's theme system..? </p></li>
+<li><h4 id="listenfn"><code>listen: (fn) -&gt;</code></h4>
+
+<p>This should return a promise, not take a callback. </p></li>
+<li><h4 id="sessionstore"><code>sessionStore: -&gt;</code></h4>
+
+<p>Cache this! </p></li>
+</ul>
+
 <p><a href="./server/sandboxes.html">server/sandboxes.coffee</a></p>
 
 <ul>

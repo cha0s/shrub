@@ -29,8 +29,12 @@ achieve the ultimate in clean, elegant structure. No more
 as well as requiring JS execution, which <a href="http://www.wired.com/threatlevel/2013/09/freedom-hosting-fbi/">some people prefer not to
 allow for untrusted websites</a>.</p>
 
-<p>Shrub implements the <code>angular</code> server package, which implements 
-hook <code>httpMiddleware</code>. Since both sides of the stack have fully featured JS
+<p>Shrub implements the
+<a href="http://cha0s.github.io/shrub/server/packages/angular/index.html"><code>angular</code></a>
+server package, which implements 
+hook
+<a href="http://cha0s.github.io/shrub/hooks.html#httpmiddleware"><code>httpMiddleware</code></a>.
+Since both sides of the stack have fully featured JS
 (<a href="http://www.youtube.com/watch?v=lD9FAOPBiDk">well, except for certain older browsers...</a>)
 , when a client requests a page from Shrub, it spins up a
 <a href="http://cha0s.github.io/shrub/server/sandboxes.html">sandbox</a> for the request,
@@ -40,8 +44,9 @@ to the client.</p>
 <p>If the client has JS enabled, the client-side Angular application takes over
 from here, loading new pages instantly and generally benefitting from all the
 lovely things that client-side applications offer. The package also implements
-hook <code>endpoint</code>, which allows a JSful client to let the server know it can
-release the sandbox.</p>
+hook
+<a href="http://cha0s.github.io/shrub/hooks.html#endpoint"><code>endpoint</code></a>, which allows a
+JSful client to let the server know it can release the sandbox.</p>
 
 <p>However, if the client does not have JS enabled, a new page will hit the server
 again, and the package, crafty as it is, will reuse the sandbox created for

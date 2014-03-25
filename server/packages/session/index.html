@@ -11,16 +11,14 @@
       
       <span class="k">return</span> <span class="nx">next</span><span class="p">()</span> <span class="nx">unless</span> <span class="nx">req</span> <span class="o">and</span> <span class="nx">req</span><span class="p">.</span><span class="nx">headers</span> <span class="o">and</span> <span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">cookie</span>
       
-      <span class="nx">req</span><span class="p">.</span><span class="nx">http</span><span class="p">.</span><span class="nx">loadSessionFromRequest</span><span class="p">(</span><span class="nx">req</span><span class="p">).</span><span class="k">then</span><span class="p">(</span>
+      <span class="nx">req</span><span class="p">.</span><span class="nx">http</span><span class="p">.</span><span class="nx">loadSessionFromRequest</span><span class="p">(</span>
+        <span class="nx">req</span>
+      
+      <span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="nf">(session) -&gt;</span>
+        <span class="nv">req.session = </span><span class="nx">session</span>
+        <span class="nx">next</span><span class="p">()</span>
         
-        <span class="nf">(session) -&gt;</span>
-          
-          <span class="nv">req.session = </span><span class="nx">session</span>
-          
-          <span class="nx">next</span><span class="p">()</span>
-        
-        <span class="nf">(error) -&gt;</span> <span class="nx">next</span> <span class="nx">error</span>
-      <span class="p">)</span>
+      <span class="p">).</span><span class="k">catch</span> <span class="nx">next</span>
       
   <span class="p">]</span>
 

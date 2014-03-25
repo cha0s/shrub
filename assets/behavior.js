@@ -17,9 +17,89 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
         "projectPath": "README.md",
         "targetPath": "index",
         "pageTitle": "Shrub documentation",
-        "title": "Shrub documentation"
+        "firstHeader": {
+          "type": "heading",
+          "data": {
+            "level": 1,
+            "title": "Shrub",
+            "slug": "shrub",
+            "isFileHeader": true
+          },
+          "depth": 1,
+          "children": [
+            {
+              "type": "heading",
+              "data": {
+                "level": 3,
+                "title": "Documentation",
+                "slug": "documentation"
+              },
+              "depth": 3
+            }, {
+              "type": "heading",
+              "data": {
+                "level": 3,
+                "title": "Awesome example of a package",
+                "slug": "awesome-example-of-a-package"
+              },
+              "depth": 3
+            }, {
+              "type": "heading",
+              "data": {
+                "level": 3,
+                "title": "Get rolling",
+                "slug": "get-rolling"
+              },
+              "depth": 3
+            }, {
+              "type": "heading",
+              "data": {
+                "level": 3,
+                "title": "TODO",
+                "slug": "todo"
+              },
+              "depth": 3
+            }
+          ]
+        },
+        "title": "Shrub"
       },
-      "depth": 1
+      "depth": 1,
+      "outline": [
+        {
+          "type": "heading",
+          "data": {
+            "level": 3,
+            "title": "Documentation",
+            "slug": "documentation"
+          },
+          "depth": 3
+        }, {
+          "type": "heading",
+          "data": {
+            "level": 3,
+            "title": "Awesome example of a package",
+            "slug": "awesome-example-of-a-package"
+          },
+          "depth": 3
+        }, {
+          "type": "heading",
+          "data": {
+            "level": 3,
+            "title": "Get rolling",
+            "slug": "get-rolling"
+          },
+          "depth": 3
+        }, {
+          "type": "heading",
+          "data": {
+            "level": 3,
+            "title": "TODO",
+            "slug": "todo"
+          },
+          "depth": 3
+        }
+      ]
     }, {
       "type": "folder",
       "data": {
@@ -849,7 +929,64 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "server/AbstractHttp",
             "title": "AbstractHttp"
           },
-          "depth": 2
+          "depth": 2,
+          "outline": [
+            {
+              "type": "heading",
+              "data": {
+                "level": 1,
+                "title": "AbstractHttp",
+                "slug": "abstracthttp"
+              },
+              "depth": 1,
+              "children": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "AbstractHttp",
+                    "slug": "abstracthttp"
+                  },
+                  "depth": 2,
+                  "children": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".initialize",
+                        "slug": "initialize"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".config",
+                        "slug": "config"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".port",
+                        "slug": "port"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".registerMiddleware",
+                        "slug": "registermiddleware"
+                      },
+                      "depth": 3
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }, {
           "type": "file",
           "data": {
@@ -1165,7 +1302,104 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/express/index",
                     "title": "index"
                   },
-                  "depth": 4
+                  "depth": 4,
+                  "outline": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 1,
+                        "title": "Express",
+                        "slug": "express"
+                      },
+                      "depth": 1,
+                      "children": [
+                        {
+                          "type": "heading",
+                          "data": {
+                            "level": 2,
+                            "title": "Express",
+                            "slug": "express"
+                          },
+                          "depth": 2,
+                          "children": [
+                            {
+                              "type": "heading",
+                              "data": {
+                                "level": 3,
+                                "title": "::path",
+                                "slug": "path"
+                              },
+                              "depth": 3
+                            }, {
+                              "type": "heading",
+                              "data": {
+                                "level": 3,
+                                "title": "::cookieParser",
+                                "slug": "cookieparser"
+                              },
+                              "depth": 3
+                            }, {
+                              "type": "heading",
+                              "data": {
+                                "level": 3,
+                                "title": "::cookieSecret",
+                                "slug": "cookiesecret"
+                              },
+                              "depth": 3
+                            }, {
+                              "type": "heading",
+                              "data": {
+                                "level": 3,
+                                "title": "::listen",
+                                "slug": "listen"
+                              },
+                              "depth": 3
+                            }, {
+                              "type": "heading",
+                              "data": {
+                                "level": 3,
+                                "title": "::loadSessionFromRequest",
+                                "slug": "loadsessionfromrequest"
+                              },
+                              "depth": 3
+                            }, {
+                              "type": "heading",
+                              "data": {
+                                "level": 3,
+                                "title": "::renderAppHtml",
+                                "slug": "renderapphtml"
+                              },
+                              "depth": 3
+                            }, {
+                              "type": "heading",
+                              "data": {
+                                "level": 3,
+                                "title": "::server",
+                                "slug": "server"
+                              },
+                              "depth": 3
+                            }, {
+                              "type": "heading",
+                              "data": {
+                                "level": 3,
+                                "title": "::sessionKey",
+                                "slug": "sessionkey"
+                              },
+                              "depth": 3
+                            }, {
+                              "type": "heading",
+                              "data": {
+                                "level": 3,
+                                "title": "::sessionStore",
+                                "slug": "sessionstore"
+                              },
+                              "depth": 3
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
                 }, {
                   "type": "file",
                   "data": {
