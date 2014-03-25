@@ -36,7 +36,7 @@ generateHookDocumentation = do ->
 	
 	markdown = """
 
-# Hooks
+# Hook overview
 
 Shrub implements message passing between packages through a hook system. Hooks
 may be invoked with [pkgman.invoke()](./client/modules/pkgman.html), and are
@@ -86,7 +86,7 @@ A dynamically generated listing of hooks follows.
 		hooks = hookInformation[filename]
 		
 		# } Top-level list: filenames
-		markdown += "* [#{
+		markdown += "* ##[#{
 			filename
 		}](./#{
 			filename.replace /(coffee|js)/, 'html'
@@ -108,7 +108,7 @@ generateHookDocumentation = do ->
 	
 	markdown = """
 
-# TODO
+# TODO list
 
 Shrub -- like any project -- always presents a path for improvement. This is
 a dynamically generated listing of TODO items, each with a line of code
@@ -168,3 +168,92 @@ context.
 			}`\n\n"
 		
 	fs.writeFileSync "documentation/todos.md", markdown
+
+# Generate package documentation.
+generatePackageDocumentation = do ->
+	
+	markdown = """
+
+# Package overview
+
+Packages are how Shrub organizes functionality. Packages may be provided for
+the server or the client (or both).
+
+This page provides a listing of packages in this project, along with a short
+description of the functionality they provide.
+
+
+"""
+	
+	packageInformation = {}
+	for filename, {commentLines} of sources
+		
+		# } Get the type and name of this package (if any).
+		packageTypeAndName = ///
+
+^(?:
+	(server)\/packages\/([^/]+)
+	|
+	(client)\/modules\/packages\/([^/]+)
+)
+
+///
+		
+		continue unless (matches = filename.match packageTypeAndName)?
+		
+		type = matches[1] ? matches[3]
+		name = matches[2] ? matches[4]
+		
+		packageInformation[type] ?= {}
+		
+		# } Only do this once for each package.
+		continue if packageInformation[type][name]?
+		
+		packageInformation[type][name] =
+			
+			description: ''
+			filename: filename
+		
+		# } Nothing to do if there are no comments.
+		continue unless commentLines.length > 0
+		
+		# } Jump to the second comment.
+		index = 0
+		index += 1 while commentLines[index] is ''
+		continue if index is commentLines.length
+		index += 2
+		continue if index is commentLines.length
+		
+		# } Get everything until the comment ends as the package description.
+		description = ''
+		while (lookaheadLine = commentLines[index]) isnt '' and lookaheadLine?
+			matches = lookaheadLine.match /^\#\s(.*)$/
+			description += matches[1].trim() + ' '
+			
+			index += 1
+			
+		continue if '' is description = description.trim()
+		packageInformation[type][name].description = " - #{description}"
+			
+	# } Output the package information.
+	for type in ['client', 'server']
+		alphabetical = Object.keys(packageInformation[type]).sort()
+		
+		humanizeType = client: 'Client-side', server: 'Server-side'
+		
+		# } Top-level list: type
+		markdown += "* ###{humanizeType[type]}\n\n"
+		
+		for packageName in alphabetical
+			{description, filename} = packageInformation[type][packageName]
+			
+			# } Second-level list: packages with descriptions.
+			markdown += "\t  * ###[#{
+				packageName
+			}](./#{
+				filename.replace /(coffee|js)/, 'html'
+			})#{
+				description
+			}\n\n"
+		
+	fs.writeFileSync "documentation/packages.md", markdown
