@@ -30,8 +30,12 @@ JS applications catch flak because they are not impliticly SEO-friendly,
 as well as requiring JS execution, which [some people prefer not to
 allow for untrusted websites](http://www.wired.com/threatlevel/2013/09/freedom-hosting-fbi/).
 
-Shrub implements the `angular` server package, which implements 
-hook `httpMiddleware`. Since both sides of the stack have fully featured JS
+Shrub implements the
+[`angular`](http://cha0s.github.io/shrub/server/packages/angular/index.html)
+server package, which implements 
+hook
+[`httpMiddleware`](http://cha0s.github.io/shrub/hooks.html#httpmiddleware).
+Since both sides of the stack have fully featured JS
 ([well, except for certain older browsers...](http://www.youtube.com/watch?v=lD9FAOPBiDk))
 , when a client requests a page from Shrub, it spins up a
 [sandbox](http://cha0s.github.io/shrub/server/sandboxes.html) for the request,
@@ -41,8 +45,9 @@ to the client.
 If the client has JS enabled, the client-side Angular application takes over
 from here, loading new pages instantly and generally benefitting from all the
 lovely things that client-side applications offer. The package also implements
-hook `endpoint`, which allows a JSful client to let the server know it can
-release the sandbox.
+hook
+[`endpoint`](http://cha0s.github.io/shrub/hooks.html#endpoint), which allows a
+JSful client to let the server know it can release the sandbox.
 
 However, if the client does not have JS enabled, a new page will hit the server
 again, and the package, crafty as it is, will reuse the sandbox created for

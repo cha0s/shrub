@@ -27,8 +27,8 @@ exports.$httpMiddleware = (http) ->
 			
 			cookieObject = {}
 			for kv in cookie.split ';'
-				[key, value] = kv.split '='
-				cookieObject[key.trim()] = value
+				[k, v] = kv.split '='
+				cookieObject[k.trim()] = v
 			
 			# Pull out junk that only makes sense en route to client.
 			delete cookieObject['Path']
@@ -45,7 +45,7 @@ exports.$httpMiddleware = (http) ->
 			req.session.save (error) ->
 				next error if error?
 				
-				req.signedCookies[http.sessionKey()] = req.sessionID
+				req.signedCookies[key] = req.sessionID
 				req.headers.cookie = cookie
 				next()
 	

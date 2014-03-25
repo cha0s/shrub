@@ -1,4 +1,9 @@
 
+# # Express
+# 
+# An [Express](http://expressjs.com/) HTTP server implementation, with
+# middleware for sessions, routing, logging, etc.
+
 express = require 'express'
 fs = require 'fs'
 http = require 'http'
@@ -7,54 +12,91 @@ Promise = require 'bluebird'
 
 {defaultLogger} = require 'logging'
 
+# ## Express
+# 
+# An implementation of [AbstractHttp](../../AbstractHttp.html) using the
+# Express framework.
 class Express extends (require 'AbstractHttp')
 	
+	# ### *constructor*
+	# 
+	# *Create the server.*
 	constructor: ->
 		super
 		
+		# } Create the Express instance.
 		@_app = express()
 		
-		# Handlebars!
+		# } Register middleware.
+		@registerMiddleware()
+		
+		# } Handlebars!
+		# } `TODO`: Do we really need to use Express's theme system..?
 		@_app.set 'views', @_config.path
 		@_app.set 'view engine', 'html'
 		@_app.engine 'html', require('hbs').__express
 		
+		# } Spin up an HTTP server.
 		@_server = http.createServer @_app
 		
-		@registerMiddleware()
-		
+		# } Connect (no pun) Express's middleware system to ours.
 		@_app.use (req, res, next) => @_middleware.dispatch req, res, next
 	
+	# ### ::path
+	# 
+	# *The path where statuc files are served from.*
 	path: -> @_config.path
 	
+	# ### ::cookieParser
+	# 
+	# *Express cookie parser middleware.*
 	cookieParser: -> express.cookieParser @cookieSecret()
 	
+	# ### ::cookieSecret
+	# 
+	# *The crypto key used to encrypt cookies.*
 	cookieSecret: -> @_config.sessions.cookie.cryptoKey
 
+	# ### ::listen
+	# 
+	# *Listen for HTTP connections.*
+	# 
+	# * (function) `fn` - The function to call when the server is listening.
+	# 
+	# `TODO`: This should return a promise, not take a callback.
 	listen: (fn) ->
 		
+		# } Catch errors. If it's an address in use error then complain about
+		# } it, but try again.
 		errorCallback = (error) =>
 			return fn error unless 'EADDRINUSE' is error.code
 			
-			defaultLogger.info "Address in use... retrying in 2 seconds"
+			defaultLogger.error "Address in use... retrying in 2 seconds"
 			
 			setTimeout (=> @_server.listen @port()), 2000
-		
 		@_server.on 'error', errorCallback
 		
 		@_server.once 'listening', =>
 			@_server.removeListener 'error', errorCallback
 			fn()
 		
+		# } Bind to the listen port.
 		@_server.listen @port()
 	
+	# ### ::loadSessionFromRequest
+	# 
+	# * (object) `req` - The request object.
+	# 
+	# *Parse the request's cookies and load any session.*
 	loadSessionFromRequest: (req) ->
 		
 		new Promise (resolve, reject) =>
 		
-			@cookieParser() req, {}, (error) =>
+			@cookieParser() req, null, (error) =>
 				return reject error if error?
 				
+				# } Tricky: Assign req.sessionStore, because Express session
+				# } functionality will be broken unless it exists.
 				(req.sessionStore = @sessionStore()).load(
 					req.signedCookies[@sessionKey()]
 					(error, session) ->
@@ -65,6 +107,11 @@ class Express extends (require 'AbstractHttp')
 						resolve session
 				)
 			
+	# ### ::renderAppHtml
+	# 
+	# * (object) `locals` - The locals to pass to handlebars.
+	# 
+	# *Render the application HTML.*
 	renderAppHtml: (locals) ->
 		
 		new Promise (resolve, reject) =>
@@ -74,12 +121,21 @@ class Express extends (require 'AbstractHttp')
 				
 				resolve html
 	
+	# ### ::server
+	# 
+	# *The node HTTP server instance.*
 	server: -> @_server
 	
-	sessionId: (req) -> req.session.id
-
+	# ### ::sessionKey
+	# 
+	# *The cookie key where the session ID will be found.*
 	sessionKey: -> @_config.sessions.key
 	
+	# ### ::sessionStore
+	# 
+	# *The session store.*
+	# 
+	# `TODO`: Cache this!
 	sessionStore: ->
 		
 		switch @_config.sessions.db
@@ -90,6 +146,7 @@ class Express extends (require 'AbstractHttp')
 				RedisStore = require('connect-redis') express
 				new RedisStore client: module.createClient()
 
+# ## Implements hook `initialize`
 exports.$initialize = (config) ->
 	
 	new Promise (resolve, reject) ->
@@ -103,6 +160,7 @@ exports.$initialize = (config) ->
 			}!"
 			resolve()
 
+# ## Implements hook `settings`
 exports.$settings = ->
 
 	middleware: [

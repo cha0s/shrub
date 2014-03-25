@@ -39,9 +39,9 @@ for filename, {commentLines} of sources
 	packageTypeAndName = ///
 
 ^(?:
-	(server)\/packages\/([^/]+)/index
+	(server)\/packages\/([^/]+)
 	|
-	(client)\/modules\/packages\/([^/]+)/index
+	(client)\/modules\/packages\/([^/]+)
 )
 
 ///
@@ -58,7 +58,7 @@ for filename, {commentLines} of sources
 	continue if packageInformation[type][name]?
 	
 	packageInformation[type][name] = filename: filename
-	
+
 # Generate hook documentation.
 generateHookDocumentation = do ->
 	
@@ -156,6 +156,9 @@ description and a list of implementing packages for each hook.
 			for package_ in packages
 
 				{filename} = packageInformation[type][package_.name]
+				
+				matches = filename.match /packages\/(.*)\./
+				
 				markdown += """
 
 \t* <a href="./#{
@@ -163,7 +166,7 @@ description and a list of implementing packages for each hook.
 }\#implementshook#{
 	name.toLowerCase()
 }">#{
-	package_.name
+	matches[1].replace /\/index$/, ''
 } (#{
 	package_.type
 })</a>

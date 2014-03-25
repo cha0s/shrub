@@ -12,16 +12,14 @@ exports.$socketAuthorizationMiddleware = ->
 			
 			return next() unless req and req.headers and req.headers.cookie
 			
-			req.http.loadSessionFromRequest(req).then(
+			req.http.loadSessionFromRequest(
+				req
+			
+			).then((session) ->
+				req.session = session
+				next()
 				
-				(session) ->
-					
-					req.session = session
-					
-					next()
-				
-				(error) -> next error
-			)
+			).catch next
 			
 	]
 

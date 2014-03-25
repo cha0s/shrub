@@ -26,7 +26,9 @@ module.exports = class AbstractHttp
 	# 
 	# * (object) `config` - The server configuration.
 	#   `TODO`: Should probably just use nconf, weird interface.
-	constructor: (@_config) -> @_middleware = null
+	constructor: (@_config) ->
+		
+		@_middleware = null
 	
 	# ### .initialize
 	# 
