@@ -60,10 +60,10 @@ exports.sendMail = (type, mail) ->
 	sandboxId = null
 	
 	# Allow other packages to make changes to the mail.
-	promises = for _, promise of pkgman.invoke 'mail', type, mail
-		promise
+	Promise.all(
+		pkgman.invokeFlat 'mail', type, mail
 	
-	Promise.all(promises).then(->
+	).then(->
 		return mail.html if mail.html
 		
 		# Search for a template filename.

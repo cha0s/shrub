@@ -15,7 +15,7 @@ exports.keys = (req) ->
 	# Invoke hook `auditKeys`.
 	# Allows a package to specify unique keys for this request, e.g. IP
 	# address, session ID, etc.
-	for path, keys of pkgman.invoke 'auditKeys', req
+	for keys in pkgman.invokeFlat 'auditKeys', req
 		continue unless keys?
 		for key, value of keys
 			continue unless value?

@@ -38,32 +38,30 @@ module.exports = class AbstractHttp
 		# Invoke hook `httpInitializer`.
 		# Invoked before the server is bound on the listening port.
 		# 
-		# } TODO: This invocation should probably be middlware.fromHook()'d
-		middleware = new middleware.Middleware()
-		for _, initializer of pkgman.invoke 'httpInitializer'
-			middleware.use initializer
+		# } TODO: This invocation should probably be middleware.fromHook()'d
+		initializerMiddleware = new middleware.Middleware()
+		for fn_ in pkgman.invokeFlat 'httpInitializer'
+			initializerMiddleware.use fn_
 		
 		# } Dispatch the middleware.
 		request = http: this
 		response = null
-		middleware.dispatch request, response, (error) =>
+		initializerMiddleware.dispatch request, response, (error) =>
 			return fn error if error?
 			
 			# Start listening.
 			@listen (error) =>
 				return fn error if error?
 				
-				# Invoke hook `httpListening`.
-				# Invoked once the server is listening, but before
-				# initialization finishes.
-				promises = for _, promise of pkgman.invoke(
-					'httpListening', this
-				)
-					promise
+				Promise.all(
 					
+					# Invoke hook `httpListening`.
+					# Invoked once the server is listening, but before
+					# initialization finishes.
+					pkgman.invokeFlat 'httpListening', this
 				
 				# Finish initialization.
-				Promise.all(promises).then(
+				).then(
 					-> fn()
 					(error) -> fn error
 				)

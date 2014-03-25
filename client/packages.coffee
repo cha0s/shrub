@@ -63,6 +63,11 @@ angular.module('shrub.pkgman', [
 				args.unshift hook
 				pkgman.invoke args...
 				
+			service.invokeFlat = (hook, args...) ->
+				
+				args.unshift hook
+				pkgman.invokeFlat args...
+				
 			service.invokeWithMocks = (hook, args...) ->
 				
 				args.unshift hook

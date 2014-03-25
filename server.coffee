@@ -12,19 +12,34 @@ pkgman = require 'pkgman'
 {defaultLogger} = require 'logging'
 
 # } Set up config.
-(config = require 'config').loadSettingsFile()
+config = require('config').loadSettingsFile()
 
-# } Initialize.
-initializers = pkgman.invoke 'initialize', config.loadPackageSettings()
-initializePromises = (promise for _, promise of initializers)
+Promise.all(
+	
+	# Invoke hook `initialize`.
+	# Invoked when the server is just starting. Implementations should return
+	# a promise. When all returned promises are fulfilled, initialization
+	# continues.
+	pkgman.invokeFlat 'initialize', config.loadPackageSettings()
 
 # } After initialization.
-Promise.all(initializePromises).done(
+).done(
+
+	# Invoke hook `initialized`.
+	# Invoked after the server is initialized.
+	# 
+	# `TODO`: This should be called something like `running`.
 	-> pkgman.invoke 'initialized'
-	(error) -> defaultLogger.error errors.stack error
+	(error) ->
+		
+		defaultLogger.error errors.stack error
+		
+		# } Rethrow any error.
+		throw error
 )
 
 # Do our best to guarantee that hook `processExit` will always be invoked.
+
 # } Signal listeners and process cleanup.
 process.on 'SIGINT', -> process.exit()
 process.on 'SIGTERM', -> process.exit()

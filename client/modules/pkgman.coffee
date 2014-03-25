@@ -48,3 +48,9 @@ exports.invoke = (hook, args...) ->
 	results = {}
 	results[path] = fn args... for {path, fn} in packageCache[hook] ? []
 	results
+
+exports.invokeFlat = (hook, args...) ->
+	exports.rebuildPackageCache() unless packageCache?
+	
+	fn args... for {path, fn} in packageCache[hook] ? []
+	

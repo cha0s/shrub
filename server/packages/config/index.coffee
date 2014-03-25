@@ -29,21 +29,21 @@ exports.$httpMiddleware = (http) ->
 		(req, res, next) ->
 			return next() unless req.url is '/js/config.js'
 			
-			promises = for path, promise of pkgman.invoke 'config', req
-				promise
-			
-			config = {}
-			Promise.all(promises).then((subconfigs) ->
-				_.extend config, subconfig for subconfig in subconfigs
-			).then(->
+			Promise.all(
+				pkgman.invokeFlat 'config', req
 				
-					prettyPrintConfig = ->
-						[first, rest...] = (JSON.stringify config, null, '  ').split '\n'
-						([first].concat rest.map (line) -> '  ' + line).join '\n'
-						
-					res.setHeader 'Content-Type', 'text/javascript'
+			).then((subconfigs) ->
+
+				config = {}
+				_.extend config, subconfig for subconfig in subconfigs				
+			
+				prettyPrintConfig = ->
+					[first, rest...] = (JSON.stringify config, null, '  ').split '\n'
+					([first].concat rest.map (line) -> '  ' + line).join '\n'
 					
-					res.send """
+				res.setHeader 'Content-Type', 'text/javascript'
+				
+				res.send """
 angular.module('shrub.config', []).provider('config', function() {
 
   var __slice = [].slice;
@@ -53,8 +53,7 @@ angular.module('shrub.config', []).provider('config', function() {
 });
 """
 				
-				(error) -> next error
-			)
+			).catch next
 			
 	]
 
