@@ -30,6 +30,34 @@ for filename of files
 		raw: raw
 		lines: lines
 		commentLines: commentLines
+
+# } Get the type and name of this package (if any).
+packageInformation = {}
+packageLookup = {}
+for filename, {commentLines} of sources
+	
+	packageTypeAndName = ///
+
+^(?:
+	(server)\/packages\/([^/]+)/index
+	|
+	(client)\/modules\/packages\/([^/]+)/index
+)
+
+///
+		
+	continue unless (matches = filename.match packageTypeAndName)?
+	
+	type = matches[1] ? matches[3]
+	name = matches[2] ? matches[4]
+	
+	packageInformation[type] ?= {}
+	packageLookup[filename] = name: name, type: type
+	
+	# } Only do this once for each package.
+	continue if packageInformation[type][name]?
+	
+	packageInformation[type][name] = filename: filename
 	
 # Generate hook documentation.
 generateHookDocumentation = do ->
@@ -49,10 +77,28 @@ For instance, if we are implementing a package and want to implement the
 		
 		# Your code goes here...
 
-A dynamically generated listing of hooks follows.
+The list below was dynamically generated from the source code. There is a
+description and a list of implementing packages for each hook.
 
+---
 
 """
+	
+	packagesImplementingHook = (hookName) ->
+	
+		implementsPattern = new RegExp "^\#\\s(\#\# )?Implements hook `#{
+			hookName
+		}`"
+			
+		packages = []
+		
+		for filename, {commentLines} of sources
+			continue unless (package_ = packageLookup[filename])?
+			
+			packages.push package_ if commentLines.some (line) ->
+				line.match implementsPattern
+					
+		packages
 	
 	hookInformation = {}
 	for filename, {commentLines} of sources
@@ -80,29 +126,50 @@ A dynamically generated listing of hooks follows.
 					description: description
 					name: hookName
 	
-	# } Output the hook information.			
+	# } Output the hook information.
 	alphabetical = Object.keys(hookInformation).sort()
 	for filename in alphabetical
 		hooks = hookInformation[filename]
 		
 		# } Top-level list: filenames
-		markdown += "* ##[#{
-			filename
-		}](./#{
-			filename.replace /(coffee|js)/, 'html'
-		}):\n\n"
+		markdown += """
+
+[#{filename}](./#{filename.replace /(coffee|js)/, 'html'})
+
+"""
 		
 		# } Second-level list: hook names and descriptions.
 		for {name, description} in hooks
 			
-			markdown += "\t* ### `#{
-				name
-			}`\n\t  #### #{
-				description
-			}\n\t\n"
+			packages = packagesImplementingHook name
 			
-		markdown += '\t* ...\n'
-		
+			markdown += """
+
+* ## `#{name}`
+
+\t### #{description}
+
+"""
+			
+			continue if packages.length is 0
+				
+			for package_ in packages
+
+				{filename} = packageInformation[type][package_.name]
+				markdown += """
+
+\t* <h4><a href="./#{
+	filename.replace /\.(js|coffee)$/, '.html'
+}\#implementshook#{
+	name.toLowerCase()
+}">#{
+	package_.name
+} (#{
+	package_.type
+})</a></h4>
+
+"""
+			
 	fs.writeFileSync "documentation/hooks.md", markdown
 
 # Generate TODO documentation.
@@ -187,55 +254,33 @@ description of the functionality they provide.
 
 """
 	
-	packageInformation = {}
-	for filename, {commentLines} of sources
-		
-		# } Get the type and name of this package (if any).
-		packageTypeAndName = ///
+	for type, package_ of packageInformation
+		for name, {filename} of package_
+			{commentLines} = sources[filename]
+	
+			# } Nothing to do if there are no comments.
+			continue unless commentLines.length > 0
+			
+			# } Jump to the second comment.
+			index = 0
+			index += 1 while commentLines[index] is ''
+			continue if index is commentLines.length
+			index += 2
+			continue if index is commentLines.length
+			
+			# } Get everything until the comment ends as the package
+			# } description.
+			description = ''
+			while true
+				break if (lookaheadLine = commentLines[index]) is ''
+				break unless lookaheadLine?
 
-^(?:
-	(server)\/packages\/([^/]+)
-	|
-	(client)\/modules\/packages\/([^/]+)
-)
-
-///
-		
-		continue unless (matches = filename.match packageTypeAndName)?
-		
-		type = matches[1] ? matches[3]
-		name = matches[2] ? matches[4]
-		
-		packageInformation[type] ?= {}
-		
-		# } Only do this once for each package.
-		continue if packageInformation[type][name]?
-		
-		packageInformation[type][name] =
+				matches = lookaheadLine.match /^\#\s(.*)$/
+				description += matches[1].trim() + ' '
+				
+				index += 1
 			
-			description: ''
-			filename: filename
-		
-		# } Nothing to do if there are no comments.
-		continue unless commentLines.length > 0
-		
-		# } Jump to the second comment.
-		index = 0
-		index += 1 while commentLines[index] is ''
-		continue if index is commentLines.length
-		index += 2
-		continue if index is commentLines.length
-		
-		# } Get everything until the comment ends as the package description.
-		description = ''
-		while (lookaheadLine = commentLines[index]) isnt '' and lookaheadLine?
-			matches = lookaheadLine.match /^\#\s(.*)$/
-			description += matches[1].trim() + ' '
-			
-			index += 1
-			
-		continue if '' is description = description.trim()
-		packageInformation[type][name].description = description
+			packageInformation[type][name].description = description.trim()
 			
 	# } Output the package information.
 	for type in ['client', 'server']
