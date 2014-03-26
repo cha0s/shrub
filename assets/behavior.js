@@ -655,7 +655,53 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 "pageTitle": "client/modules/pkgman",
                 "title": "pkgman"
               },
-              "depth": 3
+              "depth": 3,
+              "outline": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 1,
+                    "title": "Package manager",
+                    "slug": "package-manager"
+                  },
+                  "depth": 1,
+                  "children": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "rebuildPackageCache",
+                        "slug": "rebuildpackagecache"
+                      },
+                      "depth": 2
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "registerPackages",
+                        "slug": "registerpackages"
+                      },
+                      "depth": 2
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "invoke",
+                        "slug": "invoke"
+                      },
+                      "depth": 2
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "invokeFlat",
+                        "slug": "invokeflat"
+                      },
+                      "depth": 2
+                    }
+                  ]
+                }
+              ]
             }, {
               "type": "file",
               "data": {
@@ -675,7 +721,29 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 "pageTitle": "client/modules/schema-client",
                 "title": "schema-client"
               },
-              "depth": 3
+              "depth": 3,
+              "outline": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 1,
+                    "title": "JugglingDB",
+                    "slug": "jugglingdb"
+                  },
+                  "depth": 1,
+                  "children": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "define",
+                        "slug": "define"
+                      },
+                      "depth": 2
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }, {
@@ -1085,18 +1153,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/config/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Configuration",
-                        "slug": "configuration"
-                      },
-                      "depth": 1
-                    }
-                  ]
+                  "depth": 4
                 }
               ]
             }, {
@@ -1346,29 +1403,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/nodemailer/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "nodemailer",
-                        "slug": "nodemailer"
-                      },
-                      "depth": 1,
-                      "children": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "sendMail",
-                            "slug": "sendmail"
-                          },
-                          "depth": 2
-                        }
-                      ]
-                    }
-                  ]
+                  "depth": 4
                 }
               ]
             }, {
@@ -1518,53 +1553,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/socket/SocketIo",
                     "title": "SocketIo"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Socket.IO",
-                        "slug": "socketio"
-                      },
-                      "depth": 1,
-                      "children": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "SocketIo",
-                            "slug": "socketio"
-                          },
-                          "depth": 2
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "::listen",
-                            "slug": "listen"
-                          },
-                          "depth": 2
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "::socketsInChannel",
-                            "slug": "socketsinchannel"
-                          },
-                          "depth": 2
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "::store",
-                            "slug": "store"
-                          },
-                          "depth": 2
-                        }
-                      ]
-                    }
-                  ]
+                  "depth": 4
                 }, {
                   "type": "file",
                   "data": {
@@ -1634,18 +1623,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/user/forgot",
                     "title": "forgot"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "User - forgot password",
-                        "slug": "user-forgot-password"
-                      },
-                      "depth": 1
-                    }
-                  ]
+                  "depth": 4
                 }, {
                   "type": "file",
                   "data": {
@@ -1665,29 +1643,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/user/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "User",
-                        "slug": "user"
-                      },
-                      "depth": 1,
-                      "children": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "loadByName",
-                            "slug": "loadbyname"
-                          },
-                          "depth": 2
-                        }
-                      ]
-                    }
-                  ]
+                  "depth": 4
                 }, {
                   "type": "file",
                   "data": {
@@ -1707,8 +1663,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/user/login",
                     "title": "login"
                   },
-                  "depth": 4,
-                  "outline": []
+                  "depth": 4
                 }, {
                   "type": "file",
                   "data": {
@@ -1728,18 +1683,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/user/logout",
                     "title": "logout"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "User logout",
-                        "slug": "user-logout"
-                      },
-                      "depth": 1
-                    }
-                  ]
+                  "depth": 4
                 }, {
                   "type": "file",
                   "data": {
@@ -1759,29 +1703,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/user/register",
                     "title": "register"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "User registration",
-                        "slug": "user-registration"
-                      },
-                      "depth": 1,
-                      "children": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "register",
-                            "slug": "register"
-                          },
-                          "depth": 2
-                        }
-                      ]
-                    }
-                  ]
+                  "depth": 4
                 }, {
                   "type": "file",
                   "data": {
@@ -1801,18 +1723,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/user/reset",
                     "title": "reset"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "User password reset",
-                        "slug": "user-password-reset"
-                      },
-                      "depth": 1
-                    }
-                  ]
+                  "depth": 4
                 }
               ]
             }, {
@@ -1842,45 +1753,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/villiany/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Villiany",
-                        "slug": "villiany"
-                      },
-                      "depth": 1,
-                      "children": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "Implements hook `httpMiddleware",
-                            "slug": "implements-hook-httpmiddleware"
-                          },
-                          "depth": 2
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "Implements hook `settings",
-                            "slug": "implements-hook-settings"
-                          },
-                          "depth": 2
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "Implements hook `socketAuthorizationMiddleware",
-                            "slug": "implements-hook-socketauthorizationmiddleware"
-                          },
-                          "depth": 2
-                        }
-                      ]
-                    }
-                  ]
+                  "depth": 4
                 }
               ]
             }

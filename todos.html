@@ -4,6 +4,39 @@
 a dynamically generated listing of TODO items, each with a line of code
 context.</p>
 
+<p><a href="./client/modules/errors.html">client/modules/errors.coffee</a></p>
+
+<ul>
+<li><h4 id="caught"><code>caught: -&gt;</code></h4>
+
+<p>Remove. </p></li>
+<li><h4 id="collectedtransmittableerrorconcatpkgmaninvokeflaterrortype"><code>collected = [TransmittableError].concat pkgman.invokeFlat 'errorType'</code></h4>
+
+<p>Rename to <code>transmittableError</code>. </p></li>
+<li><h4 id="exportscaughterror"><code>exports.caught = (error) -&gt;</code></h4>
+
+<p>Remove. </p></li>
+</ul>
+
+<p><a href="./client/modules/pkgman.html">client/modules/pkgman.coffee</a></p>
+
+<ul>
+<li><h4 id="continueiferrortostringiserrorcannotfindmodulepackagesname"><code>continue if error.toString() is "Error: Cannot find module 'packages/#{name}'"</code></h4>
+
+<p>Should we let this throw? </p></li>
+<li><h4 id="exportsregisterpackagespackages"><code>exports.registerPackages = (packages) -&gt;</code></h4>
+
+<p>Rename to <code>registerPackageList</code>. </p></li>
+</ul>
+
+<p><a href="./client/modules/schema-client.html">client/modules/schema-client.coffee</a></p>
+
+<ul>
+<li><h4 id="exportsdefineadapteroptions"><code>exports.define = (adapter, options = {}) -&gt;</code></h4>
+
+<p>Don't do the model invocation/definition immediately. </p></li>
+</ul>
+
 <p><a href="./server.html">server.coffee</a></p>
 
 <ul>

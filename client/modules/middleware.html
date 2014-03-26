@@ -1,66 +1,75 @@
-<!DOCTYPE html><html lang="en"><head><title>client/modules/middleware</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="client/modules/middleware"><meta name="groc-project-path" content="client/modules/middleware.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/client/modules/middleware.coffee">client/modules/middleware.coffee</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nv">pkgman = </span><span class="nx">require</span> <span class="s1">&#39;pkgman&#39;</span>
+<!DOCTYPE html><html lang="en"><head><title>client/modules/middleware</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="client/modules/middleware"><meta name="groc-project-path" content="client/modules/middleware.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/client/modules/middleware.coffee">client/modules/middleware.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="middleware">Middleware</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nv">pkgman = </span><span class="nx">require</span> <span class="s1">&#39;pkgman&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="middleware">Middleware</h2>
 
-<span class="nv">exports.Middleware = </span><span class="k">class</span> <span class="nx">Middleware</span>
-  
-  <span class="nv">constructor: </span><span class="o">-&gt;</span>
+<p>Implements a middleware stack. middleware functions can be added to the
+stack with <code>use</code>. Calling <code>dispatch</code> invokes the middleware functions
+serially.</p>
+
+<p>Each middleware takes three parameters: <code>req</code>, <code>res</code>, and <code>next</code>. When a
+middleware finishes, it must call the <code>next</code> function. If there was an error,
+it must be thrown or passed as the first argument to <code>next</code>. If no error
+occurred, <code>next</code> must be invoked without arguments.</p>
+
+<p>Error-handling middleware can also be defined. These middleware take four
+parameters: <code>error</code>, <code>req</code>, <code>res</code>, <code>next</code>. Error-handling middleware are only
+called if a previous middleware threw or passed an error. Conversely,
+non-error-handling middleware are skipped if a previous error occurred.</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.Middleware = </span><span class="k">class</span> <span class="nx">Middleware</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="constructor"><em>constructor</em></h2>
+
+<p><em>Create a middleware stack.</em></p></div></div><div class="code"><div class="wrapper">  <span class="nv">constructor: </span><span class="o">-&gt;</span>
     
-    <span class="vi">@_dispatcher = </span><span class="o">-&gt;</span>
     <span class="vi">@_middleware = </span><span class="p">[]</span>
-  
-  <span class="nv">use: </span><span class="nf">(fn) -&gt;</span> <span class="nx">@_middleware</span><span class="p">.</span><span class="nx">push</span> <span class="nx">fn</span>
-  
-  <span class="nv">dispatch: </span><span class="nf">(request, response, fn) -&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="use">::use</h2>
+
+<p><em>Add a middleware function to the stack.</em></p>
+
+<ul>
+<li>(function) <code>fn</code> - A middleware function. </li>
+</ul></div></div><div class="code"><div class="wrapper">  <span class="nv">use: </span><span class="nf">(fn) -&gt;</span> <span class="nx">@_middleware</span><span class="p">.</span><span class="nx">push</span> <span class="nx">fn</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="dispatch">::dispatch</h2>
+
+<p><em>Invoke the middleware functions serially.</em></p>
+
+<ul>
+<li><p>(object) <code>request</code> - A request object. </p></li>
+<li><p>(mixed) <code>response</code> - A response object. Can be null. </p></li>
+<li><p>(function) <code>fn</code> - A function invoked when the middleware stack has
+finished. If an error occurred, it will be passed as the first
+argument. </p></li>
+</ul></div></div><div class="code"><div class="wrapper">  <span class="nv">dispatch: </span><span class="nf">(request, response, fn) -&gt;</span>
     
     <span class="nv">index = </span><span class="mi">0</span>
     
     <span class="nv">invoke = </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Call <code>fn</code> with any error if we're done.</p></div></div><div class="code"><div class="wrapper">      <span class="k">return</span> <span class="nx">fn</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">index</span> <span class="o">is</span> <span class="nx">@_middleware</span><span class="p">.</span><span class="nx">length</span>
       
-      <span class="k">return</span> <span class="nx">fn</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">index</span> <span class="o">is</span> <span class="nx">@_middleware</span><span class="p">.</span><span class="nx">length</span>
-      
-      <span class="nv">current = </span><span class="nx">@_middleware</span><span class="p">[</span><span class="nx">index</span><span class="p">]</span>
-      <span class="nx">index</span> <span class="o">+=</span> <span class="mi">1</span>
-      
-      <span class="k">if</span> <span class="nx">current</span><span class="p">.</span><span class="nx">length</span> <span class="o">is</span> <span class="mi">4</span>
-        
-        <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
-          
-          <span class="k">try</span>
-          
-            <span class="nx">current</span> <span class="nx">error</span><span class="p">,</span> <span class="nx">request</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="nf">(error) -&gt;</span> <span class="nx">invoke</span> <span class="nx">error</span>
-          
+      <span class="nv">current = </span><span class="nx">@_middleware</span><span class="p">[</span><span class="nx">index</span><span class="o">++</span><span class="p">]</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Error-handling middleware.</p></div></div><div class="code"><div class="wrapper">      <span class="k">if</span> <span class="nx">current</span><span class="p">.</span><span class="nx">length</span> <span class="o">is</span> <span class="mi">4</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>An error occurred previously.</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
+          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Try to invoke the middleware, if it throws, just catch
+the error and pass it along.</p></div></div><div class="code"><div class="wrapper">          <span class="k">try</span>
+            <span class="nx">current</span> <span class="nx">error</span><span class="p">,</span> <span class="nx">request</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="nf">(error) -&gt;</span>
+              <span class="nx">invoke</span> <span class="nx">error</span>
           <span class="k">catch</span> <span class="nx">error</span>
-          
             <span class="nx">invoke</span> <span class="nx">error</span>
-          
-        <span class="k">else</span>
-          
-          <span class="nx">invoke</span> <span class="nx">error</span>
-          
-      <span class="k">else</span>
-        
-        <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
+          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>No previous error; skip this middleware.</p></div></div><div class="code"><div class="wrapper">        <span class="k">else</span>
           
           <span class="nx">invoke</span> <span class="nx">error</span>
-        
-        <span class="k">else</span>
-        
-          <span class="k">try</span>
+          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Non-error-handling middleware.</p></div></div><div class="code"><div class="wrapper">      <span class="k">else</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>An error occurred previously, skip this middleware.</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
           
+          <span class="nx">invoke</span> <span class="nx">error</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>No previous error.</p></div></div><div class="code"><div class="wrapper">        <span class="k">else</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Try to invoke the middleware, if it throws, just catch
+the error and pass it along.</p></div></div><div class="code"><div class="wrapper">          <span class="k">try</span>
             <span class="nx">current</span> <span class="nx">request</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="nf">(error) -&gt;</span> <span class="nx">invoke</span> <span class="nx">error</span>
-          
           <span class="k">catch</span> <span class="nx">error</span>
-          
-            <span class="nx">invoke</span> <span class="nx">error</span>
+            <span class="nx">invoke</span> <span class="nx">error</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Kick things off.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">invoke</span><span class="p">()</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="fromhook">fromHook</h2>
 
-    <span class="nx">invoke</span> <span class="kc">null</span>
-
-<span class="nv">exports.fromHook = </span><span class="nf">(hook, paths, args...) -&gt;</span>
+<p>Create a middleware stack from the results of a hook and path configuration.</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.fromHook = </span><span class="nf">(hook, paths, args...) -&gt;</span>
   
-  <span class="nx">args</span><span class="p">.</span><span class="nx">unshift</span> <span class="nx">hook</span>
+  <span class="nv">middleware = </span><span class="k">new</span> <span class="nx">Middleware</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke the hook and <code>use</code> the middleware in the paths configuration
+order.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">args</span><span class="p">.</span><span class="nx">unshift</span> <span class="nx">hook</span>
   <span class="nv">hookResults = </span><span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="nx">args</span><span class="p">...</span>
-  
-  <span class="nv">middleware = </span><span class="k">new</span> <span class="nx">Middleware</span>
-  
   <span class="k">for</span> <span class="nx">path</span> <span class="k">in</span> <span class="nx">paths</span>
     <span class="nx">middleware</span><span class="p">.</span><span class="nx">use</span> <span class="nx">_</span> <span class="k">for</span> <span class="nx">_</span> <span class="k">in</span> <span class="nx">hookResults</span><span class="p">[</span><span class="nx">path</span><span class="p">]</span><span class="o">?</span><span class="p">.</span><span class="nx">middleware</span> <span class="o">?</span> <span class="p">[]</span>
   

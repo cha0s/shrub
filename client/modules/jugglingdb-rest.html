@@ -1,12 +1,13 @@
-<!DOCTYPE html><html lang="en"><head><title>client/modules/jugglingdb-rest</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="client/modules/jugglingdb-rest"><meta name="groc-project-path" content="client/modules/jugglingdb-rest.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/client/modules/jugglingdb-rest.coffee">client/modules/jugglingdb-rest.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><p>Socket.IO adapter proxy for <a href="https://github.com/1602/jugglingdb">JugglingDB</a>.</p>
+<!DOCTYPE html><html lang="en"><head><title>client/modules/jugglingdb-rest</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="client/modules/jugglingdb-rest"><meta name="groc-project-path" content="client/modules/jugglingdb-rest.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/client/modules/jugglingdb-rest.coffee">client/modules/jugglingdb-rest.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="jugglingdbangular-rest-adapter">JugglingDB/Angular REST adapter</h1>
 
-<p>This adapter forwards all adapter commands through a socket, to be run by the
-database server.</p></div></div><div class="code"><div class="wrapper"><span class="nv">i8n = </span><span class="nx">require</span> <span class="s1">&#39;inflection&#39;</span>
+<p>Forwards all adapter methods through HTTP/rest using Angular.</p></div></div><div class="code"><div class="wrapper"><span class="nv">i8n = </span><span class="nx">require</span> <span class="s1">&#39;inflection&#39;</span>
 
-<span class="k">class</span> <span class="nx">SocketAdapter</span>
+<span class="k">class</span> <span class="nx">RestAdapter</span>
   
   <span class="nv">constructor: </span><span class="nf">(@schema, @$http) -&gt;</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>DRY.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">promiseCallback = </span><span class="nf">(fn, promise) -&gt;</span> <span class="nx">promise</span><span class="p">.</span><span class="k">then</span><span class="p">(</span>
+  
+  <span class="c1"># DRY.</span>
+  <span class="nv">promiseCallback = </span><span class="nf">(fn, promise) -&gt;</span> <span class="nx">promise</span><span class="p">.</span><span class="k">then</span><span class="p">(</span>
     <span class="nf">({data}) -&gt;</span> <span class="nx">fn</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">data</span>
     <span class="nf">({data}) -&gt;</span> <span class="nx">fn</span> <span class="k">new</span> <span class="nb">Error</span> <span class="nx">data</span><span class="p">.</span><span class="nx">message</span>
   <span class="p">)</span>
@@ -27,7 +28,9 @@ database server.</p></div></div><div class="code"><div class="wrapper"><span cla
 responsible for underlying schema management and only make sense when
 the adapter is actually touching the database e.g. server-side.</p></div></div><div class="code"><div class="wrapper">  <span class="p">[</span>
     <span class="s1">&#39;define&#39;</span><span class="p">,</span> <span class="s1">&#39;defineForeignKey&#39;</span><span class="p">,</span> <span class="s1">&#39;possibleIndexes&#39;</span><span class="p">,</span> <span class="s1">&#39;updateIndexes&#39;</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>and our ugly duckling.</p></div></div><div class="code"><div class="wrapper">    <span class="s1">&#39;transaction&#39;</span>
+    
+    <span class="c1"># and our ugly duckling.</span>
+    <span class="s1">&#39;transaction&#39;</span>
   <span class="p">].</span><span class="nx">forEach</span> <span class="p">(</span><span class="nx">prop</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="err">@</span><span class="o">::</span><span class="p">[</span><span class="nx">prop</span><span class="p">]</span> <span class="o">=</span> <span class="o">-&gt;</span>
   
   <span class="nv">all: </span><span class="nf">(model, query, fn) -&gt;</span>
@@ -35,37 +38,67 @@ the adapter is actually touching the database e.g. server-side.</p></div></div><
     <span class="p">{</span><span class="nx">collection</span><span class="p">}</span> <span class="o">=</span> <span class="nx">@schema</span><span class="p">.</span><span class="nx">resourcePaths</span> <span class="nx">model</span>
     <span class="nv">query = </span><span class="nx">translateQuery</span> <span class="nx">query</span> <span class="o">?</span> <span class="p">{}</span>
     
-    <span class="nx">promiseCallback</span> <span class="nx">fn</span><span class="p">,</span> <span class="nx">@$http</span><span class="p">.</span><span class="nx">get</span> <span class="s2">&quot;#{@schema.settings.apiRoot}/#{collection}?#{query}&quot;</span>
+    <span class="nx">promiseCallback</span> <span class="nx">fn</span><span class="p">,</span> <span class="nx">@$http</span><span class="p">.</span><span class="nx">get</span> <span class="s2">&quot;#{</span>
+<span class="s2">      @schema.settings.apiRoot</span>
+<span class="s2">    }/#{</span>
+<span class="s2">      collection</span>
+<span class="s2">    }?#{</span>
+<span class="s2">      query</span>
+<span class="s2">    }&quot;</span>
   
   <span class="nv">count: </span><span class="nf">(model, fn) -&gt;</span>
   
     <span class="p">{</span><span class="nx">collection</span><span class="p">}</span> <span class="o">=</span> <span class="nx">@schema</span><span class="p">.</span><span class="nx">resourcePaths</span> <span class="nx">model</span>
     
-    <span class="nx">promiseCallback</span> <span class="nx">fn</span><span class="p">,</span> <span class="nx">@$http</span><span class="p">.</span><span class="nx">get</span> <span class="s2">&quot;#{@schema.settings.apiRoot}/#{collection}/count&quot;</span>
+    <span class="nx">promiseCallback</span> <span class="nx">fn</span><span class="p">,</span> <span class="nx">@$http</span><span class="p">.</span><span class="nx">get</span> <span class="s2">&quot;#{</span>
+<span class="s2">      @schema.settings.apiRoot</span>
+<span class="s2">    }/#{</span>
+<span class="s2">      collection</span>
+<span class="s2">    }/count&quot;</span>
   
   <span class="nv">create: </span><span class="nf">(model, data, fn) -&gt;</span>
   
     <span class="p">{</span><span class="nx">collection</span><span class="p">}</span> <span class="o">=</span> <span class="nx">@schema</span><span class="p">.</span><span class="nx">resourcePaths</span> <span class="nx">model</span>
     
-    <span class="nx">promiseCallback</span> <span class="nx">fn</span><span class="p">,</span> <span class="nx">@$http</span><span class="p">.</span><span class="nx">post</span> <span class="s2">&quot;#{@schema.settings.apiRoot}/#{collection}&quot;</span><span class="p">,</span> <span class="nx">data</span>
+    <span class="nx">promiseCallback</span> <span class="nx">fn</span><span class="p">,</span> <span class="nx">@$http</span><span class="p">.</span><span class="nx">post</span> <span class="s2">&quot;#{</span>
+<span class="s2">      @schema.settings.apiRoot</span>
+<span class="s2">    }/#{</span>
+<span class="s2">      collection</span>
+<span class="s2">    }&quot;</span><span class="p">,</span> <span class="nx">data</span>
   
   <span class="nv">destroy: </span><span class="nf">(model, id, fn) -&gt;</span>
     
     <span class="p">{</span><span class="nx">resource</span><span class="p">}</span> <span class="o">=</span> <span class="nx">@schema</span><span class="p">.</span><span class="nx">resourcePaths</span> <span class="nx">model</span>
     
-    <span class="nx">promiseCallback</span> <span class="nx">fn</span><span class="p">,</span> <span class="nx">@$http</span><span class="p">.</span><span class="k">delete</span> <span class="s2">&quot;#{@schema.settings.apiRoot}/#{resource}/#{id}&quot;</span>
+    <span class="nx">promiseCallback</span> <span class="nx">fn</span><span class="p">,</span> <span class="nx">@$http</span><span class="p">.</span><span class="k">delete</span> <span class="s2">&quot;#{</span>
+<span class="s2">      @schema.settings.apiRoot</span>
+<span class="s2">    }/#{</span>
+<span class="s2">      resource</span>
+<span class="s2">    }/#{</span>
+<span class="s2">      id</span>
+<span class="s2">    }&quot;</span>
   
   <span class="nv">destroyAll: </span><span class="nf">(model, fn) -&gt;</span>
   
     <span class="p">{</span><span class="nx">collection</span><span class="p">}</span> <span class="o">=</span> <span class="nx">@schema</span><span class="p">.</span><span class="nx">resourcePaths</span> <span class="nx">model</span>
     
-    <span class="nx">promiseCallback</span> <span class="nx">fn</span><span class="p">,</span> <span class="nx">@$http</span><span class="p">.</span><span class="k">delete</span> <span class="s2">&quot;#{@schema.settings.apiRoot}/#{collection}&quot;</span>
+    <span class="nx">promiseCallback</span> <span class="nx">fn</span><span class="p">,</span> <span class="nx">@$http</span><span class="p">.</span><span class="k">delete</span> <span class="s2">&quot;#{</span>
+<span class="s2">      @schema.settings.apiRoot</span>
+<span class="s2">    }/#{</span>
+<span class="s2">      collection</span>
+<span class="s2">    }&quot;</span>
   
   <span class="nv">exists: </span><span class="nf">(model, id, fn) -&gt;</span>
   
     <span class="p">{</span><span class="nx">resource</span><span class="p">}</span> <span class="o">=</span> <span class="nx">@schema</span><span class="p">.</span><span class="nx">resourcePaths</span> <span class="nx">model</span>
     
-    <span class="nx">promiseCallback</span> <span class="nx">fn</span><span class="p">,</span> <span class="nx">@$http</span><span class="p">.</span><span class="nx">get</span> <span class="s2">&quot;#{@schema.settings.apiRoot}/#{resource}/#{id}/exists&quot;</span>
+    <span class="nx">promiseCallback</span> <span class="nx">fn</span><span class="p">,</span> <span class="nx">@$http</span><span class="p">.</span><span class="nx">get</span> <span class="s2">&quot;#{</span>
+<span class="s2">      @schema.settings.apiRoot</span>
+<span class="s2">    }/#{</span>
+<span class="s2">      resource</span>
+<span class="s2">    }/#{</span>
+<span class="s2">      id</span>
+<span class="s2">    }/exists&quot;</span>
   
   <span class="nv">find: </span><span class="o">-&gt;</span>
   
@@ -73,18 +106,21 @@ the adapter is actually touching the database e.g. server-side.</p></div></div><
   
     <span class="p">{</span><span class="nx">id</span><span class="p">}</span> <span class="o">=</span> <span class="nx">data</span>
     <span class="p">{</span><span class="nx">resource</span><span class="p">}</span> <span class="o">=</span> <span class="nx">@schema</span><span class="p">.</span><span class="nx">resourcePaths</span> <span class="nx">model</span>
-    
-    <span class="k">if</span> <span class="nx">id</span><span class="o">?</span>
-      <span class="nx">promiseCallback</span> <span class="nx">fn</span><span class="p">,</span> <span class="nx">@$http</span><span class="p">.</span><span class="nx">put</span> <span class="s2">&quot;#{@schema.settings.apiRoot}/#{resource}/#{id}&quot;</span><span class="p">,</span> <span class="nx">data</span>
-    <span class="k">else</span>
-      <span class="nx">@create</span> <span class="nx">model</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">fn</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Create if there's no ID.</p></div></div><div class="code"><div class="wrapper">    <span class="k">return</span> <span class="nx">@create</span> <span class="nx">model</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">fn</span> <span class="nx">unless</span> <span class="nx">id</span><span class="o">?</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Otherwise, update.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">promiseCallback</span> <span class="nx">fn</span><span class="p">,</span> <span class="nx">@$http</span><span class="p">.</span><span class="nx">put</span> <span class="s2">&quot;#{</span>
+<span class="s2">      @schema.settings.apiRoot</span>
+<span class="s2">    }/#{</span>
+<span class="s2">      resource</span>
+<span class="s2">    }/#{</span>
+<span class="s2">      id</span>
+<span class="s2">    }&quot;</span><span class="p">,</span> <span class="nx">data</span>
   
   <span class="nv">updateAttributes: </span><span class="nf">(model, id, data, fn) -&gt;</span>
     <span class="nv">data.id = </span><span class="nx">id</span>
     <span class="nx">@save</span> <span class="nx">model</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">fn</span>
   
   <span class="nv">updateOrCreate: </span><span class="err">@</span><span class="o">::</span><span class="nx">save</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Initialization method; instantiate the SocketAdapter.</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.initialize = </span><span class="nf">(schema) -&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Initialization method; instantiate the RestAdapter.</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.initialize = </span><span class="nf">(schema) -&gt;</span>
   <span class="p">{</span><span class="nx">$http</span><span class="p">,</span> <span class="nx">inflection</span><span class="p">}</span> <span class="o">=</span> <span class="nx">schema</span><span class="p">.</span><span class="nx">settings</span>
-  <span class="nv">schema.adapter = </span><span class="k">new</span> <span class="nx">SocketAdapter</span> <span class="nx">schema</span><span class="p">,</span> <span class="nx">$http</span><span class="p">,</span> <span class="nx">inflection</span>
+  <span class="nv">schema.adapter = </span><span class="k">new</span> <span class="nx">RestAdapter</span> <span class="nx">schema</span><span class="p">,</span> <span class="nx">$http</span><span class="p">,</span> <span class="nx">inflection</span>
   <span class="nv">schema.connected = </span><span class="kc">true</span></div></div></div></div></body></html>

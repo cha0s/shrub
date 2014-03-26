@@ -15,6 +15,44 @@ implemented in packages by prefixing a <code>$</code> to the hook name.</p>
 <p>The list below was dynamically generated from the source code. There is a
 description and a list of implementing packages for each hook.</p>
 
+<p><a href="./client/app.html">client/app.coffee</a></p>
+
+<ul>
+<li><h2 id="appconfig"><code>appConfig</code></h2>
+
+<p><h5>Invoked when the Angular application is in the configuration phase. </h5></p></li>
+<li><h2 id="apprun"><code>appRun</code></h2>
+
+<p><h5>Invoked when the Angular application is run. </h5></p></li>
+</ul>
+
+<p><a href="./client/modules/errors.html">client/modules/errors.coffee</a></p>
+
+<ul>
+<li><h2 id="errortype"><code>errorType</code></h2>
+
+<p><h5>Allows packages to specify transmittable errors. </h5></p>
+
+<ul><li><p><a href="./server/packages/limiter/index.html#implementshookerrortype">limiter (server)</a></p></li>
+<li><p><a href="./server/packages/user/login.html#implementshookerrortype">user/login (server)</a></p></li></ul></li>
+</ul>
+
+<p><a href="./client/modules/schema-client.html">client/modules/schema-client.coffee</a></p>
+
+<ul>
+<li><h2 id="models"><code>models</code></h2>
+
+<p><h5>Allows packages to create models in the database schema. </h5></p>
+
+<ul><li><p><a href="./server/packages/user/index.html#implementshookmodels">user (server)</a></p></li>
+<li><p><a href="./server/packages/villiany/index.html#implementshookmodels">villiany (server)</a></p></li></ul></li>
+<li><h2 id="modelsalter"><code>modelsAlter</code></h2>
+
+<p><h5>Allows packages to alter any models defined. </h5></p>
+
+<ul><li><a href="./server/packages/user/index.html#implementshookmodelsalter">user (server)</a></li></ul></li>
+</ul>
+
 <p><a href="./server.html">server.coffee</a></p>
 
 <ul>
