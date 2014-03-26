@@ -12,9 +12,6 @@ exports.$directive = -> [
 		link: (scope, element, attrs) ->
 			return unless (formSpec = scope[formKey = attrs['form']])?
 			
-			# Hacking out the scope, gotta be a nicer way to do this.
-			$form = angular.element '<form>'
-			
 			# Create the form element.
 			$form = angular.element(
 				'<form>'
