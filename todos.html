@@ -7,6 +7,9 @@ context.</p>
 <p><a href="./client/modules/errors.html">client/modules/errors.coffee</a></p>
 
 <ul>
+<li><h4 id="constructormessage"><code>constructor: (@message) -&gt;</code></h4>
+
+<p>Capture all arguments, and make the necessity for implementing toJSON obsolete. </p></li>
 <li><h4 id="caught"><code>caught: -&gt;</code></h4>
 
 <p>Remove. </p></li>
@@ -16,6 +19,87 @@ context.</p>
 <li><h4 id="exportscaughterror"><code>exports.caught = (error) -&gt;</code></h4>
 
 <p>Remove. </p></li>
+</ul>
+
+<p><a href="./client/modules/packages/core/index.html">client/modules/packages/core/index.coffee</a></p>
+
+<ul>
+<li><h4 id="routesinvokewithmocksroute"><code>routes = invokeWithMocks 'route'</code></h4>
+
+<p>Should just be .invoke, routeMock done separately. </p></li>
+<li><h4 id="routecontrollerroutecontroller"><code>routeController = route.controller</code></h4>
+
+<p>Define a routeController middleware stack for this. </p></li>
+<li><h4 id="routetemplate"><code>route.template ?= ' '</code></h4>
+
+<p>Some method of allowing <code>templateUrl</code>. </p></li>
+</ul>
+
+<p><a href="./client/modules/packages/form/index.html">client/modules/packages/form/index.coffee</a></p>
+
+<ul>
+<li><h4 id="fornamefieldofformspec"><code>for name, field of formSpec</code></h4>
+
+<p>Form field types should be defined by hook. </p></li>
+<li><h4 id="iffieldrpc"><code>if field.rpc?</code></h4>
+
+<p>This should be middleware'd, <code>rpc</code> should be implementing it. </p></li>
+</ul>
+
+<p><a href="./client/modules/packages/rpc/index.html">client/modules/packages/rpc/index.coffee</a></p>
+
+<ul>
+<li><h4 id="callhangupunlessnavigatoruseragentmatchnodejsd"><code>call 'hangup' unless navigator.userAgent.match /^Node\.js .*$/</code></h4>
+
+<p>This should be in a client-side <code>angular</code> package. </p></li>
+<li><h4 id="notificationsadd"><code>notifications.add(</code></h4>
+
+<p>This should be middleware'd. </p></li>
+</ul>
+
+<p><a href="./client/modules/packages/socket/index.html">client/modules/packages/socket/index.coffee</a></p>
+
+<ul>
+<li><h4 id="exportsdservice"><code>exports.$service = -&gt; [</code></h4>
+
+<p>Only Socket.IO at the moment. </p></li>
+<li><h4 id="debuglisteners"><code>debugListeners = {}</code></h4>
+
+<p>Remove after client logging. </p></li>
+<li><h4 id="debuglistenersoneventname"><code>debugListeners["on-#{eventName}"] ?= (-&gt;</code></h4>
+
+<p>Remove after client logging. </p></li>
+<li><h4 id="ifconfiggetdebugging"><code>if config.get 'debugging'</code></h4>
+
+<p>Remove after client logging. </p></li>
+<li><h4 id="ifconfiggetdebugging"><code>if config.get 'debugging'</code></h4>
+
+<p>Remove after client logging. </p></li>
+</ul>
+
+<p><a href="./client/modules/packages/ui/nav.html">client/modules/packages/ui/nav.coffee</a></p>
+
+<ul>
+<li><h4 id="scopelinkslinks"><code>scope.links = links</code></h4>
+
+<p>This whole thing needs to be overhauled. </p></li>
+<li><h4 id="exportsdservice"><code>exports.$service = -&gt; [</code></h4>
+
+<p>Overhaul this. </p></li>
+</ul>
+
+<p><a href="./client/modules/packages/user/index.html">client/modules/packages/user/index.coffee</a></p>
+
+<ul>
+<li><h4 id="userhaspermissionpermfalse"><code>User::hasPermission = (perm) -&gt; false</code></h4>
+
+<p>Access control structure. </p></li>
+<li><h4 id="serviceloginmethodusernamepassword"><code>service.login = (method, username, password) -&gt;</code></h4>
+
+<p>username and password are tightly coupled to local strategy. Change that. </p></li>
+<li><h4 id="ddelegatefakeloginusernamepasswordpasswordid1"><code>$delegate.fakeLogin = (username, password = 'password', id = 1) -&gt;</code></h4>
+
+<p>This will change when login method generalization happens. </p></li>
 </ul>
 
 <p><a href="./client/modules/pkgman.html">client/modules/pkgman.coffee</a></p>
@@ -237,9 +321,6 @@ context.</p>
 <li><h4 id="localstrategyrequirepassportlocalstrategy"><code>LocalStrategy = require('passport-local').Strategy</code></h4>
 
 <p>Strategies should be dynamically defined, probably through a hook. </p></li>
-<li><h4 id="redactforuserredactfor"><code>redactFor = User::redactFor</code></h4>
-
-<p>Does redaction ever make sense on the client? </p></li>
 </ul>
 
 <p><a href="./server/packages/user/login.html">server/packages/user/login.coffee</a></p>

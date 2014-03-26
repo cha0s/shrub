@@ -1,25 +1,26 @@
-<!DOCTYPE html><html lang="en"><head><title>client/modules/packages/ui/window</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../../"><meta name="groc-document-path" content="client/modules/packages/ui/window"><meta name="groc-project-path" content="client/modules/packages/ui/window.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../../assets/style.css"><script type="text/javascript" src="../../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/client/modules/packages/ui/window.coffee">client/modules/packages/ui/window.coffee</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$service = </span><span class="o">-&gt;</span> <span class="p">[</span>
+<!DOCTYPE html><html lang="en"><head><title>client/modules/packages/ui/window</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../../"><meta name="groc-document-path" content="client/modules/packages/ui/window"><meta name="groc-project-path" content="client/modules/packages/ui/window.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../../assets/style.css"><script type="text/javascript" src="../../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/client/modules/packages/ui/window.coffee">client/modules/packages/ui/window.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="window">Window</h1></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookservice">Implements hook <code>service</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$service = </span><span class="o">-&gt;</span> <span class="p">[</span>
   <span class="s1">&#39;$rootScope&#39;</span><span class="p">,</span> <span class="s1">&#39;$window&#39;</span>
   <span class="nf">($rootScope, $window) -&gt;</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Whether or not the window is active. This state maps 1:1 with the 'focus'
-and 'blur' events on the window.</p></div></div><div class="code"><div class="wrapper">    
-    <span class="nv">_isActive = </span><span class="kc">true</span>
+    
+    <span class="nv">service = </span><span class="p">{}</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Whether or not the window is active. This state maps 1:1 with the
+'focus' and 'blur' events on the window.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">_isActive = </span><span class="kc">true</span>
     
     <span class="nx">angular</span><span class="p">.</span><span class="nx">element</span><span class="p">(</span><span class="nx">$window</span><span class="p">).</span><span class="nx">bind</span> <span class="s1">&#39;focus&#39;</span><span class="p">,</span> <span class="o">-&gt;</span> <span class="nx">$rootScope</span><span class="p">.</span><span class="nx">$apply</span> <span class="o">-&gt;</span> <span class="nv">_isActive = </span><span class="kc">true</span>
     <span class="nx">angular</span><span class="p">.</span><span class="nx">element</span><span class="p">(</span><span class="nx">$window</span><span class="p">).</span><span class="nx">bind</span> <span class="s1">&#39;blur&#39;</span><span class="p">,</span> <span class="o">-&gt;</span> <span class="nx">$rootScope</span><span class="p">.</span><span class="nx">$apply</span> <span class="o">-&gt;</span> <span class="nv">_isActive = </span><span class="kc">false</span>
     
-    <span class="vi">@isActive = </span><span class="o">-&gt;</span> <span class="nx">_isActive</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Set whether we will notify the user when they are trying to close the tab.
-A truth value will notify the user, and a falsy value will turn off
-notification if called with no argument, it will enable notification.</p></div></div><div class="code"><div class="wrapper">    
-    <span class="nv">_notifyOnClose = </span><span class="kc">null</span>
+    <span class="nv">service.isActive = </span><span class="o">-&gt;</span> <span class="nx">_isActive</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Set whether we will notify the user when they are trying to close
+the tab. A truth value will notify the user, and a falsy value will
+turn off notification if called with no argument, it will enable
+notification.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">_notifyOnClose = </span><span class="kc">null</span>
     
     <span class="nv">$window.onbeforeunload = </span><span class="o">-&gt;</span> <span class="nx">_notifyOnClose</span>
     
-    <span class="vi">@notifyOnClose = </span><span class="nf">(notifyOnClose = true) -&gt;</span>
+    <span class="nv">service.notifyOnClose = </span><span class="nf">(notifyOnClose = true) -&gt;</span>
       
       <span class="nv">_notifyOnClose = </span><span class="k">if</span> <span class="nx">notifyOnClose</span> <span class="k">then</span> <span class="kc">true</span> <span class="k">else</span> <span class="kc">null</span>
     
-    <span class="k">return</span>
+    <span class="nx">service</span>
       
 <span class="p">]</span></div></div></div></div></body></html>

@@ -18,148 +18,174 @@ description and a list of implementing packages for each hook.</p>
 <p><a href="./client/app.html">client/app.coffee</a></p>
 
 <ul>
-<li><h2 id="appconfig"><code>appConfig</code></h2>
+<li><h2 id="examplehome"><code>example/home</code></h2>
 
-<p><h5>Invoked when the Angular application is in the configuration phase. </h5></p></li>
-<li><h2 id="apprun"><code>appRun</code></h2>
+<p><h5>Invoked when the Angular application is in the configuration phase. </h5></p>
 
-<p><h5>Invoked when the Angular application is run. </h5></p></li>
+<ul><li><p>core (<a href="./client/modules/packages/core/index.html#implementshookexample/home">client</a>)</p></li>
+<li><p>example/home (<a href="./client/modules/packages/example/home.html#implementshookexample/home">client</a>)</p></li></ul></li>
+<li><h2 id="rpcindex"><code>rpc/index</code></h2>
+
+<p><h5>Invoked when the Angular application is run. </h5></p>
+
+<ul><li><p>core (<a href="./client/modules/packages/core/index.html#implementshookrpc/index">client</a>)</p></li>
+<li><p>example (<a href="./client/modules/packages/example/index.html#implementshookrpc/index">client</a>)</p></li>
+<li><p>rpc (<a href="./client/modules/packages/rpc/index.html#implementshookrpc/index">client</a>)</p></li></ul></li>
 </ul>
 
 <p><a href="./client/modules/errors.html">client/modules/errors.coffee</a></p>
 
 <ul>
-<li><h2 id="errortype"><code>errorType</code></h2>
+<li><h2 id="userlogin"><code>user/login</code></h2>
 
 <p><h5>Allows packages to specify transmittable errors. </h5></p>
 
-<ul><li><p><a href="./server/packages/limiter/index.html#implementshookerrortype">limiter (server)</a></p></li>
-<li><p><a href="./server/packages/user/login.html#implementshookerrortype">user/login (server)</a></p></li></ul></li>
+<ul><li><p>limiter (<a href="./client/modules/packages/limiter/index.html#implementshookuser/login">client</a>, <a href="./server/packages/limiter/index.html#implementshookuser/login">server</a>)</p></li>
+<li><p>user/login (<a href="./client/modules/packages/user/login.html#implementshookuser/login">client</a>, <a href="./server/packages/user/login.html#implementshookuser/login">server</a>)</p></li></ul></li>
+</ul>
+
+<p><a href="./client/modules/packages/core/index.html">client/modules/packages/core/index.coffee</a></p>
+
+<ul>
+<li><h2 id="userreset"><code>user/reset</code></h2>
+
+<p><h5>Allow packages to define routes in the Angular application. <code>TODO</code>: Should just be .invoke, routeMock done separately. </h5></p>
+
+<ul><li><p>example/about (<a href="./client/modules/packages/example/about.html#implementshookuser/reset">client</a>)</p></li>
+<li><p>example/home (<a href="./client/modules/packages/example/home.html#implementshookuser/reset">client</a>)</p></li>
+<li><p>user/forgot (<a href="./client/modules/packages/user/forgot.html#implementshookuser/reset">client</a>)</p></li>
+<li><p>user/login (<a href="./client/modules/packages/user/login.html#implementshookuser/reset">client</a>)</p></li>
+<li><p>user/logout (<a href="./client/modules/packages/user/logout.html#implementshookuser/reset">client</a>)</p></li>
+<li><p>user/register (<a href="./client/modules/packages/user/register.html#implementshookuser/reset">client</a>)</p></li>
+<li><p>user/reset (<a href="./client/modules/packages/user/reset.html#implementshookuser/reset">client</a>)</p></li></ul></li>
+<li><h2 id="routealter"><code>routeAlter</code></h2>
+
+<p><h5>Allow packages to alter defined routes. </h5></p></li>
 </ul>
 
 <p><a href="./client/modules/schema-client.html">client/modules/schema-client.coffee</a></p>
 
 <ul>
-<li><h2 id="models"><code>models</code></h2>
+<li><h2 id="villianyindex"><code>villiany/index</code></h2>
 
 <p><h5>Allows packages to create models in the database schema. </h5></p>
 
-<ul><li><p><a href="./server/packages/user/index.html#implementshookmodels">user (server)</a></p></li>
-<li><p><a href="./server/packages/villiany/index.html#implementshookmodels">villiany (server)</a></p></li></ul></li>
-<li><h2 id="modelsalter"><code>modelsAlter</code></h2>
+<ul><li><p>user (<a href="./client/modules/packages/user/index.html#implementshookvilliany/index">client</a>, <a href="./server/packages/user/index.html#implementshookvilliany/index">server</a>)</p></li>
+<li><p>villiany (<a href="./server/packages/villiany/index.html#implementshookvilliany/index">server</a>)</p></li></ul></li>
+<li><h2 id="userindex"><code>user/index</code></h2>
 
 <p><h5>Allows packages to alter any models defined. </h5></p>
 
-<ul><li><a href="./server/packages/user/index.html#implementshookmodelsalter">user (server)</a></li></ul></li>
+<ul><li>user (<a href="./client/modules/packages/user/index.html#implementshookuser/index">client</a>, <a href="./server/packages/user/index.html#implementshookuser/index">server</a>)</li></ul></li>
 </ul>
 
 <p><a href="./server.html">server.coffee</a></p>
 
 <ul>
-<li><h2 id="initialize"><code>initialize</code></h2>
+<li><h2 id="rpcindex"><code>rpc/index</code></h2>
 
 <p><h5>Invoked when the server is just starting. Implementations should return a promise. When all returned promises are fulfilled, initialization continues. </h5></p>
 
-<ul><li><p><a href="./server/packages/angular/index.html#implementshookinitialize">angular (server)</a></p></li>
-<li><p><a href="./server/packages/express/index.html#implementshookinitialize">express (server)</a></p></li>
-<li><p><a href="./server/packages/rpc/index.html#implementshookinitialize">rpc (server)</a></p></li></ul></li>
-<li><h2 id="initialized"><code>initialized</code></h2>
+<ul><li><p>angular (<a href="./server/packages/angular/index.html#implementshookrpc/index">server</a>)</p></li>
+<li><p>express (<a href="./server/packages/express/index.html#implementshookrpc/index">server</a>)</p></li>
+<li><p>rpc (<a href="./server/packages/rpc/index.html#implementshookrpc/index">server</a>)</p></li></ul></li>
+<li><h2 id="replindex"><code>repl/index</code></h2>
 
 <p><h5>Invoked after the server is initialized. </h5></p>
 
-<ul><li><a href="./server/packages/repl/index.html#implementshookinitialized">repl (server)</a></li></ul></li>
+<ul><li>repl (<a href="./server/packages/repl/index.html#implementshookrepl/index">server</a>)</li></ul></li>
 </ul>
 
 <p><a href="./server/AbstractHttp.html">server/AbstractHttp.coffee</a></p>
 
 <ul>
-<li><h2 id="httpinitializer"><code>httpInitializer</code></h2>
+<li><h2 id="userindex"><code>user/index</code></h2>
 
 <p><h5>Invoked before the server is bound on the listening port. </h5></p>
 
-<ul><li><p><a href="./server/packages/schema/index.html#implementshookhttpinitializer">schema (server)</a></p></li>
-<li><p><a href="./server/packages/socket/factory.html#implementshookhttpinitializer">socket/factory (server)</a></p></li>
-<li><p><a href="./server/packages/user/index.html#implementshookhttpinitializer">user (server)</a></p></li></ul></li>
-<li><h2 id="httplistening"><code>httpListening</code></h2>
+<ul><li><p>schema (<a href="./server/packages/schema/index.html#implementshookuser/index">server</a>)</p></li>
+<li><p>socket/factory (<a href="./server/packages/socket/factory.html#implementshookuser/index">server</a>)</p></li>
+<li><p>user (<a href="./server/packages/user/index.html#implementshookuser/index">server</a>)</p></li></ul></li>
+<li><h2 id="nodemailerindex"><code>nodemailer/index</code></h2>
 
 <p><h5>Invoked once the server is listening, but before initialization finishes. </h5></p>
 
-<ul><li><a href="./server/packages/nodemailer/index.html#implementshookhttplistening">nodemailer (server)</a></li></ul></li>
-<li><h2 id="httpmiddleware"><code>httpMiddleware</code></h2>
+<ul><li>nodemailer (<a href="./server/packages/nodemailer/index.html#implementshooknodemailer/index">server</a>)</li></ul></li>
+<li><h2 id="userindex"><code>user/index</code></h2>
 
 <p><h5>Invoked every time an HTTP connection is established. </h5></p>
 
-<ul><li><p><a href="./server/packages/angular/index.html#implementshookhttpmiddleware">angular (server)</a></p></li>
-<li><p><a href="./server/packages/assets/index.html#implementshookhttpmiddleware">assets (server)</a></p></li>
-<li><p><a href="./server/packages/config/index.html#implementshookhttpmiddleware">config (server)</a></p></li>
-<li><p><a href="./server/packages/core/index.html#implementshookhttpmiddleware">core (server)</a></p></li>
-<li><p><a href="./server/packages/express/errors.html#implementshookhttpmiddleware">express/errors (server)</a></p></li>
-<li><p><a href="./server/packages/express/logger.html#implementshookhttpmiddleware">express/logger (server)</a></p></li>
-<li><p><a href="./server/packages/express/routes.html#implementshookhttpmiddleware">express/routes (server)</a></p></li>
-<li><p><a href="./server/packages/express/session.html#implementshookhttpmiddleware">express/session (server)</a></p></li>
-<li><p><a href="./server/packages/express/static.html#implementshookhttpmiddleware">express/static (server)</a></p></li>
-<li><p><a href="./server/packages/form/index.html#implementshookhttpmiddleware">form (server)</a></p></li>
-<li><p><a href="./server/packages/socket/factory.html#implementshookhttpmiddleware">socket/factory (server)</a></p></li>
-<li><p><a href="./server/packages/user/index.html#implementshookhttpmiddleware">user (server)</a></p></li></ul></li>
+<ul><li><p>angular (<a href="./server/packages/angular/index.html#implementshookuser/index">server</a>)</p></li>
+<li><p>assets (<a href="./server/packages/assets/index.html#implementshookuser/index">server</a>)</p></li>
+<li><p>config (<a href="./server/packages/config/index.html#implementshookuser/index">server</a>)</p></li>
+<li><p>core (<a href="./server/packages/core/index.html#implementshookuser/index">server</a>)</p></li>
+<li><p>express/errors (<a href="./server/packages/express/errors.html#implementshookuser/index">server</a>)</p></li>
+<li><p>express/logger (<a href="./server/packages/express/logger.html#implementshookuser/index">server</a>)</p></li>
+<li><p>express/routes (<a href="./server/packages/express/routes.html#implementshookuser/index">server</a>)</p></li>
+<li><p>express/session (<a href="./server/packages/express/session.html#implementshookuser/index">server</a>)</p></li>
+<li><p>express/static (<a href="./server/packages/express/static.html#implementshookuser/index">server</a>)</p></li>
+<li><p>form (<a href="./server/packages/form/index.html#implementshookuser/index">server</a>)</p></li>
+<li><p>socket/factory (<a href="./server/packages/socket/factory.html#implementshookuser/index">server</a>)</p></li>
+<li><p>user (<a href="./server/packages/user/index.html#implementshookuser/index">server</a>)</p></li></ul></li>
 </ul>
 
 <p><a href="./server/AbstractSocketFactory.html">server/AbstractSocketFactory.coffee</a></p>
 
 <ul>
-<li><h2 id="socketauthorizationmiddleware"><code>socketAuthorizationMiddleware</code></h2>
+<li><h2 id="userindex"><code>user/index</code></h2>
 
 <p><h5>Invoked when a socket connection begins. Packages may throw an instance of <code>AbstractSocketFactory.AuthorizationFailure</code> to reject the socket connection as unauthorized. </h5></p>
 
-<ul><li><p><a href="./server/packages/core/index.html#implementshooksocketauthorizationmiddleware">core (server)</a></p></li>
-<li><p><a href="./server/packages/session/index.html#implementshooksocketauthorizationmiddleware">session (server)</a></p></li>
-<li><p><a href="./server/packages/user/index.html#implementshooksocketauthorizationmiddleware">user (server)</a></p></li></ul></li>
-<li><h2 id="socketrequestmiddleware"><code>socketRequestMiddleware</code></h2>
+<ul><li><p>core (<a href="./server/packages/core/index.html#implementshookuser/index">server</a>)</p></li>
+<li><p>session (<a href="./server/packages/session/index.html#implementshookuser/index">server</a>)</p></li>
+<li><p>user (<a href="./server/packages/user/index.html#implementshookuser/index">server</a>)</p></li></ul></li>
+<li><h2 id="userindex"><code>user/index</code></h2>
 
 <p><h5>Invoked for every socket connection. </h5></p>
 
-<ul><li><p><a href="./server/packages/rpc/index.html#implementshooksocketrequestmiddleware">rpc (server)</a></p></li>
-<li><p><a href="./server/packages/session/index.html#implementshooksocketrequestmiddleware">session (server)</a></p></li>
-<li><p><a href="./server/packages/socket/factory.html#implementshooksocketrequestmiddleware">socket/factory (server)</a></p></li>
-<li><p><a href="./server/packages/user/index.html#implementshooksocketrequestmiddleware">user (server)</a></p></li></ul></li>
+<ul><li><p>rpc (<a href="./server/packages/rpc/index.html#implementshookuser/index">server</a>)</p></li>
+<li><p>session (<a href="./server/packages/session/index.html#implementshookuser/index">server</a>)</p></li>
+<li><p>socket/factory (<a href="./server/packages/socket/factory.html#implementshookuser/index">server</a>)</p></li>
+<li><p>user (<a href="./server/packages/user/index.html#implementshookuser/index">server</a>)</p></li></ul></li>
 </ul>
 
 <p><a href="./server/audit.html">server/audit.coffee</a></p>
 
 <ul>
-<li><h2 id="auditkeys"><code>auditKeys</code></h2>
+<li><h2 id="userindex"><code>user/index</code></h2>
 
 <p><h5>Allows a package to specify unique keys for this request, e.g. IP address, session ID, etc. </h5></p>
 
-<ul><li><p><a href="./server/packages/core/index.html#implementshookauditkeys">core (server)</a></p></li>
-<li><p><a href="./server/packages/session/index.html#implementshookauditkeys">session (server)</a></p></li>
-<li><p><a href="./server/packages/user/index.html#implementshookauditkeys">user (server)</a></p></li></ul></li>
+<ul><li><p>core (<a href="./server/packages/core/index.html#implementshookuser/index">server</a>)</p></li>
+<li><p>session (<a href="./server/packages/session/index.html#implementshookuser/index">server</a>)</p></li>
+<li><p>user (<a href="./server/packages/user/index.html#implementshookuser/index">server</a>)</p></li></ul></li>
 </ul>
 
 <p><a href="./server/config.html">server/config.coffee</a></p>
 
 <ul>
-<li><h2 id="settings"><code>settings</code></h2>
+<li><h2 id="socketindex"><code>socket/index</code></h2>
 
 <p><h5>Invoked when the server application is loading configuration. Allows packages to define their own default settings. </h5></p>
 
-<ul><li><p><a href="./server/packages/angular/index.html#implementshooksettings">angular (server)</a></p></li>
-<li><p><a href="./server/packages/core/index.html#implementshooksettings">core (server)</a></p></li>
-<li><p><a href="./server/packages/express/index.html#implementshooksettings">express (server)</a></p></li>
-<li><p><a href="./server/packages/nodemailer/index.html#implementshooksettings">nodemailer (server)</a></p></li>
-<li><p><a href="./server/packages/repl/index.html#implementshooksettings">repl (server)</a></p></li>
-<li><p><a href="./server/packages/socket/index.html#implementshooksettings">socket (server)</a></p></li></ul></li>
+<ul><li><p>angular (<a href="./server/packages/angular/index.html#implementshooksocket/index">server</a>)</p></li>
+<li><p>core (<a href="./server/packages/core/index.html#implementshooksocket/index">server</a>)</p></li>
+<li><p>express (<a href="./server/packages/express/index.html#implementshooksocket/index">server</a>)</p></li>
+<li><p>nodemailer (<a href="./server/packages/nodemailer/index.html#implementshooksocket/index">server</a>)</p></li>
+<li><p>repl (<a href="./server/packages/repl/index.html#implementshooksocket/index">server</a>)</p></li>
+<li><p>socket (<a href="./server/packages/socket/index.html#implementshooksocket/index">server</a>)</p></li></ul></li>
 </ul>
 
 <p><a href="./server/packages/config/index.html">server/packages/config/index.coffee</a></p>
 
 <ul>
-<li><h2 id="config"><code>config</code></h2>
+<li><h2 id="userindex"><code>user/index</code></h2>
 
 <p><h5>Allows packages to specify configuration that will be sent to the client. Implementations may return an object, or a promise that resolves to an object. </h5></p>
 
-<ul><li><p><a href="./server/packages/config/index.html#implementshookconfig">config (server)</a></p></li>
-<li><p><a href="./server/packages/schema/index.html#implementshookconfig">schema (server)</a></p></li>
-<li><p><a href="./server/packages/user/index.html#implementshookconfig">user (server)</a></p></li></ul></li>
+<ul><li><p>config (<a href="./server/packages/config/index.html#implementshookuser/index">server</a>)</p></li>
+<li><p>schema (<a href="./server/packages/schema/index.html#implementshookuser/index">server</a>)</p></li>
+<li><p>user (<a href="./server/packages/user/index.html#implementshookuser/index">server</a>)</p></li></ul></li>
 </ul>
 
 <p><a href="./server/packages/nodemailer/index.html">server/packages/nodemailer/index.coffee</a></p>
@@ -173,34 +199,34 @@ description and a list of implementing packages for each hook.</p>
 <p><a href="./server/packages/repl/index.html">server/packages/repl/index.coffee</a></p>
 
 <ul>
-<li><h2 id="replcontext"><code>replContext</code></h2>
+<li><h2 id="userregister"><code>user/register</code></h2>
 
 <p><h5>Allow packages to add values to the REPL's context. </h5></p>
 
-<ul><li><p><a href="./server/packages/config/index.html#implementshookreplcontext">config (server)</a></p></li>
-<li><p><a href="./server/packages/core/index.html#implementshookreplcontext">core (server)</a></p></li>
-<li><p><a href="./server/packages/schema/index.html#implementshookreplcontext">schema (server)</a></p></li>
-<li><p><a href="./server/packages/socket/factory.html#implementshookreplcontext">socket/factory (server)</a></p></li>
-<li><p><a href="./server/packages/user/register.html#implementshookreplcontext">user/register (server)</a></p></li></ul></li>
+<ul><li><p>config (<a href="./server/packages/config/index.html#implementshookuser/register">server</a>)</p></li>
+<li><p>core (<a href="./server/packages/core/index.html#implementshookuser/register">server</a>)</p></li>
+<li><p>schema (<a href="./server/packages/schema/index.html#implementshookuser/register">server</a>)</p></li>
+<li><p>socket/factory (<a href="./server/packages/socket/factory.html#implementshookuser/register">server</a>)</p></li>
+<li><p>user/register (<a href="./server/packages/user/register.html#implementshookuser/register">server</a>)</p></li></ul></li>
 </ul>
 
 <p><a href="./server/packages/rpc/index.html">server/packages/rpc/index.coffee</a></p>
 
 <ul>
-<li><h2 id="endpoint"><code>endpoint</code></h2>
+<li><h2 id="userreset"><code>user/reset</code></h2>
 
 <p><h5>Gather all endpoints. </h5></p>
 
-<ul><li><p><a href="./server/packages/angular/index.html#implementshookendpoint">angular (server)</a></p></li>
-<li><p><a href="./server/packages/user/forgot.html#implementshookendpoint">user/forgot (server)</a></p></li>
-<li><p><a href="./server/packages/user/login.html#implementshookendpoint">user/login (server)</a></p></li>
-<li><p><a href="./server/packages/user/logout.html#implementshookendpoint">user/logout (server)</a></p></li>
-<li><p><a href="./server/packages/user/register.html#implementshookendpoint">user/register (server)</a></p></li>
-<li><p><a href="./server/packages/user/reset.html#implementshookendpoint">user/reset (server)</a></p></li></ul></li>
-<li><h2 id="endpointalter"><code>endpointAlter</code></h2>
+<ul><li><p>angular (<a href="./server/packages/angular/index.html#implementshookuser/reset">server</a>)</p></li>
+<li><p>user/forgot (<a href="./server/packages/user/forgot.html#implementshookuser/reset">server</a>)</p></li>
+<li><p>user/login (<a href="./server/packages/user/login.html#implementshookuser/reset">server</a>)</p></li>
+<li><p>user/logout (<a href="./server/packages/user/logout.html#implementshookuser/reset">server</a>)</p></li>
+<li><p>user/register (<a href="./server/packages/user/register.html#implementshookuser/reset">server</a>)</p></li>
+<li><p>user/reset (<a href="./server/packages/user/reset.html#implementshookuser/reset">server</a>)</p></li></ul></li>
+<li><h2 id="villianyindex"><code>villiany/index</code></h2>
 
 <p><h5>Allows packages to modify any endpoints defined. </h5></p>
 
-<ul><li><p><a href="./server/packages/limiter/index.html#implementshookendpointalter">limiter (server)</a></p></li>
-<li><p><a href="./server/packages/villiany/index.html#implementshookendpointalter">villiany (server)</a></p></li></ul></li>
+<ul><li><p>limiter (<a href="./server/packages/limiter/index.html#implementshookvilliany/index">server</a>)</p></li>
+<li><p>villiany (<a href="./server/packages/villiany/index.html#implementshookvilliany/index">server</a>)</p></li></ul></li>
 </ul></div></div></div></div></body></html>

@@ -1,11 +1,12 @@
-<!DOCTYPE html><html lang="en"><head><title>client/modules/packages/form/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../../"><meta name="groc-document-path" content="client/modules/packages/form/index"><meta name="groc-project-path" content="client/modules/packages/form/index.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../../assets/style.css"><script type="text/javascript" src="../../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/client/modules/packages/form/index.coffee">client/modules/packages/form/index.coffee</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$directive = </span><span class="o">-&gt;</span> <span class="p">[</span>
+<!DOCTYPE html><html lang="en"><head><title>client/modules/packages/form/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../../"><meta name="groc-document-path" content="client/modules/packages/form/index"><meta name="groc-project-path" content="client/modules/packages/form/index.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../../assets/style.css"><script type="text/javascript" src="../../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/client/modules/packages/form/index.coffee">client/modules/packages/form/index.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="form">Form</h1>
+
+<p>Define a directive for Angular forms, and a service to cache and look them
+up later.</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookdirective">Implements hook <code>directive</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$directive = </span><span class="o">-&gt;</span> <span class="p">[</span>
   <span class="s1">&#39;$compile&#39;</span><span class="p">,</span> <span class="s1">&#39;$injector&#39;</span><span class="p">,</span> <span class="s1">&#39;$q&#39;</span><span class="p">,</span> <span class="s1">&#39;form&#39;</span><span class="p">,</span> <span class="s1">&#39;require&#39;</span>
-  <span class="nf">($compile, $injector, $q, form, require) -&gt;</span>
+  <span class="nf">($compile, {invoke}, $q, {cache}, require) -&gt;</span>
     
     <span class="nv">link: </span><span class="nf">(scope, element, attrs) -&gt;</span>
-      
-      <span class="nv">formKey = </span><span class="nx">attrs</span><span class="p">[</span><span class="s1">&#39;form&#39;</span><span class="p">]</span>
-      <span class="k">return</span> <span class="nx">unless</span> <span class="p">(</span><span class="nv">formSpec = </span><span class="nx">scope</span><span class="p">[</span><span class="nx">formKey</span><span class="p">])</span><span class="o">?</span>
+      <span class="k">return</span> <span class="nx">unless</span> <span class="p">(</span><span class="nv">formSpec = </span><span class="nx">scope</span><span class="p">[</span><span class="nv">formKey = </span><span class="nx">attrs</span><span class="p">[</span><span class="s1">&#39;form&#39;</span><span class="p">]])</span><span class="o">?</span>
       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Hacking out the scope, gotta be a nicer way to do this.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">$form = </span><span class="nx">angular</span><span class="p">.</span><span class="nx">element</span> <span class="s1">&#39;&lt;form&gt;&#39;</span>
       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Create the form element.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">$form = </span><span class="nx">angular</span><span class="p">.</span><span class="nx">element</span><span class="p">(</span>
         <span class="s1">&#39;&lt;form&gt;&#39;</span>
@@ -14,7 +15,8 @@
         </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Default method to POST.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">method: </span><span class="nx">$form</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;method&#39;</span><span class="p">)</span> <span class="o">?</span> <span class="s1">&#39;POST&#39;</span>
       
       <span class="p">).</span><span class="nx">addClass</span> <span class="nx">formKey</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Build the form fields.</p></div></div><div class="code"><div class="wrapper">      <span class="k">for</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">field</span> <span class="k">of</span> <span class="nx">formSpec</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Build the form fields.
+<code>TODO</code>: Form field types should be defined by hook.</p></div></div><div class="code"><div class="wrapper">      <span class="k">for</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">field</span> <span class="k">of</span> <span class="nx">formSpec</span>
         <span class="k">continue</span> <span class="nx">unless</span> <span class="nx">field</span><span class="p">.</span><span class="nx">type</span><span class="o">?</span>
         
         <span class="nv">$wrapper = </span><span class="nx">angular</span><span class="p">.</span><span class="nx">element</span> <span class="s1">&#39;&lt;div class=&quot;form-group&quot;&gt;&#39;</span>
@@ -52,8 +54,9 @@
             <span class="nx">$input</span>
             
           <span class="k">when</span> <span class="s1">&#39;submit&#39;</span>
-          
-            <span class="k">if</span> <span class="nx">field</span><span class="p">.</span><span class="nx">rpc</span><span class="o">?</span>
+            </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Handle RPC calls.
+<code>TODO</code>: This should be middleware'd, <code>rpc</code> should be
+implementing it.</p></div></div><div class="code"><div class="wrapper">            <span class="k">if</span> <span class="nx">field</span><span class="p">.</span><span class="nx">rpc</span><span class="o">?</span>
               <span class="nx">field</span><span class="p">.</span><span class="nx">handler</span> <span class="o">?=</span> <span class="o">-&gt;</span>
               <span class="nv">handler = </span><span class="nx">field</span><span class="p">.</span><span class="nx">handler</span>
               <span class="nv">field.handler = </span><span class="o">-&gt;</span>
@@ -69,7 +72,7 @@
                   <span class="k">continue</span> <span class="k">if</span> <span class="nx">field</span><span class="p">.</span><span class="nx">type</span> <span class="o">is</span> <span class="s1">&#39;submit&#39;</span>
                   <span class="nx">fields</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="nx">scope</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span>
                 
-                <span class="nx">$injector</span><span class="p">.</span><span class="nx">invoke</span> <span class="p">[</span>
+                <span class="nx">invoke</span> <span class="p">[</span>
                   <span class="s1">&#39;rpc&#39;</span>
                   <span class="nf">(rpc) -&gt;</span>
                     
@@ -94,24 +97,25 @@
       <span class="nx">$form</span><span class="p">.</span><span class="nx">append</span> <span class="nx">$formKeyElement</span>
       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Insert and compile the form element.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">element</span><span class="p">.</span><span class="nx">append</span> <span class="nx">$form</span>
       <span class="nx">$compile</span><span class="p">(</span><span class="nx">$form</span><span class="p">)</span> <span class="nx">scope</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Register the form in the system.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">form</span><span class="p">.</span><span class="nx">register</span> <span class="nx">formKey</span><span class="p">,</span> <span class="nx">scope</span><span class="p">,</span> <span class="nx">$form</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Register the form in the system.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">cache</span> <span class="nx">formKey</span><span class="p">,</span> <span class="nx">scope</span><span class="p">,</span> <span class="nx">$form</span>
       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Guarantee a submit handler.</p></div></div><div class="code"><div class="wrapper">      <span class="p">(</span><span class="nx">formSpec</span><span class="p">.</span><span class="nx">submit</span> <span class="o">?=</span> <span class="p">{}).</span><span class="nx">handler</span> <span class="o">?=</span> <span class="o">-&gt;</span> <span class="nx">$q</span><span class="p">.</span><span class="k">when</span> <span class="kc">true</span>
       
-<span class="p">]</span>
-
-<span class="nx">exports</span><span class="p">.</span><span class="nv">$service = </span><span class="o">-&gt;</span> <span class="p">[</span>
+<span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookservice">Implements hook <code>service</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$service = </span><span class="o">-&gt;</span> <span class="p">[</span>
   
   <span class="o">-&gt;</span>
     
-    <span class="nv">forms = </span><span class="p">{}</span>
-    
-    <span class="vi">@register = </span><span class="nf">(key, scope, element) -&gt;</span>
-      <span class="nx">forms</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span>
-        <span class="nv">scope: </span><span class="nx">scope</span>
-        <span class="nv">element: </span><span class="nx">element</span>
+    <span class="nv">service = forms: </span><span class="p">{}</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="formcache">form.cache</h2>
+
+<p>Cache a form for later lookup.</p>
+
+<ul>
+<li><p>(string) <code>key</code> - The form key.</p></li>
+<li><p>(Scope) <code>scope</code> - The form's Angular scope.</p></li>
+<li><p>(Element) <code>element</code> - The form's jqLite element.</p></li>
+</ul></div></div><div class="code"><div class="wrapper">    <span class="nv">service.cache = </span><span class="nf">(key, scope, element) -&gt;</span>
+      <span class="nx">service</span><span class="p">.</span><span class="nx">forms</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nv">scope: </span><span class="nx">scope</span><span class="p">,</span> <span class="nv">element: </span><span class="nx">element</span>
           
-    <span class="vi">@lookup = </span><span class="nf">(key) -&gt;</span> <span class="nx">forms</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span>
-    
-    <span class="k">return</span>
+    <span class="nx">service</span>
 
 <span class="p">]</span></div></div></div></div></body></html>

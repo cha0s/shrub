@@ -1,33 +1,27 @@
-<!DOCTYPE html><html lang="en"><head><title>client/modules/packages/user/login</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../../"><meta name="groc-document-path" content="client/modules/packages/user/login"><meta name="groc-project-path" content="client/modules/packages/user/login.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../../assets/style.css"><script type="text/javascript" src="../../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/client/modules/packages/user/login.coffee">client/modules/packages/user/login.coffee</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nv">errors = </span><span class="nx">require</span> <span class="s1">&#39;errors&#39;</span>
-
-<span class="nv">exports.e2eLogin = $routeMock: </span><span class="o">-&gt;</span>
+<!DOCTYPE html><html lang="en"><head><title>client/modules/packages/user/login</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../../"><meta name="groc-document-path" content="client/modules/packages/user/login"><meta name="groc-project-path" content="client/modules/packages/user/login.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../../assets/style.css"><script type="text/javascript" src="../../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/client/modules/packages/user/login.coffee">client/modules/packages/user/login.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="user-login">User login</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nv">errors = </span><span class="nx">require</span> <span class="s1">&#39;errors&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookroutemock">Implements hook <code>routeMock</code></h2></div></div><div class="code"><div class="wrapper"><span class="nv">exports.e2eLogin = $routeMock: </span><span class="o">-&gt;</span>
   
   <span class="nv">path: </span><span class="s1">&#39;e2e/user/login/:destination&#39;</span>
   
   <span class="nv">controller: </span><span class="p">[</span>
-    <span class="s1">&#39;$location&#39;</span><span class="p">,</span> <span class="s1">&#39;$routeParams&#39;</span><span class="p">,</span> <span class="s1">&#39;$scope&#39;</span><span class="p">,</span> <span class="s1">&#39;socket&#39;</span><span class="p">,</span> <span class="s1">&#39;user&#39;</span>
-    <span class="nf">($location, $routeParams, $scope, socket, user) -&gt;</span>
+    <span class="s1">&#39;$location&#39;</span><span class="p">,</span> <span class="s1">&#39;$routeParams&#39;</span><span class="p">,</span> <span class="s1">&#39;socket&#39;</span><span class="p">,</span> <span class="s1">&#39;user&#39;</span>
+    <span class="nf">($location, {destination}, socket, {fakeLogin}) -&gt;</span>
       
-      <span class="nx">user</span><span class="p">.</span><span class="nx">fakeLogin</span><span class="p">(</span><span class="s1">&#39;cha0s&#39;</span><span class="p">).</span><span class="k">then</span> <span class="o">-&gt;</span>
-        <span class="nx">$location</span><span class="p">.</span><span class="nx">path</span> <span class="s2">&quot;/user/#{$routeParams.destination}&quot;</span>
+      <span class="nx">fakeLogin</span><span class="p">(</span><span class="s1">&#39;cha0s&#39;</span><span class="p">).</span><span class="k">then</span> <span class="o">-&gt;</span> 
+        <span class="nx">$location</span><span class="p">.</span><span class="nx">path</span> <span class="s2">&quot;/user/#{destination}&quot;</span>
         
   <span class="p">]</span>
-  
-<span class="nv">LoginError = </span><span class="k">class</span> <span class="nx">LoginError</span> <span class="k">extends</span> <span class="nx">errors</span><span class="p">.</span><span class="nx">TransmittableError</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Transmittable login error.</p></div></div><div class="code"><div class="wrapper"><span class="nv">LoginError = </span><span class="k">class</span> <span class="nx">LoginError</span> <span class="k">extends</span> <span class="nx">errors</span><span class="p">.</span><span class="nx">TransmittableError</span>
 
   <span class="nv">key: </span><span class="s1">&#39;login&#39;</span>
   <span class="nv">template: </span><span class="s2">&quot;No such username/password.&quot;</span>
-    
-<span class="nx">exports</span><span class="p">.</span><span class="nv">$errorType = </span><span class="o">-&gt;</span> <span class="nx">LoginError</span>
-
-<span class="nx">exports</span><span class="p">.</span><span class="nv">$route = </span><span class="o">-&gt;</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookerrortype">Implements hook <code>errorType</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$errorType = </span><span class="o">-&gt;</span> <span class="nx">LoginError</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookroute">Implements hook <code>route</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$route = </span><span class="o">-&gt;</span>
   
   <span class="nv">title: </span><span class="s1">&#39;Sign in&#39;</span>
   
   <span class="nv">controller: </span><span class="p">[</span>
     <span class="s1">&#39;$location&#39;</span><span class="p">,</span> <span class="s1">&#39;$scope&#39;</span><span class="p">,</span> <span class="s1">&#39;ui/notifications&#39;</span><span class="p">,</span> <span class="s1">&#39;user&#39;</span>
-    <span class="nf">($location, $scope, notifications, user) -&gt;</span>
-      <span class="k">return</span> <span class="nx">$location</span><span class="p">.</span><span class="nx">path</span> <span class="s1">&#39;/&#39;</span> <span class="k">if</span> <span class="nx">user</span><span class="p">.</span><span class="nx">isLoggedIn</span><span class="p">()</span>
+    <span class="nf">($location, $scope, {add}, {isLoggedIn, login}) -&gt;</span>
+      <span class="k">return</span> <span class="nx">$location</span><span class="p">.</span><span class="nx">path</span> <span class="s1">&#39;/&#39;</span> <span class="k">if</span> <span class="nx">isLoggedIn</span><span class="p">()</span>
         
       <span class="nv">$scope.userLogin =</span>
         
@@ -46,14 +40,14 @@
           <span class="nv">label: </span><span class="s2">&quot;Sign in&quot;</span>
           <span class="nv">handler: </span><span class="o">-&gt;</span>
         
-            <span class="nx">user</span><span class="p">.</span><span class="nx">login</span><span class="p">(</span>
+            <span class="nx">login</span><span class="p">(</span>
               <span class="s1">&#39;local&#39;</span>
               <span class="nx">$scope</span><span class="p">.</span><span class="nx">username</span>
               <span class="nx">$scope</span><span class="p">.</span><span class="nx">password</span>
 
             <span class="p">).</span><span class="k">then</span> <span class="o">-&gt;</span>
               
-              <span class="nx">notifications</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span>
+              <span class="nx">add</span><span class="p">(</span>
                 <span class="k">class</span><span class="o">:</span> <span class="s1">&#39;alert-success&#39;</span>
                 <span class="nv">text: </span><span class="s2">&quot;Logged in successfully.&quot;</span>
               <span class="p">)</span>

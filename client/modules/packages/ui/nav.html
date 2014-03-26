@@ -1,17 +1,15 @@
-<!DOCTYPE html><html lang="en"><head><title>client/modules/packages/ui/nav</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../../"><meta name="groc-document-path" content="client/modules/packages/ui/nav"><meta name="groc-project-path" content="client/modules/packages/ui/nav.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../../assets/style.css"><script type="text/javascript" src="../../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/client/modules/packages/ui/nav.coffee">client/modules/packages/ui/nav.coffee</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$directive = </span><span class="o">-&gt;</span> <span class="p">[</span>
-  <span class="s1">&#39;$location&#39;</span><span class="p">,</span> <span class="s1">&#39;ui/nav&#39;</span><span class="p">,</span> <span class="s1">&#39;socket&#39;</span><span class="p">,</span> <span class="s1">&#39;ui/title&#39;</span><span class="p">,</span> <span class="s1">&#39;user&#39;</span>
-  <span class="nf">($location, nav, socket, title, user) -&gt;</span>
+<!DOCTYPE html><html lang="en"><head><title>client/modules/packages/ui/nav</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../../"><meta name="groc-document-path" content="client/modules/packages/ui/nav"><meta name="groc-project-path" content="client/modules/packages/ui/nav.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../../assets/style.css"><script type="text/javascript" src="../../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/client/modules/packages/ui/nav.coffee">client/modules/packages/ui/nav.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="navigation">Navigation</h1></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookdirective">Implements hook <code>directive</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$directive = </span><span class="o">-&gt;</span> <span class="p">[</span>
+  <span class="s1">&#39;$location&#39;</span><span class="p">,</span> <span class="s1">&#39;ui/nav&#39;</span><span class="p">,</span> <span class="s1">&#39;ui/title&#39;</span><span class="p">,</span> <span class="s1">&#39;user&#39;</span>
+  <span class="nf">($location, {links}, {page}, {instance}) -&gt;</span>
   
     <span class="nv">link: </span><span class="nf">(scope, elm, attr) -&gt;</span>
-      
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p><code>TODO</code>: This whole thing needs to be overhauled.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">scope.links = </span><span class="nx">links</span>
       <span class="nv">scope.navClass = </span><span class="k">if</span> <span class="nx">attr</span><span class="p">[</span><span class="s1">&#39;uiNav&#39;</span><span class="p">]</span> <span class="k">then</span> <span class="nx">attr</span><span class="p">[</span><span class="s1">&#39;uiNav&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="s1">&#39;ui-nav&#39;</span>
-    
-      <span class="nv">scope.links = </span><span class="nx">nav</span><span class="p">.</span><span class="nx">links</span>
-      <span class="nv">scope.user = </span><span class="nx">user</span><span class="p">.</span><span class="nx">instance</span><span class="p">()</span>
+      <span class="nv">scope.user = </span><span class="nx">instance</span><span class="p">()</span>
       
       <span class="nx">scope</span><span class="p">.</span><span class="nx">$watch</span><span class="p">(</span>
-        <span class="o">-&gt;</span> <span class="nx">title</span><span class="p">.</span><span class="nx">page</span><span class="nf">()</span>
-<span class="nf">        -&gt;</span> <span class="nv">scope.pageTitle = </span><span class="nx">title</span><span class="p">.</span><span class="nx">page</span><span class="p">()</span>
+        <span class="o">-&gt;</span> <span class="nx">page</span><span class="nf">()</span>
+<span class="nf">        -&gt;</span> <span class="nv">scope.pageTitle = </span><span class="nx">page</span><span class="p">()</span>
       <span class="p">)</span>
       
       <span class="p">(</span><span class="nv">navActiveLinks = </span><span class="o">-&gt;</span>
@@ -23,7 +21,8 @@
           <span class="nv">link.active = </span><span class="k">if</span> <span class="nx">regexp</span><span class="p">.</span><span class="nx">test</span> <span class="nx">path</span> <span class="k">then</span> <span class="s1">&#39;active&#39;</span>
           
       <span class="p">)()</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Make sure we set active the first time, since angular-strap won't be ready.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">scope</span><span class="p">.</span><span class="nx">$watch</span><span class="p">(</span>
+      
+      <span class="nx">scope</span><span class="p">.</span><span class="nx">$watch</span><span class="p">(</span>
         <span class="o">-&gt;</span> <span class="nx">scope</span><span class="p">.</span><span class="nx">links</span><span class="p">()</span>
         <span class="nx">navActiveLinks</span>  
       <span class="p">)</span>
@@ -68,11 +67,14 @@
 
 <span class="s2">&quot;&quot;</span><span class="err">&quot;</span>
     
-<span class="p">]</span>
+<span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookservice">Implements hook <code>service</code></h2>
 
-<span class="nx">exports</span><span class="p">.</span><span class="nv">$service = </span><span class="o">-&gt;</span> <span class="p">[</span>
+<p>This API allows you to dynamically change the navigation links.
+<code>TODO</code>: Overhaul this.</p></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$service = </span><span class="o">-&gt;</span> <span class="p">[</span>
   <span class="o">-&gt;</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>This API allows you to dynamically change the navigation links.</p></div></div><div class="code"><div class="wrapper">    
+    
+    <span class="nv">service = </span><span class="p">{}</span>
+    
     <span class="nv">_links = </span><span class="p">[]</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Get and set the navigation links. The links are objects structured like so:</p>
 
@@ -90,9 +92,9 @@ active.</li>
     href: '#/home'
     name: 'Home'
 </code></pre></div></div><div class="code"><div class="wrapper">    
-    <span class="vi">@links = </span><span class="o">-&gt;</span> <span class="nx">_links</span>
-    <span class="vi">@setLinks = </span><span class="nf">(links) -&gt;</span> <span class="nv">_links = </span><span class="nx">links</span>
+    <span class="nv">service.links = </span><span class="o">-&gt;</span> <span class="nx">_links</span>
+    <span class="nv">service.setLinks = </span><span class="nf">(links) -&gt;</span> <span class="nv">_links = </span><span class="nx">links</span>
     
-    <span class="k">return</span>
+    <span class="nx">service</span>
     
 <span class="p">]</span></div></div></div></div></body></html>
