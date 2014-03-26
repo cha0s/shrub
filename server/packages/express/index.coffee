@@ -30,6 +30,15 @@ class Express extends (require 'AbstractHttp')
 		# } Register middleware.
 		@registerMiddleware()
 		
+		# } Cache the session store.
+		@_sessionStore = switch @_config.sessions.db
+			when 'redis'
+				
+				module = require 'connect-redis/node_modules/redis'
+		
+				RedisStore = require('connect-redis') express
+				new RedisStore client: module.createClient()
+		
 		# } Handlebars!
 		# } `TODO`: Do we really need to use Express's theme system..?
 		@_app.set 'views', @_config.path
@@ -138,18 +147,8 @@ class Express extends (require 'AbstractHttp')
 	# ### ::sessionStore
 	# 
 	# *The session store.*
-	# 
-	# `TODO`: Cache this!
-	sessionStore: ->
+	sessionStore: -> @_sessionStore
 		
-		switch @_config.sessions.db
-			when 'redis'
-				
-				module = require 'connect-redis/node_modules/redis'
-		
-				RedisStore = require('connect-redis') express
-				new RedisStore client: module.createClient()
-
 # ## Implements hook `initialize`
 exports.$initialize = (config) ->
 	
