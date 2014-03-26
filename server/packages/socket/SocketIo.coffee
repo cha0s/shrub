@@ -78,9 +78,8 @@ module.exports = class SocketIo extends AbstractSocketFactory
 					delete req[key] for key of handshake
 					
 					# Store the request object and accept authentication.
-					requestObjects[
-						handshake.requestKey = key.toString 'hex'
-					] = req
+					handshake.requestKey = key.toString 'hex'
+					requestObjects[handshake.requestKey] = req
 					fn null, true
 				
 		# Connection (post-authorization).
@@ -89,8 +88,10 @@ module.exports = class SocketIo extends AbstractSocketFactory
 			# Use the handshake as the request base, and augment it with the
 			# request object from the authentication phase, plus some other
 			# goodies.
+			# `TODO`: Make req an instance of require('http').IncomingMessage
+			# if we can do that.
 			req = socket.handshake
-			req[key] = value for key, value of  requestObjects[req.requestKey]
+			req[key] = value for key, value of requestObjects[req.requestKey]
 			
 			req.http = http
 			req.socket = socket

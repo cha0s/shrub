@@ -1,4 +1,8 @@
 
+# # Villiany
+# 
+# Watch for and punish bad behavior.
+
 moment = require 'moment'
 nconf = require 'nconf'
 i8n = require 'inflection'
@@ -12,17 +16,18 @@ logging = require 'logging'
 
 logger = logging.create 'logs/villiany.log'
 	
+# ## Implements hook `endpointAlter`
 exports.$endpointAlter = (endpoints) ->
 	
 	for route, endpoint of endpoints
 	
 		endpoint.villianyScore ?= 20
 
+# ## Implements hook `models`
 exports.$models = (schema) ->
 	
 	# Bans.
-	# TODO it'd be nice to be able to generate all of this dynamically from
-	# audit keys.
+	# `TODO`: Generate all of this dynamically from audit keys.
 	Ban = schema.define 'Ban',
 		
 		ip:
@@ -39,7 +44,6 @@ exports.$models = (schema) ->
 		
 		expires:
 			type: Number
-
 
 	banTemplate = (where) ->
 	
@@ -94,6 +98,7 @@ villianyLimiter = new Limiter(
 	threshold(1000).every(10).minutes()
 )
 
+# Define `req.reportVilliany()`.
 reporterMiddleware = (req, res, next) ->
 				
 	{models: Ban: Ban} = require 'server/jugglingdb'
@@ -110,8 +115,9 @@ reporterMiddleware = (req, res, next) ->
 		villianyLimiter.addAndCheckThreshold(
 			keys, score
 		
-		).bind({}).then((isVillian) ->
-		
+		).then((isVillian) ->
+			
+			# Log this transgression.
 			message = "Logged villiany score #{
 				score
 			} for #{
@@ -119,24 +125,19 @@ reporterMiddleware = (req, res, next) ->
 			}, audit keys: #{
 				JSON.stringify auditKeys
 			}"
-			
 			message += ", which resulted in a ban." if isVillian
-			
-			logger.warn message 
+			logger[if isVillian then 'error' else 'warn'] message 
 			
 			throw new NotAVillian unless isVillian
 			
-			villianyLimiter.ttl keys
-					
-		).then((@ttl) ->
-			
 			# Ban.
 			Ban.createFromKeys auditKeys
+			villianyLimiter.ttl keys
+					
+		).then((ttl) ->
 			
-		).then(->
-
 			# Kick.
-			req.villianyKick @ttl
+			req.villianyKick ttl
 		
 		).then(-> true
 		).catch NotAVillian, -> false
@@ -173,6 +174,7 @@ enforcementMiddleware = (req, res, next) ->
 
 	).catch (error) -> next error
 
+# Build a nice message for the villian.
 buildBanMessage = (subject, ttl) ->
 	
 	message = if subject?
@@ -188,6 +190,7 @@ buildBanMessage = (subject, ttl) ->
 		
 	message
 
+# ## Implements hook `httpMiddleware
 exports.$httpMiddleware = ->
 	
 	{models: User: User} = require 'server/jugglingdb'
@@ -216,6 +219,7 @@ exports.$httpMiddleware = ->
 			
 	]
 
+# ## Implements hook `settings
 exports.$settings = ->
 	
 	ban:
@@ -223,6 +227,7 @@ exports.$settings = ->
 		# 10 minute ban time by default.
 		defaultExpiration: 1000 * 60 * 10
 
+# ## Implements hook `socketAuthorizationMiddleware
 exports.$socketAuthorizationMiddleware = ->
 	
 	label: 'Provide villiany management'

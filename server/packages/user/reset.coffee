@@ -1,8 +1,11 @@
 
+# # User password reset
+
 crypto = require 'server/crypto'
 
 {threshold} = require 'limits'
 
+# ## Implements hook `endpoint`
 exports.$endpoint = ->
 
 	limiter: threshold: threshold(1).every(5).minutes()
@@ -11,17 +14,20 @@ exports.$endpoint = ->
 		
 		{models: User: User} = require 'server/jugglingdb'
 		
-		filter = where: resetPasswordToken: req.body.token
+		# Look up the user.
+		User.findOne(
+			where: resetPasswordToken: req.body.token
 		
-		(User.findOne filter).bind({}).then((@user) ->
+		).bind({}).then((@user) ->
 			return unless @user?
 			
+			# Recalculate the password hashing details.
 			crypto.hasher plaintext: req.body.password
 			
-		).then((opts) ->
+		).then((hashed) ->
 		
-			@user.passwordHash = opts.key.toString 'hex'
-			@user.salt = opts.salt.toString 'hex'
+			@user.passwordHash = hashed.key.toString 'hex'
+			@user.salt = hashed.salt.toString 'hex'
 			@user.resetPasswordToken = null
 			@user.save()
 			

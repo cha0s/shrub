@@ -1,27 +1,39 @@
 
+# # User
+# 
+# User oprations. 
+
 passport = require 'passport'
 Promise = require 'bluebird'
 
 crypto = require 'server/crypto'
 
+clientModule = require 'client/modules/packages/user'
+
+# ## Implements hook `auditKeys`
 exports.$auditKeys = (req) ->
 
+	# User (ID).
 	user: req.user.id if req.user?.id?
 
+# ## Implements hook `config`
 exports.$config = (req) ->
 	
-	req.user.redactFor(req.user).then (redacted) ->
-	
-		user: redacted
+	# Send a redacted version of the request user.
+	req.user.redactFor(req.user).then (redacted) -> user: redacted
 
+# ## Implements hook `httpInitializer`
 exports.$httpInitializer = -> (req, res, next) ->
 	
 	{models: User: User} = require 'server/jugglingdb'
 	
+	# Implement a local passport strategy.
+	# `TODO`: Strategies should be dynamically defined, probably through a
+	# hook.
 	LocalStrategy = require('passport-local').Strategy
-	
 	passport.use new LocalStrategy (username, password, done) ->
 		
+		# Load a user and compare the hashed password.
 		exports.loadByName(username).bind({}).then((@user)->
 			return unless @user?
 			
@@ -30,9 +42,9 @@ exports.$httpInitializer = -> (req, res, next) ->
 				salt: new Buffer @user.salt, 'hex'
 			)
 			
-		).then((opts) ->
+		).then((hashed) ->
 			return unless @user?
-			return unless @user.passwordHash is opts.key.toString 'hex'
+			return unless @user.passwordHash is hashed.key.toString 'hex'
 			
 			@user
 			
@@ -44,15 +56,19 @@ exports.$httpInitializer = -> (req, res, next) ->
 	
 	next()
 				
+# ## Implements hook `httpMiddleware`
 exports.$httpMiddleware = (http) ->
 	
 	{models: User: User} = require 'server/jugglingdb'
 	
 	label: 'Load user using passport'
 	middleware: [
-	
+		
+		# Passport middleware.
 		passport.initialize()
 		passport.session()
+		
+		# Set the user into the request.
 		(req, res, next) ->
 			
 			if req.user?
@@ -72,12 +88,16 @@ exports.$httpMiddleware = (http) ->
 		
 	]
 
+# ## Implements hook `models`
 exports.$models = (schema) ->
 	
-	(require 'client/modules/packages/user').$models schema
+	# Invoke the client hook implementation.
+	clientModule.$models schema
 	
 	User = schema.models['User']
 	
+	# Extend the redaction function with server-specific information.
+	# `TODO`: Does redaction ever make sense on the client?
 	redactFor = User::redactFor
 	User::redactFor = (user) ->
 		
@@ -93,8 +113,10 @@ exports.$models = (schema) ->
 		
 		).then -> @redacted
 		
-exports.$modelsAlter = (require 'client/modules/packages/user').$modelsAlter
+# ## Implements hook `modelsAlter`
+exports.$modelsAlter = clientModule.$modelsAlter
 
+# ## Implements hook `socketAuthorizationMiddleware`
 exports.$socketAuthorizationMiddleware = ->
 	
 	{models: User: User} = require 'server/jugglingdb'
@@ -104,20 +126,23 @@ exports.$socketAuthorizationMiddleware = ->
 	
 		(req, res, next) ->
 			
-			req[method] = require('http').IncomingMessage.prototype[method] for method in [
+			# Augment our request object with certain methods from
+			# `http.IncomingMessage`.
+			for method in [
 				'login', 'logIn'
 				'logout', 'logOut'
 				'isAuthenticated', 'isUnauthenticated'
 			]
+				req[method] = require('http').IncomingMessage.prototype[method]
 			
 			next()
 			
+		# Passport middleware.
 		passport.initialize()
 		passport.session()
 		
+		# Set the user into the request.
 		(req, res, next) ->
-			
-			req.passport = req._passport.instance
 			
 			if req.user?
 			
@@ -128,7 +153,9 @@ exports.$socketAuthorizationMiddleware = ->
 					
 					new Promise (resolve) ->
 						
-						req.socket?.emit 'user.logout', null, -> resolve req.user
+						# Alos log the client out, if we can.
+						req.socket?.emit 'user.logout', null, ->
+							resolve req.user
 			
 			else
 			
@@ -138,6 +165,7 @@ exports.$socketAuthorizationMiddleware = ->
 	
 	]
 
+# ## Implements hook `socketRequestMiddleware`
 exports.$socketRequestMiddleware = ->
 	
 	{models: User: User} = require 'server/jugglingdb'
@@ -147,12 +175,18 @@ exports.$socketRequestMiddleware = ->
 	
 		(req, res, next) ->
 			
+			# Join a channel for the username.
 			req.socket.join req.user.name if req.user.id?
 			
 			next()
 	
 	]
 
+# ## loadByName
+# 
+# *Load a user by name.*
+# 
+# (string) `name` - The name of the user to load.
 exports.loadByName = (name) ->
 	
 	{models: User: User} = require 'server/jugglingdb'

@@ -1,4 +1,6 @@
 
+# # User - forgot password
+
 crypto = require 'server/crypto'
 nconf = require 'nconf'
 nodemailer = require 'server/packages/nodemailer'
@@ -6,6 +8,7 @@ Promise = require 'bluebird'
 
 {threshold} = require 'limits'
 
+# ## Implements hook `endpoint`
 exports.$endpoint = ->
 	
 	limiter: threshold: threshold(1).every(30).seconds()
@@ -44,10 +47,12 @@ exports.$endpoint = ->
 			
 			@user.resetPasswordToken = token.toString 'hex'
 			
+			# Decrypt the user's email address.
 			crypto.decrypt @user.email
 			
 		).then((email) ->
 			
+			# Send an email to the user with a one-time login link.
 			baseUrl = "http://#{
 				req.headers.host
 			}"
@@ -75,7 +80,9 @@ exports.$endpoint = ->
 			nodemailer.sendMail(
 				'user/forgot'
 				to: email
-				subject: "Password recovery request for your account at #{siteName}"
+				subject: "Password recovery request for your account at #{
+					siteName
+				}"
 				tokens: tokens
 			)
 		
@@ -83,6 +90,6 @@ exports.$endpoint = ->
 	
 		).then(->
 			
-			return
+			fn()
 			
-		).nodeify fn
+		).catch fn

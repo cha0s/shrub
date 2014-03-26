@@ -5,6 +5,9 @@ errors = require 'errors'
 
 {threshold} = require 'limits'
 
+clientModule = require 'client/modules/packages/user/login'
+
+# ## Implements hook `endpoint`
 exports.$endpoint = ->
 	
 	limiter:
@@ -19,14 +22,15 @@ exports.$endpoint = ->
 			
 			when 'local'
 				
-				deferred = Promise.defer()
+				res = {}
 				
-				passport.authenticate('local', deferred.callback)(
-					req, res = {}, fn
-				)
+				deferred = Promise.defer()
+				passport.authenticate('local', deferred.callback) req, res, fn
 				
 				Promise.settle([
 					
+					# Log the user in (if it exists), and redact it for the
+					# response.
 					deferred.promise.bind({}).spread((@user, info) ->
 						throw errors.instantiate 'login' unless @user
 						
@@ -34,11 +38,13 @@ exports.$endpoint = ->
 						
 					).then -> @user.redactFor @user
 					
-# If no user is found, the rejection will happen a lot sooner than if one is;
-# password hashing must be done in the latter case. We'll create an artificial
-# floor of 1 second to make it harder for an attacker to tell if a valid
-# username was used.
-
+					# If no user is found, the rejection will happen a lot
+					# sooner than if one is; password hashing must be done in
+					# the latter case. We'll create an artificial floor of 1
+					# second to make it harder for an attacker to tell if a
+					# valid username was used.
+					# `TODO`: Remove this. We'll eventually disallow
+					# registration conflicts.
 					new Promise (resolve, reject) -> setTimeout resolve, 1000
 
 				]).then ([userPromiseInspector]) ->
@@ -56,4 +62,5 @@ exports.$endpoint = ->
 			(error) -> fn error
 		)
 
-exports.$errorType = (require 'client/modules/packages/user/login').$errorType
+# ## Implements hook `errorType`
+exports.$errorType = clientModule.$errorType

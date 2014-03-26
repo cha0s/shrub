@@ -75,7 +75,8 @@ exports.$settings = ->
 #   useful for anyone interested in implementing hook `mail`.
 # 
 # * (object) `mail` - See [the nodemailer example](https://github.com/andris9/Nodemailer/blob/master/examples/example_sendmail.js#L9)
-#   for an example of the structure of this object. 
+#   for an example of the structure of this object. There is also a `tokens`
+#   key, which is used to replace tokens in the mail.
 exports.sendMail = (type, mail) ->
 	
 	path = nconf.get 'path'
@@ -127,7 +128,7 @@ exports.sendMail = (type, mail) ->
 			# Prepare the HTML to be sent as email.
 			templateCache[type] = sandbox.prepareHtmlForEmail html.toString()
 	
-		# Compile it with Handlebars.
+		# Compile it with Handlebars, using the tokens passed in as the locals.
 		mail.tokens ?= {}
 		html = handlebars.compile(html) mail.tokens
 			

@@ -1,4 +1,6 @@
 
+# # User registration
+
 nconf = require 'nconf'
 nodemailer = require 'server/packages/nodemailer'
 
@@ -6,6 +8,7 @@ crypto = require 'server/crypto'
 
 {threshold} = require 'limits'
 
+# ## Implements hook `endpoint`
 exports.$endpoint = ->
 
 	limiter:
@@ -17,8 +20,11 @@ exports.$endpoint = ->
 		{body} = req
 		{email, password, username} = body
 		
+		# Register a new user.
 		exports.register(username, email, password).then((user) ->
 			
+			# Send an email to the new user's email with a one-time login
+			# link.
 			baseUrl = "http://#{
 				req.headers.host
 			}"
@@ -57,6 +63,7 @@ exports.$endpoint = ->
 			(error) -> fn error
 		)
 		
+# ## Implements hook `replContext`
 exports.$replContext = (context) ->
 	
 	schema = require 'server/jugglingdb'
@@ -65,6 +72,15 @@ exports.$replContext = (context) ->
 	
 		_register name, email, password, schema
 
+# ## register
+# 
+# *Register a user in the system.*
+# 
+# * (string) `name` - Name of the new user.
+# 
+# * (string) `email` - Email address of the new user.
+# 
+# * (string) `password` - The new user's password.
 exports.register = (name, email, password) ->
 	
 	_register name, email, password, require 'server/jugglingdb'
@@ -79,21 +95,20 @@ _register = (name, email, password, schema) ->
 
 		user.email = encryptedEmail
 
+		# Set the password encryption details.
 		crypto.hasher plaintext: password
 		
-	).then((opts) ->
+	).then((hashed) ->
 		
-		user.plaintext = opts.plaintext
-		user.salt = opts.salt.toString 'hex'
-		user.passwordHash = opts.key.toString 'hex'
+		user.plaintext = hashed.plaintext
+		user.salt = hashed.salt.toString 'hex'
+		user.passwordHash = hashed.key.toString 'hex'
 	
 		# Generate a one-time login token.
 		crypto.randomBytes 24
 		
-	).then((token) ->
+	).then (token) ->
 		
 		user.resetPasswordToken = token.toString 'hex'
 		
 		user.save()
-	
-	)

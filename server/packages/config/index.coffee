@@ -54,7 +54,8 @@ exports.$httpMiddleware = (http) ->
 			
 			# Invoke hook `config`.
 			# Allows packages to specify configuration that will be sent to
-			# the client.
+			# the client. Implementations may return an object, or a promise
+			# that resolves to an object.
 			Promise.all(
 				pkgman.invokeFlat 'config', req
 				
