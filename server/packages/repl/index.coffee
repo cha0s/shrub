@@ -14,8 +14,8 @@ pkgman = require 'pkgman'
 # The socket server.
 server = null
 
-# ## Implements hook `initialized`
-exports.$initialized = ->
+# ## Implements hook `ready`
+exports.$ready = ->
 	
 	settings = nconf.get 'packageSettings:repl'
 	

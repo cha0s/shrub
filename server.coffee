@@ -25,11 +25,9 @@ Promise.all(
 # } After initialization.
 ).done(
 
-	# Invoke hook `initialized`.
-	# Invoked after the server is initialized.
-	# 
-	# `TODO`: Rename to `ready`.
-	-> pkgman.invoke 'initialized'
+	# Invoke hook `ready`.
+	# Invoked after the server is initialized and ready.
+	-> pkgman.invoke 'ready'
 	(error) ->
 		
 		defaultLogger.error errors.stack error
