@@ -78,8 +78,3 @@ angular.module('shrub.config', []).provider('config', function() {
 			).catch next
 			
 	]
-
-# ## Implements hook `replContext`
-# 
-# } `TODO`: Should probably just remove this and `require 'nconf'`.
-exports.$replContext = (context) -> context.config = nconf
