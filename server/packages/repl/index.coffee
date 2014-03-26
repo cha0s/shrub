@@ -36,7 +36,7 @@ exports.$initialized = ->
 		# Allow settings to define whether the REPL runs CoffeeScript.
 		if settings.useCoffee
 			
-			opts.prompt = "#{settings.prompt} (coffee) "
+			opts.prompt = "#{settings.prompt}(coffee) "
 			
 			# } Define our own eval function, using CoffeeScript.
 			opts.eval = (cmd, context, filename, callback) ->
