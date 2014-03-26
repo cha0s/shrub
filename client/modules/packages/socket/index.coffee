@@ -2,7 +2,6 @@
 # # Socket
 # 
 # Provide an Angular service wrapping Socket.IO.
-# `TODO`: Only Socket.IO at the moment.
 
 # ## Implements hook `service`
 exports.$service = -> [
@@ -14,6 +13,8 @@ exports.$service = -> [
 		# Be aware: this will throw in unit tests because [global].io won't be
 		# available. It must be mocked out.
 		return service if 'unit' is config.get 'testMode'
+
+		# `TODO`: Only Socket.IO at the moment.
 		socket = io.connect()
 		
 		# We have to queue emits while not initialized to keep things robust.

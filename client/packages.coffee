@@ -21,25 +21,38 @@ angular.module('shrub.packages', [
 					
 				i8n.camelize (i8n.underscore parts.join ''), true
 
-			# Package-defined controllers.
+			# Invoke hook `controller`.
+			# Allows packages to define Angular controllers. Implementations
+			# should return an [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
 			for path, injected of invokeWithMocks 'controller'
 				$controllerProvider.register path, injected
 
-			# Package-defined directives.
+			# Invoke hook `directive`.
+			# Allows packages to define Angular directives. Implementations
+			# should return an [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
 			for path, injected of invokeWithMocks 'directive'
 				$compileProvider.directive (normalize path), injected
 
-			# Package-defined filters.
+			# Invoke hook `filter`.
+			# Allows packages to define Angular filters. Implementations
+			# should return a function.
 			for path, injected of invokeWithMocks 'filter'
 				$filterProvider.register (normalize path), injected
 
-			# Package-defined services.
+			# Invoke hook `service`.
+			# Allows packages to define Angular services. Implementations
+			# should return an [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
 			for path, injected of invoke 'service'
 				$provide.service path, injected
 			
 			# If we are testing, decorate the services with their mock
 			# versions.
 			if configProvider.get 'testMode'
+				
+				# Invoke hook `serviceMock`.
+				# Allows packages to decorate mock Angular services.
+				# Implementations should return an
+				# [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
 				for path, injected of invoke 'serviceMock'
 					$provide.decorator path, injected
 			

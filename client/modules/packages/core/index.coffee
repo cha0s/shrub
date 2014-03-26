@@ -10,6 +10,7 @@ exports.$appConfig = -> [
 	
 		# Invoke hook `route`.
 		# Allow packages to define routes in the Angular application.
+		# 
 		# `TODO`: Should just be .invoke, routeMock done separately.
 		routes = invokeWithMocks 'route'
 
