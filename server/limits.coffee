@@ -240,8 +240,10 @@ redback.addStructure(
 		lrange(@key + ':' + id, 0, -1).then (counts) ->
 			
 			# } Sum all the scores.
-			counts.reduce ((l, r) -> l + r), 0
-		
+			counts.map(
+				(count) -> parseInt count, 10
+			
+			).reduce ((l, r) -> l + r), 0
 	
 	# ### .ttl
 	# 
