@@ -12,9 +12,16 @@
 <span class="nv">logger = </span><span class="nx">logging</span><span class="p">.</span><span class="nx">create</span> <span class="s1">&#39;logs/rpc.log&#39;</span>
 
 <span class="p">{</span><span class="nx">Limiter</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;limits&#39;</span>
-<span class="p">{</span><span class="nx">Middleware</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;middleware&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>RPC endpoint information.</p></div></div><div class="code"><div class="wrapper"><span class="nv">endpoints = </span><span class="p">{}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>An example of defining an endpoint:</p></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$endpoint = </span><span class="o">-&gt;</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Validators can be run before the call is received. They are defined as
-middleware.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">validators: </span><span class="p">[</span>
+<span class="p">{</span><span class="nx">Middleware</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;middleware&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>RPC endpoint information.</p></div></div><div class="code"><div class="wrapper"><span class="nv">endpoints = </span><span class="p">{}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookinitialize">Implements hook <code>initialize</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$initialize = </span><span class="o">-&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>A route is defined like:</p>
+
+<ul>
+<li><p><code>validators</code>: Validators are run before the call is received. They are
+defined as middleware.</p></li>
+<li><p><code>receiver</code>: The receiver is called if none of the validators throw an
+error.</p></li>
+</ul>
+
+<p>Example:</p></div></div><div class="code"><div class="wrapper">  <span class="nv">validators: </span><span class="p">[</span>
     
     <span class="nf">(req, res, next) -&gt;</span>
       
@@ -26,7 +33,8 @@ middleware.</p></div></div><div class="code"><div class="wrapper">  <span class=
         
         <span class="nx">next</span><span class="p">()</span>
   <span class="p">]</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The receiver is called if none of the validators throw an error.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">receiver: </span><span class="nf">(req, fn) -&gt;</span>
+  
+  <span class="nv">receiver: </span><span class="nf">(req, fn) -&gt;</span>
   
     <span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">badStuffHappened</span>
       
@@ -35,11 +43,7 @@ middleware.</p></div></div><div class="code"><div class="wrapper">  <span class=
     <span class="k">else</span>
       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Anything you pass to the second parameter of fn will be passed
 back to the client. Keep this in mind.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">fn</span> <span class="kc">null</span><span class="p">,</span> <span class="nv">message: </span><span class="s2">&quot;Everything went better than expected!&quot;</span>
-      
-  <span class="c1"># ... the rest of the endpoint definition</span>
-  
-<span class="c1"># ...that was just an example.</span>
-<span class="k">delete</span> <span class="nx">exports</span><span class="p">.</span><span class="nx">$endpoint</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookinitialize">Implements hook <code>initialize</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$initialize = </span><span class="o">-&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>endpoint</code>.
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>endpoint</code>.
 Gather all endpoints.</p></div></div><div class="code"><div class="wrapper">  <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">endpoint</span> <span class="k">of</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s1">&#39;endpoint&#39;</span>
     
     <span class="nv">endpoint = receiver: </span><span class="nx">endpoint</span> <span class="k">if</span> <span class="nx">_</span><span class="p">.</span><span class="nx">isFunction</span> <span class="nx">endpoint</span>
@@ -55,7 +59,7 @@ Allows packages to modify any endpoints defined.</p></div></div><div class="code
     <span class="nv">validators = </span><span class="k">new</span> <span class="nx">Middleware</span><span class="p">()</span>
     <span class="nx">validators</span><span class="p">.</span><span class="nx">use</span> <span class="nx">validator</span> <span class="k">for</span> <span class="nx">validator</span> <span class="k">in</span> <span class="nx">endpoint</span><span class="p">.</span><span class="nx">validators</span>
     <span class="nv">endpoint.validators = </span><span class="nx">validators</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshooksocketrequestmiddleware">Implements hook <code>socketRequestMiddleware</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$socketRequestMiddleware = </span><span class="o">-&gt;</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshooksocketconnectionmiddleware">Implements hook <code>socketConnectionMiddleware</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$socketConnectionMiddleware = </span><span class="o">-&gt;</span>
   
   <span class="nv">label: </span><span class="s1">&#39;Receive and dispatch RPC calls&#39;</span>
   <span class="nv">middleware: </span><span class="p">[</span>
@@ -80,10 +84,8 @@ routes, and violate other routes' expectations.</p></div></div><div class="code"
 the real underlying issue.</p></div></div><div class="code"><div class="wrapper">          <span class="nv">concealErrorFromClient = </span><span class="nf">(error) -&gt;</span>
             
             <span class="nx">emitError</span> <span class="k">new</span> <span class="nb">Error</span> <span class="s2">&quot;Please try again later.&quot;</span>
-            <span class="nx">logError</span> <span class="nx">errors</span><span class="p">.</span><span class="nx">caught</span> <span class="nx">error</span>
-            </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Transmit the error as it is directly to the client.</p></div></div><div class="code"><div class="wrapper">          <span class="nv">sendErrorToClient = </span><span class="nf">(error) -&gt;</span>
-            
-            <span class="nx">emitError</span> <span class="nx">errors</span><span class="p">.</span><span class="nx">caught</span> <span class="nx">error</span>
+            <span class="nx">logError</span> <span class="nx">error</span>
+            </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Transmit the error as it is directly to the client.</p></div></div><div class="code"><div class="wrapper">          <span class="nv">sendErrorToClient = </span><span class="nf">(error) -&gt;</span> <span class="nx">emitError</span> <span class="nx">error</span>
           </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Validate.</p></div></div><div class="code"><div class="wrapper">          <span class="nx">endpoint</span><span class="p">.</span><span class="nx">validators</span><span class="p">.</span><span class="nx">dispatch</span> <span class="nx">routeReq</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nf">(error) -&gt;</span>
             <span class="k">return</span> <span class="nx">sendErrorToClient</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
             </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Receive.</p></div></div><div class="code"><div class="wrapper">            <span class="nx">endpoint</span><span class="p">.</span><span class="nx">receiver</span> <span class="nx">routeReq</span><span class="p">,</span> <span class="nf">(error, result) -&gt;</span>

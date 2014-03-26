@@ -7,23 +7,21 @@ endpoints.</p></div></div><div class="code"><div class="wrapper"><span class="nv
 <span class="nv">audit = </span><span class="nx">require</span> <span class="s1">&#39;audit&#39;</span>
 <span class="nv">errors = </span><span class="nx">require</span> <span class="s1">&#39;errors&#39;</span>
 
-<span class="p">{</span><span class="nx">Limiter</span><span class="p">,</span> <span class="nx">threshold</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;limits&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>An example of defining a limiter on an endpoint:</p></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$endpoint = </span><span class="o">-&gt;</span>
+<span class="p">{</span><span class="nx">Limiter</span><span class="p">,</span> <span class="nx">threshold</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;limits&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookendpointalter">Implements hook <code>endpointAlter</code></h2>
 
-  <span class="nv">limiter:</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The message returned to the client when the threshold is passed.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">message: </span><span class="s2">&quot;Too many things!&quot;</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The <a href="http://shrub.doc.com.dev/server/limits.html#threshold">threshold</a>
-for this limiter.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">threshold: </span><span class="nx">threshold</span><span class="p">(</span><span class="mi">3</span><span class="p">).</span><span class="nx">every</span><span class="p">(</span><span class="mi">30</span><span class="p">).</span><span class="nx">seconds</span><span class="p">()</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The <a href="http://shrub.doc.com.dev/hooks.html#auditkeys">audit keys</a>
-to ignore when determining the total limit. In this example, the
-IP address and session ID would be ignored.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">excludeKeys: </span><span class="p">[</span><span class="s1">&#39;ip&#39;</span><span class="p">,</span> <span class="s1">&#39;session&#39;</span><span class="p">]</span>
-    
-  <span class="c1"># ... the rest of the endpoint definition</span>
-  
-<span class="c1"># ...that was just an example.</span>
-<span class="k">delete</span> <span class="nx">exports</span><span class="p">.</span><span class="nx">$endpoint</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookendpointalter">Implements hook <code>endpointAlter</code></h2>
+<p>Allow RPC endpoint definitions to specify rate limiters.</p></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$endpointAlter = </span><span class="nf">(endpoints) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>A limiter on a route is defined like:</p>
 
-<p>Allow RPC endpoint definitions to specify rate limiters.</p></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$endpointAlter = </span><span class="nf">(endpoints) -&gt;</span>
-
+<ul>
+<li><p><code>message</code>: The message returned to the client when the threshold is
+passed.</p></li>
+<li><p><code>threshold</code>: The
+<a href="http://shrub.doc.com.dev/server/limits.html#threshold">threshold</a> for
+this limiter.</p></li>
+<li><p><code>ignoreKeys</code>: The
+<a href="http://shrub.doc.com.dev/hooks.html#auditkeys">audit keys</a> to ignore
+when determining the total limit. In this example, the IP address and
+session ID would be ignored.</p></li>
+</ul></div></div><div class="code"><div class="wrapper">  
   <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">endpoints</span><span class="p">).</span><span class="nx">forEach</span> <span class="nf">(route) -&gt;</span>
     <span class="nv">endpoint = </span><span class="nx">endpoints</span><span class="p">[</span><span class="nx">route</span><span class="p">]</span>
     
@@ -33,16 +31,15 @@ IP address and session ID would be ignored.</p></div></div><div class="code"><di
       <span class="s2">&quot;rpc://#{route}&quot;</span>
       <span class="nx">endpoint</span><span class="p">.</span><span class="nx">limiter</span><span class="p">.</span><span class="nx">threshold</span>
     <span class="p">)</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Set defaults.
-<code>TODO</code>: Rename to <code>ignoreKeys</code>.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">endpoint</span><span class="p">.</span><span class="nx">limiter</span><span class="p">.</span><span class="nx">excludeKeys</span> <span class="o">?=</span> <span class="p">[]</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Set defaults.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">endpoint</span><span class="p">.</span><span class="nx">limiter</span><span class="p">.</span><span class="nx">ignoreKeys</span> <span class="o">?=</span> <span class="p">[]</span>
     <span class="nx">endpoint</span><span class="p">.</span><span class="nx">limiter</span><span class="p">.</span><span class="nx">message</span> <span class="o">?=</span> <span class="s2">&quot;You are doing that too much.&quot;</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Add a validator, where we'll check the threshold.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">endpoint</span><span class="p">.</span><span class="nx">validators</span><span class="p">.</span><span class="nx">push</span> <span class="nf">(req, res, next) -&gt;</span>
       
-      <span class="p">{</span><span class="nx">excludeKeys</span><span class="p">,</span> <span class="nx">instance</span><span class="p">,</span> <span class="nx">message</span><span class="p">,</span> <span class="nx">threshold</span><span class="p">}</span> <span class="o">=</span> <span class="nx">endpoint</span><span class="p">.</span><span class="nx">limiter</span>
+      <span class="p">{</span><span class="nx">ignoreKeys</span><span class="p">,</span> <span class="nx">instance</span><span class="p">,</span> <span class="nx">message</span><span class="p">,</span> <span class="nx">threshold</span><span class="p">}</span> <span class="o">=</span> <span class="nx">endpoint</span><span class="p">.</span><span class="nx">limiter</span>
       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Ignore keys.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">auditKeys = </span><span class="nx">audit</span><span class="p">.</span><span class="nx">keys</span> <span class="nx">req</span>
-      <span class="k">delete</span> <span class="nx">auditKeys</span><span class="p">[</span><span class="nx">excludedKey</span><span class="p">]</span> <span class="k">for</span> <span class="nx">excludedKey</span> <span class="k">in</span> <span class="nx">excludeKeys</span>
+      <span class="k">delete</span> <span class="nx">auditKeys</span><span class="p">[</span><span class="nx">excludedKey</span><span class="p">]</span> <span class="k">for</span> <span class="nx">excludedKey</span> <span class="k">in</span> <span class="nx">ignoreKeys</span>
       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Accrue a hit and check the threshold.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">keys = </span><span class="p">(</span><span class="s2">&quot;#{key}:#{value}&quot;</span> <span class="k">for</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span> <span class="k">of</span> <span class="nx">auditKeys</span><span class="p">)</span>
-      <span class="nx">instance</span><span class="p">.</span><span class="nx">addAndCheckThreshold</span><span class="p">(</span><span class="nx">keys</span><span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="nf">(isLimited) -&gt;</span>
+      <span class="nx">instance</span><span class="p">.</span><span class="nx">accrueAndCheckThreshold</span><span class="p">(</span><span class="nx">keys</span><span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="nf">(isLimited) -&gt;</span>
         <span class="k">return</span> <span class="nx">next</span><span class="p">()</span> <span class="nx">unless</span> <span class="nx">isLimited</span>
         </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Report villiany for crossing the limiter threshold.
 <code>TODO</code>: Should this be added by <a href="/server/packages/villiany/index.html">villiany</a>?</p></div></div><div class="code"><div class="wrapper">        <span class="nv">promise = </span><span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">reportVilliany</span><span class="o">?</span>
@@ -68,6 +65,6 @@ hopefully will stop doing that.</p></div></div><div class="code"><div class="wra
             <span class="p">)</span>
           
       <span class="p">).</span><span class="k">catch</span> <span class="nx">next</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookerrortype">Implements hook <code>errorType</code></h2>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshooktransmittableerror">Implements hook <code>transmittableError</code></h2>
 
-<p>Just defer to client, where the error is defined.</p></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$errorType = </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;client/modules/packages/limiter&#39;</span><span class="p">).</span><span class="nx">$errorType</span></div></div></div></div></body></html>
+<p>Just defer to client, where the error is defined.</p></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$transmittableError = </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;client/modules/packages/limiter&#39;</span><span class="p">).</span><span class="nx">$transmittableError</span></div></div></div></div></body></html>

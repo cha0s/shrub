@@ -47,18 +47,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "client/app",
             "title": "app"
           },
-          "depth": 2,
-          "outline": [
-            {
-              "type": "heading",
-              "data": {
-                "level": 1,
-                "title": "Application entry point.",
-                "slug": "application-entry-point"
-              },
-              "depth": 1
-            }
-          ]
+          "depth": 2
         }, {
           "type": "folder",
           "data": {
@@ -162,18 +151,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/core/index",
                         "title": "index"
                       },
-                      "depth": 5,
-                      "outline": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 1,
-                            "title": "Core",
-                            "slug": "core"
-                          },
-                          "depth": 1
-                        }
-                      ]
+                      "depth": 5
                     }
                   ]
                 }, {
@@ -273,29 +251,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/form/index",
                         "title": "index"
                       },
-                      "depth": 5,
-                      "outline": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 1,
-                            "title": "Form",
-                            "slug": "form"
-                          },
-                          "depth": 1,
-                          "children": [
-                            {
-                              "type": "heading",
-                              "data": {
-                                "level": 2,
-                                "title": "form.cache",
-                                "slug": "formcache"
-                              },
-                              "depth": 2
-                            }
-                          ]
-                        }
-                      ]
+                      "depth": 5
                     }
                   ]
                 }, {
@@ -505,7 +461,53 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/ui/notifications",
                         "title": "notifications"
                       },
-                      "depth": 5
+                      "depth": 5,
+                      "outline": [
+                        {
+                          "type": "heading",
+                          "data": {
+                            "level": 1,
+                            "title": "Notifications",
+                            "slug": "notifications"
+                          },
+                          "depth": 1,
+                          "children": [
+                            {
+                              "type": "heading",
+                              "data": {
+                                "level": 2,
+                                "title": "notifications.add",
+                                "slug": "notificationsadd"
+                              },
+                              "depth": 2
+                            }, {
+                              "type": "heading",
+                              "data": {
+                                "level": 2,
+                                "title": "notifications.top",
+                                "slug": "notificationstop"
+                              },
+                              "depth": 2
+                            }, {
+                              "type": "heading",
+                              "data": {
+                                "level": 2,
+                                "title": "notifications.removeTop",
+                                "slug": "notificationsremovetop"
+                              },
+                              "depth": 2
+                            }, {
+                              "type": "heading",
+                              "data": {
+                                "level": 2,
+                                "title": "notifications.count",
+                                "slug": "notificationscount"
+                              },
+                              "depth": 2
+                            }
+                          ]
+                        }
+                      ]
                     }, {
                       "type": "file",
                       "data": {
@@ -741,8 +743,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "client/packages",
             "title": "packages"
           },
-          "depth": 2,
-          "outline": []
+          "depth": 2
         }, {
           "type": "file",
           "data": {
@@ -1350,7 +1351,18 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/limiter/index",
                     "title": "index"
                   },
-                  "depth": 4
+                  "depth": 4,
+                  "outline": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 1,
+                        "title": "Rate limiter",
+                        "slug": "rate-limiter"
+                      },
+                      "depth": 1
+                    }
+                  ]
                 }
               ]
             }, {
@@ -1440,7 +1452,18 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/rpc/index",
                     "title": "index"
                   },
-                  "depth": 4
+                  "depth": 4,
+                  "outline": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 1,
+                        "title": "RPC",
+                        "slug": "rpc"
+                      },
+                      "depth": 1
+                    }
+                  ]
                 }
               ]
             }, {

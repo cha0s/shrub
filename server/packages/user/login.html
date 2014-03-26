@@ -12,7 +12,7 @@
 
   <span class="nv">receiver: </span><span class="nf">(req, fn) -&gt;</span>
     
-    <span class="p">{</span><span class="nx">passport</span><span class="p">}</span> <span class="o">=</span> <span class="nx">req</span>
+    <span class="nv">passport = </span><span class="nx">req</span><span class="p">.</span><span class="nx">_passport</span><span class="p">.</span><span class="nx">instance</span>
     
     <span class="nv">loginPromise = </span><span class="k">switch</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">method</span>
       
@@ -49,4 +49,4 @@ registration conflicts.</p></div></div><div class="code"><div class="wrapper">  
 </code></pre></div></div><div class="code"><div class="wrapper">    <span class="nx">loginPromise</span><span class="p">.</span><span class="k">then</span><span class="p">(</span>
       <span class="nf">(result) -&gt;</span> <span class="nx">fn</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">result</span>
       <span class="nf">(error) -&gt;</span> <span class="nx">fn</span> <span class="nx">error</span>
-    <span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookerrortype">Implements hook <code>errorType</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$errorType = </span><span class="nx">clientModule</span><span class="p">.</span><span class="nx">$errorType</span></div></div></div></div></body></html>
+    <span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshooktransmittableerror">Implements hook <code>transmittableError</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$transmittableError = </span><span class="nx">clientModule</span><span class="p">.</span><span class="nx">$transmittableError</span></div></div></div></div></body></html>

@@ -6,7 +6,32 @@
 <span class="nv">crypto = </span><span class="nx">require</span> <span class="s1">&#39;server/crypto&#39;</span>
 
 <span class="nv">clientModule = </span><span class="nx">require</span> <span class="s1">&#39;client/modules/packages/user&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookauditkeys">Implements hook <code>auditKeys</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$auditKeys = </span><span class="nf">(req) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>User (ID).</p></div></div><div class="code"><div class="wrapper">  <span class="nv">user: </span><span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span> <span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="o">?</span><span class="p">.</span><span class="nx">id</span><span class="o">?</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookconfig">Implements hook <code>config</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$config = </span><span class="nf">(req) -&gt;</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Send a redacted version of the request user.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">redactFor</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">).</span><span class="k">then</span> <span class="nf">(redacted) -&gt;</span> <span class="nv">user: </span><span class="nx">redacted</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookhttpinitializer">Implements hook <code>httpInitializer</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$httpInitializer = </span><span class="o">-&gt;</span> <span class="nf">(req, res, next) -&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Send a redacted version of the request user.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">redactFor</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">).</span><span class="k">then</span> <span class="nf">(redacted) -&gt;</span> <span class="nv">user: </span><span class="nx">redacted</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookhttpmiddleware">Implements hook <code>httpMiddleware</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$httpMiddleware = </span><span class="nf">(http) -&gt;</span>
+  
+  <span class="p">{</span><span class="nv">models: User: </span><span class="nx">User</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;server/jugglingdb&#39;</span>
+  
+  <span class="nv">label: </span><span class="s1">&#39;Load user using passport&#39;</span>
+  <span class="nv">middleware: </span><span class="p">[</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Passport middleware.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">passport</span><span class="p">.</span><span class="nx">initialize</span><span class="p">()</span>
+    <span class="nx">passport</span><span class="p">.</span><span class="nx">session</span><span class="p">()</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Set the user into the request.</p></div></div><div class="code"><div class="wrapper">    <span class="nf">(req, res, next) -&gt;</span>
+      
+      <span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="o">?</span>
+      
+        <span class="nv">req.user.logout = </span><span class="o">-&gt;</span>
+          
+          <span class="nx">req</span><span class="p">.</span><span class="nx">logout</span><span class="p">()</span>
+          <span class="nv">req.user = </span><span class="k">new</span> <span class="nx">User</span><span class="p">()</span>
+          
+          <span class="nx">Promise</span><span class="p">.</span><span class="nx">resolve</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span>
+          
+      <span class="k">else</span>
+      
+        <span class="nv">req.user = </span><span class="k">new</span> <span class="nx">User</span><span class="p">()</span>
+      
+      <span class="nx">next</span><span class="p">()</span>
+    
+  <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookinitialize">Implements hook <code>initialize</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$initialize = </span><span class="nf">(config) -&gt;</span>
   
   <span class="p">{</span><span class="nv">models: User: </span><span class="nx">User</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;server/jugglingdb&#39;</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Implement a local passport strategy.
@@ -32,34 +57,7 @@ hook.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">L
   <span class="nx">passport</span><span class="p">.</span><span class="nx">serializeUser</span> <span class="nf">(user, done) -&gt;</span> <span class="nx">done</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">user</span><span class="p">.</span><span class="nx">id</span>
   
   <span class="nx">passport</span><span class="p">.</span><span class="nx">deserializeUser</span> <span class="nf">(id, done) -&gt;</span> <span class="nx">User</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">id</span><span class="p">).</span><span class="nx">nodeify</span> <span class="nx">done</span>
-  
-  <span class="nx">next</span><span class="p">()</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookhttpmiddleware">Implements hook <code>httpMiddleware</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$httpMiddleware = </span><span class="nf">(http) -&gt;</span>
-  
-  <span class="p">{</span><span class="nv">models: User: </span><span class="nx">User</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;server/jugglingdb&#39;</span>
-  
-  <span class="nv">label: </span><span class="s1">&#39;Load user using passport&#39;</span>
-  <span class="nv">middleware: </span><span class="p">[</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Passport middleware.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">passport</span><span class="p">.</span><span class="nx">initialize</span><span class="p">()</span>
-    <span class="nx">passport</span><span class="p">.</span><span class="nx">session</span><span class="p">()</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Set the user into the request.</p></div></div><div class="code"><div class="wrapper">    <span class="nf">(req, res, next) -&gt;</span>
-      
-      <span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="o">?</span>
-      
-        <span class="nv">req.user.logout = </span><span class="o">-&gt;</span>
-          
-          <span class="nx">req</span><span class="p">.</span><span class="nx">logout</span><span class="p">()</span>
-          <span class="nv">req.user = </span><span class="k">new</span> <span class="nx">User</span><span class="p">()</span>
-          
-          <span class="nx">Promise</span><span class="p">.</span><span class="nx">resolve</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span>
-          
-      <span class="k">else</span>
-      
-        <span class="nv">req.user = </span><span class="k">new</span> <span class="nx">User</span><span class="p">()</span>
-      
-      <span class="nx">next</span><span class="p">()</span>
-    
-  <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookmodels">Implements hook <code>models</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$models = </span><span class="nf">(schema) -&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookmodels">Implements hook <code>models</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$models = </span><span class="nf">(schema) -&gt;</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke the client hook implementation.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">clientModule</span><span class="p">.</span><span class="nx">$models</span> <span class="nx">schema</span>
   
   <span class="nv">User = </span><span class="nx">schema</span><span class="p">.</span><span class="nx">models</span><span class="p">[</span><span class="s1">&#39;User&#39;</span><span class="p">]</span>
@@ -115,7 +113,7 @@ hook.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">L
       
       <span class="nx">next</span><span class="p">()</span>
   
-  <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshooksocketrequestmiddleware">Implements hook <code>socketRequestMiddleware</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$socketRequestMiddleware = </span><span class="o">-&gt;</span>
+  <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshooksocketconnectionmiddleware">Implements hook <code>socketConnectionMiddleware</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$socketConnectionMiddleware = </span><span class="o">-&gt;</span>
   
   <span class="p">{</span><span class="nv">models: User: </span><span class="nx">User</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;server/jugglingdb&#39;</span>
   

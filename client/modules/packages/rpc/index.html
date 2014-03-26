@@ -7,8 +7,8 @@
 <code>TODO</code>: This should be in a client-side <code>angular</code> package.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">call</span> <span class="s1">&#39;hangup&#39;</span> <span class="nx">unless</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">userAgent</span><span class="p">.</span><span class="nx">match</span> <span class="sr">/^Node\.js .*$/</span>
 
 <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookservice">Implements hook <code>service</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$service = </span><span class="o">-&gt;</span> <span class="p">[</span>
-  <span class="s1">&#39;$injector&#39;</span><span class="p">,</span> <span class="s1">&#39;$q&#39;</span><span class="p">,</span> <span class="s1">&#39;require&#39;</span><span class="p">,</span> <span class="s1">&#39;socket&#39;</span>
-  <span class="nf">({invoke}, {defer}, require, {emit}) -&gt;</span>
+  <span class="s1">&#39;$injector&#39;</span><span class="p">,</span> <span class="s1">&#39;$q&#39;</span><span class="p">,</span> <span class="s1">&#39;require&#39;</span><span class="p">,</span> <span class="s1">&#39;pkgman&#39;</span><span class="p">,</span> <span class="s1">&#39;socket&#39;</span>
+  <span class="nf">({invoke}, {defer}, require, pkgman, {emit}) -&gt;</span>
     
     <span class="nv">service = </span><span class="p">{}</span>
     
@@ -36,19 +36,22 @@ from the server, or rejected with the error from the server.</p></div></div><div
       <span class="nv">deferred = </span><span class="nx">defer</span><span class="p">()</span>
       
       <span class="nx">emit</span> <span class="s2">&quot;rpc://#{route}&quot;</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="nf">({error, result}) -&gt;</span>
-        
         <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
-          
-          <span class="nv">error = </span><span class="nx">errors</span><span class="p">.</span><span class="nx">caught</span> <span class="nx">errors</span><span class="p">.</span><span class="nx">unserialize</span> <span class="nx">error</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p><code>TODO</code>: This should be middleware'd.                    </p></div></div><div class="code"><div class="wrapper">          <span class="nx">notifications</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span>
-            <span class="k">class</span><span class="o">:</span> <span class="s1">&#39;alert-danger&#39;</span>
-            <span class="nv">text: </span><span class="nx">errors</span><span class="p">.</span><span class="nx">message</span> <span class="nx">error</span>
-          <span class="p">)</span> <span class="k">if</span> <span class="nx">notifications</span><span class="o">?</span>
-          
-          <span class="nx">deferred</span><span class="p">.</span><span class="nx">reject</span> <span class="nx">error</span>
-          
+          <span class="nx">deferred</span><span class="p">.</span><span class="nx">reject</span> <span class="nx">errors</span><span class="p">.</span><span class="nx">unserialize</span> <span class="nx">error</span>
         <span class="k">else</span>
-          
           <span class="nx">deferred</span><span class="p">.</span><span class="nx">resolve</span> <span class="nx">result</span>
+      
+      <span class="nx">invoke</span><span class="p">(</span>
+        <span class="nx">injectable</span><span class="p">,</span> <span class="kc">null</span>
+        
+        <span class="nv">route: </span><span class="nx">route</span>
+        <span class="nv">data: </span><span class="nx">data</span>
+        <span class="nv">result: </span><span class="nx">deferred</span><span class="p">.</span><span class="nx">promise</span>
+      
+      <span class="p">)</span> <span class="k">for</span> <span class="nx">injectable</span> <span class="k">in</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invokeFlat</span><span class="p">(</span>
+        <span class="s1">&#39;rpcCall&#39;</span><span class="p">,</span> <span class="nx">route</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">deferred</span><span class="p">.</span><span class="nx">promise</span>
+      
+      <span class="p">)</span>
         
       <span class="nx">deferred</span><span class="p">.</span><span class="nx">promise</span>
     

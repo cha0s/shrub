@@ -18,10 +18,8 @@ a promise. When all returned promises are fulfilled, initialization
 continues.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invokeFlat</span> <span class="s1">&#39;initialize&#39;</span><span class="p">,</span> <span class="nx">config</span>
 
 <span class="c1"># After initialization.</span>
-<span class="p">).</span><span class="nx">done</span><span class="p">(</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>initialized</code>.
-Invoked after the server is initialized.</p>
-
-<p><code>TODO</code>: Rename to <code>ready</code>.</p></div></div><div class="code"><div class="wrapper">  <span class="o">-&gt;</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s1">&#39;initialized&#39;</span>
+<span class="p">).</span><span class="nx">done</span><span class="p">(</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>ready</code>.
+Invoked after the server is initialized and ready.</p></div></div><div class="code"><div class="wrapper">  <span class="o">-&gt;</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s1">&#39;ready&#39;</span>
   <span class="nf">(error) -&gt;</span>
     
     <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">error</span> <span class="nx">errors</span><span class="p">.</span><span class="nx">stack</span> <span class="nx">error</span>

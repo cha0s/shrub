@@ -36,12 +36,12 @@ description and a list of implementing packages for each hook.</p>
 <p><a href="./client/modules/errors.html">client/modules/errors.coffee</a></p>
 
 <ul>
-<li><h2 id="errortype"><code>errorType</code></h2>
+<li><h2 id="transmittableerror"><code>transmittableError</code></h2>
 
-<p><h5>Allows packages to specify transmittable errors. </h5></p>
+<p><h5>Allows packages to specify transmittable errors. Implementations should return a subclass of <code>TransmittableError</code>. </h5></p>
 
-<ul><li><p>limiter (<a href="./client/modules/packages/limiter/index.html#implementshookerrortype">client</a>, <a href="./server/packages/limiter/index.html#implementshookerrortype">server</a>)</p></li>
-<li><p>user/login (<a href="./client/modules/packages/user/login.html#implementshookerrortype">client</a>, <a href="./server/packages/user/login.html#implementshookerrortype">server</a>)</p></li></ul></li>
+<ul><li><p>limiter (<a href="./client/modules/packages/limiter/index.html#implementshooktransmittableerror">client</a>, <a href="./server/packages/limiter/index.html#implementshooktransmittableerror">server</a>)</p></li>
+<li><p>user/login (<a href="./client/modules/packages/user/login.html#implementshooktransmittableerror">client</a>, <a href="./server/packages/user/login.html#implementshooktransmittableerror">server</a>)</p></li></ul></li>
 </ul>
 
 <p><a href="./client/modules/packages/core/index.html">client/modules/packages/core/index.coffee</a></p>
@@ -134,27 +134,27 @@ description and a list of implementing packages for each hook.</p>
 
 <ul><li><p>angular (<a href="./server/packages/angular/index.html#implementshookinitialize">server</a>)</p></li>
 <li><p>express (<a href="./server/packages/express/index.html#implementshookinitialize">server</a>)</p></li>
-<li><p>rpc (<a href="./server/packages/rpc/index.html#implementshookinitialize">server</a>)</p></li></ul></li>
-<li><h2 id="initialized"><code>initialized</code></h2>
+<li><p>rpc (<a href="./server/packages/rpc/index.html#implementshookinitialize">server</a>)</p></li>
+<li><p>user (<a href="./server/packages/user/index.html#implementshookinitialize">server</a>)</p></li></ul></li>
+<li><h2 id="ready"><code>ready</code></h2>
 
-<p><h5>Invoked after the server is initialized. </h5></p>
+<p><h5>Invoked after the server is initialized and ready. </h5></p>
 
-<ul><li>repl (<a href="./server/packages/repl/index.html#implementshookinitialized">server</a>)</li></ul></li>
+<ul><li>repl (<a href="./server/packages/repl/index.html#implementshookready">server</a>)</li></ul></li>
 </ul>
 
 <p><a href="./server/AbstractHttp.html">server/AbstractHttp.coffee</a></p>
 
 <ul>
-<li><h2 id="httpinitializer"><code>httpInitializer</code></h2>
+<li><h2 id="httpinitializing"><code>httpInitializing</code></h2>
 
 <p><h5>Invoked before the server is bound on the listening port. </h5></p>
 
-<ul><li><p>schema (<a href="./server/packages/schema/index.html#implementshookhttpinitializer">server</a>)</p></li>
-<li><p>socket/factory (<a href="./server/packages/socket/factory.html#implementshookhttpinitializer">server</a>)</p></li>
-<li><p>user (<a href="./server/packages/user/index.html#implementshookhttpinitializer">server</a>)</p></li></ul></li>
+<ul><li><p>schema (<a href="./server/packages/schema/index.html#implementshookhttpinitializing">server</a>)</p></li>
+<li><p>socket/factory (<a href="./server/packages/socket/factory.html#implementshookhttpinitializing">server</a>)</p></li></ul></li>
 <li><h2 id="httplistening"><code>httpListening</code></h2>
 
-<p><h5>Invoked once the server is listening, but before initialization finishes. </h5></p>
+<p><h5>Invoked once the server is listening, but before initialization finishes. Implementations should return a promise. When all promises are fulfilled, initialization finishes. </h5></p>
 
 <ul><li>nodemailer (<a href="./server/packages/nodemailer/index.html#implementshookhttplistening">server</a>)</li></ul></li>
 <li><h2 id="httpmiddleware"><code>httpMiddleware</code></h2>
@@ -185,14 +185,14 @@ description and a list of implementing packages for each hook.</p>
 <ul><li><p>core (<a href="./server/packages/core/index.html#implementshooksocketauthorizationmiddleware">server</a>)</p></li>
 <li><p>session (<a href="./server/packages/session/index.html#implementshooksocketauthorizationmiddleware">server</a>)</p></li>
 <li><p>user (<a href="./server/packages/user/index.html#implementshooksocketauthorizationmiddleware">server</a>)</p></li></ul></li>
-<li><h2 id="socketrequestmiddleware"><code>socketRequestMiddleware</code></h2>
+<li><h2 id="socketconnectionmiddleware"><code>socketConnectionMiddleware</code></h2>
 
 <p><h5>Invoked for every socket connection. </h5></p>
 
-<ul><li><p>rpc (<a href="./server/packages/rpc/index.html#implementshooksocketrequestmiddleware">server</a>)</p></li>
-<li><p>session (<a href="./server/packages/session/index.html#implementshooksocketrequestmiddleware">server</a>)</p></li>
-<li><p>socket/factory (<a href="./server/packages/socket/factory.html#implementshooksocketrequestmiddleware">server</a>)</p></li>
-<li><p>user (<a href="./server/packages/user/index.html#implementshooksocketrequestmiddleware">server</a>)</p></li></ul></li>
+<ul><li><p>rpc (<a href="./server/packages/rpc/index.html#implementshooksocketconnectionmiddleware">server</a>)</p></li>
+<li><p>session (<a href="./server/packages/session/index.html#implementshooksocketconnectionmiddleware">server</a>)</p></li>
+<li><p>socket/factory (<a href="./server/packages/socket/factory.html#implementshooksocketconnectionmiddleware">server</a>)</p></li>
+<li><p>user (<a href="./server/packages/user/index.html#implementshooksocketconnectionmiddleware">server</a>)</p></li></ul></li>
 </ul>
 
 <p><a href="./server/audit.html">server/audit.coffee</a></p>
@@ -210,16 +210,16 @@ description and a list of implementing packages for each hook.</p>
 <p><a href="./server/config.html">server/config.coffee</a></p>
 
 <ul>
-<li><h2 id="settings"><code>settings</code></h2>
+<li><h2 id="packagesettings"><code>packageSettings</code></h2>
 
 <p><h5>Invoked when the server application is loading configuration. Allows packages to define their own default settings. </h5></p>
 
-<ul><li><p>angular (<a href="./server/packages/angular/index.html#implementshooksettings">server</a>)</p></li>
-<li><p>core (<a href="./server/packages/core/index.html#implementshooksettings">server</a>)</p></li>
-<li><p>express (<a href="./server/packages/express/index.html#implementshooksettings">server</a>)</p></li>
-<li><p>nodemailer (<a href="./server/packages/nodemailer/index.html#implementshooksettings">server</a>)</p></li>
-<li><p>repl (<a href="./server/packages/repl/index.html#implementshooksettings">server</a>)</p></li>
-<li><p>socket (<a href="./server/packages/socket/index.html#implementshooksettings">server</a>)</p></li></ul></li>
+<ul><li><p>angular (<a href="./server/packages/angular/index.html#implementshookpackagesettings">server</a>)</p></li>
+<li><p>core (<a href="./server/packages/core/index.html#implementshookpackagesettings">server</a>)</p></li>
+<li><p>express (<a href="./server/packages/express/index.html#implementshookpackagesettings">server</a>)</p></li>
+<li><p>nodemailer (<a href="./server/packages/nodemailer/index.html#implementshookpackagesettings">server</a>)</p></li>
+<li><p>repl (<a href="./server/packages/repl/index.html#implementshookpackagesettings">server</a>)</p></li>
+<li><p>socket (<a href="./server/packages/socket/index.html#implementshookpackagesettings">server</a>)</p></li></ul></li>
 </ul>
 
 <p><a href="./server/packages/config/index.html">server/packages/config/index.coffee</a></p>
@@ -249,8 +249,7 @@ description and a list of implementing packages for each hook.</p>
 
 <p><h5>Allow packages to add values to the REPL's context. </h5></p>
 
-<ul><li><p>config (<a href="./server/packages/config/index.html#implementshookreplcontext">server</a>)</p></li>
-<li><p>core (<a href="./server/packages/core/index.html#implementshookreplcontext">server</a>)</p></li>
+<ul><li><p>core (<a href="./server/packages/core/index.html#implementshookreplcontext">server</a>)</p></li>
 <li><p>schema (<a href="./server/packages/schema/index.html#implementshookreplcontext">server</a>)</p></li>
 <li><p>socket/factory (<a href="./server/packages/socket/factory.html#implementshookreplcontext">server</a>)</p></li>
 <li><p>user/register (<a href="./server/packages/user/register.html#implementshookreplcontext">server</a>)</p></li></ul></li>

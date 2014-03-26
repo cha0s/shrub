@@ -22,6 +22,15 @@ Express framework.</p></div></div><div class="code"><div class="wrapper"><span c
     <span class="c1"># Register middleware.</span>
     <span class="nx">@registerMiddleware</span><span class="p">()</span>
     
+    <span class="c1"># Cache the session store.</span>
+    <span class="vi">@_sessionStore = </span><span class="k">switch</span> <span class="nx">@_config</span><span class="p">.</span><span class="nx">sessions</span><span class="p">.</span><span class="nx">db</span>
+      <span class="k">when</span> <span class="s1">&#39;redis&#39;</span>
+        
+        <span class="nv">module = </span><span class="nx">require</span> <span class="s1">&#39;connect-redis/node_modules/redis&#39;</span>
+    
+        <span class="nv">RedisStore = </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;connect-redis&#39;</span><span class="p">)</span> <span class="nx">express</span>
+        <span class="k">new</span> <span class="nx">RedisStore</span> <span class="nv">client: </span><span class="nx">module</span><span class="p">.</span><span class="nx">createClient</span><span class="p">()</span>
+    
     <span class="c1"># Handlebars!</span>
     <span class="c1"># `TODO`: Do we really need to use Express&#39;s theme system..?</span>
     <span class="nx">@_app</span><span class="p">.</span><span class="nx">set</span> <span class="s1">&#39;views&#39;</span><span class="p">,</span> <span class="nx">@_config</span><span class="p">.</span><span class="nx">path</span>
@@ -47,26 +56,26 @@ Express framework.</p></div></div><div class="code"><div class="wrapper"><span c
 
 <ul>
 <li>(function) <code>fn</code> - The function to call when the server is listening.</li>
-</ul>
-
-<p><code>TODO</code>: This should return a promise, not take a callback.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">listen: </span><span class="nf">(fn) -&gt;</span>
+</ul></div></div><div class="code"><div class="wrapper">  <span class="nv">listen: </span><span class="o">-&gt;</span>
     
-    <span class="c1"># Catch errors. If it&#39;s an address in use error then complain about</span>
-    <span class="c1"># it, but try again.</span>
-    <span class="nv">errorCallback = </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span>
-      <span class="k">return</span> <span class="nx">fn</span> <span class="nx">error</span> <span class="nx">unless</span> <span class="s1">&#39;EADDRINUSE&#39;</span> <span class="o">is</span> <span class="nx">error</span><span class="p">.</span><span class="nx">code</span>
+    <span class="k">new</span> <span class="nx">Promise</span> <span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="o">=&gt;</span>
+    
+      <span class="c1"># Catch errors. If it&#39;s an address in use error then complain</span>
+      <span class="c1"># about it, but try again.</span>
+      <span class="nv">errorCallback = </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span>
+        <span class="k">return</span> <span class="nx">reject</span> <span class="nx">error</span> <span class="nx">unless</span> <span class="s1">&#39;EADDRINUSE&#39;</span> <span class="o">is</span> <span class="nx">error</span><span class="p">.</span><span class="nx">code</span>
+        
+        <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">error</span> <span class="s2">&quot;Address in use... retrying in 2 seconds&quot;</span>
+        
+        <span class="nx">setTimeout</span> <span class="p">(</span><span class="o">=&gt;</span> <span class="nx">@_server</span><span class="p">.</span><span class="nx">listen</span> <span class="nx">@port</span><span class="p">()),</span> <span class="mi">2000</span>
+      <span class="nx">@_server</span><span class="p">.</span><span class="kc">on</span> <span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="nx">errorCallback</span>
       
-      <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">error</span> <span class="s2">&quot;Address in use... retrying in 2 seconds&quot;</span>
+      <span class="nx">@_server</span><span class="p">.</span><span class="nx">once</span> <span class="s1">&#39;listening&#39;</span><span class="p">,</span> <span class="o">=&gt;</span>
+        <span class="nx">@_server</span><span class="p">.</span><span class="nx">removeListener</span> <span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="nx">errorCallback</span>
+        <span class="nx">resolve</span><span class="p">()</span>
       
-      <span class="nx">setTimeout</span> <span class="p">(</span><span class="o">=&gt;</span> <span class="nx">@_server</span><span class="p">.</span><span class="nx">listen</span> <span class="nx">@port</span><span class="p">()),</span> <span class="mi">2000</span>
-    <span class="nx">@_server</span><span class="p">.</span><span class="kc">on</span> <span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="nx">errorCallback</span>
-    
-    <span class="nx">@_server</span><span class="p">.</span><span class="nx">once</span> <span class="s1">&#39;listening&#39;</span><span class="p">,</span> <span class="o">=&gt;</span>
-      <span class="nx">@_server</span><span class="p">.</span><span class="nx">removeListener</span> <span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="nx">errorCallback</span>
-      <span class="nx">fn</span><span class="p">()</span>
-    
-    <span class="c1"># Bind to the listen port.</span>
-    <span class="nx">@_server</span><span class="p">.</span><span class="nx">listen</span> <span class="nx">@port</span><span class="p">()</span>
+      <span class="c1"># Bind to the listen port.</span>
+      <span class="nx">@_server</span><span class="p">.</span><span class="nx">listen</span> <span class="nx">@port</span><span class="p">()</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="loadsessionfromrequest">::loadSessionFromRequest</h3>
 
 <ul>
@@ -117,28 +126,16 @@ Express framework.</p></div></div><div class="code"><div class="wrapper"><span c
 <p><em>The cookie key where the session ID will be found.</em></p></div></div><div class="code"><div class="wrapper">  <span class="nv">sessionKey: </span><span class="o">-&gt;</span> <span class="nx">@_config</span><span class="p">.</span><span class="nx">sessions</span><span class="p">.</span><span class="nx">key</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="sessionstore">::sessionStore</h3>
 
-<p><em>The session store.</em></p>
-
-<p><code>TODO</code>: Cache this!</p></div></div><div class="code"><div class="wrapper">  <span class="nv">sessionStore: </span><span class="o">-&gt;</span>
-    
-    <span class="k">switch</span> <span class="nx">@_config</span><span class="p">.</span><span class="nx">sessions</span><span class="p">.</span><span class="nx">db</span>
-      <span class="k">when</span> <span class="s1">&#39;redis&#39;</span>
-        
-        <span class="nv">module = </span><span class="nx">require</span> <span class="s1">&#39;connect-redis/node_modules/redis&#39;</span>
-    
-        <span class="nv">RedisStore = </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;connect-redis&#39;</span><span class="p">)</span> <span class="nx">express</span>
-        <span class="k">new</span> <span class="nx">RedisStore</span> <span class="nv">client: </span><span class="nx">module</span><span class="p">.</span><span class="nx">createClient</span><span class="p">()</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookinitialize">Implements hook <code>initialize</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$initialize = </span><span class="nf">(config) -&gt;</span>
+<p><em>The session store.</em></p></div></div><div class="code"><div class="wrapper">  <span class="nv">sessionStore: </span><span class="o">-&gt;</span> <span class="nx">@_sessionStore</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookinitialize">Implements hook <code>initialize</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$initialize = </span><span class="nf">(config) -&gt;</span>
   
-  <span class="k">new</span> <span class="nx">Promise</span> <span class="nf">(resolve, reject) -&gt;</span>
+  <span class="nv">http = </span><span class="k">new</span> <span class="nx">Express</span> <span class="nv">settings = </span><span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:express&#39;</span>
+  <span class="nx">http</span><span class="p">.</span><span class="nx">initialize</span><span class="p">().</span><span class="k">then</span> <span class="o">-&gt;</span>
   
-    <span class="nv">http = </span><span class="k">new</span> <span class="nx">Express</span> <span class="nv">settings = </span><span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:express&#39;</span>
-    <span class="nx">http</span><span class="p">.</span><span class="nx">initialize</span> <span class="nf">(error) -&gt;</span>
-      <span class="k">return</span> <span class="nx">reject</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
-      
-      <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s2">&quot;Shrub Express HTTP server up and running on port #{</span>
-<span class="s2">        settings.port</span>
-<span class="s2">      }!&quot;</span>
-      <span class="nx">resolve</span><span class="p">()</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshooksettings">Implements hook <code>settings</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$settings = </span><span class="o">-&gt;</span>
+    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s2">&quot;Shrub Express HTTP server up and running on port #{</span>
+<span class="s2">      settings.port</span>
+<span class="s2">    }!&quot;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookpackagesettings">Implements hook <code>packageSettings</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$packageSettings = </span><span class="o">-&gt;</span>
 
   <span class="nv">middleware: </span><span class="p">[</span>
     <span class="s1">&#39;core&#39;</span>

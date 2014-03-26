@@ -89,7 +89,7 @@
       <span class="nv">constructor: </span><span class="nf">(@message) -&gt;</span>
     
     <span class="nv">keys = </span><span class="p">(</span><span class="s2">&quot;#{key}:#{value}&quot;</span> <span class="k">for</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span> <span class="k">of</span> <span class="nx">auditKeys</span><span class="p">)</span>
-    <span class="nx">villianyLimiter</span><span class="p">.</span><span class="nx">addAndCheckThreshold</span><span class="p">(</span>
+    <span class="nx">villianyLimiter</span><span class="p">.</span><span class="nx">accrueAndCheckThreshold</span><span class="p">(</span>
       <span class="nx">keys</span><span class="p">,</span> <span class="nx">score</span>
     
     <span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="nf">(isVillian) -&gt;</span>
@@ -172,7 +172,7 @@
     
     <span class="nx">enforcementMiddleware</span>
       
-  <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implements-hook-settings">Implements hook `settings</h2></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$settings = </span><span class="o">-&gt;</span>
+  <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implements-hook-settings">Implements hook `settings</h2></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$packageSettings = </span><span class="o">-&gt;</span>
   
   <span class="nv">ban:</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>10 minute ban time by default.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">defaultExpiration: </span><span class="mi">1000</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">10</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implements-hook-socketauthorizationmiddleware">Implements hook `socketAuthorizationMiddleware</h2></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$socketAuthorizationMiddleware = </span><span class="o">-&gt;</span>

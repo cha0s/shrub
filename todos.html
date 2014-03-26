@@ -10,15 +10,6 @@ context.</p>
 <li><h4 id="constructormessage"><code>constructor: (@message) -&gt;</code></h4>
 
 <p>Capture all arguments, and make the necessity for implementing toJSON obsolete. </p></li>
-<li><h4 id="caught"><code>caught: -&gt;</code></h4>
-
-<p>Remove. </p></li>
-<li><h4 id="collectedtransmittableerrorconcatpkgmaninvokeflaterrortype"><code>collected = [TransmittableError].concat pkgman.invokeFlat 'errorType'</code></h4>
-
-<p>Rename to <code>transmittableError</code>. </p></li>
-<li><h4 id="exportscaughterror"><code>exports.caught = (error) -&gt;</code></h4>
-
-<p>Remove. </p></li>
 </ul>
 
 <p><a href="./client/modules/packages/core/index.html">client/modules/packages/core/index.coffee</a></p>
@@ -49,9 +40,6 @@ context.</p>
 <li><h4 id="callhangupunlessnavigatoruseragentmatchnodejsd"><code>call 'hangup' unless navigator.userAgent.match /^Node\.js .*$/</code></h4>
 
 <p>This should be in a client-side <code>angular</code> package. </p></li>
-<li><h4 id="notificationsadd"><code>notifications.add(</code></h4>
-
-<p>This should be middleware'd. </p></li>
 </ul>
 
 <p><a href="./client/modules/packages/socket/index.html">client/modules/packages/socket/index.coffee</a></p>
@@ -105,9 +93,6 @@ context.</p>
 <li><h4 id="continueiferrortostringiserrorcannotfindmodulepackagesname"><code>continue if error.toString() is "Error: Cannot find module 'packages/#{name}'"</code></h4>
 
 <p>Should we let this throw? </p></li>
-<li><h4 id="exportsregisterpackagespackages"><code>exports.registerPackages = (packages) -&gt;</code></h4>
-
-<p>Rename to <code>registerPackageList</code>. </p></li>
 </ul>
 
 <p><a href="./client/modules/schema-client.html">client/modules/schema-client.coffee</a></p>
@@ -118,26 +103,12 @@ context.</p>
 <p>Don't do the model invocation/definition immediately. </p></li>
 </ul>
 
-<p><a href="./server.html">server.coffee</a></p>
-
-<ul>
-<li><h4 id="pkgmaninvokeinitialized"><code>-&gt; pkgman.invoke 'initialized'</code></h4>
-
-<p>Rename to <code>ready</code>. </p></li>
-</ul>
-
 <p><a href="./server/AbstractHttp.html">server/AbstractHttp.coffee</a></p>
 
 <ul>
 <li><h4 id="moduleexportsclassabstracthttp"><code>module.exports = class AbstractHttp</code></h4>
 
 <p>This needs work, it probably wouldn't be able to handle another server in its current state. Move API from Express to here, and use a 'pure virtual' pattern, to allow any other server to extend along reasonable lines. </p></li>
-<li><h4 id="initializermiddlewarenewmiddlewaremiddleware"><code>initializerMiddleware = new middleware.Middleware()</code></h4>
-
-<p>This invocation should probably be middleware.fromHook()'d </p></li>
-<li><h4 id="forfn_inpkgmaninvokeflathttpinitializer"><code>for fn_ in pkgman.invokeFlat 'httpInitializer'</code></h4>
-
-<p>Rename to <code>httpStarting</code>. </p></li>
 </ul>
 
 <p><a href="./server/AbstractSocketFactory.html">server/AbstractSocketFactory.coffee</a></p>
@@ -146,17 +117,11 @@ context.</p>
 <li><h4 id="moduleexportsclassabstractsocketfactoryextendseventemitter"><code>module.exports = class AbstractSocketFactory extends EventEmitter</code></h4>
 
 <p>This needs work, it probably wouldn't be able to handle another server in its current state. Move API from SocketIo to here. </p></li>
-<li><h4 id="socketrequestmiddleware"><code>'socketRequestMiddleware'</code></h4>
-
-<p>This should be renamed to <code>socketConnectionMiddleware</code>. </p></li>
 </ul>
 
 <p><a href="./server/config.html">server/config.coffee</a></p>
 
 <ul>
-<li><h4 id="packagesettingspkgmaninvokesettings"><code>packageSettings: pkgman.invoke 'settings'</code></h4>
-
-<p>This should be renamed to <code>defaultSettings</code>. </p></li>
 <li><h4 id="dgetthis"><code>$get: -&gt; this</code></h4>
 
 <p>This is Angular-specific. Move it to where it belongs. </p></li>
@@ -168,35 +133,6 @@ context.</p>
 <li><h4 id="moduleexportsrequireschemaclientdefine"><code>module.exports = require('schema-client').define(</code></h4>
 
 <p>This module currently immediately attempts to gather package models and create the schema: it should provide a function to lookup that information instead of doing it all at require time. </p></li>
-</ul>
-
-<p><a href="./server/limits.html">server/limits.coffee</a></p>
-
-<ul>
-<li><h4 id="optionsbuckettimethresholdcalculateseconds"><code>options.bucketTime ?= @threshold.calculateSeconds()</code></h4>
-
-<p>This goes away. </p></li>
-<li><h4 id="addkeysscore1"><code>add: (keys, score = 1) -&gt;</code></h4>
-
-<p>This should be called <code>accrue</code>. </p></li>
-<li><h4 id="addandcheckthresholdkeysscore1"><code>addAndCheckThreshold: (keys, score = 1) -&gt;</code></h4>
-
-<p>This should be called <code>accrueAndCheckThreshold</code>. </p></li>
-<li><h4 id="countkeys_largestkeyscount"><code>count: (keys) -&gt; @_largest keys, 'count'</code></h4>
-
-<p>This should be named <code>score</code>. </p></li>
-<li><h4 id="this"><code>this</code></h4>
-
-<p>This should instantiate a finalized Threshold class which cannot be chained, nor modified. </p></li>
-<li><h4 id="initoptionsbuckettimeoptionsbuckettime6010"><code>init: (options = {}) -&gt; @bucketTime = options.bucketTime ? 60 * 10</code></h4>
-
-<p>"bucketTime" is the WRONG symbol name. </p></li>
-<li><h4 id="addidscore1"><code>add: (id, score = 1) -&gt;</code></h4>
-
-<p>This should be called <code>accrue</code>. </p></li>
-<li><h4 id="countid"><code>count: (id) -&gt;</code></h4>
-
-<p>This should be named <code>score</code>. </p></li>
 </ul>
 
 <p><a href="./server/packages/angular/index.html">server/packages/angular/index.coffee</a></p>
@@ -216,21 +152,12 @@ context.</p>
 <p><a href="./server/packages/config/index.html">server/packages/config/index.coffee</a></p>
 
 <ul>
-<li><h4 id="baseurlreqheadershost"><code>baseUrl: "//#{req.headers.host}"</code></h4>
-
-<p>Renamed to host. </p></li>
-<li><h4 id="debuggingproductionisntreqnconfgetnode_env"><code>debugging: 'production' isnt req.nconf.get 'NODE_ENV'</code></h4>
+<li><h4 id="debuggingproductionisntnconfgetnode_env"><code>debugging: 'production' isnt nconf.get 'NODE_ENV'</code></h4>
 
 <p>Remove this, and implement a client logging system. </p></li>
-<li><h4 id="reqnconfnconf"><code>req.nconf = nconf</code></h4>
-
-<p>Should probably just remove this and <code>require 'nconf'</code>. </p></li>
 <li><h4 id="ressend"><code>res.send """</code></h4>
 
 <p>This shouldn't be a module, we can do this better. </p></li>
-<li><h4 id="exportsdreplcontextcontextcontextconfignconf"><code>exports.$replContext = (context) -&gt; context.config = nconf</code></h4>
-
-<p>Should probably just remove this and <code>require 'nconf'</code>. </p></li>
 </ul>
 
 <p><a href="./server/packages/express/index.html">server/packages/express/index.coffee</a></p>
@@ -239,12 +166,6 @@ context.</p>
 <li><h4 id="_appsetviews_configpath"><code>@_app.set 'views', @_config.path</code></h4>
 
 <p>Do we really need to use Express's theme system..? </p></li>
-<li><h4 id="listenfn"><code>listen: (fn) -&gt;</code></h4>
-
-<p>This should return a promise, not take a callback. </p></li>
-<li><h4 id="sessionstore"><code>sessionStore: -&gt;</code></h4>
-
-<p>Cache this! </p></li>
 </ul>
 
 <p><a href="./server/packages/form/index.html">server/packages/form/index.coffee</a></p>
@@ -258,9 +179,6 @@ context.</p>
 <p><a href="./server/packages/limiter/index.html">server/packages/limiter/index.coffee</a></p>
 
 <ul>
-<li><h4 id="endpointlimiterexcludekeys"><code>endpoint.limiter.excludeKeys ?= []</code></h4>
-
-<p>Rename to <code>ignoreKeys</code>. </p></li>
 <li><h4 id="promiseifreqreportvilliany"><code>promise = if req.reportVilliany?</code></h4>
 
 <p>Should this be added by <a href="/server/packages/villiany/index.html">villiany</a>? </p></li>
