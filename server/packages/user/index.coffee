@@ -55,7 +55,7 @@ exports.$httpMiddleware = (http) ->
 	]
 
 # ## Implements hook `initialize`
-exports.$initialize = -> (req, res, next) ->
+exports.$initialize = (config) ->
 	
 	{models: User: User} = require 'server/jugglingdb'
 	
@@ -86,8 +86,6 @@ exports.$initialize = -> (req, res, next) ->
 	
 	passport.deserializeUser (id, done) -> User.find(id).nodeify done
 	
-	next()
-				
 # ## Implements hook `models`
 exports.$models = (schema) ->
 	
