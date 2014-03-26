@@ -14,7 +14,7 @@ clientModule = require 'client/modules/packages/user'
 exports.$fingerprint = (req) ->
 
 	# User (ID).
-	user: req.user.id if req?.user?.id?
+	user: if req?.user?.id? then req.user.id
 
 # ## Implements hook `config`
 exports.$config = (req) ->

@@ -7,7 +7,7 @@
 exports.$fingerprint = (req) ->
 	
 	# Session ID.
-	session: req.session.id if req?.session?
+	session: if req?.session? then req.session.id
 
 # ## Implements hook `socketAuthorizationMiddleware`
 exports.$socketAuthorizationMiddleware = ->
