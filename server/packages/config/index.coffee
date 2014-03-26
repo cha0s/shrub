@@ -17,9 +17,7 @@ pkgman = require 'pkgman'
 exports.$config = (req) ->
 	
 	# The URL that the site was accessed at.
-	# 
-	# } `TODO`: Renamed to host.
-	baseUrl: "//#{req.headers.host}"
+	hostname: "//#{req.headers.host}"
 	
 	# Is the server running in test mode?
 	testMode: if (req.nconf.get 'E2E')? then 'e2e' else false

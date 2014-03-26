@@ -53,7 +53,7 @@ exports.$endpoint = ->
 		).then((email) ->
 			
 			# Send an email to the user with a one-time login link.
-			baseUrl = "http://#{
+			hostname = "http://#{
 				req.headers.host
 			}"
 			
@@ -61,12 +61,12 @@ exports.$endpoint = ->
 			
 			tokens =
 				
-				baseUrl: baseUrl
+				hostname: hostname
 				
 				email: email
 				
 				loginUrl: "#{
-					baseUrl
+					hostname
 				}/user/reset/#{
 					@user.resetPasswordToken
 				}"
