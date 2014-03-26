@@ -39,22 +39,17 @@ module.exports = class AbstractHttp
 		# Invoked before the server is bound on the listening port.
 		pkgman.invoke 'httpInitializing', this
 		
-		new Promise (resolve, reject) =>
+		# Start listening.
+		@listen().then => Promise.all(
+				
+			# Invoke hook `httpListening`.
+			# Invoked once the server is listening, but before
+			# initialization finishes. Implementations should return a
+			# promise. When all promises are fulfilled, initialization
+			# finishes.
+			pkgman.invokeFlat 'httpListening', this
 		
-			# Start listening.
-			@listen (error) =>
-				return reject error if error?
-				
-				resolve Promise.all(
-					
-					# Invoke hook `httpListening`.
-					# Invoked once the server is listening, but before
-					# initialization finishes. Implementations should return a
-					# promise. When all promises are fulfilled, initialization
-					# finishes.
-					pkgman.invokeFlat 'httpListening', this
-				
-				)
+		)
 			
 	# ### .config
 	# 

@@ -62,26 +62,26 @@ class Express extends (require 'AbstractHttp')
 	# *Listen for HTTP connections.*
 	# 
 	# * (function) `fn` - The function to call when the server is listening.
-	# 
-	# `TODO`: This should return a promise, not take a callback.
-	listen: (fn) ->
+	listen: ->
 		
-		# } Catch errors. If it's an address in use error then complain about
-		# } it, but try again.
-		errorCallback = (error) =>
-			return fn error unless 'EADDRINUSE' is error.code
+		new Promise (resolve, reject) =>
+		
+			# } Catch errors. If it's an address in use error then complain
+			# } about it, but try again.
+			errorCallback = (error) =>
+				return reject error unless 'EADDRINUSE' is error.code
+				
+				defaultLogger.error "Address in use... retrying in 2 seconds"
+				
+				setTimeout (=> @_server.listen @port()), 2000
+			@_server.on 'error', errorCallback
 			
-			defaultLogger.error "Address in use... retrying in 2 seconds"
+			@_server.once 'listening', =>
+				@_server.removeListener 'error', errorCallback
+				resolve()
 			
-			setTimeout (=> @_server.listen @port()), 2000
-		@_server.on 'error', errorCallback
-		
-		@_server.once 'listening', =>
-			@_server.removeListener 'error', errorCallback
-			fn()
-		
-		# } Bind to the listen port.
-		@_server.listen @port()
+			# } Bind to the listen port.
+			@_server.listen @port()
 	
 	# ### ::loadSessionFromRequest
 	# 
