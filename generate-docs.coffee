@@ -32,11 +32,9 @@ for filename of files
 		commentLines: commentLines
 
 # } Get the type and name of this package (if any).
-packageInformation = {}
-packageLookup = {}
-for filename, {commentLines} of sources
-	
-	packageTypeAndName = ///
+packageTypeAndName = (filename) ->
+
+	regex = ///
 
 ^(?:
 	(server)\/packages\/([^/]+)
@@ -45,11 +43,18 @@ for filename, {commentLines} of sources
 )
 
 ///
-		
-	continue unless (matches = filename.match packageTypeAndName)?
+
+	return unless (matches = filename.match regex)?
 	
-	type = matches[1] ? matches[3]
-	name = matches[2] ? matches[4]
+	type: matches[1] ? matches[3]
+	name: matches[2] ? matches[4]
+	
+packageInformation = {}
+packageLookup = {}
+for filename, {commentLines} of sources
+	
+	continue unless (typeAndName = packageTypeAndName filename)?
+	{type, name} = typeAndName
 	
 	packageInformation[type] ?= {}
 	packageLookup[filename] = name: name, type: type
@@ -92,9 +97,14 @@ description and a list of implementing packages for each hook.
 		packages = []
 		
 		for filename, {commentLines} of sources
-			continue unless (package_ = packageLookup[filename])?
 			
-			packages.push package_ if commentLines.some (line) ->
+			continue unless (typeAndName = packageTypeAndName filename)?
+			
+			matches = filename.match /packages\/(.*)\./
+			typeAndName.name = matches[1]
+			typeAndName.filename = filename
+
+			packages.push typeAndName if commentLines.some (line) ->
 				line.match implementsPattern
 					
 		packages
@@ -156,18 +166,14 @@ description and a list of implementing packages for each hook.
 				
 			for package_ in packages
 
-				{filename} = packageInformation[type][package_.name]
-				
-				matches = filename.match /packages\/(.*)\./
-				
 				markdown += """
 
 \t* <a href="./#{
-	filename.replace /\.(js|coffee)$/, '.html'
+	package_.filename.replace /\.(js|coffee)$/, '.html'
 }\#implementshook#{
 	name.toLowerCase()
 }">#{
-	matches[1].replace /\/index$/, ''
+	package_.name.replace /\/index$/, ''
 } (#{
 	package_.type
 })</a>
