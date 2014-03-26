@@ -28,8 +28,8 @@ exports.$socketAuthorizationMiddleware = ->
 			
 	]
 
-# ## Implements hook `socketRequestMiddleware`
-exports.$socketRequestMiddleware = ->
+# ## Implements hook `socketConnectionMiddleware`
+exports.$socketConnectionMiddleware = ->
 
 	label: 'Join channel for socket'
 	middleware: [

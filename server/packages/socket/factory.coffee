@@ -34,8 +34,8 @@ exports.$replContext = (context) ->
 	# Provide the socketFactory to REPL.
 	context.socketFactory = socketFactory
 
-# ## Implements hook `socketRequestMiddleware`
-exports.$socketRequestMiddleware = ->
+# ## Implements hook `socketConnectionMiddleware`
+exports.$socketConnectionMiddleware = ->
 	
 	label: 'Register socket factory'
 	middleware : [

@@ -167,8 +167,8 @@ exports.$socketAuthorizationMiddleware = ->
 	
 	]
 
-# ## Implements hook `socketRequestMiddleware`
-exports.$socketRequestMiddleware = ->
+# ## Implements hook `socketConnectionMiddleware`
+exports.$socketConnectionMiddleware = ->
 	
 	{models: User: User} = require 'server/jugglingdb'
 	

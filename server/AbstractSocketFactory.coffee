@@ -46,13 +46,12 @@ module.exports = class AbstractSocketFactory extends EventEmitter
 		)
 		defaultLogger.info 'END loading socket authorization middleware'
 
-		# Invoke hook `socketRequestMiddleware`.
+		# Invoke hook `socketConnectionMiddleware`.
 		# Invoked for every socket connection.
 		defaultLogger.info 'BEGIN loading socket middleware'
 
 		@_requestMiddleware = middleware.fromHook(
-			# } `TODO`: This should be renamed to `socketConnectionMiddleware`.
-			'socketRequestMiddleware'
+			'socketConnectionMiddleware'
 			@_config.requestMiddleware
 		)
 		defaultLogger.info 'END loading socket middleware'

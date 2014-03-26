@@ -83,8 +83,8 @@ exports.$initialize = ->
 		validators.use validator for validator in endpoint.validators
 		endpoint.validators = validators
 		
-# ## Implements hook `socketRequestMiddleware`
-exports.$socketRequestMiddleware = ->
+# ## Implements hook `socketConnectionMiddleware`
+exports.$socketConnectionMiddleware = ->
 	
 	label: 'Receive and dispatch RPC calls'
 	middleware: [
