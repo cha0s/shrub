@@ -15,5 +15,5 @@ class LimiterThresholdError extends TransmittableError
 	template: ":message You may try again :time."
 	toJSON: -> [@key, @message, @time]
 
-# ## Implements hook `errorType`
-exports.$errorType = -> LimiterThresholdError
+# ## Implements hook `transmittableError`
+exports.$transmittableError = -> LimiterThresholdError

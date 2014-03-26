@@ -23,8 +23,8 @@ LoginError = class LoginError extends errors.TransmittableError
 	key: 'login'
 	template: "No such username/password."
 		
-# ## Implements hook `errorType`
-exports.$errorType = -> LoginError
+# ## Implements hook `transmittableError`
+exports.$transmittableError = -> LoginError
 
 # ## Implements hook `route`
 exports.$route = ->

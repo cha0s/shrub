@@ -62,5 +62,5 @@ exports.$endpoint = ->
 			(error) -> fn error
 		)
 
-# ## Implements hook `errorType`
-exports.$errorType = clientModule.$errorType
+# ## Implements hook `transmittableError`
+exports.$transmittableError = clientModule.$transmittableError

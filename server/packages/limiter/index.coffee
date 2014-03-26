@@ -98,7 +98,7 @@ exports.$endpointAlter = (endpoints) ->
 					
 			).catch next
 			
-# ## Implements hook `errorType`
+# ## Implements hook `transmittableError`
 # 
 # Just defer to client, where the error is defined.
-exports.$errorType = require('client/modules/packages/limiter').$errorType
+exports.$transmittableError = require('client/modules/packages/limiter').$transmittableError

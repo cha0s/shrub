@@ -28,16 +28,15 @@ exports.TransmittableError = class TransmittableError extends Error
 	# message.
 	toJSON: -> [@key, @message]
 		
-# ## errorTypes
+# ## transmittableErrors
 # 
 # *Collect the error types implemented by packages.*
-exports.errorTypes = ->
+exports.transmittableErrors = ->
 	
-	# Invoke hook `errorType`.
-	# Allows packages to specify transmittable errors.
-	# 
-	# `TODO`: Rename to `transmittableError`.
-	collected = [TransmittableError].concat pkgman.invokeFlat 'errorType'
+	# Invoke hook `transmittableError`.
+	# Allows packages to specify transmittable errors. Implementations should
+	# return a subclass of `TransmittableError`.
+	collected = [TransmittableError].concat pkgman.invokeFlat 'transmittableError'
 	
 	Types = {}
 	Types[Type::key] = Type for Type in collected
@@ -110,7 +109,7 @@ exports.stack = (error) ->
 # constructor.*
 exports.instantiate = (key, args...) ->
 	
-	Types = exports.errorTypes()
+	Types = exports.transmittableErrors()
 	Type = if Types[key]? then Types[key] else TransmittableError
 	
 	# Trickery to be able to essentially call new with Function::apply.
