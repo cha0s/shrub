@@ -12,33 +12,25 @@ errors = require 'errors'
 
 {Limiter, threshold} = require 'limits'
 
-# An example of defining a limiter on an endpoint:
-exports.$endpoint = ->
-
-	limiter:
-	
-		# The message returned to the client when the threshold is passed.
-		message: "Too many things!"
-	
-		# The [threshold](http://shrub.doc.com.dev/server/limits.html#threshold)
-		# for this limiter.
-		threshold: threshold(3).every(30).seconds()
-	
-		# The [audit keys](http://shrub.doc.com.dev/hooks.html#auditkeys)
-		# to ignore when determining the total limit. In this example, the
-		# IP address and session ID would be ignored.
-		excludeKeys: ['ip', 'session']
-		
-	# } ... the rest of the endpoint definition
-	
-# } ...that was just an example.
-delete exports.$endpoint
-
 # ## Implements hook `endpointAlter`
 # 
 # Allow RPC endpoint definitions to specify rate limiters.
 exports.$endpointAlter = (endpoints) ->
 
+	# A limiter on a route is defined like:
+	# 
+	# * `message`: The message returned to the client when the threshold is
+	#   passed.
+	# 
+	# * `threshold`: The
+	#   [threshold](http://shrub.doc.com.dev/server/limits.html#threshold) for
+	#   this limiter.
+	# 
+	# * `ignoreKeys`: The
+	#   [audit keys](http://shrub.doc.com.dev/hooks.html#auditkeys) to ignore
+	#   when determining the total limit. In this example, the IP address and
+	#   session ID would be ignored.
+	
 	Object.keys(endpoints).forEach (route) ->
 		endpoint = endpoints[route]
 		
@@ -52,18 +44,17 @@ exports.$endpointAlter = (endpoints) ->
 		)
 		
 		# Set defaults.
-		# `TODO`: Rename to `ignoreKeys`.
-		endpoint.limiter.excludeKeys ?= []
+		endpoint.limiter.ignoreKeys ?= []
 		endpoint.limiter.message ?= "You are doing that too much."
 		
 		# Add a validator, where we'll check the threshold.
 		endpoint.validators.push (req, res, next) ->
 			
-			{excludeKeys, instance, message, threshold} = endpoint.limiter
+			{ignoreKeys, instance, message, threshold} = endpoint.limiter
 			
 			# Ignore keys.
 			auditKeys = audit.keys req
-			delete auditKeys[excludedKey] for excludedKey in excludeKeys
+			delete auditKeys[excludedKey] for excludedKey in ignoreKeys
 			
 			# Accrue a hit and check the threshold.
 			keys = ("#{key}:#{value}" for key, value of auditKeys)

@@ -20,11 +20,18 @@ logger = logging.create 'logs/rpc.log'
 # RPC endpoint information.
 endpoints = {}
 
-# An example of defining an endpoint:
-exports.$endpoint = ->
-	
-	# Validators can be run before the call is received. They are defined as
-	# middleware.
+# ## Implements hook `initialize`
+exports.$initialize = ->
+
+	# A route is defined like:
+	# 
+	# * `validators`: Validators are run before the call is received. They are
+	#   defined as middleware.
+	# 
+	# * `receiver`: The receiver is called if none of the validators throw an
+	#   error.
+	# 
+	# Example:
 	validators: [
 		
 		(req, res, next) ->
@@ -38,7 +45,6 @@ exports.$endpoint = ->
 				next()
 	]
 	
-	# The receiver is called if none of the validators throw an error.
 	receiver: (req, fn) ->
 	
 		if req.badStuffHappened
@@ -51,14 +57,6 @@ exports.$endpoint = ->
 			# back to the client. Keep this in mind.
 			fn null, message: "Everything went better than expected!"
 			
-	# } ... the rest of the endpoint definition
-	
-# } ...that was just an example.
-delete exports.$endpoint
-
-# ## Implements hook `initialize`
-exports.$initialize = ->
-
 	# Invoke hook `endpoint`.
 	# Gather all endpoints.
 	for path, endpoint of pkgman.invoke 'endpoint'
