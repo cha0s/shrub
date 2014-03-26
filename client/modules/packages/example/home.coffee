@@ -18,9 +18,9 @@ exports.$route = ->
 	
 	controller: [
 		'$scope'
-		({$emit}) ->
+		($scope) ->
 			
-			$emit 'shrubFinishedRendering'
+			$scope.$emit 'shrubFinishedRendering'
 			
 	]
 	
