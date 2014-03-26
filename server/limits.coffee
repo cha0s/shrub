@@ -27,57 +27,47 @@ exports.Limiter = class Limiter
 	#   e.g. "rpc://user.login:limiter"
 	# 
 	# * (Threshold) `threshold` - A threshold, see below for details.
-	# 
-	# * (object) `options` - Limiter options
-	#   `TODO`: This is gross API, just accept a limiter expiration window.
-	constructor: (key, @threshold, options = {}) ->
+	constructor: (key, @threshold) ->
 		
 		# } Make sure it's a threshold.
 		throw new TypeError(
 			"Limiter(#{key}) must be constructed with a valid threshold!"
 		) unless @threshold instanceof ThresholdFinal
 		
-		# } `TODO`: This goes away.
-		options.bucketTime ?= @threshold.calculateSeconds()
-		
 		# } Create the low-level redback limiter.
-		@limiter = redback.createBetterRateLimit key, options
+		@limiter = redback.createBetterRateLimit(
+			key, @threshold.calculateSeconds()
+		)
 	
 	# ### .add
 	# 
-	# *Add score to a limiter.*
-	# 
-	# `TODO`: This should be called `accrue`.
+	# *Accrue score for a limiter.*
 	# 
 	# * (array) `keys` - An array of keys, e.g. a flattened array of keys
 	#   from [`audit.keys()`](./audit.html)
 	# 
 	# * (integer) `score` - The score to add. Defaults to 1.
-	add: (keys, score = 1) ->
-		Promise.all(@limiter.add key, score for key in keys)
+	accrue: (keys, score = 1) ->
+		Promise.all(@limiter.accrue key, score for key in keys)
 	
-	# ### .addAndCheckThreshold
+	# ### .accrueAndCheckThreshold
 	# 
 	# *Add score to a limiter, and check it against the threshold.*
 	# 
-	# `TODO`: This should be called `accrueAndCheckThreshold`.
-	# 
 	# * (array) `keys` - An array of keys, e.g. a flattened array of keys
 	#   from [`audit.keys()`](./audit.html)
 	# 
 	# * (integer) `score` - The score to add. Defaults to 1.
-	addAndCheckThreshold: (keys, score = 1) ->
-		@add(keys, score).then => @checkThreshold keys
+	accrueAndCheckThreshold: (keys, score = 1) ->
+		@accrue(keys, score).then => @checkThreshold keys
 	
-	# ### .count
+	# ### .score
 	# 
 	# *Check score for a limiter.*
 	# 
-	# `TODO`: This should be named `score`.
-	# 
 	# * (array) `keys` - An array of keys, e.g. a flattened array of keys
 	#   from [`audit.keys()`](./audit.html)
-	count: (keys) -> @_largest keys, 'count'
+	score: (keys) -> @_largest keys, 'score'
 		
 	# ### .ttl
 	# 
@@ -94,7 +84,7 @@ exports.Limiter = class Limiter
 	# * (array) `keys` - An array of keys, e.g. a flattened array of keys
 	#   from [`audit.keys()`](./audit.html)
 	checkThreshold: (keys) ->
-		@count(keys).then (count) => count > @threshold.count()
+		@score(keys).then (score) => score > @threshold.score()
 
 	# #### ._largest
 	# 
@@ -116,9 +106,8 @@ class ThresholdBase
 	# 
 	# *Create a threshold base object.*
 	# 
-	# * (integer) `count` - The maximum score allowed to accrue.
-	#   `TODO`: Rename this and all other usages to `score`.
-	constructor: (@_count) ->
+	# * (integer) `score` - The maximum score allowed to accrue.
+	constructor: (@_score) ->
 	
 	# ### .every
 	# 
@@ -126,33 +115,23 @@ class ThresholdBase
 	# 
 	# * (integer) `amount` - The quantity of time units this threshold
 	#   concerns. e.g, if the threshold is every 5 minutes, this will be `5`. 
-	every: (amount) -> new ThresholdFinal @_count, amount
+	every: (amount) -> new ThresholdMultiplier @_score, amount
 	
-# ## ThresholdFinal
+# ## ThresholdMultiplier
 # 
-# A finalized threshold definition.
-class ThresholdFinal
+# A threshold class to collect the multiplier.
+class ThresholdMultiplier
 	
 	# ### *constructor*
 	# 
 	# *Create a threshold.*
 	# 
-	# * (integer) `count` - Passed along from ThresholdBase.
+	# * (integer) `score` - Passed along from ThresholdBase.
 	# 
 	# * (integer) `amount` - Passed along from ThresholdBase.
-	constructor: (@_count, @_amount) ->
+	constructor: (@_score, @_amount) ->
 		
 		@_multiplier = 1
-	
-	# ### .calculateSeconds
-	# 
-	# *Calculate the threshold window in seconds.*
-	calculateSeconds: -> @_amount * @_multiplier
-	
-	# ### .count
-	# 
-	# *The threshold score.*
-	count: -> @_count
 	
 	# Add a method for each multipler. This is this way just to DRY things up.
 	multipliers =
@@ -165,11 +144,28 @@ class ThresholdFinal
 			@::[key] = ->
 				@_multiplier = multiplier
 				
-				# } Return `this` to chain.
-				# } `TODO`: This should instantiate a finalized Threshold class
-				# } which cannot be chained, nor modified.
-				this
+				# } Return a finalized threshold.
+				new ThresholdFinal @_score, @_amount, @_multiplier
 
+# ## ThresholdFinal
+# 
+# A finalized threshold definition.
+class ThresholdFinal
+	
+	# ### *constructor*
+	# 
+	# *Create a threshold.*
+	# 
+	# * (integer) `score` - Passed along from ThresholdMultiplier.
+	# 
+	# * (integer) `amount` - Passed along from ThresholdMultiplier.
+	# 
+	# * (integer) `multiplier` - Passed along from ThresholdMultiplier.
+	constructor: (score, amount, multiplier) ->
+		
+		@calculateSeconds = -> amount * multiplier
+		@score = -> score
+		
 # ## threshold
 # 
 # Expose a factory method for constructing Threshold instances. A Threshold is
@@ -181,26 +177,23 @@ class ThresholdFinal
 # Which means that the threshold represents the allowance of a score of 4 to
 # accumulate over the period of 20 minutes. If more score is accrued during
 # that window, then the threshold is said to be crossed.
-exports.threshold = (count) -> new ThresholdBase count
+exports.threshold = (score) -> new ThresholdBase score
 				
 # Add a redback structure to handle rate limiting.
 redback.addStructure(
 	'BetterRateLimit'
 	
 	# Called by redback at initialization time: default to 10 minute window.
-	# `TODO`: "bucketTime" is the WRONG symbol name.
-	init: (options = {}) -> @bucketTime = options.bucketTime ? 60 * 10
-	
+	init: (@thresholdWindow) ->
 	
 	# ### .add
 	# 
 	# *Add score to a limiter.*
 	# 
-	# `TODO`: This should be called `accrue`.
-	# 
 	# * (string) `id` - The ID of the limiter.
+	# 
 	# * (integer) `score` - The score to add. Defaults to 1.
-	add: (id, score = 1) ->
+	accrue: (id, score = 1) ->
 	
 		# } Convenience.
 		exists = Promise.promisify @client.exists, @client
@@ -221,27 +214,25 @@ redback.addStructure(
 			# } to expire.
 			multi = @client.multi()
 			multi.rpush id, score
-			multi.expire id, @bucketTime
+			multi.expire id, @thresholdWindow
 			Promise.promisify(multi.exec, multi)()
 				
-	# ### .count
+	# ### .score
 	# 
 	# *Check score for a limiter.*
 	# 
-	# `TODO`: This should be named `score`.
-	# 
 	# * (string) `id` - The ID of the limiter.
-	count: (id) ->
+	score: (id) ->
 	
 		# } Convenience.
 		lrange = Promise.promisify @client.lrange, @client
 		
 		# } Get all scores for this limiter.
-		lrange(@key + ':' + id, 0, -1).then (counts) ->
+		lrange(@key + ':' + id, 0, -1).then (scores) ->
 			
 			# } Sum all the scores.
-			counts.map(
-				(count) -> parseInt count, 10
+			scores.map(
+				(score) -> parseInt score, 10
 			
 			).reduce ((l, r) -> l + r), 0
 	

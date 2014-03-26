@@ -67,7 +67,7 @@ exports.$endpointAlter = (endpoints) ->
 			
 			# Accrue a hit and check the threshold.
 			keys = ("#{key}:#{value}" for key, value of auditKeys)
-			instance.addAndCheckThreshold(keys).then((isLimited) ->
+			instance.accrueAndCheckThreshold(keys).then((isLimited) ->
 				return next() unless isLimited
 				
 				# Report villiany for crossing the limiter threshold.

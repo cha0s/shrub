@@ -112,7 +112,7 @@ reporterMiddleware = (req, res, next) ->
 			constructor: (@message) ->
 		
 		keys = ("#{key}:#{value}" for key, value of auditKeys)
-		villianyLimiter.addAndCheckThreshold(
+		villianyLimiter.accrueAndCheckThreshold(
 			keys, score
 		
 		).then((isVillian) ->
