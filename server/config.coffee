@@ -102,7 +102,7 @@ exports.Config = -> class Config
 	# * (string) `key` - The key to look up, e.g. parent:child:grandchild
 	has: (key) ->
 	
-		current = @httpInitializerconfig
+		current = @config
 		for part in key.split ':'
 			return false unless part of current
 			current = current[part]
