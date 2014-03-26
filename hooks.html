@@ -49,7 +49,7 @@ description and a list of implementing packages for each hook.</p>
 <ul>
 <li><h2 id="route"><code>route</code></h2>
 
-<p><h5>Allow packages to define routes in the Angular application. <code>TODO</code>: Should just be .invoke, routeMock done separately. </h5></p>
+<p><h5>Allow packages to define routes in the Angular application. </h5></p>
 
 <ul><li><p>example/about (<a href="./client/modules/packages/example/about.html#implementshookroute">client</a>)</p></li>
 <li><p>example/home (<a href="./client/modules/packages/example/home.html#implementshookroute">client</a>)</p></li>
@@ -77,6 +77,46 @@ description and a list of implementing packages for each hook.</p>
 <p><h5>Allows packages to alter any models defined. </h5></p>
 
 <ul><li>user (<a href="./client/modules/packages/user/index.html#implementshookmodelsalter">client</a>, <a href="./server/packages/user/index.html#implementshookmodelsalter">server</a>)</li></ul></li>
+</ul>
+
+<p><a href="./client/packages.html">client/packages.coffee</a></p>
+
+<ul>
+<li><h2 id="controller"><code>controller</code></h2>
+
+<p><h5>Allows packages to define Angular controllers. Implementations should return an <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>. </h5></p></li>
+<li><h2 id="directive"><code>directive</code></h2>
+
+<p><h5>Allows packages to define Angular directives. Implementations should return an <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>. </h5></p>
+
+<ul><li><p>form (<a href="./client/modules/packages/form/index.html#implementshookdirective">client</a>)</p></li>
+<li><p>ui/nav (<a href="./client/modules/packages/ui/nav.html#implementshookdirective">client</a>)</p></li>
+<li><p>ui/notifications (<a href="./client/modules/packages/ui/notifications.html#implementshookdirective">client</a>)</p></li>
+<li><p>ui/title (<a href="./client/modules/packages/ui/title.html#implementshookdirective">client</a>)</p></li></ul></li>
+<li><h2 id="filter"><code>filter</code></h2>
+
+<p><h5>Allows packages to define Angular filters. Implementations should return a function. </h5></p>
+
+<ul><li>ui/markdown (<a href="./client/modules/packages/ui/markdown.html#implementshookfilter">client</a>)</li></ul></li>
+<li><h2 id="service"><code>service</code></h2>
+
+<p><h5>Allows packages to define Angular services. Implementations should return an <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>. </h5></p>
+
+<ul><li><p>form (<a href="./client/modules/packages/form/index.html#implementshookservice">client</a>)</p></li>
+<li><p>rpc (<a href="./client/modules/packages/rpc/index.html#implementshookservice">client</a>)</p></li>
+<li><p>schema (<a href="./client/modules/packages/schema/index.html#implementshookservice">client</a>)</p></li>
+<li><p>socket (<a href="./client/modules/packages/socket/index.html#implementshookservice">client</a>)</p></li>
+<li><p>ui/nav (<a href="./client/modules/packages/ui/nav.html#implementshookservice">client</a>)</p></li>
+<li><p>ui/notifications (<a href="./client/modules/packages/ui/notifications.html#implementshookservice">client</a>)</p></li>
+<li><p>ui/title (<a href="./client/modules/packages/ui/title.html#implementshookservice">client</a>)</p></li>
+<li><p>ui/window (<a href="./client/modules/packages/ui/window.html#implementshookservice">client</a>)</p></li>
+<li><p>user (<a href="./client/modules/packages/user/index.html#implementshookservice">client</a>)</p></li></ul></li>
+<li><h2 id="servicemock"><code>serviceMock</code></h2>
+
+<p><h5>Allows packages to decorate mock Angular services. Implementations should return an <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>. </h5></p>
+
+<ul><li><p>socket (<a href="./client/modules/packages/socket/index.html#implementshookservicemock">client</a>)</p></li>
+<li><p>user (<a href="./client/modules/packages/user/index.html#implementshookservicemock">client</a>)</p></li></ul></li>
 </ul>
 
 <p><a href="./server.html">server.coffee</a></p>

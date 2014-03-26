@@ -4,8 +4,9 @@
   <span class="s1">&#39;$injector&#39;</span><span class="p">,</span> <span class="s1">&#39;$routeProvider&#39;</span><span class="p">,</span> <span class="s1">&#39;$locationProvider&#39;</span><span class="p">,</span> <span class="s1">&#39;pkgmanProvider&#39;</span>
   <span class="nf">({invoke}, $routeProvider, {html5Mode}, {invokeWithMocks}) -&gt;</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>route</code>.
-Allow packages to define routes in the Angular application.
-<code>TODO</code>: Should just be .invoke, routeMock done separately.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">routes = </span><span class="nx">invokeWithMocks</span> <span class="s1">&#39;route&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Implementations should return an object of the form:</p></div></div><div class="code"><div class="wrapper">    <span class="p">{</span>
+Allow packages to define routes in the Angular application.</p>
+
+<p><code>TODO</code>: Should just be .invoke, routeMock done separately.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">routes = </span><span class="nx">invokeWithMocks</span> <span class="s1">&#39;route&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Implementations should return an object of the form:</p></div></div><div class="code"><div class="wrapper">    <span class="p">{</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>An <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>
 which will be injected.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">controller: </span><span class="s1">&#39;...&#39;</span>
        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>A template string.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">template: </span><span class="s1">&#39;...&#39;</span>

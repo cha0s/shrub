@@ -181,7 +181,18 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/example/about",
                         "title": "about"
                       },
-                      "depth": 5
+                      "depth": 5,
+                      "outline": [
+                        {
+                          "type": "heading",
+                          "data": {
+                            "level": 1,
+                            "title": "About page",
+                            "slug": "about-page"
+                          },
+                          "depth": 1
+                        }
+                      ]
                     }, {
                       "type": "file",
                       "data": {

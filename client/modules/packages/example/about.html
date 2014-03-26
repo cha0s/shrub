@@ -7,87 +7,90 @@
     <span class="s1">&#39;$scope&#39;</span>
     <span class="nf">($scope) -&gt;</span>
       
-      <span class="nv">$scope.about = </span><span class="s2">&quot;&quot;</span><span class="err">&quot;</span>
-<span class="nx">Shrub</span>
-<span class="o">=====</span>
+      <span class="nv">$scope.about = </span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">Shrub</span>
+<span class="s2">=====</span>
 
-<span class="nx">Shrub</span> <span class="o">is</span> <span class="nx">a</span> <span class="nx">JavaScript</span> <span class="p">(</span><span class="o">or</span> <span class="nx">CoffeeScript</span> <span class="k">if</span> <span class="nx">you</span> <span class="nx">prefer</span><span class="p">)</span> <span class="nx">application</span>
-<span class="nx">framework</span><span class="p">.</span> <span class="p">[</span><span class="nx">AngularJS</span><span class="p">](</span><span class="nx">http</span><span class="o">:</span><span class="err">//angularjs.org/) is used on the client-side, as</span>
-<span class="nx">well</span> <span class="nx">as</span> <span class="p">[</span><span class="nx">Socket</span><span class="p">.</span><span class="nx">IO</span><span class="p">](</span><span class="nx">http</span><span class="o">:</span><span class="err">//socket.io/), enabling real-time communication right</span>
-<span class="nx">out</span> <span class="k">of</span> <span class="nx">the</span> <span class="nx">box</span><span class="p">.</span> <span class="nx">The</span> <span class="nx">server</span> <span class="o">is</span> <span class="nx">a</span> <span class="p">[</span><span class="nx">Node</span><span class="p">.</span><span class="nx">js</span><span class="p">](</span><span class="nx">http</span><span class="o">:</span><span class="err">//nodejs.org/) server using</span>
-<span class="p">[</span><span class="nx">Redis</span><span class="p">](</span><span class="nx">http</span><span class="o">:</span><span class="err">//redis.io/) for persistence and scalability.</span>
+<span class="s2">Shrub is a JavaScript (or CoffeeScript if you prefer) application</span>
+<span class="s2">framework. [AngularJS](http://angularjs.org/) is used on the client-side, as</span>
+<span class="s2">well as [Socket.IO](http://socket.io/), enabling real-time communication right</span>
+<span class="s2">out of the box. The server is an [Express](http://expressjs.com)</span>
+<span class="s2">[Node.js](http://nodejs.org/) server using</span>
+<span class="s2">[JugglingDB](https://github.com/1602/jugglingdb) for storage.</span>
 
-<span class="nx">Shrub</span> <span class="nx">handles</span> <span class="nx">generation</span> <span class="p">(</span><span class="nx">using</span> <span class="p">[</span><span class="nx">Grunt</span><span class="p">](</span><span class="nx">http</span><span class="o">:</span><span class="err">//gruntjs.com/)) of the vast</span>
-<span class="nx">majority</span> <span class="k">of</span> <span class="nx">Angular</span> <span class="nx">boilerplate</span><span class="p">,</span> <span class="nx">to</span> <span class="nx">allow</span> <span class="nx">you</span> <span class="nx">to</span> <span class="nx">structure</span> <span class="nx">your</span> <span class="nx">application</span> <span class="k">in</span>
-<span class="nx">a</span> <span class="nx">very</span> <span class="nx">clean</span> <span class="o">and</span> <span class="nx">consistent</span> <span class="nx">way</span><span class="p">.</span>
+<span class="s2">Shrub handles generation (using [Grunt](http://gruntjs.com/)) of all Angular</span>
+<span class="s2">boilerplate, to allow you to structure your application in a very clean and</span>
+<span class="s2">consistent way.</span>
 
-<span class="nx">Also</span> <span class="nx">provided</span> <span class="o">is</span> <span class="nx">an</span> <span class="nx">Angular</span> <span class="nx">service</span> <span class="nx">providing</span> <span class="nx">a</span> <span class="nx">NodeJS</span><span class="o">-</span><span class="nx">style</span> <span class="nx">module</span> <span class="nx">framework</span>
-<span class="nx">to</span> <span class="nx">allow</span> <span class="nx">your</span> <span class="nx">application</span> <span class="nx">to</span> <span class="nx">bridge</span> <span class="nx">the</span> <span class="nx">gap</span> <span class="nx">between</span> <span class="nx">Angular</span> <span class="o">and</span> <span class="nx">the</span> <span class="nx">vast</span>
-<span class="nx">ecosystem</span> <span class="k">of</span> <span class="nx">publically</span> <span class="nx">available</span> <span class="nx">NodeJS</span><span class="o">-</span><span class="nx">style</span> <span class="nx">modules</span><span class="p">.</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The Twist</p>
+<span class="s2">Shrub is organized into packages which implement hooks. Angular services,</span>
+<span class="s2">directives, filters, etc. are specified through package hooks, allowing you to</span>
+<span class="s2">achieve the ultimate in clean, elegant structure. No more</span>
+<span class="s2">(controllers|directives|filters|services).js blobs.</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Documentation</p>
 
-<p>JS applications catch flak because they are not impliticly SEO-friendly,
-as well as requiring JS execution, which <a href="http://www.wired.com/threatlevel/2013/09/freedom-hosting-fbi/">some people prefer not to
-allow for untrusted websites</a>.</p>
+<p>You may view the continuously evolving autogenerated documentation at
+<a href="http://cha0s.github.io/shrub">http://cha0s.github.io/shrub</a>.</p>
 
-<p>Shrub does an interesting thing which is possible because both sides of the
-stack have fully featured JS (<a href="http://www.youtube.com/watch?v=lD9FAOPBiDk">well, except for certain older browsers...</a>).
-When a client requests a page from Shrub, it spins up a DOM for the request,
-and renders the entire page, JS and all. Shrub then serves the fully-built page
-to the client.</p>
+<p>If you'd like to build the project documentation, run <code>$ npm run-script doc</code>.</p></div></div><div class="code"><div class="wrapper"><span class="s2"> Awesome example of a package</span>
 
-<p>If the client has JS enabled, the client-side Angular application takes over
-from here, loading new pages (nearly) instantly and generally benefitting from
-all the lovely things that client-side applications offer.</p>
+<span class="s2">JS applications catch flak because they are not impliticly SEO-friendly,</span>
+<span class="s2">as well as requiring JS execution, which [some people prefer not to</span>
+<span class="s2">allow for untrusted websites](http://www.wired.com/threatlevel/2013/09/freedom-hosting-fbi/).</span>
 
-<p>However, if the client does not have JS enabled, a new page will hit the server
-again, and Shrub, crafty as it is, will reuse the DOM created for that session,
-navigate Angular to the new page, render it, and serve it to the client. Nice! </p></div></div><div class="code"><div class="wrapper"> <span class="nx">Get</span> <span class="nx">rolling</span>
+<span class="s2">Shrub implements the</span>
+<span class="s2">[`angular`](http://cha0s.github.io/shrub/server/packages/angular/index.html)</span>
+<span class="s2">server package, which implements </span>
+<span class="s2">hook</span>
+<span class="s2">[`httpMiddleware`](http://cha0s.github.io/shrub/hooks.html#httpmiddleware).</span>
+<span class="s2">Since both sides of the stack have fully featured JS</span>
+<span class="s2">([well, except for certain older browsers...](http://www.youtube.com/watch?v=lD9FAOPBiDk))</span>
+<span class="s2">, when a client requests a page from Shrub, it spins up a</span>
+<span class="s2">[sandbox](http://cha0s.github.io/shrub/server/sandboxes.html) for the request,</span>
+<span class="s2">and renders the entire page -- JS and all. It then serves the fully-built page</span>
+<span class="s2">to the client.</span>
 
-<span class="o">*</span> <span class="nx">Get</span> <span class="nx">yourself</span> <span class="nx">a</span> <span class="nv">clone: </span><span class="o">`</span><span class="nx">$</span> <span class="nx">git</span> <span class="nx">clone</span> <span class="nx">git</span><span class="o">:</span><span class="err">//github.com/cha0s/shrub.git`</span>
+<span class="s2">If the client has JS enabled, the client-side Angular application takes over</span>
+<span class="s2">from here, loading new pages instantly and generally benefitting from all the</span>
+<span class="s2">lovely things that client-side applications offer. The package also implements</span>
+<span class="s2">hook</span>
+<span class="s2">[`endpoint`](http://cha0s.github.io/shrub/hooks.html#endpoint), which allows a</span>
+<span class="s2">JSful client to let the server know it can release the sandbox.</span>
 
-<span class="o">*</span> <span class="nx">Get</span> <span class="k">in</span> <span class="nx">the</span> <span class="k">new</span> <span class="nx">directory</span> <span class="o">and</span> <span class="k">then</span> <span class="nx">the</span> <span class="nx">usual</span> <span class="o">`</span><span class="nx">npm</span> <span class="nx">install</span><span class="o">`</span><span class="p">,</span> <span class="nx">followed</span> <span class="k">by</span>
-<span class="o">`</span><span class="nx">$</span> <span class="nx">scripts</span><span class="err">/good-to-go`. This script will return 0 if the project builds, and</span>
-<span class="nx">the</span> <span class="nx">tests</span> <span class="nx">run</span> <span class="nx">successfully</span><span class="p">.</span> <span class="nx">In</span> <span class="nx">other</span> <span class="nx">words</span><span class="p">,</span> <span class="nx">you</span> <span class="nx">can</span> <span class="nx">easily</span> <span class="nx">wire</span> <span class="nx">it</span> <span class="nx">up</span> <span class="k">in</span> <span class="nx">a</span>
-<span class="nx">pre</span><span class="o">-</span><span class="nx">commit</span> <span class="nx">hook</span><span class="p">.</span>
-
-<span class="o">*</span> <span class="nx">Spin</span> <span class="nx">up</span> <span class="nx">the</span> <span class="nv">server: </span><span class="o">`</span><span class="nx">$</span> <span class="nx">npm</span> <span class="nx">start</span><span class="o">`</span> <span class="o">and</span> <span class="nx">navigate</span> <span class="nx">to</span> <span class="nx">http</span><span class="o">:</span><span class="err">//localhost:4201 (make</span>
-<span class="nx">sure</span> <span class="nx">you</span><span class="err">&#39;</span><span class="nx">ve</span> <span class="nx">run</span> <span class="nx">grunt</span> <span class="nx">at</span> <span class="nx">least</span> <span class="nx">once</span><span class="o">!</span><span class="p">)</span>
-
-<span class="o">*</span> <span class="nx">Check</span> <span class="nx">out</span> <span class="nx">how</span> <span class="nx">Shrub</span> <span class="nx">has</span> <span class="nx">generated</span> <span class="nx">a</span> <span class="nx">lot</span> <span class="k">of</span> <span class="nx">Angular</span> <span class="nx">boilerplate</span> <span class="k">for</span>
-<span class="nx">you</span><span class="p">.</span> <span class="nx">Particularly</span> <span class="nx">app</span><span class="sr">/js/</span><span class="p">{</span><span class="nx">controllers</span><span class="p">,</span><span class="nx">directives</span><span class="p">,</span><span class="nx">filters</span><span class="p">,</span><span class="nx">services</span><span class="p">}.</span><span class="nx">js</span> <span class="nx">will</span>
-<span class="nx">be</span> <span class="k">of</span> <span class="nx">interest</span><span class="p">.</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>TODO</p>
-
-<p>There is much to do, and this project is currently essentially a
-proof-of-concept of some of the ideas outlined here. My plans for this
-framework include:</p>
+<span class="s2">However, if the client does not have JS enabled, a new page will hit the server</span>
+<span class="s2">again, and the package, crafty as it is, will reuse the sandbox created for</span>
+<span class="s2">that session, navigate the sandboxed Angular to the new page, render it, and</span>
+<span class="s2">serve it to the client again. Amazing! </span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Get rolling</p>
 
 <ul>
-<li>Integration of a database abstraction layer</li>
-<li>A resource layer (using the aforementioned db layer) for serving Angular $resource requests</li>
-<li>Socket/Session stores based on aforementioned db layer</li>
-<li>Better handling of server-side DOM in the absence of a session/cookie</li>
-<li>Research into whether server-side rendering can be synchronized in a DRY fashion (currently the rendering is given 50 ms to complete, not ideal)</li>
-<li>Better abstraction of assets, instead of (for instance) hardcoding bootstrap/LESS</li>
-<li>Using standardized solutions to UI and Bootstrap interface, instead of the hackish half-hand-rolled solutions currently in place</li>
-<li>Better abstraction of the RPC interface, allowing other systems beside Socket.IO</li>
-<li>Research into whether the http server interface (currently using Express) is worth abstracting</li>
-<li><p>There is a rudimentary working form API, but research should be done as to how to DRY it up and make sure it's secure and resistant to attack
-"""</p>
+<li><p>Get yourself a clone: <code>$ git clone git://github.com/cha0s/shrub.git</code></p></li>
+<li><p>Get in the new directory and then the usual <code>npm install</code></p></li>
+<li><p>If you'd like to run the tests, first spin up the server using
+<code>$ E2E=true npm start</code>, to start the server in end-to-end testing mode. Then
+run <code>$ ./scripts/good-to-go</code>. This script will return 0 if the project builds,
+and the tests run successfully. In other words, you could theoretically wire
+it up in a pre-commit hook.</p></li>
+<li><p>Spin up the server in debug mode: <code>$ npm start</code> and navigate to
+http://localhost:4201 (if you didn't run the tests above, you must first run
+<code>$ grunt</code> before navigating to the site in your browser).</p></li>
+<li><p>Enjoy!</p></li>
+</ul></div></div><div class="code"><div class="wrapper"><span class="s2"> TODO</span>
 
-<pre><code>    $scope.$emit 'shrubFinishedRendering'
-</code></pre>
+<span class="s2">There is always more to do! </span>
 
-<p>]</p>
+<span class="s2">* Better abstraction of assets, in other words, a theme/skin system</span>
 
-<p>template: """</p></li>
-</ul>
+<span class="s2">* CSRF mitigation</span>
 
-<p><span
-    class="about"
-    data-ng-bind-html="about | uiMarkdown:false"</p>
+<span class="s2">* Client-side config should be handled better</span>
+<span class="s2">&quot;&quot;&quot;</span>
+  
+      <span class="nx">$scope</span><span class="p">.</span><span class="nx">$emit</span> <span class="s1">&#39;shrubFinishedRendering&#39;</span>
+  <span class="p">]</span>
+  
+  <span class="nv">template: </span><span class="s2">&quot;&quot;&quot;</span>
 
-<blockquote>
-  <p></span></p>
-</blockquote>
+<span class="s2">&lt;span</span>
+<span class="s2">  class=&quot;</span><span class="nx">about</span><span class="s2">&quot;</span>
+<span class="s2">  data-ng-bind-html=&quot;</span><span class="nx">about</span> <span class="o">|</span> <span class="nx">uiMarkdown</span><span class="o">:</span><span class="kc">false</span><span class="s2">&quot;</span>
+<span class="s2">&gt;&lt;/span&gt;</span>
 
-<p>"""</p></div></div></div></div></body></html>
+<span class="s2">&quot;&quot;&quot;</span></div></div></div></div></body></html>
