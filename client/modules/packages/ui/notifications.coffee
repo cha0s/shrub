@@ -1,6 +1,8 @@
 
 # # Notifications
 
+errors = require 'errors'
+
 # ## Implements hook `directive`
 exports.$directive = -> [
 	'$timeout', 'ui/notifications'
@@ -62,6 +64,23 @@ exports.$directive = -> [
 		
 ]
 
+# ## Implements hook `rpcCall`
+exports.$rpcCall = -> [
+	'ui/notifications', 'result'
+	(notifications, result) ->
+
+		result.catch (error) ->
+		
+			notifications.add(
+				class: 'alert-danger'
+				text: errors.message error
+			)
+
+] 
+
+(route, data, result) ->
+
+	
 # ## Implements hook `service`
 exports.$service = -> [
 	'socket'
