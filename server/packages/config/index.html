@@ -27,7 +27,8 @@
       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Only if the path matches.</p></div></div><div class="code"><div class="wrapper">      <span class="k">return</span> <span class="nx">next</span><span class="p">()</span> <span class="nx">unless</span> <span class="nx">req</span><span class="p">.</span><span class="nx">url</span> <span class="o">is</span> <span class="s1">&#39;/js/config.js&#39;</span>
       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>config</code>.
 Allows packages to specify configuration that will be sent to
-the client.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span>
+the client. Implementations may return an object, or a promise
+that resolves to an object.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span>
         <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invokeFlat</span> <span class="s1">&#39;config&#39;</span><span class="p">,</span> <span class="nx">req</span>
         
       <span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="nf">(subconfigs) -&gt;</span>

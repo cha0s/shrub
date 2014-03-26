@@ -40,7 +40,8 @@ description and a list of implementing packages for each hook.</p>
 <p><h5>Invoked before the server is bound on the listening port. </h5></p>
 
 <ul><li><p><a href="./server/packages/schema/index.html#implementshookhttpinitializer">schema (server)</a></p></li>
-<li><p><a href="./server/packages/socket/factory.html#implementshookhttpinitializer">socket/factory (server)</a></p></li></ul></li>
+<li><p><a href="./server/packages/socket/factory.html#implementshookhttpinitializer">socket/factory (server)</a></p></li>
+<li><p><a href="./server/packages/user/index.html#implementshookhttpinitializer">user (server)</a></p></li></ul></li>
 <li><h2 id="httplistening"><code>httpListening</code></h2>
 
 <p><h5>Invoked once the server is listening, but before initialization finishes. </h5></p>
@@ -60,7 +61,8 @@ description and a list of implementing packages for each hook.</p>
 <li><p><a href="./server/packages/express/session.html#implementshookhttpmiddleware">express/session (server)</a></p></li>
 <li><p><a href="./server/packages/express/static.html#implementshookhttpmiddleware">express/static (server)</a></p></li>
 <li><p><a href="./server/packages/form/index.html#implementshookhttpmiddleware">form (server)</a></p></li>
-<li><p><a href="./server/packages/socket/factory.html#implementshookhttpmiddleware">socket/factory (server)</a></p></li></ul></li>
+<li><p><a href="./server/packages/socket/factory.html#implementshookhttpmiddleware">socket/factory (server)</a></p></li>
+<li><p><a href="./server/packages/user/index.html#implementshookhttpmiddleware">user (server)</a></p></li></ul></li>
 </ul>
 
 <p><a href="./server/AbstractSocketFactory.html">server/AbstractSocketFactory.coffee</a></p>
@@ -71,14 +73,16 @@ description and a list of implementing packages for each hook.</p>
 <p><h5>Invoked when a socket connection begins. Packages may throw an instance of <code>AbstractSocketFactory.AuthorizationFailure</code> to reject the socket connection as unauthorized. </h5></p>
 
 <ul><li><p><a href="./server/packages/core/index.html#implementshooksocketauthorizationmiddleware">core (server)</a></p></li>
-<li><p><a href="./server/packages/session/index.html#implementshooksocketauthorizationmiddleware">session (server)</a></p></li></ul></li>
+<li><p><a href="./server/packages/session/index.html#implementshooksocketauthorizationmiddleware">session (server)</a></p></li>
+<li><p><a href="./server/packages/user/index.html#implementshooksocketauthorizationmiddleware">user (server)</a></p></li></ul></li>
 <li><h2 id="socketrequestmiddleware"><code>socketRequestMiddleware</code></h2>
 
 <p><h5>Invoked for every socket connection. </h5></p>
 
 <ul><li><p><a href="./server/packages/rpc/index.html#implementshooksocketrequestmiddleware">rpc (server)</a></p></li>
 <li><p><a href="./server/packages/session/index.html#implementshooksocketrequestmiddleware">session (server)</a></p></li>
-<li><p><a href="./server/packages/socket/factory.html#implementshooksocketrequestmiddleware">socket/factory (server)</a></p></li></ul></li>
+<li><p><a href="./server/packages/socket/factory.html#implementshooksocketrequestmiddleware">socket/factory (server)</a></p></li>
+<li><p><a href="./server/packages/user/index.html#implementshooksocketrequestmiddleware">user (server)</a></p></li></ul></li>
 </ul>
 
 <p><a href="./server/audit.html">server/audit.coffee</a></p>
@@ -89,7 +93,8 @@ description and a list of implementing packages for each hook.</p>
 <p><h5>Allows a package to specify unique keys for this request, e.g. IP address, session ID, etc. </h5></p>
 
 <ul><li><p><a href="./server/packages/core/index.html#implementshookauditkeys">core (server)</a></p></li>
-<li><p><a href="./server/packages/session/index.html#implementshookauditkeys">session (server)</a></p></li></ul></li>
+<li><p><a href="./server/packages/session/index.html#implementshookauditkeys">session (server)</a></p></li>
+<li><p><a href="./server/packages/user/index.html#implementshookauditkeys">user (server)</a></p></li></ul></li>
 </ul>
 
 <p><a href="./server/config.html">server/config.coffee</a></p>
@@ -112,10 +117,11 @@ description and a list of implementing packages for each hook.</p>
 <ul>
 <li><h2 id="config"><code>config</code></h2>
 
-<p><h5>Allows packages to specify configuration that will be sent to the client. </h5></p>
+<p><h5>Allows packages to specify configuration that will be sent to the client. Implementations may return an object, or a promise that resolves to an object. </h5></p>
 
 <ul><li><p><a href="./server/packages/config/index.html#implementshookconfig">config (server)</a></p></li>
-<li><p><a href="./server/packages/schema/index.html#implementshookconfig">schema (server)</a></p></li></ul></li>
+<li><p><a href="./server/packages/schema/index.html#implementshookconfig">schema (server)</a></p></li>
+<li><p><a href="./server/packages/user/index.html#implementshookconfig">user (server)</a></p></li></ul></li>
 </ul>
 
 <p><a href="./server/packages/nodemailer/index.html">server/packages/nodemailer/index.coffee</a></p>
@@ -136,7 +142,8 @@ description and a list of implementing packages for each hook.</p>
 <ul><li><p><a href="./server/packages/config/index.html#implementshookreplcontext">config (server)</a></p></li>
 <li><p><a href="./server/packages/core/index.html#implementshookreplcontext">core (server)</a></p></li>
 <li><p><a href="./server/packages/schema/index.html#implementshookreplcontext">schema (server)</a></p></li>
-<li><p><a href="./server/packages/socket/factory.html#implementshookreplcontext">socket/factory (server)</a></p></li></ul></li>
+<li><p><a href="./server/packages/socket/factory.html#implementshookreplcontext">socket/factory (server)</a></p></li>
+<li><p><a href="./server/packages/user/register.html#implementshookreplcontext">user/register (server)</a></p></li></ul></li>
 </ul>
 
 <p><a href="./server/packages/rpc/index.html">server/packages/rpc/index.coffee</a></p>
@@ -146,10 +153,16 @@ description and a list of implementing packages for each hook.</p>
 
 <p><h5>Gather all endpoints. </h5></p>
 
-<ul><li><a href="./server/packages/angular/index.html#implementshookendpoint">angular (server)</a></li></ul></li>
+<ul><li><p><a href="./server/packages/angular/index.html#implementshookendpoint">angular (server)</a></p></li>
+<li><p><a href="./server/packages/user/forgot.html#implementshookendpoint">user/forgot (server)</a></p></li>
+<li><p><a href="./server/packages/user/login.html#implementshookendpoint">user/login (server)</a></p></li>
+<li><p><a href="./server/packages/user/logout.html#implementshookendpoint">user/logout (server)</a></p></li>
+<li><p><a href="./server/packages/user/register.html#implementshookendpoint">user/register (server)</a></p></li>
+<li><p><a href="./server/packages/user/reset.html#implementshookendpoint">user/reset (server)</a></p></li></ul></li>
 <li><h2 id="endpointalter"><code>endpointAlter</code></h2>
 
 <p><h5>Allows packages to modify any endpoints defined. </h5></p>
 
-<ul><li><a href="./server/packages/limiter/index.html#implementshookendpointalter">limiter (server)</a></li></ul></li>
+<ul><li><p><a href="./server/packages/limiter/index.html#implementshookendpointalter">limiter (server)</a></p></li>
+<li><p><a href="./server/packages/villiany/index.html#implementshookendpointalter">villiany (server)</a></p></li></ul></li>
 </ul></div></div></div></div></body></html>

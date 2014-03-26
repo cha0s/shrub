@@ -44,7 +44,8 @@
 <li><p>(string) <code>type</code> - The type of email to send. This is user-defined and
 useful for anyone interested in implementing hook <code>mail</code>.</p></li>
 <li><p>(object) <code>mail</code> - See <a href="https://github.com/andris9/Nodemailer/blob/master/examples/example_sendmail.js#L9">the nodemailer example</a>
-for an example of the structure of this object. </p></li>
+for an example of the structure of this object. There is also a <code>tokens</code>
+key, which is used to replace tokens in the mail.</p></li>
 </ul></div></div><div class="code"><div class="wrapper"><span class="nv">exports.sendMail = </span><span class="nf">(type, mail) -&gt;</span>
   
   <span class="nv">path = </span><span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;path&#39;</span>
@@ -87,7 +88,7 @@ is a template at <code>path</code>/server/packages/user/register.email.html</p><
       
     <span class="k">else</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Prepare the HTML to be sent as email.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">templateCache</span><span class="p">[</span><span class="nx">type</span><span class="p">]</span> <span class="o">=</span> <span class="nx">sandbox</span><span class="p">.</span><span class="nx">prepareHtmlForEmail</span> <span class="nx">html</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Compile it with Handlebars.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">mail</span><span class="p">.</span><span class="nx">tokens</span> <span class="o">?=</span> <span class="p">{}</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Compile it with Handlebars, using the tokens passed in as the locals.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">mail</span><span class="p">.</span><span class="nx">tokens</span> <span class="o">?=</span> <span class="p">{}</span>
     <span class="nv">html = </span><span class="nx">handlebars</span><span class="p">.</span><span class="nx">compile</span><span class="p">(</span><span class="nx">html</span><span class="p">)</span> <span class="nx">mail</span><span class="p">.</span><span class="nx">tokens</span>
       
   <span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="nf">(html) -&gt;</span>

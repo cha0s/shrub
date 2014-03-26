@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><title>server/packages/villiany/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="server/packages/villiany/index"><meta name="groc-project-path" content="server/packages/villiany/index.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/server/packages/villiany/index.coffee">server/packages/villiany/index.coffee</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nv">moment = </span><span class="nx">require</span> <span class="s1">&#39;moment&#39;</span>
+<!DOCTYPE html><html lang="en"><head><title>server/packages/villiany/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="server/packages/villiany/index"><meta name="groc-project-path" content="server/packages/villiany/index.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/server/packages/villiany/index.coffee">server/packages/villiany/index.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="villiany">Villiany</h1>
+
+<p>Watch for and punish bad behavior.</p></div></div><div class="code"><div class="wrapper"><span class="nv">moment = </span><span class="nx">require</span> <span class="s1">&#39;moment&#39;</span>
 <span class="nv">nconf = </span><span class="nx">require</span> <span class="s1">&#39;nconf&#39;</span>
 <span class="nv">i8n = </span><span class="nx">require</span> <span class="s1">&#39;inflection&#39;</span>
 <span class="nv">Promise = </span><span class="nx">require</span> <span class="s1">&#39;bluebird&#39;</span>
@@ -10,17 +12,13 @@
 <span class="p">{</span><span class="nx">Limiter</span><span class="p">,</span> <span class="nx">threshold</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;limits&#39;</span>
 
 <span class="nv">logger = </span><span class="nx">logging</span><span class="p">.</span><span class="nx">create</span> <span class="s1">&#39;logs/villiany.log&#39;</span>
-  
-<span class="nx">exports</span><span class="p">.</span><span class="nv">$endpointAlter = </span><span class="nf">(endpoints) -&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookendpointalter">Implements hook <code>endpointAlter</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$endpointAlter = </span><span class="nf">(endpoints) -&gt;</span>
   
   <span class="k">for</span> <span class="nx">route</span><span class="p">,</span> <span class="nx">endpoint</span> <span class="k">of</span> <span class="nx">endpoints</span>
   
-    <span class="nx">endpoint</span><span class="p">.</span><span class="nx">villianyScore</span> <span class="o">?=</span> <span class="mi">20</span>
-
-<span class="nx">exports</span><span class="p">.</span><span class="nv">$models = </span><span class="nf">(schema) -&gt;</span>
+    <span class="nx">endpoint</span><span class="p">.</span><span class="nx">villianyScore</span> <span class="o">?=</span> <span class="mi">20</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookmodels">Implements hook <code>models</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$models = </span><span class="nf">(schema) -&gt;</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Bans.
-TODO it'd be nice to be able to generate all of this dynamically from
-audit keys.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">Ban = </span><span class="nx">schema</span><span class="p">.</span><span class="nx">define</span> <span class="s1">&#39;Ban&#39;</span><span class="p">,</span>
+<code>TODO</code>: Generate all of this dynamically from audit keys.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">Ban = </span><span class="nx">schema</span><span class="p">.</span><span class="nx">define</span> <span class="s1">&#39;Ban&#39;</span><span class="p">,</span>
     
     <span class="nv">ip:</span>
       <span class="nv">index: </span><span class="kc">true</span>
@@ -36,7 +34,6 @@ audit keys.</p></div></div><div class="code"><div class="wrapper">  <span class=
     
     <span class="nv">expires:</span>
       <span class="nv">type: </span><span class="nb">Number</span>
-
 
   <span class="nv">banTemplate = </span><span class="nf">(where) -&gt;</span>
   
@@ -81,9 +78,7 @@ audit keys.</p></div></div><div class="code"><div class="wrapper">  <span class=
 <span class="nv">villianyLimiter = </span><span class="k">new</span> <span class="nx">Limiter</span><span class="p">(</span>
   <span class="s2">&quot;villiany&quot;</span>
   <span class="nx">threshold</span><span class="p">(</span><span class="mi">1000</span><span class="p">).</span><span class="nx">every</span><span class="p">(</span><span class="mi">10</span><span class="p">).</span><span class="nx">minutes</span><span class="p">()</span>
-<span class="p">)</span>
-
-<span class="nv">reporterMiddleware = </span><span class="nf">(req, res, next) -&gt;</span>
+<span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Define <code>req.reportVilliany()</code>.</p></div></div><div class="code"><div class="wrapper"><span class="nv">reporterMiddleware = </span><span class="nf">(req, res, next) -&gt;</span>
         
   <span class="p">{</span><span class="nv">models: Ban: </span><span class="nx">Ban</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;server/jugglingdb&#39;</span>
 
@@ -97,28 +92,23 @@ audit keys.</p></div></div><div class="code"><div class="wrapper">  <span class=
     <span class="nx">villianyLimiter</span><span class="p">.</span><span class="nx">addAndCheckThreshold</span><span class="p">(</span>
       <span class="nx">keys</span><span class="p">,</span> <span class="nx">score</span>
     
-    <span class="p">).</span><span class="nx">bind</span><span class="p">({}).</span><span class="k">then</span><span class="p">(</span><span class="nf">(isVillian) -&gt;</span>
-    
-      <span class="nv">message = </span><span class="s2">&quot;Logged villiany score #{</span>
+    <span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="nf">(isVillian) -&gt;</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Log this transgression.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">message = </span><span class="s2">&quot;Logged villiany score #{</span>
 <span class="s2">        score</span>
 <span class="s2">      } for #{</span>
 <span class="s2">        type</span>
 <span class="s2">      }, audit keys: #{</span>
 <span class="s2">        JSON.stringify auditKeys</span>
 <span class="s2">      }&quot;</span>
-      
       <span class="nx">message</span> <span class="o">+=</span> <span class="s2">&quot;, which resulted in a ban.&quot;</span> <span class="k">if</span> <span class="nx">isVillian</span>
-      
-      <span class="nx">logger</span><span class="p">.</span><span class="nx">warn</span> <span class="nx">message</span> 
+      <span class="nx">logger</span><span class="p">[</span><span class="k">if</span> <span class="nx">isVillian</span> <span class="k">then</span> <span class="s1">&#39;error&#39;</span> <span class="k">else</span> <span class="s1">&#39;warn&#39;</span><span class="p">]</span> <span class="nx">message</span> 
       
       <span class="k">throw</span> <span class="k">new</span> <span class="nx">NotAVillian</span> <span class="nx">unless</span> <span class="nx">isVillian</span>
-      
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Ban.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">Ban</span><span class="p">.</span><span class="nx">createFromKeys</span> <span class="nx">auditKeys</span>
       <span class="nx">villianyLimiter</span><span class="p">.</span><span class="nx">ttl</span> <span class="nx">keys</span>
           
-    <span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="nf">(@ttl) -&gt;</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Ban.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">Ban</span><span class="p">.</span><span class="nx">createFromKeys</span> <span class="nx">auditKeys</span>
-      
-    <span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="o">-&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Kick.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">req</span><span class="p">.</span><span class="nx">villianyKick</span> <span class="nx">@ttl</span>
+    <span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="nf">(ttl) -&gt;</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Kick.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">req</span><span class="p">.</span><span class="nx">villianyKick</span> <span class="nx">ttl</span>
     
     <span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="o">-&gt;</span> <span class="kc">true</span>
     <span class="p">).</span><span class="k">catch</span> <span class="nx">NotAVillian</span><span class="p">,</span> <span class="o">-&gt;</span> <span class="kc">false</span>
@@ -147,9 +137,7 @@ audit keys.</p></div></div><div class="code"><div class="wrapper">  <span class=
   
   <span class="p">).</span><span class="k">catch</span><span class="p">(</span><span class="nx">RequestBanned</span><span class="p">,</span> <span class="o">-&gt;</span>
 
-  <span class="p">).</span><span class="k">catch</span> <span class="nf">(error) -&gt;</span> <span class="nx">next</span> <span class="nx">error</span>
-
-<span class="nv">buildBanMessage = </span><span class="nf">(subject, ttl) -&gt;</span>
+  <span class="p">).</span><span class="k">catch</span> <span class="nf">(error) -&gt;</span> <span class="nx">next</span> <span class="nx">error</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Build a nice message for the villian.</p></div></div><div class="code"><div class="wrapper"><span class="nv">buildBanMessage = </span><span class="nf">(subject, ttl) -&gt;</span>
   
   <span class="nv">message = </span><span class="k">if</span> <span class="nx">subject</span><span class="o">?</span>
     <span class="s2">&quot;Your #{subject} is banned.&quot;</span>
@@ -162,9 +150,7 @@ audit keys.</p></div></div><div class="code"><div class="wrapper">  <span class=
 <span class="s2">      moment().add(&#39;seconds&#39;, ttl).fromNow()</span>
 <span class="s2">    }.&quot;</span>
     
-  <span class="nx">message</span>
-
-<span class="nx">exports</span><span class="p">.</span><span class="nv">$httpMiddleware = </span><span class="o">-&gt;</span>
+  <span class="nx">message</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implements-hook-httpmiddleware">Implements hook `httpMiddleware</h2></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$httpMiddleware = </span><span class="o">-&gt;</span>
   
   <span class="p">{</span><span class="nv">models: User: </span><span class="nx">User</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;server/jugglingdb&#39;</span>
   
@@ -186,14 +172,10 @@ audit keys.</p></div></div><div class="code"><div class="wrapper">  <span class=
     
     <span class="nx">enforcementMiddleware</span>
       
-  <span class="p">]</span>
-
-<span class="nx">exports</span><span class="p">.</span><span class="nv">$settings = </span><span class="o">-&gt;</span>
+  <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implements-hook-settings">Implements hook `settings</h2></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$settings = </span><span class="o">-&gt;</span>
   
   <span class="nv">ban:</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>10 minute ban time by default.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">defaultExpiration: </span><span class="mi">1000</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">10</span>
-
-<span class="nx">exports</span><span class="p">.</span><span class="nv">$socketAuthorizationMiddleware = </span><span class="o">-&gt;</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>10 minute ban time by default.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">defaultExpiration: </span><span class="mi">1000</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">10</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implements-hook-socketauthorizationmiddleware">Implements hook `socketAuthorizationMiddleware</h2></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$socketAuthorizationMiddleware = </span><span class="o">-&gt;</span>
   
   <span class="nv">label: </span><span class="s1">&#39;Provide villiany management&#39;</span>
   <span class="nv">middleware: </span><span class="p">[</span>

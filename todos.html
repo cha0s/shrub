@@ -179,6 +179,14 @@ context.</p>
 <p>Generalize and serve "broken" JSON for Angular. See: <a href="http://docs.angularjs.org/api/ng/service/$http#json-vulnerability-protection">Angular JSON vulnerability protection</a>. </p></li>
 </ul>
 
+<p><a href="./server/packages/socket/SocketIo.html">server/packages/socket/SocketIo.coffee</a></p>
+
+<ul>
+<li><h4 id="reqsockethandshake"><code>req = socket.handshake</code></h4>
+
+<p>Make req an instance of require('http').IncomingMessage if we can do that. </p></li>
+</ul>
+
 <p><a href="./server/packages/socket/index.html">server/packages/socket/index.coffee</a></p>
 
 <ul>
@@ -188,6 +196,33 @@ context.</p>
 <li><h4 id="storeredis"><code>store: 'redis'</code></h4>
 
 <p>This probably doesn't belong here. </p></li>
+</ul>
+
+<p><a href="./server/packages/user/index.html">server/packages/user/index.coffee</a></p>
+
+<ul>
+<li><h4 id="localstrategyrequirepassportlocalstrategy"><code>LocalStrategy = require('passport-local').Strategy</code></h4>
+
+<p>Strategies should be dynamically defined, probably through a hook. </p></li>
+<li><h4 id="redactforuserredactfor"><code>redactFor = User::redactFor</code></h4>
+
+<p>Does redaction ever make sense on the client? </p></li>
+</ul>
+
+<p><a href="./server/packages/user/login.html">server/packages/user/login.coffee</a></p>
+
+<ul>
+<li><h4 id="newpromiseresolverejectsettimeoutresolve1000"><code>new Promise (resolve, reject) -&gt; setTimeout resolve, 1000</code></h4>
+
+<p>Remove this. We'll eventually disallow registration conflicts. </p></li>
+</ul>
+
+<p><a href="./server/packages/villiany/index.html">server/packages/villiany/index.coffee</a></p>
+
+<ul>
+<li><h4 id="banschemadefineban"><code>Ban = schema.define 'Ban',</code></h4>
+
+<p>Generate all of this dynamically from audit keys. </p></li>
 </ul>
 
 <p><a href="./server/sandboxes.html">server/sandboxes.coffee</a></p>
