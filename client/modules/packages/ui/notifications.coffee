@@ -69,18 +69,13 @@ exports.$rpcCall = -> [
 	'ui/notifications', 'result'
 	(notifications, result) ->
 
-		result.catch (error) ->
-		
-			notifications.add(
-				class: 'alert-danger'
-				text: errors.message error
-			)
+		# Add a notification with the error text.
+		result.catch (error) -> notifications.add(
+			class: 'alert-danger', text: errors.message error
+		)
 
 ] 
 
-(route, data, result) ->
-
-	
 # ## Implements hook `service`
 exports.$service = -> [
 	'socket'
