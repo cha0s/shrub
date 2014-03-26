@@ -75,85 +75,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 "pageTitle": "client/modules/errors",
                 "title": "errors"
               },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "Error handling",
-                    "slug": "error-handling"
-                  },
-                  "depth": 1,
-                  "children": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "TransmittableError",
-                        "slug": "transmittableerror"
-                      },
-                      "depth": 2
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "errorTypes",
-                        "slug": "errortypes"
-                      },
-                      "depth": 2
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "serialize",
-                        "slug": "serialize"
-                      },
-                      "depth": 2
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "unserialize",
-                        "slug": "unserialize"
-                      },
-                      "depth": 2
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "message",
-                        "slug": "message"
-                      },
-                      "depth": 2
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "stack",
-                        "slug": "stack"
-                      },
-                      "depth": 2
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "instantiate",
-                        "slug": "instantiate"
-                      },
-                      "depth": 2
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "caught",
-                        "slug": "caught"
-                      },
-                      "depth": 2
-                    }
-                  ]
-                }
-              ]
+              "depth": 3
             }, {
               "type": "file",
               "data": {
@@ -279,18 +201,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/example/home",
                         "title": "home"
                       },
-                      "depth": 5,
-                      "outline": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 1,
-                            "title": "Home page",
-                            "slug": "home-page"
-                          },
-                          "depth": 1
-                        }
-                      ]
+                      "depth": 5
                     }, {
                       "type": "file",
                       "data": {
@@ -530,18 +441,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/ui/nav",
                         "title": "nav"
                       },
-                      "depth": 5,
-                      "outline": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 1,
-                            "title": "Navigation",
-                            "slug": "navigation"
-                          },
-                          "depth": 1
-                        }
-                      ]
+                      "depth": 5
                     }, {
                       "type": "file",
                       "data": {
@@ -561,53 +461,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/ui/notifications",
                         "title": "notifications"
                       },
-                      "depth": 5,
-                      "outline": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 1,
-                            "title": "Notifications",
-                            "slug": "notifications"
-                          },
-                          "depth": 1,
-                          "children": [
-                            {
-                              "type": "heading",
-                              "data": {
-                                "level": 2,
-                                "title": "notifications.add",
-                                "slug": "notificationsadd"
-                              },
-                              "depth": 2
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 2,
-                                "title": "notifications.top",
-                                "slug": "notificationstop"
-                              },
-                              "depth": 2
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 2,
-                                "title": "notifications.removeTop",
-                                "slug": "notificationsremovetop"
-                              },
-                              "depth": 2
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 2,
-                                "title": "notifications.count",
-                                "slug": "notificationscount"
-                              },
-                              "depth": 2
-                            }
-                          ]
-                        }
-                      ]
+                      "depth": 5
                     }, {
                       "type": "file",
                       "data": {
@@ -627,18 +481,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/ui/title",
                         "title": "title"
                       },
-                      "depth": 5,
-                      "outline": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 1,
-                            "title": "Titles",
-                            "slug": "titles"
-                          },
-                          "depth": 1
-                        }
-                      ]
+                      "depth": 5
                     }, {
                       "type": "file",
                       "data": {
@@ -688,18 +531,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/user/forgot",
                         "title": "forgot"
                       },
-                      "depth": 5,
-                      "outline": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 1,
-                            "title": "User forgot password",
-                            "slug": "user-forgot-password"
-                          },
-                          "depth": 1
-                        }
-                      ]
+                      "depth": 5
                     }, {
                       "type": "file",
                       "data": {
@@ -719,61 +551,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/user/index",
                         "title": "index"
                       },
-                      "depth": 5,
-                      "outline": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 1,
-                            "title": "User",
-                            "slug": "user"
-                          },
-                          "depth": 1,
-                          "children": [
-                            {
-                              "type": "heading",
-                              "data": {
-                                "level": 2,
-                                "title": "user.isLoggedIn",
-                                "slug": "userisloggedin"
-                              },
-                              "depth": 2
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 2,
-                                "title": "user.login",
-                                "slug": "userlogin"
-                              },
-                              "depth": 2
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 2,
-                                "title": "user.logout",
-                                "slug": "userlogout"
-                              },
-                              "depth": 2
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 2,
-                                "title": "user.instance",
-                                "slug": "userinstance"
-                              },
-                              "depth": 2
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 2,
-                                "title": "user.fakeLogin",
-                                "slug": "userfakelogin"
-                              },
-                              "depth": 2
-                            }
-                          ]
-                        }
-                      ]
+                      "depth": 5
                     }, {
                       "type": "file",
                       "data": {
@@ -793,18 +571,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/user/login",
                         "title": "login"
                       },
-                      "depth": 5,
-                      "outline": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 1,
-                            "title": "User login",
-                            "slug": "user-login"
-                          },
-                          "depth": 1
-                        }
-                      ]
+                      "depth": 5
                     }, {
                       "type": "file",
                       "data": {
@@ -824,18 +591,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/user/logout",
                         "title": "logout"
                       },
-                      "depth": 5,
-                      "outline": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 1,
-                            "title": "User logout",
-                            "slug": "user-logout"
-                          },
-                          "depth": 1
-                        }
-                      ]
+                      "depth": 5
                     }, {
                       "type": "file",
                       "data": {
@@ -855,18 +611,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/user/register",
                         "title": "register"
                       },
-                      "depth": 5,
-                      "outline": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 1,
-                            "title": "User register",
-                            "slug": "user-register"
-                          },
-                          "depth": 1
-                        }
-                      ]
+                      "depth": 5
                     }, {
                       "type": "file",
                       "data": {
@@ -886,18 +631,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/user/reset",
                         "title": "reset"
                       },
-                      "depth": 5,
-                      "outline": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 1,
-                            "title": "User reset",
-                            "slug": "user-reset"
-                          },
-                          "depth": 1
-                        }
-                      ]
+                      "depth": 5
                     }
                   ]
                 }
@@ -1541,18 +1275,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/form/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Form processing.",
-                        "slug": "form-processing"
-                      },
-                      "depth": 1
-                    }
-                  ]
+                  "depth": 4
                 }
               ]
             }, {
