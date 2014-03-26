@@ -105,13 +105,13 @@ reporterMiddleware = (req, res, next) ->
 
 	req.reportVilliany = (score, type) ->
 		
-		auditKeys = audit.keys req
+		fingerprint = audit.fingerprint req
 		
 		# Terminate the chain if not a villian.
 		class NotAVillian extends Error
 			constructor: (@message) ->
 		
-		keys = ("#{key}:#{value}" for key, value of auditKeys)
+		keys = ("#{key}:#{value}" for key, value of fingerprint)
 		villianyLimiter.accrueAndCheckThreshold(
 			keys, score
 		
@@ -123,7 +123,7 @@ reporterMiddleware = (req, res, next) ->
 			} for #{
 				type
 			}, audit keys: #{
-				JSON.stringify auditKeys
+				JSON.stringify fingerprint
 			}"
 			message += ", which resulted in a ban." if isVillian
 			logger[if isVillian then 'error' else 'warn'] message 
@@ -131,7 +131,7 @@ reporterMiddleware = (req, res, next) ->
 			throw new NotAVillian unless isVillian
 			
 			# Ban.
-			Ban.createFromKeys auditKeys
+			Ban.createFromKeys fingerprint
 			villianyLimiter.ttl keys
 					
 		).then((ttl) ->
@@ -153,13 +153,13 @@ enforcementMiddleware = (req, res, next) ->
 	class RequestBanned extends Error
 		constructor: (@message) ->
 	
-	auditKeys = audit.keys req
+	fingerprint = audit.fingerprint req
 
-	banPromises = for enforced in Object.keys auditKeys
+	banPromises = for enforced in Object.keys fingerprint
 	
 		method = i8n.camelize "is_#{enforced}_banned", true
 		
-		Ban[method](auditKeys[enforced]).spread (isBanned, ttl) ->
+		Ban[method](fingerprint[enforced]).spread (isBanned, ttl) ->
 			return unless isBanned
 			
 			req.villianyKick(enforced, ttl).then ->

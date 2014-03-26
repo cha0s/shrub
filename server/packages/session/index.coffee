@@ -3,11 +3,11 @@
 # 
 # Various means for dealing with sessions.
 
-# ## Implements hook `auditKeys`
-exports.$auditKeys = (req) ->
+# ## Implements hook `fingerprint`
+exports.$fingerprint = (req) ->
 	
 	# Session ID.
-	session: req.session.id if req.session?
+	session: req.session.id if req?.session?
 
 # ## Implements hook `socketAuthorizationMiddleware`
 exports.$socketAuthorizationMiddleware = ->

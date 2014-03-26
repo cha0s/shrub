@@ -27,7 +27,7 @@ exports.$endpointAlter = (endpoints) ->
 	#   this limiter.
 	# 
 	# * `ignoreKeys`: The
-	#   [audit keys](http://shrub.doc.com.dev/hooks.html#auditkeys) to ignore
+	#   [audit keys](http://shrub.doc.com.dev/hooks.html#fingerprint) to ignore
 	#   when determining the total limit. In this example, the IP address and
 	#   session ID would be ignored.
 	
@@ -53,11 +53,11 @@ exports.$endpointAlter = (endpoints) ->
 			{ignoreKeys, instance, message, threshold} = endpoint.limiter
 			
 			# Ignore keys.
-			auditKeys = audit.keys req
-			delete auditKeys[excludedKey] for excludedKey in ignoreKeys
+			fingerprint = audit.fingerprint req
+			delete fingerprint[excludedKey] for excludedKey in ignoreKeys
 			
 			# Accrue a hit and check the threshold.
-			keys = ("#{key}:#{value}" for key, value of auditKeys)
+			keys = ("#{key}:#{value}" for key, value of fingerprint)
 			instance.accrueAndCheckThreshold(keys).then((isLimited) ->
 				return next() unless isLimited
 				

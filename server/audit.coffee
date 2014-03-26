@@ -3,23 +3,44 @@
 
 pkgman = require 'pkgman'
 
-# ### keys
+# ### fingerprint
 # 
-# *Lookup the unique keys for a request.*
+# *Get the fingerprint for a request.*
 # 
 # * (request) `req` - The request object to gather keys on.
-exports.keys = (req) ->
+exports.fingerprint = (req) ->
 	
-	auditKeys = {}
+	fingerprint = {}
 	
-	# Invoke hook `auditKeys`.
+	# Remove null values.
+	for key, value of exports.fingerprintRaw req
+		continue unless value?
+		fingerprint[key] = value
+	
+	fingerprint
+
+# ### fingerprintKeys
+# 
+# *Get the fingerprint keys for a request.*
+# 
+# * (request) `req` - The request object to gather keys on.
+exports.fingerprintKeys = (req) -> Object.keys exports.fingerprintRaw req
+
+# ### fingerprintRaw
+# 
+# *Get the raw fingerprint for a request.*
+# 
+# * (request) `req` - The request object to gather keys on.
+exports.fingerprintRaw = (req) ->
+	
+	fingerprint = {}
+	
+	# Invoke hook `fingerprint`.
 	# Allows a package to specify unique keys for this request, e.g. IP
-	# address, session ID, etc.
-	for keys in pkgman.invokeFlat 'auditKeys', req
+	# address, session ID, etc. Implementations take a request object as the
+	# only parameter. The request parameter may be null.
+	for keys in pkgman.invokeFlat 'fingerprint', req
 		continue unless keys?
-		for key, value of keys
-			continue unless value?
-			
-			auditKeys[key] = value
+		fingerprint[key] = value for key, value of keys
 	
-	auditKeys
+	fingerprint

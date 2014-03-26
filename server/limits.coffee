@@ -44,7 +44,7 @@ exports.Limiter = class Limiter
 	# *Accrue score for a limiter.*
 	# 
 	# * (array) `keys` - An array of keys, e.g. a flattened array of keys
-	#   from [`audit.keys()`](./audit.html)
+	#   from [`audit.fingerprint()`](./audit.html)
 	# 
 	# * (integer) `score` - The score to add. Defaults to 1.
 	accrue: (keys, score = 1) ->
@@ -55,7 +55,7 @@ exports.Limiter = class Limiter
 	# *Add score to a limiter, and check it against the threshold.*
 	# 
 	# * (array) `keys` - An array of keys, e.g. a flattened array of keys
-	#   from [`audit.keys()`](./audit.html)
+	#   from [`audit.fingerprint()`](./audit.html)
 	# 
 	# * (integer) `score` - The score to add. Defaults to 1.
 	accrueAndCheckThreshold: (keys, score = 1) ->
@@ -66,7 +66,7 @@ exports.Limiter = class Limiter
 	# *Check score for a limiter.*
 	# 
 	# * (array) `keys` - An array of keys, e.g. a flattened array of keys
-	#   from [`audit.keys()`](./audit.html)
+	#   from [`audit.fingerprint()`](./audit.html)
 	score: (keys) -> @_largest keys, 'score'
 		
 	# ### .ttl
@@ -74,7 +74,7 @@ exports.Limiter = class Limiter
 	# *Time-to-live for a limiter.*
 	# 
 	# * (array) `keys` - An array of keys, e.g. a flattened array of keys
-	#   from [`audit.keys()`](./audit.html)
+	#   from [`audit.fingerprint()`](./audit.html)
 	ttl: (keys) -> @_largest keys, 'ttl'
 		
 	# ### .checkThreshold
@@ -82,7 +82,7 @@ exports.Limiter = class Limiter
 	# *Check the current limiter score against the threshold.*
 	# 
 	# * (array) `keys` - An array of keys, e.g. a flattened array of keys
-	#   from [`audit.keys()`](./audit.html)
+	#   from [`audit.fingerprint()`](./audit.html)
 	checkThreshold: (keys) ->
 		@score(keys).then (score) => score > @threshold.score()
 

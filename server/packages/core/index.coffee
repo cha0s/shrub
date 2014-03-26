@@ -7,11 +7,11 @@ nconf = require 'nconf'
 
 pkgman = require 'pkgman'
 
-# ## Implements hook `auditKeys`
-exports.$auditKeys = (req) ->
+# ## Implements hook `fingerprint`
+exports.$fingerprint = (req) ->
 	
 	# } The IP address.
-	ip: req.normalizedIp
+	ip: req?.normalizedIp
 
 # Walk up the X-Forwarded-For header until we hit an untrusted address.
 resolvedAddress = (trustedProxies, address, forwardedFor) ->

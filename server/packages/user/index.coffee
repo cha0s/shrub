@@ -10,11 +10,11 @@ crypto = require 'server/crypto'
 
 clientModule = require 'client/modules/packages/user'
 
-# ## Implements hook `auditKeys`
-exports.$auditKeys = (req) ->
+# ## Implements hook `fingerprint`
+exports.$fingerprint = (req) ->
 
 	# User (ID).
-	user: req.user.id if req.user?.id?
+	user: req.user.id if req?.user?.id?
 
 # ## Implements hook `config`
 exports.$config = (req) ->
