@@ -6,17 +6,15 @@ nconf = require 'nconf'
 # The socket factory.
 socketFactory = null
 
-# ## Implements hook `httpInitializer`
-exports.$httpInitializer = -> (req, res, next) ->
+# ## Implements hook `httpInitializing`
+exports.$httpInitializing = (http) ->
 	
 	config = nconf.get 'packageSettings:socket'
 	
 	# Spin up the socket server, and have it listen on the HTTP server.
 	socketFactory = new (require config.module) config
 	socketFactory.loadMiddleware()
-	socketFactory.listen req.http
-	
-	next()
+	socketFactory.listen http
 	
 # ## Implements hook `httpMiddleware`
 exports.$httpMiddleware = (http) ->

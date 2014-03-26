@@ -10,10 +10,10 @@ exports.$config = (req) ->
 	
 	apiRoot: nconf.get 'apiRoot'
 
-# ## Implements hook `httpInitializer`
+# ## Implements hook `httpInitializing`
 # 
 # Serve the database schema as an authenticated REST API.
-exports.$httpInitializer = -> (req, res, next) ->
+exports.$httpInitializing = ({_app}) ->
 	
 	schema = require 'server/jugglingdb'
 	
@@ -32,10 +32,8 @@ exports.$httpInitializer = -> (req, res, next) ->
 			
 		res.json code, data
 	
-	routes = {}
-	
 	# Gross...
-	app = req.http._app # Yeah, this is hackish. NFG
+	app = _app
 	app._usedRouter = true
 	
 	# Serve the models. For each model, we'll define REST paths to allow
@@ -150,8 +148,6 @@ exports.$httpInitializer = -> (req, res, next) ->
 					-> serveJson res, 200, message: "Resource deleted."
 					interceptError res
 				).done()
-
-	next()
 	
 # ## Implements hook `replContext`
 # 

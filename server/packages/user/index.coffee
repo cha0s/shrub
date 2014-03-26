@@ -22,40 +22,6 @@ exports.$config = (req) ->
 	# Send a redacted version of the request user.
 	req.user.redactFor(req.user).then (redacted) -> user: redacted
 
-# ## Implements hook `httpInitializer`
-exports.$httpInitializer = -> (req, res, next) ->
-	
-	{models: User: User} = require 'server/jugglingdb'
-	
-	# Implement a local passport strategy.
-	# `TODO`: Strategies should be dynamically defined, probably through a
-	# hook.
-	LocalStrategy = require('passport-local').Strategy
-	passport.use new LocalStrategy (username, password, done) ->
-		
-		# Load a user and compare the hashed password.
-		exports.loadByName(username).bind({}).then((@user)->
-			return unless @user?
-			
-			crypto.hasher(
-				plaintext: password
-				salt: new Buffer @user.salt, 'hex'
-			)
-			
-		).then((hashed) ->
-			return unless @user?
-			return unless @user.passwordHash is hashed.key.toString 'hex'
-			
-			@user
-			
-		).nodeify done
-		
-	passport.serializeUser (user, done) -> done null, user.id
-	
-	passport.deserializeUser (id, done) -> User.find(id).nodeify done
-	
-	next()
-				
 # ## Implements hook `httpMiddleware`
 exports.$httpMiddleware = (http) ->
 	
@@ -88,6 +54,40 @@ exports.$httpMiddleware = (http) ->
 		
 	]
 
+# ## Implements hook `initialize`
+exports.$initialize = -> (req, res, next) ->
+	
+	{models: User: User} = require 'server/jugglingdb'
+	
+	# Implement a local passport strategy.
+	# `TODO`: Strategies should be dynamically defined, probably through a
+	# hook.
+	LocalStrategy = require('passport-local').Strategy
+	passport.use new LocalStrategy (username, password, done) ->
+		
+		# Load a user and compare the hashed password.
+		exports.loadByName(username).bind({}).then((@user)->
+			return unless @user?
+			
+			crypto.hasher(
+				plaintext: password
+				salt: new Buffer @user.salt, 'hex'
+			)
+			
+		).then((hashed) ->
+			return unless @user?
+			return unless @user.passwordHash is hashed.key.toString 'hex'
+			
+			@user
+			
+		).nodeify done
+		
+	passport.serializeUser (user, done) -> done null, user.id
+	
+	passport.deserializeUser (id, done) -> User.find(id).nodeify done
+	
+	next()
+				
 # ## Implements hook `models`
 exports.$models = (schema) ->
 	
