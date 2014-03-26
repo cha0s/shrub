@@ -75,7 +75,77 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 "pageTitle": "client/modules/errors",
                 "title": "errors"
               },
-              "depth": 3
+              "depth": 3,
+              "outline": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 1,
+                    "title": "Error handling",
+                    "slug": "error-handling"
+                  },
+                  "depth": 1,
+                  "children": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "TransmittableError",
+                        "slug": "transmittableerror"
+                      },
+                      "depth": 2
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "instantiate",
+                        "slug": "instantiate"
+                      },
+                      "depth": 2
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "message",
+                        "slug": "message"
+                      },
+                      "depth": 2
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "serialize",
+                        "slug": "serialize"
+                      },
+                      "depth": 2
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "stack",
+                        "slug": "stack"
+                      },
+                      "depth": 2
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "transmittableErrors",
+                        "slug": "transmittableerrors"
+                      },
+                      "depth": 2
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "unserialize",
+                        "slug": "unserialize"
+                      },
+                      "depth": 2
+                    }
+                  ]
+                }
+              ]
             }, {
               "type": "file",
               "data": {
@@ -127,6 +197,47 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 {
                   "type": "folder",
                   "data": {
+                    "path": "client/modules/packages/angular",
+                    "title": "angular"
+                  },
+                  "depth": 4,
+                  "children": [
+                    {
+                      "type": "file",
+                      "data": {
+                        "language": {
+                          "nameMatchers": [".coffee", "Cakefile"],
+                          "pygmentsLexer": "coffee-script",
+                          "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                          "strictMultiLineEnd": false,
+                          "singleLineComment": ["#"],
+                          "ignorePrefix": "}",
+                          "foldPrefix": "^",
+                          "name": "CoffeeScript"
+                        },
+                        "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/modules/packages/angular/index.coffee",
+                        "projectPath": "client/modules/packages/angular/index.coffee",
+                        "targetPath": "client/modules/packages/angular/index",
+                        "pageTitle": "client/modules/packages/angular/index",
+                        "title": "index"
+                      },
+                      "depth": 5,
+                      "outline": [
+                        {
+                          "type": "heading",
+                          "data": {
+                            "level": 1,
+                            "title": "Angular",
+                            "slug": "angular"
+                          },
+                          "depth": 1
+                        }
+                      ]
+                    }
+                  ]
+                }, {
+                  "type": "folder",
+                  "data": {
                     "path": "client/modules/packages/core",
                     "title": "core"
                   },
@@ -151,7 +262,18 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/core/index",
                         "title": "index"
                       },
-                      "depth": 5
+                      "depth": 5,
+                      "outline": [
+                        {
+                          "type": "heading",
+                          "data": {
+                            "level": 1,
+                            "title": "Core",
+                            "slug": "core"
+                          },
+                          "depth": 1
+                        }
+                      ]
                     }
                   ]
                 }, {
@@ -311,7 +433,29 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/rpc/index",
                         "title": "index"
                       },
-                      "depth": 5
+                      "depth": 5,
+                      "outline": [
+                        {
+                          "type": "heading",
+                          "data": {
+                            "level": 1,
+                            "title": "RPC",
+                            "slug": "rpc"
+                          },
+                          "depth": 1,
+                          "children": [
+                            {
+                              "type": "heading",
+                              "data": {
+                                "level": 2,
+                                "title": "rpc.call",
+                                "slug": "rpccall"
+                              },
+                              "depth": 2
+                            }
+                          ]
+                        }
+                      ]
                     }
                   ]
                 }, {
@@ -461,53 +605,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/ui/notifications",
                         "title": "notifications"
                       },
-                      "depth": 5,
-                      "outline": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 1,
-                            "title": "Notifications",
-                            "slug": "notifications"
-                          },
-                          "depth": 1,
-                          "children": [
-                            {
-                              "type": "heading",
-                              "data": {
-                                "level": 2,
-                                "title": "notifications.add",
-                                "slug": "notificationsadd"
-                              },
-                              "depth": 2
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 2,
-                                "title": "notifications.top",
-                                "slug": "notificationstop"
-                              },
-                              "depth": 2
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 2,
-                                "title": "notifications.removeTop",
-                                "slug": "notificationsremovetop"
-                              },
-                              "depth": 2
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 2,
-                                "title": "notifications.count",
-                                "slug": "notificationscount"
-                              },
-                              "depth": 2
-                            }
-                          ]
-                        }
-                      ]
+                      "depth": 5
                     }, {
                       "type": "file",
                       "data": {
@@ -527,7 +625,18 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/ui/title",
                         "title": "title"
                       },
-                      "depth": 5
+                      "depth": 5,
+                      "outline": [
+                        {
+                          "type": "heading",
+                          "data": {
+                            "level": 1,
+                            "title": "Titles",
+                            "slug": "titles"
+                          },
+                          "depth": 1
+                        }
+                      ]
                     }, {
                       "type": "file",
                       "data": {
@@ -1351,18 +1460,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/limiter/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Rate limiter",
-                        "slug": "rate-limiter"
-                      },
-                      "depth": 1
-                    }
-                  ]
+                  "depth": 4
                 }
               ]
             }, {
@@ -1452,18 +1550,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/rpc/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "RPC",
-                        "slug": "rpc"
-                      },
-                      "depth": 1
-                    }
-                  ]
+                  "depth": 4
                 }
               ]
             }, {

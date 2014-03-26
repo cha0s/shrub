@@ -28,9 +28,9 @@ description and a list of implementing packages for each hook.</p>
 
 <p><h5>Invoked when the Angular application is run. </h5></p>
 
-<ul><li><p>core (<a href="./client/modules/packages/core/index.html#implementshookapprun">client</a>)</p></li>
-<li><p>example (<a href="./client/modules/packages/example/index.html#implementshookapprun">client</a>)</p></li>
-<li><p>rpc (<a href="./client/modules/packages/rpc/index.html#implementshookapprun">client</a>)</p></li></ul></li>
+<ul><li><p>angular (<a href="./client/modules/packages/angular/index.html#implementshookapprun">client</a>)</p></li>
+<li><p>core (<a href="./client/modules/packages/core/index.html#implementshookapprun">client</a>)</p></li>
+<li><p>example (<a href="./client/modules/packages/example/index.html#implementshookapprun">client</a>)</p></li></ul></li>
 </ul>
 
 <p><a href="./client/modules/errors.html">client/modules/errors.coffee</a></p>
@@ -67,6 +67,11 @@ description and a list of implementing packages for each hook.</p>
 <li><h2 id="routealter"><code>routeAlter</code></h2>
 
 <p><h5>Allow packages to alter defined routes. </h5></p></li>
+<li><h2 id="routecontrollerstart"><code>routeControllerStart</code></h2>
+
+<p><h5>Allow packages to act before a new route controller is executed. </h5></p>
+
+<ul><li>ui/title (<a href="./client/modules/packages/ui/title.html#implementshookroutecontrollerstart">client</a>)</li></ul></li>
 </ul>
 
 <p><a href="./client/modules/schema-client.html">client/modules/schema-client.coffee</a></p>

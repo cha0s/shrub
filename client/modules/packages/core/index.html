@@ -29,18 +29,23 @@ Allow packages to alter defined routes.</p></div></div><div class="code"><div cl
     <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">route</span> <span class="k">of</span> <span class="nx">routes</span>
       <span class="nx">do</span> <span class="nf">(path, route) -&gt;</span>
         </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Wrap the controller so we can provide some automatic
-behavior.
-<code>TODO</code>: Define a routeController middleware stack for this.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">routeController = </span><span class="nx">route</span><span class="p">.</span><span class="nx">controller</span>
+behavior.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">routeController = </span><span class="nx">route</span><span class="p">.</span><span class="nx">controller</span>
         <span class="nv">route.controller = </span><span class="p">[</span>
-          <span class="s1">&#39;$injector&#39;</span><span class="p">,</span> <span class="s1">&#39;$scope&#39;</span><span class="p">,</span> <span class="s1">&#39;ui/title&#39;</span>
-          <span class="nf">({invoke}, $scope, title) -&gt;</span>
+          <span class="s1">&#39;$injector&#39;</span><span class="p">,</span> <span class="s1">&#39;$scope&#39;</span>
+          <span class="nf">({invoke}, $scope) -&gt;</span>
+            </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>routeControllerStart</code>.
+Allow packages to act before a new route controller
+is executed.</p></div></div><div class="code"><div class="wrapper">            <span class="nv">injectables = </span><span class="nx">pkgmanProvider</span><span class="p">.</span><span class="nx">invokeFlat</span><span class="p">(</span>
+              <span class="s1">&#39;routeControllerStart&#39;</span>
+            <span class="p">)</span>
             
-            <span class="nx">title</span><span class="p">.</span><span class="nx">setPage</span> <span class="nx">route</span><span class="p">.</span><span class="nx">title</span> <span class="o">?</span> <span class="s1">&#39;&#39;</span>
+            <span class="nx">injectables</span><span class="p">.</span><span class="nx">push</span> <span class="nx">routeController</span>
             
             <span class="nx">invoke</span><span class="p">(</span>
-              <span class="nx">routeController</span><span class="p">,</span> <span class="kc">null</span>
+              <span class="nx">injectable</span><span class="p">,</span> <span class="kc">null</span>
               <span class="nv">$scope: </span><span class="nx">$scope</span>
-            <span class="p">)</span>
+              <span class="nv">route: </span><span class="nx">route</span>
+            <span class="p">)</span> <span class="k">for</span> <span class="nx">injectable</span> <span class="k">in</span> <span class="nx">injectables</span>
         <span class="p">]</span>
         </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p><code>TODO</code>: Some method of allowing <code>templateUrl</code>.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">route</span><span class="p">.</span><span class="nx">template</span> <span class="o">?=</span> <span class="s1">&#39; &#39;</span>
         </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Register the path into Angular.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">$routeProvider</span><span class="p">.</span><span class="k">when</span> <span class="s2">&quot;/#{route.path ? path}&quot;</span><span class="p">,</span> <span class="nx">route</span>
