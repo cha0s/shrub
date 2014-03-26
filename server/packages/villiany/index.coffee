@@ -220,7 +220,7 @@ exports.$httpMiddleware = ->
 	]
 
 # ## Implements hook `settings
-exports.$settings = ->
+exports.$packageSettings = ->
 	
 	ban:
 		

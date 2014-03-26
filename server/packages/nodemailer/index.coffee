@@ -59,8 +59,8 @@ exports.$httpListening = (http) ->
 		
 	)
 
-# ## Implements hook `settings`
-exports.$settings = ->
+# ## Implements hook `packageSettings`
+exports.$packageSettings = ->
 	
 	# Passed through directly to nodemailer.
 	transport:

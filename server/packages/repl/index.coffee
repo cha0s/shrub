@@ -65,8 +65,8 @@ exports.$ready = ->
 # ## Implements hook `processExit`
 exports.$processExit = -> server?.close()
 	
-# ## Implements hook `settings`
-exports.$settings = ->
+# ## Implements hook `packageSettings`
+exports.$packageSettings = ->
 	
 	# The prompt display for REPL clients.
 	prompt: 'shrub> '

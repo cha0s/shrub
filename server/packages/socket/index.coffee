@@ -3,8 +3,8 @@
 # 
 # Manage socket connections.
 
-# ## Implements hook `settings`
-exports.$settings = ->
+# ## Implements hook `packageSettings`
+exports.$packageSettings = ->
 
 	# Middleware stack dispatched to authorize or reject a socket connection.
 	authorizationMiddleware: [

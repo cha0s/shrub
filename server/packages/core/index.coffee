@@ -51,8 +51,8 @@ exports.$replContext = (context) ->
 		
 		pkgman.invoke 'clearCaches'
 
-# ## Implements hook `settings`
-exports.$settings = ->
+# ## Implements hook `packageSettings`
+exports.$packageSettings = ->
 	
 	# } A list of the IP addresses of trusted proxies between clients.
 	trustedProxies: []

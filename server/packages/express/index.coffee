@@ -160,8 +160,8 @@ exports.$initialize = (config) ->
 			settings.port
 		}!"
 	
-# ## Implements hook `settings`
-exports.$settings = ->
+# ## Implements hook `packageSettings`
+exports.$packageSettings = ->
 
 	middleware: [
 		'core'

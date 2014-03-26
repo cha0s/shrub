@@ -126,8 +126,8 @@ exports.$initialize = (config) ->
 		nconf.get 'packageSettings:angular:navigation:middleware'
 	)
 
-# ## Implements hook `settings`
-exports.$settings = ->
+# ## Implements hook `packageSettings`
+exports.$packageSettings = ->
 
 	navigation:
 	
