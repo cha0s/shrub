@@ -1,14 +1,17 @@
 
+# # User register
+
 errors = require 'errors'
 
+# ## Implements hook `route`
 exports.$route = ->
 	
 	title: 'Sign up'
 	
 	controller: [
 		'$location', '$scope', 'ui/notifications', 'user'
-		($location, $scope, notifications, user) ->
-			return $location.path '/' if user.isLoggedIn()
+		($location, $scope, {add}, {isLoggedIn}) ->
+			return $location.path '/' if isLoggedIn()
 				
 			$scope.userRegister =
 				
@@ -29,7 +32,7 @@ exports.$route = ->
 					handler: (error, result) ->
 						return if error?
 				
-						notifications.add(
+						add(
 							text: "An email has been sent with account registration details. Please check your email."
 						)
 						

@@ -1,12 +1,16 @@
 
+# # Form
+# 
+# Define a directive for Angular forms, and a service to cache and look them
+# up later.
+
+# ## Implements hook `directive`
 exports.$directive = -> [
 	'$compile', '$injector', '$q', 'form', 'require'
-	($compile, $injector, $q, form, require) ->
+	($compile, {invoke}, $q, {cache}, require) ->
 		
 		link: (scope, element, attrs) ->
-			
-			formKey = attrs['form']
-			return unless (formSpec = scope[formKey])?
+			return unless (formSpec = scope[formKey = attrs['form']])?
 			
 			# Hacking out the scope, gotta be a nicer way to do this.
 			$form = angular.element '<form>'
@@ -25,6 +29,7 @@ exports.$directive = -> [
 			).addClass formKey
 			
 			# Build the form fields.
+			# `TODO`: Form field types should be defined by hook.
 			for name, field of formSpec
 				continue unless field.type?
 				
@@ -63,7 +68,10 @@ exports.$directive = -> [
 						$input
 						
 					when 'submit'
-					
+						
+						# Handle RPC calls.
+						# `TODO`: This should be middleware'd, `rpc` should be
+						# implementing it.
 						if field.rpc?
 							field.handler ?= ->
 							handler = field.handler
@@ -80,7 +88,7 @@ exports.$directive = -> [
 									continue if field.type is 'submit'
 									fields[name] = scope[name]
 								
-								$injector.invoke [
+								invoke [
 									'rpc'
 									(rpc) ->
 										
@@ -111,27 +119,33 @@ exports.$directive = -> [
 			$compile($form) scope
 			
 			# Register the form in the system.
-			form.register formKey, scope, $form
+			cache formKey, scope, $form
 			
 			# Guarantee a submit handler.
 			(formSpec.submit ?= {}).handler ?= -> $q.when true
 			
 ]
 
+# ## Implements hook `service`
 exports.$service = -> [
 	
 	->
 		
-		forms = {}
+		service = forms: {}
 		
-		@register = (key, scope, element) ->
-			forms[key] =
-				scope: scope
-				element: element
+		# ## form.cache
+		# 
+		# Cache a form for later lookup.
+		# 
+		# * (string) `key` - The form key.
+		# 
+		# * (Scope) `scope` - The form's Angular scope.
+		# 
+		# * (Element) `element` - The form's jqLite element.
+		service.cache = (key, scope, element) ->
+			service.forms[key] = scope: scope, element: element
 					
-		@lookup = (key) -> forms[key]
-		
-		return
+		service
 
 ]
 

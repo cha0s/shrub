@@ -97,12 +97,14 @@ exports.$models = (schema) ->
 	User = schema.models['User']
 	
 	# Extend the redaction function with server-specific information.
-	# `TODO`: Does redaction ever make sense on the client?
-	redactFor = User::redactFor
 	User::redactFor = (user) ->
 		
+		Promise.cast(
+			name: @name
+			id: @id
+
 		# Decrypt the e-mail if redacting for the same user.
-		redactFor.call(this, user).bind({}).then((@redacted) ->
+		).bind({}).then((@redacted) ->
 			return null unless @redacted.email?
 			return @redacted.email unless user.id?
 			return @redacted.email if user.id isnt @redacted.id

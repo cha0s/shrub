@@ -1,6 +1,9 @@
 
+# # User reset
+
 errors = require 'errors'
 
+# ## Implements hook `route`
 exports.$route = ->
 	
 	path: 'user/reset/:token'
@@ -8,7 +11,7 @@ exports.$route = ->
 	
 	controller: [
 		'$location', '$routeParams', '$scope', 'ui/notifications'
-		($location, $routeParams, $scope, notifications) ->
+		($location, {token}, $scope, {add}) ->
 			
 			$scope.userReset =
 				
@@ -19,7 +22,7 @@ exports.$route = ->
 				
 				token:
 					type: 'hidden'
-					value: $routeParams.token
+					value: token
 				
 				submit:
 					type: 'submit'
@@ -28,9 +31,7 @@ exports.$route = ->
 					handler: (error, result) ->
 						return if error?
 						
-						notifications.add(
-							text: "You may now log in with your new password."
-						)
+						add text: "You may now log in with your new password."
 						
 						$location.path '/user/login'
 

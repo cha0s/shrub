@@ -24,16 +24,16 @@ exports.$angularNavigationMiddleware = ->
 			return next() unless body.formKey?
 
 			# Lookup the cached form.
-			shrubForm = null
+			formService = null
 			
 			sandbox.inject [
 				'form'
-				(form) -> shrubForm = form
+				(form) -> formService = form
 			]
 		
-			return next() unless (cachedForm = shrubForm.lookup body.formKey)?
+			return next() unless (form = formService.forms[body.formKey])?
 				
-			{element, scope} = cachedForm
+			{element, scope} = form
 			
 			# Assign the scope values from the POST body. (Is this safe?)
 			form = scope[body.formKey]

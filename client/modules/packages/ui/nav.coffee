@@ -1,18 +1,21 @@
 
+# # Navigation
+
+# ## Implements hook `directive`
 exports.$directive = -> [
-	'$location', 'ui/nav', 'socket', 'ui/title', 'user'
-	($location, nav, socket, title, user) ->
+	'$location', 'ui/nav', 'ui/title', 'user'
+	($location, {links}, {page}, {instance}) ->
 	
 		link: (scope, elm, attr) ->
 			
+			# `TODO`: This whole thing needs to be overhauled.
+			scope.links = links
 			scope.navClass = if attr['uiNav'] then attr['uiNav'] else 'ui-nav'
-		
-			scope.links = nav.links
-			scope.user = user.instance()
+			scope.user = instance()
 			
 			scope.$watch(
-				-> title.page()
-				-> scope.pageTitle = title.page()
+				-> page()
+				-> scope.pageTitle = page()
 			)
 			
 			(navActiveLinks = ->
@@ -25,8 +28,6 @@ exports.$directive = -> [
 					
 			)()
 			
-# Make sure we set active the first time, since angular-strap won't be ready.
-
 			scope.$watch(
 				-> scope.links()
 				navActiveLinks	
@@ -74,10 +75,14 @@ exports.$directive = -> [
 		
 ]
 
+# ## Implements hook `service`
+# 
+# This API allows you to dynamically change the navigation links.
+# `TODO`: Overhaul this.
 exports.$service = -> [
 	->
-	
-# This API allows you to dynamically change the navigation links.
+		
+		service = {}
 		
 		_links = []
 		
@@ -95,9 +100,9 @@ exports.$service = -> [
 #         href: '#/home'
 #         name: 'Home'
 		
-		@links = -> _links
-		@setLinks = (links) -> _links = links
+		service.links = -> _links
+		service.setLinks = (links) -> _links = links
 		
-		return
+		service
 		
 ]

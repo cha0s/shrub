@@ -10,6 +10,8 @@ pkgman = require 'pkgman'
 exports.TransmittableError = class TransmittableError extends Error
 	
 	# See: [https://github.com/jashkenas/coffee-script/issues/2359](https://github.com/jashkenas/coffee-script/issues/2359)
+	# `TODO`: Capture all arguments, and make the necessity for implementing
+	# toJSON obsolete.
 	constructor: (@message) ->
 	
 	# Invoked when the error is caught.
@@ -81,7 +83,7 @@ exports.message = (error) ->
 		TransmittableError::template.replace ":message", error.toString()
 	
 	# Replace placeholders in the template.
-	output.replace ":#{key}", value for key, value of error
+	output = output.replace ":#{key}", value for key, value of error
 	output
 	
 # ## stack

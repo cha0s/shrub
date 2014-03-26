@@ -1,4 +1,7 @@
 
+# # Home page
+
+# ## Implements hook `appConfig`
 exports.$appConfig = -> [
 	'$routeProvider'
 	($routeProvider) ->
@@ -7,6 +10,7 @@ exports.$appConfig = -> [
 		$routeProvider.otherwise redirectTo: '/home'
 ]
 
+# ## Implements hook `route`
 exports.$route = ->
 
 	path: 'home'
@@ -14,9 +18,9 @@ exports.$route = ->
 	
 	controller: [
 		'$scope'
-		($scope) ->
+		({$emit}) ->
 			
-			$scope.$emit 'shrubFinishedRendering'
+			$emit 'shrubFinishedRendering'
 			
 	]
 	

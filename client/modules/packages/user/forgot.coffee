@@ -1,15 +1,17 @@
 
+# # User forgot password
+
 errors = require 'errors'
 
-# User forgot password.
+# ## Implements hook `route`
 exports.$route = ->
 	
 	title: 'Forgot password'
 	
 	controller: [
 		'$location', '$scope', 'ui/notifications', 'user'
-		($location, $scope, notifications, user) ->
-			return $location.path '/' if user.isLoggedIn()
+		($location, $scope, {add}, {isLoggedIn}) ->
+			return $location.path '/' if isLoggedIn()
 				
 			$scope.userForgot =
 				
@@ -25,7 +27,7 @@ exports.$route = ->
 					handler: (error, result) ->
 						return if error?
 						
-						notifications.add(
+						add(
 							text: "A reset link will be emailed."
 						)
 						

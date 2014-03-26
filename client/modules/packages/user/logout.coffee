@@ -1,11 +1,14 @@
 
+# # User logout
+
+# ## Implements hook `route`
 exports.$route = ->
 	
 	controller: [
-		'$location', '$q', 'user'
-		($location, $q, user) ->
-			return $location.path '/' unless user.isLoggedIn()
+		'$location', 'user'
+		($location, {isLoggedIn, logout}) ->
+			return $location.path '/' unless isLoggedIn()
 			
-			user.logout().then -> $location.path '/'
+			logout().then -> $location.path '/'
 
 	]

@@ -1,60 +1,67 @@
 
+# # Titles
+
+# ## Implements hook `directive`
 exports.$directive = -> [
 	'ui/title'
-	(title) ->
+	({window}) ->
 	
 		link: (scope, elm, attr) ->
-		
+			
+			# Keep the window title synchronized. 
 			scope.$watch(
-				-> title.window()
-				-> scope.windowTitle = title.window()
+				-> window()
+				-> scope.windowTitle = window()
 			)
 		
 ]
 
+# ## Implements hook `service`
 exports.$service = -> [
-	'$rootScope', '$interval'
-	($rootScope, $interval) ->
+	'$interval'
+	($interval) ->
 		
-# Get and set the page title.
+		service = {}
+		
+		# Get and set the page title.
 		_page = ''
 		
-		@page = -> _page
-		@setPage = (page, setWindow = true) ->
+		service.page = -> _page
+		service.setPage = (page, setWindow = true) ->
 			
 			_page = page
 			
-			@setWindow [_page, _site].join _separator if setWindow
+			service.setWindow [_page, _site].join _separator if setWindow
 		
-# Get and set the token that separates the page and window title.
+		# Get and set the token that separates the page and window title.
 		_separator = ' · '
 
-		@separator = -> _separator
-		@setSeparator = (separator) -> _separator = separator
+		service.separator = -> _separator
+		service.setSeparator = (separator) -> _separator = separator
 		
-# Get and set the site name.		
+		# Get and set the site name.		
 		_site = ''
 
-		@site = -> _site
-		@setSite = (site) -> _site = site
+		service.site = -> _site
+		service.setSite = (site) -> _site = site
 		
-# Get and set the window title.		
+		# Get and set the window title.		
 		_window = ''
 
-		@window = -> _windowWrapper _window
-		@setWindow = (window) -> _window = window
+		service.window = -> _windowWrapper _window
+		service.setWindow = (window) -> _window = window
 		
-# Certain things will want to make the window/tab title flash for attention.
-# Those things will use this API to do so.
+		# Certain things will want to make the window/tab title flash for
+		# attention. Those things will use this API to do so.
 		_flashUpWrapper = (text) -> "¯¯¯#{text.toUpperCase()}¯¯¯"
 		_flashDownWrapper = (text) -> "___#{text}___"
 		_windowWrapper = angular.identity
 		
 		flashInProgress = null
 		
-		@flash = ->
+		service.flash = ->
 			
-# Don't queue up a million timeouts.
+			# Don't queue up a million timeouts.
 			return if flashInProgress?
 			
 			flashInProgress = $interval(
@@ -68,31 +75,31 @@ exports.$service = -> [
 				600
 			)
 			
-# Restore the window/tab title to normal again.
-		@stopFlashing = ->
+		# Restore the window/tab title to normal again.
+		service.stopFlashing = ->
 			
 			$interval.cancel flashInProgress if flashInProgress?
 			flashInProgress = null
 			
 			_windowWrapper = angular.identity
 		
-# The wrappers below handle rendering the window title and flash states. The
-# wrappers are passed in a single argument, the title text. The wrapper
-# function returns another string, which is the text after whatever wrapping
-# you'd like to do.
+		# The wrappers below handle rendering the window title and flash
+		# states. The wrappers are passed in a single argument, the title text.
+		# The wrapper function returns another string, which is the text after
+		# whatever wrapping you'd like to do.
 		
-# Get and set the window title wrapper.		
-		@windowWrapper = -> _windowWrapper
-		@setWindowWrapper = (windowWrapper) -> _windowWrapper = windowWrapper
+		# Get and set the window title wrapper.		
+		service.windowWrapper = -> _windowWrapper
+		service.setWindowWrapper = (windowWrapper) -> _windowWrapper = windowWrapper
 		
-# Get and set the flash down state wrapper.
-		@flashDownWrapper = -> _flashDownWrapper
-		@setFlashDownWrapper = (flashDownWrapper) -> _flashDownWrapper = flashDownWrapper
+		# Get and set the flash down state wrapper.
+		service.flashDownWrapper = -> _flashDownWrapper
+		service.setFlashDownWrapper = (flashDownWrapper) -> _flashDownWrapper = flashDownWrapper
 		
-# Get and set the flash up state wrapper.
-		@flashUpWrapper = -> _flashUpWrapper
-		@setFlashUpWrapper = (flashUpWrapper) -> _flashUpWrapper = flashUpWrapper
+		# Get and set the flash up state wrapper.
+		service.flashUpWrapper = -> _flashUpWrapper
+		service.setFlashUpWrapper = (flashUpWrapper) -> _flashUpWrapper = flashUpWrapper
 
-		return
+		service
 		
 ]

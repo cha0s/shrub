@@ -1,34 +1,40 @@
 
+# # User login
+
 errors = require 'errors'
 
+# ## Implements hook `routeMock`
 exports.e2eLogin = $routeMock: ->
 	
 	path: 'e2e/user/login/:destination'
 	
 	controller: [
-		'$location', '$routeParams', '$scope', 'socket', 'user'
-		($location, $routeParams, $scope, socket, user) ->
+		'$location', '$routeParams', 'socket', 'user'
+		($location, {destination}, socket, {fakeLogin}) ->
 			
-			user.fakeLogin('cha0s').then ->
-				$location.path "/user/#{$routeParams.destination}"
+			fakeLogin('cha0s').then -> 
+				$location.path "/user/#{destination}"
 				
 	]
 	
+# Transmittable login error.
 LoginError = class LoginError extends errors.TransmittableError
 
 	key: 'login'
 	template: "No such username/password."
 		
+# ## Implements hook `errorType`
 exports.$errorType = -> LoginError
 
+# ## Implements hook `route`
 exports.$route = ->
 	
 	title: 'Sign in'
 	
 	controller: [
 		'$location', '$scope', 'ui/notifications', 'user'
-		($location, $scope, notifications, user) ->
-			return $location.path '/' if user.isLoggedIn()
+		($location, $scope, {add}, {isLoggedIn, login}) ->
+			return $location.path '/' if isLoggedIn()
 				
 			$scope.userLogin =
 				
@@ -47,14 +53,14 @@ exports.$route = ->
 					label: "Sign in"
 					handler: ->
 				
-						user.login(
+						login(
 							'local'
 							$scope.username
 							$scope.password
 
 						).then ->
 							
-							notifications.add(
+							add(
 								class: 'alert-success'
 								text: "Logged in successfully."
 							)

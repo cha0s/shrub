@@ -1,13 +1,19 @@
 
-errors = require 'errors'
+# # Limiter
+# 
+# Define a TransmittableError for the limiter.
 
-class LimiterThresholdError extends errors.TransmittableError
+{TransmittableError} = require 'errors'
+
+# Implement a TransmittableError to inform the user of limiter threshold
+# passing..
+class LimiterThresholdError extends TransmittableError
 	
 	constructor: (message, @time) -> super
 	
 	key: 'limiterThreshold'
 	template: ":message You may try again :time."
-	
 	toJSON: -> [@key, @message, @time]
 
+# ## Implements hook `errorType`
 exports.$errorType = -> LimiterThresholdError

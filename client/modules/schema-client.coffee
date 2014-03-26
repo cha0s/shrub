@@ -6,7 +6,7 @@ pkgman = require 'pkgman'
 {Schema} = require 'jugglingdb-client'
 
 # Translate model names to REST resource/collection paths.
-# 'CatalogEntry' -> ['catalog-entry', 'catalog-entries']
+# `'CatalogEntry'` -> `['catalog-entry', 'catalog-entries']`
 Schema::resourcePaths = (name) ->
 
 	resource = i8n.dasherize(i8n.underscore name).toLowerCase()

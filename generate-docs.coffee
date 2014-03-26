@@ -94,20 +94,23 @@ description and a list of implementing packages for each hook.
 			hookName
 		}`"
 			
-		packages = []
+		packages = {}
 		
 		for filename, {commentLines} of sources
-			
 			continue unless (typeAndName = packageTypeAndName filename)?
 			
 			matches = filename.match /packages\/(.*)\./
 			typeAndName.name = matches[1]
 			typeAndName.filename = filename
-
-			packages.push typeAndName if commentLines.some (line) ->
-				line.match implementsPattern
-					
-		packages
+			
+			some = commentLines.some (line) -> line.match implementsPattern
+			if some
+			
+				package_ = packages[typeAndName.name] ?= typeAndName
+				(package_.typesAndFilenames ?= []).push
+					type: typeAndName.type, filename: filename 
+				
+		package_ for name, package_ of packages
 	
 	hookInformation = {}
 	for filename, {commentLines} of sources
@@ -163,20 +166,27 @@ description and a list of implementing packages for each hook.
 """
 			
 			continue if packages.length is 0
-				
+			
 			for package_ in packages
+				
+				links = []
+				for {type, filename} in package_.typesAndFilenames
+
+					links.push """
+<a href="./#{
+	filename.replace /\.(js|coffee)$/, '.html'
+}\#implementshook#{
+	name.toLowerCase()
+}">#{type}</a>
+"""					
 
 				markdown += """
 
-\t* <a href="./#{
-	package_.filename.replace /\.(js|coffee)$/, '.html'
-}\#implementshook#{
-	name.toLowerCase()
-}">#{
+\t* #{
 	package_.name.replace /\/index$/, ''
 } (#{
-	package_.type
-})</a>
+	links.join ', '
+})
 
 """
 			

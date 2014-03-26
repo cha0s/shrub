@@ -1,4 +1,7 @@
 
+# # About page
+
+# ## Implements hook `route`
 exports.$route = ->
 
 	path: 'about'

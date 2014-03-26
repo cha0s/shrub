@@ -1,7 +1,10 @@
 
+# # Notifications
+
+# ## Implements hook `directive`
 exports.$directive = -> [
 	'$timeout', 'ui/notifications'
-	($timeout, notifications) ->
+	($timeout, {count, removeTop, top}) ->
 	
 		link: (scope, elm, attr) ->
 			
@@ -9,26 +12,24 @@ exports.$directive = -> [
 			
 			$notificationWrapper = elm.find '.notification-wrapper'
 			
-# User closed the notification.
-			
+			# User closed the notification.
 			scope.close = ->
 				$timeout.cancel activeNotification
 				$notificationWrapper.fadeOut '2000', -> scope.$apply ->
-					notifications.removeTop()
+					removeTop()
 					
 				return
 			
 			scope.$watch(
-				-> notifications.top()
+				-> top()
 				->
 					
-# When we get a new notification, make it our active notification.
-
-					scope.notification = notifications.top()
-					return if notifications.count() is 0
+					# When we get a new notification, make it our active
+					# notification.
+					scope.notification = top()
+					return if count() is 0
 					
-# Fade it in and keep it on the screen for 15 seconds.
-						
+					# Fade it in and keep it on the screen for 15 seconds.
 					$notificationWrapper.fadeIn '2000'
 							
 					activeNotification = $timeout(
@@ -61,36 +62,40 @@ exports.$directive = -> [
 		
 ]
 
+# ## Implements hook `service`
 exports.$service = -> [
 	'socket'
 	(socket) ->
 	
-		_notifications = []
-		
 		service = {}
 		
-# Add a notification to be displayed.
+		_notifications = []
 		
+		# ## notifications.add
+		# 
+		# Add a notification to be displayed.
 		service.add = (notification) ->
 			
 			notification.class ?= 'alert-info'
 			
 			_notifications.push notification
 		
-# Get the top notification.
-		
+		# ## notifications.top
+		# 
+		# Get the top notification.
 		service.top = -> _notifications[0]
 		
-# Remove the top notification.
-		
+		# ## notifications.removeTop
+		# 
+		# Remove the top notification.
 		service.removeTop = -> _notifications.shift()
 		
-# The number of notifications to show.
-		
+		# ## notifications.count
+		# 
+		# The number of notifications to show.
 		service.count = -> _notifications.length
 
-# Accept notifications from the server.
-		
+		# Accept notifications from the server.
 		socket.on 'notifications', (data) ->
 			
 			service.add notification for notification in data.notifications

@@ -1,23 +1,14 @@
 
 describe 'form', ->
 	
-	form = null
-	
-	beforeEach ->
-		
-		inject [
-			'form'
-			(_form_) -> form = _form_
-		]
-		
 	it 'should automagically register a form when compiling a directive', ->
 
 		inject [
-			'$compile', '$rootScope'
-			($compile, $rootScope) ->
+			'$compile', '$rootScope', 'form'
+			($compile, $rootScope, {forms}) ->
 				
 				# Sanity
-				expect(form.lookup 'test').not.toBeDefined()
+				expect(forms.test).not.toBeDefined()
 				
 				tpl = $compile '<div data-form="test"></div>'
 				
@@ -27,7 +18,7 @@ describe 'form', ->
 				tpl scope
 				
 				# Registered.
-				expect(form.lookup 'test').toBeDefined()
+				expect(forms.test).toBeDefined()
 				
 		]
 
