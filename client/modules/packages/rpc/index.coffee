@@ -53,7 +53,7 @@ exports.$service = -> [
 				
 				if error?
 					
-					error = errors.caught errors.unserialize error
+					error = errors.unserialize error
 
 					# `TODO`: This should be middleware'd.					
 					notifications.add(

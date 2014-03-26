@@ -113,12 +113,10 @@ exports.$socketConnectionMiddleware = ->
 					concealErrorFromClient = (error) ->
 						
 						emitError new Error "Please try again later."
-						logError errors.caught error
+						logError error
 						
 					# Transmit the error as it is directly to the client.
-					sendErrorToClient = (error) ->
-						
-						emitError errors.caught error
+					sendErrorToClient = (error) -> emitError error
 					
 					# Validate.
 					endpoint.validators.dispatch routeReq, null, (error) ->
