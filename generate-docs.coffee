@@ -106,11 +106,11 @@ description and a list of implementing packages for each hook.
 			some = commentLines.some (line) -> line.match implementsPattern
 			if some
 			
-				package_ = packages[hookName] ?= typeAndName
+				package_ = packages[typeAndName.name] ?= typeAndName
 				(package_.typesAndFilenames ?= []).push
 					type: typeAndName.type, filename: filename 
 				
-		package_ for name, package_ of packages
+		package_ for _, package_ of packages
 	
 	hookInformation = {}
 	for filename, {commentLines} of sources
