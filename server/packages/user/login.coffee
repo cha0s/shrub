@@ -16,7 +16,7 @@ exports.$endpoint = ->
 
 	receiver: (req, fn) ->
 		
-		{passport} = req
+		passport = req._passport.instance
 		
 		loginPromise = switch req.body.method
 			
