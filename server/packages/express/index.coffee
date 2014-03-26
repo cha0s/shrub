@@ -153,17 +153,13 @@ class Express extends (require 'AbstractHttp')
 # ## Implements hook `initialize`
 exports.$initialize = (config) ->
 	
-	new Promise (resolve, reject) ->
+	http = new Express settings = nconf.get 'packageSettings:express'
+	http.initialize().then ->
 	
-		http = new Express settings = nconf.get 'packageSettings:express'
-		http.initialize (error) ->
-			return reject error if error?
-			
-			defaultLogger.info "Shrub Express HTTP server up and running on port #{
-				settings.port
-			}!"
-			resolve()
-
+		defaultLogger.info "Shrub Express HTTP server up and running on port #{
+			settings.port
+		}!"
+	
 # ## Implements hook `settings`
 exports.$settings = ->
 

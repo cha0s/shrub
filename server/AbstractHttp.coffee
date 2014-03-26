@@ -33,32 +33,28 @@ module.exports = class AbstractHttp
 	# ### .initialize
 	# 
 	# *Initialize the server.*
-	# 
-	# `TODO`: Return a promise.
-	# 
-	# * (function) `fn` - The function to be called upon initialization.
-	initialize: (fn) ->
+	initialize: ->
 		
 		# Invoke hook `httpInitializing`.
 		# Invoked before the server is bound on the listening port.
 		pkgman.invoke 'httpInitializing', this
 		
-		# Start listening.
-		@listen (error) =>
-			return fn error if error?
-			
-			Promise.all(
+		new Promise (resolve, reject) =>
+		
+			# Start listening.
+			@listen (error) =>
+				return reject error if error?
 				
-				# Invoke hook `httpListening`.
-				# Invoked once the server is listening, but before
-				# initialization finishes.
-				pkgman.invokeFlat 'httpListening', this
-			
-			# Finish initialization.
-			).then(
-				-> fn()
-				(error) -> fn error
-			)
+				resolve Promise.all(
+					
+					# Invoke hook `httpListening`.
+					# Invoked once the server is listening, but before
+					# initialization finishes. Implementations should return a
+					# promise. When all promises are fulfilled, initialization
+					# finishes.
+					pkgman.invokeFlat 'httpListening', this
+				
+				)
 			
 	# ### .config
 	# 
