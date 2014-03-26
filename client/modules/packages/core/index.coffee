@@ -5,8 +5,8 @@
 
 # ## Implements hook `appConfig`
 exports.$appConfig = -> [
-	'$injector', '$routeProvider', '$locationProvider', 'pkgmanProvider'
-	({invoke}, $routeProvider, {html5Mode}, pkgmanProvider) ->
+	'$injector', '$routeProvider', '$locationProvider', 'configProvider', 'pkgmanProvider'
+	({invoke}, $routeProvider, {html5Mode}, configProvider, pkgmanProvider) ->
 		
 		routes = {}
 		

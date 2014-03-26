@@ -10,7 +10,7 @@ exports.$directive = -> [
 	($compile, {invoke}, $q, {cache}, require) ->
 		
 		link: (scope, element, attrs) ->
-			return unless (formSpec = scope[formKey = attrs['form']])?
+			return unless (formSpec = scope[formKey = attrs.form])?
 			
 			# Create the form element.
 			$form = angular.element(
@@ -21,7 +21,7 @@ exports.$directive = -> [
 				'data-ng-submit': "#{formKey}.submit.handler()"
 				
 				# Default method to POST.
-				method: $form.attr('method') ? 'POST'
+				method: attrs.method ? 'POST'
 			
 			).addClass formKey
 			
