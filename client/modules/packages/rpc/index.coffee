@@ -5,17 +5,6 @@
 
 errors = require 'errors'
 
-# ## Implements hook `appRun`
-exports.$appRun = -> [
-	'$window', 'rpc'
-	({navigator}, {call}) ->
-	
-		# Hang up the socket unless it's the local (Node.js) client.
-		# `TODO`: This should be in a client-side `angular` package.
-		call 'hangup' unless navigator.userAgent.match /^Node\.js .*$/
-
-]
-
 # ## Implements hook `service`
 exports.$service = -> [
 	'$injector', '$q', 'require', 'pkgman', 'socket'
