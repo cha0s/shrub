@@ -1,7 +1,7 @@
 
 errors = require 'errors'
 
-class LimiterThresholdError extends errors.BaseError
+class LimiterThresholdError extends errors.TransmittableError
 	
 	constructor: (message, @time) -> super
 	

@@ -1,20 +1,15 @@
 
-###
-
-Socket.IO adapter proxy for [JugglingDB](https://github.com/1602/jugglingdb).
-
-This adapter forwards all adapter commands through a socket, to be run by the
-database server.
-
-###
+# # JugglingDB/Angular REST adapter
+# 
+# Forwards all adapter methods through HTTP/rest using Angular.
 
 i8n = require 'inflection'
 
-class SocketAdapter
+class RestAdapter
 	
 	constructor: (@schema, @$http) ->
 	
-	# DRY.
+	# } DRY.
 	promiseCallback = (fn, promise) -> promise.then(
 		({data}) -> fn null, data
 		({data}) -> fn new Error data.message
@@ -43,7 +38,7 @@ class SocketAdapter
 	[
 		'define', 'defineForeignKey', 'possibleIndexes', 'updateIndexes'
 		
-		# and our ugly duckling.
+		# } and our ugly duckling.
 		'transaction'
 	].forEach (prop) => @::[prop] = ->
 	
@@ -52,37 +47,67 @@ class SocketAdapter
 		{collection} = @schema.resourcePaths model
 		query = translateQuery query ? {}
 		
-		promiseCallback fn, @$http.get "#{@schema.settings.apiRoot}/#{collection}?#{query}"
+		promiseCallback fn, @$http.get "#{
+			@schema.settings.apiRoot
+		}/#{
+			collection
+		}?#{
+			query
+		}"
 	
 	count: (model, fn) ->
 	
 		{collection} = @schema.resourcePaths model
 		
-		promiseCallback fn, @$http.get "#{@schema.settings.apiRoot}/#{collection}/count"
+		promiseCallback fn, @$http.get "#{
+			@schema.settings.apiRoot
+		}/#{
+			collection
+		}/count"
 	
 	create: (model, data, fn) ->
 	
 		{collection} = @schema.resourcePaths model
 		
-		promiseCallback fn, @$http.post "#{@schema.settings.apiRoot}/#{collection}", data
+		promiseCallback fn, @$http.post "#{
+			@schema.settings.apiRoot
+		}/#{
+			collection
+		}", data
 	
 	destroy: (model, id, fn) ->
 		
 		{resource} = @schema.resourcePaths model
 		
-		promiseCallback fn, @$http.delete "#{@schema.settings.apiRoot}/#{resource}/#{id}"
+		promiseCallback fn, @$http.delete "#{
+			@schema.settings.apiRoot
+		}/#{
+			resource
+		}/#{
+			id
+		}"
 	
 	destroyAll: (model, fn) ->
 	
 		{collection} = @schema.resourcePaths model
 		
-		promiseCallback fn, @$http.delete "#{@schema.settings.apiRoot}/#{collection}"
+		promiseCallback fn, @$http.delete "#{
+			@schema.settings.apiRoot
+		}/#{
+			collection
+		}"
 	
 	exists: (model, id, fn) ->
 	
 		{resource} = @schema.resourcePaths model
 		
-		promiseCallback fn, @$http.get "#{@schema.settings.apiRoot}/#{resource}/#{id}/exists"
+		promiseCallback fn, @$http.get "#{
+			@schema.settings.apiRoot
+		}/#{
+			resource
+		}/#{
+			id
+		}/exists"
 	
 	find: ->
 	
@@ -91,10 +116,17 @@ class SocketAdapter
 		{id} = data
 		{resource} = @schema.resourcePaths model
 		
-		if id?
-			promiseCallback fn, @$http.put "#{@schema.settings.apiRoot}/#{resource}/#{id}", data
-		else
-			@create model, data, fn
+		# Create if there's no ID.
+		return @create model, data, fn unless id?
+		
+		# Otherwise, update.
+		promiseCallback fn, @$http.put "#{
+			@schema.settings.apiRoot
+		}/#{
+			resource
+		}/#{
+			id
+		}", data
 	
 	updateAttributes: (model, id, data, fn) ->
 		data.id = id
@@ -102,8 +134,8 @@ class SocketAdapter
 	
 	updateOrCreate: @::save
 	
-# Initialization method; instantiate the SocketAdapter.
+# Initialization method; instantiate the RestAdapter.
 exports.initialize = (schema) ->
 	{$http, inflection} = schema.settings
-	schema.adapter = new SocketAdapter schema, $http, inflection
+	schema.adapter = new RestAdapter schema, $http, inflection
 	schema.connected = true

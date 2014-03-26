@@ -14,7 +14,7 @@ exports.e2eLogin = $routeMock: ->
 				
 	]
 	
-LoginError = class LoginError extends errors.BaseError
+LoginError = class LoginError extends errors.TransmittableError
 
 	key: 'login'
 	template: "No such username/password."

@@ -76,7 +76,18 @@ module.exports = (grunt, config) ->
 				moduleName = path.join dirname, path.basename moduleName, extname 
 				
 				if moduleName?
-					["requires_['#{moduleName}'] = function(module, exports, require, __dirname, __filename) {\n\n", '\n};\n']
+					[
+						"""
+requires_['#{moduleName}'] = function(module, exports, require, __dirname, __filename) {
+
+
+"""
+						"""
+
+};
+
+"""
+					]
 				else
 					['', '']
 	

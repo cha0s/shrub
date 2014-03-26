@@ -1,47 +1,56 @@
 
+# # Package manager
+
 packageCache = null
 _packages = []
 
+# ## rebuildPackageCache
 exports.rebuildPackageCache = ->
-	moduleCache = {}
 	packageCache = {}
 	
+	modules = {}
 	for name in _packages
 	
 		try
-			package_ = require "packages/#{name}"
+			modules[name] = require "packages/#{name}"
 		catch error
 			
+			# Suppress missing package errors.
+			# `TODO`: Should we let this throw?
 			continue if error.toString() is "Error: Cannot find module 'packages/#{name}'"
-				
 			throw error
-			
-		moduleCache[name] = package_
-		
+	
+	# Recur down the package tree and collect hooks.		
 	cacheRecursive = (path, parent) ->
 		
 		for key, objectOrFunction of parent
 			
+			# It's a hook, cache it.
 			if key.charCodeAt(0) is '$'.charCodeAt(0)
-				
 				(packageCache[key.slice 1] ?= []).push
 					path: path
 					fn: objectOrFunction
 	
 			else
 				
+				# Recur.
 				cacheRecursive "#{path}/#{key}", objectOrFunction
 				
-	cacheRecursive path, module for path, module of moduleCache
+	cacheRecursive path, module for path, module of modules
 		
 	return
 
+# ## registerPackages
+# 
+# `TODO`: Rename to `registerPackageList`.
 exports.registerPackages = (packages) ->
-	
 	_packages.push.apply _packages, packages
-	
 	exports.rebuildPackageCache()
 
+# ## invoke
+# 
+# Invoke a hook with arguments. Return the result as an object, keyed by
+# package path.
 exports.invoke = (hook, args...) ->
 	exports.rebuildPackageCache() unless packageCache?
 	
@@ -49,8 +58,11 @@ exports.invoke = (hook, args...) ->
 	results[path] = fn args... for {path, fn} in packageCache[hook] ? []
 	results
 
+# ## invokeFlat
+# 
+# Invoke a hook with arguments. Return the result as an array.
 exports.invokeFlat = (hook, args...) ->
 	exports.rebuildPackageCache() unless packageCache?
 	
-	fn args... for {path, fn} in packageCache[hook] ? []
+	fn args... for {fn} in packageCache[hook] ? []
 	
