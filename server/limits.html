@@ -27,7 +27,7 @@ e.g. "rpc://user.login:limiter"</p></li>
     <span class="c1"># Make sure it&#39;s a threshold.</span>
     <span class="k">throw</span> <span class="k">new</span> <span class="nx">TypeError</span><span class="p">(</span>
       <span class="s2">&quot;Limiter(#{key}) must be constructed with a valid threshold!&quot;</span>
-    <span class="p">)</span> <span class="nx">unless</span> <span class="nx">@threshold</span> <span class="k">instanceof</span> <span class="nx">Threshold</span>
+    <span class="p">)</span> <span class="nx">unless</span> <span class="nx">@threshold</span> <span class="k">instanceof</span> <span class="nx">ThresholdFinal</span>
     
     <span class="c1"># `TODO`: This goes away.</span>
     <span class="nx">options</span><span class="p">.</span><span class="nx">bucketTime</span> <span class="o">?=</span> <span class="nx">@threshold</span><span class="p">.</span><span class="nx">calculateSeconds</span><span class="p">()</span>
@@ -94,13 +94,7 @@ from <a href="./audit.html"><code>audit.keys()</code></a></li>
     <span class="p">).</span><span class="k">then</span> <span class="nf">(reduction) -&gt;</span>
       <span class="nx">reduction</span><span class="p">.</span><span class="nx">reduce</span> <span class="p">(</span><span class="nf">(l, r) -&gt;</span> <span class="k">if</span> <span class="nx">l</span> <span class="o">&gt;</span> <span class="nx">r</span> <span class="k">then</span> <span class="nx">l</span> <span class="k">else</span> <span class="nx">r</span><span class="p">),</span> <span class="o">-</span><span class="kc">Infinity</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="thresholdbase">ThresholdBase</h2>
 
-<p>Define a threshold. A threshold is defined like:</p>
-
-<p><code>threshold(4).every(20).minutes()</code></p>
-
-<p>Which means that the threshold represents the allowance of a score of 4 to
-accumulate over the period of 20 minutes. If more score is accrued during
-that window, then the threshold is said to be crossed.</p></div></div><div class="code"><div class="wrapper"><span class="k">class</span> <span class="nx">ThresholdBase</span>
+<p>The base class used to define a threshold.</p></div></div><div class="code"><div class="wrapper"><span class="k">class</span> <span class="nx">ThresholdBase</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="constructor"><em>constructor</em></h3>
 
 <p><em>Create a threshold base object.</em></p>
@@ -116,10 +110,10 @@ that window, then the threshold is said to be crossed.</p></div></div><div class
 <ul>
 <li>(integer) <code>amount</code> - The quantity of time units this threshold
 concerns. e.g, if the threshold is every 5 minutes, this will be <code>5</code>. </li>
-</ul></div></div><div class="code"><div class="wrapper">  <span class="nv">every: </span><span class="nf">(amount) -&gt;</span> <span class="k">new</span> <span class="nx">Threshold</span> <span class="nx">@_count</span><span class="p">,</span> <span class="nx">amount</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="threshold">Threshold</h2>
+</ul></div></div><div class="code"><div class="wrapper">  <span class="nv">every: </span><span class="nf">(amount) -&gt;</span> <span class="k">new</span> <span class="nx">ThresholdFinal</span> <span class="nx">@_count</span><span class="p">,</span> <span class="nx">amount</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="thresholdfinal">ThresholdFinal</h2>
 
-<p>Create, finalize and inspect a threshold definition.</p></div></div><div class="code"><div class="wrapper"><span class="k">class</span> <span class="nx">Threshold</span>
+<p>A finalized threshold definition.</p></div></div><div class="code"><div class="wrapper"><span class="k">class</span> <span class="nx">ThresholdFinal</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="constructor"><em>constructor</em></h3>
 
 <p><em>Create a threshold.</em></p>
@@ -149,7 +143,18 @@ concerns. e.g, if the threshold is every 5 minutes, this will be <code>5</code>.
         <span class="c1"># Return `this` to chain.</span>
         <span class="c1"># `TODO`: This should instantiate a finalized Threshold class</span>
         <span class="c1"># which cannot be chained, nor modified.</span>
-        <span class="k">this</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Expose a factory method for constructing Threshold instances.</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.threshold = </span><span class="nf">(count) -&gt;</span> <span class="k">new</span> <span class="nx">ThresholdBase</span> <span class="nx">count</span>
+        <span class="k">this</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="threshold">threshold</h2>
+
+<p>Expose a factory method for constructing Threshold instances. A Threshold is
+defined like:</p>
+
+<pre><code>{threshold} = require 'limits'
+threshold(4).every(20).minutes()
+</code></pre>
+
+<p>Which means that the threshold represents the allowance of a score of 4 to
+accumulate over the period of 20 minutes. If more score is accrued during
+that window, then the threshold is said to be crossed.</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.threshold = </span><span class="nf">(count) -&gt;</span> <span class="k">new</span> <span class="nx">ThresholdBase</span> <span class="nx">count</span>
         </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Add a redback structure to handle rate limiting.</p></div></div><div class="code"><div class="wrapper"><span class="nx">redback</span><span class="p">.</span><span class="nx">addStructure</span><span class="p">(</span>
   <span class="s1">&#39;BetterRateLimit&#39;</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Called by redback at initialization time: default to 10 minute window.

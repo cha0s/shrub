@@ -23,10 +23,13 @@ description and a list of implementing packages for each hook.</p>
 <p><h5>Invoked when the server is just starting. Implementations should return a promise. When all returned promises are fulfilled, initialization continues. </h5></p>
 
 <ul><li><p><a href="./server/packages/angular/index.html#implementshookinitialize">angular (server)</a></p></li>
-<li><p><a href="./server/packages/express/index.html#implementshookinitialize">express (server)</a></p></li></ul></li>
+<li><p><a href="./server/packages/express/index.html#implementshookinitialize">express (server)</a></p></li>
+<li><p><a href="./server/packages/rpc/index.html#implementshookinitialize">rpc (server)</a></p></li></ul></li>
 <li><h2 id="initialized"><code>initialized</code></h2>
 
-<p><h5>Invoked after the server is initialized. </h5></p></li>
+<p><h5>Invoked after the server is initialized. </h5></p>
+
+<ul><li><a href="./server/packages/repl/index.html#implementshookinitialized">repl (server)</a></li></ul></li>
 </ul>
 
 <p><a href="./server/AbstractHttp.html">server/AbstractHttp.coffee</a></p>
@@ -34,10 +37,14 @@ description and a list of implementing packages for each hook.</p>
 <ul>
 <li><h2 id="httpinitializer"><code>httpInitializer</code></h2>
 
-<p><h5>Invoked before the server is bound on the listening port. </h5></p></li>
+<p><h5>Invoked before the server is bound on the listening port. </h5></p>
+
+<ul><li><a href="./server/packages/schema/index.html#implementshookhttpinitializer">schema (server)</a></li></ul></li>
 <li><h2 id="httplistening"><code>httpListening</code></h2>
 
-<p><h5>Invoked once the server is listening, but before initialization finishes. </h5></p></li>
+<p><h5>Invoked once the server is listening, but before initialization finishes. </h5></p>
+
+<ul><li><a href="./server/packages/nodemailer/index.html#implementshookhttplistening">nodemailer (server)</a></li></ul></li>
 <li><h2 id="httpmiddleware"><code>httpMiddleware</code></h2>
 
 <p><h5>Invoked every time an HTTP connection is established. </h5></p>
@@ -50,7 +57,8 @@ description and a list of implementing packages for each hook.</p>
 <li><p><a href="./server/packages/express/index.html#implementshookhttpmiddleware">express (server)</a></p></li>
 <li><p><a href="./server/packages/express/index.html#implementshookhttpmiddleware">express (server)</a></p></li>
 <li><p><a href="./server/packages/express/index.html#implementshookhttpmiddleware">express (server)</a></p></li>
-<li><p><a href="./server/packages/express/index.html#implementshookhttpmiddleware">express (server)</a></p></li></ul></li>
+<li><p><a href="./server/packages/express/index.html#implementshookhttpmiddleware">express (server)</a></p></li>
+<li><p><a href="./server/packages/form/index.html#implementshookhttpmiddleware">form (server)</a></p></li></ul></li>
 </ul>
 
 <p><a href="./server/AbstractSocketFactory.html">server/AbstractSocketFactory.coffee</a></p>
@@ -60,10 +68,14 @@ description and a list of implementing packages for each hook.</p>
 
 <p><h5>Invoked when a socket connection begins. Packages may throw an instance of <code>AbstractSocketFactory.AuthorizationFailure</code> to reject the socket connection as unauthorized. </h5></p>
 
-<ul><li><a href="./server/packages/core/index.html#implementshooksocketauthorizationmiddleware">core (server)</a></li></ul></li>
+<ul><li><p><a href="./server/packages/core/index.html#implementshooksocketauthorizationmiddleware">core (server)</a></p></li>
+<li><p><a href="./server/packages/session/index.html#implementshooksocketauthorizationmiddleware">session (server)</a></p></li></ul></li>
 <li><h2 id="socketrequestmiddleware"><code>socketRequestMiddleware</code></h2>
 
-<p><h5>Invoked for every socket connection. </h5></p></li>
+<p><h5>Invoked for every socket connection. </h5></p>
+
+<ul><li><p><a href="./server/packages/rpc/index.html#implementshooksocketrequestmiddleware">rpc (server)</a></p></li>
+<li><p><a href="./server/packages/session/index.html#implementshooksocketrequestmiddleware">session (server)</a></p></li></ul></li>
 </ul>
 
 <p><a href="./server/audit.html">server/audit.coffee</a></p>
@@ -73,7 +85,8 @@ description and a list of implementing packages for each hook.</p>
 
 <p><h5>Allows a package to specify unique keys for this request, e.g. IP address, session ID, etc. </h5></p>
 
-<ul><li><a href="./server/packages/core/index.html#implementshookauditkeys">core (server)</a></li></ul></li>
+<ul><li><p><a href="./server/packages/core/index.html#implementshookauditkeys">core (server)</a></p></li>
+<li><p><a href="./server/packages/session/index.html#implementshookauditkeys">session (server)</a></p></li></ul></li>
 </ul>
 
 <p><a href="./server/config.html">server/config.coffee</a></p>
@@ -85,7 +98,9 @@ description and a list of implementing packages for each hook.</p>
 
 <ul><li><p><a href="./server/packages/angular/index.html#implementshooksettings">angular (server)</a></p></li>
 <li><p><a href="./server/packages/core/index.html#implementshooksettings">core (server)</a></p></li>
-<li><p><a href="./server/packages/express/index.html#implementshooksettings">express (server)</a></p></li></ul></li>
+<li><p><a href="./server/packages/express/index.html#implementshooksettings">express (server)</a></p></li>
+<li><p><a href="./server/packages/nodemailer/index.html#implementshooksettings">nodemailer (server)</a></p></li>
+<li><p><a href="./server/packages/repl/index.html#implementshooksettings">repl (server)</a></p></li></ul></li>
 </ul>
 
 <p><a href="./server/packages/config/index.html">server/packages/config/index.coffee</a></p>
@@ -95,5 +110,41 @@ description and a list of implementing packages for each hook.</p>
 
 <p><h5>Allows packages to specify configuration that will be sent to the client. </h5></p>
 
-<ul><li><a href="./server/packages/config/index.html#implementshookconfig">config (server)</a></li></ul></li>
+<ul><li><p><a href="./server/packages/config/index.html#implementshookconfig">config (server)</a></p></li>
+<li><p><a href="./server/packages/schema/index.html#implementshookconfig">schema (server)</a></p></li></ul></li>
+</ul>
+
+<p><a href="./server/packages/nodemailer/index.html">server/packages/nodemailer/index.coffee</a></p>
+
+<ul>
+<li><h2 id="mail"><code>mail</code></h2>
+
+<p><h5>Allow other packages to make changes to outgoing mail. </h5></p></li>
+</ul>
+
+<p><a href="./server/packages/repl/index.html">server/packages/repl/index.coffee</a></p>
+
+<ul>
+<li><h2 id="replcontext"><code>replContext</code></h2>
+
+<p><h5>Allow packages to add values to the REPL's context. </h5></p>
+
+<ul><li><p><a href="./server/packages/config/index.html#implementshookreplcontext">config (server)</a></p></li>
+<li><p><a href="./server/packages/core/index.html#implementshookreplcontext">core (server)</a></p></li>
+<li><p><a href="./server/packages/schema/index.html#implementshookreplcontext">schema (server)</a></p></li></ul></li>
+</ul>
+
+<p><a href="./server/packages/rpc/index.html">server/packages/rpc/index.coffee</a></p>
+
+<ul>
+<li><h2 id="endpoint"><code>endpoint</code></h2>
+
+<p><h5>Gather all endpoints. </h5></p>
+
+<ul><li><a href="./server/packages/angular/index.html#implementshookendpoint">angular (server)</a></li></ul></li>
+<li><h2 id="endpointalter"><code>endpointAlter</code></h2>
+
+<p><h5>Allows packages to modify any endpoints defined. </h5></p>
+
+<ul><li><a href="./server/packages/limiter/index.html#implementshookendpointalter">limiter (server)</a></li></ul></li>
 </ul></div></div></div></div></body></html>

@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><title>server/packages/nodemailer/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="server/packages/nodemailer/index"><meta name="groc-project-path" content="server/packages/nodemailer/index.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/server/packages/nodemailer/index.coffee">server/packages/nodemailer/index.coffee</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nv">fs = </span><span class="nx">require</span> <span class="s1">&#39;fs&#39;</span>
+<!DOCTYPE html><html lang="en"><head><title>server/packages/nodemailer/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="server/packages/nodemailer/index"><meta name="groc-project-path" content="server/packages/nodemailer/index.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/server/packages/nodemailer/index.coffee">server/packages/nodemailer/index.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="nodemailer">nodemailer</h1>
+
+<p>Renders and sends email.</p></div></div><div class="code"><div class="wrapper"><span class="nv">fs = </span><span class="nx">require</span> <span class="s1">&#39;fs&#39;</span>
 <span class="nv">nconf = </span><span class="nx">require</span> <span class="s1">&#39;nconf&#39;</span>
 <span class="nv">nodemailer = </span><span class="nx">require</span> <span class="s1">&#39;nodemailer&#39;</span>
 <span class="nv">Promise = </span><span class="nx">require</span> <span class="s1">&#39;bluebird&#39;</span>
@@ -8,25 +10,17 @@
 
 <span class="p">{</span><span class="nx">handlebars</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;hbs&#39;</span>
 
-<span class="nv">readFile = </span><span class="nx">Promise</span><span class="p">.</span><span class="nx">promisify</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">,</span> <span class="nx">fs</span>
-
-<span class="nv">sandbox = </span><span class="kc">null</span>
-<span class="nv">templateCache = </span><span class="p">{}</span>
-<span class="nv">transport = </span><span class="kc">null</span>
-
-<span class="nx">exports</span><span class="p">.</span><span class="nv">$clearCaches = </span><span class="o">-&gt;</span>
+<span class="nv">readFile = </span><span class="nx">Promise</span><span class="p">.</span><span class="nx">promisify</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">,</span> <span class="nx">fs</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Sandbox used to render email as HTML.</p></div></div><div class="code"><div class="wrapper"><span class="nv">sandbox = </span><span class="kc">null</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Cache template rendering since it's a bit heavy.</p></div></div><div class="code"><div class="wrapper"><span class="nv">templateCache = </span><span class="p">{}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>nodemailer transport. Defaults to sendmail.</p></div></div><div class="code"><div class="wrapper"><span class="nv">transport = </span><span class="kc">null</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookclearcaches">Implements hook <code>clearCaches</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$clearCaches = </span><span class="o">-&gt;</span>
   
   <span class="nv">templateCache = </span><span class="p">{}</span>
-  
-<span class="nx">exports</span><span class="p">.</span><span class="nv">$httpListening = </span><span class="nf">(http) -&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookhttplistening">Implements hook <code>httpListening</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$httpListening = </span><span class="nf">(http) -&gt;</span>
   
   <span class="nv">settings = </span><span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:nodemailer&#39;</span>
-    
-  <span class="nv">transport = </span><span class="nx">nodemailer</span><span class="p">.</span><span class="nx">createTransport</span><span class="p">(</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Instantiate the email transport.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">transport = </span><span class="nx">nodemailer</span><span class="p">.</span><span class="nx">createTransport</span><span class="p">(</span>
     <span class="nx">settings</span><span class="p">.</span><span class="nx">transport</span><span class="p">.</span><span class="nx">type</span>
     <span class="nx">settings</span><span class="p">.</span><span class="nx">transport</span><span class="p">.</span><span class="nx">options</span>
   <span class="p">)</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>All we'll need is jQuery.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">locals =</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Inject scripts we'll need into the sandbox, e.g. jQuery.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">locals =</span>
     <span class="nv">assets:</span>
       <span class="nv">js: </span><span class="p">[</span>
         <span class="s2">&quot;/lib/jquery/jquery-1.11.0.js&quot;</span>
@@ -36,24 +30,29 @@
     <span class="nx">sandboxes</span><span class="p">.</span><span class="nx">create</span> <span class="nx">html</span>
     
   <span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="nf">(_sandbox_) -&gt;</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Augment it with functionality we'll find useful and convenient.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">augmentSandbox</span> <span class="nv">sandbox = </span><span class="nx">_sandbox_</span>
     
-    <span class="nx">augmentSandbox</span> <span class="nv">sandbox = </span><span class="nx">_sandbox_</span>
-    
-  <span class="p">)</span>
-
-<span class="nx">exports</span><span class="p">.</span><span class="nv">$settings = </span><span class="o">-&gt;</span>
-  
-  <span class="nv">transport:</span>
+  <span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshooksettings">Implements hook <code>settings</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$settings = </span><span class="o">-&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Passed through directly to nodemailer.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">transport:</span>
     <span class="nv">type: </span><span class="s1">&#39;sendmail&#39;</span>
     <span class="nv">options: </span><span class="p">{}</span>
-  
-<span class="nv">exports.sendMail = </span><span class="nf">(type, mail) -&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="sendmail">sendMail</h2>
+
+<p><em>Send an email.</em></p>
+
+<ul>
+<li><p>(string) <code>type</code> - The type of email to send. This is user-defined and
+useful for anyone interested in implementing hook <code>mail</code>.</p></li>
+<li><p>(object) <code>mail</code> - See <a href="https://github.com/andris9/Nodemailer/blob/master/examples/example_sendmail.js#L9">the nodemailer example</a>
+for an example of the structure of this object. </p></li>
+</ul></div></div><div class="code"><div class="wrapper"><span class="nv">exports.sendMail = </span><span class="nf">(type, mail) -&gt;</span>
   
   <span class="nv">path = </span><span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;path&#39;</span>
   <span class="nv">siteEmail = </span><span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;siteEmail&#39;</span>
   
   <span class="nv">sandboxId = </span><span class="kc">null</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Allow other packages to make changes to the mail.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>mail</code>.
+Allow other packages to make changes to outgoing mail.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span>
     <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invokeFlat</span> <span class="s1">&#39;mail&#39;</span><span class="p">,</span> <span class="nx">type</span><span class="p">,</span> <span class="nx">mail</span>
   
   <span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="o">-&gt;</span>
@@ -177,7 +176,7 @@ like a nav on top.</p></div></div><div class="code"><div class="wrapper">      <
         </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Clone the body and insert the HTML into the main application
 area.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">$body = </span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">).</span><span class="nx">clone</span><span class="p">()</span>
         <span class="nx">$</span><span class="p">(</span><span class="nx">html</span><span class="p">).</span><span class="nx">appendTo</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.main&#39;</span><span class="p">,</span> <span class="nx">$body</span><span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Inject a minimally-built nav.
-TODO this kind of thing should be configurable and handled
+<code>TODO</code>: this kind of thing should be configurable and handled
 by the theme/skin when we get to that point.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;[data-ui-nav]&#39;</span><span class="p">,</span> <span class="nx">$body</span><span class="p">).</span><span class="nx">html</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">&lt;nav role=&quot;</span><span class="nx">navigation</span><span class="s2">&quot; class=&quot;</span><span class="nx">navbar</span> <span class="nx">navbar</span><span class="o">-</span><span class="nx">default</span><span class="s2">&quot;&gt;</span>
 <span class="s2">  &lt;div class=&quot;</span><span class="nx">container</span><span class="o">-</span><span class="nx">fluid</span><span class="s2">&quot;&gt;</span>

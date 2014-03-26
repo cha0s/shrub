@@ -94,6 +94,9 @@ context.</p>
 <li><h4 id="return"><code>return</code></h4>
 
 <p>need to extract params to build redirectTo, small enough mismatch to ignore for now. </p></li>
+<li><h4 id="sandboxinjectinjectable"><code>sandbox.inject = (injectable) -&gt;</code></h4>
+
+<p>Return a promise, resolved with the dependency array. </p></li>
 </ul>
 
 <p><a href="./server/packages/config/index.html">server/packages/config/index.coffee</a></p>
@@ -128,6 +131,52 @@ context.</p>
 <li><h4 id="sessionstore"><code>sessionStore: -&gt;</code></h4>
 
 <p>Cache this! </p></li>
+</ul>
+
+<p><a href="./server/packages/form/index.html">server/packages/form/index.coffee</a></p>
+
+<ul>
+<li><h4 id="returnnextunlessbodyformkey"><code>return next() unless body.formKey?</code></h4>
+
+<p>CRSF check needed here. </p></li>
+</ul>
+
+<p><a href="./server/packages/limiter/index.html">server/packages/limiter/index.coffee</a></p>
+
+<ul>
+<li><h4 id="endpointlimiterexcludekeys"><code>endpoint.limiter.excludeKeys ?= []</code></h4>
+
+<p>Rename to <code>ignoreKeys</code>. </p></li>
+<li><h4 id="promiseifreqreportvilliany"><code>promise = if req.reportVilliany?</code></h4>
+
+<p>Should this be added by <a href="/server/packages/villiany/index.html">villiany</a>? </p></li>
+</ul>
+
+<p><a href="./server/packages/nodemailer/index.html">server/packages/nodemailer/index.coffee</a></p>
+
+<ul>
+<li><h4 id="ddatauinavdbodyhtml"><code>$('[data-ui-nav]', $body).html """</code></h4>
+
+<p>this kind of thing should be configurable and handled by the theme/skin when we get to that point. </p></li>
+</ul>
+
+<p><a href="./server/packages/rpc/index.html">server/packages/rpc/index.coffee</a></p>
+
+<ul>
+<li><h4 id="replyerror"><code>reply = (error) -&gt;</code></h4>
+
+<p>Should be middleware for after a request, <code>session</code> should register into that. </p></li>
+</ul>
+
+<p><a href="./server/packages/schema/index.html">server/packages/schema/index.coffee</a></p>
+
+<ul>
+<li><h4 id="resset"><code>res.set</code></h4>
+
+<p>Settings-defined headers are what actually make sense here. </p></li>
+<li><h4 id="keyifykeyvalue"><code>keyify = (key, value) -&gt;</code></h4>
+
+<p>Generalize and serve "broken" JSON for Angular. See: <a href="http://docs.angularjs.org/api/ng/service/$http#json-vulnerability-protection">Angular JSON vulnerability protection</a>. </p></li>
 </ul>
 
 <p><a href="./server/sandboxes.html">server/sandboxes.coffee</a></p>
