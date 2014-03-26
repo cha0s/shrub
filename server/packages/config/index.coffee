@@ -20,15 +20,15 @@ exports.$config = (req) ->
 	hostname: "//#{req.headers.host}"
 	
 	# Is the server running in test mode?
-	testMode: if (req.nconf.get 'E2E')? then 'e2e' else false
+	testMode: if (nconf.get 'E2E')? then 'e2e' else false
 	
 	# Debug mode if we're not running in production.
 	# 
 	# } `TODO`: Remove this, and implement a client logging system.
-	debugging: 'production' isnt req.nconf.get 'NODE_ENV'
+	debugging: 'production' isnt nconf.get 'NODE_ENV'
 	
 	# The list of enabled packages.
-	packageList: req.nconf.get 'packageList'
+	packageList: nconf.get 'packageList'
 
 # ## Implements hook `httpMiddleware`
 exports.$httpMiddleware = (http) ->
@@ -36,14 +36,6 @@ exports.$httpMiddleware = (http) ->
 	label: 'Serve package configuration'
 	middleware: [
 
-		# Store nconf in the request.
-		(req, res, next) ->
-			
-			# } `TODO`: Should probably just remove this and `require 'nconf'`.
-			req.nconf = nconf
-			
-			next()
-		
 		# Serve the configuration module.
 		(req, res, next) ->
 			
