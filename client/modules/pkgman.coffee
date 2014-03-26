@@ -40,10 +40,8 @@ exports.rebuildPackageCache = ->
 		
 	return
 
-# ## registerPackages
-# 
-# `TODO`: Rename to `registerPackageList`.
-exports.registerPackages = (packages) ->
+# ## registerPackageList
+exports.registerPackageList = (packages) ->
 	_packages.push.apply _packages, packages
 	exports.rebuildPackageCache()
 

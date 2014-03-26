@@ -22,7 +22,7 @@ exports.load = ->
 	nconf.defaults path: "#{__dirname}/.."
 		
 	# } Register packages.
-	pkgman.registerPackages nconf.get 'packageList'
+	pkgman.registerPackageList nconf.get 'packageList'
 
 	nconf.defaults
 		

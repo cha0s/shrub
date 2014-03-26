@@ -71,7 +71,7 @@ angular.module('shrub.pkgman', [
 			pkgman = require 'pkgman'
 			
 			# Load the package list from configuration.
-			pkgman.registerPackages configProvider.get 'packageList'
+			pkgman.registerPackageList configProvider.get 'packageList'
 			
 			service = {}
 			
