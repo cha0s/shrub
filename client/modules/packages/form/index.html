@@ -7,7 +7,6 @@ up later.</p></div></div></div><div class="segment"><div class="comments"><div c
     
     <span class="nv">link: </span><span class="nf">(scope, element, attrs) -&gt;</span>
       <span class="k">return</span> <span class="nx">unless</span> <span class="p">(</span><span class="nv">formSpec = </span><span class="nx">scope</span><span class="p">[</span><span class="nv">formKey = </span><span class="nx">attrs</span><span class="p">[</span><span class="s1">&#39;form&#39;</span><span class="p">]])</span><span class="o">?</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Hacking out the scope, gotta be a nicer way to do this.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">$form = </span><span class="nx">angular</span><span class="p">.</span><span class="nx">element</span> <span class="s1">&#39;&lt;form&gt;&#39;</span>
       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Create the form element.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">$form = </span><span class="nx">angular</span><span class="p">.</span><span class="nx">element</span><span class="p">(</span>
         <span class="s1">&#39;&lt;form&gt;&#39;</span>
       <span class="p">).</span><span class="nx">attr</span><span class="p">(</span>

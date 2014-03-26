@@ -47,7 +47,18 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "client/app",
             "title": "app"
           },
-          "depth": 2
+          "depth": 2,
+          "outline": [
+            {
+              "type": "heading",
+              "data": {
+                "level": 1,
+                "title": "Application entry point.",
+                "slug": "application-entry-point"
+              },
+              "depth": 1
+            }
+          ]
         }, {
           "type": "folder",
           "data": {
@@ -151,7 +162,18 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/core/index",
                         "title": "index"
                       },
-                      "depth": 5
+                      "depth": 5,
+                      "outline": [
+                        {
+                          "type": "heading",
+                          "data": {
+                            "level": 1,
+                            "title": "Core",
+                            "slug": "core"
+                          },
+                          "depth": 1
+                        }
+                      ]
                     }
                   ]
                 }, {
@@ -181,18 +203,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/example/about",
                         "title": "about"
                       },
-                      "depth": 5,
-                      "outline": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 1,
-                            "title": "About page",
-                            "slug": "about-page"
-                          },
-                          "depth": 1
-                        }
-                      ]
+                      "depth": 5
                     }, {
                       "type": "file",
                       "data": {
@@ -262,7 +273,29 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/form/index",
                         "title": "index"
                       },
-                      "depth": 5
+                      "depth": 5,
+                      "outline": [
+                        {
+                          "type": "heading",
+                          "data": {
+                            "level": 1,
+                            "title": "Form",
+                            "slug": "form"
+                          },
+                          "depth": 1,
+                          "children": [
+                            {
+                              "type": "heading",
+                              "data": {
+                                "level": 2,
+                                "title": "form.cache",
+                                "slug": "formcache"
+                              },
+                              "depth": 2
+                            }
+                          ]
+                        }
+                      ]
                     }
                   ]
                 }, {
@@ -708,7 +741,8 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "client/packages",
             "title": "packages"
           },
-          "depth": 2
+          "depth": 2,
+          "outline": []
         }, {
           "type": "file",
           "data": {

@@ -2,22 +2,29 @@
 
 <p>Core functionality.</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookappconfig">Implements hook <code>appConfig</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$appConfig = </span><span class="o">-&gt;</span> <span class="p">[</span>
   <span class="s1">&#39;$injector&#39;</span><span class="p">,</span> <span class="s1">&#39;$routeProvider&#39;</span><span class="p">,</span> <span class="s1">&#39;$locationProvider&#39;</span><span class="p">,</span> <span class="s1">&#39;pkgmanProvider&#39;</span>
-  <span class="nf">({invoke}, $routeProvider, {html5Mode}, {invokeWithMocks}) -&gt;</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>route</code>.
-Allow packages to define routes in the Angular application.</p>
+  <span class="nf">({invoke}, $routeProvider, {html5Mode}, pkgmanProvider) -&gt;</span>
+    
+    <span class="nv">routes = </span><span class="p">{}</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>A route is defined like:</p>
 
-<p><code>TODO</code>: Should just be .invoke, routeMock done separately.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">routes = </span><span class="nx">invokeWithMocks</span> <span class="s1">&#39;route&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Implementations should return an object of the form:</p></div></div><div class="code"><div class="wrapper">    <span class="p">{</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>An <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>
-which will be injected.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">controller: </span><span class="s1">&#39;...&#39;</span>
-       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>A template string.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">template: </span><span class="s1">&#39;...&#39;</span>
-       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>A string which will be set as the page title.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">title: </span><span class="s1">&#39;...&#39;</span>
-      
-    <span class="p">}</span>
+<ul>
+<li><p><code>controller</code>: An <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>
+which will be injected.</p></li>
+<li><p><code>template</code>: A template string.</p></li>
+<li><p><code>title</code>: A string which will be set as the page title.</p></li>
+</ul></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>route</code>.
+Allow packages to define routes in the Angular application.</p></div></div><div class="code"><div class="wrapper">    <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">route</span> <span class="k">of</span> <span class="nx">pkgmanProvider</span><span class="p">.</span><span class="nx">invoke</span> <span class="s1">&#39;route&#39;</span>
+      <span class="nx">routes</span><span class="p">[</span><span class="nx">route</span><span class="p">.</span><span class="nx">path</span> <span class="o">?</span> <span class="nx">path</span><span class="p">]</span> <span class="o">=</span> <span class="nx">route</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>routeMock</code>.
+Allow packages to define routes in the Angular application which are
+only defined during test mode.</p></div></div><div class="code"><div class="wrapper">    <span class="k">if</span> <span class="nx">configProvider</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;testMode&#39;</span>
+      <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">route</span> <span class="k">of</span> <span class="nx">pkgmanProvider</span><span class="p">.</span><span class="nx">invoke</span> <span class="s1">&#39;routeMock&#39;</span>
+        <span class="nx">routes</span><span class="p">[</span><span class="nx">route</span><span class="p">.</span><span class="nx">path</span> <span class="o">?</span> <span class="nx">path</span><span class="p">]</span> <span class="o">=</span> <span class="nx">route</span>
       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>routeAlter</code>.
 Allow packages to alter defined routes.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">invoke</span><span class="p">(</span>
       <span class="nx">injectable</span><span class="p">,</span> <span class="kc">null</span>
       <span class="nv">routes: </span><span class="nx">routes</span>
-    <span class="p">)</span> <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">injectable</span> <span class="k">of</span> <span class="nx">invokeWithMocks</span> <span class="s1">&#39;routeAlter&#39;</span>
+    <span class="p">)</span> <span class="k">for</span> <span class="nx">injectable</span> <span class="k">in</span> <span class="nx">pkgmanProvider</span><span class="p">.</span><span class="nx">invokeFlat</span> <span class="s1">&#39;routeAlter&#39;</span>
     
     <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">route</span> <span class="k">of</span> <span class="nx">routes</span>
       <span class="nx">do</span> <span class="nf">(path, route) -&gt;</span>

@@ -5,7 +5,7 @@
 
   <span class="p">.</span><span class="nx">config</span><span class="p">([</span>
     <span class="s1">&#39;$compileProvider&#39;</span><span class="p">,</span> <span class="s1">&#39;$controllerProvider&#39;</span><span class="p">,</span> <span class="s1">&#39;$filterProvider&#39;</span><span class="p">,</span> <span class="s1">&#39;$provide&#39;</span><span class="p">,</span> <span class="s1">&#39;configProvider&#39;</span><span class="p">,</span> <span class="s1">&#39;pkgmanProvider&#39;</span><span class="p">,</span> <span class="s1">&#39;requireProvider&#39;</span>
-    <span class="nf">($compileProvider, $controllerProvider, $filterProvider, $provide, configProvider, {invoke, invokeWithMocks}, {require}) -&gt;</span>
+    <span class="nf">($compileProvider, $controllerProvider, $filterProvider, $provide, configProvider, {invoke}, {require}) -&gt;</span>
       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Use normalized names for directives and filters:
 'core/foo/bar' -> 'coreFooBar'</p></div></div><div class="code"><div class="wrapper">      <span class="nv">i8n = </span><span class="nx">require</span> <span class="s1">&#39;inflection&#39;</span>
       <span class="nv">normalize = </span><span class="nf">(path) -&gt;</span>
@@ -17,13 +17,13 @@
           
         <span class="nx">i8n</span><span class="p">.</span><span class="nx">camelize</span> <span class="p">(</span><span class="nx">i8n</span><span class="p">.</span><span class="nx">underscore</span> <span class="nx">parts</span><span class="p">.</span><span class="nx">join</span> <span class="s1">&#39;&#39;</span><span class="p">),</span> <span class="kc">true</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>controller</code>.
 Allows packages to define Angular controllers. Implementations
-should return an <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>.</p></div></div><div class="code"><div class="wrapper">      <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span> <span class="k">of</span> <span class="nx">invokeWithMocks</span> <span class="s1">&#39;controller&#39;</span>
+should return an <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>.</p></div></div><div class="code"><div class="wrapper">      <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span> <span class="k">of</span> <span class="nx">invoke</span> <span class="s1">&#39;controller&#39;</span>
         <span class="nx">$controllerProvider</span><span class="p">.</span><span class="nx">register</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>directive</code>.
 Allows packages to define Angular directives. Implementations
-should return an <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>.</p></div></div><div class="code"><div class="wrapper">      <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span> <span class="k">of</span> <span class="nx">invokeWithMocks</span> <span class="s1">&#39;directive&#39;</span>
+should return an <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>.</p></div></div><div class="code"><div class="wrapper">      <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span> <span class="k">of</span> <span class="nx">invoke</span> <span class="s1">&#39;directive&#39;</span>
         <span class="nx">$compileProvider</span><span class="p">.</span><span class="nx">directive</span> <span class="p">(</span><span class="nx">normalize</span> <span class="nx">path</span><span class="p">),</span> <span class="nx">injected</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>filter</code>.
 Allows packages to define Angular filters. Implementations
-should return a function.</p></div></div><div class="code"><div class="wrapper">      <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span> <span class="k">of</span> <span class="nx">invokeWithMocks</span> <span class="s1">&#39;filter&#39;</span>
+should return a function.</p></div></div><div class="code"><div class="wrapper">      <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span> <span class="k">of</span> <span class="nx">invoke</span> <span class="s1">&#39;filter&#39;</span>
         <span class="nx">$filterProvider</span><span class="p">.</span><span class="nx">register</span> <span class="p">(</span><span class="nx">normalize</span> <span class="nx">path</span><span class="p">),</span> <span class="nx">injected</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>service</code>.
 Allows packages to define Angular services. Implementations
 should return an <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>.</p></div></div><div class="code"><div class="wrapper">      <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span> <span class="k">of</span> <span class="nx">invoke</span> <span class="s1">&#39;service&#39;</span>
@@ -52,20 +52,7 @@ Implementations should return an
       
       <span class="nv">service.invoke = </span><span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span>
       <span class="nv">service.invokeFlat = </span><span class="nx">pkgman</span><span class="p">.</span><span class="nx">invokeFlat</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="pkgmaninvokewithmocks">pkgman.invokeWithMocks</h2>
-
-<p><em>Invoke the hook, with mocks overriding the original definitions
-if running in test mode.</em></p></div></div><div class="code"><div class="wrapper">      <span class="nv">service.invokeWithMocks = </span><span class="nf">(hook, args...) -&gt;</span>
-        
-        <span class="nx">args</span><span class="p">.</span><span class="nx">unshift</span> <span class="nx">hook</span>
-        <span class="nv">results = </span><span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="nx">args</span><span class="p">...</span>
-        
-        <span class="k">if</span> <span class="nx">configProvider</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;testMode&#39;</span>
-          <span class="nx">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;#{hook}Mock&quot;</span>
-          <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span> <span class="nx">results</span><span class="p">,</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="nx">args</span><span class="p">...</span>
-          
-        <span class="nx">results</span>
-        
+      
       <span class="nx">service</span><span class="p">.</span><span class="nv">$get = </span><span class="o">-&gt;</span> <span class="nx">service</span>
       
       <span class="nx">service</span>
