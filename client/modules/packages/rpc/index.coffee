@@ -18,8 +18,8 @@ exports.$appRun = -> [
 
 # ## Implements hook `service`
 exports.$service = -> [
-	'$injector', '$q', 'require', 'socket'
-	({invoke}, {defer}, require, {emit}) ->
+	'$injector', '$q', 'require', 'pkgman', 'socket'
+	({invoke}, {defer}, require, pkgman, {emit}) ->
 		
 		service = {}
 		
@@ -50,22 +50,22 @@ exports.$service = -> [
 			deferred = defer()
 			
 			emit "rpc://#{route}", data, ({error, result}) ->
-				
 				if error?
-					
-					error = errors.unserialize error
-
-					# `TODO`: This should be middleware'd.					
-					notifications.add(
-						class: 'alert-danger'
-						text: errors.message error
-					) if notifications?
-					
-					deferred.reject error
-					
+					deferred.reject errors.unserialize error
 				else
-					
 					deferred.resolve result
+			
+			invoke(
+				injectable, null
+				
+				route: route
+				data: data
+				result: deferred.promise
+			
+			) for injectable in pkgman.invokeFlat(
+				'rpcCall', route, data, deferred.promise
+			
+			)
 				
 			deferred.promise
 		
