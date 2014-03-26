@@ -43,18 +43,25 @@ exports.$appConfig = -> [
 				
 				# Wrap the controller so we can provide some automatic
 				# behavior.
-				# `TODO`: Define a routeController middleware stack for this.
 				routeController = route.controller
 				route.controller = [
-					'$injector', '$scope', 'ui/title'
-					({invoke}, $scope, title) ->
+					'$injector', '$scope'
+					({invoke}, $scope) ->
 						
-						title.setPage route.title ? ''
+						# Invoke hook `routeControllerStart`.
+						# Allow packages to act before a new route controller
+						# is executed.
+						injectables = pkgmanProvider.invokeFlat(
+							'routeControllerStart'
+						)
+						
+						injectables.push routeController
 						
 						invoke(
-							routeController, null
+							injectable, null
 							$scope: $scope
-						)
+							route: route
+						) for injectable in injectables
 				]
 				
 				# `TODO`: Some method of allowing `templateUrl`.

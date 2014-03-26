@@ -16,6 +16,12 @@ exports.$directive = -> [
 		
 ]
 
+# ## Implements hook `routeControllerStart`
+exports.$routeControllerStart = -> [
+	'route', 'ui/title'
+	(route, title) -> title.setPage route.title ? ''	
+]
+
 # ## Implements hook `service`
 exports.$service = -> [
 	'$interval'
