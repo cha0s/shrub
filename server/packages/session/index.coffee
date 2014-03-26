@@ -1,16 +1,21 @@
 
+# # Session
+# 
+# Various means for dealing with sessions.
+
+# ## Implements hook `auditKeys`
 exports.$auditKeys = (req) ->
 	
+	# Session ID.
 	session: req.session.id if req.session?
 
+# ## Implements hook `socketAuthorizationMiddleware`
 exports.$socketAuthorizationMiddleware = ->
 
 	label: 'Load session'
 	middleware: [
 	
 		(req, res, next) ->
-			
-			return next() unless req and req.headers and req.headers.cookie
 			
 			req.http.loadSessionFromRequest(
 				req
@@ -23,7 +28,7 @@ exports.$socketAuthorizationMiddleware = ->
 			
 	]
 
-
+# ## Implements hook `socketRequestMiddleware`
 exports.$socketRequestMiddleware = ->
 
 	label: 'Join channel for socket'

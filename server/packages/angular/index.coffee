@@ -279,6 +279,8 @@ exports.augmentSandbox = (sandbox) ->
 	# 
 	# *Inject an [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation) with dependencies.*
 	# 
+	# `TODO`: Return a promise, resolved with the dependency array.
+	# 
 	# * (mixed) `injectable` - An annontated function to inject with
 	#   dependencies. 
 	sandbox.inject = (injectable) ->

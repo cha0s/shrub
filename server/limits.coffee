@@ -1,5 +1,4 @@
 
-
 # # Limits
 
 Promise = require 'bluebird'
@@ -36,7 +35,7 @@ exports.Limiter = class Limiter
 		# } Make sure it's a threshold.
 		throw new TypeError(
 			"Limiter(#{key}) must be constructed with a valid threshold!"
-		) unless @threshold instanceof Threshold
+		) unless @threshold instanceof ThresholdFinal
 		
 		# } `TODO`: This goes away.
 		options.bucketTime ?= @threshold.calculateSeconds()
@@ -110,13 +109,7 @@ exports.Limiter = class Limiter
 
 # ## ThresholdBase
 # 
-# Define a threshold. A threshold is defined like:
-# 
-# `threshold(4).every(20).minutes()`
-# 
-# Which means that the threshold represents the allowance of a score of 4 to
-# accumulate over the period of 20 minutes. If more score is accrued during
-# that window, then the threshold is said to be crossed.
+# The base class used to define a threshold.
 class ThresholdBase
 	
 	# ### *constructor*
@@ -133,12 +126,12 @@ class ThresholdBase
 	# 
 	# * (integer) `amount` - The quantity of time units this threshold
 	#   concerns. e.g, if the threshold is every 5 minutes, this will be `5`. 
-	every: (amount) -> new Threshold @_count, amount
+	every: (amount) -> new ThresholdFinal @_count, amount
 	
-# ## Threshold
+# ## ThresholdFinal
 # 
-# Create, finalize and inspect a threshold definition.
-class Threshold
+# A finalized threshold definition.
+class ThresholdFinal
 	
 	# ### *constructor*
 	# 
@@ -177,7 +170,17 @@ class Threshold
 				# } which cannot be chained, nor modified.
 				this
 
-# Expose a factory method for constructing Threshold instances.
+# ## threshold
+# 
+# Expose a factory method for constructing Threshold instances. A Threshold is
+# defined like:
+# 
+# 	{threshold} = require 'limits'
+# 	threshold(4).every(20).minutes()
+# 
+# Which means that the threshold represents the allowance of a score of 4 to
+# accumulate over the period of 20 minutes. If more score is accrued during
+# that window, then the threshold is said to be crossed.
 exports.threshold = (count) -> new ThresholdBase count
 				
 # Add a redback structure to handle rate limiting.

@@ -1,4 +1,8 @@
 
+# # nodemailer
+# 
+# Renders and sends email.
+
 fs = require 'fs'
 nconf = require 'nconf'
 nodemailer = require 'nodemailer'
@@ -11,24 +15,32 @@ sandboxes = require 'sandboxes'
 
 readFile = Promise.promisify fs.readFile, fs
 
+# Sandbox used to render email as HTML.
 sandbox = null
+
+# Cache template rendering since it's a bit heavy.
 templateCache = {}
+
+# nodemailer transport. Defaults to sendmail.
 transport = null
 
+# ## Implements hook `clearCaches`
 exports.$clearCaches = ->
 	
 	templateCache = {}
 	
+# ## Implements hook `httpListening`
 exports.$httpListening = (http) ->
 	
 	settings = nconf.get 'packageSettings:nodemailer'
-		
+	
+	# Instantiate the email transport.
 	transport = nodemailer.createTransport(
 		settings.transport.type
 		settings.transport.options
 	)
 	
-	# All we'll need is jQuery.
+	# Inject scripts we'll need into the sandbox, e.g. jQuery.
 	locals =
 		assets:
 			js: [
@@ -42,16 +54,28 @@ exports.$httpListening = (http) ->
 		
 	).then((_sandbox_) ->
 		
+		# Augment it with functionality we'll find useful and convenient.
 		augmentSandbox sandbox = _sandbox_
 		
 	)
 
+# ## Implements hook `settings`
 exports.$settings = ->
 	
+	# Passed through directly to nodemailer.
 	transport:
 		type: 'sendmail'
 		options: {}
 	
+# ## sendMail
+# 
+# *Send an email.*
+# 
+# * (string) `type` - The type of email to send. This is user-defined and
+#   useful for anyone interested in implementing hook `mail`.
+# 
+# * (object) `mail` - See [the nodemailer example](https://github.com/andris9/Nodemailer/blob/master/examples/example_sendmail.js#L9)
+#   for an example of the structure of this object. 
 exports.sendMail = (type, mail) ->
 	
 	path = nconf.get 'path'
@@ -59,7 +83,8 @@ exports.sendMail = (type, mail) ->
 	
 	sandboxId = null
 	
-	# Allow other packages to make changes to the mail.
+	# Invoke hook `mail`.
+	# Allow other packages to make changes to outgoing mail.
 	Promise.all(
 		pkgman.invokeFlat 'mail', type, mail
 	
@@ -230,7 +255,7 @@ augmentSandbox = (sandbox) ->
 				$(html).appendTo $('.main', $body)
 
 				# Inject a minimally-built nav.
-				# TODO this kind of thing should be configurable and handled
+				# `TODO`: this kind of thing should be configurable and handled
 				# by the theme/skin when we get to that point.
 				$('[data-ui-nav]', $body).html """
 <nav role="navigation" class="navbar navbar-default">

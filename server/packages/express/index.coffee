@@ -91,6 +91,10 @@ class Express extends (require 'AbstractHttp')
 	loadSessionFromRequest: (req) ->
 		
 		new Promise (resolve, reject) =>
+			
+			# } Make sure there's a possibility we will find a session.
+			unless req and req.headers and req.headers.cookie
+				return resolve()
 		
 			@cookieParser() req, null, (error) =>
 				return reject error if error?
