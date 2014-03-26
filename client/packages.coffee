@@ -7,7 +7,7 @@ angular.module('shrub.packages', [
 
 	.config([
 		'$compileProvider', '$controllerProvider', '$filterProvider', '$provide', 'configProvider', 'pkgmanProvider', 'requireProvider'
-		($compileProvider, $controllerProvider, $filterProvider, $provide, configProvider, {invoke, invokeWithMocks}, {require}) ->
+		($compileProvider, $controllerProvider, $filterProvider, $provide, configProvider, {invoke}, {require}) ->
 			
 			# Use normalized names for directives and filters:
 			# 'core/foo/bar' -> 'coreFooBar'
@@ -24,19 +24,19 @@ angular.module('shrub.packages', [
 			# Invoke hook `controller`.
 			# Allows packages to define Angular controllers. Implementations
 			# should return an [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
-			for path, injected of invokeWithMocks 'controller'
+			for path, injected of invoke 'controller'
 				$controllerProvider.register path, injected
 
 			# Invoke hook `directive`.
 			# Allows packages to define Angular directives. Implementations
 			# should return an [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
-			for path, injected of invokeWithMocks 'directive'
+			for path, injected of invoke 'directive'
 				$compileProvider.directive (normalize path), injected
 
 			# Invoke hook `filter`.
 			# Allows packages to define Angular filters. Implementations
 			# should return a function.
-			for path, injected of invokeWithMocks 'filter'
+			for path, injected of invoke 'filter'
 				$filterProvider.register (normalize path), injected
 
 			# Invoke hook `service`.
@@ -78,21 +78,6 @@ angular.module('shrub.pkgman', [
 			service.invoke = pkgman.invoke
 			service.invokeFlat = pkgman.invokeFlat
 			
-			# ## pkgman.invokeWithMocks
-			# 
-			# *Invoke the hook, with mocks overriding the original definitions
-			# if running in test mode.*
-			service.invokeWithMocks = (hook, args...) ->
-				
-				args.unshift hook
-				results = pkgman.invoke args...
-				
-				if configProvider.get 'testMode'
-					args[0] = "#{hook}Mock"
-					_.extend results, pkgman.invoke args...
-					
-				results
-				
 			service.$get = -> service
 			
 			service

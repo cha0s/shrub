@@ -6,35 +6,37 @@
 # ## Implements hook `appConfig`
 exports.$appConfig = -> [
 	'$injector', '$routeProvider', '$locationProvider', 'pkgmanProvider'
-	({invoke}, $routeProvider, {html5Mode}, {invokeWithMocks}) ->
-	
+	({invoke}, $routeProvider, {html5Mode}, pkgmanProvider) ->
+		
+		routes = {}
+		
+		# A route is defined like:
+		# 
+		# * `controller`: An [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation)
+		#   which will be injected.
+		# 
+		# * `template`: A template string.
+		# 
+		# * `title`: A string which will be set as the page title.
+
 		# Invoke hook `route`.
 		# Allow packages to define routes in the Angular application.
-		# 
-		# `TODO`: Should just be .invoke, routeMock done separately.
-		routes = invokeWithMocks 'route'
-
-		# Implementations should return an object of the form:
-		{
-		
-			# An [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation)
-			# which will be injected.
-			controller: '...'
-			 
-			# A template string.
-			template: '...'
-			 
-			# A string which will be set as the page title.
-			title: '...'
+		for path, route of pkgmanProvider.invoke 'route'
+			routes[route.path ? path] = route
 			
-		}
+		# Invoke hook `routeMock`.
+		# Allow packages to define routes in the Angular application which are
+		# only defined during test mode.
+		if configProvider.get 'testMode'
+			for path, route of pkgmanProvider.invoke 'routeMock'
+				routes[route.path ? path] = route
 			
 		# Invoke hook `routeAlter`.
 		# Allow packages to alter defined routes.
 		invoke(
 			injectable, null
 			routes: routes
-		) for _, injectable of invokeWithMocks 'routeAlter'
+		) for injectable in pkgmanProvider.invokeFlat 'routeAlter'
 		
 		for path, route of routes
 			do (path, route) ->

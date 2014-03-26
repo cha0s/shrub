@@ -20,24 +20,22 @@ angular.module('shrub.core', [
 
 	.config([
 		'$injector', 'pkgmanProvider'
-		($injector, pkgmanProvider) ->
+		({invoke}, {invokeFlat}) ->
 			
 			# Invoke hook `appConfig`.
 			# Invoked when the Angular application is in the configuration
 			# phase.
-			for _, injected of pkgmanProvider.invokeWithMocks 'appConfig'
-				$injector.invoke injected
+			invoke injectable for injectable in invokeFlat 'appConfig'
 			
 	])
 	
 	.run([
 	
 		'$injector', 'pkgman'
-		($injector, pkgman) ->
+		({invoke}, {invokeFlat}) ->
 			
 			# Invoke hook `appRun`.
 			# Invoked when the Angular application is run.
-			for _, injected of pkgman.invokeWithMocks 'appRun'
-				$injector.invoke injected
+			invoke injectable for injectable in invokeFlat 'appRun'
 
 	])
