@@ -32,89 +32,9 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
         "projectPath": "README.md",
         "targetPath": "README",
         "pageTitle": "README",
-        "firstHeader": {
-          "type": "heading",
-          "data": {
-            "level": 1,
-            "title": "Shrub",
-            "slug": "shrub",
-            "isFileHeader": true
-          },
-          "depth": 1,
-          "children": [
-            {
-              "type": "heading",
-              "data": {
-                "level": 3,
-                "title": "Documentation",
-                "slug": "documentation"
-              },
-              "depth": 3
-            }, {
-              "type": "heading",
-              "data": {
-                "level": 3,
-                "title": "Awesome example of a package",
-                "slug": "awesome-example-of-a-package"
-              },
-              "depth": 3
-            }, {
-              "type": "heading",
-              "data": {
-                "level": 3,
-                "title": "Get rolling",
-                "slug": "get-rolling"
-              },
-              "depth": 3
-            }, {
-              "type": "heading",
-              "data": {
-                "level": 3,
-                "title": "TODO",
-                "slug": "todo"
-              },
-              "depth": 3
-            }
-          ]
-        },
-        "title": "Shrub"
+        "title": "README"
       },
-      "depth": 1,
-      "outline": [
-        {
-          "type": "heading",
-          "data": {
-            "level": 3,
-            "title": "Documentation",
-            "slug": "documentation"
-          },
-          "depth": 3
-        }, {
-          "type": "heading",
-          "data": {
-            "level": 3,
-            "title": "Awesome example of a package",
-            "slug": "awesome-example-of-a-package"
-          },
-          "depth": 3
-        }, {
-          "type": "heading",
-          "data": {
-            "level": 3,
-            "title": "Get rolling",
-            "slug": "get-rolling"
-          },
-          "depth": 3
-        }, {
-          "type": "heading",
-          "data": {
-            "level": 3,
-            "title": "TODO",
-            "slug": "todo"
-          },
-          "depth": 3
-        }
-      ]
+      "depth": 1
     }, {
       "type": "folder",
       "data": {
