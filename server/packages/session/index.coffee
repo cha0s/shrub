@@ -11,8 +11,8 @@ exports.$fingerprint = (req) ->
 	# Session ID.
 	session: if req?.session? then req.session.id
 
-# ## Implements hook `rpcCallFinished`
-exports.$rpcCallFinished = (req, result) ->
+# ## Implements hook `endpointFinished`
+exports.$endpointFinished = (req, result) ->
 	
 	return Promise.resolve() unless req.session?
 	

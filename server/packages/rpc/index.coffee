@@ -124,7 +124,7 @@ exports.$socketConnectionMiddleware = ->
 						endpoint.receiver routeReq, (error, result) ->
 							return sendErrorToClient error if error?
 							
-							# Invoke hook `rpcCallFinished`.
+							# Invoke hook `endpointFinished`.
 							# Allow packages to act after an RPC call, but
 							# before the response is sent. Packages may
 							# modify the response before it is returned.
@@ -133,7 +133,7 @@ exports.$socketConnectionMiddleware = ->
 							# returned.
 							Promise.all(
 								pkgman.invokeFlat(
-									'rpcCallFinished', routeReq, result
+									'endpointFinished', routeReq, result
 								)							
 
 							).then(
