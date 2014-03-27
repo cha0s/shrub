@@ -1,7 +1,7 @@
 
 # # Socket.IO
 # 
-# Socket implementation using [Socket.IO](http://socket.io/).
+# SocketManager implementation using [Socket.IO](http://socket.io/).
 
 crypto = require 'server/crypto'
 nconf = require 'nconf'
@@ -13,16 +13,38 @@ pkgman = require 'pkgman'
 
 logger = new logging.create 'logs/socket.io.log'
 	
-AbstractSocketFactory = require 'AbstractSocketFactory'
+SocketManager = require './manager'
+{AuthorizationFailure} = SocketManager
 
-# ## SocketIo
-# Implements `AbstractSocketFactory`.
+# ## SocketIoManager
+# Implements `SocketManager`.
 # 
 # A socket factory implemented with [Socket.IO](http://socket.io/).
-module.exports = class SocketIo extends AbstractSocketFactory
+module.exports = class SocketIoManager extends SocketManager
+	
+	# ## *constructor*
+	constructor: ->
+		super
+		
+		options = nconf.get 'packageSettings:socket:manager:options'
+		
+		# Load the backing store.
+		@_store = switch options?.store ? 'redis'
+			
+			when 'redis'
+				
+				redis = require 'connect-redis/node_modules/redis'
+				RedisStore = require 'socket.io/lib/stores/redis'
+				
+				new RedisStore(
+					redis: redis
+					redisPub: redis.createClient()
+					redisSub: redis.createClient()
+					redisClient: redis.createClient()
+				)
 	
 	# ## ::listen
-	# Implements `AbstractSocketFactory::listen`.
+	# Implements `SocketManager::listen`.
 	listen: (http) ->
 	
 		# Set up the socket.io server.
@@ -35,7 +57,7 @@ module.exports = class SocketIo extends AbstractSocketFactory
 			else
 				'debug'
 			logger: logger
-			store: @store()
+			store: @_store
 			transports: [
 				'websocket'
 				'flashsocket'
@@ -65,9 +87,9 @@ module.exports = class SocketIo extends AbstractSocketFactory
 			# Dispatch the authorization middleware.
 			@_authorizationMiddleware.dispatch req, null, (error) ->
 				
-				# If `AbstractSocketFactory.AuthorizationFailure` was thrown,
-				# the connection is rejected as unauthorized.
-				if error instanceof AbstractSocketFactory.AuthorizationFailure
+				# If `AuthorizationFailure` was thrown, the connection is
+				# rejected as unauthorized.
+				if error instanceof AuthorizationFailure
 					return fn null, false
 					
 				# If any other kind of error was thrown, propagate it.
@@ -115,22 +137,3 @@ module.exports = class SocketIo extends AbstractSocketFactory
 	# 
 	# * (string) `channelName` - The channel or 'room' name.
 	socketsInChannel: (channelName) -> @io.sockets.clients channelName
-		
-	# ## ::store
-	# 
-	# *The backing store for socket connections.*
-	store: ->
-
-		switch @_config.store
-			
-			when 'redis'
-				
-				redis = require 'connect-redis/node_modules/redis'
-				RedisStore = require 'socket.io/lib/stores/redis'
-				
-				new RedisStore(
-					redis: redis
-					redisPub: redis.createClient()
-					redisSub: redis.createClient()
-					redisClient: redis.createClient()
-				)

@@ -1,31 +1,30 @@
 
-# # AbstractSocketFactory
-# 
-# This class implements an abstract interface to be implemented by a socket
-# server (e.g. [Socket.io](./packages/socket/SocketIo.html)).
+# # SocketManager
 
 {EventEmitter} = require 'events'
-pkgman = require 'pkgman'
+nconf = require 'nconf'
 
 middleware = require 'middleware'
+pkgman = require 'pkgman'
 
 {defaultLogger} = require 'logging'
 
-# `TODO`: This needs work, it probably wouldn't be able to handle another
-# server in its current state. Move API from SocketIo to here.
-module.exports = class AbstractSocketFactory extends EventEmitter
+# This class implements an abstract interface to be implemented by a socket
+# server (e.g. [Socket.io](./packages/socket/SocketIo.html)).
+module.exports = class SocketManager extends EventEmitter
 	
 	# ### *constructor*
 	# 
 	# *Create the server.*
-	# 
-	# * (object) `config` - The server configuration.
-	#   `TODO`: Should probably just use `nconf`, weird interface.
-	constructor: (@_config) ->
+	constructor: ->
+		
 		super
+		
+		@_authorizationMiddleware = null
+		@_connectionMiddleware = null
 	
-	# `AbstractSocketFactory.AuthorizationFailure` may be thrown from within
-	# socket authorization middleware, to denote that no real error occurred,
+	# `SocketManager.AuthorizationFailure` may be thrown from within socket
+	# authorization middleware, to denote that no real error occurred,
 	# authorization just failed.
 	class @AuthorizationFailure extends Error
 		constructor: (@message) ->
@@ -35,14 +34,16 @@ module.exports = class AbstractSocketFactory extends EventEmitter
 	# *Gather and initialize socket middleware.*
 	loadMiddleware: ->
 		
+		config = nconf.get 'packageSettings:socket'
+		
 		# Invoke hook `socketAuthorizationMiddleware`.
 		# Invoked when a socket connection begins. Packages may throw an
-		# instance of `AbstractSocketFactory.AuthorizationFailure` to reject
+		# instance of `SocketManager.AuthorizationFailure` to reject
 		# the socket connection as unauthorized.
 		defaultLogger.info 'BEGIN loading socket authorization middleware'
 		@_authorizationMiddleware = middleware.fromHook(
 			'socketAuthorizationMiddleware'
-			@_config.authorizationMiddleware
+			config.authorizationMiddleware
 		)
 		defaultLogger.info 'END loading socket authorization middleware'
 
@@ -52,7 +53,7 @@ module.exports = class AbstractSocketFactory extends EventEmitter
 
 		@_connectionMiddleware = middleware.fromHook(
 			'socketConnectionMiddleware'
-			@_config.connectionMiddleware
+			config.connectionMiddleware
 		)
 		defaultLogger.info 'END loading socket middleware'
 

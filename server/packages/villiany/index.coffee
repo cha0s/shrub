@@ -11,7 +11,7 @@ Promise = require 'bluebird'
 audit = require 'audit'
 logging = require 'logging'
 
-{AuthorizationFailure} = require 'AbstractSocketFactory'
+{AuthorizationFailure} = require 'packages/socket/manager'
 {Limiter, threshold} = require 'limits'
 
 logger = logging.create 'logs/villiany.log'

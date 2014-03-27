@@ -3,6 +3,21 @@
 # 
 # Manage socket connections.
 
+nconf = require 'nconf'
+
+# The socket manager.
+socketManager = null
+
+# ## Implements hook `httpInitializing`
+exports.$httpInitializing = (http) ->
+	
+	Manager = require nconf.get 'packageSettings:socket:manager:module'
+	
+	# Spin up the socket server, and have it listen on the HTTP server.
+	socketManager = new Manager
+	socketManager.loadMiddleware()
+	socketManager.listen http
+	
 # ## Implements hook `packageSettings`
 exports.$packageSettings = ->
 
@@ -16,19 +31,21 @@ exports.$packageSettings = ->
 
 	# Middleware stack dispatched once a socket connection is authorized.
 	connectionMiddleware: [
-		'socket/factory'
 		'session'
 		'user'
 		'rpc'
 	]
 
-	# Module implementing the socket.
-	module: 'packages/socket/SocketIo'
+	manager:
 	
-	# Backing store for socket connections.
-	# `TODO`: This probably doesn't belong here.
-	store: 'redis'
+		# Module implementing the socket manager.
+		module: 'packages/socket/SocketIoManager'
 
-exports[path] = require "./#{path}" for path in [
-	'factory'
-]
+# ## Implements hook `replContext`
+exports.$replContext = (context) ->
+	
+	# Provide the socketManager to REPL.
+	context.socketManager = socketManager
+
+# ## manager
+exports.manager = -> socketManager
