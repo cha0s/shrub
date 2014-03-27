@@ -3,11 +3,23 @@
 # 
 # Various means for dealing with sessions.
 
+Promise = require 'bluebird'
+
 # ## Implements hook `fingerprint`
 exports.$fingerprint = (req) ->
 	
 	# Session ID.
 	session: if req?.session? then req.session.id
+
+# ## Implements hook `rpcCallFinished`
+exports.$rpcCallFinished = (req, result) ->
+	
+	return Promise.resolve() unless req.session?
+	
+	# Touch and save the session after every RPC call finishes.
+	deferred = Promise.defer()
+	req.session.touch().save deferred.callback
+	deferred.promise 
 
 # ## Implements hook `socketAuthorizationMiddleware`
 exports.$socketAuthorizationMiddleware = ->

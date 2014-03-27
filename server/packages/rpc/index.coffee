@@ -124,21 +124,23 @@ exports.$socketConnectionMiddleware = ->
 						endpoint.receiver routeReq, (error, result) ->
 							return sendErrorToClient error if error?
 							
-							# Touch and save the session for every RPC call.
-							# `TODO`: Should be middleware for after a request,
-							# `session` should register into that.
-							reply = (error) ->
-								return concealErrorFromClient(
-									error
-								) if error?
+							# Invoke hook `rpcCallFinished`.
+							# Allow packages to act after an RPC call, but
+							# before the response is sent. Packages may
+							# modify the response before it is returned.
+							# Implementations should return a promise. When
+							# all promises are resolved, the result is
+							# returned.
+							Promise.all(
+								pkgman.invokeFlat(
+									'rpcCallFinished', routeReq, result
+								)							
+
+							).then(
+								-> fn result: result
+								concealErrorFromClient
+							)
 								
-								fn result: result
-							
-							if (session = req.session)?
-								session.touch().save reply
-							else
-								reply()
-					
 			next()
 			
 	]
