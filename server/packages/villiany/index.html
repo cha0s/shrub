@@ -139,7 +139,7 @@
 <span class="s2">      moment().add(&#39;seconds&#39;, ttl).fromNow()</span>
 <span class="s2">    }.&quot;</span>
     
-  <span class="nx">message</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implements-hook-httpmiddleware">Implements hook `httpMiddleware</h2></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$httpMiddleware = </span><span class="o">-&gt;</span>
+  <span class="nx">message</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookhttpmiddleware">Implements hook <code>httpMiddleware</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$httpMiddleware = </span><span class="o">-&gt;</span>
   
   <span class="p">{</span><span class="nv">models: User: </span><span class="nx">User</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;server/jugglingdb&#39;</span>
   
@@ -161,10 +161,10 @@
     
     <span class="nx">enforcementMiddleware</span>
       
-  <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implements-hook-settings">Implements hook `settings</h2></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$packageSettings = </span><span class="o">-&gt;</span>
+  <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshooksettings">Implements hook <code>settings</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$packageSettings = </span><span class="o">-&gt;</span>
   
   <span class="nv">ban:</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>10 minute ban time by default.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">defaultExpiration: </span><span class="mi">1000</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">10</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implements-hook-socketauthorizationmiddleware">Implements hook `socketAuthorizationMiddleware</h2></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$socketAuthorizationMiddleware = </span><span class="o">-&gt;</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>10 minute ban time by default.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">defaultExpiration: </span><span class="mi">1000</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">10</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshooksocketauthorizationmiddleware">Implements hook <code>socketAuthorizationMiddleware</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$socketAuthorizationMiddleware = </span><span class="o">-&gt;</span>
   
   <span class="nv">label: </span><span class="s1">&#39;Provide villiany management&#39;</span>
   <span class="nv">middleware: </span><span class="p">[</span>

@@ -6,13 +6,10 @@
 <span class="nv">nconf = </span><span class="nx">require</span> <span class="s1">&#39;nconf&#39;</span>
 <span class="nv">Promise = </span><span class="nx">require</span> <span class="s1">&#39;bluebird&#39;</span>
 
-<span class="nv">pkgman = </span><span class="nx">require</span> <span class="s1">&#39;pkgman&#39;</span>
-
-<span class="p">{</span><span class="nx">Config</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;config&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookconfig">Implements hook <code>config</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$config = </span><span class="nf">(req) -&gt;</span>
+<span class="nv">pkgman = </span><span class="nx">require</span> <span class="s1">&#39;pkgman&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookconfig">Implements hook <code>config</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$config = </span><span class="nf">(req) -&gt;</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The URL that the site was accessed at.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">hostname: </span><span class="s2">&quot;//#{req.headers.host}&quot;</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Is the server running in test mode?</p></div></div><div class="code"><div class="wrapper">  <span class="nv">testMode: </span><span class="k">if</span> <span class="p">(</span><span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;E2E&#39;</span><span class="p">)</span><span class="o">?</span> <span class="k">then</span> <span class="s1">&#39;e2e&#39;</span> <span class="k">else</span> <span class="kc">false</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Debug mode if we're not running in production.</p></div></div><div class="code"><div class="wrapper">  <span class="c1"># `TODO`: Remove this, and implement a client logging system.</span>
-  <span class="nv">debugging: </span><span class="s1">&#39;production&#39;</span> <span class="o">isnt</span> <span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;NODE_ENV&#39;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Execution environment, <code>production</code>, or...</p></div></div><div class="code"><div class="wrapper">  <span class="nv">environment: </span><span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;NODE_ENV&#39;</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The list of enabled packages.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">packageList: </span><span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageList&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookhttpmiddleware">Implements hook <code>httpMiddleware</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$httpMiddleware = </span><span class="nf">(http) -&gt;</span>
   
   <span class="nv">label: </span><span class="s1">&#39;Serve package configuration&#39;</span>
@@ -34,18 +31,19 @@ that resolves to an object.</p></div></div><div class="code"><div class="wrapper
         <span class="nv">prettyPrintConfig = </span><span class="o">-&gt;</span>
           <span class="nv">stringified = </span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span> <span class="nx">config</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="s1">&#39;  &#39;</span>
           <span class="p">[</span><span class="nx">first</span><span class="p">,</span> <span class="nx">rest</span><span class="p">...]</span> <span class="o">=</span> <span class="nx">stringified</span><span class="p">.</span><span class="nx">split</span> <span class="s1">&#39;\n&#39;</span>
-          <span class="p">([</span><span class="nx">first</span><span class="p">].</span><span class="nx">concat</span> <span class="nx">rest</span><span class="p">.</span><span class="nx">map</span> <span class="nf">(line) -&gt;</span> <span class="s1">&#39;  &#39;</span> <span class="o">+</span> <span class="nx">line</span><span class="p">).</span><span class="nx">join</span> <span class="s1">&#39;\n&#39;</span>
+          <span class="p">([</span><span class="nx">first</span><span class="p">].</span><span class="nx">concat</span> <span class="nx">rest</span><span class="p">.</span><span class="nx">map</span> <span class="nf">(line) -&gt;</span> <span class="s1">&#39;    &#39;</span> <span class="o">+</span> <span class="nx">line</span><span class="p">).</span><span class="nx">join</span> <span class="s1">&#39;\n&#39;</span>
         </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Emit the configuration module.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">res</span><span class="p">.</span><span class="nx">setHeader</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/javascript&#39;</span>
         
-        <span class="c1"># `TODO`: This shouldn&#39;t be a module, we can do this better.</span>
         <span class="nx">res</span><span class="p">.</span><span class="nx">send</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">angular.module(&#39;shrub.config&#39;, []).provider(&#39;config&#39;, function() {</span>
+<span class="s2">angular.module(</span>
+<span class="s2">  &#39;shrub.config&#39;, [&#39;shrub.require&#39;]</span>
+<span class="s2">)</span>
 
-<span class="s2">  var __slice = [].slice;</span>
-<span class="s2">  </span>
-<span class="s2">  return new ((#{Config.toString()})())(#{prettyPrintConfig()});</span>
+<span class="s2">  .config([&#39;requireProvider&#39;, function(requireProvider) {</span>
 
-<span class="s2">});</span>
+<span class="s2">    requireProvider.require(&#39;config&#39;).from(#{prettyPrintConfig()});</span>
+
+<span class="s2">  }]);</span>
 <span class="s2">&quot;&quot;&quot;</span>
         
       <span class="p">).</span><span class="k">catch</span> <span class="nx">next</span>

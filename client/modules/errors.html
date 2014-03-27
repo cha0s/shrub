@@ -2,9 +2,7 @@
 <span class="nv">pkgman = </span><span class="nx">require</span> <span class="s1">&#39;pkgman&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="transmittableerror">TransmittableError</h2>
 
 <p>Extend this class if you'd like to implement an error </p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.TransmittableError = </span><span class="k">class</span> <span class="nx">TransmittableError</span> <span class="k">extends</span> <span class="nb">Error</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>See: <a href="https://github.com/jashkenas/coffee-script/issues/2359">https://github.com/jashkenas/coffee-script/issues/2359</a>
-<code>TODO</code>: Capture all arguments, and make the necessity for implementing
-toJSON obsolete.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">constructor: </span><span class="nf">(@message) -&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>See: <a href="https://github.com/jashkenas/coffee-script/issues/2359">https://github.com/jashkenas/coffee-script/issues/2359</a></p></div></div><div class="code"><div class="wrapper">  <span class="nv">constructor: </span><span class="nf">(@message) -&gt;</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>A unique key for this error.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">key: </span><span class="s1">&#39;unknown&#39;</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The template used to format the error output.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">template: </span><span class="s2">&quot;Unknown error: :message&quot;</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Implement this if you need to transmit more than just the key and the

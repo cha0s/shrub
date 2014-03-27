@@ -19,9 +19,6 @@ Express framework.</p></div></div><div class="code"><div class="wrapper"><span c
     <span class="c1"># Create the Express instance.</span>
     <span class="vi">@_app = </span><span class="nx">express</span><span class="p">()</span>
     
-    <span class="c1"># Register middleware.</span>
-    <span class="nx">@registerMiddleware</span><span class="p">()</span>
-    
     <span class="c1"># Cache the session store.</span>
     <span class="vi">@_sessionStore = </span><span class="k">switch</span> <span class="nx">@_config</span><span class="p">.</span><span class="nx">sessions</span><span class="p">.</span><span class="nx">db</span>
       <span class="k">when</span> <span class="s1">&#39;redis&#39;</span>
@@ -30,6 +27,9 @@ Express framework.</p></div></div><div class="code"><div class="wrapper"><span c
     
         <span class="nv">RedisStore = </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;connect-redis&#39;</span><span class="p">)</span> <span class="nx">express</span>
         <span class="k">new</span> <span class="nx">RedisStore</span> <span class="nv">client: </span><span class="nx">module</span><span class="p">.</span><span class="nx">createClient</span><span class="p">()</span>
+    
+    <span class="c1"># Register middleware.</span>
+    <span class="nx">@registerMiddleware</span><span class="p">()</span>
     
     <span class="c1"># Handlebars!</span>
     <span class="c1"># `TODO`: Do we really need to use Express&#39;s theme system..?</span>

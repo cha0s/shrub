@@ -4,8 +4,10 @@
 <span class="p">])</span>
 
   <span class="p">.</span><span class="nx">config</span><span class="p">([</span>
-    <span class="s1">&#39;$compileProvider&#39;</span><span class="p">,</span> <span class="s1">&#39;$controllerProvider&#39;</span><span class="p">,</span> <span class="s1">&#39;$filterProvider&#39;</span><span class="p">,</span> <span class="s1">&#39;$provide&#39;</span><span class="p">,</span> <span class="s1">&#39;configProvider&#39;</span><span class="p">,</span> <span class="s1">&#39;pkgmanProvider&#39;</span><span class="p">,</span> <span class="s1">&#39;requireProvider&#39;</span>
-    <span class="nf">($compileProvider, $controllerProvider, $filterProvider, $provide, configProvider, {invoke}, {require}) -&gt;</span>
+    <span class="s1">&#39;$compileProvider&#39;</span><span class="p">,</span> <span class="s1">&#39;$controllerProvider&#39;</span><span class="p">,</span> <span class="s1">&#39;$filterProvider&#39;</span><span class="p">,</span> <span class="s1">&#39;$provide&#39;</span><span class="p">,</span> <span class="s1">&#39;pkgmanProvider&#39;</span><span class="p">,</span> <span class="s1">&#39;requireProvider&#39;</span>
+    <span class="nf">($compileProvider, $controllerProvider, $filterProvider, $provide, {invoke}, {require}) -&gt;</span>
+      
+      <span class="nv">config = </span><span class="nx">require</span> <span class="s1">&#39;config&#39;</span>
       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Use normalized names for directives and filters:
 'core/foo/bar' -> 'coreFooBar'</p></div></div><div class="code"><div class="wrapper">      <span class="nv">i8n = </span><span class="nx">require</span> <span class="s1">&#39;inflection&#39;</span>
       <span class="nv">normalize = </span><span class="nf">(path) -&gt;</span>
@@ -29,7 +31,7 @@ Allows packages to define Angular services. Implementations
 should return an <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>.</p></div></div><div class="code"><div class="wrapper">      <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span> <span class="k">of</span> <span class="nx">invoke</span> <span class="s1">&#39;service&#39;</span>
         <span class="nx">$provide</span><span class="p">.</span><span class="nx">service</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span>
       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>If we are testing, decorate the services with their mock
-versions.</p></div></div><div class="code"><div class="wrapper">      <span class="k">if</span> <span class="nx">configProvider</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;testMode&#39;</span>
+versions.</p></div></div><div class="code"><div class="wrapper">      <span class="k">if</span> <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;testMode&#39;</span>
         </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>serviceMock</code>.
 Allows packages to decorate mock Angular services.
 Implementations should return an
@@ -41,12 +43,13 @@ Implementations should return an
 <span class="p">])</span>
 
   <span class="p">.</span><span class="nx">provider</span> <span class="s1">&#39;pkgman&#39;</span><span class="p">,</span> <span class="p">[</span>
-    <span class="s1">&#39;$provide&#39;</span><span class="p">,</span> <span class="s1">&#39;configProvider&#39;</span><span class="p">,</span> <span class="s1">&#39;requireProvider&#39;</span>
-    <span class="nf">($provide, configProvider, {require}) -&gt;</span>
+    <span class="s1">&#39;$provide&#39;</span><span class="p">,</span> <span class="s1">&#39;requireProvider&#39;</span>
+    <span class="nf">($provide, {require}) -&gt;</span>
       
       <span class="nv">_ = </span><span class="nx">require</span> <span class="s1">&#39;underscore&#39;</span>
+      <span class="nv">config = </span><span class="nx">require</span> <span class="s1">&#39;config&#39;</span>
       <span class="nv">pkgman = </span><span class="nx">require</span> <span class="s1">&#39;pkgman&#39;</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Load the package list from configuration.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">pkgman</span><span class="p">.</span><span class="nx">registerPackageList</span> <span class="nx">configProvider</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageList&#39;</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Load the package list from configuration.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">pkgman</span><span class="p">.</span><span class="nx">registerPackageList</span> <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageList&#39;</span>
       
       <span class="nv">service = </span><span class="p">{}</span>
       

@@ -13,13 +13,108 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
           "commentsOnly": true,
           "name": "Markdown"
         },
-        "sourcePath": "/home/cha0s6983/dev/code/js/shrub/README.md",
-        "projectPath": "README.md",
+        "sourcePath": "/home/cha0s6983/dev/code/js/shrub/documentation/index.md",
+        "projectPath": "documentation/index.md",
         "targetPath": "index",
         "pageTitle": "Shrub documentation",
         "title": "Shrub documentation"
       },
       "depth": 1
+    }, {
+      "type": "file",
+      "data": {
+        "language": {
+          "nameMatchers": [".md", ".markdown", ".mkd", ".mkdn", ".mdown"],
+          "commentsOnly": true,
+          "name": "Markdown"
+        },
+        "sourcePath": "/home/cha0s6983/dev/code/js/shrub/README.md",
+        "projectPath": "README.md",
+        "targetPath": "README",
+        "pageTitle": "README",
+        "firstHeader": {
+          "type": "heading",
+          "data": {
+            "level": 1,
+            "title": "Shrub",
+            "slug": "shrub",
+            "isFileHeader": true
+          },
+          "depth": 1,
+          "children": [
+            {
+              "type": "heading",
+              "data": {
+                "level": 3,
+                "title": "Documentation",
+                "slug": "documentation"
+              },
+              "depth": 3
+            }, {
+              "type": "heading",
+              "data": {
+                "level": 3,
+                "title": "Awesome example of a package",
+                "slug": "awesome-example-of-a-package"
+              },
+              "depth": 3
+            }, {
+              "type": "heading",
+              "data": {
+                "level": 3,
+                "title": "Get rolling",
+                "slug": "get-rolling"
+              },
+              "depth": 3
+            }, {
+              "type": "heading",
+              "data": {
+                "level": 3,
+                "title": "TODO",
+                "slug": "todo"
+              },
+              "depth": 3
+            }
+          ]
+        },
+        "title": "Shrub"
+      },
+      "depth": 1,
+      "outline": [
+        {
+          "type": "heading",
+          "data": {
+            "level": 3,
+            "title": "Documentation",
+            "slug": "documentation"
+          },
+          "depth": 3
+        }, {
+          "type": "heading",
+          "data": {
+            "level": 3,
+            "title": "Awesome example of a package",
+            "slug": "awesome-example-of-a-package"
+          },
+          "depth": 3
+        }, {
+          "type": "heading",
+          "data": {
+            "level": 3,
+            "title": "Get rolling",
+            "slug": "get-rolling"
+          },
+          "depth": 3
+        }, {
+          "type": "heading",
+          "data": {
+            "level": 3,
+            "title": "TODO",
+            "slug": "todo"
+          },
+          "depth": 3
+        }
+      ]
     }, {
       "type": "folder",
       "data": {
@@ -69,6 +164,26 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                   "foldPrefix": "^",
                   "name": "CoffeeScript"
                 },
+                "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/modules/config.coffee",
+                "projectPath": "client/modules/config.coffee",
+                "targetPath": "client/modules/config",
+                "pageTitle": "client/modules/config",
+                "title": "config"
+              },
+              "depth": 3
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
                 "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/modules/errors.coffee",
                 "projectPath": "client/modules/errors.coffee",
                 "targetPath": "client/modules/errors",
@@ -94,6 +209,26 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 "targetPath": "client/modules/jugglingdb-rest",
                 "pageTitle": "client/modules/jugglingdb-rest",
                 "title": "jugglingdb-rest"
+              },
+              "depth": 3
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/modules/logging.coffee",
+                "projectPath": "client/modules/logging.coffee",
+                "targetPath": "client/modules/logging",
+                "pageTitle": "client/modules/logging",
+                "title": "logging"
               },
               "depth": 3
             }, {
@@ -919,45 +1054,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "server/audit",
             "title": "audit"
           },
-          "depth": 2,
-          "outline": [
-            {
-              "type": "heading",
-              "data": {
-                "level": 1,
-                "title": "Audit",
-                "slug": "audit"
-              },
-              "depth": 1,
-              "children": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 3,
-                    "title": "fingerprint",
-                    "slug": "fingerprint"
-                  },
-                  "depth": 3
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 3,
-                    "title": "fingerprintKeys",
-                    "slug": "fingerprintkeys"
-                  },
-                  "depth": 3
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 3,
-                    "title": "fingerprintRaw",
-                    "slug": "fingerprintraw"
-                  },
-                  "depth": 3
-                }
-              ]
-            }
-          ]
+          "depth": 2
         }, {
           "type": "file",
           "data": {
@@ -1037,153 +1134,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "server/limits",
             "title": "limits"
           },
-          "depth": 2,
-          "outline": [
-            {
-              "type": "heading",
-              "data": {
-                "level": 1,
-                "title": "Limits",
-                "slug": "limits"
-              },
-              "depth": 1,
-              "children": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 2,
-                    "title": "Limiter",
-                    "slug": "limiter"
-                  },
-                  "depth": 2,
-                  "children": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".add",
-                        "slug": "add"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".accrueAndCheckThreshold",
-                        "slug": "accrueandcheckthreshold"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".score",
-                        "slug": "score"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".ttl",
-                        "slug": "ttl"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".checkThreshold",
-                        "slug": "checkthreshold"
-                      },
-                      "depth": 3,
-                      "children": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 4,
-                            "title": "._largest",
-                            "slug": "-largest"
-                          },
-                          "depth": 4
-                        }
-                      ]
-                    }
-                  ]
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 2,
-                    "title": "ThresholdBase",
-                    "slug": "thresholdbase"
-                  },
-                  "depth": 2,
-                  "children": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".every",
-                        "slug": "every"
-                      },
-                      "depth": 3
-                    }
-                  ]
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 2,
-                    "title": "ThresholdMultiplier",
-                    "slug": "thresholdmultiplier"
-                  },
-                  "depth": 2
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 2,
-                    "title": "ThresholdFinal",
-                    "slug": "thresholdfinal"
-                  },
-                  "depth": 2
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 2,
-                    "title": "threshold",
-                    "slug": "threshold"
-                  },
-                  "depth": 2,
-                  "children": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".add",
-                        "slug": "add"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".score",
-                        "slug": "score"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".ttl",
-                        "slug": "ttl"
-                      },
-                      "depth": 3
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
+          "depth": 2
         }, {
           "type": "file",
           "data": {
@@ -1329,18 +1280,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/core/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Core",
-                        "slug": "core"
-                      },
-                      "depth": 1
-                    }
-                  ]
+                  "depth": 4
                 }
               ]
             }, {
@@ -1530,18 +1470,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/limiter/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Rate limiter",
-                        "slug": "rate-limiter"
-                      },
-                      "depth": 1
-                    }
-                  ]
+                  "depth": 4
                 }
               ]
             }, {
@@ -1631,18 +1560,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/rpc/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "RPC",
-                        "slug": "rpc"
-                      },
-                      "depth": 1
-                    }
-                  ]
+                  "depth": 4
                 }
               ]
             }, {
@@ -1702,18 +1620,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/session/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Session",
-                        "slug": "session"
-                      },
-                      "depth": 1
-                    }
-                  ]
+                  "depth": 4
                 }
               ]
             }, {
@@ -1743,53 +1650,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/socket/SocketIo",
                     "title": "SocketIo"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Socket.IO",
-                        "slug": "socketio"
-                      },
-                      "depth": 1,
-                      "children": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "SocketIo",
-                            "slug": "socketio"
-                          },
-                          "depth": 2
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "::listen",
-                            "slug": "listen"
-                          },
-                          "depth": 2
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "::socketsInChannel",
-                            "slug": "socketsinchannel"
-                          },
-                          "depth": 2
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "::store",
-                            "slug": "store"
-                          },
-                          "depth": 2
-                        }
-                      ]
-                    }
-                  ]
+                  "depth": 4
                 }, {
                   "type": "file",
                   "data": {
@@ -1879,29 +1740,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/user/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "User",
-                        "slug": "user"
-                      },
-                      "depth": 1,
-                      "children": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "loadByName",
-                            "slug": "loadbyname"
-                          },
-                          "depth": 2
-                        }
-                      ]
-                    }
-                  ]
+                  "depth": 4
                 }, {
                   "type": "file",
                   "data": {
@@ -1921,8 +1760,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/user/login",
                     "title": "login"
                   },
-                  "depth": 4,
-                  "outline": []
+                  "depth": 4
                 }, {
                   "type": "file",
                   "data": {
@@ -2012,45 +1850,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/villiany/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Villiany",
-                        "slug": "villiany"
-                      },
-                      "depth": 1,
-                      "children": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "Implements hook `httpMiddleware",
-                            "slug": "implements-hook-httpmiddleware"
-                          },
-                          "depth": 2
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "Implements hook `settings",
-                            "slug": "implements-hook-settings"
-                          },
-                          "depth": 2
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "Implements hook `socketAuthorizationMiddleware",
-                            "slug": "implements-hook-socketauthorizationmiddleware"
-                          },
-                          "depth": 2
-                        }
-                      ]
-                    }
-                  ]
+                  "depth": 4
                 }
               ]
             }

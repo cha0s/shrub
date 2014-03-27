@@ -4,14 +4,6 @@
 a dynamically generated listing of TODO items, each with a line of code
 context.</p>
 
-<p><a href="./client/modules/errors.html">client/modules/errors.coffee</a></p>
-
-<ul>
-<li><h4 id="constructormessage"><code>constructor: (@message) -&gt;</code></h4>
-
-<p>Capture all arguments, and make the necessity for implementing toJSON obsolete. </p></li>
-</ul>
-
 <p><a href="./client/modules/packages/core/index.html">client/modules/packages/core/index.coffee</a></p>
 
 <ul>
@@ -37,18 +29,6 @@ context.</p>
 <li><h4 id="socketioconnect"><code>socket = io.connect()</code></h4>
 
 <p>Only Socket.IO at the moment. </p></li>
-<li><h4 id="debuglisteners"><code>debugListeners = {}</code></h4>
-
-<p>Remove after client logging. </p></li>
-<li><h4 id="debuglistenersoneventname"><code>debugListeners["on-#{eventName}"] ?= (-&gt;</code></h4>
-
-<p>Remove after client logging. </p></li>
-<li><h4 id="ifconfiggetdebugging"><code>if config.get 'debugging'</code></h4>
-
-<p>Remove after client logging. </p></li>
-<li><h4 id="ifconfiggetdebugging"><code>if config.get 'debugging'</code></h4>
-
-<p>Remove after client logging. </p></li>
 </ul>
 
 <p><a href="./client/modules/packages/ui/nav.html">client/modules/packages/ui/nav.coffee</a></p>
@@ -108,14 +88,6 @@ context.</p>
 <p>This needs work, it probably wouldn't be able to handle another server in its current state. Move API from SocketIo to here. </p></li>
 </ul>
 
-<p><a href="./server/config.html">server/config.coffee</a></p>
-
-<ul>
-<li><h4 id="dgetthis"><code>$get: -&gt; this</code></h4>
-
-<p>This is Angular-specific. Move it to where it belongs. </p></li>
-</ul>
-
 <p><a href="./server/jugglingdb.html">server/jugglingdb.coffee</a></p>
 
 <ul>
@@ -136,17 +108,6 @@ context.</p>
 <li><h4 id="sandboxinjectinjectable"><code>sandbox.inject = (injectable) -&gt;</code></h4>
 
 <p>Return a promise, resolved with the dependency array. </p></li>
-</ul>
-
-<p><a href="./server/packages/config/index.html">server/packages/config/index.coffee</a></p>
-
-<ul>
-<li><h4 id="debuggingproductionisntnconfgetnode_env"><code>debugging: 'production' isnt nconf.get 'NODE_ENV'</code></h4>
-
-<p>Remove this, and implement a client logging system. </p></li>
-<li><h4 id="ressend"><code>res.send """</code></h4>
-
-<p>This shouldn't be a module, we can do this better. </p></li>
 </ul>
 
 <p><a href="./server/packages/express/index.html">server/packages/express/index.coffee</a></p>
