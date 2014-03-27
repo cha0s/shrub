@@ -75,77 +75,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 "pageTitle": "client/modules/errors",
                 "title": "errors"
               },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "Error handling",
-                    "slug": "error-handling"
-                  },
-                  "depth": 1,
-                  "children": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "TransmittableError",
-                        "slug": "transmittableerror"
-                      },
-                      "depth": 2
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "instantiate",
-                        "slug": "instantiate"
-                      },
-                      "depth": 2
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "message",
-                        "slug": "message"
-                      },
-                      "depth": 2
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "serialize",
-                        "slug": "serialize"
-                      },
-                      "depth": 2
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "stack",
-                        "slug": "stack"
-                      },
-                      "depth": 2
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "transmittableErrors",
-                        "slug": "transmittableerrors"
-                      },
-                      "depth": 2
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "unserialize",
-                        "slug": "unserialize"
-                      },
-                      "depth": 2
-                    }
-                  ]
-                }
-              ]
+              "depth": 3
             }, {
               "type": "file",
               "data": {
@@ -221,18 +151,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/angular/index",
                         "title": "index"
                       },
-                      "depth": 5,
-                      "outline": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 1,
-                            "title": "Angular",
-                            "slug": "angular"
-                          },
-                          "depth": 1
-                        }
-                      ]
+                      "depth": 5
                     }
                   ]
                 }, {
@@ -262,18 +181,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/core/index",
                         "title": "index"
                       },
-                      "depth": 5,
-                      "outline": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 1,
-                            "title": "Core",
-                            "slug": "core"
-                          },
-                          "depth": 1
-                        }
-                      ]
+                      "depth": 5
                     }
                   ]
                 }, {
@@ -433,29 +341,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/rpc/index",
                         "title": "index"
                       },
-                      "depth": 5,
-                      "outline": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 1,
-                            "title": "RPC",
-                            "slug": "rpc"
-                          },
-                          "depth": 1,
-                          "children": [
-                            {
-                              "type": "heading",
-                              "data": {
-                                "level": 2,
-                                "title": "rpc.call",
-                                "slug": "rpccall"
-                              },
-                              "depth": 2
-                            }
-                          ]
-                        }
-                      ]
+                      "depth": 5
                     }
                   ]
                 }, {
@@ -625,18 +511,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/ui/title",
                         "title": "title"
                       },
-                      "depth": 5,
-                      "outline": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 1,
-                            "title": "Titles",
-                            "slug": "titles"
-                          },
-                          "depth": 1
-                        }
-                      ]
+                      "depth": 5
                     }, {
                       "type": "file",
                       "data": {
@@ -1044,7 +919,45 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "server/audit",
             "title": "audit"
           },
-          "depth": 2
+          "depth": 2,
+          "outline": [
+            {
+              "type": "heading",
+              "data": {
+                "level": 1,
+                "title": "Audit",
+                "slug": "audit"
+              },
+              "depth": 1,
+              "children": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 3,
+                    "title": "fingerprint",
+                    "slug": "fingerprint"
+                  },
+                  "depth": 3
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 3,
+                    "title": "fingerprintKeys",
+                    "slug": "fingerprintkeys"
+                  },
+                  "depth": 3
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 3,
+                    "title": "fingerprintRaw",
+                    "slug": "fingerprintraw"
+                  },
+                  "depth": 3
+                }
+              ]
+            }
+          ]
         }, {
           "type": "file",
           "data": {
@@ -1124,7 +1037,153 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "server/limits",
             "title": "limits"
           },
-          "depth": 2
+          "depth": 2,
+          "outline": [
+            {
+              "type": "heading",
+              "data": {
+                "level": 1,
+                "title": "Limits",
+                "slug": "limits"
+              },
+              "depth": 1,
+              "children": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "Limiter",
+                    "slug": "limiter"
+                  },
+                  "depth": 2,
+                  "children": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".add",
+                        "slug": "add"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".accrueAndCheckThreshold",
+                        "slug": "accrueandcheckthreshold"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".score",
+                        "slug": "score"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".ttl",
+                        "slug": "ttl"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".checkThreshold",
+                        "slug": "checkthreshold"
+                      },
+                      "depth": 3,
+                      "children": [
+                        {
+                          "type": "heading",
+                          "data": {
+                            "level": 4,
+                            "title": "._largest",
+                            "slug": "-largest"
+                          },
+                          "depth": 4
+                        }
+                      ]
+                    }
+                  ]
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "ThresholdBase",
+                    "slug": "thresholdbase"
+                  },
+                  "depth": 2,
+                  "children": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".every",
+                        "slug": "every"
+                      },
+                      "depth": 3
+                    }
+                  ]
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "ThresholdMultiplier",
+                    "slug": "thresholdmultiplier"
+                  },
+                  "depth": 2
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "ThresholdFinal",
+                    "slug": "thresholdfinal"
+                  },
+                  "depth": 2
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "threshold",
+                    "slug": "threshold"
+                  },
+                  "depth": 2,
+                  "children": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".add",
+                        "slug": "add"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".score",
+                        "slug": "score"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".ttl",
+                        "slug": "ttl"
+                      },
+                      "depth": 3
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }, {
           "type": "file",
           "data": {
@@ -1270,7 +1329,18 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/core/index",
                     "title": "index"
                   },
-                  "depth": 4
+                  "depth": 4,
+                  "outline": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 1,
+                        "title": "Core",
+                        "slug": "core"
+                      },
+                      "depth": 1
+                    }
+                  ]
                 }
               ]
             }, {
@@ -1460,7 +1530,18 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/limiter/index",
                     "title": "index"
                   },
-                  "depth": 4
+                  "depth": 4,
+                  "outline": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 1,
+                        "title": "Rate limiter",
+                        "slug": "rate-limiter"
+                      },
+                      "depth": 1
+                    }
+                  ]
                 }
               ]
             }, {
@@ -1550,7 +1631,18 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/rpc/index",
                     "title": "index"
                   },
-                  "depth": 4
+                  "depth": 4,
+                  "outline": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 1,
+                        "title": "RPC",
+                        "slug": "rpc"
+                      },
+                      "depth": 1
+                    }
+                  ]
                 }
               ]
             }, {
@@ -1610,7 +1702,18 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/session/index",
                     "title": "index"
                   },
-                  "depth": 4
+                  "depth": 4,
+                  "outline": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 1,
+                        "title": "Session",
+                        "slug": "session"
+                      },
+                      "depth": 1
+                    }
+                  ]
                 }
               ]
             }, {
@@ -1640,7 +1743,53 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/socket/SocketIo",
                     "title": "SocketIo"
                   },
-                  "depth": 4
+                  "depth": 4,
+                  "outline": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 1,
+                        "title": "Socket.IO",
+                        "slug": "socketio"
+                      },
+                      "depth": 1,
+                      "children": [
+                        {
+                          "type": "heading",
+                          "data": {
+                            "level": 2,
+                            "title": "SocketIo",
+                            "slug": "socketio"
+                          },
+                          "depth": 2
+                        }, {
+                          "type": "heading",
+                          "data": {
+                            "level": 2,
+                            "title": "::listen",
+                            "slug": "listen"
+                          },
+                          "depth": 2
+                        }, {
+                          "type": "heading",
+                          "data": {
+                            "level": 2,
+                            "title": "::socketsInChannel",
+                            "slug": "socketsinchannel"
+                          },
+                          "depth": 2
+                        }, {
+                          "type": "heading",
+                          "data": {
+                            "level": 2,
+                            "title": "::store",
+                            "slug": "store"
+                          },
+                          "depth": 2
+                        }
+                      ]
+                    }
+                  ]
                 }, {
                   "type": "file",
                   "data": {
@@ -1730,7 +1879,29 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/user/index",
                     "title": "index"
                   },
-                  "depth": 4
+                  "depth": 4,
+                  "outline": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 1,
+                        "title": "User",
+                        "slug": "user"
+                      },
+                      "depth": 1,
+                      "children": [
+                        {
+                          "type": "heading",
+                          "data": {
+                            "level": 2,
+                            "title": "loadByName",
+                            "slug": "loadbyname"
+                          },
+                          "depth": 2
+                        }
+                      ]
+                    }
+                  ]
                 }, {
                   "type": "file",
                   "data": {
@@ -1750,7 +1921,8 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/user/login",
                     "title": "login"
                   },
-                  "depth": 4
+                  "depth": 4,
+                  "outline": []
                 }, {
                   "type": "file",
                   "data": {
@@ -1840,7 +2012,45 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/villiany/index",
                     "title": "index"
                   },
-                  "depth": 4
+                  "depth": 4,
+                  "outline": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 1,
+                        "title": "Villiany",
+                        "slug": "villiany"
+                      },
+                      "depth": 1,
+                      "children": [
+                        {
+                          "type": "heading",
+                          "data": {
+                            "level": 2,
+                            "title": "Implements hook `httpMiddleware",
+                            "slug": "implements-hook-httpmiddleware"
+                          },
+                          "depth": 2
+                        }, {
+                          "type": "heading",
+                          "data": {
+                            "level": 2,
+                            "title": "Implements hook `settings",
+                            "slug": "implements-hook-settings"
+                          },
+                          "depth": 2
+                        }, {
+                          "type": "heading",
+                          "data": {
+                            "level": 2,
+                            "title": "Implements hook `socketAuthorizationMiddleware",
+                            "slug": "implements-hook-socketauthorizationmiddleware"
+                          },
+                          "depth": 2
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             }

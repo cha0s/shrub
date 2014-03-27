@@ -2,10 +2,10 @@
 
 <p>Implements various core functionality.</p></div></div><div class="code"><div class="wrapper"><span class="nv">nconf = </span><span class="nx">require</span> <span class="s1">&#39;nconf&#39;</span>
 
-<span class="nv">pkgman = </span><span class="nx">require</span> <span class="s1">&#39;pkgman&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookauditkeys">Implements hook <code>auditKeys</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$auditKeys = </span><span class="nf">(req) -&gt;</span>
+<span class="nv">pkgman = </span><span class="nx">require</span> <span class="s1">&#39;pkgman&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookfingerprint">Implements hook <code>fingerprint</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$fingerprint = </span><span class="nf">(req) -&gt;</span>
   
   <span class="c1"># The IP address.</span>
-  <span class="nv">ip: </span><span class="nx">req</span><span class="p">.</span><span class="nx">normalizedIp</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Walk up the X-Forwarded-For header until we hit an untrusted address.</p></div></div><div class="code"><div class="wrapper"><span class="nv">resolvedAddress = </span><span class="nf">(trustedProxies, address, forwardedFor) -&gt;</span>
+  <span class="nv">ip: </span><span class="nx">req</span><span class="o">?</span><span class="p">.</span><span class="nx">normalizedIp</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Walk up the X-Forwarded-For header until we hit an untrusted address.</p></div></div><div class="code"><div class="wrapper"><span class="nv">resolvedAddress = </span><span class="nf">(trustedProxies, address, forwardedFor) -&gt;</span>
   <span class="k">return</span> <span class="nx">address</span> <span class="nx">unless</span> <span class="nx">forwardedFor</span><span class="o">?</span>
   <span class="k">return</span> <span class="nx">address</span> <span class="k">if</span> <span class="nx">trustedProxies</span><span class="p">.</span><span class="nx">length</span> <span class="o">is</span> <span class="mi">0</span>
   

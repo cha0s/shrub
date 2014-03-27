@@ -72,7 +72,7 @@ Allows packages to modify any endpoints defined.</p></div></div><div class="code
         <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="p">.</span><span class="kc">on</span> <span class="s2">&quot;rpc://#{route}&quot;</span><span class="p">,</span> <span class="nf">(data, fn) -&gt;</span>
           </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Don't pass req directly, since it can be mutated by
 routes, and violate other routes' expectations.</p></div></div><div class="code"><div class="wrapper">          <span class="nv">routeReq = </span><span class="p">{}</span>
-          <span class="nx">routeReq</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span> <span class="k">for</span> <span class="nx">own</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span> <span class="k">of</span> <span class="nx">req</span>
+          <span class="nx">routeReq</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span> <span class="k">for</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span> <span class="k">of</span> <span class="nx">req</span>
           <span class="nv">routeReq.body = </span><span class="nx">data</span>
           
           <span class="c1"># Send an error to the client.</span>

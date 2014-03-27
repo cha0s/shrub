@@ -37,7 +37,7 @@ e.g. "rpc://user.login:limiter"</p></li>
 
 <ul>
 <li><p>(array) <code>keys</code> - An array of keys, e.g. a flattened array of keys
-from <a href="./audit.html"><code>audit.keys()</code></a></p></li>
+from <a href="./audit.html"><code>audit.fingerprint()</code></a></p></li>
 <li><p>(integer) <code>score</code> - The score to add. Defaults to 1.</p></li>
 </ul></div></div><div class="code"><div class="wrapper">  <span class="nv">accrue: </span><span class="nf">(keys, score = 1) -&gt;</span>
     <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">@limiter</span><span class="p">.</span><span class="nx">accrue</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">score</span> <span class="k">for</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">keys</span><span class="p">)</span>
@@ -47,7 +47,7 @@ from <a href="./audit.html"><code>audit.keys()</code></a></p></li>
 
 <ul>
 <li><p>(array) <code>keys</code> - An array of keys, e.g. a flattened array of keys
-from <a href="./audit.html"><code>audit.keys()</code></a></p></li>
+from <a href="./audit.html"><code>audit.fingerprint()</code></a></p></li>
 <li><p>(integer) <code>score</code> - The score to add. Defaults to 1.</p></li>
 </ul></div></div><div class="code"><div class="wrapper">  <span class="nv">accrueAndCheckThreshold: </span><span class="nf">(keys, score = 1) -&gt;</span>
     <span class="nx">@accrue</span><span class="p">(</span><span class="nx">keys</span><span class="p">,</span> <span class="nx">score</span><span class="p">).</span><span class="k">then</span> <span class="o">=&gt;</span> <span class="nx">@checkThreshold</span> <span class="nx">keys</span>
@@ -57,7 +57,7 @@ from <a href="./audit.html"><code>audit.keys()</code></a></p></li>
 
 <ul>
 <li>(array) <code>keys</code> - An array of keys, e.g. a flattened array of keys
-from <a href="./audit.html"><code>audit.keys()</code></a></li>
+from <a href="./audit.html"><code>audit.fingerprint()</code></a></li>
 </ul></div></div><div class="code"><div class="wrapper">  <span class="nv">score: </span><span class="nf">(keys) -&gt;</span> <span class="nx">@_largest</span> <span class="nx">keys</span><span class="p">,</span> <span class="s1">&#39;score&#39;</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="ttl">.ttl</h3>
 
@@ -65,7 +65,7 @@ from <a href="./audit.html"><code>audit.keys()</code></a></li>
 
 <ul>
 <li>(array) <code>keys</code> - An array of keys, e.g. a flattened array of keys
-from <a href="./audit.html"><code>audit.keys()</code></a></li>
+from <a href="./audit.html"><code>audit.fingerprint()</code></a></li>
 </ul></div></div><div class="code"><div class="wrapper">  <span class="nv">ttl: </span><span class="nf">(keys) -&gt;</span> <span class="nx">@_largest</span> <span class="nx">keys</span><span class="p">,</span> <span class="s1">&#39;ttl&#39;</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="checkthreshold">.checkThreshold</h3>
 
@@ -73,7 +73,7 @@ from <a href="./audit.html"><code>audit.keys()</code></a></li>
 
 <ul>
 <li>(array) <code>keys</code> - An array of keys, e.g. a flattened array of keys
-from <a href="./audit.html"><code>audit.keys()</code></a></li>
+from <a href="./audit.html"><code>audit.fingerprint()</code></a></li>
 </ul></div></div><div class="code"><div class="wrapper">  <span class="nv">checkThreshold: </span><span class="nf">(keys) -&gt;</span>
     <span class="nx">@score</span><span class="p">(</span><span class="nx">keys</span><span class="p">).</span><span class="k">then</span> <span class="p">(</span><span class="nx">score</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">score</span> <span class="o">&gt;</span> <span class="nx">@threshold</span><span class="p">.</span><span class="nx">score</span><span class="p">()</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h4 id="-largest">._largest</h4>
 

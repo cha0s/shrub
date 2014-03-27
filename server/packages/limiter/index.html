@@ -18,7 +18,7 @@ passed.</p></li>
 <a href="http://shrub.doc.com.dev/server/limits.html#threshold">threshold</a> for
 this limiter.</p></li>
 <li><p><code>ignoreKeys</code>: The
-<a href="http://shrub.doc.com.dev/hooks.html#auditkeys">audit keys</a> to ignore
+<a href="http://shrub.doc.com.dev/hooks.html#fingerprint">audit keys</a> to ignore
 when determining the total limit. In this example, the IP address and
 session ID would be ignored.</p></li>
 </ul></div></div><div class="code"><div class="wrapper">  
@@ -36,9 +36,9 @@ session ID would be ignored.</p></li>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Add a validator, where we'll check the threshold.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">endpoint</span><span class="p">.</span><span class="nx">validators</span><span class="p">.</span><span class="nx">push</span> <span class="nf">(req, res, next) -&gt;</span>
       
       <span class="p">{</span><span class="nx">ignoreKeys</span><span class="p">,</span> <span class="nx">instance</span><span class="p">,</span> <span class="nx">message</span><span class="p">,</span> <span class="nx">threshold</span><span class="p">}</span> <span class="o">=</span> <span class="nx">endpoint</span><span class="p">.</span><span class="nx">limiter</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Ignore keys.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">auditKeys = </span><span class="nx">audit</span><span class="p">.</span><span class="nx">keys</span> <span class="nx">req</span>
-      <span class="k">delete</span> <span class="nx">auditKeys</span><span class="p">[</span><span class="nx">excludedKey</span><span class="p">]</span> <span class="k">for</span> <span class="nx">excludedKey</span> <span class="k">in</span> <span class="nx">ignoreKeys</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Accrue a hit and check the threshold.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">keys = </span><span class="p">(</span><span class="s2">&quot;#{key}:#{value}&quot;</span> <span class="k">for</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span> <span class="k">of</span> <span class="nx">auditKeys</span><span class="p">)</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Ignore keys.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">fingerprint = </span><span class="nx">audit</span><span class="p">.</span><span class="nx">fingerprint</span> <span class="nx">req</span>
+      <span class="k">delete</span> <span class="nx">fingerprint</span><span class="p">[</span><span class="nx">excludedKey</span><span class="p">]</span> <span class="k">for</span> <span class="nx">excludedKey</span> <span class="k">in</span> <span class="nx">ignoreKeys</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Accrue a hit and check the threshold.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">keys = </span><span class="p">(</span><span class="s2">&quot;#{key}:#{value}&quot;</span> <span class="k">for</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span> <span class="k">of</span> <span class="nx">fingerprint</span><span class="p">)</span>
       <span class="nx">instance</span><span class="p">.</span><span class="nx">accrueAndCheckThreshold</span><span class="p">(</span><span class="nx">keys</span><span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="nf">(isLimited) -&gt;</span>
         <span class="k">return</span> <span class="nx">next</span><span class="p">()</span> <span class="nx">unless</span> <span class="nx">isLimited</span>
         </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Report villiany for crossing the limiter threshold.

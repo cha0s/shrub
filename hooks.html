@@ -203,13 +203,13 @@ description and a list of implementing packages for each hook.</p>
 <p><a href="./server/audit.html">server/audit.coffee</a></p>
 
 <ul>
-<li><h2 id="auditkeys"><code>auditKeys</code></h2>
+<li><h2 id="fingerprint"><code>fingerprint</code></h2>
 
-<p><h5>Allows a package to specify unique keys for this request, e.g. IP address, session ID, etc. </h5></p>
+<p><h5>Allows a package to specify unique keys for this request, e.g. IP address, session ID, etc. Implementations take a request object as the only parameter. The request parameter may be null. </h5></p>
 
-<ul><li><p>core (<a href="./server/packages/core/index.html#implementshookauditkeys">server</a>)</p></li>
-<li><p>session (<a href="./server/packages/session/index.html#implementshookauditkeys">server</a>)</p></li>
-<li><p>user (<a href="./server/packages/user/index.html#implementshookauditkeys">server</a>)</p></li></ul></li>
+<ul><li><p>core (<a href="./server/packages/core/index.html#implementshookfingerprint">server</a>)</p></li>
+<li><p>session (<a href="./server/packages/session/index.html#implementshookfingerprint">server</a>)</p></li>
+<li><p>user (<a href="./server/packages/user/index.html#implementshookfingerprint">server</a>)</p></li></ul></li>
 </ul>
 
 <p><a href="./server/config.html">server/config.coffee</a></p>

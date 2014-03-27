@@ -17,62 +17,51 @@
   <span class="k">for</span> <span class="nx">route</span><span class="p">,</span> <span class="nx">endpoint</span> <span class="k">of</span> <span class="nx">endpoints</span>
   
     <span class="nx">endpoint</span><span class="p">.</span><span class="nx">villianyScore</span> <span class="o">?=</span> <span class="mi">20</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookmodels">Implements hook <code>models</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$models = </span><span class="nf">(schema) -&gt;</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Bans.
-<code>TODO</code>: Generate all of this dynamically from audit keys.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">Ban = </span><span class="nx">schema</span><span class="p">.</span><span class="nx">define</span> <span class="s1">&#39;Ban&#39;</span><span class="p">,</span>
-    
-    <span class="nv">ip:</span>
+  
+  <span class="nv">fingerprintKeys = </span><span class="nx">audit</span><span class="p">.</span><span class="nx">fingerprintKeys</span><span class="p">()</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Bans.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">model = expires: type: </span><span class="nb">Number</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The structure of a ban is dictated by the fingerprint structure.</p></div></div><div class="code"><div class="wrapper">  <span class="k">for</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">fingerprintKeys</span>
+    <span class="nx">model</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span>
       <span class="nv">index: </span><span class="kc">true</span>
       <span class="nv">type: </span><span class="nb">String</span>
-    
-    <span class="nv">session:</span>
-      <span class="nv">index: </span><span class="kc">true</span>
-      <span class="nv">type: </span><span class="nb">String</span>
-    
-    <span class="nv">user:</span>
-      <span class="nv">index: </span><span class="kc">true</span>
-      <span class="nv">type: </span><span class="nb">Number</span>
-    
-    <span class="nv">expires:</span>
-      <span class="nv">type: </span><span class="nb">Number</span>
-
-  <span class="nv">banTemplate = </span><span class="nf">(where) -&gt;</span>
   
-    <span class="nx">Ban</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nv">where: </span><span class="nx">where</span><span class="p">).</span><span class="nx">bind</span><span class="p">({}).</span><span class="k">then</span><span class="p">(</span><span class="nf">(@bans) -&gt;</span>
-      <span class="k">return</span> <span class="kc">false</span> <span class="k">if</span> <span class="nx">@bans</span><span class="p">.</span><span class="nx">length</span> <span class="o">is</span> <span class="mi">0</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Destroy all expired bans.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">expired = </span><span class="nx">@bans</span><span class="p">.</span><span class="nx">filter</span> <span class="nf">(ban) -&gt;</span> <span class="nx">ban</span><span class="p">.</span><span class="nx">expires</span> <span class="o">&lt;=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span>
-      <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span> <span class="nx">expired</span><span class="p">.</span><span class="nx">map</span> <span class="nf">(ban) -&gt;</span> <span class="nx">ban</span><span class="p">.</span><span class="nx">destroy</span><span class="p">()</span>
+  <span class="nv">Ban = </span><span class="nx">schema</span><span class="p">.</span><span class="nx">define</span> <span class="s1">&#39;Ban&#39;</span><span class="p">,</span> <span class="nx">model</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Generate a test for whether each fingerprint key has been banned.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">fingerprintKeys</span><span class="p">.</span><span class="nx">forEach</span> <span class="nf">(key) -&gt;</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p><code>session</code> -> <code>isSessionBanned</code></p></div></div><div class="code"><div class="wrapper">    <span class="nx">Ban</span><span class="p">[</span><span class="nx">i8n</span><span class="p">.</span><span class="nx">camelize</span> <span class="s2">&quot;is_#{key}_banned&quot;</span><span class="p">,</span> <span class="kc">true</span><span class="p">]</span> <span class="o">=</span> <span class="nf">(value) -&gt;</span>
+      <span class="nv">where = </span><span class="p">{}</span>
+      <span class="nx">where</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span>
       
-    <span class="p">).</span><span class="k">then</span> <span class="nf">(expired) -&gt;</span>
-      
-      <span class="nv">active = </span><span class="nx">@bans</span><span class="p">.</span><span class="nx">filter</span> <span class="nf">(ban) -&gt;</span> <span class="nx">ban</span><span class="p">.</span><span class="nx">expires</span> <span class="o">&gt;</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span>
-      
-      <span class="p">[</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>More bans than those that expired?</p></div></div><div class="code"><div class="wrapper">        <span class="nx">@bans</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="nx">expired</span><span class="p">.</span><span class="nx">length</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Ban ttl.</p></div></div><div class="code"><div class="wrapper">        <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span> <span class="p">(</span><span class="nx">active</span><span class="p">.</span><span class="nx">reduce</span><span class="p">(</span>
-          <span class="nf">(l, r) -&gt;</span>
-            
-            <span class="k">if</span> <span class="nx">l</span><span class="p">.</span><span class="nx">expires</span> <span class="o">&gt;</span> <span class="nx">r</span><span class="p">.</span><span class="nx">expires</span> <span class="k">then</span> <span class="nx">l</span><span class="p">.</span><span class="nx">expires</span> <span class="k">else</span> <span class="nx">r</span><span class="p">.</span><span class="nx">expires</span>
-            
-          <span class="o">-</span><span class="kc">Infinity</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>It's a timestamp, and it's in ms.</p></div></div><div class="code"><div class="wrapper">        <span class="p">)</span> <span class="o">-</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">())</span> <span class="o">/</span> <span class="mi">1000</span>
-      <span class="p">]</span>
-  
-  <span class="nv">Ban.isIpBanned = </span><span class="nf">(ip) -&gt;</span> <span class="nx">banTemplate</span> <span class="nv">ip: </span><span class="nx">ip</span>
-    
-  <span class="nv">Ban.isSessionBanned = </span><span class="nf">(id) -&gt;</span> <span class="nx">banTemplate</span> <span class="nv">session: </span><span class="nx">id</span>
-    
-  <span class="nv">Ban.isUserBanned = </span><span class="nf">(id) -&gt;</span> <span class="nx">banTemplate</span> <span class="nv">user: </span><span class="nx">id</span>
-    
-  <span class="nv">Ban.createFromKeys = </span><span class="nf">(keys, expires) -&gt;</span>
-    <span class="k">return</span> <span class="nx">unless</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">keys</span><span class="p">).</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span>
+      <span class="nx">Ban</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nv">where: </span><span class="nx">where</span><span class="p">).</span><span class="nx">bind</span><span class="p">({}).</span><span class="k">then</span><span class="p">(</span><span class="nf">(@bans) -&gt;</span>
+        <span class="k">return</span> <span class="kc">false</span> <span class="k">if</span> <span class="nx">@bans</span><span class="p">.</span><span class="nx">length</span> <span class="o">is</span> <span class="mi">0</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Destroy all expired bans.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">expired = </span><span class="nx">@bans</span><span class="p">.</span><span class="nx">filter</span> <span class="nf">(ban) -&gt;</span> <span class="nx">ban</span><span class="p">.</span><span class="nx">expires</span> <span class="o">&lt;=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span>
+        <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span> <span class="nx">expired</span><span class="p">.</span><span class="nx">map</span> <span class="nf">(ban) -&gt;</span> <span class="nx">ban</span><span class="p">.</span><span class="nx">destroy</span><span class="p">()</span>
+        
+      <span class="p">).</span><span class="k">then</span> <span class="nf">(expired) -&gt;</span>
+        
+        <span class="nv">active = </span><span class="nx">@bans</span><span class="p">.</span><span class="nx">filter</span> <span class="nf">(ban) -&gt;</span> <span class="nx">ban</span><span class="p">.</span><span class="nx">expires</span> <span class="o">&gt;</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span>
+        
+        <span class="p">[</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>More bans than those that expired?</p></div></div><div class="code"><div class="wrapper">          <span class="nx">@bans</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="nx">expired</span><span class="p">.</span><span class="nx">length</span>
+          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Ban ttl.</p></div></div><div class="code"><div class="wrapper">          <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span> <span class="p">(</span><span class="nx">active</span><span class="p">.</span><span class="nx">reduce</span><span class="p">(</span>
+            <span class="nf">(l, r) -&gt;</span>
+              
+              <span class="k">if</span> <span class="nx">l</span><span class="p">.</span><span class="nx">expires</span> <span class="o">&gt;</span> <span class="nx">r</span><span class="p">.</span><span class="nx">expires</span>
+                <span class="nx">l</span><span class="p">.</span><span class="nx">expires</span>
+              <span class="k">else</span>
+                <span class="nx">r</span><span class="p">.</span><span class="nx">expires</span>
+              
+            <span class="o">-</span><span class="kc">Infinity</span>
+          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>It's a timestamp, and it's in ms.</p></div></div><div class="code"><div class="wrapper">          <span class="p">)</span> <span class="o">-</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">())</span> <span class="o">/</span> <span class="mi">1000</span>
+        <span class="p">]</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Create a ban from a fingerprint.    </p></div></div><div class="code"><div class="wrapper">  <span class="nv">Ban.createFromFingerprint = </span><span class="nf">(fingerprint, expires) -&gt;</span>
+    <span class="k">return</span> <span class="nx">unless</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">fingerprint</span><span class="p">).</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span>
     
     <span class="nx">unless</span> <span class="nx">expires</span><span class="o">?</span>
       <span class="nv">settings = </span><span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:villiany:ban&#39;</span>
       <span class="nv">expires = </span><span class="nx">settings</span><span class="p">.</span><span class="nx">defaultExpiration</span>
     
-    <span class="nv">ban = </span><span class="k">new</span> <span class="nx">Ban</span><span class="p">()</span>
-    <span class="nv">ban.expires = </span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span> <span class="o">+</span> <span class="nx">expires</span>
-    <span class="nx">ban</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span> <span class="k">for</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span> <span class="k">of</span> <span class="nx">keys</span>
-    
+    <span class="nv">ban = </span><span class="k">new</span> <span class="nx">Ban</span> <span class="nv">expires: </span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span> <span class="o">+</span> <span class="nx">expires</span>
+    <span class="nx">ban</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">fingerprint</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="k">for</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">fingerprintKeys</span>
+      
     <span class="nx">ban</span><span class="p">.</span><span class="nx">save</span><span class="p">()</span>
     
 <span class="nv">villianyLimiter = </span><span class="k">new</span> <span class="nx">Limiter</span><span class="p">(</span>
@@ -84,11 +73,11 @@
 
   <span class="nv">req.reportVilliany = </span><span class="nf">(score, type) -&gt;</span>
     
-    <span class="nv">auditKeys = </span><span class="nx">audit</span><span class="p">.</span><span class="nx">keys</span> <span class="nx">req</span>
+    <span class="nv">fingerprint = </span><span class="nx">audit</span><span class="p">.</span><span class="nx">fingerprint</span> <span class="nx">req</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Terminate the chain if not a villian.</p></div></div><div class="code"><div class="wrapper">    <span class="k">class</span> <span class="nx">NotAVillian</span> <span class="k">extends</span> <span class="nb">Error</span>
       <span class="nv">constructor: </span><span class="nf">(@message) -&gt;</span>
     
-    <span class="nv">keys = </span><span class="p">(</span><span class="s2">&quot;#{key}:#{value}&quot;</span> <span class="k">for</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span> <span class="k">of</span> <span class="nx">auditKeys</span><span class="p">)</span>
+    <span class="nv">keys = </span><span class="p">(</span><span class="s2">&quot;#{key}:#{value}&quot;</span> <span class="k">for</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span> <span class="k">of</span> <span class="nx">fingerprint</span><span class="p">)</span>
     <span class="nx">villianyLimiter</span><span class="p">.</span><span class="nx">accrueAndCheckThreshold</span><span class="p">(</span>
       <span class="nx">keys</span><span class="p">,</span> <span class="nx">score</span>
     
@@ -98,13 +87,13 @@
 <span class="s2">      } for #{</span>
 <span class="s2">        type</span>
 <span class="s2">      }, audit keys: #{</span>
-<span class="s2">        JSON.stringify auditKeys</span>
+<span class="s2">        JSON.stringify fingerprint</span>
 <span class="s2">      }&quot;</span>
       <span class="nx">message</span> <span class="o">+=</span> <span class="s2">&quot;, which resulted in a ban.&quot;</span> <span class="k">if</span> <span class="nx">isVillian</span>
       <span class="nx">logger</span><span class="p">[</span><span class="k">if</span> <span class="nx">isVillian</span> <span class="k">then</span> <span class="s1">&#39;error&#39;</span> <span class="k">else</span> <span class="s1">&#39;warn&#39;</span><span class="p">]</span> <span class="nx">message</span> 
       
       <span class="k">throw</span> <span class="k">new</span> <span class="nx">NotAVillian</span> <span class="nx">unless</span> <span class="nx">isVillian</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Ban.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">Ban</span><span class="p">.</span><span class="nx">createFromKeys</span> <span class="nx">auditKeys</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Ban.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">Ban</span><span class="p">.</span><span class="nx">createFromFingerprint</span> <span class="nx">fingerprint</span>
       <span class="nx">villianyLimiter</span><span class="p">.</span><span class="nx">ttl</span> <span class="nx">keys</span>
           
     <span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="nf">(ttl) -&gt;</span>
@@ -118,13 +107,13 @@
   <span class="p">{</span><span class="nv">models: Ban: </span><span class="nx">Ban</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;server/jugglingdb&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Terminate the request if a ban is enforced.</p></div></div><div class="code"><div class="wrapper">  <span class="k">class</span> <span class="nx">RequestBanned</span> <span class="k">extends</span> <span class="nb">Error</span>
     <span class="nv">constructor: </span><span class="nf">(@message) -&gt;</span>
   
-  <span class="nv">auditKeys = </span><span class="nx">audit</span><span class="p">.</span><span class="nx">keys</span> <span class="nx">req</span>
+  <span class="nv">fingerprint = </span><span class="nx">audit</span><span class="p">.</span><span class="nx">fingerprint</span> <span class="nx">req</span>
 
-  <span class="nv">banPromises = </span><span class="k">for</span> <span class="nx">enforced</span> <span class="k">in</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span> <span class="nx">auditKeys</span>
+  <span class="nv">banPromises = </span><span class="k">for</span> <span class="nx">enforced</span> <span class="k">in</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span> <span class="nx">fingerprint</span>
   
     <span class="nv">method = </span><span class="nx">i8n</span><span class="p">.</span><span class="nx">camelize</span> <span class="s2">&quot;is_#{enforced}_banned&quot;</span><span class="p">,</span> <span class="kc">true</span>
     
-    <span class="nx">Ban</span><span class="p">[</span><span class="nx">method</span><span class="p">](</span><span class="nx">auditKeys</span><span class="p">[</span><span class="nx">enforced</span><span class="p">]).</span><span class="nx">spread</span> <span class="nf">(isBanned, ttl) -&gt;</span>
+    <span class="nx">Ban</span><span class="p">[</span><span class="nx">method</span><span class="p">](</span><span class="nx">fingerprint</span><span class="p">[</span><span class="nx">enforced</span><span class="p">]).</span><span class="nx">spread</span> <span class="nf">(isBanned, ttl) -&gt;</span>
       <span class="k">return</span> <span class="nx">unless</span> <span class="nx">isBanned</span>
       
       <span class="nx">req</span><span class="p">.</span><span class="nx">villianyKick</span><span class="p">(</span><span class="nx">enforced</span><span class="p">,</span> <span class="nx">ttl</span><span class="p">).</span><span class="k">then</span> <span class="o">-&gt;</span>
