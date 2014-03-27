@@ -260,11 +260,11 @@ description and a list of implementing packages for each hook.</p>
 
 <ul><li><p>limiter (<a href="./server/packages/limiter/index.html#implementshookendpointalter">server</a>)</p></li>
 <li><p>villiany (<a href="./server/packages/villiany/index.html#implementshookendpointalter">server</a>)</p></li></ul></li>
-<li><h2 id="rpccallfinished"><code>rpcCallFinished</code></h2>
+<li><h2 id="endpointfinished"><code>endpointFinished</code></h2>
 
 <p><h5>Allow packages to act after an RPC call, but before the response is sent. Packages may modify the response before it is returned. Implementations should return a promise. When all promises are resolved, the result is returned. </h5></p>
 
-<ul><li>session (<a href="./server/packages/session/index.html#implementshookrpccallfinished">server</a>)</li></ul></li>
+<ul><li>session (<a href="./server/packages/session/index.html#implementshookendpointfinished">server</a>)</li></ul></li>
 </ul>
 
 <p><a href="./server/packages/socket/manager.html">server/packages/socket/manager.coffee</a></p>
