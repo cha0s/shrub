@@ -12,18 +12,6 @@ exports.$service = -> [
 		
 		service = {}
 		
-		notifications = null
-		
-		try
-
-			invoke [
-				'ui/notifications'
-				(_notifications_) -> notifications = _notifications_
-			]
-		
-		# It's fine if this fails. 
-		catch error
-		
 		# ## rpc.call
 		# 
 		# Call the server with some data.
