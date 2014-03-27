@@ -12,8 +12,13 @@ Shrub handles generation (using [Grunt](http://gruntjs.com/)) of all Angular
 boilerplate, to allow you to structure your application in a very clean and
 consistent way.
 
-Shrub is organized into packages which implement hooks. Angular services,
-directives, filters, etc. are specified through package hooks, allowing you to
+Shrub is organized into [packages](http://cha0s.github.io/shrub/packages.html)
+which implement [hooks](http://cha0s.github.io/shrub/hooks.html). Angular
+[controllers](http://cha0s.github.io/shrub/hooks.html#controller),
+[directives](http://cha0s.github.io/shrub/hooks.html#directive),
+[filters](http://cha0s.github.io/shrub/hooks.html#filter),
+[services](http://cha0s.github.io/shrub/hooks.html#service),
+etc. are specified through package hooks, allowing you to
 achieve the ultimate in clean, elegant structure. No more
 (controllers|directives|filters|services).js blobs.
 
