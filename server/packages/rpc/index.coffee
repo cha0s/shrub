@@ -97,7 +97,7 @@ exports.$socketConnectionMiddleware = ->
 					# Don't pass req directly, since it can be mutated by
 					# routes, and violate other routes' expectations.
 					routeReq = {}
-					routeReq[key] = value for own key, value of req
+					routeReq[key] = value for key, value of req
 					routeReq.body = data
 					
 					# } Send an error to the client.

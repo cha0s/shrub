@@ -124,19 +124,6 @@ exports.$socketAuthorizationMiddleware = ->
 	label: 'Load user using passport'
 	middleware: [
 	
-		(req, res, next) ->
-			
-			# Augment our request object with certain methods from
-			# `http.IncomingMessage`.
-			for method in [
-				'login', 'logIn'
-				'logout', 'logOut'
-				'isAuthenticated', 'isUnauthenticated'
-			]
-				req[method] = require('http').IncomingMessage.prototype[method]
-			
-			next()
-			
 		# Passport middleware.
 		passport.initialize()
 		passport.session()

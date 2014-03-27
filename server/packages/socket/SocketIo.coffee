@@ -56,9 +56,9 @@ module.exports = class SocketIo extends AbstractSocketFactory
 		@io.set 'authorization', (handshake, fn) =>
 			
 			# Derive a request object from the handshake.
-			# `TODO`: Make req an instance of require('http').IncomingMessage
-			# if we can do that.
-			req = {}
+			{IncomingMessage} = require 'http'
+			req = new IncomingMessage null
+			
 			req[key] = value for key, value of handshake
 			req.http = http
 			
