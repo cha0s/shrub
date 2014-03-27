@@ -7,6 +7,7 @@ nodemailer = require 'server/packages/nodemailer'
 Promise = require 'bluebird'
 
 {threshold} = require 'limits'
+schema = require 'server/jugglingdb'
 
 # ## Implements hook `endpoint`
 exports.$endpoint = ->
@@ -15,7 +16,7 @@ exports.$endpoint = ->
 
 	receiver: (req, fn) ->
 		
-		{models: User: User} = require 'server/jugglingdb'
+		{User} = schema.models
 		
 		Promise.resolve().then(->
 		

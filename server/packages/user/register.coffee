@@ -5,6 +5,7 @@ nconf = require 'nconf'
 nodemailer = require 'server/packages/nodemailer'
 
 crypto = require 'server/crypto'
+schema = require 'server/jugglingdb'
 
 {threshold} = require 'limits'
 
@@ -66,11 +67,7 @@ exports.$endpoint = ->
 # ## Implements hook `replContext`
 exports.$replContext = (context) ->
 	
-	schema = require 'server/jugglingdb'
-	
-	context.registerUser = (name, email, password) ->
-	
-		_register name, email, password, schema
+	context.registerUser = exports.register
 
 # ## register
 # 
@@ -83,11 +80,7 @@ exports.$replContext = (context) ->
 # * (string) `password` - The new user's password.
 exports.register = (name, email, password) ->
 	
-	_register name, email, password, require 'server/jugglingdb'
-	
-_register = (name, email, password, schema) ->
-	
-	{models: User: User} = schema
+	{User} = schema.models
 	user = new User name: name, iname: name.toLowerCase()
 	
 	# Encrypt the email.

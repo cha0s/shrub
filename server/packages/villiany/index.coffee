@@ -13,6 +13,7 @@ logging = require 'logging'
 
 {AuthorizationFailure} = require 'packages/socket/manager'
 {Limiter, threshold} = require 'limits'
+schema = require 'server/jugglingdb'
 
 logger = logging.create 'logs/villiany.log'
 	
@@ -97,8 +98,8 @@ villianyLimiter = new Limiter(
 
 # Define `req.reportVilliany()`.
 reporterMiddleware = (req, res, next) ->
-				
-	{models: Ban: Ban} = require 'server/jugglingdb'
+	
+	{Ban} = schema.models			
 
 	req.reportVilliany = (score, type) ->
 		
@@ -144,7 +145,7 @@ reporterMiddleware = (req, res, next) ->
 # Enforce bans.
 enforcementMiddleware = (req, res, next) ->
 
-	{models: Ban: Ban} = require 'server/jugglingdb'
+	{Ban} = schema.models
 
 	# Terminate the request if a ban is enforced.
 	class RequestBanned extends Error
@@ -189,8 +190,6 @@ buildBanMessage = (subject, ttl) ->
 
 # ## Implements hook `httpMiddleware`
 exports.$httpMiddleware = ->
-	
-	{models: User: User} = require 'server/jugglingdb'
 	
 	label: 'Provide villiany management'
 	middleware: [

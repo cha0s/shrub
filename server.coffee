@@ -8,11 +8,15 @@ Promise = require 'bluebird'
 
 errors = require 'errors'
 pkgman = require 'pkgman'
+schema = require 'server/jugglingdb'
 
 {defaultLogger} = require 'logging'
 
 # } Set up config.
 config = require('config').load()
+
+# } Let packages define their models in the schema.
+schema.definePackageModels()
 
 Promise.all(
 	

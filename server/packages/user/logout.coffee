@@ -1,10 +1,12 @@
 
 # # User logout
 
+schema = require 'server/jugglingdb'
+
 # ## Implements hook `endpoint`
 exports.$endpoint = -> (req, fn) ->
 	
-	{models: User: User} = require 'server/jugglingdb'
+	{User} = schema.models
 	
 	# Log out.
 	req.logout()

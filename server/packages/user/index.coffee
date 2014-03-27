@@ -7,6 +7,7 @@ passport = require 'passport'
 Promise = require 'bluebird'
 
 crypto = require 'server/crypto'
+schema = require 'server/jugglingdb'
 
 clientModule = require 'client/modules/packages/user'
 
@@ -25,7 +26,7 @@ exports.$config = (req) ->
 # ## Implements hook `httpMiddleware`
 exports.$httpMiddleware = (http) ->
 	
-	{models: User: User} = require 'server/jugglingdb'
+	{User} = schema.models
 	
 	label: 'Load user using passport'
 	middleware: [
@@ -57,7 +58,7 @@ exports.$httpMiddleware = (http) ->
 # ## Implements hook `initialize`
 exports.$initialize = (config) ->
 	
-	{models: User: User} = require 'server/jugglingdb'
+	{User} = schema.models
 	
 	# Implement a local passport strategy.
 	# `TODO`: Strategies should be dynamically defined, probably through a
@@ -119,7 +120,7 @@ exports.$modelsAlter = clientModule.$modelsAlter
 # ## Implements hook `socketAuthorizationMiddleware`
 exports.$socketAuthorizationMiddleware = ->
 	
-	{models: User: User} = require 'server/jugglingdb'
+	{User} = schema.models
 	
 	label: 'Load user using passport'
 	middleware: [
@@ -155,7 +156,7 @@ exports.$socketAuthorizationMiddleware = ->
 # ## Implements hook `socketConnectionMiddleware`
 exports.$socketConnectionMiddleware = ->
 	
-	{models: User: User} = require 'server/jugglingdb'
+	{User} = schema.models
 	
 	label: 'Join channel for user'
 	middleware: [
@@ -176,7 +177,7 @@ exports.$socketConnectionMiddleware = ->
 # (string) `name` - The name of the user to load.
 exports.loadByName = (name) ->
 	
-	{models: User: User} = require 'server/jugglingdb'
+	{User} = schema.models
 	
 	User.findOne where: iname: name.toLowerCase()
 

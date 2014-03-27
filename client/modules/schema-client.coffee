@@ -17,17 +17,21 @@ Schema::resourcePaths = (name) ->
 # ## define
 # 
 # Define the JugglingDB schema.
-# `TODO`: Don't do the model invocation/definition immediately.
 exports.define = (adapter, options = {}) ->
 	
 	schema = new Schema adapter, options
 	
-	# Invoke hook `models`.
-	# Allows packages to create models in the database schema.
-	pkgman.invoke 'models', schema
-
-	# Invoke hook `modelsAlter`.
-	# Allows packages to alter any models defined.
-	pkgman.invoke 'modelsAlter', schema.models, schema
+	# ## schema.definePackageModels
+	# 
+	# Let packages define JugglingDB models.
+	schema.definePackageModels = ->
+		
+		# Invoke hook `models`.
+		# Allows packages to create models in the database schema.
+		pkgman.invoke 'models', schema
 	
+		# Invoke hook `modelsAlter`.
+		# Allows packages to alter any models defined.
+		pkgman.invoke 'modelsAlter', schema.models, schema
+		
 	schema

@@ -5,6 +5,8 @@
 
 nconf = require 'nconf'
 
+schema = require 'server/jugglingdb'
+
 # ## Implements hook `config`
 exports.$config = (req) ->
 	
@@ -14,8 +16,6 @@ exports.$config = (req) ->
 # 
 # Serve the database schema as an authenticated REST API.
 exports.$httpInitializing = ({_app}) ->
-	
-	schema = require 'server/jugglingdb'
 	
 	# } DRY.
 	interceptError = (res) ->
@@ -159,4 +159,4 @@ exports.$packageSettings = ->
 # Provide the database schema to the REPL context.
 exports.$replContext = (context) ->
 	
-	context.schema = require 'server/jugglingdb'
+	context.schema = schema

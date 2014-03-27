@@ -10,10 +10,14 @@ exports.$service = -> [
 	'$http', 'require'
 	($http, require) ->
 
-		require('schema-client').define(
+		schema = require('schema-client').define(
 			require 'jugglingdb-rest'
 			$http: $http
 			apiRoot: config.get 'apiRoot'
 		)
+		
+		schema.definePackageModels()
+		
+		schema
 		
 ]
