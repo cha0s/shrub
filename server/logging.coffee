@@ -6,8 +6,6 @@
 nconf = require 'nconf'
 winston = require 'winston'
 
-winston = require 'winston'
-
 # ## .create
 # 
 # *Create a new logger instance.*
