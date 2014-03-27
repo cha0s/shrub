@@ -10,8 +10,6 @@ pkgman = require 'pkgman'
 exports.TransmittableError = class TransmittableError extends Error
 	
 	# See: [https://github.com/jashkenas/coffee-script/issues/2359](https://github.com/jashkenas/coffee-script/issues/2359)
-	# `TODO`: Capture all arguments, and make the necessity for implementing
-	# toJSON obsolete.
 	constructor: (@message) ->
 	
 	# A unique key for this error.
