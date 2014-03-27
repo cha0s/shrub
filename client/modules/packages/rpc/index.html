@@ -5,16 +5,6 @@
   <span class="nf">({invoke}, {defer}, require, pkgman, {emit}) -&gt;</span>
     
     <span class="nv">service = </span><span class="p">{}</span>
-    
-    <span class="nv">notifications = </span><span class="kc">null</span>
-    
-    <span class="k">try</span>
-
-      <span class="nx">invoke</span> <span class="p">[</span>
-        <span class="s1">&#39;ui/notifications&#39;</span>
-        <span class="nf">(_notifications_) -&gt;</span> <span class="nv">notifications = </span><span class="nx">_notifications_</span>
-      <span class="p">]</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>It's fine if this fails. </p></div></div><div class="code"><div class="wrapper">    <span class="k">catch</span> <span class="nx">error</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="rpccall">rpc.call</h2>
 
 <p>Call the server with some data.</p>
@@ -42,10 +32,7 @@ from the server, or rejected with the error from the server.</p></div></div><div
         <span class="nv">data: </span><span class="nx">data</span>
         <span class="nv">result: </span><span class="nx">deferred</span><span class="p">.</span><span class="nx">promise</span>
       
-      <span class="p">)</span> <span class="k">for</span> <span class="nx">injectable</span> <span class="k">in</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invokeFlat</span><span class="p">(</span>
-        <span class="s1">&#39;rpcCall&#39;</span><span class="p">,</span> <span class="nx">route</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">deferred</span><span class="p">.</span><span class="nx">promise</span>
-      
-      <span class="p">)</span>
+      <span class="p">)</span> <span class="k">for</span> <span class="nx">injectable</span> <span class="k">in</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invokeFlat</span> <span class="s1">&#39;rpcCall&#39;</span>
         
       <span class="nx">deferred</span><span class="p">.</span><span class="nx">promise</span>
     
