@@ -187,7 +187,7 @@ buildBanMessage = (subject, ttl) ->
 		
 	message
 
-# ## Implements hook `httpMiddleware
+# ## Implements hook `httpMiddleware`
 exports.$httpMiddleware = ->
 	
 	{models: User: User} = require 'server/jugglingdb'
@@ -216,7 +216,7 @@ exports.$httpMiddleware = ->
 			
 	]
 
-# ## Implements hook `settings
+# ## Implements hook `settings`
 exports.$packageSettings = ->
 	
 	ban:
@@ -224,7 +224,7 @@ exports.$packageSettings = ->
 		# 10 minute ban time by default.
 		defaultExpiration: 1000 * 60 * 10
 
-# ## Implements hook `socketAuthorizationMiddleware
+# ## Implements hook `socketAuthorizationMiddleware`
 exports.$socketAuthorizationMiddleware = ->
 	
 	label: 'Provide villiany management'
