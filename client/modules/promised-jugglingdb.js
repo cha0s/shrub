@@ -978,8 +978,8 @@ function hasOwnProperty(obj, prop) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 }
 
-}).call(this,_dereq_("/home/cha0s6983/dev/code/js/reddichat/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":5,"/home/cha0s6983/dev/code/js/reddichat/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":4,"inherits":3}],7:[function(_dereq_,module,exports){
+}).call(this,_dereq_("./node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./support/isBuffer":5,"./node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":4,"inherits":3}],7:[function(_dereq_,module,exports){
 (function (global,__dirname){
 'use strict';
 
@@ -4006,8 +4006,8 @@ exports.hiddenProperty = function (where, property, value){
 
 
 
-}).call(this,_dereq_("/home/cha0s6983/dev/code/js/reddichat/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"))
-},{"/home/cha0s6983/dev/code/js/reddichat/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":4,"bluebird":false}],16:[function(_dereq_,module,exports){
+}).call(this,_dereq_("./node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"))
+},{"./node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":4,"bluebird":false}],16:[function(_dereq_,module,exports){
 'use strict';
 
 var

@@ -13,7 +13,7 @@ logging = require 'logging'
 
 {AuthorizationFailure} = require 'packages/socket/manager'
 {Limiter, threshold} = require 'limits'
-schema = require 'server/jugglingdb'
+schema = require 'schema'
 
 logger = logging.create 'logs/villiany.log'
 	

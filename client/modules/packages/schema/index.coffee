@@ -10,7 +10,7 @@ exports.$service = -> [
 	'$http', 'require'
 	($http, require) ->
 
-		schema = require('schema-client').define(
+		schema = require('schema').define(
 			require 'jugglingdb-rest'
 			$http: $http
 			apiRoot: config.get 'apiRoot'

@@ -3,7 +3,7 @@
 
 i8n = require 'inflection'
 pkgman = require 'pkgman'
-{Schema} = require 'jugglingdb-client'
+{Schema} = require 'promised-jugglingdb'
 
 # Translate model names to REST resource/collection paths.
 # `'CatalogEntry'` -> `['catalog-entry', 'catalog-entries']`

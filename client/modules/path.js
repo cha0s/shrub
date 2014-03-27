@@ -280,7 +280,7 @@ var substr = 'ab'.substr(-1) === 'b'
     }
 ;
 
-}).call(this,_dereq_("/home/cha0s6983/dev/code/js/reddichat/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"))
-},{"/home/cha0s6983/dev/code/js/reddichat/node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":1}]},{},[2])
+}).call(this,_dereq_("./node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js"))
+},{"./node_modules/browserify/node_modules/insert-module-globals/node_modules/process/browser.js":1}]},{},[2])
 (2)
 });

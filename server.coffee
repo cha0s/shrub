@@ -8,7 +8,7 @@ Promise = require 'bluebird'
 
 errors = require 'errors'
 pkgman = require 'pkgman'
-schema = require 'server/jugglingdb'
+schema = require 'schema'
 
 {defaultLogger} = require 'logging'
 

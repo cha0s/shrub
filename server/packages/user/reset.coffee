@@ -4,7 +4,7 @@
 crypto = require 'server/crypto'
 
 {threshold} = require 'limits'
-schema = require 'server/jugglingdb'
+schema = require 'schema'
 
 # ## Implements hook `endpoint`
 exports.$endpoint = ->

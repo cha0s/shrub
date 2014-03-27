@@ -5,7 +5,7 @@ nconf = require 'nconf'
 nodemailer = require 'server/packages/nodemailer'
 
 crypto = require 'server/crypto'
-schema = require 'server/jugglingdb'
+schema = require 'schema'
 
 {threshold} = require 'limits'
 

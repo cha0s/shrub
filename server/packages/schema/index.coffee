@@ -5,7 +5,7 @@
 
 nconf = require 'nconf'
 
-schema = require 'server/jugglingdb'
+schema = require 'schema'
 
 # ## Implements hook `config`
 exports.$config = (req) ->

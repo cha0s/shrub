@@ -1,7 +1,7 @@
 
 # # User logout
 
-schema = require 'server/jugglingdb'
+schema = require 'schema'
 
 # ## Implements hook `endpoint`
 exports.$endpoint = -> (req, fn) ->

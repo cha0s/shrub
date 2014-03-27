@@ -28,6 +28,7 @@
     "passport-facebook": "~0.1.6",
     "passport-github": "~0.1.5",
     "passport-twitter": "~0.1.5",
+    "promised-jugglingdb": "git://github.com/cha0s/promised-jugglingdb.git#promises",
     "redback": "~0.4.0",
     "shrub-groc-style": "^1.0.0",
     "socket.io": "~0.9.16",
@@ -54,7 +55,6 @@
     "karma-jasmine": "~0.1",
     "karma-junit-reporter": "~0.1",
     "phantomjs": "~1.9",
-    "promised-jugglingdb": "git://github.com/cha0s/promised-jugglingdb.git#promises",
     "protractor": "~0.17.0"
   },
   "license": "MIT"

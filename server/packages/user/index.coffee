@@ -7,7 +7,7 @@ passport = require 'passport'
 Promise = require 'bluebird'
 
 crypto = require 'server/crypto'
-schema = require 'server/jugglingdb'
+schema = require 'schema'
 
 clientModule = require 'client/modules/packages/user'
 

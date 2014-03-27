@@ -20,7 +20,7 @@ module.exports = (grunt, config) ->
 			standalone: 'inflection'
 
 	config.browserify.jugglingdb =
-		files: 'build/js/dependencies/jugglingdb-client.js': [
+		files: 'build/js/dependencies/promised-jugglingdb.js': [
 			'node_modules/promised-jugglingdb/index.js'
 		]
 		options:
@@ -49,7 +49,7 @@ module.exports = (grunt, config) ->
 	config.copy.jugglingdb =
 		expand: true
 		cwd: 'build/js/dependencies'
-		src: ['**/jugglingdb-client.js']
+		src: ['**/promised-jugglingdb.js']
 		dest: 'client/modules'
 	
 	config.copy.path =

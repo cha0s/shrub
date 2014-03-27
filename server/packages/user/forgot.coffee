@@ -7,7 +7,7 @@ nodemailer = require 'server/packages/nodemailer'
 Promise = require 'bluebird'
 
 {threshold} = require 'limits'
-schema = require 'server/jugglingdb'
+schema = require 'schema'
 
 # ## Implements hook `endpoint`
 exports.$endpoint = ->
