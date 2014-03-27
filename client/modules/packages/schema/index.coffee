@@ -3,10 +3,12 @@
 # 
 # Provide the JugglingDB schema as an Angular service.
 
+config = require 'config'
+
 # ## Implements hook `service`
 exports.$service = -> [
-	'$http', 'config', 'require'
-	($http, config, require) ->
+	'$http', 'require'
+	($http, require) ->
 
 		require('schema-client').define(
 			require 'jugglingdb-rest'

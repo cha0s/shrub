@@ -5,6 +5,8 @@
 
 Promise = require 'bluebird'
 
+config = require 'config'
+
 # ## Implements hook `models`
 exports.$models = (schema) ->
 	
@@ -173,8 +175,8 @@ exports.$modelsAlter = (models) ->
 		
 # ## Implements hook `service`		
 exports.$service = -> [
-	'config', 'rpc', 'schema', 'socket'
-	(config, {call}, {models: User: User}, socket) ->
+	'rpc', 'schema', 'socket'
+	({call}, {models: User: User}, socket) ->
 		
 		service = {}
 		

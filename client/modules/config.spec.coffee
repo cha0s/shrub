@@ -1,13 +1,11 @@
 
-Config = (require 'config').Config()
+config = require './config'
 
 describe 'config', ->
 	
-	config = null
-	
 	beforeEach ->
 		
-		config = new Config(
+		config.from(
 			test: 69
 			another:
 				foo:
@@ -15,7 +13,7 @@ describe 'config', ->
 				bar:
 					null
 		)
-	
+		
 	it "gets variables", ->
 		
 		expect(config.get 'test').toBe 69

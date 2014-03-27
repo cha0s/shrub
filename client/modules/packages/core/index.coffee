@@ -3,10 +3,12 @@
 # 
 # Core functionality.
 
+config = require 'config'
+
 # ## Implements hook `appConfig`
 exports.$appConfig = -> [
-	'$injector', '$routeProvider', '$locationProvider', 'configProvider', 'pkgmanProvider'
-	({invoke}, $routeProvider, {html5Mode}, configProvider, pkgmanProvider) ->
+	'$injector', '$routeProvider', '$locationProvider', 'pkgmanProvider'
+	({invoke}, $routeProvider, {html5Mode}, pkgmanProvider) ->
 		
 		routes = {}
 		
@@ -27,7 +29,7 @@ exports.$appConfig = -> [
 		# Invoke hook `routeMock`.
 		# Allow packages to define routes in the Angular application which are
 		# only defined during test mode.
-		if configProvider.get 'testMode'
+		if config.get 'testMode'
 			for path, route of pkgmanProvider.invoke 'routeMock'
 				routes[route.path ? path] = route
 			

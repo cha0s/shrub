@@ -6,8 +6,10 @@ angular.module('shrub.packages', [
 ])
 
 	.config([
-		'$compileProvider', '$controllerProvider', '$filterProvider', '$provide', 'configProvider', 'pkgmanProvider', 'requireProvider'
-		($compileProvider, $controllerProvider, $filterProvider, $provide, configProvider, {invoke}, {require}) ->
+		'$compileProvider', '$controllerProvider', '$filterProvider', '$provide', 'pkgmanProvider', 'requireProvider'
+		($compileProvider, $controllerProvider, $filterProvider, $provide, {invoke}, {require}) ->
+			
+			config = require 'config'
 			
 			# Use normalized names for directives and filters:
 			# 'core/foo/bar' -> 'coreFooBar'
@@ -47,7 +49,7 @@ angular.module('shrub.packages', [
 			
 			# If we are testing, decorate the services with their mock
 			# versions.
-			if configProvider.get 'testMode'
+			if config.get 'testMode'
 				
 				# Invoke hook `serviceMock`.
 				# Allows packages to decorate mock Angular services.
@@ -64,14 +66,15 @@ angular.module('shrub.pkgman', [
 ])
 
 	.provider 'pkgman', [
-		'$provide', 'configProvider', 'requireProvider'
-		($provide, configProvider, {require}) ->
+		'$provide', 'requireProvider'
+		($provide, {require}) ->
 			
 			_ = require 'underscore'
+			config = require 'config'
 			pkgman = require 'pkgman'
 			
 			# Load the package list from configuration.
-			pkgman.registerPackageList configProvider.get 'packageList'
+			pkgman.registerPackageList config.get 'packageList'
 			
 			service = {}
 			

@@ -11,8 +11,6 @@ Promise = require 'bluebird'
 
 pkgman = require 'pkgman'
 
-{Config} = require 'config'
-
 # ## Implements hook `config`
 exports.$config = (req) ->
 	
@@ -22,10 +20,8 @@ exports.$config = (req) ->
 	# Is the server running in test mode?
 	testMode: if (nconf.get 'E2E')? then 'e2e' else false
 	
-	# Debug mode if we're not running in production.
-	# 
-	# } `TODO`: Remove this, and implement a client logging system.
-	debugging: 'production' isnt nconf.get 'NODE_ENV'
+	# Execution environment, `production`, or...
+	environment: nconf.get 'NODE_ENV'
 	
 	# The list of enabled packages.
 	packageList: nconf.get 'packageList'
@@ -59,20 +55,21 @@ exports.$httpMiddleware = (http) ->
 				prettyPrintConfig = ->
 					stringified = JSON.stringify config, null, '  '
 					[first, rest...] = stringified.split '\n'
-					([first].concat rest.map (line) -> '  ' + line).join '\n'
+					([first].concat rest.map (line) -> '    ' + line).join '\n'
 				
 				# Emit the configuration module.
 				res.setHeader 'Content-Type', 'text/javascript'
 				
-				# } `TODO`: This shouldn't be a module, we can do this better.
 				res.send """
-angular.module('shrub.config', []).provider('config', function() {
+angular.module(
+  'shrub.config', ['shrub.require']
+)
 
-  var __slice = [].slice;
-  
-  return new ((#{Config.toString()})())(#{prettyPrintConfig()});
+  .config(['requireProvider', function(requireProvider) {
 
-});
+    requireProvider.require('config').from(#{prettyPrintConfig()});
+
+  }]);
 """
 				
 			).catch next

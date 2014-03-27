@@ -3,6 +3,8 @@
 # 
 # Provide a unified interface for logging information.
 
+config = require 'config'
+
 # ## .create
 # 
 # *Create a new logger instance.*
@@ -15,11 +17,8 @@ exports.create = (type) ->
 		args.unshift type
 		console[key].apply console, args
 	
-	# `TODO`: Bootstrapped, relies on proper client configuration.
-	environment = ''
-	
 	# In production, we'll only log errors.
-	if 'production' is environment
+	if 'production' is config.get 'environment'
 		
 		debug: ->
 		error: augmentedConsoleFunction 'error'

@@ -3,10 +3,15 @@
 # 
 # Provide an Angular service wrapping Socket.IO.
 
+config = require 'config'
+logging = require 'logging'
+
+logger = logging.create 'socket'
+
 # ## Implements hook `service`
 exports.$service = -> [
-	'$rootScope', 'config'
-	($rootScope, config) ->
+	'$rootScope'
+	($rootScope) ->
 		
 		service = {}
 		
@@ -22,10 +27,6 @@ exports.$service = -> [
 		socket.on 'initialized', =>
 			service.emit.apply this, args for args in initializedQueue
 		
-		# Might as well make sure everything's working fine.
-		# `TODO`: Remove after client logging.
-		debugListeners = {}
-
 		# Connection and disconnection.
 		service.connect = -> socket.socket.connect()
 		service.connected = -> socket.socket.connected
@@ -34,49 +35,40 @@ exports.$service = -> [
 		# ## socket.on
 		service.on = (eventName, fn) ->
 			
-			# `TODO`: Remove after client logging.
-			debugListeners["on-#{eventName}"] ?= (->
-				socket.on eventName, (data) ->
-					console.debug "received: #{
-						eventName
-					}, #{
-						JSON.stringify data, null, '  '
-					}"
-			)() if config.get 'debugging'
-				
 			# We need to digest the scope after the response.
-			socket.on eventName, ->
+			socket.on eventName, (data) ->
+				
+				# Log.
+				message = "received: #{eventName}"
+				message += ", #{JSON.stringify data, null, '  '}" if data?
+				logger.debug message
+				
 				onArguments = arguments
 				$rootScope.$apply -> fn.apply socket, onArguments
 		
 		# ## socket.emit
 		service.emit = (eventName, data, fn) ->
 			return initializedQueue.push arguments unless service.connected()
+		
+			# Log.
+			message = "sent: #{eventName}"
+			message += ", #{JSON.stringify data, null, '  '}" if data?
+			logger.debug message
 			
-			# `TODO`: Remove after client logging.
-			if config.get 'debugging'
-				console.debug "sent: #{
-					eventName
-				}, #{
-					JSON.stringify data, null, '  '
-				}"
-				
-			socket.emit eventName, data, ->
+			socket.emit eventName, data, (response) ->
 				
 				# Early out if the client doesn't care about the response.
 				return unless fn?
 				
-				# `TODO`: Remove after client logging.
-				if config.get 'debugging'
-					console.debug "data from: #{
-						eventName
-					}, #{
-						JSON.stringify arguments, null, '  '
-					}"
-					
+				# Log.
+				message = "response: #{eventName}"
+				message += ", #{
+					JSON.stringify response, null, '  '
+				}" if response.result? or response.error?
+				logger.debug message
+				
 				# We need to digest the scope after the response.
-				emitArguments = arguments
-				$rootScope.$apply -> fn.apply socket, emitArguments
+				$rootScope.$apply -> fn response
 		
 		$rootScope.$on 'debugLog', (error) -> service.emit 'debugLog', error
 		
