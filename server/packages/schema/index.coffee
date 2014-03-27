@@ -24,11 +24,9 @@ exports.$httpInitializing = ({_app}) ->
 	# } DRY,
 	serveJson = (res, code, data) ->
 		
-		# http://en.wikipedia.org/wiki/Cross-origin_resource_sharing
-		# `TODO`: Settings-defined headers are what actually make sense here.
-		res.set
-			'Access-Control-Allow-Origin': '*'
-			'Access-Control-Allow-Headers': 'X-Requested-With'
+		# CORS policy enforcement.
+		corsHeaders = nconf.get 'packageSettings:schema:corsHeaders'
+		res.set corsHeaders if corsHeaders?
 			
 		res.json code, data
 	
@@ -148,6 +146,13 @@ exports.$httpInitializing = ({_app}) ->
 					-> serveJson res, 200, message: "Resource deleted."
 					interceptError res
 				).done()
+	
+# ## Implements hook `packageSettings`
+exports.$packageSettings = ->
+	
+	# [CORS](http://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
+	# headers.
+	corsHeaders: null
 	
 # ## Implements hook `replContext`
 # 
