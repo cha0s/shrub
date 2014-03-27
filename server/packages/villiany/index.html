@@ -8,8 +8,9 @@
 <span class="nv">audit = </span><span class="nx">require</span> <span class="s1">&#39;audit&#39;</span>
 <span class="nv">logging = </span><span class="nx">require</span> <span class="s1">&#39;logging&#39;</span>
 
-<span class="p">{</span><span class="nx">AuthorizationFailure</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;AbstractSocketFactory&#39;</span>
+<span class="p">{</span><span class="nx">AuthorizationFailure</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;packages/socket/manager&#39;</span>
 <span class="p">{</span><span class="nx">Limiter</span><span class="p">,</span> <span class="nx">threshold</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;limits&#39;</span>
+<span class="nv">schema = </span><span class="nx">require</span> <span class="s1">&#39;schema&#39;</span>
 
 <span class="nv">logger = </span><span class="nx">logging</span><span class="p">.</span><span class="nx">create</span> <span class="s1">&#39;logs/villiany.log&#39;</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookendpointalter">Implements hook <code>endpointAlter</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$endpointAlter = </span><span class="nf">(endpoints) -&gt;</span>
@@ -68,8 +69,8 @@
   <span class="s2">&quot;villiany&quot;</span>
   <span class="nx">threshold</span><span class="p">(</span><span class="mi">1000</span><span class="p">).</span><span class="nx">every</span><span class="p">(</span><span class="mi">10</span><span class="p">).</span><span class="nx">minutes</span><span class="p">()</span>
 <span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Define <code>req.reportVilliany()</code>.</p></div></div><div class="code"><div class="wrapper"><span class="nv">reporterMiddleware = </span><span class="nf">(req, res, next) -&gt;</span>
-        
-  <span class="p">{</span><span class="nv">models: Ban: </span><span class="nx">Ban</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;server/jugglingdb&#39;</span>
+  
+  <span class="p">{</span><span class="nx">Ban</span><span class="p">}</span> <span class="o">=</span> <span class="nx">schema</span><span class="p">.</span><span class="nx">models</span>     
 
   <span class="nv">req.reportVilliany = </span><span class="nf">(score, type) -&gt;</span>
     
@@ -104,7 +105,7 @@
     
   <span class="nx">next</span><span class="p">()</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Enforce bans.</p></div></div><div class="code"><div class="wrapper"><span class="nv">enforcementMiddleware = </span><span class="nf">(req, res, next) -&gt;</span>
 
-  <span class="p">{</span><span class="nv">models: Ban: </span><span class="nx">Ban</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;server/jugglingdb&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Terminate the request if a ban is enforced.</p></div></div><div class="code"><div class="wrapper">  <span class="k">class</span> <span class="nx">RequestBanned</span> <span class="k">extends</span> <span class="nb">Error</span>
+  <span class="p">{</span><span class="nx">Ban</span><span class="p">}</span> <span class="o">=</span> <span class="nx">schema</span><span class="p">.</span><span class="nx">models</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Terminate the request if a ban is enforced.</p></div></div><div class="code"><div class="wrapper">  <span class="k">class</span> <span class="nx">RequestBanned</span> <span class="k">extends</span> <span class="nb">Error</span>
     <span class="nv">constructor: </span><span class="nf">(@message) -&gt;</span>
   
   <span class="nv">fingerprint = </span><span class="nx">audit</span><span class="p">.</span><span class="nx">fingerprint</span> <span class="nx">req</span>
@@ -140,8 +141,6 @@
 <span class="s2">    }.&quot;</span>
     
   <span class="nx">message</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookhttpmiddleware">Implements hook <code>httpMiddleware</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$httpMiddleware = </span><span class="o">-&gt;</span>
-  
-  <span class="p">{</span><span class="nv">models: User: </span><span class="nx">User</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;server/jugglingdb&#39;</span>
   
   <span class="nv">label: </span><span class="s1">&#39;Provide villiany management&#39;</span>
   <span class="nv">middleware: </span><span class="p">[</span>

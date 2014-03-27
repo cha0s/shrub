@@ -90,7 +90,53 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 "pageTitle": "client/modules/config",
                 "title": "config"
               },
-              "depth": 3
+              "depth": 3,
+              "outline": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 1,
+                    "title": "Config",
+                    "slug": "config"
+                  },
+                  "depth": 1,
+                  "children": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".from",
+                        "slug": "from"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".get",
+                        "slug": "get"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".has",
+                        "slug": "has"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".set",
+                        "slug": "set"
+                      },
+                      "depth": 3
+                    }
+                  ]
+                }
+              ]
             }, {
               "type": "file",
               "data": {
@@ -110,7 +156,77 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 "pageTitle": "client/modules/errors",
                 "title": "errors"
               },
-              "depth": 3
+              "depth": 3,
+              "outline": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 1,
+                    "title": "Error handling",
+                    "slug": "error-handling"
+                  },
+                  "depth": 1,
+                  "children": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "TransmittableError",
+                        "slug": "transmittableerror"
+                      },
+                      "depth": 2
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "instantiate",
+                        "slug": "instantiate"
+                      },
+                      "depth": 2
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "message",
+                        "slug": "message"
+                      },
+                      "depth": 2
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "serialize",
+                        "slug": "serialize"
+                      },
+                      "depth": 2
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "stack",
+                        "slug": "stack"
+                      },
+                      "depth": 2
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "transmittableErrors",
+                        "slug": "transmittableerrors"
+                      },
+                      "depth": 2
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "unserialize",
+                        "slug": "unserialize"
+                      },
+                      "depth": 2
+                    }
+                  ]
+                }
+              ]
             }, {
               "type": "file",
               "data": {
@@ -130,7 +246,18 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 "pageTitle": "client/modules/jugglingdb-rest",
                 "title": "jugglingdb-rest"
               },
-              "depth": 3
+              "depth": 3,
+              "outline": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 1,
+                    "title": "JugglingDB/Angular REST adapter",
+                    "slug": "jugglingdbangular-rest-adapter"
+                  },
+                  "depth": 1
+                }
+              ]
             }, {
               "type": "file",
               "data": {
@@ -150,7 +277,29 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 "pageTitle": "client/modules/logging",
                 "title": "logging"
               },
-              "depth": 3
+              "depth": 3,
+              "outline": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 1,
+                    "title": "Logging",
+                    "slug": "logging"
+                  },
+                  "depth": 1,
+                  "children": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": ".create",
+                        "slug": "create"
+                      },
+                      "depth": 2
+                    }
+                  ]
+                }
+              ]
             }, {
               "type": "file",
               "data": {
@@ -170,7 +319,53 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 "pageTitle": "client/modules/middleware",
                 "title": "middleware"
               },
-              "depth": 3
+              "depth": 3,
+              "outline": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 1,
+                    "title": "Middleware",
+                    "slug": "middleware"
+                  },
+                  "depth": 1,
+                  "children": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "Middleware",
+                        "slug": "middleware"
+                      },
+                      "depth": 2
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "::use",
+                        "slug": "use"
+                      },
+                      "depth": 2
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "::dispatch",
+                        "slug": "dispatch"
+                      },
+                      "depth": 2
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "fromHook",
+                        "slug": "fromhook"
+                      },
+                      "depth": 2
+                    }
+                  ]
+                }
+              ]
             }, {
               "type": "folder",
               "data": {
@@ -396,29 +591,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/rpc/index",
                         "title": "index"
                       },
-                      "depth": 5,
-                      "outline": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 1,
-                            "title": "RPC",
-                            "slug": "rpc"
-                          },
-                          "depth": 1,
-                          "children": [
-                            {
-                              "type": "heading",
-                              "data": {
-                                "level": 2,
-                                "title": "rpc.call",
-                                "slug": "rpccall"
-                              },
-                              "depth": 2
-                            }
-                          ]
-                        }
-                      ]
+                      "depth": 5
                     }
                   ]
                 }, {
@@ -448,7 +621,18 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/schema/index",
                         "title": "index"
                       },
-                      "depth": 5
+                      "depth": 5,
+                      "outline": [
+                        {
+                          "type": "heading",
+                          "data": {
+                            "level": 1,
+                            "title": "Schema",
+                            "slug": "schema"
+                          },
+                          "depth": 1
+                        }
+                      ]
                     }
                   ]
                 }, {
@@ -776,13 +960,43 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                   "foldPrefix": "^",
                   "name": "CoffeeScript"
                 },
-                "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/modules/schema-client.coffee",
-                "projectPath": "client/modules/schema-client.coffee",
-                "targetPath": "client/modules/schema-client",
-                "pageTitle": "client/modules/schema-client",
-                "title": "schema-client"
+                "sourcePath": "/home/cha0s6983/dev/code/js/shrub/client/modules/schema.coffee",
+                "projectPath": "client/modules/schema.coffee",
+                "targetPath": "client/modules/schema",
+                "pageTitle": "client/modules/schema",
+                "title": "schema"
               },
-              "depth": 3
+              "depth": 3,
+              "outline": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 1,
+                    "title": "JugglingDB",
+                    "slug": "jugglingdb"
+                  },
+                  "depth": 1,
+                  "children": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "define",
+                        "slug": "define"
+                      },
+                      "depth": 2
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "schema.definePackageModels",
+                        "slug": "schemadefinepackagemodels"
+                      },
+                      "depth": 2
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }, {
@@ -936,6 +1150,17 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
         "title": "server"
       },
       "depth": 1,
+      "outline": [
+        {
+          "type": "heading",
+          "data": {
+            "level": 1,
+            "title": "Server",
+            "slug": "server"
+          },
+          "depth": 1
+        }
+      ],
       "children": [
         {
           "type": "file",
@@ -955,26 +1180,6 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "targetPath": "server/AbstractHttp",
             "pageTitle": "server/AbstractHttp",
             "title": "AbstractHttp"
-          },
-          "depth": 2
-        }, {
-          "type": "file",
-          "data": {
-            "language": {
-              "nameMatchers": [".coffee", "Cakefile"],
-              "pygmentsLexer": "coffee-script",
-              "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-              "strictMultiLineEnd": false,
-              "singleLineComment": ["#"],
-              "ignorePrefix": "}",
-              "foldPrefix": "^",
-              "name": "CoffeeScript"
-            },
-            "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/AbstractSocketFactory.coffee",
-            "projectPath": "server/AbstractSocketFactory.coffee",
-            "targetPath": "server/AbstractSocketFactory",
-            "pageTitle": "server/AbstractSocketFactory",
-            "title": "AbstractSocketFactory"
           },
           "depth": 2
         }, {
@@ -1035,26 +1240,6 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "targetPath": "server/crypto",
             "pageTitle": "server/crypto",
             "title": "crypto"
-          },
-          "depth": 2
-        }, {
-          "type": "file",
-          "data": {
-            "language": {
-              "nameMatchers": [".coffee", "Cakefile"],
-              "pygmentsLexer": "coffee-script",
-              "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-              "strictMultiLineEnd": false,
-              "singleLineComment": ["#"],
-              "ignorePrefix": "}",
-              "foldPrefix": "^",
-              "name": "CoffeeScript"
-            },
-            "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/jugglingdb.coffee",
-            "projectPath": "server/jugglingdb.coffee",
-            "targetPath": "server/jugglingdb",
-            "pageTitle": "server/jugglingdb",
-            "title": "jugglingdb"
           },
           "depth": 2
         }, {
@@ -1532,7 +1717,18 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/schema/index",
                     "title": "index"
                   },
-                  "depth": 4
+                  "depth": 4,
+                  "outline": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 1,
+                        "title": "Database schema",
+                        "slug": "database-schema"
+                      },
+                      "depth": 1
+                    }
+                  ]
                 }
               ]
             }, {
@@ -1586,31 +1782,11 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "foldPrefix": "^",
                       "name": "CoffeeScript"
                     },
-                    "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/packages/socket/SocketIo.coffee",
-                    "projectPath": "server/packages/socket/SocketIo.coffee",
-                    "targetPath": "server/packages/socket/SocketIo",
-                    "pageTitle": "server/packages/socket/SocketIo",
-                    "title": "SocketIo"
-                  },
-                  "depth": 4
-                }, {
-                  "type": "file",
-                  "data": {
-                    "language": {
-                      "nameMatchers": [".coffee", "Cakefile"],
-                      "pygmentsLexer": "coffee-script",
-                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                      "strictMultiLineEnd": false,
-                      "singleLineComment": ["#"],
-                      "ignorePrefix": "}",
-                      "foldPrefix": "^",
-                      "name": "CoffeeScript"
-                    },
-                    "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/packages/socket/factory.coffee",
-                    "projectPath": "server/packages/socket/factory.coffee",
-                    "targetPath": "server/packages/socket/factory",
-                    "pageTitle": "server/packages/socket/factory",
-                    "title": "factory"
+                    "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/packages/socket/SocketIoManager.coffee",
+                    "projectPath": "server/packages/socket/SocketIoManager.coffee",
+                    "targetPath": "server/packages/socket/SocketIoManager",
+                    "pageTitle": "server/packages/socket/SocketIoManager",
+                    "title": "SocketIoManager"
                   },
                   "depth": 4
                 }, {
@@ -1631,6 +1807,26 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "targetPath": "server/packages/socket/index",
                     "pageTitle": "server/packages/socket/index",
                     "title": "index"
+                  },
+                  "depth": 4
+                }, {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/packages/socket/manager.coffee",
+                    "projectPath": "server/packages/socket/manager.coffee",
+                    "targetPath": "server/packages/socket/manager",
+                    "pageTitle": "server/packages/socket/manager",
+                    "title": "manager"
                   },
                   "depth": 4
                 }
@@ -1662,7 +1858,18 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/user/forgot",
                     "title": "forgot"
                   },
-                  "depth": 4
+                  "depth": 4,
+                  "outline": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 1,
+                        "title": "User - forgot password",
+                        "slug": "user-forgot-password"
+                      },
+                      "depth": 1
+                    }
+                  ]
                 }, {
                   "type": "file",
                   "data": {
@@ -1682,7 +1889,29 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/user/index",
                     "title": "index"
                   },
-                  "depth": 4
+                  "depth": 4,
+                  "outline": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 1,
+                        "title": "User",
+                        "slug": "user"
+                      },
+                      "depth": 1,
+                      "children": [
+                        {
+                          "type": "heading",
+                          "data": {
+                            "level": 2,
+                            "title": "loadByName",
+                            "slug": "loadbyname"
+                          },
+                          "depth": 2
+                        }
+                      ]
+                    }
+                  ]
                 }, {
                   "type": "file",
                   "data": {
@@ -1722,7 +1951,18 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/user/logout",
                     "title": "logout"
                   },
-                  "depth": 4
+                  "depth": 4,
+                  "outline": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 1,
+                        "title": "User logout",
+                        "slug": "user-logout"
+                      },
+                      "depth": 1
+                    }
+                  ]
                 }, {
                   "type": "file",
                   "data": {
@@ -1742,7 +1982,29 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/user/register",
                     "title": "register"
                   },
-                  "depth": 4
+                  "depth": 4,
+                  "outline": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 1,
+                        "title": "User registration",
+                        "slug": "user-registration"
+                      },
+                      "depth": 1,
+                      "children": [
+                        {
+                          "type": "heading",
+                          "data": {
+                            "level": 2,
+                            "title": "register",
+                            "slug": "register"
+                          },
+                          "depth": 2
+                        }
+                      ]
+                    }
+                  ]
                 }, {
                   "type": "file",
                   "data": {
@@ -1762,7 +2024,18 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/user/reset",
                     "title": "reset"
                   },
-                  "depth": 4
+                  "depth": 4,
+                  "outline": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 1,
+                        "title": "User password reset",
+                        "slug": "user-password-reset"
+                      },
+                      "depth": 1
+                    }
+                  ]
                 }
               ]
             }, {
@@ -1792,7 +2065,18 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/villiany/index",
                     "title": "index"
                   },
-                  "depth": 4
+                  "depth": 4,
+                  "outline": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 1,
+                        "title": "Villiany",
+                        "slug": "villiany"
+                      },
+                      "depth": 1
+                    }
+                  ]
                 }
               ]
             }
@@ -1817,6 +2101,37 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "title": "sandboxes"
           },
           "depth": 2
+        }, {
+          "type": "file",
+          "data": {
+            "language": {
+              "nameMatchers": [".coffee", "Cakefile"],
+              "pygmentsLexer": "coffee-script",
+              "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+              "strictMultiLineEnd": false,
+              "singleLineComment": ["#"],
+              "ignorePrefix": "}",
+              "foldPrefix": "^",
+              "name": "CoffeeScript"
+            },
+            "sourcePath": "/home/cha0s6983/dev/code/js/shrub/server/schema.coffee",
+            "projectPath": "server/schema.coffee",
+            "targetPath": "server/schema",
+            "pageTitle": "server/schema",
+            "title": "schema"
+          },
+          "depth": 2,
+          "outline": [
+            {
+              "type": "heading",
+              "data": {
+                "level": 1,
+                "title": "JugglingDB",
+                "slug": "jugglingdb"
+              },
+              "depth": 1
+            }
+          ]
         }
       ]
     }, {

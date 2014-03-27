@@ -74,7 +74,7 @@ description and a list of implementing packages for each hook.</p>
 <ul><li>ui/title (<a href="./client/modules/packages/ui/title.html#implementshookroutecontrollerstart">client</a>)</li></ul></li>
 </ul>
 
-<p><a href="./client/modules/schema-client.html">client/modules/schema-client.coffee</a></p>
+<p><a href="./client/modules/schema.html">client/modules/schema.coffee</a></p>
 
 <ul>
 <li><h2 id="models"><code>models</code></h2>
@@ -156,7 +156,7 @@ description and a list of implementing packages for each hook.</p>
 <p><h5>Invoked before the server is bound on the listening port. </h5></p>
 
 <ul><li><p>schema (<a href="./server/packages/schema/index.html#implementshookhttpinitializing">server</a>)</p></li>
-<li><p>socket/factory (<a href="./server/packages/socket/factory.html#implementshookhttpinitializing">server</a>)</p></li></ul></li>
+<li><p>socket (<a href="./server/packages/socket/index.html#implementshookhttpinitializing">server</a>)</p></li></ul></li>
 <li><h2 id="httplistening"><code>httpListening</code></h2>
 
 <p><h5>Invoked once the server is listening, but before initialization finishes. Implementations should return a promise. When all promises are fulfilled, initialization finishes. </h5></p>
@@ -176,30 +176,8 @@ description and a list of implementing packages for each hook.</p>
 <li><p>express/session (<a href="./server/packages/express/session.html#implementshookhttpmiddleware">server</a>)</p></li>
 <li><p>express/static (<a href="./server/packages/express/static.html#implementshookhttpmiddleware">server</a>)</p></li>
 <li><p>form (<a href="./server/packages/form/index.html#implementshookhttpmiddleware">server</a>)</p></li>
-<li><p>socket/factory (<a href="./server/packages/socket/factory.html#implementshookhttpmiddleware">server</a>)</p></li>
 <li><p>user (<a href="./server/packages/user/index.html#implementshookhttpmiddleware">server</a>)</p></li>
 <li><p>villiany (<a href="./server/packages/villiany/index.html#implementshookhttpmiddleware">server</a>)</p></li></ul></li>
-</ul>
-
-<p><a href="./server/AbstractSocketFactory.html">server/AbstractSocketFactory.coffee</a></p>
-
-<ul>
-<li><h2 id="socketauthorizationmiddleware"><code>socketAuthorizationMiddleware</code></h2>
-
-<p><h5>Invoked when a socket connection begins. Packages may throw an instance of <code>AbstractSocketFactory.AuthorizationFailure</code> to reject the socket connection as unauthorized. </h5></p>
-
-<ul><li><p>core (<a href="./server/packages/core/index.html#implementshooksocketauthorizationmiddleware">server</a>)</p></li>
-<li><p>session (<a href="./server/packages/session/index.html#implementshooksocketauthorizationmiddleware">server</a>)</p></li>
-<li><p>user (<a href="./server/packages/user/index.html#implementshooksocketauthorizationmiddleware">server</a>)</p></li>
-<li><p>villiany (<a href="./server/packages/villiany/index.html#implementshooksocketauthorizationmiddleware">server</a>)</p></li></ul></li>
-<li><h2 id="socketconnectionmiddleware"><code>socketConnectionMiddleware</code></h2>
-
-<p><h5>Invoked for every socket connection. </h5></p>
-
-<ul><li><p>rpc (<a href="./server/packages/rpc/index.html#implementshooksocketconnectionmiddleware">server</a>)</p></li>
-<li><p>session (<a href="./server/packages/session/index.html#implementshooksocketconnectionmiddleware">server</a>)</p></li>
-<li><p>socket/factory (<a href="./server/packages/socket/factory.html#implementshooksocketconnectionmiddleware">server</a>)</p></li>
-<li><p>user (<a href="./server/packages/user/index.html#implementshooksocketconnectionmiddleware">server</a>)</p></li></ul></li>
 </ul>
 
 <p><a href="./server/audit.html">server/audit.coffee</a></p>
@@ -226,6 +204,7 @@ description and a list of implementing packages for each hook.</p>
 <li><p>express (<a href="./server/packages/express/index.html#implementshookpackagesettings">server</a>)</p></li>
 <li><p>nodemailer (<a href="./server/packages/nodemailer/index.html#implementshookpackagesettings">server</a>)</p></li>
 <li><p>repl (<a href="./server/packages/repl/index.html#implementshookpackagesettings">server</a>)</p></li>
+<li><p>schema (<a href="./server/packages/schema/index.html#implementshookpackagesettings">server</a>)</p></li>
 <li><p>socket (<a href="./server/packages/socket/index.html#implementshookpackagesettings">server</a>)</p></li></ul></li>
 </ul>
 
@@ -258,7 +237,7 @@ description and a list of implementing packages for each hook.</p>
 
 <ul><li><p>core (<a href="./server/packages/core/index.html#implementshookreplcontext">server</a>)</p></li>
 <li><p>schema (<a href="./server/packages/schema/index.html#implementshookreplcontext">server</a>)</p></li>
-<li><p>socket/factory (<a href="./server/packages/socket/factory.html#implementshookreplcontext">server</a>)</p></li>
+<li><p>socket (<a href="./server/packages/socket/index.html#implementshookreplcontext">server</a>)</p></li>
 <li><p>user/register (<a href="./server/packages/user/register.html#implementshookreplcontext">server</a>)</p></li></ul></li>
 </ul>
 
@@ -281,4 +260,29 @@ description and a list of implementing packages for each hook.</p>
 
 <ul><li><p>limiter (<a href="./server/packages/limiter/index.html#implementshookendpointalter">server</a>)</p></li>
 <li><p>villiany (<a href="./server/packages/villiany/index.html#implementshookendpointalter">server</a>)</p></li></ul></li>
+<li><h2 id="rpccallfinished"><code>rpcCallFinished</code></h2>
+
+<p><h5>Allow packages to act after an RPC call, but before the response is sent. Packages may modify the response before it is returned. Implementations should return a promise. When all promises are resolved, the result is returned. </h5></p>
+
+<ul><li>session (<a href="./server/packages/session/index.html#implementshookrpccallfinished">server</a>)</li></ul></li>
+</ul>
+
+<p><a href="./server/packages/socket/manager.html">server/packages/socket/manager.coffee</a></p>
+
+<ul>
+<li><h2 id="socketauthorizationmiddleware"><code>socketAuthorizationMiddleware</code></h2>
+
+<p><h5>Invoked when a socket connection begins. Packages may throw an instance of <code>SocketManager.AuthorizationFailure</code> to reject the socket connection as unauthorized. </h5></p>
+
+<ul><li><p>core (<a href="./server/packages/core/index.html#implementshooksocketauthorizationmiddleware">server</a>)</p></li>
+<li><p>session (<a href="./server/packages/session/index.html#implementshooksocketauthorizationmiddleware">server</a>)</p></li>
+<li><p>user (<a href="./server/packages/user/index.html#implementshooksocketauthorizationmiddleware">server</a>)</p></li>
+<li><p>villiany (<a href="./server/packages/villiany/index.html#implementshooksocketauthorizationmiddleware">server</a>)</p></li></ul></li>
+<li><h2 id="socketconnectionmiddleware"><code>socketConnectionMiddleware</code></h2>
+
+<p><h5>Invoked for every socket connection. </h5></p>
+
+<ul><li><p>rpc (<a href="./server/packages/rpc/index.html#implementshooksocketconnectionmiddleware">server</a>)</p></li>
+<li><p>session (<a href="./server/packages/session/index.html#implementshooksocketconnectionmiddleware">server</a>)</p></li>
+<li><p>user (<a href="./server/packages/user/index.html#implementshooksocketconnectionmiddleware">server</a>)</p></li></ul></li>
 </ul></div></div></div></div></body></html>

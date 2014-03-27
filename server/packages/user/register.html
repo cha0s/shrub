@@ -2,6 +2,7 @@
 <span class="nv">nodemailer = </span><span class="nx">require</span> <span class="s1">&#39;server/packages/nodemailer&#39;</span>
 
 <span class="nv">crypto = </span><span class="nx">require</span> <span class="s1">&#39;server/crypto&#39;</span>
+<span class="nv">schema = </span><span class="nx">require</span> <span class="s1">&#39;schema&#39;</span>
 
 <span class="p">{</span><span class="nx">threshold</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;limits&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookendpoint">Implements hook <code>endpoint</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$endpoint = </span><span class="o">-&gt;</span>
 
@@ -54,11 +55,7 @@ link.</p></div></div><div class="code"><div class="wrapper">      <span class="n
     <span class="p">)</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookreplcontext">Implements hook <code>replContext</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$replContext = </span><span class="nf">(context) -&gt;</span>
   
-  <span class="nv">schema = </span><span class="nx">require</span> <span class="s1">&#39;server/jugglingdb&#39;</span>
-  
-  <span class="nv">context.registerUser = </span><span class="nf">(name, email, password) -&gt;</span>
-  
-    <span class="nx">_register</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">email</span><span class="p">,</span> <span class="nx">password</span><span class="p">,</span> <span class="nx">schema</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="register">register</h2>
+  <span class="nv">context.registerUser = </span><span class="nx">exports</span><span class="p">.</span><span class="nx">register</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="register">register</h2>
 
 <p><em>Register a user in the system.</em></p>
 
@@ -68,11 +65,7 @@ link.</p></div></div><div class="code"><div class="wrapper">      <span class="n
 <li><p>(string) <code>password</code> - The new user's password.</p></li>
 </ul></div></div><div class="code"><div class="wrapper"><span class="nv">exports.register = </span><span class="nf">(name, email, password) -&gt;</span>
   
-  <span class="nx">_register</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">email</span><span class="p">,</span> <span class="nx">password</span><span class="p">,</span> <span class="nx">require</span> <span class="s1">&#39;server/jugglingdb&#39;</span>
-  
-<span class="nv">_register = </span><span class="nf">(name, email, password, schema) -&gt;</span>
-  
-  <span class="p">{</span><span class="nv">models: User: </span><span class="nx">User</span><span class="p">}</span> <span class="o">=</span> <span class="nx">schema</span>
+  <span class="p">{</span><span class="nx">User</span><span class="p">}</span> <span class="o">=</span> <span class="nx">schema</span><span class="p">.</span><span class="nx">models</span>
   <span class="nv">user = </span><span class="k">new</span> <span class="nx">User</span> <span class="nv">name: </span><span class="nx">name</span><span class="p">,</span> <span class="nv">iname: </span><span class="nx">name</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Encrypt the email.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">crypto</span><span class="p">.</span><span class="nx">encrypt</span><span class="p">(</span><span class="nx">email</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()).</span><span class="k">then</span><span class="p">(</span><span class="nf">(encryptedEmail) -&gt;</span>
 

@@ -90,20 +90,22 @@ the real underlying issue.</p></div></div><div class="code"><div class="wrapper"
             <span class="k">return</span> <span class="nx">sendErrorToClient</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
             </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Receive.</p></div></div><div class="code"><div class="wrapper">            <span class="nx">endpoint</span><span class="p">.</span><span class="nx">receiver</span> <span class="nx">routeReq</span><span class="p">,</span> <span class="nf">(error, result) -&gt;</span>
               <span class="k">return</span> <span class="nx">sendErrorToClient</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
-              </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Touch and save the session for every RPC call.
-<code>TODO</code>: Should be middleware for after a request,
-<code>session</code> should register into that.</p></div></div><div class="code"><div class="wrapper">              <span class="nv">reply = </span><span class="nf">(error) -&gt;</span>
-                <span class="k">return</span> <span class="nx">concealErrorFromClient</span><span class="p">(</span>
-                  <span class="nx">error</span>
-                <span class="p">)</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
+              </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>rpcCallFinished</code>.
+Allow packages to act after an RPC call, but
+before the response is sent. Packages may
+modify the response before it is returned.
+Implementations should return a promise. When
+all promises are resolved, the result is
+returned.</p></div></div><div class="code"><div class="wrapper">              <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span>
+                <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invokeFlat</span><span class="p">(</span>
+                  <span class="s1">&#39;rpcCallFinished&#39;</span><span class="p">,</span> <span class="nx">routeReq</span><span class="p">,</span> <span class="nx">result</span>
+                <span class="p">)</span>             
+
+              <span class="p">).</span><span class="k">then</span><span class="p">(</span>
+                <span class="o">-&gt;</span> <span class="nx">fn</span> <span class="nv">result: </span><span class="nx">result</span>
+                <span class="nx">concealErrorFromClient</span>
+              <span class="p">)</span>
                 
-                <span class="nx">fn</span> <span class="nv">result: </span><span class="nx">result</span>
-              
-              <span class="k">if</span> <span class="p">(</span><span class="nv">session = </span><span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">)</span><span class="o">?</span>
-                <span class="nx">session</span><span class="p">.</span><span class="nx">touch</span><span class="p">().</span><span class="nx">save</span> <span class="nx">reply</span>
-              <span class="k">else</span>
-                <span class="nx">reply</span><span class="p">()</span>
-          
       <span class="nx">next</span><span class="p">()</span>
       
   <span class="p">]</span></div></div></div></div></body></html>

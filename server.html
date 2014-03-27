@@ -5,11 +5,15 @@ initialization hooks, and listen for signals and process exit.</p></div></div><d
 
 <span class="nv">errors = </span><span class="nx">require</span> <span class="s1">&#39;errors&#39;</span>
 <span class="nv">pkgman = </span><span class="nx">require</span> <span class="s1">&#39;pkgman&#39;</span>
+<span class="nv">schema = </span><span class="nx">require</span> <span class="s1">&#39;schema&#39;</span>
 
 <span class="p">{</span><span class="nx">defaultLogger</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;logging&#39;</span>
 
 <span class="c1"># Set up config.</span>
 <span class="nv">config = </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;config&#39;</span><span class="p">).</span><span class="nx">load</span><span class="p">()</span>
+
+<span class="c1"># Let packages define their models in the schema.</span>
+<span class="nx">schema</span><span class="p">.</span><span class="nx">definePackageModels</span><span class="p">()</span>
 
 <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>initialize</code>.

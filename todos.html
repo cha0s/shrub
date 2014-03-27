@@ -64,36 +64,12 @@ context.</p>
 <p>Should we let this throw? </p></li>
 </ul>
 
-<p><a href="./client/modules/schema-client.html">client/modules/schema-client.coffee</a></p>
-
-<ul>
-<li><h4 id="exportsdefineadapteroptions"><code>exports.define = (adapter, options = {}) -&gt;</code></h4>
-
-<p>Don't do the model invocation/definition immediately. </p></li>
-</ul>
-
 <p><a href="./server/AbstractHttp.html">server/AbstractHttp.coffee</a></p>
 
 <ul>
 <li><h4 id="moduleexportsclassabstracthttp"><code>module.exports = class AbstractHttp</code></h4>
 
 <p>This needs work, it probably wouldn't be able to handle another server in its current state. Move API from Express to here, and use a 'pure virtual' pattern, to allow any other server to extend along reasonable lines. </p></li>
-</ul>
-
-<p><a href="./server/AbstractSocketFactory.html">server/AbstractSocketFactory.coffee</a></p>
-
-<ul>
-<li><h4 id="moduleexportsclassabstractsocketfactoryextendseventemitter"><code>module.exports = class AbstractSocketFactory extends EventEmitter</code></h4>
-
-<p>This needs work, it probably wouldn't be able to handle another server in its current state. Move API from SocketIo to here. </p></li>
-</ul>
-
-<p><a href="./server/jugglingdb.html">server/jugglingdb.coffee</a></p>
-
-<ul>
-<li><h4 id="moduleexportsrequireschemaclientdefine"><code>module.exports = require('schema-client').define(</code></h4>
-
-<p>This module currently immediately attempts to gather package models and create the schema: it should provide a function to lookup that information instead of doing it all at require time. </p></li>
 </ul>
 
 <p><a href="./server/packages/angular/index.html">server/packages/angular/index.coffee</a></p>
@@ -142,34 +118,12 @@ context.</p>
 <p>this kind of thing should be configurable and handled by the theme/skin when we get to that point. </p></li>
 </ul>
 
-<p><a href="./server/packages/rpc/index.html">server/packages/rpc/index.coffee</a></p>
-
-<ul>
-<li><h4 id="replyerror"><code>reply = (error) -&gt;</code></h4>
-
-<p>Should be middleware for after a request, <code>session</code> should register into that. </p></li>
-</ul>
-
 <p><a href="./server/packages/schema/index.html">server/packages/schema/index.coffee</a></p>
 
 <ul>
-<li><h4 id="resset"><code>res.set</code></h4>
-
-<p>Settings-defined headers are what actually make sense here. </p></li>
 <li><h4 id="keyifykeyvalue"><code>keyify = (key, value) -&gt;</code></h4>
 
 <p>Generalize and serve "broken" JSON for Angular. See: <a href="http://docs.angularjs.org/api/ng/service/$http#json-vulnerability-protection">Angular JSON vulnerability protection</a>. </p></li>
-</ul>
-
-<p><a href="./server/packages/socket/index.html">server/packages/socket/index.coffee</a></p>
-
-<ul>
-<li><h4 id="requestmiddleware"><code>requestMiddleware: [</code></h4>
-
-<p>Rename to connectionMiddleware. </p></li>
-<li><h4 id="storeredis"><code>store: 'redis'</code></h4>
-
-<p>This probably doesn't belong here. </p></li>
 </ul>
 
 <p><a href="./server/packages/user/index.html">server/packages/user/index.coffee</a></p>
@@ -178,14 +132,6 @@ context.</p>
 <li><h4 id="localstrategyrequirepassportlocalstrategy"><code>LocalStrategy = require('passport-local').Strategy</code></h4>
 
 <p>Strategies should be dynamically defined, probably through a hook. </p></li>
-</ul>
-
-<p><a href="./server/packages/user/login.html">server/packages/user/login.coffee</a></p>
-
-<ul>
-<li><h4 id="newpromiseresolverejectsettimeoutresolve1000"><code>new Promise (resolve, reject) -&gt; setTimeout resolve, 1000</code></h4>
-
-<p>Remove this. We'll eventually disallow registration conflicts. </p></li>
 </ul>
 
 <p><a href="./server/sandboxes.html">server/sandboxes.coffee</a></p>
@@ -215,4 +161,12 @@ context.</p>
 <li><h4 id="setbusy_busy"><code>setBusy: (@_busy) -&gt;</code></h4>
 
 <p>This is a sloppy interface. </p></li>
+</ul>
+
+<p><a href="./server/schema.html">server/schema.coffee</a></p>
+
+<ul>
+<li><h4 id="moduleexportsrequireclientmodulesschemadefine"><code>module.exports = require('client/modules/schema').define(</code></h4>
+
+<p>This module currently immediately attempts to gather package models and create the schema: it should provide a function to lookup that information instead of doing it all at require time. </p></li>
 </ul></div></div></div></div></body></html>
