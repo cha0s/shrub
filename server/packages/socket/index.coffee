@@ -15,8 +15,7 @@ exports.$packageSettings = ->
 	]
 
 	# Middleware stack dispatched once a socket connection is authorized.
-	# `TODO`: Rename to connectionMiddleware.
-	requestMiddleware: [
+	connectionMiddleware: [
 		'socket/factory'
 		'session'
 		'user'

@@ -50,9 +50,9 @@ module.exports = class AbstractSocketFactory extends EventEmitter
 		# Invoked for every socket connection.
 		defaultLogger.info 'BEGIN loading socket middleware'
 
-		@_requestMiddleware = middleware.fromHook(
+		@_connectionMiddleware = middleware.fromHook(
 			'socketConnectionMiddleware'
-			@_config.requestMiddleware
+			@_config.connectionMiddleware
 		)
 		defaultLogger.info 'END loading socket middleware'
 

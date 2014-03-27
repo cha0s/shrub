@@ -104,7 +104,7 @@ module.exports = class SocketIo extends AbstractSocketFactory
 			socket.join '$global'
 			
 			# Dispatch the connection middleware.
-			@_requestMiddleware.dispatch req, null, (error) ->
+			@_connectionMiddleware.dispatch req, null, (error) ->
 				return logger.error errors.stack error if error?
 				
 				socket.emit 'initialized'
