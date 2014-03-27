@@ -27,9 +27,6 @@ class Express extends (require 'AbstractHttp')
 		# } Create the Express instance.
 		@_app = express()
 		
-		# } Register middleware.
-		@registerMiddleware()
-		
 		# } Cache the session store.
 		@_sessionStore = switch @_config.sessions.db
 			when 'redis'
@@ -38,6 +35,9 @@ class Express extends (require 'AbstractHttp')
 		
 				RedisStore = require('connect-redis') express
 				new RedisStore client: module.createClient()
+		
+		# } Register middleware.
+		@registerMiddleware()
 		
 		# } Handlebars!
 		# } `TODO`: Do we really need to use Express's theme system..?
