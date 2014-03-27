@@ -26,71 +26,68 @@ exports.$endpointAlter = (endpoints) ->
 # ## Implements hook `models`
 exports.$models = (schema) ->
 	
+	fingerprintKeys = audit.fingerprintKeys()
+	
 	# Bans.
-	# `TODO`: Generate all of this dynamically from audit keys.
-	Ban = schema.define 'Ban',
-		
-		ip:
+	model = expires: type: Number
+	
+	# The structure of a ban is dictated by the fingerprint structure.
+	for key in fingerprintKeys
+		model[key] =
 			index: true
 			type: String
-		
-		session:
-			index: true
-			type: String
-		
-		user:
-			index: true
-			type: Number
-		
-		expires:
-			type: Number
-
-	banTemplate = (where) ->
 	
-		Ban.all(where: where).bind({}).then((@bans) ->
-			return false if @bans.length is 0
-			
-			# Destroy all expired bans.
-			expired = @bans.filter (ban) -> ban.expires <= Date.now()
-			Promise.all expired.map (ban) -> ban.destroy()
-			
-		).then (expired) ->
-			
-			active = @bans.filter (ban) -> ban.expires > Date.now()
-			
-			[
-				# More bans than those that expired?
-				@bans.length > expired.length
-				
-				# Ban ttl.
-				Math.round (active.reduce(
-					(l, r) ->
-						
-						if l.expires > r.expires then l.expires else r.expires
-						
-					-Infinity
-				
-				# It's a timestamp, and it's in ms.
-				) - Date.now()) / 1000
-			]
+	Ban = schema.define 'Ban', model
 	
-	Ban.isIpBanned = (ip) -> banTemplate ip: ip
+	# Generate a test for whether each fingerprint key has been banned.
+	fingerprintKeys.forEach (key) ->
 		
-	Ban.isSessionBanned = (id) -> banTemplate session: id
-		
-	Ban.isUserBanned = (id) -> banTemplate user: id
-		
-	Ban.createFromKeys = (keys, expires) ->
-		return unless Object.keys(keys).length > 0
+		# `session` -> `isSessionBanned`
+		Ban[i8n.camelize "is_#{key}_banned", true] = (value) ->
+			where = {}
+			where[key] = value
+			
+			Ban.all(where: where).bind({}).then((@bans) ->
+				return false if @bans.length is 0
+				
+				# Destroy all expired bans.
+				expired = @bans.filter (ban) -> ban.expires <= Date.now()
+				Promise.all expired.map (ban) -> ban.destroy()
+				
+			).then (expired) ->
+				
+				active = @bans.filter (ban) -> ban.expires > Date.now()
+				
+				[
+					# More bans than those that expired?
+					@bans.length > expired.length
+					
+					# Ban ttl.
+					Math.round (active.reduce(
+						(l, r) ->
+							
+							if l.expires > r.expires
+								l.expires
+							else
+								r.expires
+							
+						-Infinity
+					
+					# It's a timestamp, and it's in ms.
+					) - Date.now()) / 1000
+				]
+	
+	# Create a ban from a fingerprint.	
+	Ban.createFromFingerprint = (fingerprint, expires) ->
+		return unless Object.keys(fingerprint).length > 0
 		
 		unless expires?
 			settings = nconf.get 'packageSettings:villiany:ban'
 			expires = settings.defaultExpiration
 		
-		ban = new Ban()
-		ban.expires = Date.now() + expires
-		ban[key] = value for key, value of keys
-		
+		ban = new Ban expires: Date.now() + expires
+		ban[key] = fingerprint[key] for key in fingerprintKeys
+			
 		ban.save()
 		
 villianyLimiter = new Limiter(
@@ -131,7 +128,7 @@ reporterMiddleware = (req, res, next) ->
 			throw new NotAVillian unless isVillian
 			
 			# Ban.
-			Ban.createFromKeys fingerprint
+			Ban.createFromFingerprint fingerprint
 			villianyLimiter.ttl keys
 					
 		).then((ttl) ->
