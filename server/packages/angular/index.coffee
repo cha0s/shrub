@@ -136,7 +136,7 @@ exports.$packageSettings = ->
 		]
 
 	# } Should we render in the sandbox?
-	render: not process.env['E2E']?
+	render: true
 
 # ## augmentSandbox
 # 

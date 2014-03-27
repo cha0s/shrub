@@ -14,6 +14,21 @@ pkgman = require 'pkgman'
 # The socket server.
 server = null
 
+# ## Implements hook `packageSettings`
+exports.$packageSettings = ->
+	
+	# The prompt display for REPL clients.
+	prompt: 'shrub> '
+	
+	# The location of the socket.
+	socket: "#{__dirname}/socket"
+	
+	# Use a CoffeeScript REPL?
+	useCoffee: true
+	
+# ## Implements hook `processExit`
+exports.$processExit = -> server?.close()
+
 # ## Implements hook `ready`
 exports.$ready = ->
 	
@@ -62,17 +77,3 @@ exports.$ready = ->
 	# } Try to be tidy about things.	
 	fs.unlink settings.socket, -> server.listen settings.socket
 	
-# ## Implements hook `processExit`
-exports.$processExit = -> server?.close()
-	
-# ## Implements hook `packageSettings`
-exports.$packageSettings = ->
-	
-	# The prompt display for REPL clients.
-	prompt: 'shrub> '
-	
-	# The location of the socket.
-	socket: "#{__dirname}/socket"
-	
-	# Use a CoffeeScript REPL?
-	useCoffee: true

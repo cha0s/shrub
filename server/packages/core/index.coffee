@@ -43,6 +43,12 @@ exports.$httpMiddleware = (http) ->
 		
 	]
 
+# ## Implements hook `packageSettings`
+exports.$packageSettings = ->
+	
+	# } A list of the IP addresses of trusted proxies between clients.
+	trustedProxies: []
+		
 # ## Implements hook `replContext`
 exports.$replContext = (context) ->
 
@@ -51,12 +57,6 @@ exports.$replContext = (context) ->
 		
 		pkgman.invoke 'clearCaches'
 
-# ## Implements hook `packageSettings`
-exports.$packageSettings = ->
-	
-	# } A list of the IP addresses of trusted proxies between clients.
-	trustedProxies: []
-		
 # ## Implements hook `socketAuthorizationMiddleware`
 exports.$socketAuthorizationMiddleware = ->
 	

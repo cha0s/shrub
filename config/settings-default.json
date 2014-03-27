@@ -40,8 +40,7 @@
 			"render": true
 		},
 		"core": {
-			"trustedProxies": [
-			]
+			"trustedProxies": []
 		},
 		"express": {
 			"middleware": [
@@ -72,27 +71,41 @@
 		"nodemailer": {
 			"transport": {
 				"type": "sendmail",
-				"options": {
-				}
+				"options": {}
 			}
 		},
 		"repl": {
+			"prompt": "shrub> ",
 			"useCoffee": true
 		},
+		"schema": {
+			"corsHeaders": null
+		},
 		"socket": {
-			"authoriationMiddleware": [
+			"authorizationMiddleware": [
 				"core",
 				"session",
 				"user",
 				"villiany"
 			],
+			"connectionMiddleware": [
+				"session",
+				"user",
+				"rpc"
+			],
+			"manager": {
+				"module": "packages/socket/SocketIoManager"
+			},
 			"requestMiddleware": [
 				"socket/factory",
 				"user",
 				"rpc"
 			],
-			"module": "packages/socket/SocketIo",
-			"store": "redis"
+		},
+		"villiany": {
+			"ban": {
+				"defaultExpiration": 600000
+			}
 		}
 	}
 }
