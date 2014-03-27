@@ -39,10 +39,7 @@ exports.$service = -> [
 				data: data
 				result: deferred.promise
 			
-			) for injectable in pkgman.invokeFlat(
-				'rpcCall', route, data, deferred.promise
-			
-			)
+			) for injectable in pkgman.invokeFlat 'rpcCall'
 				
 			deferred.promise
 		
