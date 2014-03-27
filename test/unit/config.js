@@ -1,33 +1,36 @@
-angular.module('shrub.config', []).provider('config', function() {
+angular.module(
+  'shrub.config', ['shrub.require']
+)
 
-	var _config = {
-		testMode: 'unit',
-		packageList: [
-			"core",
-			"example",
-			"form",
-			"rpc",
-			"schema",
-			"socket",
-			"ui",
-			"user"
-		],
-		user: {
-			"name": "Anonymous"
-		}
-	};
-	
-	var get = function(key) { return _config[key]; };
-	var has = function(key) { return _config[key] != null; };
-	var set = function(key, value) { return _config[key] = value; };
-	
-	return {
-		
-		get: get,
-		has: has,
-		set: set,
-		
-		$get: function() { return {get: get, has: has, set: set}; }
-	};
-	
-});
+  .config(['requireProvider', function(requireProvider) {
+
+    requireProvider.require('config').from({
+      testMode: "unit",
+      packageList: [
+        "angular",
+        "assets",
+        "config",
+        "core",
+        "example",
+        "express",
+        "files",
+        "form",
+        "limiter",
+        "logger",
+        "nodemailer",
+        "repl",
+        "rpc",
+        "schema",
+        "session",
+        "socket",
+        "ui",
+        "user",
+        "villiany"
+      ],
+      user: {
+        name: "Anonymous",
+        email: null
+      }
+    });
+
+  }]);
