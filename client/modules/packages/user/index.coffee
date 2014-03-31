@@ -74,13 +74,11 @@ exports.$modelsAlter = (models) ->
 			
 			checkPermission = (user, perm) ->
 			
-				new Promise (resolve, reject) ->
-		
-					return resolve() if user.hasPermission perm
-						
-					error = new Error "Access denied."
-					error.code = 403
-					reject error
+				return if user.hasPermission perm
+					
+				error = new Error "Forbidden."
+				error.code = 403
+				throw error
 					
 			Model.authenticatedAll = (user, params) ->
 				
