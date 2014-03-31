@@ -16,16 +16,18 @@
   <span class="nv">serveJson = </span><span class="nf">(res, code, data) -&gt;</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>CORS policy enforcement.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">corsHeaders = </span><span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:schema:corsHeaders&#39;</span>
     <span class="nx">res</span><span class="p">.</span><span class="nx">set</span> <span class="nx">corsHeaders</span> <span class="k">if</span> <span class="nx">corsHeaders</span><span class="o">?</span>
-      
-    <span class="nx">res</span><span class="p">.</span><span class="nx">json</span> <span class="nx">code</span><span class="p">,</span> <span class="nx">data</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Serve JSON manually, breaking it to protect against XSRF.
+See: <a href="http://docs.angularjs.org/api/ng/service/$http#json-vulnerability-protection">http://docs.angularjs.org/api/ng/service/$http#json-vulnerability-protection</a></p></div></div><div class="code"><div class="wrapper">    <span class="nx">res</span><span class="p">.</span><span class="nx">set</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;application/json&#39;</span>
+    <span class="nv">res.statusCode = </span><span class="nx">code</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">send</span> <span class="s2">&quot;)]}&#39;,\n#{JSON.stringify data}&quot;</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Gross...</p></div></div><div class="code"><div class="wrapper">  <span class="nv">app = </span><span class="nx">_app</span>
   <span class="nv">app._usedRouter = </span><span class="kc">true</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Serve the models. For each model, we'll define REST paths to allow
 interaction with a model, or set of models.</p></div></div><div class="code"><div class="wrapper">  <span class="k">for</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">Model</span> <span class="k">of</span> <span class="nx">schema</span><span class="p">.</span><span class="nx">models</span>
     
     <span class="nx">do</span> <span class="nf">(Model) -&gt;</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p><code>TODO</code>: Generalize and serve "broken" JSON for Angular.
-See: <a href="http://docs.angularjs.org/api/ng/service/$http#json-vulnerability-protection">Angular JSON vulnerability protection</a>.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">keyify = </span><span class="nf">(key, value) -&gt;</span>
+      
+      <span class="nv">keyify = </span><span class="nf">(key, value) -&gt;</span>
         <span class="nv">O = </span><span class="p">{}</span>
         <span class="nx">O</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span>
         <span class="nx">O</span>
@@ -38,8 +40,9 @@ default (<code>/api</code>), the values will be:</p>
 resourcePath = "/api/user/:id"
 </code></pre>
 
-<p>We'll assume these defaults for each path's explanation.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">collectionPath = </span><span class="s2">&quot;#{schema.settings.apiRoot}/#{collection}&quot;</span>
-      <span class="nv">resourcePath = </span><span class="s2">&quot;#{schema.settings.apiRoot}/#{resource}/:id&quot;</span>
+<p>We'll assume these defaults for each path's explanation.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">apiRoot = </span><span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;apiRoot&#39;</span>
+      <span class="nv">collectionPath = </span><span class="s2">&quot;#{apiRoot}/#{collection}&quot;</span>
+      <span class="nv">resourcePath = </span><span class="s2">&quot;#{apiRoot}/#{resource}/:id&quot;</span>
       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Get the entire collection.
 GET <code>/api/users</code></p></div></div><div class="code"><div class="wrapper">      <span class="nx">app</span><span class="p">.</span><span class="nx">get</span> <span class="nx">collectionPath</span><span class="p">,</span> <span class="nf">(req, res) -&gt;</span>
         
@@ -49,8 +52,8 @@ GET <code>/api/users</code></p></div></div><div class="code"><div class="wrapper
 
         <span class="p">).</span><span class="k">then</span><span class="p">(</span>
           <span class="nf">(models) -&gt;</span> <span class="nx">serveJson</span> <span class="nx">res</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="nx">keyify</span> <span class="nx">collection</span><span class="p">,</span> <span class="nx">models</span>
-          <span class="nx">interceptError</span> <span class="nx">res</span>
-        <span class="p">).</span><span class="nx">done</span><span class="p">()</span>
+
+        <span class="p">).</span><span class="k">catch</span> <span class="nx">interceptError</span> <span class="nx">res</span>
         </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Get how many resources are in the collection.
 GET <code>/api/users/count</code></p></div></div><div class="code"><div class="wrapper">      <span class="nx">app</span><span class="p">.</span><span class="nx">get</span> <span class="s2">&quot;#{collectionPath}/count&quot;</span><span class="p">,</span> <span class="nf">(req, res) -&gt;</span>
         
@@ -59,8 +62,8 @@ GET <code>/api/users/count</code></p></div></div><div class="code"><div class="w
 
         <span class="p">).</span><span class="k">then</span><span class="p">(</span>
           <span class="nf">(count) -&gt;</span> <span class="nx">serveJson</span> <span class="nx">res</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="nx">keyify</span> <span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="nx">count</span>
-          <span class="nx">interceptError</span> <span class="nx">res</span>
-        <span class="p">).</span><span class="nx">done</span><span class="p">()</span>
+
+        <span class="p">).</span><span class="k">catch</span> <span class="nx">interceptError</span> <span class="nx">res</span>
       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Create a new resource in the collection.
 POST <code>/api/users</code></p></div></div><div class="code"><div class="wrapper">      <span class="nx">app</span><span class="p">.</span><span class="nx">post</span> <span class="nx">collectionPath</span><span class="p">,</span> <span class="nf">(req, res) -&gt;</span>
 
@@ -70,8 +73,8 @@ POST <code>/api/users</code></p></div></div><div class="code"><div class="wrappe
 
         <span class="p">).</span><span class="k">then</span><span class="p">(</span>
           <span class="nf">(model) -&gt;</span> <span class="nx">serveJson</span> <span class="nx">res</span><span class="p">,</span> <span class="mi">201</span><span class="p">,</span> <span class="nx">keyify</span> <span class="nx">resource</span><span class="p">,</span> <span class="nx">model</span>
-          <span class="nx">interceptError</span> <span class="nx">res</span>
-        <span class="p">).</span><span class="nx">done</span><span class="p">()</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Delete all resources in a collection.
+
+        <span class="p">).</span><span class="k">catch</span> <span class="nx">interceptError</span> <span class="nx">res</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Delete all resources in a collection.
 DELETE <code>/api/users</code></p></div></div><div class="code"><div class="wrapper">      <span class="nx">app</span><span class="p">.</span><span class="k">delete</span> <span class="nx">collectionPath</span><span class="p">,</span> <span class="nf">(req, res) -&gt;</span>
         
         <span class="nx">Model</span><span class="p">.</span><span class="nx">authenticatedDestroyAll</span><span class="p">(</span>
@@ -79,8 +82,8 @@ DELETE <code>/api/users</code></p></div></div><div class="code"><div class="wrap
         
         <span class="p">).</span><span class="k">then</span><span class="p">(</span>
           <span class="o">-&gt;</span> <span class="nx">serveJson</span> <span class="nx">res</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="nv">message: </span><span class="s2">&quot;Collection deleted.&quot;</span>
-          <span class="nx">interceptError</span> <span class="nx">res</span>
-        <span class="p">).</span><span class="nx">done</span><span class="p">()</span>
+
+        <span class="p">).</span><span class="k">catch</span> <span class="nx">interceptError</span> <span class="nx">res</span>
       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Get a resource.
 GET <code>/api/user/1</code></p></div></div><div class="code"><div class="wrapper">      <span class="nx">app</span><span class="p">.</span><span class="nx">get</span> <span class="nx">resourcePath</span><span class="p">,</span> <span class="nf">(req, res) -&gt;</span>
         
@@ -90,8 +93,8 @@ GET <code>/api/user/1</code></p></div></div><div class="code"><div class="wrappe
         
         <span class="p">).</span><span class="k">then</span><span class="p">(</span>
           <span class="nf">(model) -&gt;</span> <span class="nx">serveJson</span> <span class="nx">res</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="nx">keyify</span> <span class="nx">resource</span><span class="p">,</span> <span class="nx">model</span>
-          <span class="nx">interceptError</span> <span class="nx">res</span>
-        <span class="p">).</span><span class="nx">done</span><span class="p">()</span>
+
+        <span class="p">).</span><span class="k">catch</span> <span class="nx">interceptError</span> <span class="nx">res</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Update a resource.
 PUT <code>/api/user/1</code></p></div></div><div class="code"><div class="wrapper">      <span class="nx">app</span><span class="p">.</span><span class="nx">put</span> <span class="nx">resourcePath</span><span class="p">,</span> <span class="nf">(req, res) -&gt;</span>
         
@@ -101,8 +104,8 @@ PUT <code>/api/user/1</code></p></div></div><div class="code"><div class="wrappe
           <span class="nx">req</span><span class="p">.</span><span class="nx">body</span>
         <span class="p">).</span><span class="k">then</span><span class="p">(</span>
           <span class="o">-&gt;</span> <span class="nx">serveJson</span> <span class="nx">res</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="nv">message: </span><span class="s2">&quot;Resource updated.&quot;</span>
-          <span class="nx">interceptError</span> <span class="nx">res</span>
-        <span class="p">).</span><span class="nx">done</span><span class="p">()</span>
+
+        <span class="p">).</span><span class="k">catch</span> <span class="nx">interceptError</span> <span class="nx">res</span>
               </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Delete a resource.
 DELETE <code>/api/user/1</code></p></div></div><div class="code"><div class="wrapper">      <span class="nx">app</span><span class="p">.</span><span class="k">delete</span> <span class="nx">resourcePath</span><span class="p">,</span> <span class="nf">(req, res) -&gt;</span>
         
@@ -111,8 +114,8 @@ DELETE <code>/api/user/1</code></p></div></div><div class="code"><div class="wra
           <span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">id</span>
         <span class="p">).</span><span class="k">then</span><span class="p">(</span>
           <span class="o">-&gt;</span> <span class="nx">serveJson</span> <span class="nx">res</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="nv">message: </span><span class="s2">&quot;Resource deleted.&quot;</span>
-          <span class="nx">interceptError</span> <span class="nx">res</span>
-        <span class="p">).</span><span class="nx">done</span><span class="p">()</span>
+
+        <span class="p">).</span><span class="k">catch</span> <span class="nx">interceptError</span> <span class="nx">res</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookpackagesettings">Implements hook <code>packageSettings</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$packageSettings = </span><span class="o">-&gt;</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p><a href="http://en.wikipedia.org/wiki/Cross-origin_resource_sharing">CORS</a>
 headers.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">corsHeaders: </span><span class="kc">null</span>

@@ -6,7 +6,7 @@
 <span class="nv">Promise = </span><span class="nx">require</span> <span class="s1">&#39;bluebird&#39;</span>
 
 <span class="nv">pkgman = </span><span class="nx">require</span> <span class="s1">&#39;pkgman&#39;</span>
-<span class="nv">sandboxes = </span><span class="nx">require</span> <span class="s1">&#39;sandboxes&#39;</span>
+<span class="p">{</span><span class="nx">Sandbox</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;sandboxes&#39;</span>
 
 <span class="p">{</span><span class="nx">handlebars</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;hbs&#39;</span>
 
@@ -27,7 +27,8 @@
       <span class="p">]</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Render the app HTML and create a sandbox with it.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">http</span><span class="p">.</span><span class="nx">renderAppHtml</span><span class="p">(</span><span class="nx">locals</span><span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="nf">(html) -&gt;</span>
     
-    <span class="nx">sandboxes</span><span class="p">.</span><span class="nx">create</span> <span class="nx">html</span>
+    <span class="nv">sandbox = </span><span class="k">new</span> <span class="nx">Sandbox</span><span class="p">()</span>
+    <span class="nx">sandbox</span><span class="p">.</span><span class="nx">createDocument</span> <span class="nx">html</span>
     
   <span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="nf">(_sandbox_) -&gt;</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Augment it with functionality we'll find useful and convenient.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">augmentSandbox</span> <span class="nv">sandbox = </span><span class="nx">_sandbox_</span>
@@ -109,76 +110,70 @@ provided.</p></div></div><div class="code"><div class="wrapper">    <span class=
       
   <span class="p">)</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Augment the sandbox with the ability to rewrite HTML for email, and emit HTML
-as text.</p></div></div><div class="code"><div class="wrapper"><span class="nv">augmentSandbox = </span><span class="nf">(sandbox) -&gt;</span>
-
-  <span class="k">new</span> <span class="nx">Promise</span> <span class="nf">(resolve, reject) -&gt;</span> 
+as text.</p></div></div><div class="code"><div class="wrapper"><span class="nv">augmentSandbox = </span><span class="nf">(sandbox) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Convenience.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">$ = </span><span class="nx">sandbox</span><span class="p">.</span><span class="nx">_window</span><span class="p">.</span><span class="nx">$</span>
+  
+  <span class="nv">selectors = </span><span class="p">{}</span>
+  
+  <span class="nv">htmlCssText = </span><span class="s1">&#39;&#39;</span>
+  <span class="nv">bodyCssText = </span><span class="s1">&#39;&#39;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Gather all CSS selectors and rules ahead of time.</p></div></div><div class="code"><div class="wrapper">  <span class="k">for</span> <span class="nx">stylesheet</span> <span class="k">in</span> <span class="nx">sandbox</span><span class="p">.</span><span class="nx">_window</span><span class="p">.</span><span class="nb">document</span><span class="p">.</span><span class="nx">styleSheets</span>
+    <span class="k">for</span> <span class="nx">rule</span> <span class="k">in</span> <span class="nx">stylesheet</span><span class="p">.</span><span class="nx">cssRules</span>
+      <span class="k">continue</span> <span class="nx">unless</span> <span class="nx">rule</span><span class="p">.</span><span class="nx">selectorText</span><span class="o">?</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Split into individual selectors.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">parts = </span><span class="nx">rule</span><span class="p">.</span><span class="nx">selectorText</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span>
+        
+        <span class="s1">&#39;,&#39;</span>
+      
+      <span class="p">).</span><span class="nx">map</span><span class="p">(</span><span class="nf">(selector) -&gt;</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Trim whitespace.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">selector</span><span class="p">.</span><span class="nx">trim</span><span class="p">()</span>
+        
+      <span class="p">).</span><span class="nx">filter</span> <span class="nf">(selector) -&gt;</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Filter pseudo selectors.</p></div></div><div class="code"><div class="wrapper">        <span class="k">return</span> <span class="kc">false</span> <span class="k">if</span> <span class="nx">selector</span><span class="p">.</span><span class="nx">match</span> <span class="sr">/[:@]/</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Collect html and body rules manually.</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="nx">selector</span> <span class="o">is</span> <span class="s1">&#39;html&#39;</span>
+          <span class="nx">htmlCssText</span> <span class="o">+=</span> <span class="nx">rule</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">cssText</span>
+          <span class="k">return</span> <span class="kc">false</span>
+        
+        <span class="k">if</span> <span class="nx">selector</span> <span class="o">is</span> <span class="s1">&#39;body&#39;</span>
+          <span class="nx">bodyCssText</span> <span class="o">+=</span> <span class="nx">rule</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">cssText</span>
+          <span class="k">return</span> <span class="kc">false</span>
+        
+        <span class="kc">true</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Rejoin the selectors.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">selector = </span><span class="nx">parts</span><span class="p">.</span><span class="nx">join</span> <span class="s1">&#39;,&#39;</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Normalize the rule(s).</p></div></div><div class="code"><div class="wrapper">      <span class="nx">selectors</span><span class="p">[</span><span class="nx">selector</span><span class="p">]</span> <span class="o">?=</span> <span class="s1">&#39;&#39;</span>
+      <span class="nx">selectors</span><span class="p">[</span><span class="nx">selector</span><span class="p">]</span> <span class="o">+=</span> <span class="nx">rule</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">cssText</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span>
+      
+        <span class="s1">&#39;;&#39;</span>
+      
+      <span class="p">).</span><span class="nx">filter</span><span class="p">(</span><span class="nf">(rule) -&gt;</span>
+        
+        <span class="nx">rule</span> <span class="o">isnt</span> <span class="s1">&#39;&#39;</span>
+      
+      <span class="p">).</span><span class="nx">map</span><span class="p">(</span><span class="nf">(rule) -&gt;</span>
+        
+        <span class="nx">rule</span><span class="p">.</span><span class="nx">trim</span><span class="p">()</span>
+        
+      <span class="p">).</span><span class="nx">sort</span><span class="p">().</span><span class="nx">join</span> <span class="s1">&#39;; &#39;</span>
+      <span class="nx">selectors</span><span class="p">[</span><span class="nx">selector</span><span class="p">]</span> <span class="o">+=</span> <span class="s1">&#39;;&#39;</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Merge as many rules as we can, so we'll have less work to do for
+each application.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">cssTextCache = </span><span class="p">{}</span>
+  <span class="k">for</span> <span class="nx">selector</span><span class="p">,</span> <span class="nx">cssText</span> <span class="k">of</span> <span class="nx">selectors</span>
+    <span class="p">(</span><span class="nx">cssTextCache</span><span class="p">[</span><span class="nx">cssText</span><span class="p">]</span> <span class="o">?=</span> <span class="p">[]).</span><span class="nx">push</span> <span class="nx">selector</span>
     
-    <span class="nx">sandbox</span><span class="p">.</span><span class="kc">on</span> <span class="s1">&#39;ready&#39;</span><span class="p">,</span> <span class="nf">(error) -&gt;</span>
-      <span class="k">return</span> <span class="nx">reject</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Convenience.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">$ = </span><span class="nx">sandbox</span><span class="p">.</span><span class="nx">_window</span><span class="p">.</span><span class="nx">$</span>
-      
-      <span class="nv">selectors = </span><span class="p">{}</span>
-      
-      <span class="nv">htmlCssText = </span><span class="s1">&#39;&#39;</span>
-      <span class="nv">bodyCssText = </span><span class="s1">&#39;&#39;</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Gather all CSS selectors and rules ahead of time.</p></div></div><div class="code"><div class="wrapper">      <span class="k">for</span> <span class="nx">stylesheet</span> <span class="k">in</span> <span class="nx">@_window</span><span class="p">.</span><span class="nb">document</span><span class="p">.</span><span class="nx">styleSheets</span>
-        <span class="k">for</span> <span class="nx">rule</span> <span class="k">in</span> <span class="nx">stylesheet</span><span class="p">.</span><span class="nx">cssRules</span>
-          <span class="k">continue</span> <span class="nx">unless</span> <span class="nx">rule</span><span class="p">.</span><span class="nx">selectorText</span><span class="o">?</span>
-          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Split into individual selectors.</p></div></div><div class="code"><div class="wrapper">          <span class="nv">parts = </span><span class="nx">rule</span><span class="p">.</span><span class="nx">selectorText</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span>
-            
-            <span class="s1">&#39;,&#39;</span>
-          
-          <span class="p">).</span><span class="nx">map</span><span class="p">(</span><span class="nf">(selector) -&gt;</span>
-            </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Trim whitespace.</p></div></div><div class="code"><div class="wrapper">            <span class="nx">selector</span><span class="p">.</span><span class="nx">trim</span><span class="p">()</span>
-            
-          <span class="p">).</span><span class="nx">filter</span> <span class="nf">(selector) -&gt;</span>
-            </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Filter pseudo selectors.</p></div></div><div class="code"><div class="wrapper">            <span class="k">return</span> <span class="kc">false</span> <span class="k">if</span> <span class="nx">selector</span><span class="p">.</span><span class="nx">match</span> <span class="sr">/[:@]/</span>
-            </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Collect html and body rules manually.</p></div></div><div class="code"><div class="wrapper">            <span class="k">if</span> <span class="nx">selector</span> <span class="o">is</span> <span class="s1">&#39;html&#39;</span>
-              <span class="nx">htmlCssText</span> <span class="o">+=</span> <span class="nx">rule</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">cssText</span>
-              <span class="k">return</span> <span class="kc">false</span>
-            
-            <span class="k">if</span> <span class="nx">selector</span> <span class="o">is</span> <span class="s1">&#39;body&#39;</span>
-              <span class="nx">bodyCssText</span> <span class="o">+=</span> <span class="nx">rule</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">cssText</span>
-              <span class="k">return</span> <span class="kc">false</span>
-            
-            <span class="kc">true</span>
-            </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Rejoin the selectors.</p></div></div><div class="code"><div class="wrapper">          <span class="nv">selector = </span><span class="nx">parts</span><span class="p">.</span><span class="nx">join</span> <span class="s1">&#39;,&#39;</span>
-          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Normalize the rule(s).</p></div></div><div class="code"><div class="wrapper">          <span class="nx">selectors</span><span class="p">[</span><span class="nx">selector</span><span class="p">]</span> <span class="o">?=</span> <span class="s1">&#39;&#39;</span>
-          <span class="nx">selectors</span><span class="p">[</span><span class="nx">selector</span><span class="p">]</span> <span class="o">+=</span> <span class="nx">rule</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">cssText</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span>
-          
-            <span class="s1">&#39;;&#39;</span>
-          
-          <span class="p">).</span><span class="nx">filter</span><span class="p">(</span><span class="nf">(rule) -&gt;</span>
-            
-            <span class="nx">rule</span> <span class="o">isnt</span> <span class="s1">&#39;&#39;</span>
-          
-          <span class="p">).</span><span class="nx">map</span><span class="p">(</span><span class="nf">(rule) -&gt;</span>
-            
-            <span class="nx">rule</span><span class="p">.</span><span class="nx">trim</span><span class="p">()</span>
-            
-          <span class="p">).</span><span class="nx">sort</span><span class="p">().</span><span class="nx">join</span> <span class="s1">&#39;; &#39;</span>
-          <span class="nx">selectors</span><span class="p">[</span><span class="nx">selector</span><span class="p">]</span> <span class="o">+=</span> <span class="s1">&#39;;&#39;</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Merge as many rules as we can, so we'll have less work to do for
-each application.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">cssTextCache = </span><span class="p">{}</span>
-      <span class="k">for</span> <span class="nx">selector</span><span class="p">,</span> <span class="nx">cssText</span> <span class="k">of</span> <span class="nx">selectors</span>
-        <span class="p">(</span><span class="nx">cssTextCache</span><span class="p">[</span><span class="nx">cssText</span><span class="p">]</span> <span class="o">?=</span> <span class="p">[]).</span><span class="nx">push</span> <span class="nx">selector</span>
-        
-      <span class="nv">selectors = </span><span class="p">{}</span>
-      <span class="k">for</span> <span class="nx">cssText</span><span class="p">,</span> <span class="nx">selectors_</span> <span class="k">of</span> <span class="nx">cssTextCache</span>
-        <span class="nx">selectors</span><span class="p">[</span><span class="nx">selectors_</span><span class="p">.</span><span class="nx">join</span> <span class="s1">&#39;,&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">cssText</span>
-          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>CREDIT: http://devintorr.es/blog/2010/05/26/turn-css-rules-into-inline-style-attributes-using-jquery/
-With some improvements, of course.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">sandbox.inlineCss = </span><span class="nf">(html) -&gt;</span>
-        
-        <span class="k">for</span> <span class="nx">selector</span><span class="p">,</span> <span class="nx">cssText</span> <span class="k">of</span> <span class="nx">selectors</span>
-          <span class="k">for</span> <span class="nx">element</span> <span class="k">in</span> <span class="nx">$</span><span class="p">(</span><span class="nx">selector</span><span class="p">,</span> <span class="nx">$</span><span class="p">(</span><span class="nx">html</span><span class="p">))</span>
-            <span class="nx">element</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">cssText</span> <span class="o">+=</span> <span class="nx">cssText</span>
-            </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Prepare HTML for email; inject all CSS inline and insert niceties
-like a nav on top.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">sandbox.prepareHtmlForEmail = </span><span class="nf">(html) -&gt;</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Clone the body and insert the HTML into the main application
-area.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">$body = </span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">).</span><span class="nx">clone</span><span class="p">()</span>
-        <span class="nx">$</span><span class="p">(</span><span class="nx">html</span><span class="p">).</span><span class="nx">appendTo</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.main&#39;</span><span class="p">,</span> <span class="nx">$body</span><span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Inject a minimally-built nav.
+  <span class="nv">selectors = </span><span class="p">{}</span>
+  <span class="k">for</span> <span class="nx">cssText</span><span class="p">,</span> <span class="nx">selectors_</span> <span class="k">of</span> <span class="nx">cssTextCache</span>
+    <span class="nx">selectors</span><span class="p">[</span><span class="nx">selectors_</span><span class="p">.</span><span class="nx">join</span> <span class="s1">&#39;,&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">cssText</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>CREDIT: http://devintorr.es/blog/2010/05/26/turn-css-rules-into-inline-style-attributes-using-jquery/
+With some improvements, of course.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">sandbox.inlineCss = </span><span class="nf">(html) -&gt;</span>
+    
+    <span class="k">for</span> <span class="nx">selector</span><span class="p">,</span> <span class="nx">cssText</span> <span class="k">of</span> <span class="nx">selectors</span>
+      <span class="k">for</span> <span class="nx">element</span> <span class="k">in</span> <span class="nx">$</span><span class="p">(</span><span class="nx">selector</span><span class="p">,</span> <span class="nx">$</span><span class="p">(</span><span class="nx">html</span><span class="p">))</span>
+        <span class="nx">element</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">cssText</span> <span class="o">+=</span> <span class="nx">cssText</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Prepare HTML for email; inject all CSS inline and insert niceties
+like a nav on top.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">sandbox.prepareHtmlForEmail = </span><span class="nf">(html) -&gt;</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Clone the body and insert the HTML into the main application
+area.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">$body = </span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">).</span><span class="nx">clone</span><span class="p">()</span>
+    <span class="nx">$</span><span class="p">(</span><span class="nx">html</span><span class="p">).</span><span class="nx">appendTo</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.main&#39;</span><span class="p">,</span> <span class="nx">$body</span><span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Inject a minimally-built nav.
 <code>TODO</code>: this kind of thing should be configurable and handled
-by the theme/skin when we get to that point.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;[data-ui-nav]&#39;</span><span class="p">,</span> <span class="nx">$body</span><span class="p">).</span><span class="nx">html</span> <span class="s2">&quot;&quot;&quot;</span>
+by the theme/skin when we get to that point.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;[data-ui-nav]&#39;</span><span class="p">,</span> <span class="nx">$body</span><span class="p">).</span><span class="nx">html</span> <span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">&lt;nav role=&quot;</span><span class="nx">navigation</span><span class="s2">&quot; class=&quot;</span><span class="nx">navbar</span> <span class="nx">navbar</span><span class="o">-</span><span class="nx">default</span><span class="s2">&quot;&gt;</span>
 <span class="s2">  &lt;div class=&quot;</span><span class="nx">container</span><span class="o">-</span><span class="nx">fluid</span><span class="s2">&quot;&gt;</span>
 <span class="s2">    </span>
@@ -191,8 +186,8 @@ by the theme/skin when we get to that point.</p></div></div><div class="code"><d
   <span class="o">&lt;</span><span class="err">/div&gt;</span>
 <span class="o">&lt;</span><span class="err">/nav&gt;</span>
 <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">        </span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Inject all the styles inline.</p></div></div><div class="code"><div class="wrapper"><span class="s2">        sandbox.inlineCss $body</span>
-<span class="s2">        </span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Return a valid HTML document.</p></div></div><div class="code"><div class="wrapper"><span class="s2">        &quot;&quot;&quot;</span>
+<span class="s2">        </span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Inject all the styles inline.</p></div></div><div class="code"><div class="wrapper"><span class="s2">    sandbox.inlineCss $body</span>
+<span class="s2">    </span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Return a valid HTML document.</p></div></div><div class="code"><div class="wrapper"><span class="s2">    &quot;&quot;&quot;</span>
 <span class="o">&lt;!</span><span class="nx">doctype</span> <span class="nx">html</span><span class="o">&gt;</span>
 <span class="o">&lt;</span><span class="nx">html</span> <span class="nx">style</span><span class="o">=</span><span class="c1">#{htmlCssText}&quot;&gt;</span>
 <span class="o">&lt;</span><span class="nx">body</span> <span class="nx">style</span><span class="o">=</span><span class="c1">#{bodyCssText}&quot;&gt;</span>
@@ -200,25 +195,25 @@ by the theme/skin when we get to that point.</p></div></div><div class="code"><d
 <span class="o">&lt;</span><span class="err">/body&gt;</span>
 <span class="o">&lt;</span><span class="err">/html&gt;</span>
 <span class="s2">&quot;&quot;</span><span class="err">&quot;</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Convert HTML to text.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">sandbox.text = </span><span class="nf">(html) -&gt;</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Convert HTML to text.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">sandbox.text = </span><span class="nf">(html) -&gt;</span>
+    
+    <span class="nv">text = </span><span class="nx">$</span><span class="p">(</span><span class="nx">html</span><span class="p">).</span><span class="nx">text</span><span class="p">()</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Remove tab characters.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">text = </span><span class="nx">text</span><span class="p">.</span><span class="nx">replace</span> <span class="sr">/\t/g</span><span class="p">,</span> <span class="s1">&#39;&#39;</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Remove excessive empty lines.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">emptyLines = </span><span class="mi">0</span>
+    <span class="nv">text = </span><span class="nx">text</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">).</span><span class="nx">reduce</span><span class="p">(</span>
+      <span class="nf">(l, r) -&gt;</span>
         
-        <span class="nv">text = </span><span class="nx">$</span><span class="p">(</span><span class="nx">html</span><span class="p">).</span><span class="nx">text</span><span class="p">()</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Remove tab characters.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">text = </span><span class="nx">text</span><span class="p">.</span><span class="nx">replace</span> <span class="sr">/\t/g</span><span class="p">,</span> <span class="s1">&#39;&#39;</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Remove excessive empty lines.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">emptyLines = </span><span class="mi">0</span>
-        <span class="nv">text = </span><span class="nx">text</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">).</span><span class="nx">reduce</span><span class="p">(</span>
-          <span class="nf">(l, r) -&gt;</span>
-            
-            <span class="k">if</span> <span class="p">(</span><span class="nx">l</span><span class="p">.</span><span class="nx">slice</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">is</span> <span class="s1">&#39;\n&#39;</span> <span class="o">and</span> <span class="nx">r</span> <span class="o">is</span> <span class="s1">&#39;\n&#39;</span>
-              <span class="nx">emptyLines</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="k">else</span>
-              <span class="nv">emptyLines = </span><span class="mi">0</span>
-            
-            <span class="k">if</span> <span class="nx">emptyLines</span> <span class="o">&gt;</span> <span class="mi">1</span>
-              <span class="nx">l</span>
-            <span class="k">else</span>
-              <span class="nx">l</span> <span class="o">+</span> <span class="nx">r</span>
-            
-          <span class="s1">&#39;&#39;</span>
-        <span class="p">)</span>
-      
-      <span class="nx">resolve</span><span class="p">()</span></div></div></div></div></body></html>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">l</span><span class="p">.</span><span class="nx">slice</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">is</span> <span class="s1">&#39;\n&#39;</span> <span class="o">and</span> <span class="nx">r</span> <span class="o">is</span> <span class="s1">&#39;\n&#39;</span>
+          <span class="nx">emptyLines</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span>
+          <span class="nv">emptyLines = </span><span class="mi">0</span>
+        
+        <span class="k">if</span> <span class="nx">emptyLines</span> <span class="o">&gt;</span> <span class="mi">1</span>
+          <span class="nx">l</span>
+        <span class="k">else</span>
+          <span class="nx">l</span> <span class="o">+</span> <span class="nx">r</span>
+        
+      <span class="s1">&#39;&#39;</span>
+    <span class="p">)</span>
+  
+  <span class="nx">sandbox</span></div></div></div></div></body></html>

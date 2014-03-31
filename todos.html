@@ -75,15 +75,9 @@ context.</p>
 <p><a href="./server/packages/angular/index.html">server/packages/angular/index.coffee</a></p>
 
 <ul>
-<li><h4 id="deferredpromisedefer"><code>@deferred = Promise.defer()</code></h4>
-
-<p>This should be a queue, not a busy promise. </p></li>
 <li><h4 id="return"><code>return</code></h4>
 
 <p>need to extract params to build redirectTo, small enough mismatch to ignore for now. </p></li>
-<li><h4 id="sandboxinjectinjectable"><code>sandbox.inject = (injectable) -&gt;</code></h4>
-
-<p>Return a promise, resolved with the dependency array. </p></li>
 </ul>
 
 <p><a href="./server/packages/express/index.html">server/packages/express/index.coffee</a></p>
@@ -118,47 +112,10 @@ context.</p>
 <p>this kind of thing should be configurable and handled by the theme/skin when we get to that point. </p></li>
 </ul>
 
-<p><a href="./server/packages/schema/index.html">server/packages/schema/index.coffee</a></p>
-
-<ul>
-<li><h4 id="keyifykeyvalue"><code>keyify = (key, value) -&gt;</code></h4>
-
-<p>Generalize and serve "broken" JSON for Angular. See: <a href="http://docs.angularjs.org/api/ng/service/$http#json-vulnerability-protection">Angular JSON vulnerability protection</a>. </p></li>
-</ul>
-
 <p><a href="./server/packages/user/index.html">server/packages/user/index.coffee</a></p>
 
 <ul>
 <li><h4 id="localstrategyrequirepassportlocalstrategy"><code>LocalStrategy = require('passport-local').Strategy</code></h4>
 
 <p>Strategies should be dynamically defined, probably through a hook. </p></li>
-</ul>
-
-<p><a href="./server/sandboxes.html">server/sandboxes.coffee</a></p>
-
-<ul>
-<li><h4 id="moduleexportsnewclasssandboxfactory"><code>module.exports = new class SandboxFactory</code></h4>
-
-<p>This is probably more of an <code>angular</code> package-specific need. It should probably be moved there and this module should solely provide Sandbox. </p></li>
-<li><h4 id="constructorhtmlcookie_idnull"><code>constructor: (html, cookie, @_id = null) -&gt;</code></h4>
-
-<p>Move ID to SandboxFactory. </p></li>
-<li><h4 id="toucherif_id"><code>toucher = if @_id?</code></h4>
-
-<p>Move to SandboxFactory. </p></li>
-<li><h4 id="urlhttplocalhost"><code>url: "http://localhost:#{</code></h4>
-
-<p>"Entry point" is an <code>angular</code> package-specific idiom. </p></li>
-<li><h4 id="moduleexportsremove_id"><code>module.exports.remove @_id</code></h4>
-
-<p>Move to SandboxFactory. </p></li>
-<li><h4 id="_busy"><code>@_busy</code></h4>
-
-<p>There should be a worker queue, not a single 'busy' promise. </p></li>
-<li><h4 id="isnewtrue"><code>isNew: -&gt; true</code></h4>
-
-<p>Move to SandboxFactory. </p></li>
-<li><h4 id="setbusy_busy"><code>setBusy: (@_busy) -&gt;</code></h4>
-
-<p>This is a sloppy interface. </p></li>
 </ul></div></div></div></div></body></html>
