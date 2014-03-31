@@ -9,7 +9,7 @@ nodemailer = require 'nodemailer'
 Promise = require 'bluebird'
 
 pkgman = require 'pkgman'
-sandboxes = require 'sandboxes'
+{Sandbox} = require 'sandboxes'
 
 {handlebars} = require 'hbs'
 
@@ -50,7 +50,8 @@ exports.$httpListening = (http) ->
 	# Render the app HTML and create a sandbox with it.
 	http.renderAppHtml(locals).then((html) ->
 		
-		sandboxes.create html
+		sandbox = new Sandbox()
+		sandbox.createDocument html
 		
 	).then((_sandbox_) ->
 		
@@ -164,101 +165,96 @@ exports.sendMail = (type, mail) ->
 # as text.
 augmentSandbox = (sandbox) ->
 
-	new Promise (resolve, reject) -> 
+	# Convenience.
+	$ = sandbox._window.$
+	
+	selectors = {}
+	
+	htmlCssText = ''
+	bodyCssText = ''
+	
+	# Gather all CSS selectors and rules ahead of time.
+	for stylesheet in sandbox._window.document.styleSheets
+		for rule in stylesheet.cssRules
+			continue unless rule.selectorText?
+			
+			# Split into individual selectors.
+			parts = rule.selectorText.split(
+				
+				','
+			
+			).map((selector) ->
+				
+				# Trim whitespace.
+				selector.trim()
+				
+			).filter (selector) ->
+				
+				# Filter pseudo selectors.
+				return false if selector.match /[:@]/
+				
+				# Collect html and body rules manually.
+				if selector is 'html'
+					htmlCssText += rule.style.cssText
+					return false
+				
+				if selector is 'body'
+					bodyCssText += rule.style.cssText
+					return false
+				
+				true
+				
+			# Rejoin the selectors.
+			selector = parts.join ','
+			
+			# Normalize the rule(s).
+			selectors[selector] ?= ''
+			selectors[selector] += rule.style.cssText.split(
+			
+				';'
+			
+			).filter((rule) ->
+				
+				rule isnt ''
+			
+			).map((rule) ->
+				
+				rule.trim()
+				
+			).sort().join '; '
+			selectors[selector] += ';'
 		
-		sandbox.on 'ready', (error) ->
-			return reject error if error?
+	# Merge as many rules as we can, so we'll have less work to do for
+	# each application.
+	cssTextCache = {}
+	for selector, cssText of selectors
+		(cssTextCache[cssText] ?= []).push selector
+		
+	selectors = {}
+	for cssText, selectors_ of cssTextCache
+		selectors[selectors_.join ','] = cssText
 			
-			# Convenience.
-			$ = sandbox._window.$
-			
-			selectors = {}
-			
-			htmlCssText = ''
-			bodyCssText = ''
-			
-			# Gather all CSS selectors and rules ahead of time.
-			for stylesheet in @_window.document.styleSheets
-				for rule in stylesheet.cssRules
-					continue unless rule.selectorText?
-					
-					# Split into individual selectors.
-					parts = rule.selectorText.split(
-						
-						','
-					
-					).map((selector) ->
-						
-						# Trim whitespace.
-						selector.trim()
-						
-					).filter (selector) ->
-						
-						# Filter pseudo selectors.
-						return false if selector.match /[:@]/
-						
-						# Collect html and body rules manually.
-						if selector is 'html'
-							htmlCssText += rule.style.cssText
-							return false
-						
-						if selector is 'body'
-							bodyCssText += rule.style.cssText
-							return false
-						
-						true
-						
-					# Rejoin the selectors.
-					selector = parts.join ','
-					
-					# Normalize the rule(s).
-					selectors[selector] ?= ''
-					selectors[selector] += rule.style.cssText.split(
-					
-						';'
-					
-					).filter((rule) ->
-						
-						rule isnt ''
-					
-					).map((rule) ->
-						
-						rule.trim()
-						
-					).sort().join '; '
-					selectors[selector] += ';'
+	# CREDIT: http://devintorr.es/blog/2010/05/26/turn-css-rules-into-inline-style-attributes-using-jquery/
+	# With some improvements, of course.
+	sandbox.inlineCss = (html) ->
+		
+		for selector, cssText of selectors
+			for element in $(selector, $(html))
+				element.style.cssText += cssText
 				
-			# Merge as many rules as we can, so we'll have less work to do for
-			# each application.
-			cssTextCache = {}
-			for selector, cssText of selectors
-				(cssTextCache[cssText] ?= []).push selector
-				
-			selectors = {}
-			for cssText, selectors_ of cssTextCache
-				selectors[selectors_.join ','] = cssText
-					
-			# CREDIT: http://devintorr.es/blog/2010/05/26/turn-css-rules-into-inline-style-attributes-using-jquery/
-			# With some improvements, of course.
-			sandbox.inlineCss = (html) ->
-				
-				for selector, cssText of selectors
-					for element in $(selector, $(html))
-						element.style.cssText += cssText
-						
-			# Prepare HTML for email; inject all CSS inline and insert niceties
-			# like a nav on top.
-			sandbox.prepareHtmlForEmail = (html) ->
-				
-				# Clone the body and insert the HTML into the main application
-				# area.
-				$body = $('body').clone()
-				$(html).appendTo $('.main', $body)
+	# Prepare HTML for email; inject all CSS inline and insert niceties
+	# like a nav on top.
+	sandbox.prepareHtmlForEmail = (html) ->
+		
+		# Clone the body and insert the HTML into the main application
+		# area.
+		$body = $('body').clone()
+		$(html).appendTo $('.main', $body)
 
-				# Inject a minimally-built nav.
-				# `TODO`: this kind of thing should be configurable and handled
-				# by the theme/skin when we get to that point.
-				$('[data-ui-nav]', $body).html """
+		# Inject a minimally-built nav.
+		# `TODO`: this kind of thing should be configurable and handled
+		# by the theme/skin when we get to that point.
+		$('[data-ui-nav]', $body).html """
 <nav role="navigation" class="navbar navbar-default">
 	<div class="container-fluid">
 		
@@ -272,11 +268,11 @@ augmentSandbox = (sandbox) ->
 </nav>
 """
 				
-				# Inject all the styles inline.
-				sandbox.inlineCss $body
-				
-				# Return a valid HTML document.
-				"""
+		# Inject all the styles inline.
+		sandbox.inlineCss $body
+		
+		# Return a valid HTML document.
+		"""
 <!doctype html>
 <html style=#{htmlCssText}">
 <body style=#{bodyCssText}">
@@ -285,30 +281,30 @@ augmentSandbox = (sandbox) ->
 </html>
 """
 			
-			# Convert HTML to text.
-			sandbox.text = (html) ->
+	# Convert HTML to text.
+	sandbox.text = (html) ->
+		
+		text = $(html).text()
+		
+		# Remove tab characters.
+		text = text.replace /\t/g, ''
+		
+		# Remove excessive empty lines.
+		emptyLines = 0
+		text = text.split('').reduce(
+			(l, r) ->
 				
-				text = $(html).text()
+				if (l.slice -1) is '\n' and r is '\n'
+					emptyLines += 1
+				else
+					emptyLines = 0
 				
-				# Remove tab characters.
-				text = text.replace /\t/g, ''
+				if emptyLines > 1
+					l
+				else
+					l + r
 				
-				# Remove excessive empty lines.
-				emptyLines = 0
-				text = text.split('').reduce(
-					(l, r) ->
-						
-						if (l.slice -1) is '\n' and r is '\n'
-							emptyLines += 1
-						else
-							emptyLines = 0
-						
-						if emptyLines > 1
-							l
-						else
-							l + r
-						
-					''
-				)
-			
-			resolve()
+			''
+		)
+	
+	sandbox

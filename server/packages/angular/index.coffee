@@ -3,16 +3,93 @@
 # 
 # A sandboxed version of Angular, for clients lacking JS.
 
+_ = require 'underscore'
 nconf = require 'nconf'
 Promise = require 'bluebird'
 url = require 'url'
 
+{defaultLogger} = require 'logging'
 middleware = require 'middleware'
-sandboxes = require 'sandboxes'
+{Sandbox} = require 'sandboxes'
 
 # } The middleware dispatched every time sandboxed angular is navigated.
 navigationMiddleware = []
 
+# ## SandboxManager
+# This class handles instantiation of new sandboxes, as well as providing a
+# mechanism for registering and looking up persistent sandboxes using an id.
+sandboxManager = new class SandboxManager
+	
+	# ### *constructor*
+	# 
+	# *Initialize the persistent store.*
+	constructor: ->
+		
+		@_sandboxes = {}
+	
+	# ### .create
+	# 
+	# *Create a sandbox.*
+	# 
+	# * (string) `html` - The HTML to use as the sandbox document.
+	# * (string) `cookie` - The cookie to use for the document.
+	# * (string) `id`? - An ID for looking up this sandbox later.
+	create: (html, options, id = null) ->
+		
+		defaultLogger.info "Creating sandbox ID: #{id}"
+		
+		sandbox = new Sandbox()
+		sandbox.id = id
+		
+		# ### sandbox.touch
+		# 
+		# *Reset the time-to-live for a sandbox.*
+		ttl = nconf.get 'packageSettings:angular:ttl'
+		toucher = _.debounce (=> sandbox.close()), ttl
+		do sandbox.touch = ->
+			defaultLogger.info "Touched sandbox ID: #{id}"
+		
+			toucher()
+			sandbox
+			
+		# Remove from the manager when closing.
+		close = sandbox.close
+		sandbox.close = =>
+			defaultLogger.info "Closing sandbox ID: #{id}"
+		
+			@_sandboxes[id] = null
+			close.apply sandbox
+		
+		# Create the document.
+		(@_sandboxes[id] = sandbox).createDocument html, options
+		
+	# ### .lookup
+	# 
+	# *Look up a sandbox by ID.*
+	# 
+	# * (string) `id` - An ID for looking up this sandbox later.
+	lookup: (id) -> @_sandboxes[id]?.touch()
+	
+	# ### .lookupOrCreate
+	# 
+	# *Look up a sandbox by ID, or create one if none is registered for this
+	# ID.*
+	# 
+	# * (string) `html` - The HTML to use as the sandbox document if creating.
+	# * (string) `cookie` - The cookie to use for the document if creating.
+	# * (string) `id`? - An ID either for looking up later (if creating), or
+	#   as a search now.
+	lookupOrCreate: (html, options, id = null) ->
+		
+		promise = if (sandbox = @lookup id)?
+			
+			Promise.resolve sandbox
+			
+		else
+			
+			@create(html, options, id).then (sandbox) ->
+				exports.augmentSandbox sandbox
+	
 # ## Implements hook `endpoint`
 # 
 # Allow a JSful client to call us back and inform us that we don't need to
@@ -22,7 +99,8 @@ exports.$endpoint = ->
 	route: 'hangup'
 	receiver: (req, fn) ->
 		
-		if (sandbox = sandboxes.lookup req.session?.id)?
+		id = req.session?.id
+		if (sandbox = sandboxManager.lookup id)?
 			sandbox.close().finally -> fn()
 		else
 			fn()
@@ -56,11 +134,16 @@ exports.$httpMiddleware = (http) ->
 			# } After the template is rendered, lookup or create the sandbox.
 			htmlPromise.bind({}).then((html) ->
 				
-				sandboxes.lookupOrCreate(
-					html, req.headers.cookie, req.session.id
-
-				# } Augment it.				
-				).then (sandbox) -> exports.augmentSandbox sandbox
+				sandboxManager.lookupOrCreate(
+					html
+				,
+					cookie: req.headers.cookie
+					url: "http://localhost:#{
+						nconf.get 'packageSettings:express:port'
+					}/shrub-entry-point"
+				,
+					req.session.id
+				)
 				
 			).then((@sandbox) ->
 				
@@ -76,13 +159,6 @@ exports.$httpMiddleware = (http) ->
 					res.redirect redirectionPath
 					throw new ResponseComplete()
 					
-				# } Prevent a possible race condition that would hang up the
-				# } sandbox in between now and render.
-				# 
-				# } `TODO`: This should be a queue, not a busy promise.
-				@deferred = Promise.defer()
-				@sandbox.setBusy @deferred.promise
-				
 				{path} = url.parse req.url
 				@sandbox.navigate path, req.body
 				
@@ -90,11 +166,6 @@ exports.$httpMiddleware = (http) ->
 				
 				emission = @sandbox.emitHtml()
 				
-				# } Let any sandbox expirations take place now that we've
-				# } emitted.
-				@deferred.resolve()
-				@sandbox.setBusy null
-			
 				# } If a redirect happened in the sandbox, actually redirect
 				# } the browser and save the emission for the next request.
 				if (redirectionPath = @sandbox.redirectionPath())?
@@ -137,6 +208,9 @@ exports.$packageSettings = ->
 
 	# } Should we render in the sandbox?
 	render: true
+	
+	# } Time-to-live for rendering sandboxes.
+	ttl: 1000 * 60 * 5
 
 # ## augmentSandbox
 # 
@@ -279,8 +353,6 @@ exports.augmentSandbox = (sandbox) ->
 	# 
 	# *Inject an [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation) with dependencies.*
 	# 
-	# `TODO`: Return a promise, resolved with the dependency array.
-	# 
 	# * (mixed) `injectable` - An annontated function to inject with
 	#   dependencies. 
 	sandbox.inject = (injectable) ->
@@ -304,25 +376,16 @@ exports.augmentSandbox = (sandbox) ->
 				
 			]
 	
-	# Do some initial configuration if the sandbox is new.
-	return sandbox unless sandbox.isNew()
-	new Promise (resolve, reject) ->
+	new Promise (resolve) ->
+	
+		sandbox.inject [
+			'$sniffer', 'socket'
+			($sniffer, socket) ->
+				
+				# } Don't even try HTML 5 history on the server side.
+				$sniffer.history = false
+				
+				# } Let the socket finish initialization.						
+				socket.on 'initialized', -> resolve sandbox
 		
-		sandbox.on 'ready', (error) ->
-			
-			# } Don't ignore errors, just pass them up.
-			if error?
-				sandbox.close()
-				return reject error
-			
-			sandbox.inject [
-				'$sniffer', 'socket'
-				($sniffer, socket) ->
-					
-					# } Don't even try HTML 5 history on the server side.
-					$sniffer.history = false
-					
-					# } Let the socket finish initialization.						
-					socket.on 'initialized', -> resolve sandbox
-			
-			]
+		]
