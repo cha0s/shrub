@@ -43,6 +43,15 @@ module.exports = class SocketIoManager extends SocketManager
 					redisClient: redis.createClient()
 				)
 	
+	# ## ::channelsSocketIsIn
+	# 
+	# *Get a list of channels a socket is in.*
+	# 
+	# * (socket) `socket` - A socket.
+	channelsSocketIsIn: (socket) ->
+	
+		@io.sockets.manager.roomClients[socket.id]
+	
 	# ## ::listen
 	# Implements `SocketManager::listen`.
 	listen: (http) ->
