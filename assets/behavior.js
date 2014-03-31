@@ -130,18 +130,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 "pageTitle": "client/modules/jugglingdb-rest",
                 "title": "jugglingdb-rest"
               },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "JugglingDB/Angular REST adapter",
-                    "slug": "jugglingdbangular-rest-adapter"
-                  },
-                  "depth": 1
-                }
-              ]
+              "depth": 3
             }, {
               "type": "file",
               "data": {
@@ -181,7 +170,53 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 "pageTitle": "client/modules/middleware",
                 "title": "middleware"
               },
-              "depth": 3
+              "depth": 3,
+              "outline": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 1,
+                    "title": "Middleware",
+                    "slug": "middleware"
+                  },
+                  "depth": 1,
+                  "children": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "Middleware",
+                        "slug": "middleware"
+                      },
+                      "depth": 2
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "::use",
+                        "slug": "use"
+                      },
+                      "depth": 2
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "::dispatch",
+                        "slug": "dispatch"
+                      },
+                      "depth": 2
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "fromHook",
+                        "slug": "fromhook"
+                      },
+                      "depth": 2
+                    }
+                  ]
+                }
+              ]
             }, {
               "type": "folder",
               "data": {
@@ -437,18 +472,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/schema/index",
                         "title": "index"
                       },
-                      "depth": 5,
-                      "outline": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 1,
-                            "title": "Schema",
-                            "slug": "schema"
-                          },
-                          "depth": 1
-                        }
-                      ]
+                      "depth": 5
                     }
                   ]
                 }, {
@@ -658,61 +682,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/user/index",
                         "title": "index"
                       },
-                      "depth": 5,
-                      "outline": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 1,
-                            "title": "User",
-                            "slug": "user"
-                          },
-                          "depth": 1,
-                          "children": [
-                            {
-                              "type": "heading",
-                              "data": {
-                                "level": 2,
-                                "title": "user.isLoggedIn",
-                                "slug": "userisloggedin"
-                              },
-                              "depth": 2
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 2,
-                                "title": "user.login",
-                                "slug": "userlogin"
-                              },
-                              "depth": 2
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 2,
-                                "title": "user.logout",
-                                "slug": "userlogout"
-                              },
-                              "depth": 2
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 2,
-                                "title": "user.instance",
-                                "slug": "userinstance"
-                              },
-                              "depth": 2
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 2,
-                                "title": "user.fakeLogin",
-                                "slug": "userfakelogin"
-                              },
-                              "depth": 2
-                            }
-                          ]
-                        }
-                      ]
+                      "depth": 5
                     }, {
                       "type": "file",
                       "data": {
@@ -816,7 +786,53 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 "pageTitle": "client/modules/pkgman",
                 "title": "pkgman"
               },
-              "depth": 3
+              "depth": 3,
+              "outline": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 1,
+                    "title": "Package manager",
+                    "slug": "package-manager"
+                  },
+                  "depth": 1,
+                  "children": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "rebuildPackageCache",
+                        "slug": "rebuildpackagecache"
+                      },
+                      "depth": 2
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "registerPackageList",
+                        "slug": "registerpackagelist"
+                      },
+                      "depth": 2
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "invoke",
+                        "slug": "invoke"
+                      },
+                      "depth": 2
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "invokeFlat",
+                        "slug": "invokeflat"
+                      },
+                      "depth": 2
+                    }
+                  ]
+                }
+              ]
             }, {
               "type": "file",
               "data": {
@@ -836,37 +852,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 "pageTitle": "client/modules/schema",
                 "title": "schema"
               },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "JugglingDB",
-                    "slug": "jugglingdb"
-                  },
-                  "depth": 1,
-                  "children": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "define",
-                        "slug": "define"
-                      },
-                      "depth": 2
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "schema.definePackageModels",
-                        "slug": "schemadefinepackagemodels"
-                      },
-                      "depth": 2
-                    }
-                  ]
-                }
-              ]
+              "depth": 3
             }
           ]
         }, {
@@ -888,7 +874,8 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "client/packages",
             "title": "packages"
           },
-          "depth": 2
+          "depth": 2,
+          "outline": []
         }, {
           "type": "file",
           "data": {
@@ -1020,6 +1007,17 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
         "title": "server"
       },
       "depth": 1,
+      "outline": [
+        {
+          "type": "heading",
+          "data": {
+            "level": 1,
+            "title": "Server",
+            "slug": "server"
+          },
+          "depth": 1
+        }
+      ],
       "children": [
         {
           "type": "file",
@@ -1040,7 +1038,64 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "server/AbstractHttp",
             "title": "AbstractHttp"
           },
-          "depth": 2
+          "depth": 2,
+          "outline": [
+            {
+              "type": "heading",
+              "data": {
+                "level": 1,
+                "title": "AbstractHttp",
+                "slug": "abstracthttp"
+              },
+              "depth": 1,
+              "children": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "AbstractHttp",
+                    "slug": "abstracthttp"
+                  },
+                  "depth": 2,
+                  "children": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".initialize",
+                        "slug": "initialize"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".config",
+                        "slug": "config"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".port",
+                        "slug": "port"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".registerMiddleware",
+                        "slug": "registermiddleware"
+                      },
+                      "depth": 3
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }, {
           "type": "file",
           "data": {
@@ -1080,7 +1135,29 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "server/config",
             "title": "config"
           },
-          "depth": 2
+          "depth": 2,
+          "outline": [
+            {
+              "type": "heading",
+              "data": {
+                "level": 1,
+                "title": "Configuration",
+                "slug": "configuration"
+              },
+              "depth": 1,
+              "children": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 3,
+                    "title": "load",
+                    "slug": "load"
+                  },
+                  "depth": 3
+                }
+              ]
+            }
+          ]
         }, {
           "type": "file",
           "data": {
@@ -1176,7 +1253,131 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/angular/index",
                     "title": "index"
                   },
-                  "depth": 4
+                  "depth": 4,
+                  "outline": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 1,
+                        "title": "Angular",
+                        "slug": "angular"
+                      },
+                      "depth": 1,
+                      "children": [
+                        {
+                          "type": "heading",
+                          "data": {
+                            "level": 2,
+                            "title": "SandboxManager",
+                            "slug": "sandboxmanager"
+                          },
+                          "depth": 2,
+                          "children": [
+                            {
+                              "type": "heading",
+                              "data": {
+                                "level": 3,
+                                "title": ".create",
+                                "slug": "create"
+                              },
+                              "depth": 3
+                            }, {
+                              "type": "heading",
+                              "data": {
+                                "level": 3,
+                                "title": "sandbox.touch",
+                                "slug": "sandboxtouch"
+                              },
+                              "depth": 3
+                            }, {
+                              "type": "heading",
+                              "data": {
+                                "level": 3,
+                                "title": ".lookup",
+                                "slug": "lookup"
+                              },
+                              "depth": 3
+                            }, {
+                              "type": "heading",
+                              "data": {
+                                "level": 3,
+                                "title": ".lookupOrCreate",
+                                "slug": "lookuporcreate"
+                              },
+                              "depth": 3
+                            }
+                          ]
+                        }, {
+                          "type": "heading",
+                          "data": {
+                            "level": 2,
+                            "title": "augmentSandbox",
+                            "slug": "augmentsandbox"
+                          },
+                          "depth": 2,
+                          "children": [
+                            {
+                              "type": "heading",
+                              "data": {
+                                "level": 3,
+                                "title": "sandbox.(setR|r)edirectionHtml",
+                                "slug": "sandboxsetrredirectionhtml"
+                              },
+                              "depth": 3
+                            }, {
+                              "type": "heading",
+                              "data": {
+                                "level": 3,
+                                "title": "sandbox.(setR|r)edirectionPath",
+                                "slug": "sandboxsetrredirectionpath"
+                              },
+                              "depth": 3
+                            }, {
+                              "type": "heading",
+                              "data": {
+                                "level": 3,
+                                "title": "sandbox.catchAngularRedirection",
+                                "slug": "sandboxcatchangularredirection"
+                              },
+                              "depth": 3
+                            }, {
+                              "type": "heading",
+                              "data": {
+                                "level": 3,
+                                "title": "sandbox.checkPathChanges",
+                                "slug": "sandboxcheckpathchanges"
+                              },
+                              "depth": 3
+                            }, {
+                              "type": "heading",
+                              "data": {
+                                "level": 3,
+                                "title": "sandbox.navigate",
+                                "slug": "sandboxnavigate"
+                              },
+                              "depth": 3
+                            }, {
+                              "type": "heading",
+                              "data": {
+                                "level": 3,
+                                "title": "sandbox.pathRedirectsTo",
+                                "slug": "sandboxpathredirectsto"
+                              },
+                              "depth": 3
+                            }, {
+                              "type": "heading",
+                              "data": {
+                                "level": 3,
+                                "title": "sandbox.inject",
+                                "slug": "sandboxinject"
+                              },
+                              "depth": 3
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             }, {
@@ -1576,18 +1777,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/schema/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Database schema",
-                        "slug": "database-schema"
-                      },
-                      "depth": 1
-                    }
-                  ]
+                  "depth": 4
                 }
               ]
             }, {
@@ -1617,7 +1807,18 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/session/index",
                     "title": "index"
                   },
-                  "depth": 4
+                  "depth": 4,
+                  "outline": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 1,
+                        "title": "Session",
+                        "slug": "session"
+                      },
+                      "depth": 1
+                    }
+                  ]
                 }
               ]
             }, {
@@ -1664,6 +1865,14 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                             "level": 2,
                             "title": "SocketIoManager",
                             "slug": "socketiomanager"
+                          },
+                          "depth": 2
+                        }, {
+                          "type": "heading",
+                          "data": {
+                            "level": 2,
+                            "title": "::channelsSocketIsIn",
+                            "slug": "channelssocketisin"
                           },
                           "depth": 2
                         }, {
@@ -1725,7 +1934,29 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/socket/manager",
                     "title": "manager"
                   },
-                  "depth": 4
+                  "depth": 4,
+                  "outline": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 1,
+                        "title": "SocketManager",
+                        "slug": "socketmanager"
+                      },
+                      "depth": 1,
+                      "children": [
+                        {
+                          "type": "heading",
+                          "data": {
+                            "level": 3,
+                            "title": ".loadMiddleware",
+                            "slug": "loadmiddleware"
+                          },
+                          "depth": 3
+                        }
+                      ]
+                    }
+                  ]
                 }
               ]
             }, {
@@ -1909,64 +2140,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "server/sandboxes",
             "title": "sandboxes"
           },
-          "depth": 2,
-          "outline": [
-            {
-              "type": "heading",
-              "data": {
-                "level": 1,
-                "title": "Sandboxes",
-                "slug": "sandboxes"
-              },
-              "depth": 1,
-              "children": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 2,
-                    "title": "Sandbox",
-                    "slug": "sandbox"
-                  },
-                  "depth": 2,
-                  "children": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".close",
-                        "slug": "close"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".emitHtml",
-                        "slug": "emithtml"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".registerCleanupFunction",
-                        "slug": "registercleanupfunction"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".url",
-                        "slug": "url"
-                      },
-                      "depth": 3
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
+          "depth": 2
         }, {
           "type": "file",
           "data": {
@@ -1986,18 +2160,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "server/schema",
             "title": "schema"
           },
-          "depth": 2,
-          "outline": [
-            {
-              "type": "heading",
-              "data": {
-                "level": 1,
-                "title": "JugglingDB",
-                "slug": "jugglingdb"
-              },
-              "depth": 1
-            }
-          ]
+          "depth": 2
         }
       ]
     }, {

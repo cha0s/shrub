@@ -3,7 +3,9 @@
 <p>Manages server and package configuration.</p></div></div><div class="code"><div class="wrapper"><span class="nv">nconf = </span><span class="nx">require</span> <span class="s1">&#39;nconf&#39;</span>
 <span class="nv">fs = </span><span class="nx">require</span> <span class="s1">&#39;fs&#39;</span>
 
-<span class="nv">pkgman = </span><span class="nx">require</span> <span class="s1">&#39;pkgman&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="load">load</h3>
+<span class="nv">pkgman = </span><span class="nx">require</span> <span class="s1">&#39;pkgman&#39;</span>
+
+<span class="p">{</span><span class="nx">defaultLogger</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;logging&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="load">load</h3>
 
 <p><em>Load configuration from the settings file and package defaults.</em></p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.load = </span><span class="o">-&gt;</span>
 
@@ -16,7 +18,11 @@
   <span class="nx">nconf</span><span class="p">.</span><span class="nx">defaults</span> <span class="nv">path: </span><span class="s2">&quot;#{__dirname}/..&quot;</span>
     
   <span class="c1"># Register packages.</span>
+  <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s2">&quot;Registering packages...&quot;</span>
+  
   <span class="nx">pkgman</span><span class="p">.</span><span class="nx">registerPackageList</span> <span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageList&#39;</span>
+  
+  <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s2">&quot;Packages registered.&quot;</span>
 
   <span class="nx">nconf</span><span class="p">.</span><span class="nx">defaults</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>packageSettings</code>.

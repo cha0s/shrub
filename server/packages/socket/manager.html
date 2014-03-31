@@ -26,23 +26,23 @@ authorization just failed.</p></div></div><div class="code"><div class="wrapper"
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>socketAuthorizationMiddleware</code>.
 Invoked when a socket connection begins. Packages may throw an
 instance of <code>SocketManager.AuthorizationFailure</code> to reject
-the socket connection as unauthorized.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s1">&#39;BEGIN loading socket authorization middleware&#39;</span>
+the socket connection as unauthorized.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s1">&#39;Loading socket authorization middleware...&#39;</span>
     <span class="vi">@_authorizationMiddleware = </span><span class="nx">middleware</span><span class="p">.</span><span class="nx">fromHook</span><span class="p">(</span>
       <span class="s1">&#39;socketAuthorizationMiddleware&#39;</span>
       <span class="nx">config</span><span class="p">.</span><span class="nx">authorizationMiddleware</span>
     <span class="p">)</span>
-    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s1">&#39;END loading socket authorization middleware&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>socketConnectionMiddleware</code>.
-Invoked for every socket connection.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s1">&#39;BEGIN loading socket middleware&#39;</span>
+    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s1">&#39;Socket authorization middleware loaded.&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>socketConnectionMiddleware</code>.
+Invoked for every socket connection.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s1">&#39;Loading socket middleware...&#39;</span>
 
     <span class="vi">@_connectionMiddleware = </span><span class="nx">middleware</span><span class="p">.</span><span class="nx">fromHook</span><span class="p">(</span>
       <span class="s1">&#39;socketConnectionMiddleware&#39;</span>
       <span class="nx">config</span><span class="p">.</span><span class="nx">connectionMiddleware</span>
     <span class="p">)</span>
-    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s1">&#39;END loading socket middleware&#39;</span>
+    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s1">&#39;Socket middleware loaded.&#39;</span>
 
   <span class="c1"># Ensure any subclass implements these methods.</span>
   <span class="err">@</span><span class="o">::</span><span class="p">[</span><span class="nx">method</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="o">-&gt;</span> <span class="k">throw</span> <span class="k">new</span> <span class="nx">ReferenceError</span><span class="p">(</span>
     <span class="s2">&quot;AbstractSocket::#{method} is a pure virtual method!&quot;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>"Pure virtual" methods.</p></div></div><div class="code"><div class="wrapper">  <span class="p">))</span> <span class="k">for</span> <span class="nx">method</span> <span class="k">in</span> <span class="p">[</span>
     
-    <span class="s1">&#39;listen&#39;</span><span class="p">,</span> <span class="s1">&#39;socketsInChannel&#39;</span>
+    <span class="s1">&#39;channelsSocketIsIn&#39;</span><span class="p">,</span> <span class="s1">&#39;listen&#39;</span><span class="p">,</span> <span class="s1">&#39;socketsInChannel&#39;</span>
   <span class="p">]</span></div></div></div></div></body></html>

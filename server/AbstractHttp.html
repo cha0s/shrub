@@ -45,7 +45,7 @@ finishes.</p></div></div><div class="code"><div class="wrapper">      <span clas
 
 <p><em>Gather and initialize HTTP middleware.</em></p></div></div><div class="code"><div class="wrapper">  <span class="nv">registerMiddleware: </span><span class="o">-&gt;</span>
     
-    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s1">&#39;BEGIN loading HTTP middleware&#39;</span>
+    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s1">&#39;Loading HTTP middleware...&#39;</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>httpMiddleware</code>.
 Invoked every time an HTTP connection is established.</p></div></div><div class="code"><div class="wrapper">    <span class="vi">@_middleware = </span><span class="nx">middleware</span><span class="p">.</span><span class="nx">fromHook</span><span class="p">(</span>
       <span class="s1">&#39;httpMiddleware&#39;</span>
@@ -53,4 +53,4 @@ Invoked every time an HTTP connection is established.</p></div></div><div class=
       <span class="k">this</span>
     <span class="p">)</span>
     
-    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s1">&#39;END loading HTTP middleware&#39;</span></div></div></div></div></body></html>
+    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s1">&#39;HTTP middleware loaded.&#39;</span></div></div></div></div></body></html>

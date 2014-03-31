@@ -10,7 +10,11 @@ initialization hooks, and listen for signals and process exit.</p></div></div><d
 <span class="p">{</span><span class="nx">defaultLogger</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;logging&#39;</span>
 
 <span class="c1"># Set up config.</span>
+<span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s2">&quot;Loading config...&quot;</span>
+
 <span class="nv">config = </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;config&#39;</span><span class="p">).</span><span class="nx">load</span><span class="p">()</span>
+
+<span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s2">&quot;Config loaded.&quot;</span>
 
 <span class="c1"># Let packages define their models in the schema.</span>
 <span class="nx">schema</span><span class="p">.</span><span class="nx">definePackageModels</span><span class="p">()</span>

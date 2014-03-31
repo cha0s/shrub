@@ -33,6 +33,15 @@
           <span class="nv">redisSub: </span><span class="nx">redis</span><span class="p">.</span><span class="nx">createClient</span><span class="p">()</span>
           <span class="nv">redisClient: </span><span class="nx">redis</span><span class="p">.</span><span class="nx">createClient</span><span class="p">()</span>
         <span class="p">)</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="channelssocketisin">::channelsSocketIsIn</h2>
+
+<p><em>Get a list of channels a socket is in.</em></p>
+
+<ul>
+<li>(socket) <code>socket</code> - A socket.</li>
+</ul></div></div><div class="code"><div class="wrapper">  <span class="nv">channelsSocketIsIn: </span><span class="nf">(socket) -&gt;</span>
+  
+    <span class="nx">@io</span><span class="p">.</span><span class="nx">sockets</span><span class="p">.</span><span class="nx">manager</span><span class="p">.</span><span class="nx">roomClients</span><span class="p">[</span><span class="nx">socket</span><span class="p">.</span><span class="nx">id</span><span class="p">]</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="listen">::listen</h2>
 
 <p>Implements <code>SocketManager::listen</code>.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">listen: </span><span class="nf">(http) -&gt;</span>
