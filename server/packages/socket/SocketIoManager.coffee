@@ -96,13 +96,13 @@ module.exports = class SocketIoManager extends SocketManager
 				return fn error if error?
 				
 				# Generate a random key to store the request object.
-				crypto.randomBytes(24).then (key) ->
+				crypto.randomBytes(24).then (requestKey) ->
 					
 					# Remove the handshake values.
 					delete req[key] for key of handshake
 					
 					# Store the request object and accept authentication.
-					handshake.requestKey = key.toString 'hex'
+					handshake.requestKey = requestKey.toString 'hex'
 					requestObjects[handshake.requestKey] = req
 					fn null, true
 				
