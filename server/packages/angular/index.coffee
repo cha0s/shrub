@@ -57,7 +57,7 @@ exports.$httpMiddleware = (http) ->
 			htmlPromise.bind({}).then((html) ->
 				
 				sandboxes.lookupOrCreate(
-					html, cookie, id
+					html, req.headers.cookie, req.session.id
 
 				# } Augment it.				
 				).then (sandbox) -> exports.augmentSandbox sandbox
