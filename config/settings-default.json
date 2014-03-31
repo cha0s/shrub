@@ -100,7 +100,7 @@
 				"socket/factory",
 				"user",
 				"rpc"
-			],
+			]
 		},
 		"villiany": {
 			"ban": {
