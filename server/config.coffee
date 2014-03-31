@@ -8,6 +8,8 @@ fs = require 'fs'
 
 pkgman = require 'pkgman'
 
+{defaultLogger} = require 'logging'
+
 # ### load
 # 
 # *Load configuration from the settings file and package defaults.*
@@ -22,7 +24,11 @@ exports.load = ->
 	nconf.defaults path: "#{__dirname}/.."
 		
 	# } Register packages.
+	defaultLogger.info "Registering packages..."
+	
 	pkgman.registerPackageList nconf.get 'packageList'
+	
+	defaultLogger.info "Packages registered."
 
 	nconf.defaults
 		

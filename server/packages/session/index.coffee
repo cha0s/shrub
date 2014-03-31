@@ -43,7 +43,7 @@ exports.$socketAuthorizationMiddleware = ->
 # ## Implements hook `socketConnectionMiddleware`
 exports.$socketConnectionMiddleware = ->
 
-	label: 'Join channel for socket'
+	label: 'Join channel for session'
 	middleware: [
 	
 		(req, res, next) ->

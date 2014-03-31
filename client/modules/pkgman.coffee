@@ -1,6 +1,8 @@
 
 # # Package manager
 
+{defaultLogger} = require 'logging'
+
 packageCache = null
 _packages = []
 
@@ -19,6 +21,8 @@ exports.rebuildPackageCache = ->
 			# `TODO`: Should we let this throw?
 			continue if error.toString() is "Error: Cannot find module 'packages/#{name}'"
 			throw error
+			
+		defaultLogger.info "Loaded package #{name}."
 	
 	# Recur down the package tree and collect hooks.		
 	cacheRecursive = (path, parent) ->

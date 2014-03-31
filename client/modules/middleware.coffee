@@ -3,6 +3,8 @@
 
 pkgman = require 'pkgman'
 
+{defaultLogger} = require 'logging'
+
 # ## Middleware
 # 
 # Implements a middleware stack. middleware functions can be added to the
@@ -108,6 +110,10 @@ exports.fromHook = (hook, paths, args...) ->
 	args.unshift hook
 	hookResults = pkgman.invoke args...
 	for path in paths
-		middleware.use _ for _ in hookResults[path]?.middleware ? []
+		continue unless (spec = hookResults[path])?
+		
+		defaultLogger.info spec.label
+		
+		middleware.use _ for _ in spec.middleware ? []
 	
 	middleware

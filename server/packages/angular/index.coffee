@@ -190,13 +190,18 @@ exports.$initialize = (config) ->
 
 	# Always disable sandbox rendering in end-to-end testing mode.
 	config.set 'packageSettings:angular:render', false if config.get 'E2E'
-
+	
 	# } Load the navigation middleware.
+	
+	defaultLogger.info "Loading Angular navigation middleware..."
+	
 	navigationMiddleware = middleware.fromHook(
 		'angularNavigationMiddleware'
 		nconf.get 'packageSettings:angular:navigation:middleware'
 	)
 
+	defaultLogger.info "Angular navigation middleware loaded."
+	
 # ## Implements hook `packageSettings`
 exports.$packageSettings = ->
 

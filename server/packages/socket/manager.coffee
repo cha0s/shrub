@@ -40,22 +40,22 @@ module.exports = class SocketManager extends EventEmitter
 		# Invoked when a socket connection begins. Packages may throw an
 		# instance of `SocketManager.AuthorizationFailure` to reject
 		# the socket connection as unauthorized.
-		defaultLogger.info 'BEGIN loading socket authorization middleware'
+		defaultLogger.info 'Loading socket authorization middleware...'
 		@_authorizationMiddleware = middleware.fromHook(
 			'socketAuthorizationMiddleware'
 			config.authorizationMiddleware
 		)
-		defaultLogger.info 'END loading socket authorization middleware'
+		defaultLogger.info 'Socket authorization middleware loaded.'
 
 		# Invoke hook `socketConnectionMiddleware`.
 		# Invoked for every socket connection.
-		defaultLogger.info 'BEGIN loading socket middleware'
+		defaultLogger.info 'Loading socket middleware...'
 
 		@_connectionMiddleware = middleware.fromHook(
 			'socketConnectionMiddleware'
 			config.connectionMiddleware
 		)
-		defaultLogger.info 'END loading socket middleware'
+		defaultLogger.info 'Socket middleware loaded.'
 
 	# } Ensure any subclass implements these methods.
 	@::[method] = (-> throw new ReferenceError(

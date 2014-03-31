@@ -66,7 +66,7 @@ module.exports = class AbstractHttp
 	# *Gather and initialize HTTP middleware.*
 	registerMiddleware: ->
 		
-		defaultLogger.info 'BEGIN loading HTTP middleware'
+		defaultLogger.info 'Loading HTTP middleware...'
 		
 		# Invoke hook `httpMiddleware`.
 		# Invoked every time an HTTP connection is established.
@@ -76,4 +76,4 @@ module.exports = class AbstractHttp
 			this
 		)
 		
-		defaultLogger.info 'END loading HTTP middleware'
+		defaultLogger.info 'HTTP middleware loaded.'

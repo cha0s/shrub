@@ -13,7 +13,11 @@ schema = require 'schema'
 {defaultLogger} = require 'logging'
 
 # } Set up config.
+defaultLogger.info "Loading config..."
+
 config = require('config').load()
+
+defaultLogger.info "Config loaded."
 
 # } Let packages define their models in the schema.
 schema.definePackageModels()
