@@ -124,6 +124,10 @@ module.exports = class SocketIoManager extends SocketManager
 			req = requestObjects[socket.handshake.requestKey]
 			req[key] = value for key, value of socket.handshake
 			
+			# Socket.IO hax. socket.handshake is behind a getter, so we'll get
+			# in the internals.
+			socket.manager.handshaken[socket.id] = req
+			
 			req.http = http
 			req.socket = socket
 			
