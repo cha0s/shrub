@@ -11,17 +11,24 @@ schema = require 'schema'
 
 clientModule = require 'client/modules/packages/user'
 
-# ## Implements hook `fingerprint`
-exports.$fingerprint = (req) ->
-
-	# User (ID).
-	user: if req?.user?.id? then req.user.id
-
 # ## Implements hook `config`
 exports.$config = (req) ->
 	
 	# Send a redacted version of the request user.
 	req.user.redactFor(req.user).then (redacted) -> user: redacted
+
+# ## Implements hook `endpointFinished`
+exports.$endpointFinished = (routeReq, result, req) ->
+	return unless routeReq.user.id?
+	
+	# Propagate changes back up to the original request.
+	req.user = routeReq.user
+
+# ## Implements hook `fingerprint`
+exports.$fingerprint = (req) ->
+
+	# User (ID).
+	user: if req?.user?.id? then req.user.id
 
 # ## Implements hook `httpMiddleware`
 exports.$httpMiddleware = (http) ->

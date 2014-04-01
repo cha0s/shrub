@@ -12,14 +12,15 @@ exports.$fingerprint = (req) ->
 	session: if req?.session? then req.session.id
 
 # ## Implements hook `endpointFinished`
-exports.$endpointFinished = (req, result) ->
-	
-	return Promise.resolve() unless req.session?
+exports.$endpointFinished = (routeReq, result, req) ->
+	return unless routeReq.session?
 	
 	# Touch and save the session after every RPC call finishes.
 	deferred = Promise.defer()
-	req.session.touch().save deferred.callback
-	deferred.promise 
+	routeReq.session.touch().save deferred.callback
+	
+	# Propagate changes back up to the original request.
+	deferred.promise.then -> req.session = routeReq.session
 
 # ## Implements hook `socketAuthorizationMiddleware`
 exports.$socketAuthorizationMiddleware = ->
