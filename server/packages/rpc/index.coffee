@@ -133,7 +133,7 @@ exports.$socketConnectionMiddleware = ->
 							# returned.
 							Promise.all(
 								pkgman.invokeFlat(
-									'endpointFinished', routeReq, result
+									'endpointFinished', routeReq, result, req
 								)							
 
 							).then(
