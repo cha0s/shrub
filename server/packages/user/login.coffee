@@ -34,7 +34,12 @@ exports.$endpoint = ->
 					
 					Promise.promisify(req.login, req) @user
 					
-				).then -> @user.redactFor @user
+				).then ->
+					
+					# Join a channel for the username.
+					req.socket.join @user.name
+					
+					@user.redactFor @user
 				
 # } Using nodeify here crashes the app. It may be a bluebird bug.
 		
