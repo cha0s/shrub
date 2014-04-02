@@ -1,6 +1,9 @@
 
 # # Middleware
 
+i8n = require 'inflection'
+
+config = require 'config'
 pkgman = require 'pkgman'
 
 {defaultLogger} = require 'logging'
@@ -115,5 +118,41 @@ exports.fromHook = (hook, paths, args...) ->
 		defaultLogger.info spec.label
 		
 		middleware.use _ for _ in spec.middleware ? []
+	
+	middleware
+
+# ## fromHook
+# 
+# Create a middleware stack from a short name. e.g. "user before login".
+# 
+# The short name is converted into log messages, a hook name, and configuration
+# key. In the case where we passed in "user before login", this would look
+# like:
+# 
+#	defaultLogger.info "Loading user before login middleware..."
+#	
+#	middleware = exports.fromHook(
+#		"userBeforeLoginMiddleware"
+#		config.get "packageSettings:user:beforeLoginMiddleware"
+#	)
+#	
+#	defaultLogger.info "User before login middleware loaded."
+#
+exports.fromShortName = (shortName) ->
+
+	defaultLogger.info "Loading #{shortName} middleware..."
+	
+	[packageName, keyParts...] = shortName.split ' '
+	key = keyParts.join '_'
+	
+	middleware = exports.fromHook(
+		"#{packageName}#{i8n.camelize key}Middleware"
+		
+		config.get "packageSettings:#{packageName}:#{
+			i8n.camelize key, true
+		}Middleware"
+	)
+	
+	defaultLogger.info "#{i8n.capitalize shortName} middleware loaded."
 	
 	middleware

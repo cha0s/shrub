@@ -192,24 +192,16 @@ exports.$initialize = (config) ->
 	config.set 'packageSettings:angular:render', false if config.get 'E2E'
 	
 	# } Load the navigation middleware.
-	
-	defaultLogger.info "Loading Angular navigation middleware..."
-	
-	navigationMiddleware = middleware.fromHook(
-		'angularNavigationMiddleware'
-		config.get 'packageSettings:angular:navigation:middleware'
+	navigationMiddleware = middleware.fromShortName(
+		"angular navigation middleware"
 	)
-
-	defaultLogger.info "Angular navigation middleware loaded."
 	
 # ## Implements hook `packageSettings`
 exports.$packageSettings = ->
 
-	navigation:
-	
-		middleware: [
-			'form'
-		]
+	navigationMiddleware: [
+		'form'
+	]
 
 	# } Should we render in the sandbox?
 	render: true

@@ -1,6 +1,5 @@
 
 i8n = require 'inflection'
-config = require 'config'
 passport = require 'passport'
 Promise = require 'bluebird'
 
@@ -55,7 +54,7 @@ exports.$endpoint = ->
 		).catch fn
 
 # ## Implements hook `initialize`
-exports.$initialize = (config) ->
+exports.$initialize = ->
 	
 	{User} = schema.models
 	
@@ -96,29 +95,13 @@ monkeyPatchLogin = ->
 	
 	req = IncomingMessage.prototype
 	
-	# DRY helper.
-	buildMiddleware = (type) ->
-		
-		defaultLogger.info "Loading user #{type} middleware..."
-		
-		builtMiddleware = middleware.fromHook(
-			"user#{i8n.camelize type.replace ' ', '_'}Middleware"
-			config.get "packageSettings:user:#{
-				i8n.camelize type.replace(' ', '_'), true
-			}Middleware"
-		)
-		
-		defaultLogger.info "User #{type} middleware loaded."
-		
-		builtMiddleware
-	
 	# Invoke hook `userBeforeLoginMiddleware`.
 	# Invoked before a user logs in.
-	userBeforeLoginMiddleware = buildMiddleware 'before login'
+	userBeforeLoginMiddleware = middleware.fromShortName 'user before login'
 
 	# Invoke hook `userAfterLoginMiddleware`.
 	# Invoked after a user logs in.
-	userAfterLoginMiddleware = buildMiddleware 'after login'
+	userAfterLoginMiddleware = middleware.fromShortName 'user after login'
 	
 	login = req.login
 	req.login = req.logIn = (user, fn) ->

@@ -70,6 +70,7 @@ module.exports = class AbstractHttp
 		
 		# Invoke hook `httpMiddleware`.
 		# Invoked every time an HTTP connection is established.
+		# `TODO`: Rename express to http, so we can use a short name.
 		@_middleware = middleware.fromHook(
 			'httpMiddleware'
 			@_config.middleware

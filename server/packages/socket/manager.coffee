@@ -2,7 +2,6 @@
 # # SocketManager
 
 {EventEmitter} = require 'events'
-config = require 'config'
 
 middleware = require 'middleware'
 pkgman = require 'pkgman'
@@ -34,28 +33,19 @@ module.exports = class SocketManager extends EventEmitter
 	# *Gather and initialize socket middleware.*
 	loadMiddleware: ->
 		
-		config = config.get 'packageSettings:socket'
-		
 		# Invoke hook `socketAuthorizationMiddleware`.
 		# Invoked when a socket connection begins. Packages may throw an
 		# instance of `SocketManager.AuthorizationFailure` to reject
 		# the socket connection as unauthorized.
-		defaultLogger.info 'Loading socket authorization middleware...'
-		@_authorizationMiddleware = middleware.fromHook(
-			'socketAuthorizationMiddleware'
-			config.authorizationMiddleware
+		@_authorizationMiddleware = middleware.fromShortName(
+			"socket authorization middleware"
 		)
-		defaultLogger.info 'Socket authorization middleware loaded.'
-
+		
 		# Invoke hook `socketConnectionMiddleware`.
 		# Invoked for every socket connection.
-		defaultLogger.info 'Loading socket middleware...'
-
-		@_connectionMiddleware = middleware.fromHook(
-			'socketConnectionMiddleware'
-			config.connectionMiddleware
+		@_connectionMiddleware = middleware.fromShortName(
+			"socket connection middleware"
 		)
-		defaultLogger.info 'Socket middleware loaded.'
 
 	# } Ensure any subclass implements these methods.
 	@::[method] = (-> throw new ReferenceError(
