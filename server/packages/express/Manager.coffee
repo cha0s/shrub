@@ -11,7 +11,7 @@ readFile = Promise.promisify fs.readFile, fs
 
 {defaultLogger} = require 'logging'
 
-# An implementation of [HttpManager](./manager.html) using the
+# An implementation of [HttpManager](../http/manager.html) using the
 # Express framework.
 module.exports = class Express extends (require '../http/manager')
 	
