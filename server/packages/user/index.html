@@ -6,8 +6,9 @@
 <span class="nv">crypto = </span><span class="nx">require</span> <span class="s1">&#39;server/crypto&#39;</span>
 <span class="nv">schema = </span><span class="nx">require</span> <span class="s1">&#39;schema&#39;</span>
 
-<span class="nv">clientModule = </span><span class="nx">require</span> <span class="s1">&#39;client/modules/packages/user&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookfingerprint">Implements hook <code>fingerprint</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$fingerprint = </span><span class="nf">(req) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>User (ID).</p></div></div><div class="code"><div class="wrapper">  <span class="nv">user: </span><span class="k">if</span> <span class="nx">req</span><span class="o">?</span><span class="p">.</span><span class="nx">user</span><span class="o">?</span><span class="p">.</span><span class="nx">id</span><span class="o">?</span> <span class="k">then</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookconfig">Implements hook <code>config</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$config = </span><span class="nf">(req) -&gt;</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Send a redacted version of the request user.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">redactFor</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">).</span><span class="k">then</span> <span class="nf">(redacted) -&gt;</span> <span class="nv">user: </span><span class="nx">redacted</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookhttpmiddleware">Implements hook <code>httpMiddleware</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$httpMiddleware = </span><span class="nf">(http) -&gt;</span>
+<span class="nv">clientModule = </span><span class="nx">require</span> <span class="s1">&#39;client/modules/packages/user&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookconfig">Implements hook <code>config</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$config = </span><span class="nf">(req) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Send a redacted version of the request user.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">redactFor</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">).</span><span class="k">then</span> <span class="nf">(redacted) -&gt;</span> <span class="nv">user: </span><span class="nx">redacted</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookendpointfinished">Implements hook <code>endpointFinished</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$endpointFinished = </span><span class="nf">(routeReq, result, req) -&gt;</span>
+  <span class="k">return</span> <span class="nx">unless</span> <span class="nx">routeReq</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span><span class="o">?</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Propagate changes back up to the original request.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">req.user = </span><span class="nx">routeReq</span><span class="p">.</span><span class="nx">user</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookfingerprint">Implements hook <code>fingerprint</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$fingerprint = </span><span class="nf">(req) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>User (ID).</p></div></div><div class="code"><div class="wrapper">  <span class="nv">user: </span><span class="k">if</span> <span class="nx">req</span><span class="o">?</span><span class="p">.</span><span class="nx">user</span><span class="o">?</span><span class="p">.</span><span class="nx">id</span><span class="o">?</span> <span class="k">then</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookhttpmiddleware">Implements hook <code>httpMiddleware</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$httpMiddleware = </span><span class="nf">(http) -&gt;</span>
   
   <span class="p">{</span><span class="nx">User</span><span class="p">}</span> <span class="o">=</span> <span class="nx">schema</span><span class="p">.</span><span class="nx">models</span>
   
@@ -17,48 +18,11 @@
     <span class="nx">passport</span><span class="p">.</span><span class="nx">session</span><span class="p">()</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Set the user into the request.</p></div></div><div class="code"><div class="wrapper">    <span class="nf">(req, res, next) -&gt;</span>
       
-      <span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="o">?</span>
-      
-        <span class="nv">req.user.logout = </span><span class="o">-&gt;</span>
-          
-          <span class="nx">req</span><span class="p">.</span><span class="nx">logout</span><span class="p">()</span>
-          <span class="nv">req.user = </span><span class="k">new</span> <span class="nx">User</span><span class="p">()</span>
-          
-          <span class="nx">Promise</span><span class="p">.</span><span class="nx">resolve</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span>
-          
-      <span class="k">else</span>
-      
-        <span class="nv">req.user = </span><span class="k">new</span> <span class="nx">User</span><span class="p">()</span>
+      <span class="nv">req.user = </span><span class="k">new</span> <span class="nx">User</span><span class="p">()</span> <span class="nx">unless</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="o">?</span>
       
       <span class="nx">next</span><span class="p">()</span>
     
-  <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookinitialize">Implements hook <code>initialize</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$initialize = </span><span class="nf">(config) -&gt;</span>
-  
-  <span class="p">{</span><span class="nx">User</span><span class="p">}</span> <span class="o">=</span> <span class="nx">schema</span><span class="p">.</span><span class="nx">models</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Implement a local passport strategy.
-<code>TODO</code>: Strategies should be dynamically defined, probably through a
-hook.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">LocalStrategy = </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;passport-local&#39;</span><span class="p">).</span><span class="nx">Strategy</span>
-  <span class="nx">passport</span><span class="p">.</span><span class="nx">use</span> <span class="k">new</span> <span class="nx">LocalStrategy</span> <span class="nf">(username, password, done) -&gt;</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Load a user and compare the hashed password.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">exports</span><span class="p">.</span><span class="nx">loadByName</span><span class="p">(</span><span class="nx">username</span><span class="p">).</span><span class="nx">bind</span><span class="p">({}).</span><span class="k">then</span><span class="p">(</span><span class="nf">(@user)-&gt;</span>
-      <span class="k">return</span> <span class="nx">unless</span> <span class="nx">@user</span><span class="o">?</span>
-      
-      <span class="nx">crypto</span><span class="p">.</span><span class="nx">hasher</span><span class="p">(</span>
-        <span class="nv">plaintext: </span><span class="nx">password</span>
-        <span class="nv">salt: </span><span class="k">new</span> <span class="nx">Buffer</span> <span class="nx">@user</span><span class="p">.</span><span class="nx">salt</span><span class="p">,</span> <span class="s1">&#39;hex&#39;</span>
-      <span class="p">)</span>
-      
-    <span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="nf">(hashed) -&gt;</span>
-      <span class="k">return</span> <span class="nx">unless</span> <span class="nx">@user</span><span class="o">?</span>
-      <span class="k">return</span> <span class="nx">unless</span> <span class="nx">@user</span><span class="p">.</span><span class="nx">passwordHash</span> <span class="o">is</span> <span class="nx">hashed</span><span class="p">.</span><span class="nx">key</span><span class="p">.</span><span class="nx">toString</span> <span class="s1">&#39;hex&#39;</span>
-      
-      <span class="nx">@user</span>
-      
-    <span class="p">).</span><span class="nx">nodeify</span> <span class="nx">done</span>
-    
-  <span class="nx">passport</span><span class="p">.</span><span class="nx">serializeUser</span> <span class="nf">(user, done) -&gt;</span> <span class="nx">done</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">user</span><span class="p">.</span><span class="nx">id</span>
-  
-  <span class="nx">passport</span><span class="p">.</span><span class="nx">deserializeUser</span> <span class="nf">(id, done) -&gt;</span> <span class="nx">User</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">id</span><span class="p">).</span><span class="nx">nodeify</span> <span class="nx">done</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookmodels">Implements hook <code>models</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$models = </span><span class="nf">(schema) -&gt;</span>
+  <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookmodels">Implements hook <code>models</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$models = </span><span class="nf">(schema) -&gt;</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke the client hook implementation.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">clientModule</span><span class="p">.</span><span class="nx">$models</span> <span class="nx">schema</span>
   
   <span class="nv">User = </span><span class="nx">schema</span><span class="p">.</span><span class="nx">models</span><span class="p">[</span><span class="s1">&#39;User&#39;</span><span class="p">]</span>
@@ -76,7 +40,19 @@ hook.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">L
     <span class="p">).</span><span class="k">then</span><span class="p">(</span><span class="nf">(email) -&gt;</span> <span class="vi">@redacted.email = </span><span class="nx">email</span>
     
     <span class="p">).</span><span class="k">then</span> <span class="o">-&gt;</span> <span class="nx">@redacted</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookmodelsalter">Implements hook <code>modelsAlter</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$modelsAlter = </span><span class="nx">clientModule</span><span class="p">.</span><span class="nx">$modelsAlter</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshooksocketauthorizationmiddleware">Implements hook <code>socketAuthorizationMiddleware</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$socketAuthorizationMiddleware = </span><span class="o">-&gt;</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookmodelsalter">Implements hook <code>modelsAlter</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$modelsAlter = </span><span class="nx">clientModule</span><span class="p">.</span><span class="nx">$modelsAlter</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookpackagesettings">Implements hook <code>packageSettings</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$packageSettings = </span><span class="o">-&gt;</span>
+  
+  <span class="nv">beforeLoginMiddleware: </span><span class="p">[]</span>
+  
+  <span class="nv">afterLoginMiddleware: </span><span class="p">[]</span>
+  
+  <span class="nv">beforeLogoutMiddleware: </span><span class="p">[</span>
+    <span class="s1">&#39;user&#39;</span>
+  <span class="p">]</span>
+
+  <span class="nv">afterLogoutMiddleware: </span><span class="p">[</span>
+    <span class="s1">&#39;user&#39;</span>
+  <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshooksocketauthorizationmiddleware">Implements hook <code>socketAuthorizationMiddleware</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$socketAuthorizationMiddleware = </span><span class="o">-&gt;</span>
   
   <span class="p">{</span><span class="nx">User</span><span class="p">}</span> <span class="o">=</span> <span class="nx">schema</span><span class="p">.</span><span class="nx">models</span>
   
@@ -86,20 +62,7 @@ hook.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">L
     <span class="nx">passport</span><span class="p">.</span><span class="nx">session</span><span class="p">()</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Set the user into the request.</p></div></div><div class="code"><div class="wrapper">    <span class="nf">(req, res, next) -&gt;</span>
       
-      <span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="o">?</span>
-      
-        <span class="nv">req.user.logout = </span><span class="o">-&gt;</span>
-          
-          <span class="nx">req</span><span class="p">.</span><span class="nx">logout</span><span class="p">()</span>
-          <span class="nv">req.user = </span><span class="k">new</span> <span class="nx">User</span><span class="p">()</span>
-          
-          <span class="k">new</span> <span class="nx">Promise</span> <span class="nf">(resolve) -&gt;</span>
-            </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Alos log the client out, if we can.</p></div></div><div class="code"><div class="wrapper">            <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="o">?</span><span class="p">.</span><span class="nx">emit</span> <span class="s1">&#39;user.logout&#39;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="o">-&gt;</span>
-              <span class="nx">resolve</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span>
-      
-      <span class="k">else</span>
-      
-        <span class="nv">req.user = </span><span class="k">new</span> <span class="nx">User</span><span class="p">()</span>
+      <span class="nv">req.user = </span><span class="k">new</span> <span class="nx">User</span><span class="p">()</span> <span class="nx">unless</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="o">?</span>
       
       <span class="nx">next</span><span class="p">()</span>
   
@@ -115,6 +78,32 @@ hook.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">L
       
       <span class="nx">next</span><span class="p">()</span>
   
+  <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookuserbeforelogoutmiddleware">Implements hook <code>userBeforeLogoutMiddleware</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$userBeforeLogoutMiddleware = </span><span class="o">-&gt;</span>
+  
+  <span class="nv">label: </span><span class="s1">&#39;Tell client to log out, and leave the user channel&#39;</span>
+  <span class="nv">middleware: </span><span class="p">[</span>
+  
+    <span class="nf">({req, user}, res, next) -&gt;</span>
+      
+      <span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="o">?</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Tell client to log out.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="p">.</span><span class="nx">emit</span> <span class="s1">&#39;user.logout&#39;</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Leave the user channel.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="p">.</span><span class="nx">leave</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">name</span>
+      
+      <span class="nx">next</span><span class="p">()</span>
+      
+  <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookuserafterlogoutmiddleware">Implements hook <code>userAfterLogoutMiddleware</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$userAfterLogoutMiddleware = </span><span class="o">-&gt;</span>
+  
+  <span class="p">{</span><span class="nx">User</span><span class="p">}</span> <span class="o">=</span> <span class="nx">schema</span><span class="p">.</span><span class="nx">models</span>
+      
+  <span class="nv">label: </span><span class="s1">&#39;Instantiate anonymous user&#39;</span>
+  <span class="nv">middleware: </span><span class="p">[</span>
+  
+    <span class="nf">({req, user}, res, next) -&gt;</span>
+      
+      <span class="nv">req.user = </span><span class="k">new</span> <span class="nx">User</span><span class="p">()</span>
+      
+      <span class="nx">next</span><span class="p">()</span>
+      
   <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="loadbyname">loadByName</h2>
 
 <p><em>Load a user by name.</em></p>

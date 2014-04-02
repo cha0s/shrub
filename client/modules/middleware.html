@@ -1,4 +1,7 @@
-<!DOCTYPE html><html lang="en"><head><title>client/modules/middleware</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="client/modules/middleware"><meta name="groc-project-path" content="client/modules/middleware.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/client/modules/middleware.coffee">client/modules/middleware.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="middleware">Middleware</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nv">pkgman = </span><span class="nx">require</span> <span class="s1">&#39;pkgman&#39;</span>
+<!DOCTYPE html><html lang="en"><head><title>client/modules/middleware</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="client/modules/middleware"><meta name="groc-project-path" content="client/modules/middleware.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/client/modules/middleware.coffee">client/modules/middleware.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="middleware">Middleware</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nv">i8n = </span><span class="nx">require</span> <span class="s1">&#39;inflection&#39;</span>
+
+<span class="nv">config = </span><span class="nx">require</span> <span class="s1">&#39;config&#39;</span>
+<span class="nv">pkgman = </span><span class="nx">require</span> <span class="s1">&#39;pkgman&#39;</span>
 
 <span class="p">{</span><span class="nx">defaultLogger</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;logging&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="middleware">Middleware</h2>
 
@@ -78,5 +81,37 @@ order.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">
     <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="nx">spec</span><span class="p">.</span><span class="nx">label</span>
     
     <span class="nx">middleware</span><span class="p">.</span><span class="nx">use</span> <span class="nx">_</span> <span class="k">for</span> <span class="nx">_</span> <span class="k">in</span> <span class="nx">spec</span><span class="p">.</span><span class="nx">middleware</span> <span class="o">?</span> <span class="p">[]</span>
+  
+  <span class="nx">middleware</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="fromhook">fromHook</h2>
+
+<p>Create a middleware stack from a short name. e.g. "user before login".</p>
+
+<p>The short name is converted into log messages, a hook name, and configuration
+key. In the case where we passed in "user before login", this would look
+like:</p>
+
+<p>defaultLogger.info "Loading user before login middleware..."</p>
+
+<p>middleware = exports.fromHook(
+    "userBeforeLoginMiddleware"
+    config.get "packageSettings:user:beforeLoginMiddleware"
+)</p>
+
+<p>defaultLogger.info "User before login middleware loaded."</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.fromShortName = </span><span class="nf">(shortName) -&gt;</span>
+
+  <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s2">&quot;Loading #{shortName} middleware...&quot;</span>
+  
+  <span class="p">[</span><span class="nx">packageName</span><span class="p">,</span> <span class="nx">keyParts</span><span class="p">...]</span> <span class="o">=</span> <span class="nx">shortName</span><span class="p">.</span><span class="nx">split</span> <span class="s1">&#39; &#39;</span>
+  <span class="nv">key = </span><span class="nx">keyParts</span><span class="p">.</span><span class="nx">join</span> <span class="s1">&#39;_&#39;</span>
+  
+  <span class="nv">middleware = </span><span class="nx">exports</span><span class="p">.</span><span class="nx">fromHook</span><span class="p">(</span>
+    <span class="s2">&quot;#{packageName}#{i8n.camelize key}Middleware&quot;</span>
+    
+    <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s2">&quot;packageSettings:#{packageName}:#{</span>
+<span class="s2">      i8n.camelize key, true</span>
+<span class="s2">    }Middleware&quot;</span>
+  <span class="p">)</span>
+  
+  <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s2">&quot;#{i8n.capitalize shortName} middleware loaded.&quot;</span>
   
   <span class="nx">middleware</span></div></div></div></div></body></html>

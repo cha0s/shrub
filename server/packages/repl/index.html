@@ -2,7 +2,7 @@
 
 <p>Runs a REPL and allows packages to add values to its context.</p></div></div><div class="code"><div class="wrapper"><span class="nv">CoffeeScript = </span><span class="nx">require</span> <span class="s1">&#39;coffee-script&#39;</span>
 <span class="nv">fs = </span><span class="nx">require</span> <span class="s1">&#39;fs&#39;</span>
-<span class="nv">nconf = </span><span class="nx">require</span> <span class="s1">&#39;nconf&#39;</span>
+<span class="nv">config = </span><span class="nx">require</span> <span class="s1">&#39;config&#39;</span>
 <span class="nv">net = </span><span class="nx">require</span> <span class="s1">&#39;net&#39;</span>
 <span class="nv">replServer = </span><span class="nx">require</span> <span class="s1">&#39;repl&#39;</span>
 
@@ -12,11 +12,11 @@
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Use a CoffeeScript REPL?</p></div></div><div class="code"><div class="wrapper">  <span class="nv">useCoffee: </span><span class="kc">true</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookprocessexit">Implements hook <code>processExit</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$processExit = </span><span class="o">-&gt;</span> <span class="nx">server</span><span class="o">?</span><span class="p">.</span><span class="nx">close</span><span class="p">()</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookready">Implements hook <code>ready</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$ready = </span><span class="o">-&gt;</span>
   
-  <span class="nv">settings = </span><span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:repl&#39;</span>
+  <span class="nv">settings = </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:repl&#39;</span>
   
   <span class="nv">server = </span><span class="nx">net</span><span class="p">.</span><span class="nx">createServer</span> <span class="nf">(socket) -&gt;</span>
     
-    <span class="nv">settings = </span><span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:repl&#39;</span>
+    <span class="nv">settings = </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:repl&#39;</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>replContext</code>.
 Allow packages to add values to the REPL's context.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s1">&#39;replContext&#39;</span><span class="p">,</span> <span class="nv">context = </span><span class="p">{}</span>
     

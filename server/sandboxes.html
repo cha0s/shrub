@@ -4,7 +4,7 @@
 <a href="https://github.com/tmpvar/jsdom">jsdom</a>). It augments the DOM with a
 functional <a href="http://en.wikipedia.org/wiki/WebSocket">WebSocket</a> using
 <a href="https://github.com/einaros/ws/">ws</a>, and generally makes spinning up
-arbitrary DOM contexts a pleasant breeze.</p></div></div><div class="code"><div class="wrapper"><span class="nv">nconf = </span><span class="nx">require</span> <span class="s1">&#39;nconf&#39;</span>
+arbitrary DOM contexts a pleasant breeze.</p></div></div><div class="code"><div class="wrapper"><span class="nv">config = </span><span class="nx">require</span> <span class="s1">&#39;config&#39;</span>
 <span class="nv">Promise = </span><span class="nx">require</span> <span class="s1">&#39;bluebird&#39;</span>
 <span class="nv">WebSocket = </span><span class="nx">require</span> <span class="s1">&#39;socket.io/node_modules/socket.io-client/node_modules/ws/lib/WebSocket&#39;</span>
 
@@ -58,7 +58,7 @@ some methods to inspect the state of the document.</p></div></div><div class="co
       <span class="nv">cookieDomain: </span><span class="nx">options</span><span class="p">.</span><span class="nx">cookieDomain</span> <span class="o">?</span> <span class="s1">&#39;localhost&#39;</span>
       
       <span class="nv">url: </span><span class="nx">options</span><span class="p">.</span><span class="nx">url</span> <span class="o">?</span> <span class="s2">&quot;http://localhost:#{</span>
-<span class="s2">        nconf.get &#39;packageSettings:express:port&#39;</span>
+<span class="s2">        config.get &#39;packageSettings:express:port&#39;</span>
 <span class="s2">      }/&quot;</span>
     <span class="p">)</span>
     <span class="vi">@_window = </span><span class="nb">window</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createWindow</span><span class="p">()</span>

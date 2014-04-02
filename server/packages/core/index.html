@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><title>server/packages/core/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="server/packages/core/index"><meta name="groc-project-path" content="server/packages/core/index.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/server/packages/core/index.coffee">server/packages/core/index.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="core">Core</h1>
 
-<p>Implements various core functionality.</p></div></div><div class="code"><div class="wrapper"><span class="nv">nconf = </span><span class="nx">require</span> <span class="s1">&#39;nconf&#39;</span>
+<p>Implements various core functionality.</p></div></div><div class="code"><div class="wrapper"><span class="nv">config = </span><span class="nx">require</span> <span class="s1">&#39;config&#39;</span>
 
 <span class="nv">pkgman = </span><span class="nx">require</span> <span class="s1">&#39;pkgman&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookfingerprint">Implements hook <code>fingerprint</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$fingerprint = </span><span class="nf">(req) -&gt;</span>
   
@@ -20,7 +20,7 @@
   <span class="nv">middleware: </span><span class="p">[</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Normalize IP address.    </p></div></div><div class="code"><div class="wrapper">    <span class="nf">(req, res, next) -&gt;</span>
       
       <span class="nv">req.normalizedIp = </span><span class="nx">resolvedAddress</span><span class="p">(</span>
-        <span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:core:trustedProxies&#39;</span>
+        <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:core:trustedProxies&#39;</span>
         <span class="nx">req</span><span class="p">.</span><span class="nx">connection</span><span class="p">.</span><span class="nx">remoteAddress</span>
         <span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">[</span><span class="s1">&#39;x-forwarded-for&#39;</span><span class="p">]</span>
       <span class="p">)</span>
@@ -40,7 +40,7 @@
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Normalize IP address.    </p></div></div><div class="code"><div class="wrapper">    <span class="nf">(req, res, next) -&gt;</span>
       
       <span class="nv">req.normalizedIp = </span><span class="nx">resolvedAddress</span><span class="p">(</span>
-        <span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:core:trustedProxies&#39;</span>
+        <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:core:trustedProxies&#39;</span>
         <span class="nx">req</span><span class="p">.</span><span class="nx">address</span><span class="p">.</span><span class="nx">address</span>
         <span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">[</span><span class="s1">&#39;x-forwarded-for&#39;</span><span class="p">]</span>
       <span class="p">)</span>

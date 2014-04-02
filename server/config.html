@@ -5,7 +5,11 @@
 
 <span class="nv">pkgman = </span><span class="nx">require</span> <span class="s1">&#39;pkgman&#39;</span>
 
-<span class="p">{</span><span class="nx">defaultLogger</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;logging&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="load">load</h3>
+<span class="p">{</span><span class="nx">defaultLogger</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;logging&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="get">get</h3>
+
+<p><em>Get a configuration value by key.</em></p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.get = </span><span class="nf">(key) -&gt;</span> <span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="nx">key</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="has">has</h3>
+
+<p><em>Check if a configuration value exists by key.</em></p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.has = </span><span class="nf">(key) -&gt;</span> <span class="nx">nconf</span><span class="p">.</span><span class="nx">has</span> <span class="nx">key</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="load">load</h3>
 
 <p><em>Load configuration from the settings file and package defaults.</em></p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.load = </span><span class="o">-&gt;</span>
 
@@ -29,5 +33,6 @@
 Invoked when the server application is loading configuration. Allows
 packages to define their own default settings.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">packageSettings: </span><span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s1">&#39;packageSettings&#39;</span>
     
-    <span class="nv">path: </span><span class="s2">&quot;#{__dirname}/..&quot;</span>
-  </div></div></div></div></body></html>
+    <span class="nv">path: </span><span class="s2">&quot;#{__dirname}/..&quot;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="set">set</h3>
+
+<p><em>Set a configuration value by key.</em></p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.set = </span><span class="nf">(key, value) -&gt;</span> <span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span></div></div></div></div></body></html>

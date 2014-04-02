@@ -140,7 +140,8 @@ description and a list of implementing packages for each hook.</p>
 <ul><li><p>angular (<a href="./server/packages/angular/index.html#implementshookinitialize">server</a>)</p></li>
 <li><p>express (<a href="./server/packages/express/index.html#implementshookinitialize">server</a>)</p></li>
 <li><p>rpc (<a href="./server/packages/rpc/index.html#implementshookinitialize">server</a>)</p></li>
-<li><p>user (<a href="./server/packages/user/index.html#implementshookinitialize">server</a>)</p></li></ul></li>
+<li><p>user/login (<a href="./server/packages/user/login.html#implementshookinitialize">server</a>)</p></li>
+<li><p>user/logout (<a href="./server/packages/user/logout.html#implementshookinitialize">server</a>)</p></li></ul></li>
 <li><h2 id="ready"><code>ready</code></h2>
 
 <p><h5>Invoked after the server is initialized and ready. </h5></p>
@@ -164,7 +165,7 @@ description and a list of implementing packages for each hook.</p>
 <ul><li>nodemailer (<a href="./server/packages/nodemailer/index.html#implementshookhttplistening">server</a>)</li></ul></li>
 <li><h2 id="httpmiddleware"><code>httpMiddleware</code></h2>
 
-<p><h5>Invoked every time an HTTP connection is established. </h5></p>
+<p><h5>Invoked every time an HTTP connection is established. <code>TODO</code>: Rename express to http, so we can use a short name. </h5></p>
 
 <ul><li><p>angular (<a href="./server/packages/angular/index.html#implementshookhttpmiddleware">server</a>)</p></li>
 <li><p>assets (<a href="./server/packages/assets/index.html#implementshookhttpmiddleware">server</a>)</p></li>
@@ -205,7 +206,8 @@ description and a list of implementing packages for each hook.</p>
 <li><p>nodemailer (<a href="./server/packages/nodemailer/index.html#implementshookpackagesettings">server</a>)</p></li>
 <li><p>repl (<a href="./server/packages/repl/index.html#implementshookpackagesettings">server</a>)</p></li>
 <li><p>schema (<a href="./server/packages/schema/index.html#implementshookpackagesettings">server</a>)</p></li>
-<li><p>socket (<a href="./server/packages/socket/index.html#implementshookpackagesettings">server</a>)</p></li></ul></li>
+<li><p>socket (<a href="./server/packages/socket/index.html#implementshookpackagesettings">server</a>)</p></li>
+<li><p>user (<a href="./server/packages/user/index.html#implementshookpackagesettings">server</a>)</p></li></ul></li>
 </ul>
 
 <p><a href="./server/packages/config/index.html">server/packages/config/index.coffee</a></p>
@@ -264,7 +266,8 @@ description and a list of implementing packages for each hook.</p>
 
 <p><h5>Allow packages to act after an RPC call, but before the response is sent. Packages may modify the response before it is returned. Implementations should return a promise. When all promises are resolved, the result is returned. </h5></p>
 
-<ul><li>session (<a href="./server/packages/session/index.html#implementshookendpointfinished">server</a>)</li></ul></li>
+<ul><li><p>session (<a href="./server/packages/session/index.html#implementshookendpointfinished">server</a>)</p></li>
+<li><p>user (<a href="./server/packages/user/index.html#implementshookendpointfinished">server</a>)</p></li></ul></li>
 </ul>
 
 <p><a href="./server/packages/socket/manager.html">server/packages/socket/manager.coffee</a></p>
@@ -285,4 +288,30 @@ description and a list of implementing packages for each hook.</p>
 <ul><li><p>rpc (<a href="./server/packages/rpc/index.html#implementshooksocketconnectionmiddleware">server</a>)</p></li>
 <li><p>session (<a href="./server/packages/session/index.html#implementshooksocketconnectionmiddleware">server</a>)</p></li>
 <li><p>user (<a href="./server/packages/user/index.html#implementshooksocketconnectionmiddleware">server</a>)</p></li></ul></li>
+</ul>
+
+<p><a href="./server/packages/user/login.html">server/packages/user/login.coffee</a></p>
+
+<ul>
+<li><h2 id="userbeforeloginmiddleware"><code>userBeforeLoginMiddleware</code></h2>
+
+<p><h5>Invoked before a user logs in. </h5></p></li>
+<li><h2 id="userafterloginmiddleware"><code>userAfterLoginMiddleware</code></h2>
+
+<p><h5>Invoked after a user logs in. </h5></p></li>
+</ul>
+
+<p><a href="./server/packages/user/logout.html">server/packages/user/logout.coffee</a></p>
+
+<ul>
+<li><h2 id="userbeforelogoutmiddleware"><code>userBeforeLogoutMiddleware</code></h2>
+
+<p><h5>Invoked before a user logs out. </h5></p>
+
+<ul><li>user (<a href="./server/packages/user/index.html#implementshookuserbeforelogoutmiddleware">server</a>)</li></ul></li>
+<li><h2 id="userafterlogoutmiddleware"><code>userAfterLogoutMiddleware</code></h2>
+
+<p><h5>Invoked after a user logs out. </h5></p>
+
+<ul><li>user (<a href="./server/packages/user/index.html#implementshookuserafterlogoutmiddleware">server</a>)</li></ul></li>
 </ul></div></div></div></div></body></html>

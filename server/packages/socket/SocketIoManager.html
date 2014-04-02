@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="en"><head><title>server/packages/socket/SocketIoManager</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="server/packages/socket/SocketIoManager"><meta name="groc-project-path" content="server/packages/socket/SocketIoManager.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/server/packages/socket/SocketIoManager.coffee">server/packages/socket/SocketIoManager.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="socketio">Socket.IO</h1>
 
 <p>SocketManager implementation using <a href="http://socket.io/">Socket.IO</a>.</p></div></div><div class="code"><div class="wrapper"><span class="nv">crypto = </span><span class="nx">require</span> <span class="s1">&#39;server/crypto&#39;</span>
-<span class="nv">nconf = </span><span class="nx">require</span> <span class="s1">&#39;nconf&#39;</span>
+<span class="nv">config = </span><span class="nx">require</span> <span class="s1">&#39;config&#39;</span>
 <span class="nv">Promise = </span><span class="nx">require</span> <span class="s1">&#39;bluebird&#39;</span>
 
 <span class="nv">errors = </span><span class="nx">require</span> <span class="s1">&#39;errors&#39;</span>
@@ -19,7 +19,7 @@
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="constructor"><em>constructor</em></h2></div></div><div class="code"><div class="wrapper">  <span class="nv">constructor: </span><span class="o">-&gt;</span>
     <span class="k">super</span>
     
-    <span class="nv">options = </span><span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:socket:manager:options&#39;</span>
+    <span class="nv">options = </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:socket:manager:options&#39;</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Load the backing store.</p></div></div><div class="code"><div class="wrapper">    <span class="vi">@_store = </span><span class="k">switch</span> <span class="nx">options</span><span class="o">?</span><span class="p">.</span><span class="nx">store</span> <span class="o">?</span> <span class="s1">&#39;redis&#39;</span>
       
       <span class="k">when</span> <span class="s1">&#39;redis&#39;</span>
@@ -87,6 +87,8 @@ rejected as unauthorized.</p></div></div><div class="code"><div class="wrapper">
 request object from the authentication phase, plus some other
 goodies.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">req = </span><span class="nx">requestObjects</span><span class="p">[</span><span class="nx">socket</span><span class="p">.</span><span class="nx">handshake</span><span class="p">.</span><span class="nx">requestKey</span><span class="p">]</span>
       <span class="nx">req</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span> <span class="k">for</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span> <span class="k">of</span> <span class="nx">socket</span><span class="p">.</span><span class="nx">handshake</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Socket.IO hax. socket.handshake is behind a getter, so we'll get
+in the internals.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">socket</span><span class="p">.</span><span class="nx">manager</span><span class="p">.</span><span class="nx">handshaken</span><span class="p">[</span><span class="nx">socket</span><span class="p">.</span><span class="nx">id</span><span class="p">]</span> <span class="o">=</span> <span class="nx">req</span>
       
       <span class="nv">req.http = </span><span class="nx">http</span>
       <span class="nv">req.socket = </span><span class="nx">socket</span>

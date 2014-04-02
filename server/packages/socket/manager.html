@@ -1,5 +1,4 @@
 <!DOCTYPE html><html lang="en"><head><title>server/packages/socket/manager</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="server/packages/socket/manager"><meta name="groc-project-path" content="server/packages/socket/manager.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/server/packages/socket/manager.coffee">server/packages/socket/manager.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="socketmanager">SocketManager</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="p">{</span><span class="nx">EventEmitter</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;events&#39;</span>
-<span class="nv">nconf = </span><span class="nx">require</span> <span class="s1">&#39;nconf&#39;</span>
 
 <span class="nv">middleware = </span><span class="nx">require</span> <span class="s1">&#39;middleware&#39;</span>
 <span class="nv">pkgman = </span><span class="nx">require</span> <span class="s1">&#39;pkgman&#39;</span>
@@ -21,24 +20,16 @@ authorization just failed.</p></div></div><div class="code"><div class="wrapper"
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="loadmiddleware">.loadMiddleware</h3>
 
 <p><em>Gather and initialize socket middleware.</em></p></div></div><div class="code"><div class="wrapper">  <span class="nv">loadMiddleware: </span><span class="o">-&gt;</span>
-    
-    <span class="nv">config = </span><span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:socket&#39;</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>socketAuthorizationMiddleware</code>.
 Invoked when a socket connection begins. Packages may throw an
 instance of <code>SocketManager.AuthorizationFailure</code> to reject
-the socket connection as unauthorized.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s1">&#39;Loading socket authorization middleware...&#39;</span>
-    <span class="vi">@_authorizationMiddleware = </span><span class="nx">middleware</span><span class="p">.</span><span class="nx">fromHook</span><span class="p">(</span>
-      <span class="s1">&#39;socketAuthorizationMiddleware&#39;</span>
-      <span class="nx">config</span><span class="p">.</span><span class="nx">authorizationMiddleware</span>
+the socket connection as unauthorized.</p></div></div><div class="code"><div class="wrapper">    <span class="vi">@_authorizationMiddleware = </span><span class="nx">middleware</span><span class="p">.</span><span class="nx">fromShortName</span><span class="p">(</span>
+      <span class="s2">&quot;socket authorization middleware&quot;</span>
     <span class="p">)</span>
-    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s1">&#39;Socket authorization middleware loaded.&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>socketConnectionMiddleware</code>.
-Invoked for every socket connection.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s1">&#39;Loading socket middleware...&#39;</span>
-
-    <span class="vi">@_connectionMiddleware = </span><span class="nx">middleware</span><span class="p">.</span><span class="nx">fromHook</span><span class="p">(</span>
-      <span class="s1">&#39;socketConnectionMiddleware&#39;</span>
-      <span class="nx">config</span><span class="p">.</span><span class="nx">connectionMiddleware</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>socketConnectionMiddleware</code>.
+Invoked for every socket connection.</p></div></div><div class="code"><div class="wrapper">    <span class="vi">@_connectionMiddleware = </span><span class="nx">middleware</span><span class="p">.</span><span class="nx">fromShortName</span><span class="p">(</span>
+      <span class="s2">&quot;socket connection middleware&quot;</span>
     <span class="p">)</span>
-    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s1">&#39;Socket middleware loaded.&#39;</span>
 
   <span class="c1"># Ensure any subclass implements these methods.</span>
   <span class="err">@</span><span class="o">::</span><span class="p">[</span><span class="nx">method</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="o">-&gt;</span> <span class="k">throw</span> <span class="k">new</span> <span class="nx">ReferenceError</span><span class="p">(</span>

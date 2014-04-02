@@ -4,7 +4,7 @@
 middleware for sessions, routing, logging, etc.</p></div></div><div class="code"><div class="wrapper"><span class="nv">express = </span><span class="nx">require</span> <span class="s1">&#39;express&#39;</span>
 <span class="nv">fs = </span><span class="nx">require</span> <span class="s1">&#39;fs&#39;</span>
 <span class="nv">http = </span><span class="nx">require</span> <span class="s1">&#39;http&#39;</span>
-<span class="nv">nconf = </span><span class="nx">require</span> <span class="s1">&#39;nconf&#39;</span>
+<span class="nv">config = </span><span class="nx">require</span> <span class="s1">&#39;config&#39;</span>
 <span class="nv">Promise = </span><span class="nx">require</span> <span class="s1">&#39;bluebird&#39;</span>
 
 <span class="p">{</span><span class="nx">defaultLogger</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;logging&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="express">Express</h2>
@@ -129,7 +129,7 @@ Express framework.</p></div></div><div class="code"><div class="wrapper"><span c
 <p><em>The session store.</em></p></div></div><div class="code"><div class="wrapper">  <span class="nv">sessionStore: </span><span class="o">-&gt;</span> <span class="nx">@_sessionStore</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookinitialize">Implements hook <code>initialize</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$initialize = </span><span class="nf">(config) -&gt;</span>
   
-  <span class="nv">http = </span><span class="k">new</span> <span class="nx">Express</span> <span class="nv">settings = </span><span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:express&#39;</span>
+  <span class="nv">http = </span><span class="k">new</span> <span class="nx">Express</span> <span class="nv">settings = </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:express&#39;</span>
   <span class="nx">http</span><span class="p">.</span><span class="nx">initialize</span><span class="p">().</span><span class="k">then</span> <span class="o">-&gt;</span>
   
     <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s2">&quot;Shrub Express HTTP server up and running on port #{</span>
@@ -152,7 +152,7 @@ Express framework.</p></div></div><div class="code"><div class="wrapper"><span c
     <span class="s1">&#39;express/errors&#39;</span>
   <span class="p">]</span>
 
-  <span class="nv">path: </span><span class="s2">&quot;#{nconf.get &#39;path&#39;}/app&quot;</span>
+  <span class="nv">path: </span><span class="s2">&quot;#{config.get &#39;path&#39;}/app&quot;</span>
   
   <span class="nv">port: </span><span class="mi">4201</span>
   

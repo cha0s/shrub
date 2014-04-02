@@ -70,6 +70,9 @@ context.</p>
 <li><h4 id="moduleexportsclassabstracthttp"><code>module.exports = class AbstractHttp</code></h4>
 
 <p>This needs work, it probably wouldn't be able to handle another server in its current state. Move API from Express to here, and use a 'pure virtual' pattern, to allow any other server to extend along reasonable lines. </p></li>
+<li><h4 id="_middlewaremiddlewarefromhook"><code>@_middleware = middleware.fromHook(</code></h4>
+
+<p>Rename express to http, so we can use a short name. </p></li>
 </ul>
 
 <p><a href="./server/packages/angular/index.html">server/packages/angular/index.coffee</a></p>
@@ -112,7 +115,7 @@ context.</p>
 <p>this kind of thing should be configurable and handled by the theme/skin when we get to that point. </p></li>
 </ul>
 
-<p><a href="./server/packages/user/index.html">server/packages/user/index.coffee</a></p>
+<p><a href="./server/packages/user/login.html">server/packages/user/login.coffee</a></p>
 
 <ul>
 <li><h4 id="localstrategyrequirepassportlocalstrategy"><code>LocalStrategy = require('passport-local').Strategy</code></h4>

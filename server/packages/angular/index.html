@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="en"><head><title>server/packages/angular/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="server/packages/angular/index"><meta name="groc-project-path" content="server/packages/angular/index.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/server/packages/angular/index.coffee">server/packages/angular/index.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="angular">Angular</h1>
 
 <p>A sandboxed version of Angular, for clients lacking JS.</p></div></div><div class="code"><div class="wrapper"><span class="nv">_ = </span><span class="nx">require</span> <span class="s1">&#39;underscore&#39;</span>
-<span class="nv">nconf = </span><span class="nx">require</span> <span class="s1">&#39;nconf&#39;</span>
+<span class="nv">config = </span><span class="nx">require</span> <span class="s1">&#39;config&#39;</span>
 <span class="nv">Promise = </span><span class="nx">require</span> <span class="s1">&#39;bluebird&#39;</span>
 <span class="nv">url = </span><span class="nx">require</span> <span class="s1">&#39;url&#39;</span>
 
@@ -35,7 +35,7 @@ mechanism for registering and looking up persistent sandboxes using an id.</p></
     <span class="nv">sandbox.id = </span><span class="nx">id</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="sandboxtouch">sandbox.touch</h3>
 
-<p><em>Reset the time-to-live for a sandbox.</em></p></div></div><div class="code"><div class="wrapper">    <span class="nv">ttl = </span><span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:angular:ttl&#39;</span>
+<p><em>Reset the time-to-live for a sandbox.</em></p></div></div><div class="code"><div class="wrapper">    <span class="nv">ttl = </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:angular:ttl&#39;</span>
     <span class="nv">toucher = </span><span class="nx">_</span><span class="p">.</span><span class="nx">debounce</span> <span class="p">(</span><span class="o">=&gt;</span> <span class="nx">sandbox</span><span class="p">.</span><span class="nx">close</span><span class="p">()),</span> <span class="nx">ttl</span>
     <span class="nx">do</span> <span class="nv">sandbox.touch = </span><span class="o">-&gt;</span>
       <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s2">&quot;Touched sandbox ID: #{id}&quot;</span>
@@ -98,7 +98,7 @@ sandbox.</p></div></div><div class="code"><div class="wrapper"><span class="nx">
   
     <span class="nf">(req, res, next) -&gt;</span>
       
-      <span class="nv">settings = </span><span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:angular&#39;</span>
+      <span class="nv">settings = </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:angular&#39;</span>
       
       <span class="c1"># Render app.html</span>
       <span class="nv">htmlPromise = </span><span class="nx">http</span><span class="p">.</span><span class="nx">renderAppHtml</span> <span class="nx">res</span><span class="p">.</span><span class="nx">locals</span>
@@ -121,7 +121,7 @@ sandbox.</p></div></div><div class="code"><div class="wrapper"><span class="nx">
         <span class="p">,</span>
           <span class="nv">cookie: </span><span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">cookie</span>
           <span class="nv">url: </span><span class="s2">&quot;http://localhost:#{</span>
-<span class="s2">            nconf.get &#39;packageSettings:express:port&#39;</span>
+<span class="s2">            config.get &#39;packageSettings:express:port&#39;</span>
 <span class="s2">          }/shrub-entry-point&quot;</span>
         <span class="p">,</span>
           <span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">id</span>
@@ -168,22 +168,14 @@ sandbox.</p></div></div><div class="code"><div class="wrapper"><span class="nx">
 <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookinitialize">Implements hook <code>initialize</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$initialize = </span><span class="nf">(config) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Always disable sandbox rendering in end-to-end testing mode.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">config</span><span class="p">.</span><span class="nx">set</span> <span class="s1">&#39;packageSettings:angular:render&#39;</span><span class="p">,</span> <span class="kc">false</span> <span class="k">if</span> <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;E2E&#39;</span>
   
   <span class="c1"># Load the navigation middleware.</span>
-  
-  <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s2">&quot;Loading Angular navigation middleware...&quot;</span>
-  
-  <span class="nv">navigationMiddleware = </span><span class="nx">middleware</span><span class="p">.</span><span class="nx">fromHook</span><span class="p">(</span>
-    <span class="s1">&#39;angularNavigationMiddleware&#39;</span>
-    <span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:angular:navigation:middleware&#39;</span>
+  <span class="nv">navigationMiddleware = </span><span class="nx">middleware</span><span class="p">.</span><span class="nx">fromShortName</span><span class="p">(</span>
+    <span class="s2">&quot;angular navigation middleware&quot;</span>
   <span class="p">)</span>
-
-  <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s2">&quot;Angular navigation middleware loaded.&quot;</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookpackagesettings">Implements hook <code>packageSettings</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$packageSettings = </span><span class="o">-&gt;</span>
 
-  <span class="nv">navigation:</span>
-  
-    <span class="nv">middleware: </span><span class="p">[</span>
-      <span class="s1">&#39;form&#39;</span>
-    <span class="p">]</span>
+  <span class="nv">navigationMiddleware: </span><span class="p">[</span>
+    <span class="s1">&#39;form&#39;</span>
+  <span class="p">]</span>
 
   <span class="c1"># Should we render in the sandbox?</span>
   <span class="nv">render: </span><span class="kc">true</span>

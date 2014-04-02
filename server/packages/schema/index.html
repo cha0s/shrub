@@ -1,10 +1,10 @@
 <!DOCTYPE html><html lang="en"><head><title>server/packages/schema/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="server/packages/schema/index"><meta name="groc-project-path" content="server/packages/schema/index.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/server/packages/schema/index.coffee">server/packages/schema/index.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="database-schema">Database schema</h1>
 
-<p>Tools for working with the database schema.</p></div></div><div class="code"><div class="wrapper"><span class="nv">nconf = </span><span class="nx">require</span> <span class="s1">&#39;nconf&#39;</span>
+<p>Tools for working with the database schema.</p></div></div><div class="code"><div class="wrapper"><span class="nv">config = </span><span class="nx">require</span> <span class="s1">&#39;config&#39;</span>
 
 <span class="nv">schema = </span><span class="nx">require</span> <span class="s1">&#39;schema&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookconfig">Implements hook <code>config</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$config = </span><span class="nf">(req) -&gt;</span>
   
-  <span class="nv">apiRoot: </span><span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;apiRoot&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookhttpinitializing">Implements hook <code>httpInitializing</code></h2>
+  <span class="nv">apiRoot: </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;apiRoot&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookhttpinitializing">Implements hook <code>httpInitializing</code></h2>
 
 <p>Serve the database schema as an authenticated REST API.</p></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$httpInitializing = </span><span class="nf">({_app}) -&gt;</span>
   
@@ -14,7 +14,7 @@
   
   <span class="c1"># DRY,</span>
   <span class="nv">serveJson = </span><span class="nf">(res, code, data) -&gt;</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>CORS policy enforcement.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">corsHeaders = </span><span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:schema:corsHeaders&#39;</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>CORS policy enforcement.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">corsHeaders = </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:schema:corsHeaders&#39;</span>
     <span class="nx">res</span><span class="p">.</span><span class="nx">set</span> <span class="nx">corsHeaders</span> <span class="k">if</span> <span class="nx">corsHeaders</span><span class="o">?</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Serve JSON manually, breaking it to protect against XSRF.
 See: <a href="http://docs.angularjs.org/api/ng/service/$http#json-vulnerability-protection">http://docs.angularjs.org/api/ng/service/$http#json-vulnerability-protection</a></p></div></div><div class="code"><div class="wrapper">    <span class="nx">res</span><span class="p">.</span><span class="nx">set</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;application/json&#39;</span>
@@ -40,7 +40,7 @@ default (<code>/api</code>), the values will be:</p>
 resourcePath = "/api/user/:id"
 </code></pre>
 
-<p>We'll assume these defaults for each path's explanation.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">apiRoot = </span><span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;apiRoot&#39;</span>
+<p>We'll assume these defaults for each path's explanation.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">apiRoot = </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;apiRoot&#39;</span>
       <span class="nv">collectionPath = </span><span class="s2">&quot;#{apiRoot}/#{collection}&quot;</span>
       <span class="nv">resourcePath = </span><span class="s2">&quot;#{apiRoot}/#{resource}/:id&quot;</span>
       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Get the entire collection.

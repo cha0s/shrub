@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="en"><head><title>server/packages/villiany/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="server/packages/villiany/index"><meta name="groc-project-path" content="server/packages/villiany/index.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/server/packages/villiany/index.coffee">server/packages/villiany/index.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="villiany">Villiany</h1>
 
 <p>Watch for and punish bad behavior.</p></div></div><div class="code"><div class="wrapper"><span class="nv">moment = </span><span class="nx">require</span> <span class="s1">&#39;moment&#39;</span>
-<span class="nv">nconf = </span><span class="nx">require</span> <span class="s1">&#39;nconf&#39;</span>
+<span class="nv">config = </span><span class="nx">require</span> <span class="s1">&#39;config&#39;</span>
 <span class="nv">i8n = </span><span class="nx">require</span> <span class="s1">&#39;inflection&#39;</span>
 <span class="nv">Promise = </span><span class="nx">require</span> <span class="s1">&#39;bluebird&#39;</span>
 
@@ -57,7 +57,7 @@
     <span class="k">return</span> <span class="nx">unless</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">fingerprint</span><span class="p">).</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span>
     
     <span class="nx">unless</span> <span class="nx">expires</span><span class="o">?</span>
-      <span class="nv">settings = </span><span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:villiany:ban&#39;</span>
+      <span class="nv">settings = </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:villiany:ban&#39;</span>
       <span class="nv">expires = </span><span class="nx">settings</span><span class="p">.</span><span class="nx">defaultExpiration</span>
     
     <span class="nv">ban = </span><span class="k">new</span> <span class="nx">Ban</span> <span class="nv">expires: </span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span> <span class="o">+</span> <span class="nx">expires</span>
@@ -149,7 +149,7 @@
       
       <span class="nv">req.villianyKick = </span><span class="nf">(subject, ttl) -&gt;</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Destroy any session.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="o">?</span><span class="p">.</span><span class="nx">destroy</span><span class="p">()</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Log the user out.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">Promise</span><span class="p">.</span><span class="nx">cast</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">logout</span><span class="o">?</span><span class="p">()).</span><span class="k">then</span> <span class="o">-&gt;</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Log the user out.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">req</span><span class="p">.</span><span class="nx">logout</span><span class="p">().</span><span class="k">then</span> <span class="o">-&gt;</span>
           
           <span class="nx">res</span><span class="p">.</span><span class="nx">status</span> <span class="mi">401</span>
           <span class="nx">res</span><span class="p">.</span><span class="nx">end</span> <span class="nx">buildBanMessage</span> <span class="nx">subject</span><span class="p">,</span> <span class="nx">ttl</span>
@@ -172,16 +172,14 @@
       
       <span class="nv">req.villianyKick = </span><span class="nf">(subject, ttl) -&gt;</span>
         </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Destroy any session.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="o">?</span><span class="p">.</span><span class="nx">destroy</span><span class="p">()</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Log the user out.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">Promise</span><span class="p">.</span><span class="nx">cast</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">logout</span><span class="o">?</span><span class="p">()).</span><span class="k">then</span> <span class="o">-&gt;</span>
-          
-          <span class="k">new</span> <span class="nx">Promise</span> <span class="nf">(resolve) -&gt;</span>
-            </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Already authorized?</p></div></div><div class="code"><div class="wrapper">            <span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="o">?</span>
-              
-              <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="p">.</span><span class="nx">emit</span> <span class="s1">&#39;core.reload&#39;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">resolve</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Log the user out.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">req</span><span class="p">.</span><span class="nx">logout</span><span class="p">().</span><span class="k">then</span> <span class="o">-&gt;</span>
+          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Already authorized?</p></div></div><div class="code"><div class="wrapper">          <span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="o">?</span>
             
-            <span class="k">else</span>
-              
-              <span class="k">throw</span> <span class="k">new</span> <span class="nx">AuthorizationFailure</span>
+            <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="p">.</span><span class="nx">emit</span> <span class="s1">&#39;core.reload&#39;</span>
+          
+          <span class="k">else</span>
+            
+            <span class="k">throw</span> <span class="k">new</span> <span class="nx">AuthorizationFailure</span>
             
     
       <span class="nx">next</span><span class="p">()</span>

@@ -2,6 +2,7 @@
 
 <p>Framework for communication between client and server through
 <a href="http://en.wikipedia.org/wiki/Remote_procedure_call#Message_passing">RPC</a></p></div></div><div class="code"><div class="wrapper"><span class="nv">_ = </span><span class="nx">require</span> <span class="s1">&#39;underscore&#39;</span>
+<span class="nv">config = </span><span class="nx">require</span> <span class="s1">&#39;config&#39;</span>
 <span class="nv">Promise = </span><span class="nx">require</span> <span class="s1">&#39;bluebird&#39;</span>
 
 <span class="nv">audit = </span><span class="nx">require</span> <span class="s1">&#39;audit&#39;</span>
@@ -85,7 +86,12 @@ the real underlying issue.</p></div></div><div class="code"><div class="wrapper"
             
             <span class="nx">emitError</span> <span class="k">new</span> <span class="nb">Error</span> <span class="s2">&quot;Please try again later.&quot;</span>
             <span class="nx">logError</span> <span class="nx">error</span>
-            </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Transmit the error as it is directly to the client.</p></div></div><div class="code"><div class="wrapper">          <span class="nv">sendErrorToClient = </span><span class="nf">(error) -&gt;</span> <span class="nx">emitError</span> <span class="nx">error</span>
+            </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Transmit the error as it is directly to the client.</p></div></div><div class="code"><div class="wrapper">          <span class="nv">sendErrorToClient = </span><span class="nf">(error) -&gt;</span>
+            <span class="nx">emitError</span> <span class="nx">error</span>
+            </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>If we're not running in production, log the full
+error stack, because it might help track down any
+problem.</p></div></div><div class="code"><div class="wrapper">            <span class="k">if</span> <span class="s1">&#39;production&#39;</span> <span class="o">isnt</span> <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;NODE_ENV&#39;</span>
+              <span class="nx">logError</span> <span class="nx">error</span>
           </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Validate.</p></div></div><div class="code"><div class="wrapper">          <span class="nx">endpoint</span><span class="p">.</span><span class="nx">validators</span><span class="p">.</span><span class="nx">dispatch</span> <span class="nx">routeReq</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nf">(error) -&gt;</span>
             <span class="k">return</span> <span class="nx">sendErrorToClient</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
             </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Receive.</p></div></div><div class="code"><div class="wrapper">            <span class="nx">endpoint</span><span class="p">.</span><span class="nx">receiver</span> <span class="nx">routeReq</span><span class="p">,</span> <span class="nf">(error, result) -&gt;</span>
@@ -98,7 +104,7 @@ Implementations should return a promise. When
 all promises are resolved, the result is
 returned.</p></div></div><div class="code"><div class="wrapper">              <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span>
                 <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invokeFlat</span><span class="p">(</span>
-                  <span class="s1">&#39;endpointFinished&#39;</span><span class="p">,</span> <span class="nx">routeReq</span><span class="p">,</span> <span class="nx">result</span>
+                  <span class="s1">&#39;endpointFinished&#39;</span><span class="p">,</span> <span class="nx">routeReq</span><span class="p">,</span> <span class="nx">result</span><span class="p">,</span> <span class="nx">req</span>
                 <span class="p">)</span>             
 
               <span class="p">).</span><span class="k">then</span><span class="p">(</span>
