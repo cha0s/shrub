@@ -39,7 +39,7 @@ exports.$endpoint = ->
 				deferred.promise.bind({}).spread((@user, info) ->
 					throw errors.instantiate 'login' unless @user
 					
-					req.login @user
+					req.logIn @user
 					
 				).then ->
 					
@@ -103,7 +103,7 @@ monkeyPatchLogin = ->
 	# Invoked after a user logs in.
 	userAfterLoginMiddleware = middleware.fromShortName 'user after login'
 	
-	login = req.login
+	login = req.passportLogIn = req.login
 	req.login = req.logIn = (user, fn) ->
 		
 		new Promise (resolve, reject) =>

@@ -31,7 +31,7 @@ exports.$initialize = ->
 	# Invoked after a user logs out.
 	userAfterLogoutMiddleware = middleware.fromShortName 'user after logout'
 	
-	logout = req.logout
+	logout = req.passportLogOut = req.logout
 	req.logout = req.logOut = ->
 		
 		new Promise (resolve, reject) =>

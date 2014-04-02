@@ -202,7 +202,7 @@ exports.$httpMiddleware = ->
 				req.session?.destroy()
 				
 				# Log the user out.
-				req.logout().then ->
+				req.logOut().then ->
 					
 					res.status 401
 					res.end buildBanMessage subject, ttl
@@ -237,7 +237,7 @@ exports.$socketAuthorizationMiddleware = ->
 				req.session?.destroy()
 				
 				# Log the user out.
-				req.logout().then ->
+				req.logOut().then ->
 					
 					# Already authorized?
 					if req.socket?
