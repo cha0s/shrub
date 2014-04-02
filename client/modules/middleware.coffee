@@ -121,7 +121,7 @@ exports.fromHook = (hook, paths, args...) ->
 	
 	middleware
 
-# ## fromHook
+# ## fromShortName
 # 
 # Create a middleware stack from a short name. e.g. "user before login".
 # 
