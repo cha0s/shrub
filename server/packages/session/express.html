@@ -11,6 +11,13 @@
   
   <span class="nv">cookieParser = </span><span class="nx">express</span><span class="p">.</span><span class="nx">cookieParser</span> <span class="nx">cookie</span><span class="p">.</span><span class="nx">cryptoKey</span>
   
+  <span class="nv">sessionStore = </span><span class="k">switch</span> <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:session:sessionStore&#39;</span>
+    
+    <span class="k">when</span> <span class="s1">&#39;redis&#39;</span>
+      
+      <span class="nv">RedisStore = </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;connect-redis&#39;</span><span class="p">)</span> <span class="nx">express</span>
+      <span class="k">new</span> <span class="nx">RedisStore</span> <span class="nv">client: </span><span class="nx">redis</span><span class="p">.</span><span class="nx">createClient</span><span class="p">()</span>
+  
   <span class="nv">label: </span><span class="s1">&#39;Load session from cookie&#39;</span>
   <span class="nv">middleware: </span><span class="p">[</span>
     <span class="nx">cookieParser</span>
@@ -20,17 +27,7 @@
       <span class="nv">store: </span><span class="nx">sessionStore</span>
       <span class="nv">cookie: </span><span class="nx">cookie</span>
     <span class="p">)</span>
-  <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookinitialize">Implements hook <code>initialize</code></h2>
-
-<p>Load the session store.</p></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$initialize = </span><span class="o">-&gt;</span>
-  
-  <span class="nv">sessionStore = </span><span class="k">switch</span> <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:session:sessionStore&#39;</span>
-    
-    <span class="k">when</span> <span class="s1">&#39;redis&#39;</span>
-      
-      <span class="nv">RedisStore = </span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;connect-redis&#39;</span><span class="p">)</span> <span class="nx">express</span>
-      <span class="k">new</span> <span class="nx">RedisStore</span> <span class="nv">client: </span><span class="nx">redis</span><span class="p">.</span><span class="nx">createClient</span><span class="p">()</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshooksocketauthorizationmiddleware">Implements hook <code>socketAuthorizationMiddleware</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$socketAuthorizationMiddleware = </span><span class="o">-&gt;</span>
+  <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshooksocketauthorizationmiddleware">Implements hook <code>socketAuthorizationMiddleware</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$socketAuthorizationMiddleware = </span><span class="o">-&gt;</span>
 
   <span class="p">{</span><span class="nx">cookie</span><span class="p">,</span> <span class="nx">key</span><span class="p">}</span> <span class="o">=</span> <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:session&#39;</span>
   

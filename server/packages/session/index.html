@@ -53,16 +53,11 @@ as well as subsequent requests.</p></div></div><div class="code"><div class="wra
         <span class="nx">next</span><span class="p">()</span>
   
   <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookpackagesettings">Implements hook <code>packageSettings</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$packageSettings = </span><span class="o">-&gt;</span>
-  
-  <span class="nv">sessionStore: </span><span class="s1">&#39;redis&#39;</span>
-  
-  <span class="nv">key: </span><span class="s1">&#39;connect.sid&#39;</span>
-  
-  <span class="nv">cookie:</span>
-    
-    <span class="nv">cryptoKey: </span><span class="s1">&#39;***CHANGE THIS***&#39;</span>
-
-    <span class="nv">maxAge: </span><span class="mi">1209600000</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshooksocketconnectionmiddleware">Implements hook <code>socketConnectionMiddleware</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$socketConnectionMiddleware = </span><span class="o">-&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Session store instance.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">sessionStore: </span><span class="s1">&#39;redis&#39;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Key within the cookie where the session is stored.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">key: </span><span class="s1">&#39;connect.sid&#39;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Cookie information.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">cookie:</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The crypto key we encrypt the cookie with.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">cryptoKey: </span><span class="s1">&#39;***CHANGE THIS***&#39;</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The max age of this session. Defaults to two weeks.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">maxAge: </span><span class="mi">1000</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">14</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshooksocketconnectionmiddleware">Implements hook <code>socketConnectionMiddleware</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$socketConnectionMiddleware = </span><span class="o">-&gt;</span>
 
   <span class="nv">label: </span><span class="s1">&#39;Join channel for session&#39;</span>
   <span class="nv">middleware: </span><span class="p">[</span>

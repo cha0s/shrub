@@ -1170,45 +1170,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/express/Manager",
                     "title": "Manager"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Express",
-                        "slug": "express"
-                      },
-                      "depth": 1,
-                      "children": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 3,
-                            "title": "::listen",
-                            "slug": "listen"
-                          },
-                          "depth": 3
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 3,
-                            "title": "::renderAppHtml",
-                            "slug": "renderapphtml"
-                          },
-                          "depth": 3
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 3,
-                            "title": "::server",
-                            "slug": "server"
-                          },
-                          "depth": 3
-                        }
-                      ]
-                    }
-                  ]
+                  "depth": 4
                 }, {
                   "type": "file",
                   "data": {
@@ -1568,7 +1530,18 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/session/express",
                     "title": "express"
                   },
-                  "depth": 4
+                  "depth": 4,
+                  "outline": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 1,
+                        "title": "Express routes",
+                        "slug": "express-routes"
+                      },
+                      "depth": 1
+                    }
+                  ]
                 }, {
                   "type": "file",
                   "data": {
@@ -1588,7 +1561,18 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/session/index",
                     "title": "index"
                   },
-                  "depth": 4
+                  "depth": 4,
+                  "outline": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 1,
+                        "title": "Session",
+                        "slug": "session"
+                      },
+                      "depth": 1
+                    }
+                  ]
                 }
               ]
             }, {
