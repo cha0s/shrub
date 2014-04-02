@@ -38,13 +38,13 @@ module.exports = class SocketManager extends EventEmitter
 		# instance of `SocketManager.AuthorizationFailure` to reject
 		# the socket connection as unauthorized.
 		@_authorizationMiddleware = middleware.fromShortName(
-			"socket authorization middleware"
+			"socket authorization"
 		)
 		
 		# Invoke hook `socketConnectionMiddleware`.
 		# Invoked for every socket connection.
 		@_connectionMiddleware = middleware.fromShortName(
-			"socket connection middleware"
+			"socket connection"
 		)
 
 	# } Ensure any subclass implements these methods.

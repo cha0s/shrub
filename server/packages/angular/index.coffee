@@ -193,7 +193,7 @@ exports.$initialize = (config) ->
 	
 	# } Load the navigation middleware.
 	navigationMiddleware = middleware.fromShortName(
-		"angular navigation middleware"
+		"angular navigation"
 	)
 	
 # ## Implements hook `packageSettings`
