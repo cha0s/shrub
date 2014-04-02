@@ -71,7 +71,7 @@ exports.Sandbox = class Sandbox
 			cookieDomain: options.cookieDomain ? 'localhost'
 			
 			url: options.url ? "http://localhost:#{
-				config.get 'packageSettings:express:port'
+				config.get 'packageSettings:http:port'
 			}/"
 		)
 		@_window = window = document.createWindow()

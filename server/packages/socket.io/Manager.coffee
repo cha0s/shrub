@@ -13,7 +13,7 @@ pkgman = require 'pkgman'
 
 logger = new logging.create 'logs/socket.io.log'
 	
-SocketManager = require './manager'
+SocketManager = require '../socket/manager'
 {AuthorizationFailure} = SocketManager
 
 # ## SocketIoManager

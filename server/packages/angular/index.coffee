@@ -139,7 +139,7 @@ exports.$httpMiddleware = (http) ->
 				,
 					cookie: req.headers.cookie
 					url: "http://localhost:#{
-						config.get 'packageSettings:express:port'
+						config.get 'packageSettings:http:port'
 					}/shrub-entry-point"
 				,
 					req.session.id

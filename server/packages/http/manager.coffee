@@ -9,18 +9,18 @@ Promise = require 'bluebird'
 
 middleware = require 'middleware'
 
-# ## AbstractHttp
+# ## HttpManager
 # 
 # An abstract interface to be implemented by an HTTP server (e.g.
-# [Express](./packages/express/index.html)).
-module.exports = class AbstractHttp
+# [Express](./packages/http/Express.html)).
+module.exports = class HttpManager
 
 	# ### *constructor*
 	# 
 	# *Create the server.*
 	constructor: ->
 		
-		@_config = config.get 'packageSettings:express'
+		@_config = config.get 'packageSettings:http'
 		
 		@_middleware = null
 	
@@ -75,7 +75,7 @@ module.exports = class AbstractHttp
 
 	# } Ensure any subclass implements these methods.
 	@::[method] = (-> throw new ReferenceError(
-		"AbstractHttp::#{method} is a pure virtual method!"
+		"HttpManager::#{method} is a pure virtual method!"
 
 	# "Pure virtual" methods.
 	)) for method in [

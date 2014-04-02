@@ -11,7 +11,7 @@ socketManager = null
 # ## Implements hook `httpInitializing`
 exports.$httpInitializing = (http) ->
 	
-	Manager = require config.get 'packageSettings:socket:manager:module'
+	{Manager} = require config.get 'packageSettings:socket:manager:module'
 	
 	# Spin up the socket server, and have it listen on the HTTP server.
 	socketManager = new Manager
@@ -24,7 +24,7 @@ exports.$packageSettings = ->
 	# Middleware stack dispatched to authorize or reject a socket connection.
 	authorizationMiddleware: [
 		'core'
-		'session'
+		'session/express'
 		'user'
 		'villiany'
 	]
@@ -42,7 +42,7 @@ exports.$packageSettings = ->
 	manager:
 	
 		# Module implementing the socket manager.
-		module: 'packages/socket/SocketIoManager'
+		module: 'packages/socket.io'
 
 # ## Implements hook `replContext`
 exports.$replContext = (context) ->

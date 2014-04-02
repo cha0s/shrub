@@ -18,6 +18,7 @@
 		"express",
 		"files",
 		"form",
+		"http",
 		"limiter",
 		"logger",
 		"nodemailer",
@@ -26,30 +27,32 @@
 		"schema",
 		"session",
 		"socket",
+		"socket.io",
 		"ui",
 		"user",
 		"villiany"
 	],
 	"packageSettings": {
 		"angular": {
-			"navigation": {
-				"middleware": [
-					"form"
-				]
-			},
-			"render": true
+			"navigationMiddleware": [
+				"form"
+			],
+			"ttl": 300000
 		},
 		"core": {
 			"trustedProxies": []
 		},
-		"express": {
+		"http": {
+			"manager": {
+				"module": "packages/express"
+			},
 			"middleware": [
 				"core",
 				"socket/factory",
 				"form",
-				"express/session",
+				"session/express",
+				"session",
 				"user",
-				"villiany",
 				"express/logger",
 				"express/routes",
 				"express/static",
@@ -58,15 +61,7 @@
 				"angular",
 				"express/errors"
 			],
-			"port": 4201,
-			"sessions": {
-				"db": "redis",
-				"key": "connect.sid",
-				"cookie": {
-					"cryptoKey": "***CHANGE THIS***",
-					"maxAge": 1209600000
-				}
-			}
+			"port": 4201
 		},
 		"nodemailer": {
 			"transport": {
@@ -81,10 +76,18 @@
 		"schema": {
 			"corsHeaders": null
 		},
+		"session": {
+			"sessionStore": "redis",
+			"key": "connect.sid",
+			"cookie": {
+				"cryptoKey": "***CHANGE THIS***",
+				"maxAge": 1209600000
+			}
+		},
 		"socket": {
 			"authorizationMiddleware": [
 				"core",
-				"session",
+				"session/express",
 				"user",
 				"villiany"
 			],
@@ -93,13 +96,19 @@
 				"user",
 				"rpc"
 			],
+			"disconnectionMiddleware": [],
 			"manager": {
-				"module": "packages/socket/SocketIoManager"
-			},
-			"requestMiddleware": [
-				"socket/factory",
-				"user",
-				"rpc"
+				"module": "packages/socket.io"
+			}
+		},
+		"user": {
+			"beforeLoginMiddleware": [],
+			"afterLoginMiddleware": [],
+			"beforeLogoutMiddleware": [
+				"user"
+			],
+			"afterLogoutMiddleware": [
+				"user"
 			]
 		},
 		"villiany": {

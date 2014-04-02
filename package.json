@@ -15,6 +15,7 @@
     "bluebird": "~1.0.5",
     "coffee-script": "~1.7.1",
     "connect-redis": "~1.4.7",
+    "cookie-signature": "^1.0.3",
     "express": "3.1.0",
     "hbs": "~2.0.2",
     "jsdom": "~0.8.11",
@@ -30,6 +31,7 @@
     "passport-twitter": "~0.1.5",
     "promised-jugglingdb": "git://github.com/cha0s/promised-jugglingdb.git#promises",
     "redback": "~0.4.0",
+    "redis": "^0.10.1",
     "shrub-groc-style": "^1.0.0",
     "socket.io": "~0.9.16",
     "winston": "~0.7.2"
