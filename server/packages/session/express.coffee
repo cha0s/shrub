@@ -20,6 +20,13 @@ exports.$httpMiddleware = (http) ->
 	
 	cookieParser = express.cookieParser cookie.cryptoKey
 	
+	sessionStore = switch config.get 'packageSettings:session:sessionStore'
+		
+		when 'redis'
+			
+			RedisStore = require('connect-redis') express
+			new RedisStore client: redis.createClient()
+	
 	label: 'Load session from cookie'
 	middleware: [
 		cookieParser
@@ -31,18 +38,6 @@ exports.$httpMiddleware = (http) ->
 		)
 	]
 
-# ## Implements hook `initialize`
-# 
-# Load the session store.
-exports.$initialize = ->
-	
-	sessionStore = switch config.get 'packageSettings:session:sessionStore'
-		
-		when 'redis'
-			
-			RedisStore = require('connect-redis') express
-			new RedisStore client: redis.createClient()
-	
 # ## Implements hook `socketAuthorizationMiddleware`
 exports.$socketAuthorizationMiddleware = ->
 

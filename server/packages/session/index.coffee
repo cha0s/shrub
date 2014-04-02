@@ -77,15 +77,20 @@ exports.$httpMiddleware = (http) ->
 # ## Implements hook `packageSettings`
 exports.$packageSettings = ->
 	
+	# Session store instance.
 	sessionStore: 'redis'
 	
+	# Key within the cookie where the session is stored.
 	key: 'connect.sid'
 	
+	# Cookie information.
 	cookie:
 		
+		# The crypto key we encrypt the cookie with.
 		cryptoKey: '***CHANGE THIS***'
-
-		maxAge: 1209600000
+		
+		# The max age of this session. Defaults to two weeks.
+		maxAge: 1000 * 60 * 60 * 24 * 14
 
 # ## Implements hook `socketConnectionMiddleware`
 exports.$socketConnectionMiddleware = ->
