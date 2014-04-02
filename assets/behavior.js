@@ -1530,18 +1530,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/session/express",
                     "title": "express"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Express routes",
-                        "slug": "express-routes"
-                      },
-                      "depth": 1
-                    }
-                  ]
+                  "depth": 4
                 }, {
                   "type": "file",
                   "data": {
@@ -1561,18 +1550,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/session/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Session",
-                        "slug": "session"
-                      },
-                      "depth": 1
-                    }
-                  ]
+                  "depth": 4
                 }
               ]
             }, {
@@ -1742,7 +1720,8 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/user/login",
                     "title": "login"
                   },
-                  "depth": 4
+                  "depth": 4,
+                  "outline": []
                 }, {
                   "type": "file",
                   "data": {
@@ -1762,7 +1741,18 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/user/logout",
                     "title": "logout"
                   },
-                  "depth": 4
+                  "depth": 4,
+                  "outline": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 1,
+                        "title": "User logout",
+                        "slug": "user-logout"
+                      },
+                      "depth": 1
+                    }
+                  ]
                 }, {
                   "type": "file",
                   "data": {
@@ -1832,7 +1822,18 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/villiany/index",
                     "title": "index"
                   },
-                  "depth": 4
+                  "depth": 4,
+                  "outline": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 1,
+                        "title": "Villiany",
+                        "slug": "villiany"
+                      },
+                      "depth": 1
+                    }
+                  ]
                 }
               ]
             }

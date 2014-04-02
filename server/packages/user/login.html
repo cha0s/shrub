@@ -33,7 +33,7 @@
 response.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">deferred</span><span class="p">.</span><span class="nx">promise</span><span class="p">.</span><span class="nx">bind</span><span class="p">({}).</span><span class="nx">spread</span><span class="p">(</span><span class="nf">(@user, info) -&gt;</span>
           <span class="k">throw</span> <span class="nx">errors</span><span class="p">.</span><span class="nx">instantiate</span> <span class="s1">&#39;login&#39;</span> <span class="nx">unless</span> <span class="nx">@user</span>
           
-          <span class="nx">req</span><span class="p">.</span><span class="nx">login</span> <span class="nx">@user</span>
+          <span class="nx">req</span><span class="p">.</span><span class="nx">logIn</span> <span class="nx">@user</span>
           
         <span class="p">).</span><span class="k">then</span> <span class="o">-&gt;</span>
           </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Join a channel for the username.</p></div></div><div class="code"><div class="wrapper">          <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="p">.</span><span class="nx">join</span> <span class="nx">@user</span><span class="p">.</span><span class="nx">name</span>
@@ -81,7 +81,7 @@ and return a promise.</p></div></div><div class="code"><div class="wrapper"><spa
 Invoked before a user logs in.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">userBeforeLoginMiddleware = </span><span class="nx">middleware</span><span class="p">.</span><span class="nx">fromShortName</span> <span class="s1">&#39;user before login&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>userAfterLoginMiddleware</code>.
 Invoked after a user logs in.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">userAfterLoginMiddleware = </span><span class="nx">middleware</span><span class="p">.</span><span class="nx">fromShortName</span> <span class="s1">&#39;user after login&#39;</span>
   
-  <span class="nv">login = </span><span class="nx">req</span><span class="p">.</span><span class="nx">login</span>
+  <span class="nv">login = req.passportLogIn = </span><span class="nx">req</span><span class="p">.</span><span class="nx">login</span>
   <span class="nv">req.login = req.logIn = </span><span class="nf">(user, fn) -&gt;</span>
     
     <span class="k">new</span> <span class="nx">Promise</span> <span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="o">=&gt;</span>

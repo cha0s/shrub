@@ -16,7 +16,7 @@ and return a promise.</p></div></div><div class="code"><div class="wrapper"><spa
 Invoked before a user logs out.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">userBeforeLogoutMiddleware = </span><span class="nx">middleware</span><span class="p">.</span><span class="nx">fromShortName</span> <span class="s1">&#39;user before logout&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>userAfterLogoutMiddleware</code>.
 Invoked after a user logs out.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">userAfterLogoutMiddleware = </span><span class="nx">middleware</span><span class="p">.</span><span class="nx">fromShortName</span> <span class="s1">&#39;user after logout&#39;</span>
   
-  <span class="nv">logout = </span><span class="nx">req</span><span class="p">.</span><span class="nx">logout</span>
+  <span class="nv">logout = req.passportLogOut = </span><span class="nx">req</span><span class="p">.</span><span class="nx">logout</span>
   <span class="nv">req.logout = req.logOut = </span><span class="o">-&gt;</span>
     
     <span class="k">new</span> <span class="nx">Promise</span> <span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="o">=&gt;</span>

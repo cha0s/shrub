@@ -149,7 +149,7 @@
       
       <span class="nv">req.villianyKick = </span><span class="nf">(subject, ttl) -&gt;</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Destroy any session.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="o">?</span><span class="p">.</span><span class="nx">destroy</span><span class="p">()</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Log the user out.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">req</span><span class="p">.</span><span class="nx">logout</span><span class="p">().</span><span class="k">then</span> <span class="o">-&gt;</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Log the user out.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">req</span><span class="p">.</span><span class="nx">logOut</span><span class="p">().</span><span class="k">then</span> <span class="o">-&gt;</span>
           
           <span class="nx">res</span><span class="p">.</span><span class="nx">status</span> <span class="mi">401</span>
           <span class="nx">res</span><span class="p">.</span><span class="nx">end</span> <span class="nx">buildBanMessage</span> <span class="nx">subject</span><span class="p">,</span> <span class="nx">ttl</span>
@@ -172,7 +172,7 @@
       
       <span class="nv">req.villianyKick = </span><span class="nf">(subject, ttl) -&gt;</span>
         </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Destroy any session.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="o">?</span><span class="p">.</span><span class="nx">destroy</span><span class="p">()</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Log the user out.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">req</span><span class="p">.</span><span class="nx">logout</span><span class="p">().</span><span class="k">then</span> <span class="o">-&gt;</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Log the user out.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">req</span><span class="p">.</span><span class="nx">logOut</span><span class="p">().</span><span class="k">then</span> <span class="o">-&gt;</span>
           </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Already authorized?</p></div></div><div class="code"><div class="wrapper">          <span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="o">?</span>
             
             <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="p">.</span><span class="nx">emit</span> <span class="s1">&#39;core.reload&#39;</span>
