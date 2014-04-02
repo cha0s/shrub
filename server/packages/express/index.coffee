@@ -7,7 +7,7 @@
 express = require 'express'
 fs = require 'fs'
 http = require 'http'
-nconf = require 'nconf'
+config = require 'config'
 Promise = require 'bluebird'
 
 {defaultLogger} = require 'logging'
@@ -152,7 +152,7 @@ class Express extends (require 'AbstractHttp')
 # ## Implements hook `initialize`
 exports.$initialize = (config) ->
 	
-	http = new Express settings = nconf.get 'packageSettings:express'
+	http = new Express settings = config.get 'packageSettings:express'
 	http.initialize().then ->
 	
 		defaultLogger.info "Shrub Express HTTP server up and running on port #{
@@ -177,7 +177,7 @@ exports.$packageSettings = ->
 		'express/errors'
 	]
 
-	path: "#{nconf.get 'path'}/app"
+	path: "#{config.get 'path'}/app"
 	
 	port: 4201
 	

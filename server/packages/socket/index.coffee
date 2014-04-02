@@ -3,7 +3,7 @@
 # 
 # Manage socket connections.
 
-nconf = require 'nconf'
+config = require 'config'
 
 # The socket manager.
 socketManager = null
@@ -11,7 +11,7 @@ socketManager = null
 # ## Implements hook `httpInitializing`
 exports.$httpInitializing = (http) ->
 	
-	Manager = require nconf.get 'packageSettings:socket:manager:module'
+	Manager = require config.get 'packageSettings:socket:manager:module'
 	
 	# Spin up the socket server, and have it listen on the HTTP server.
 	socketManager = new Manager

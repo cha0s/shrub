@@ -4,7 +4,7 @@
 # Watch for and punish bad behavior.
 
 moment = require 'moment'
-nconf = require 'nconf'
+config = require 'config'
 i8n = require 'inflection'
 Promise = require 'bluebird'
 
@@ -83,7 +83,7 @@ exports.$models = (schema) ->
 		return unless Object.keys(fingerprint).length > 0
 		
 		unless expires?
-			settings = nconf.get 'packageSettings:villiany:ban'
+			settings = config.get 'packageSettings:villiany:ban'
 			expires = settings.defaultExpiration
 		
 		ban = new Ban expires: Date.now() + expires

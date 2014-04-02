@@ -7,7 +7,7 @@
 # [ws](https://github.com/einaros/ws/), and generally makes spinning up
 # arbitrary DOM contexts a pleasant breeze.
 
-nconf = require 'nconf'
+config = require 'config'
 Promise = require 'bluebird'
 WebSocket = require 'socket.io/node_modules/socket.io-client/node_modules/ws/lib/WebSocket'
 
@@ -71,7 +71,7 @@ exports.Sandbox = class Sandbox
 			cookieDomain: options.cookieDomain ? 'localhost'
 			
 			url: options.url ? "http://localhost:#{
-				nconf.get 'packageSettings:express:port'
+				config.get 'packageSettings:express:port'
 			}/"
 		)
 		@_window = window = document.createWindow()

@@ -1,6 +1,6 @@
 
 i8n = require 'inflection'
-nconf = require 'nconf'
+config = require 'config'
 passport = require 'passport'
 Promise = require 'bluebird'
 
@@ -103,7 +103,7 @@ monkeyPatchLogin = ->
 		
 		builtMiddleware = middleware.fromHook(
 			"user#{i8n.camelize type.replace ' ', '_'}Middleware"
-			nconf.get "packageSettings:user:#{
+			config.get "packageSettings:user:#{
 				i8n.camelize type.replace(' ', '_'), true
 			}Middleware"
 		)

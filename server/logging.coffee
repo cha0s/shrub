@@ -3,7 +3,6 @@
 # 
 # Provide a unified interface for logging information.
 
-nconf = require 'nconf'
 winston = require 'winston'
 
 # ## .create

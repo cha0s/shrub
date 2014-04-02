@@ -4,7 +4,7 @@
 # A sandboxed version of Angular, for clients lacking JS.
 
 _ = require 'underscore'
-nconf = require 'nconf'
+config = require 'config'
 Promise = require 'bluebird'
 url = require 'url'
 
@@ -44,7 +44,7 @@ sandboxManager = new class SandboxManager
 		# ### sandbox.touch
 		# 
 		# *Reset the time-to-live for a sandbox.*
-		ttl = nconf.get 'packageSettings:angular:ttl'
+		ttl = config.get 'packageSettings:angular:ttl'
 		toucher = _.debounce (=> sandbox.close()), ttl
 		do sandbox.touch = ->
 			defaultLogger.info "Touched sandbox ID: #{id}"
@@ -116,7 +116,7 @@ exports.$httpMiddleware = (http) ->
 	
 		(req, res, next) ->
 			
-			settings = nconf.get 'packageSettings:angular'
+			settings = config.get 'packageSettings:angular'
 			
 			# } Render app.html
 			htmlPromise = http.renderAppHtml res.locals
@@ -139,7 +139,7 @@ exports.$httpMiddleware = (http) ->
 				,
 					cookie: req.headers.cookie
 					url: "http://localhost:#{
-						nconf.get 'packageSettings:express:port'
+						config.get 'packageSettings:express:port'
 					}/shrub-entry-point"
 				,
 					req.session.id
@@ -197,7 +197,7 @@ exports.$initialize = (config) ->
 	
 	navigationMiddleware = middleware.fromHook(
 		'angularNavigationMiddleware'
-		nconf.get 'packageSettings:angular:navigation:middleware'
+		config.get 'packageSettings:angular:navigation:middleware'
 	)
 
 	defaultLogger.info "Angular navigation middleware loaded."

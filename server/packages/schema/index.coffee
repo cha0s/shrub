@@ -3,14 +3,14 @@
 # 
 # Tools for working with the database schema.
 
-nconf = require 'nconf'
+config = require 'config'
 
 schema = require 'schema'
 
 # ## Implements hook `config`
 exports.$config = (req) ->
 	
-	apiRoot: nconf.get 'apiRoot'
+	apiRoot: config.get 'apiRoot'
 
 # ## Implements hook `httpInitializing`
 # 
@@ -25,7 +25,7 @@ exports.$httpInitializing = ({_app}) ->
 	serveJson = (res, code, data) ->
 		
 		# CORS policy enforcement.
-		corsHeaders = nconf.get 'packageSettings:schema:corsHeaders'
+		corsHeaders = config.get 'packageSettings:schema:corsHeaders'
 		res.set corsHeaders if corsHeaders?
 		
 		# Serve JSON manually, breaking it to protect against XSRF.
@@ -58,7 +58,7 @@ exports.$httpInitializing = ({_app}) ->
 			# 	resourcePath = "/api/user/:id"
 			# 
 			# We'll assume these defaults for each path's explanation.
-			apiRoot = nconf.get 'apiRoot'
+			apiRoot = config.get 'apiRoot'
 			collectionPath = "#{apiRoot}/#{collection}"
 			resourcePath = "#{apiRoot}/#{resource}/:id"
 			

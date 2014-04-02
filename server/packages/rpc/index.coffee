@@ -5,7 +5,7 @@
 # [RPC](http://en.wikipedia.org/wiki/Remote_procedure_call#Message_passing)
 
 _ = require 'underscore'
-nconf = require 'nconf'
+config = require 'config'
 Promise = require 'bluebird'
 
 audit = require 'audit'
@@ -121,7 +121,7 @@ exports.$socketConnectionMiddleware = ->
 						# If we're not running in production, log the full
 						# error stack, because it might help track down any
 						# problem.
-						if 'production' isnt nconf.get 'NODE_ENV'
+						if 'production' isnt config.get 'NODE_ENV'
 							logError error
 					
 					# Validate.

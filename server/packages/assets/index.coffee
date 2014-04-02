@@ -4,7 +4,7 @@
 # Serve different JS based on whether the server is running in production mode.
 
 _ = require 'underscore'
-nconf = require 'nconf'
+config = require 'config'
 pkgman = require 'pkgman'
 
 # ## Implements hook `httpMiddleware`
@@ -17,7 +17,7 @@ exports.$httpMiddleware = (http) ->
 			
 			res.locals.assets =
 			
-				js: if 'production' is nconf.get 'NODE_ENV'
+				js: if 'production' is config.get 'NODE_ENV'
 					
 
 					[

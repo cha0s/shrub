@@ -2,7 +2,7 @@
 # # User - forgot password
 
 crypto = require 'server/crypto'
-nconf = require 'nconf'
+config = require 'config'
 nodemailer = require 'server/packages/nodemailer'
 Promise = require 'bluebird'
 
@@ -58,7 +58,7 @@ exports.$endpoint = ->
 				req.headers.host
 			}"
 			
-			siteName = nconf.get 'siteName'
+			siteName = config.get 'siteName'
 			
 			tokens =
 				

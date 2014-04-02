@@ -2,7 +2,7 @@
 # # Express error handler
 
 express = require 'express'
-nconf = require 'nconf'
+config = require 'config'
 
 errors = require 'errors'
 logging = require 'logging'
@@ -16,7 +16,7 @@ exports.$httpMiddleware = (http) ->
 	middleware: [
 		
 		# In production, we'll just log the error and continue.
-		if 'production' is nconf.get 'NODE_ENV'
+		if 'production' is config.get 'NODE_ENV'
 			
 			(error, req, res, next) ->
 		

@@ -2,7 +2,7 @@
 # # User logout
 
 i8n = require 'inflection'
-nconf = require 'nconf'
+config = require 'config'
 Promise = require 'bluebird'
 
 middleware = require 'middleware'
@@ -31,7 +31,7 @@ exports.$initialize = (config) ->
 		
 		builtMiddleware = middleware.fromHook(
 			"user#{i8n.camelize type.replace ' ', '_'}Middleware"
-			nconf.get "packageSettings:user:#{
+			config.get "packageSettings:user:#{
 				i8n.camelize type.replace(' ', '_'), true
 			}Middleware"
 		)

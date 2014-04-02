@@ -4,7 +4,7 @@
 # Cryptographic helper functions.
 
 crypto = require 'crypto'
-nconf = require 'nconf'
+config = require 'config'
 Promise = require 'bluebird'
 
 # ### encrypt
@@ -19,7 +19,7 @@ exports.encrypt = (message, password) ->
 	
 	new Promise (resolve, reject) ->
 	
-		cipher = crypto.createCipher 'aes256', password ? nconf.get 'cryptoKey'
+		cipher = crypto.createCipher 'aes256', password ? config.get 'cryptoKey'
 		
 		cipherText = []
 		cipherText.push cipher.update message, 'binary', 'hex'
@@ -38,7 +38,7 @@ exports.decrypt = (message, password) ->
 	
 	new Promise (resolve, reject) ->
 	
-		decipher = crypto.createDecipher 'aes256', password ? nconf.get 'cryptoKey'
+		decipher = crypto.createDecipher 'aes256', password ? config.get 'cryptoKey'
 		decipher.setAutoPadding false
 		
 		decipherText = []

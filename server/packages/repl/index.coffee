@@ -5,7 +5,7 @@
 
 CoffeeScript = require 'coffee-script'
 fs = require 'fs'
-nconf = require 'nconf'
+config = require 'config'
 net = require 'net'
 replServer = require 'repl'
 
@@ -32,11 +32,11 @@ exports.$processExit = -> server?.close()
 # ## Implements hook `ready`
 exports.$ready = ->
 	
-	settings = nconf.get 'packageSettings:repl'
+	settings = config.get 'packageSettings:repl'
 	
 	server = net.createServer (socket) ->
 		
-		settings = nconf.get 'packageSettings:repl'
+		settings = config.get 'packageSettings:repl'
 	
 		# Invoke hook `replContext`.
 		# Allow packages to add values to the REPL's context.

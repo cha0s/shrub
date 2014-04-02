@@ -2,7 +2,7 @@
 # # SocketManager
 
 {EventEmitter} = require 'events'
-nconf = require 'nconf'
+config = require 'config'
 
 middleware = require 'middleware'
 pkgman = require 'pkgman'
@@ -34,7 +34,7 @@ module.exports = class SocketManager extends EventEmitter
 	# *Gather and initialize socket middleware.*
 	loadMiddleware: ->
 		
-		config = nconf.get 'packageSettings:socket'
+		config = config.get 'packageSettings:socket'
 		
 		# Invoke hook `socketAuthorizationMiddleware`.
 		# Invoked when a socket connection begins. Packages may throw an

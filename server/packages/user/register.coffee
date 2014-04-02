@@ -1,7 +1,7 @@
 
 # # User registration
 
-nconf = require 'nconf'
+config = require 'config'
 nodemailer = require 'server/packages/nodemailer'
 
 crypto = require 'server/crypto'
@@ -30,7 +30,7 @@ exports.$endpoint = ->
 				req.headers.host
 			}"
 			
-			siteName = nconf.get 'siteName'
+			siteName = config.get 'siteName'
 			
 			tokens =
 				

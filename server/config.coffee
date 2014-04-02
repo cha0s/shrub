@@ -10,6 +10,16 @@ pkgman = require 'pkgman'
 
 {defaultLogger} = require 'logging'
 
+# ### get
+# 
+# *Get a configuration value by key.*
+exports.get = (key) -> nconf.get key
+
+# ### has
+# 
+# *Check if a configuration value exists by key.*
+exports.has = (key) -> nconf.has key
+
 # ### load
 # 
 # *Load configuration from the settings file and package defaults.*
@@ -38,4 +48,8 @@ exports.load = ->
 		packageSettings: pkgman.invoke 'packageSettings'
 		
 		path: "#{__dirname}/.."
-	
+
+# ### set
+# 
+# *Set a configuration value by key.*
+exports.set = (key, value) -> nconf.get key, value

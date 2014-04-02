@@ -4,7 +4,7 @@
 # Renders and sends email.
 
 fs = require 'fs'
-nconf = require 'nconf'
+config = require 'config'
 nodemailer = require 'nodemailer'
 Promise = require 'bluebird'
 
@@ -32,7 +32,7 @@ exports.$clearCaches = ->
 # ## Implements hook `httpListening`
 exports.$httpListening = (http) ->
 	
-	settings = nconf.get 'packageSettings:nodemailer'
+	settings = config.get 'packageSettings:nodemailer'
 	
 	# Instantiate the email transport.
 	transport = nodemailer.createTransport(
@@ -80,8 +80,8 @@ exports.$packageSettings = ->
 #   key, which is used to replace tokens in the mail.
 exports.sendMail = (type, mail) ->
 	
-	path = nconf.get 'path'
-	siteEmail = nconf.get 'siteEmail'
+	path = config.get 'path'
+	siteEmail = config.get 'siteEmail'
 	
 	sandboxId = null
 	

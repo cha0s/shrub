@@ -1,7 +1,7 @@
 
 # # AbstractHttp
 
-nconf = require 'nconf'
+config = require 'config'
 pkgman = require 'pkgman'
 Promise = require 'bluebird'
 
@@ -25,7 +25,7 @@ module.exports = class AbstractHttp
 	# *Create the server.*
 	# 
 	# * (object) `config` - The server configuration.
-	#   `TODO`: Should probably just use nconf, weird interface.
+	#   `TODO`: Should probably just use config, weird interface.
 	constructor: (@_config) ->
 		
 		@_middleware = null

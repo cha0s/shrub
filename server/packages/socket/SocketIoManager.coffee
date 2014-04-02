@@ -4,7 +4,7 @@
 # SocketManager implementation using [Socket.IO](http://socket.io/).
 
 crypto = require 'server/crypto'
-nconf = require 'nconf'
+config = require 'config'
 Promise = require 'bluebird'
 
 errors = require 'errors'
@@ -26,7 +26,7 @@ module.exports = class SocketIoManager extends SocketManager
 	constructor: ->
 		super
 		
-		options = nconf.get 'packageSettings:socket:manager:options'
+		options = config.get 'packageSettings:socket:manager:options'
 		
 		# Load the backing store.
 		@_store = switch options?.store ? 'redis'

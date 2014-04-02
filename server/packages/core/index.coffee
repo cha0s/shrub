@@ -3,7 +3,7 @@
 # 
 # Implements various core functionality.
 
-nconf = require 'nconf'
+config = require 'config'
 
 pkgman = require 'pkgman'
 
@@ -34,7 +34,7 @@ exports.$httpMiddleware = (http) ->
 		(req, res, next) ->
 			
 			req.normalizedIp = resolvedAddress(
-				nconf.get 'packageSettings:core:trustedProxies'
+				config.get 'packageSettings:core:trustedProxies'
 				req.connection.remoteAddress
 				req.headers['x-forwarded-for']
 			)
@@ -67,7 +67,7 @@ exports.$socketAuthorizationMiddleware = ->
 		(req, res, next) ->
 			
 			req.normalizedIp = resolvedAddress(
-				nconf.get 'packageSettings:core:trustedProxies'
+				config.get 'packageSettings:core:trustedProxies'
 				req.address.address
 				req.headers['x-forwarded-for']
 			)
