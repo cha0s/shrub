@@ -34,6 +34,9 @@
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Augment it with functionality we'll find useful and convenient.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">augmentSandbox</span> <span class="nv">sandbox = </span><span class="nx">_sandbox_</span>
     
   <span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookpackagesettings">Implements hook <code>packageSettings</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$packageSettings = </span><span class="o">-&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Default site email information.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">siteEmail:</span>
+    <span class="nv">address: </span><span class="s1">&#39;admin@example.com&#39;</span>
+    <span class="nv">name: </span><span class="s1">&#39;Site administrator&#39;</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Passed through directly to nodemailer.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">transport:</span>
     <span class="nv">type: </span><span class="s1">&#39;sendmail&#39;</span>
     <span class="nv">options: </span><span class="p">{}</span>
@@ -50,7 +53,7 @@ key, which is used to replace tokens in the mail.</p></li>
 </ul></div></div><div class="code"><div class="wrapper"><span class="nv">exports.sendMail = </span><span class="nf">(type, mail) -&gt;</span>
   
   <span class="nv">path = </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;path&#39;</span>
-  <span class="nv">siteEmail = </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;siteEmail&#39;</span>
+  <span class="nv">siteEmail = </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:sendmail:siteEmail&#39;</span>
   
   <span class="nv">sandboxId = </span><span class="kc">null</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>mail</code>.

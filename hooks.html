@@ -138,8 +138,9 @@ description and a list of implementing packages for each hook.</p>
 <p><h5>Invoked when the server is just starting. Implementations should return a promise. When all returned promises are fulfilled, initialization continues. </h5></p>
 
 <ul><li><p>angular (<a href="./server/packages/angular/index.html#implementshookinitialize">server</a>)</p></li>
-<li><p>express (<a href="./server/packages/express/index.html#implementshookinitialize">server</a>)</p></li>
+<li><p>http (<a href="./server/packages/http/index.html#implementshookinitialize">server</a>)</p></li>
 <li><p>rpc (<a href="./server/packages/rpc/index.html#implementshookinitialize">server</a>)</p></li>
+<li><p>session/express (<a href="./server/packages/session/express.html#implementshookinitialize">server</a>)</p></li>
 <li><p>user/login (<a href="./server/packages/user/login.html#implementshookinitialize">server</a>)</p></li>
 <li><p>user/logout (<a href="./server/packages/user/logout.html#implementshookinitialize">server</a>)</p></li></ul></li>
 <li><h2 id="ready"><code>ready</code></h2>
@@ -149,7 +150,50 @@ description and a list of implementing packages for each hook.</p>
 <ul><li>repl (<a href="./server/packages/repl/index.html#implementshookready">server</a>)</li></ul></li>
 </ul>
 
-<p><a href="./server/AbstractHttp.html">server/AbstractHttp.coffee</a></p>
+<p><a href="./server/audit.html">server/audit.coffee</a></p>
+
+<ul>
+<li><h2 id="fingerprint"><code>fingerprint</code></h2>
+
+<p><h5>Allows a package to specify unique keys for this request, e.g. IP address, session ID, etc. Implementations take a request object as the only parameter. The request parameter may be null. </h5></p>
+
+<ul><li><p>core (<a href="./server/packages/core/index.html#implementshookfingerprint">server</a>)</p></li>
+<li><p>session (<a href="./server/packages/session/index.html#implementshookfingerprint">server</a>)</p></li>
+<li><p>user (<a href="./server/packages/user/index.html#implementshookfingerprint">server</a>)</p></li></ul></li>
+</ul>
+
+<p><a href="./server/config.html">server/config.coffee</a></p>
+
+<ul>
+<li><h2 id="packagesettings"><code>packageSettings</code></h2>
+
+<p><h5>Invoked when the server application is loading configuration. Allows packages to define their own default settings. </h5></p>
+
+<ul><li><p>angular (<a href="./server/packages/angular/index.html#implementshookpackagesettings">server</a>)</p></li>
+<li><p>core (<a href="./server/packages/core/index.html#implementshookpackagesettings">server</a>)</p></li>
+<li><p>http (<a href="./server/packages/http/index.html#implementshookpackagesettings">server</a>)</p></li>
+<li><p>nodemailer (<a href="./server/packages/nodemailer/index.html#implementshookpackagesettings">server</a>)</p></li>
+<li><p>repl (<a href="./server/packages/repl/index.html#implementshookpackagesettings">server</a>)</p></li>
+<li><p>schema (<a href="./server/packages/schema/index.html#implementshookpackagesettings">server</a>)</p></li>
+<li><p>session (<a href="./server/packages/session/index.html#implementshookpackagesettings">server</a>)</p></li>
+<li><p>socket (<a href="./server/packages/socket/index.html#implementshookpackagesettings">server</a>)</p></li>
+<li><p>user (<a href="./server/packages/user/index.html#implementshookpackagesettings">server</a>)</p></li></ul></li>
+</ul>
+
+<p><a href="./server/packages/config/index.html">server/packages/config/index.coffee</a></p>
+
+<ul>
+<li><h2 id="config"><code>config</code></h2>
+
+<p><h5>Allows packages to specify configuration that will be sent to the client. Implementations may return an object, or a promise that resolves to an object. </h5></p>
+
+<ul><li><p>config (<a href="./server/packages/config/index.html#implementshookconfig">server</a>)</p></li>
+<li><p>core (<a href="./server/packages/core/index.html#implementshookconfig">server</a>)</p></li>
+<li><p>schema (<a href="./server/packages/schema/index.html#implementshookconfig">server</a>)</p></li>
+<li><p>user (<a href="./server/packages/user/index.html#implementshookconfig">server</a>)</p></li></ul></li>
+</ul>
+
+<p><a href="./server/packages/http/manager.html">server/packages/http/manager.coffee</a></p>
 
 <ul>
 <li><h2 id="httpinitializing"><code>httpInitializing</code></h2>
@@ -174,52 +218,12 @@ description and a list of implementing packages for each hook.</p>
 <li><p>express/errors (<a href="./server/packages/express/errors.html#implementshookhttpmiddleware">server</a>)</p></li>
 <li><p>express/logger (<a href="./server/packages/express/logger.html#implementshookhttpmiddleware">server</a>)</p></li>
 <li><p>express/routes (<a href="./server/packages/express/routes.html#implementshookhttpmiddleware">server</a>)</p></li>
-<li><p>express/session (<a href="./server/packages/express/session.html#implementshookhttpmiddleware">server</a>)</p></li>
 <li><p>express/static (<a href="./server/packages/express/static.html#implementshookhttpmiddleware">server</a>)</p></li>
 <li><p>form (<a href="./server/packages/form/index.html#implementshookhttpmiddleware">server</a>)</p></li>
+<li><p>session/express (<a href="./server/packages/session/express.html#implementshookhttpmiddleware">server</a>)</p></li>
+<li><p>session (<a href="./server/packages/session/index.html#implementshookhttpmiddleware">server</a>)</p></li>
 <li><p>user (<a href="./server/packages/user/index.html#implementshookhttpmiddleware">server</a>)</p></li>
 <li><p>villiany (<a href="./server/packages/villiany/index.html#implementshookhttpmiddleware">server</a>)</p></li></ul></li>
-</ul>
-
-<p><a href="./server/audit.html">server/audit.coffee</a></p>
-
-<ul>
-<li><h2 id="fingerprint"><code>fingerprint</code></h2>
-
-<p><h5>Allows a package to specify unique keys for this request, e.g. IP address, session ID, etc. Implementations take a request object as the only parameter. The request parameter may be null. </h5></p>
-
-<ul><li><p>core (<a href="./server/packages/core/index.html#implementshookfingerprint">server</a>)</p></li>
-<li><p>session (<a href="./server/packages/session/index.html#implementshookfingerprint">server</a>)</p></li>
-<li><p>user (<a href="./server/packages/user/index.html#implementshookfingerprint">server</a>)</p></li></ul></li>
-</ul>
-
-<p><a href="./server/config.html">server/config.coffee</a></p>
-
-<ul>
-<li><h2 id="packagesettings"><code>packageSettings</code></h2>
-
-<p><h5>Invoked when the server application is loading configuration. Allows packages to define their own default settings. </h5></p>
-
-<ul><li><p>angular (<a href="./server/packages/angular/index.html#implementshookpackagesettings">server</a>)</p></li>
-<li><p>core (<a href="./server/packages/core/index.html#implementshookpackagesettings">server</a>)</p></li>
-<li><p>express (<a href="./server/packages/express/index.html#implementshookpackagesettings">server</a>)</p></li>
-<li><p>nodemailer (<a href="./server/packages/nodemailer/index.html#implementshookpackagesettings">server</a>)</p></li>
-<li><p>repl (<a href="./server/packages/repl/index.html#implementshookpackagesettings">server</a>)</p></li>
-<li><p>schema (<a href="./server/packages/schema/index.html#implementshookpackagesettings">server</a>)</p></li>
-<li><p>socket (<a href="./server/packages/socket/index.html#implementshookpackagesettings">server</a>)</p></li>
-<li><p>user (<a href="./server/packages/user/index.html#implementshookpackagesettings">server</a>)</p></li></ul></li>
-</ul>
-
-<p><a href="./server/packages/config/index.html">server/packages/config/index.coffee</a></p>
-
-<ul>
-<li><h2 id="config"><code>config</code></h2>
-
-<p><h5>Allows packages to specify configuration that will be sent to the client. Implementations may return an object, or a promise that resolves to an object. </h5></p>
-
-<ul><li><p>config (<a href="./server/packages/config/index.html#implementshookconfig">server</a>)</p></li>
-<li><p>schema (<a href="./server/packages/schema/index.html#implementshookconfig">server</a>)</p></li>
-<li><p>user (<a href="./server/packages/user/index.html#implementshookconfig">server</a>)</p></li></ul></li>
 </ul>
 
 <p><a href="./server/packages/nodemailer/index.html">server/packages/nodemailer/index.coffee</a></p>
@@ -278,7 +282,7 @@ description and a list of implementing packages for each hook.</p>
 <p><h5>Invoked when a socket connection begins. Packages may throw an instance of <code>SocketManager.AuthorizationFailure</code> to reject the socket connection as unauthorized. </h5></p>
 
 <ul><li><p>core (<a href="./server/packages/core/index.html#implementshooksocketauthorizationmiddleware">server</a>)</p></li>
-<li><p>session (<a href="./server/packages/session/index.html#implementshooksocketauthorizationmiddleware">server</a>)</p></li>
+<li><p>session/express (<a href="./server/packages/session/express.html#implementshooksocketauthorizationmiddleware">server</a>)</p></li>
 <li><p>user (<a href="./server/packages/user/index.html#implementshooksocketauthorizationmiddleware">server</a>)</p></li>
 <li><p>villiany (<a href="./server/packages/villiany/index.html#implementshooksocketauthorizationmiddleware">server</a>)</p></li></ul></li>
 <li><h2 id="socketconnectionmiddleware"><code>socketConnectionMiddleware</code></h2>

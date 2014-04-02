@@ -2,11 +2,7 @@
 
 <p>Serve Express routes.</p></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$httpMiddleware = </span><span class="nf">(http) -&gt;</span>
   
-  <span class="nv">app = </span><span class="nx">http</span><span class="p">.</span><span class="nx">_app</span>
-  
   <span class="nv">label: </span><span class="s1">&#39;Serve routes&#39;</span>
   <span class="nv">middleware: </span><span class="p">[</span>
-
-    <span class="nx">app</span><span class="p">.</span><span class="nx">router</span>
-    
+    <span class="nx">http</span><span class="p">.</span><span class="nx">_app</span><span class="p">.</span><span class="nx">router</span>
   <span class="p">]</span></div></div></div></div></body></html>

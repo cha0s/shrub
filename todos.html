@@ -64,17 +64,6 @@ context.</p>
 <p>Should we let this throw? </p></li>
 </ul>
 
-<p><a href="./server/AbstractHttp.html">server/AbstractHttp.coffee</a></p>
-
-<ul>
-<li><h4 id="moduleexportsclassabstracthttp"><code>module.exports = class AbstractHttp</code></h4>
-
-<p>This needs work, it probably wouldn't be able to handle another server in its current state. Move API from Express to here, and use a 'pure virtual' pattern, to allow any other server to extend along reasonable lines. </p></li>
-<li><h4 id="_middlewaremiddlewarefromhook"><code>@_middleware = middleware.fromHook(</code></h4>
-
-<p>Rename express to http, so we can use a short name. </p></li>
-</ul>
-
 <p><a href="./server/packages/angular/index.html">server/packages/angular/index.coffee</a></p>
 
 <ul>
@@ -83,20 +72,20 @@ context.</p>
 <p>need to extract params to build redirectTo, small enough mismatch to ignore for now. </p></li>
 </ul>
 
-<p><a href="./server/packages/express/index.html">server/packages/express/index.coffee</a></p>
-
-<ul>
-<li><h4 id="_appsetviews_configpath"><code>@_app.set 'views', @_config.path</code></h4>
-
-<p>Do we really need to use Express's theme system..? </p></li>
-</ul>
-
 <p><a href="./server/packages/form/index.html">server/packages/form/index.coffee</a></p>
 
 <ul>
 <li><h4 id="returnnextunlessbodyformkey"><code>return next() unless body.formKey?</code></h4>
 
 <p>CRSF check needed here. </p></li>
+</ul>
+
+<p><a href="./server/packages/http/manager.html">server/packages/http/manager.coffee</a></p>
+
+<ul>
+<li><h4 id="_middlewaremiddlewarefromhook"><code>@_middleware = middleware.fromHook(</code></h4>
+
+<p>Rename express to http, so we can use a short name. </p></li>
 </ul>
 
 <p><a href="./server/packages/limiter/index.html">server/packages/limiter/index.coffee</a></p>

@@ -52,8 +52,8 @@ is executed.</p></div></div><div class="code"><div class="wrapper">            <
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Create a unique entry point.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">$routeProvider</span><span class="p">.</span><span class="k">when</span> <span class="s1">&#39;/shrub-entry-point&#39;</span><span class="p">,</span> <span class="p">{}</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Turn on HTML5 mode: "Real" URLs.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">html5Mode</span> <span class="kc">true</span>
 <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookapprun">Implements hook <code>appRun</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$appRun = </span><span class="o">-&gt;</span> <span class="p">[</span>
-  <span class="s1">&#39;$rootScope&#39;</span><span class="p">,</span> <span class="s1">&#39;$location&#39;</span><span class="p">,</span> <span class="s1">&#39;$window&#39;</span><span class="p">,</span> <span class="s1">&#39;socket&#39;</span>
-  <span class="nf">($rootScope, $location, $window, socket) -&gt;</span>
+  <span class="s1">&#39;$rootScope&#39;</span><span class="p">,</span> <span class="s1">&#39;$location&#39;</span><span class="p">,</span> <span class="s1">&#39;$window&#39;</span><span class="p">,</span> <span class="s1">&#39;socket&#39;</span><span class="p">,</span> <span class="s1">&#39;ui/title&#39;</span>
+  <span class="nf">($rootScope, $location, $window, socket, {setSite}) -&gt;</span>
     
     <span class="nx">$rootScope</span><span class="p">.</span><span class="nx">$watch</span><span class="p">(</span>
       <span class="o">-&gt;</span> <span class="nx">$location</span><span class="p">.</span><span class="nx">path</span><span class="nf">()</span>
@@ -69,6 +69,8 @@ is executed.</p></div></div><div class="code"><div class="wrapper">            <
     <span class="p">)</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Navigate the client to <code>href</code>.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">socket</span><span class="p">.</span><span class="kc">on</span> <span class="s1">&#39;core.navigateTo&#39;</span><span class="p">,</span> <span class="nf">(href) -&gt;</span> <span class="nv">$window.location.href = </span><span class="nx">href</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Reload the client.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">socket</span><span class="p">.</span><span class="kc">on</span> <span class="s1">&#39;core.reload&#39;</span><span class="p">,</span> <span class="o">-&gt;</span> <span class="nx">$window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">reload</span><span class="p">()</span>
+    
+    <span class="nx">setSite</span> <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;siteName&#39;</span>
     
 <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookroutemock">Implements hook <code>routeMock</code></h2>
 

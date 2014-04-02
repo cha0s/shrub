@@ -14,7 +14,10 @@ to the site's global crypto key.</p></li>
   
   <span class="k">new</span> <span class="nx">Promise</span> <span class="nf">(resolve, reject) -&gt;</span>
   
-    <span class="nv">cipher = </span><span class="nx">crypto</span><span class="p">.</span><span class="nx">createCipher</span> <span class="s1">&#39;aes256&#39;</span><span class="p">,</span> <span class="nx">password</span> <span class="o">?</span> <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;cryptoKey&#39;</span>
+    <span class="nv">cipher = </span><span class="nx">crypto</span><span class="p">.</span><span class="nx">createCipher</span><span class="p">(</span>
+      <span class="s1">&#39;aes256&#39;</span>
+      <span class="nx">password</span> <span class="o">?</span> <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:core:cryptoKey&#39;</span>
+    <span class="p">)</span>
     
     <span class="nv">cipherText = </span><span class="p">[]</span>
     <span class="nx">cipherText</span><span class="p">.</span><span class="nx">push</span> <span class="nx">cipher</span><span class="p">.</span><span class="nx">update</span> <span class="nx">message</span><span class="p">,</span> <span class="s1">&#39;binary&#39;</span><span class="p">,</span> <span class="s1">&#39;hex&#39;</span>
@@ -32,7 +35,10 @@ to the site's global crypto key.</p></li>
   
   <span class="k">new</span> <span class="nx">Promise</span> <span class="nf">(resolve, reject) -&gt;</span>
   
-    <span class="nv">decipher = </span><span class="nx">crypto</span><span class="p">.</span><span class="nx">createDecipher</span> <span class="s1">&#39;aes256&#39;</span><span class="p">,</span> <span class="nx">password</span> <span class="o">?</span> <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;cryptoKey&#39;</span>
+    <span class="nv">decipher = </span><span class="nx">crypto</span><span class="p">.</span><span class="nx">createDecipher</span><span class="p">(</span>
+      <span class="s1">&#39;aes256&#39;</span>
+      <span class="nx">password</span> <span class="o">?</span> <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:core:cryptoKey&#39;</span>
+    <span class="p">)</span>
     <span class="nx">decipher</span><span class="p">.</span><span class="nx">setAutoPadding</span> <span class="kc">false</span>
     
     <span class="nv">decipherText = </span><span class="p">[]</span>

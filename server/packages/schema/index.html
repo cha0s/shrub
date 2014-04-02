@@ -4,7 +4,7 @@
 
 <span class="nv">schema = </span><span class="nx">require</span> <span class="s1">&#39;schema&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookconfig">Implements hook <code>config</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$config = </span><span class="nf">(req) -&gt;</span>
   
-  <span class="nv">apiRoot: </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;apiRoot&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookhttpinitializing">Implements hook <code>httpInitializing</code></h2>
+  <span class="nv">apiRoot: </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:schema:apiRoot&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookhttpinitializing">Implements hook <code>httpInitializing</code></h2>
 
 <p>Serve the database schema as an authenticated REST API.</p></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$httpInitializing = </span><span class="nf">({_app}) -&gt;</span>
   
@@ -40,7 +40,7 @@ default (<code>/api</code>), the values will be:</p>
 resourcePath = "/api/user/:id"
 </code></pre>
 
-<p>We'll assume these defaults for each path's explanation.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">apiRoot = </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;apiRoot&#39;</span>
+<p>We'll assume these defaults for each path's explanation.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">apiRoot = </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageSettings:schema:apiRoot&#39;</span>
       <span class="nv">collectionPath = </span><span class="s2">&quot;#{apiRoot}/#{collection}&quot;</span>
       <span class="nv">resourcePath = </span><span class="s2">&quot;#{apiRoot}/#{resource}/:id&quot;</span>
       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Get the entire collection.
@@ -117,6 +117,9 @@ DELETE <code>/api/user/1</code></p></div></div><div class="code"><div class="wra
 
         <span class="p">).</span><span class="k">catch</span> <span class="nx">interceptError</span> <span class="nx">res</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookpackagesettings">Implements hook <code>packageSettings</code></h2></div></div><div class="code"><div class="wrapper"><span class="nx">exports</span><span class="p">.</span><span class="nv">$packageSettings = </span><span class="o">-&gt;</span>
+  
+  <span class="c1"># The URL root where the schema REST API is served.</span>
+  <span class="nv">apiRoot: </span><span class="s1">&#39;/api&#39;</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p><a href="http://en.wikipedia.org/wiki/Cross-origin_resource_sharing">CORS</a>
 headers.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">corsHeaders: </span><span class="kc">null</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookreplcontext">Implements hook <code>replContext</code></h2>

@@ -23,7 +23,7 @@ initialization hooks, and listen for signals and process exit.</p></div></div><d
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>initialize</code>.
 Invoked when the server is just starting. Implementations should return
 a promise. When all returned promises are fulfilled, initialization
-continues.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invokeFlat</span> <span class="s1">&#39;initialize&#39;</span><span class="p">,</span> <span class="nx">config</span>
+continues.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invokeFlat</span> <span class="s1">&#39;initialize&#39;</span>
 
 <span class="c1"># After initialization.</span>
 <span class="p">).</span><span class="nx">done</span><span class="p">(</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>ready</code>.
