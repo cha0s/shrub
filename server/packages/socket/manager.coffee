@@ -56,7 +56,7 @@ module.exports = class SocketManager extends EventEmitter
 		
 	# } Ensure any subclass implements these methods.
 	@::[method] = (-> throw new ReferenceError(
-		"AbstractSocket::#{method} is a pure virtual method!"
+		"SocketManager::#{method} is a pure virtual method!"
 
 	# "Pure virtual" methods.
 	)) for method in [

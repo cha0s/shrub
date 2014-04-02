@@ -16,6 +16,9 @@ Promise = require 'bluebird'
 # 
 # An implementation of [AbstractHttp](../../AbstractHttp.html) using the
 # Express framework.
+# 
+# `TODO`: We have to move all the cookie/session stuff out of here, it doesn't
+# belong in this class.
 class Express extends (require 'AbstractHttp')
 	
 	# ### *constructor*
@@ -50,11 +53,6 @@ class Express extends (require 'AbstractHttp')
 		
 		# } Connect (no pun) Express's middleware system to ours.
 		@_app.use (req, res, next) => @_middleware.dispatch req, res, next
-	
-	# ### ::path
-	# 
-	# *The path where statuc files are served from.*
-	path: -> @_config.path
 	
 	# ### ::cookieParser
 	# 

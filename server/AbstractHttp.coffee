@@ -13,20 +13,14 @@ middleware = require 'middleware'
 # 
 # An abstract interface to be implemented by an HTTP server (e.g.
 # [Express](./packages/express/index.html)).
-# 
-# `TODO`: This needs work, it probably wouldn't be able to handle another
-# server in its current state. Move API from Express to here, and use a
-# 'pure virtual' pattern, to allow any other server to extend along reasonable
-# lines.
 module.exports = class AbstractHttp
 
 	# ### *constructor*
 	# 
 	# *Create the server.*
-	# 
-	# * (object) `config` - The server configuration.
-	#   `TODO`: Should probably just use config, weird interface.
-	constructor: (@_config) ->
+	constructor: ->
+		
+		@_config = config.get 'packageSettings:express'
 		
 		@_middleware = null
 	
@@ -51,11 +45,11 @@ module.exports = class AbstractHttp
 		
 		)
 			
-	# ### .config
+	# ### ::path
 	# 
-	# *Get the server configuration.*
-	config: -> @_config
-		
+	# *The path where static files are served from.*
+	path: -> @_config.path
+	
 	# ### .port
 	# 
 	# *Get the port this server (is|will be) listening on.*
@@ -78,3 +72,13 @@ module.exports = class AbstractHttp
 		)
 		
 		defaultLogger.info 'HTTP middleware loaded.'
+
+	# } Ensure any subclass implements these methods.
+	@::[method] = (-> throw new ReferenceError(
+		"AbstractHttp::#{method} is a pure virtual method!"
+
+	# "Pure virtual" methods.
+	)) for method in [
+		
+		'listen', 'renderAppHtml', 'server'
+	]
