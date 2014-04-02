@@ -170,7 +170,61 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 "pageTitle": "client/modules/middleware",
                 "title": "middleware"
               },
-              "depth": 3
+              "depth": 3,
+              "outline": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 1,
+                    "title": "Middleware",
+                    "slug": "middleware"
+                  },
+                  "depth": 1,
+                  "children": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "Middleware",
+                        "slug": "middleware"
+                      },
+                      "depth": 2
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "::use",
+                        "slug": "use"
+                      },
+                      "depth": 2
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "::dispatch",
+                        "slug": "dispatch"
+                      },
+                      "depth": 2
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "fromHook",
+                        "slug": "fromhook"
+                      },
+                      "depth": 2
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "fromShortName",
+                        "slug": "fromshortname"
+                      },
+                      "depth": 2
+                    }
+                  ]
+                }
+              ]
             }, {
               "type": "folder",
               "data": {
@@ -1070,131 +1124,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/angular/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Angular",
-                        "slug": "angular"
-                      },
-                      "depth": 1,
-                      "children": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "SandboxManager",
-                            "slug": "sandboxmanager"
-                          },
-                          "depth": 2,
-                          "children": [
-                            {
-                              "type": "heading",
-                              "data": {
-                                "level": 3,
-                                "title": ".create",
-                                "slug": "create"
-                              },
-                              "depth": 3
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 3,
-                                "title": "sandbox.touch",
-                                "slug": "sandboxtouch"
-                              },
-                              "depth": 3
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 3,
-                                "title": ".lookup",
-                                "slug": "lookup"
-                              },
-                              "depth": 3
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 3,
-                                "title": ".lookupOrCreate",
-                                "slug": "lookuporcreate"
-                              },
-                              "depth": 3
-                            }
-                          ]
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "augmentSandbox",
-                            "slug": "augmentsandbox"
-                          },
-                          "depth": 2,
-                          "children": [
-                            {
-                              "type": "heading",
-                              "data": {
-                                "level": 3,
-                                "title": "sandbox.(setR|r)edirectionHtml",
-                                "slug": "sandboxsetrredirectionhtml"
-                              },
-                              "depth": 3
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 3,
-                                "title": "sandbox.(setR|r)edirectionPath",
-                                "slug": "sandboxsetrredirectionpath"
-                              },
-                              "depth": 3
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 3,
-                                "title": "sandbox.catchAngularRedirection",
-                                "slug": "sandboxcatchangularredirection"
-                              },
-                              "depth": 3
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 3,
-                                "title": "sandbox.checkPathChanges",
-                                "slug": "sandboxcheckpathchanges"
-                              },
-                              "depth": 3
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 3,
-                                "title": "sandbox.navigate",
-                                "slug": "sandboxnavigate"
-                              },
-                              "depth": 3
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 3,
-                                "title": "sandbox.pathRedirectsTo",
-                                "slug": "sandboxpathredirectsto"
-                              },
-                              "depth": 3
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 3,
-                                "title": "sandbox.inject",
-                                "slug": "sandboxinject"
-                              },
-                              "depth": 3
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
+                  "depth": 4
                 }
               ]
             }, {
@@ -1254,18 +1184,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/config/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Configuration",
-                        "slug": "configuration"
-                      },
-                      "depth": 1
-                    }
-                  ]
+                  "depth": 4
                 }
               ]
             }, {
@@ -1665,53 +1584,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/socket/SocketIoManager",
                     "title": "SocketIoManager"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Socket.IO",
-                        "slug": "socketio"
-                      },
-                      "depth": 1,
-                      "children": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "SocketIoManager",
-                            "slug": "socketiomanager"
-                          },
-                          "depth": 2
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "::channelsSocketIsIn",
-                            "slug": "channelssocketisin"
-                          },
-                          "depth": 2
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "::listen",
-                            "slug": "listen"
-                          },
-                          "depth": 2
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "::socketsInChannel",
-                            "slug": "socketsinchannel"
-                          },
-                          "depth": 2
-                        }
-                      ]
-                    }
-                  ]
+                  "depth": 4
                 }, {
                   "type": "file",
                   "data": {
@@ -1731,29 +1604,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/socket/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Socket",
-                        "slug": "socket"
-                      },
-                      "depth": 1,
-                      "children": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "manager",
-                            "slug": "manager"
-                          },
-                          "depth": 2
-                        }
-                      ]
-                    }
-                  ]
+                  "depth": 4
                 }, {
                   "type": "file",
                   "data": {
@@ -1773,29 +1624,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/socket/manager",
                     "title": "manager"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "SocketManager",
-                        "slug": "socketmanager"
-                      },
-                      "depth": 1,
-                      "children": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 3,
-                            "title": ".loadMiddleware",
-                            "slug": "loadmiddleware"
-                          },
-                          "depth": 3
-                        }
-                      ]
-                    }
-                  ]
+                  "depth": 4
                 }
               ]
             }, {
