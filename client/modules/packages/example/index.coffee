@@ -5,8 +5,8 @@
 
 # ## Implements hook `appRun`
 exports.$appRun = -> [
-	'ui/nav', 'ui/title'
-	({setLinks}, {setSite}) ->
+	'ui/nav'
+	({setLinks}) ->
 		
 		setLinks [
 			pattern: '/home', href: '/home', name: 'Home'
@@ -20,7 +20,6 @@ exports.$appRun = -> [
 			pattern: '/user/logout', href: '/user/logout', name: 'Sign out'
 		]
 		
-		setSite 'Shrub'
 ]
 
 exports[path] = require "./#{path}" for path in [

@@ -30,7 +30,7 @@ exports.$endpoint = ->
 				req.headers.host
 			}"
 			
-			siteName = config.get 'siteName'
+			siteName = config.get 'packageSettings:core:siteName'
 			
 			tokens =
 				

@@ -10,7 +10,7 @@ schema = require 'schema'
 # ## Implements hook `config`
 exports.$config = (req) ->
 	
-	apiRoot: config.get 'apiRoot'
+	apiRoot: config.get 'packageSettings:schema:apiRoot'
 
 # ## Implements hook `httpInitializing`
 # 
@@ -58,7 +58,7 @@ exports.$httpInitializing = ({_app}) ->
 			# 	resourcePath = "/api/user/:id"
 			# 
 			# We'll assume these defaults for each path's explanation.
-			apiRoot = config.get 'apiRoot'
+			apiRoot = config.get 'packageSettings:schema:apiRoot'
 			collectionPath = "#{apiRoot}/#{collection}"
 			resourcePath = "#{apiRoot}/#{resource}/:id"
 			
@@ -152,6 +152,9 @@ exports.$httpInitializing = ({_app}) ->
 	
 # ## Implements hook `packageSettings`
 exports.$packageSettings = ->
+	
+	# } The URL root where the schema REST API is served.
+	apiRoot: '/api'
 	
 	# [CORS](http://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
 	# headers.

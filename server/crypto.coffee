@@ -19,7 +19,10 @@ exports.encrypt = (message, password) ->
 	
 	new Promise (resolve, reject) ->
 	
-		cipher = crypto.createCipher 'aes256', password ? config.get 'cryptoKey'
+		cipher = crypto.createCipher(
+			'aes256'
+			password ? config.get 'packageSettings:core:cryptoKey'
+		)
 		
 		cipherText = []
 		cipherText.push cipher.update message, 'binary', 'hex'
@@ -38,7 +41,10 @@ exports.decrypt = (message, password) ->
 	
 	new Promise (resolve, reject) ->
 	
-		decipher = crypto.createDecipher 'aes256', password ? config.get 'cryptoKey'
+		decipher = crypto.createDecipher(
+			'aes256'
+			password ? config.get 'packageSettings:core:cryptoKey'
+		)
 		decipher.setAutoPadding false
 		
 		decipherText = []

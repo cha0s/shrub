@@ -63,6 +63,11 @@ exports.$httpListening = (http) ->
 # ## Implements hook `packageSettings`
 exports.$packageSettings = ->
 	
+	# Default site email information.
+	siteEmail:
+		address: 'admin@example.com'
+		name: 'Site administrator'
+	
 	# Passed through directly to nodemailer.
 	transport:
 		type: 'sendmail'
@@ -81,7 +86,7 @@ exports.$packageSettings = ->
 exports.sendMail = (type, mail) ->
 	
 	path = config.get 'path'
-	siteEmail = config.get 'siteEmail'
+	siteEmail = config.get 'packageSettings:sendmail:siteEmail'
 	
 	sandboxId = null
 	

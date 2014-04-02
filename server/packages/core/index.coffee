@@ -7,6 +7,11 @@ config = require 'config'
 
 pkgman = require 'pkgman'
 
+# ## Implements hook `config`
+exports.$config = (req) ->
+	
+	siteName: config.get 'packageSettings:core:siteName'
+
 # ## Implements hook `fingerprint`
 exports.$fingerprint = (req) ->
 	
@@ -46,7 +51,13 @@ exports.$httpMiddleware = (http) ->
 # ## Implements hook `packageSettings`
 exports.$packageSettings = ->
 	
-	# } A list of the IP addresses of trusted proxies between clients.
+	# Global site crypto key.
+	cryptoKey: "***CHANGE THIS***"
+	
+	# The name of the site, used in various places.
+	siteName: "Shrub example application"
+	
+	# A list of the IP addresses of trusted proxies between clients.
 	trustedProxies: []
 		
 # ## Implements hook `replContext`

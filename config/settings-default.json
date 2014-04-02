@@ -1,14 +1,4 @@
 {
-	"apiRoot": "/api",
-	"cryptoKey": "***CHANGE THIS***",
-	"sandboxes": {
-		"ttl": 300000
-	},
-	"siteEmail": {
-		"address": "admin@example.com",
-		"name": "Site administrator"
-	},
-	"siteName": "Shrub example application",
 	"packageList": [
 		"angular",
 		"assets",
@@ -40,6 +30,8 @@
 			"ttl": 300000
 		},
 		"core": {
+			"cryptoKey": "***CHANGE THIS***",
+			"siteName": "Shrub example application",
 			"trustedProxies": []
 		},
 		"http": {
@@ -64,6 +56,10 @@
 			"port": 4201
 		},
 		"nodemailer": {
+			"siteEmail": {
+				"address": "admin@example.com",
+				"name": "Site administrator"
+			},
 			"transport": {
 				"type": "sendmail",
 				"options": {}
@@ -74,6 +70,7 @@
 			"useCoffee": true
 		},
 		"schema": {
+			"apiRoot": "/api",
 			"corsHeaders": null
 		},
 		"session": {

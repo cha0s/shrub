@@ -81,8 +81,8 @@ exports.$appConfig = -> [
 
 # ## Implements hook `appRun`
 exports.$appRun = -> [
-	'$rootScope', '$location', '$window', 'socket'
-	($rootScope, $location, $window, socket) ->
+	'$rootScope', '$location', '$window', 'socket', 'ui/title'
+	($rootScope, $location, $window, socket, {setSite}) ->
 		
 		$rootScope.$watch(
 			-> $location.path()
@@ -104,6 +104,8 @@ exports.$appRun = -> [
 		
 		# Reload the client.
 		socket.on 'core.reload', -> $window.location.reload()
+		
+		setSite config.get 'siteName'
 		
 ]
 
