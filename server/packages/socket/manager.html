@@ -13,6 +13,7 @@ server (e.g. <a href="./packages/socket/SocketIo.html">Socket.io</a>).</p></div>
     
     <span class="vi">@_authorizationMiddleware = </span><span class="kc">null</span>
     <span class="vi">@_connectionMiddleware = </span><span class="kc">null</span>
+    <span class="vi">@_disconnectionMiddleware = </span><span class="kc">null</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p><code>SocketManager.AuthorizationFailure</code> may be thrown from within socket
 authorization middleware, to denote that no real error occurred,
 authorization just failed.</p></div></div><div class="code"><div class="wrapper">  <span class="k">class</span> <span class="nx">@AuthorizationFailure</span> <span class="k">extends</span> <span class="nb">Error</span>
@@ -24,13 +25,16 @@ authorization just failed.</p></div></div><div class="code"><div class="wrapper"
 Invoked when a socket connection begins. Packages may throw an
 instance of <code>SocketManager.AuthorizationFailure</code> to reject
 the socket connection as unauthorized.</p></div></div><div class="code"><div class="wrapper">    <span class="vi">@_authorizationMiddleware = </span><span class="nx">middleware</span><span class="p">.</span><span class="nx">fromShortName</span><span class="p">(</span>
-      <span class="s2">&quot;socket authorization middleware&quot;</span>
+      <span class="s2">&quot;socket authorization&quot;</span>
     <span class="p">)</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>socketConnectionMiddleware</code>.
 Invoked for every socket connection.</p></div></div><div class="code"><div class="wrapper">    <span class="vi">@_connectionMiddleware = </span><span class="nx">middleware</span><span class="p">.</span><span class="nx">fromShortName</span><span class="p">(</span>
-      <span class="s2">&quot;socket connection middleware&quot;</span>
+      <span class="s2">&quot;socket connection&quot;</span>
+    <span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>socketDisconnectionMiddleware</code>.
+Invoked when a socket disconnects.</p></div></div><div class="code"><div class="wrapper">    <span class="vi">@_disconnectionMiddleware = </span><span class="nx">middleware</span><span class="p">.</span><span class="nx">fromShortName</span><span class="p">(</span>
+      <span class="s2">&quot;socket disconnection&quot;</span>
     <span class="p">)</span>
-
+    
   <span class="c1"># Ensure any subclass implements these methods.</span>
   <span class="err">@</span><span class="o">::</span><span class="p">[</span><span class="nx">method</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="o">-&gt;</span> <span class="k">throw</span> <span class="k">new</span> <span class="nx">ReferenceError</span><span class="p">(</span>
     <span class="s2">&quot;AbstractSocket::#{method} is a pure virtual method!&quot;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>"Pure virtual" methods.</p></div></div><div class="code"><div class="wrapper">  <span class="p">))</span> <span class="k">for</span> <span class="nx">method</span> <span class="k">in</span> <span class="p">[</span>
