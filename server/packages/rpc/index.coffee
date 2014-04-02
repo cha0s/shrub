@@ -5,6 +5,7 @@
 # [RPC](http://en.wikipedia.org/wiki/Remote_procedure_call#Message_passing)
 
 _ = require 'underscore'
+nconf = require 'nconf'
 Promise = require 'bluebird'
 
 audit = require 'audit'
@@ -114,7 +115,14 @@ exports.$socketConnectionMiddleware = ->
 						logError error
 						
 					# Transmit the error as it is directly to the client.
-					sendErrorToClient = (error) -> emitError error
+					sendErrorToClient = (error) ->
+						emitError error
+						
+						# If we're not running in production, log the full
+						# error stack, because it might help track down any
+						# problem.
+						if 'production' isnt nconf.get 'NODE_ENV'
+							logError error
 					
 					# Validate.
 					endpoint.validators.dispatch routeReq, null, (error) ->
