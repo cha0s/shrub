@@ -36,6 +36,9 @@ exports.$packageSettings = ->
 		'rpc'
 	]
 
+	# Middleware stack dispatched when socket disconnects.
+	disconnectionMiddleware: []
+
 	manager:
 	
 		# Module implementing the socket manager.

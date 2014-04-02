@@ -21,6 +21,7 @@ module.exports = class SocketManager extends EventEmitter
 		
 		@_authorizationMiddleware = null
 		@_connectionMiddleware = null
+		@_disconnectionMiddleware = null
 	
 	# `SocketManager.AuthorizationFailure` may be thrown from within socket
 	# authorization middleware, to denote that no real error occurred,
@@ -47,6 +48,12 @@ module.exports = class SocketManager extends EventEmitter
 			"socket connection"
 		)
 
+		# Invoke hook `socketDisconnectionMiddleware`.
+		# Invoked when a socket disconnects.
+		@_disconnectionMiddleware = middleware.fromShortName(
+			"socket disconnection"
+		)
+		
 	# } Ensure any subclass implements these methods.
 	@::[method] = (-> throw new ReferenceError(
 		"AbstractSocket::#{method} is a pure virtual method!"

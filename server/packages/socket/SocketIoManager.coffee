@@ -138,6 +138,11 @@ module.exports = class SocketIoManager extends SocketManager
 			# Join a '$global' channel.
 			socket.join '$global'
 			
+			# RUn the disconnection middleware on disconnect.
+			socket.on 'disconnect', =>
+				@_disconnectionMiddleware.dispatch req, null, (error) ->
+					return logger.error errors.stack error if error?
+			
 			# Dispatch the connection middleware.
 			@_connectionMiddleware.dispatch req, null, (error) ->
 				return logger.error errors.stack error if error?
