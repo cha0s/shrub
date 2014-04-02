@@ -13,7 +13,7 @@ clientModule = require 'client/modules/packages/user'
 
 # ## Implements hook `config`
 exports.$config = (req) ->
-	
+
 	# Send a redacted version of the request user.
 	req.user.redactFor(req.user).then (redacted) -> user: redacted
 
@@ -45,55 +45,12 @@ exports.$httpMiddleware = (http) ->
 		# Set the user into the request.
 		(req, res, next) ->
 			
-			if req.user?
-			
-				req.user.logout = ->
-					
-					req.logout()
-					req.user = new User()
-					
-					Promise.resolve req.user
-					
-			else
-			
-				req.user = new User()
+			req.user = new User() unless req.user?
 			
 			next()
 		
 	]
 
-# ## Implements hook `initialize`
-exports.$initialize = (config) ->
-	
-	{User} = schema.models
-	
-	# Implement a local passport strategy.
-	# `TODO`: Strategies should be dynamically defined, probably through a
-	# hook.
-	LocalStrategy = require('passport-local').Strategy
-	passport.use new LocalStrategy (username, password, done) ->
-		
-		# Load a user and compare the hashed password.
-		exports.loadByName(username).bind({}).then((@user)->
-			return unless @user?
-			
-			crypto.hasher(
-				plaintext: password
-				salt: new Buffer @user.salt, 'hex'
-			)
-			
-		).then((hashed) ->
-			return unless @user?
-			return unless @user.passwordHash is hashed.key.toString 'hex'
-			
-			@user
-			
-		).nodeify done
-		
-	passport.serializeUser (user, done) -> done null, user.id
-	
-	passport.deserializeUser (id, done) -> User.find(id).nodeify done
-	
 # ## Implements hook `models`
 exports.$models = (schema) ->
 	
@@ -124,6 +81,21 @@ exports.$models = (schema) ->
 # ## Implements hook `modelsAlter`
 exports.$modelsAlter = clientModule.$modelsAlter
 
+# ## Implements hook `packageSettings`
+exports.$packageSettings = ->
+	
+	beforeLoginMiddleware: []
+	
+	afterLoginMiddleware: []
+	
+	beforeLogoutMiddleware: [
+		'user'
+	]
+
+	afterLogoutMiddleware: [
+		'user'
+	]
+
 # ## Implements hook `socketAuthorizationMiddleware`
 exports.$socketAuthorizationMiddleware = ->
 	
@@ -139,22 +111,7 @@ exports.$socketAuthorizationMiddleware = ->
 		# Set the user into the request.
 		(req, res, next) ->
 			
-			if req.user?
-			
-				req.user.logout = ->
-					
-					req.logout()
-					req.user = new User()
-					
-					new Promise (resolve) ->
-						
-						# Alos log the client out, if we can.
-						req.socket?.emit 'user.logout', null, ->
-							resolve req.user
-			
-			else
-			
-				req.user = new User()
+			req.user = new User() unless req.user?
 			
 			next()
 	
@@ -175,6 +132,42 @@ exports.$socketConnectionMiddleware = ->
 			
 			next()
 	
+	]
+
+# ## Implements hook `userBeforeLogoutMiddleware`
+exports.$userBeforeLogoutMiddleware = ->
+	
+	label: 'Tell client to log out, and leave the user channel'
+	middleware: [
+	
+		({req, user}, res, next) ->
+			
+			if req.socket?
+				
+				# Tell client to log out.
+				req.socket.emit 'user.logout'
+				
+				# Leave the user channel.
+				req.socket.leave req.user.name
+			
+			next()
+			
+	]
+
+# ## Implements hook `userAfterLogoutMiddleware`
+exports.$userAfterLogoutMiddleware = ->
+	
+	{User} = schema.models
+			
+	label: 'Instantiate anonymous user'
+	middleware: [
+	
+		({req, user}, res, next) ->
+			
+			req.user = new User()
+			
+			next()
+			
 	]
 
 # ## loadByName

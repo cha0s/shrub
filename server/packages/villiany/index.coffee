@@ -202,7 +202,7 @@ exports.$httpMiddleware = ->
 				req.session?.destroy()
 				
 				# Log the user out.
-				Promise.cast(req.user.logout?()).then ->
+				req.logout().then ->
 					
 					res.status 401
 					res.end buildBanMessage subject, ttl
@@ -237,18 +237,16 @@ exports.$socketAuthorizationMiddleware = ->
 				req.session?.destroy()
 				
 				# Log the user out.
-				Promise.cast(req.user.logout?()).then ->
+				req.logout().then ->
 					
-					new Promise (resolve) ->
+					# Already authorized?
+					if req.socket?
 						
-						# Already authorized?
-						if req.socket?
-							
-							req.socket.emit 'core.reload', null, resolve
+						req.socket.emit 'core.reload'
+					
+					else
 						
-						else
-							
-							throw new AuthorizationFailure
+						throw new AuthorizationFailure
 						
 		
 			next()
