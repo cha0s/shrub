@@ -150,7 +150,7 @@ class Express extends (require 'AbstractHttp')
 	sessionStore: -> @_sessionStore
 		
 # ## Implements hook `initialize`
-exports.$initialize = (config) ->
+exports.$initialize = ->
 	
 	http = new Express settings = config.get 'packageSettings:express'
 	http.initialize().then ->

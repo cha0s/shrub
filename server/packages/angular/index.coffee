@@ -186,7 +186,7 @@ exports.$httpMiddleware = (http) ->
 ]
 
 # ## Implements hook `initialize`
-exports.$initialize = (config) ->
+exports.$initialize = ->
 
 	# Always disable sandbox rendering in end-to-end testing mode.
 	config.set 'packageSettings:angular:render', false if config.get 'E2E'

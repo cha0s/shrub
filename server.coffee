@@ -28,7 +28,7 @@ Promise.all(
 	# Invoked when the server is just starting. Implementations should return
 	# a promise. When all returned promises are fulfilled, initialization
 	# continues.
-	pkgman.invokeFlat 'initialize', config
+	pkgman.invokeFlat 'initialize'
 
 # } After initialization.
 ).done(
