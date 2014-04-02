@@ -236,18 +236,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/core/index",
                         "title": "index"
                       },
-                      "depth": 5,
-                      "outline": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 1,
-                            "title": "Core",
-                            "slug": "core"
-                          },
-                          "depth": 1
-                        }
-                      ]
+                      "depth": 5
                     }
                   ]
                 }, {
@@ -317,18 +306,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/example/index",
                         "title": "index"
                       },
-                      "depth": 5,
-                      "outline": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 1,
-                            "title": "Example!",
-                            "slug": "example"
-                          },
-                          "depth": 1
-                        }
-                      ]
+                      "depth": 5
                     }
                   ]
                 }, {
@@ -448,18 +426,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "pageTitle": "client/modules/packages/schema/index",
                         "title": "index"
                       },
-                      "depth": 5,
-                      "outline": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 1,
-                            "title": "Schema",
-                            "slug": "schema"
-                          },
-                          "depth": 1
-                        }
-                      ]
+                      "depth": 5
                     }
                   ]
                 }, {
@@ -947,17 +914,6 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
         "title": "server"
       },
       "depth": 1,
-      "outline": [
-        {
-          "type": "heading",
-          "data": {
-            "level": 1,
-            "title": "Server",
-            "slug": "server"
-          },
-          "depth": 1
-        }
-      ],
       "children": [
         {
           "type": "file",
@@ -1018,45 +974,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "server/crypto",
             "title": "crypto"
           },
-          "depth": 2,
-          "outline": [
-            {
-              "type": "heading",
-              "data": {
-                "level": 1,
-                "title": "Crypto",
-                "slug": "crypto"
-              },
-              "depth": 1,
-              "children": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 3,
-                    "title": "encrypt",
-                    "slug": "encrypt"
-                  },
-                  "depth": 3
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 3,
-                    "title": "decrypt",
-                    "slug": "decrypt"
-                  },
-                  "depth": 3
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 3,
-                    "title": "hasher",
-                    "slug": "hasher"
-                  },
-                  "depth": 3
-                }
-              ]
-            }
-          ]
+          "depth": 2
         }, {
           "type": "file",
           "data": {
@@ -1132,131 +1050,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/angular/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Angular",
-                        "slug": "angular"
-                      },
-                      "depth": 1,
-                      "children": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "SandboxManager",
-                            "slug": "sandboxmanager"
-                          },
-                          "depth": 2,
-                          "children": [
-                            {
-                              "type": "heading",
-                              "data": {
-                                "level": 3,
-                                "title": ".create",
-                                "slug": "create"
-                              },
-                              "depth": 3
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 3,
-                                "title": "sandbox.touch",
-                                "slug": "sandboxtouch"
-                              },
-                              "depth": 3
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 3,
-                                "title": ".lookup",
-                                "slug": "lookup"
-                              },
-                              "depth": 3
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 3,
-                                "title": ".lookupOrCreate",
-                                "slug": "lookuporcreate"
-                              },
-                              "depth": 3
-                            }
-                          ]
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "augmentSandbox",
-                            "slug": "augmentsandbox"
-                          },
-                          "depth": 2,
-                          "children": [
-                            {
-                              "type": "heading",
-                              "data": {
-                                "level": 3,
-                                "title": "sandbox.(setR|r)edirectionHtml",
-                                "slug": "sandboxsetrredirectionhtml"
-                              },
-                              "depth": 3
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 3,
-                                "title": "sandbox.(setR|r)edirectionPath",
-                                "slug": "sandboxsetrredirectionpath"
-                              },
-                              "depth": 3
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 3,
-                                "title": "sandbox.catchAngularRedirection",
-                                "slug": "sandboxcatchangularredirection"
-                              },
-                              "depth": 3
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 3,
-                                "title": "sandbox.checkPathChanges",
-                                "slug": "sandboxcheckpathchanges"
-                              },
-                              "depth": 3
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 3,
-                                "title": "sandbox.navigate",
-                                "slug": "sandboxnavigate"
-                              },
-                              "depth": 3
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 3,
-                                "title": "sandbox.pathRedirectsTo",
-                                "slug": "sandboxpathredirectsto"
-                              },
-                              "depth": 3
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 3,
-                                "title": "sandbox.inject",
-                                "slug": "sandboxinject"
-                              },
-                              "depth": 3
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
+                  "depth": 4
                 }
               ]
             }, {
@@ -1346,18 +1140,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/core/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Core",
-                        "slug": "core"
-                      },
-                      "depth": 1
-                    }
-                  ]
+                  "depth": 4
                 }
               ]
             }, {
@@ -1465,18 +1248,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/express/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Express",
-                        "slug": "express"
-                      },
-                      "depth": 1
-                    }
-                  ]
+                  "depth": 4
                 }, {
                   "type": "file",
                   "data": {
@@ -1516,18 +1288,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/express/routes",
                     "title": "routes"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Express routes",
-                        "slug": "express-routes"
-                      },
-                      "depth": 1
-                    }
-                  ]
+                  "depth": 4
                 }, {
                   "type": "file",
                   "data": {
@@ -1547,18 +1308,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/express/static",
                     "title": "static"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Express static files",
-                        "slug": "express-static-files"
-                      },
-                      "depth": 1
-                    }
-                  ]
+                  "depth": 4
                 }
               ]
             }, {
@@ -1618,18 +1368,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/http/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "HTTP",
-                        "slug": "http"
-                      },
-                      "depth": 1
-                    }
-                  ]
+                  "depth": 4
                 }, {
                   "type": "file",
                   "data": {
@@ -1649,64 +1388,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/http/manager",
                     "title": "manager"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "AbstractHttp",
-                        "slug": "abstracthttp"
-                      },
-                      "depth": 1,
-                      "children": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "HttpManager",
-                            "slug": "httpmanager"
-                          },
-                          "depth": 2,
-                          "children": [
-                            {
-                              "type": "heading",
-                              "data": {
-                                "level": 3,
-                                "title": ".initialize",
-                                "slug": "initialize"
-                              },
-                              "depth": 3
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 3,
-                                "title": "::path",
-                                "slug": "path"
-                              },
-                              "depth": 3
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 3,
-                                "title": ".port",
-                                "slug": "port"
-                              },
-                              "depth": 3
-                            }, {
-                              "type": "heading",
-                              "data": {
-                                "level": 3,
-                                "title": ".registerMiddleware",
-                                "slug": "registermiddleware"
-                              },
-                              "depth": 3
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
+                  "depth": 4
                 }
               ]
             }, {
@@ -1766,29 +1448,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/nodemailer/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "nodemailer",
-                        "slug": "nodemailer"
-                      },
-                      "depth": 1,
-                      "children": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "sendMail",
-                            "slug": "sendmail"
-                          },
-                          "depth": 2
-                        }
-                      ]
-                    }
-                  ]
+                  "depth": 4
                 }
               ]
             }, {
@@ -1878,18 +1538,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/schema/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Database schema",
-                        "slug": "database-schema"
-                      },
-                      "depth": 1
-                    }
-                  ]
+                  "depth": 4
                 }
               ]
             }, {
@@ -1919,18 +1568,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/session/express",
                     "title": "express"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Express routes",
-                        "slug": "express-routes"
-                      },
-                      "depth": 1
-                    }
-                  ]
+                  "depth": 4
                 }, {
                   "type": "file",
                   "data": {
@@ -1950,18 +1588,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/session/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Session",
-                        "slug": "session"
-                      },
-                      "depth": 1
-                    }
-                  ]
+                  "depth": 4
                 }
               ]
             }, {
@@ -1991,53 +1618,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/socket.io/Manager",
                     "title": "Manager"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Socket.IO",
-                        "slug": "socketio"
-                      },
-                      "depth": 1,
-                      "children": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "SocketIoManager",
-                            "slug": "socketiomanager"
-                          },
-                          "depth": 2
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "::channelsSocketIsIn",
-                            "slug": "channelssocketisin"
-                          },
-                          "depth": 2
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "::listen",
-                            "slug": "listen"
-                          },
-                          "depth": 2
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "::socketsInChannel",
-                            "slug": "socketsinchannel"
-                          },
-                          "depth": 2
-                        }
-                      ]
-                    }
-                  ]
+                  "depth": 4
                 }, {
                   "type": "file",
                   "data": {
@@ -2057,18 +1638,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/socket.io/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Socket.IO",
-                        "slug": "socketio"
-                      },
-                      "depth": 1
-                    }
-                  ]
+                  "depth": 4
                 }
               ]
             }, {
@@ -2098,29 +1668,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/socket/index",
                     "title": "index"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Socket",
-                        "slug": "socket"
-                      },
-                      "depth": 1,
-                      "children": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "manager",
-                            "slug": "manager"
-                          },
-                          "depth": 2
-                        }
-                      ]
-                    }
-                  ]
+                  "depth": 4
                 }, {
                   "type": "file",
                   "data": {
@@ -2140,29 +1688,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/socket/manager",
                     "title": "manager"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "SocketManager",
-                        "slug": "socketmanager"
-                      },
-                      "depth": 1,
-                      "children": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 3,
-                            "title": ".loadMiddleware",
-                            "slug": "loadmiddleware"
-                          },
-                          "depth": 3
-                        }
-                      ]
-                    }
-                  ]
+                  "depth": 4
                 }
               ]
             }, {
@@ -2192,18 +1718,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/user/forgot",
                     "title": "forgot"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "User - forgot password",
-                        "slug": "user-forgot-password"
-                      },
-                      "depth": 1
-                    }
-                  ]
+                  "depth": 4
                 }, {
                   "type": "file",
                   "data": {
@@ -2283,29 +1798,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "pageTitle": "server/packages/user/register",
                     "title": "register"
                   },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "User registration",
-                        "slug": "user-registration"
-                      },
-                      "depth": 1,
-                      "children": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "register",
-                            "slug": "register"
-                          },
-                          "depth": 2
-                        }
-                      ]
-                    }
-                  ]
+                  "depth": 4
                 }, {
                   "type": "file",
                   "data": {
@@ -2379,64 +1872,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "server/sandboxes",
             "title": "sandboxes"
           },
-          "depth": 2,
-          "outline": [
-            {
-              "type": "heading",
-              "data": {
-                "level": 1,
-                "title": "Sandboxes",
-                "slug": "sandboxes"
-              },
-              "depth": 1,
-              "children": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 2,
-                    "title": "Sandbox",
-                    "slug": "sandbox"
-                  },
-                  "depth": 2,
-                  "children": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".close",
-                        "slug": "close"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".emitHtml",
-                        "slug": "emithtml"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".registerCleanupFunction",
-                        "slug": "registercleanupfunction"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".url",
-                        "slug": "url"
-                      },
-                      "depth": 3
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
+          "depth": 2
         }, {
           "type": "file",
           "data": {
