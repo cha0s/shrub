@@ -6,7 +6,7 @@
 url = require 'url'
 
 _ = require 'underscore'
-config = require 'config'
+configModule = require 'config'
 Promise = require 'bluebird'
 
 pkgman = require 'pkgman'
@@ -18,13 +18,13 @@ exports.$config = (req) ->
 	hostname: "//#{req.headers.host}"
 	
 	# Is the server running in test mode?
-	testMode: if (config.get 'E2E')? then 'e2e' else false
+	testMode: if (configModule.get 'E2E')? then 'e2e' else false
 	
 	# Execution environment, `production`, or...
-	environment: config.get 'NODE_ENV'
+	environment: configModule.get 'NODE_ENV'
 	
 	# The list of enabled packages.
-	packageList: config.get 'packageList'
+	packageList: configModule.get 'packageList'
 
 # ## Implements hook `httpMiddleware`
 exports.$httpMiddleware = (http) ->
