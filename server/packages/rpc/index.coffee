@@ -17,6 +17,7 @@ logger = logging.create 'logs/rpc.log'
 
 {Limiter} = require 'limits'
 {Middleware} = require 'middleware'
+{TransmittableError} = errors
 
 # RPC endpoint information.
 endpoints = {}
@@ -118,12 +119,18 @@ exports.$socketConnectionMiddleware = ->
 					sendErrorToClient = (error) ->
 						emitError error
 						
-						# If we're not running in production, log the full
-						# error stack, because it might help track down any
-						# problem.
-						if 'production' isnt config.get 'NODE_ENV'
-							logError error
-					
+						# Log the full error stack, because it might help
+						# track down any problem.
+						logError error if do -> 
+							
+							# Unknown errors.
+							unless error instanceof TransmittableError
+								return true
+							
+							# If we're not running in production. 
+							if 'production' isnt config.get 'NODE_ENV'
+								return true
+						
 					# Validate.
 					endpoint.validators.dispatch routeReq, null, (error) ->
 						return sendErrorToClient error if error?
