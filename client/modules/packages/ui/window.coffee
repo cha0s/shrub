@@ -23,16 +23,16 @@ exports.$service = -> [
 		service.isActive = -> _isActive
 		
 		# Set whether we will notify the user when they are trying to close
-		# the tab. A truth value will notify the user, and a falsy value will
-		# turn off notification if called with no argument, it will enable
-		# notification.
-		_notifyOnClose = null
+		# the tab.
+		_notification = undefined
 		
-		$window.onbeforeunload = -> _notifyOnClose
+		$window.addEventListener 'beforeunload', -> _notification
 		
-		service.notifyOnClose = (notifyOnClose = true) ->
-			
-			_notifyOnClose = if notifyOnClose then true else null
+		service.dontNotifyOnClose = ->
+			_notification = undefined
+		
+		service.notifyOnClose = (notification = true) ->
+			_notification = notification
 		
 		service
 			
