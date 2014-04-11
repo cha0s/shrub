@@ -12,7 +12,7 @@ middleware = require 'middleware'
 exports.$endpoint = -> (req, fn) ->
 	
 	# Log out.
-	req.logout().nodeify fn
+	req.logOut().nodeify fn
 
 # ## Implements hook `initialize`
 # Monkey patch http.IncomingMessage.prototype.logout to run our middleware,
