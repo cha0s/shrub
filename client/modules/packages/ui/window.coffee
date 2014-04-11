@@ -12,8 +12,13 @@ exports.$service = -> [
 		# 'focus' and 'blur' events on the window.
 		_isActive = true
 		
-		angular.element($window).bind 'focus', -> $rootScope.$apply -> _isActive = true
-		angular.element($window).bind 'blur', -> $rootScope.$apply -> _isActive = false
+		angular.element($window).bind 'focus', ->
+			$rootScope.$apply -> _isActive = true
+			return
+			
+		angular.element($window).bind 'blur', ->
+			$rootScope.$apply -> _isActive = false
+			return
 		
 		service.isActive = -> _isActive
 		
