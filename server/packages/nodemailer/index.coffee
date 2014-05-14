@@ -86,7 +86,7 @@ exports.$packageSettings = ->
 exports.sendMail = (type, mail) ->
 	
 	path = config.get 'path'
-	siteEmail = config.get 'packageSettings:sendmail:siteEmail'
+	siteEmail = config.get 'packageSettings:nodemailer:siteEmail'
 	
 	sandboxId = null
 	
