@@ -57,6 +57,6 @@ _require = (name, parentFilename) ->
 require = (name) -> _require name, ''
 
 # Implement an Angular module to provide require functionality.
-angular.module('shrub.require', []).provider 'require', ->
+angular.module('shrub.require', []).provider 'shrub-require', ->
 	require: require
 	$get: -> require

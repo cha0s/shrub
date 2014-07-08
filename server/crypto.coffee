@@ -21,7 +21,7 @@ exports.encrypt = (message, password) ->
 	
 		cipher = crypto.createCipher(
 			'aes256'
-			password ? config.get 'packageSettings:core:cryptoKey'
+			password ? config.get 'packageSettings:shrub-core:cryptoKey'
 		)
 		
 		cipherText = []
@@ -43,7 +43,7 @@ exports.decrypt = (message, password) ->
 	
 		decipher = crypto.createDecipher(
 			'aes256'
-			password ? config.get 'packageSettings:core:cryptoKey'
+			password ? config.get 'packageSettings:shrub-core:cryptoKey'
 		)
 		decipher.setAutoPadding false
 		

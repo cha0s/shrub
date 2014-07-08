@@ -19,7 +19,7 @@ angular.module('shrub.core', [
 ])
 
 	.config([
-		'$injector', 'pkgmanProvider'
+		'$injector', 'shrub-pkgmanProvider'
 		({invoke}, {invokeFlat}) ->
 			
 			# Invoke hook `appConfig`.
@@ -31,7 +31,7 @@ angular.module('shrub.core', [
 	
 	.run([
 	
-		'$injector', 'pkgman'
+		'$injector', 'shrub-pkgman'
 		({invoke}, {invokeFlat}) ->
 			
 			# Invoke hook `appRun`.

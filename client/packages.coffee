@@ -6,7 +6,7 @@ angular.module('shrub.packages', [
 ])
 
 	.config([
-		'$compileProvider', '$controllerProvider', '$filterProvider', '$provide', 'pkgmanProvider', 'requireProvider'
+		'$compileProvider', '$controllerProvider', '$filterProvider', '$provide', 'shrub-pkgmanProvider', 'shrub-requireProvider'
 		($compileProvider, $controllerProvider, $filterProvider, $provide, {invoke}, {require}) ->
 			
 			config = require 'config'
@@ -97,8 +97,8 @@ angular.module('shrub.pkgman', [
 	'shrub.require'
 ])
 
-	.provider 'pkgman', [
-		'$provide', 'requireProvider'
+	.provider 'shrub-pkgman', [
+		'$provide', 'shrub-requireProvider'
 		($provide, {require}) ->
 			
 			_ = require 'underscore'

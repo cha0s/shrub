@@ -107,7 +107,7 @@ exports.Middleware = class Middleware
 exports.fromHook = (hook, paths, args...) ->
 	
 	middleware = new Middleware
-
+	
 	# Invoke the hook and `use` the middleware in the paths configuration
 	# order.
 	args.unshift hook
@@ -123,7 +123,7 @@ exports.fromHook = (hook, paths, args...) ->
 
 # ## fromShortName
 # 
-# Create a middleware stack from a short name. e.g. "user before login".
+# Create a middleware stack from a short name. e.g. "example thing hook".
 # 
 # The short name is converted into log messages, a hook name, and configuration
 # key. In the case where we passed in "user before login", this would look
@@ -132,21 +132,22 @@ exports.fromHook = (hook, paths, args...) ->
 #	defaultLogger.info "Loading user before login middleware..."
 #	
 #	middleware = exports.fromHook(
-#		"userBeforeLoginMiddleware"
-#		config.get "packageSettings:user:beforeLoginMiddleware"
+#		"exampleThingHook"
+#		config.get "packageSettings:example:thingHook"
 #	)
 #	
 #	defaultLogger.info "User before login middleware loaded."
 #
-exports.fromShortName = (shortName) ->
+exports.fromShortName = (shortName, packageName) ->
 
 	defaultLogger.info "Loading #{shortName} middleware..."
 	
-	[packageName, keyParts...] = shortName.split ' '
+	[firstPart, keyParts...] = shortName.split ' '
+	packageName ?= firstPart
 	key = keyParts.join '_'
 	
 	middleware = exports.fromHook(
-		"#{packageName}#{i8n.camelize key}Middleware"
+		"#{firstPart}#{i8n.camelize key}Middleware"
 		
 		config.get "packageSettings:#{packageName}:#{
 			i8n.camelize key, true

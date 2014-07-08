@@ -8,7 +8,7 @@ Promise = require 'bluebird'
 
 errors = require 'errors'
 pkgman = require 'pkgman'
-schema = require 'schema'
+schema = require('shrub-schema').schema()
 
 {defaultLogger} = require 'logging'
 

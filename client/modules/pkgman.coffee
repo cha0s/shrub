@@ -1,6 +1,8 @@
 
 # # Package manager
 
+_ = require 'underscore'
+
 {defaultLogger} = require 'logging'
 
 packageCache = null
@@ -14,18 +16,19 @@ exports.rebuildPackageCache = ->
 	for name in _packages
 	
 		try
-			modules[name] = require "packages/#{name}"
+			modules[name] = require name
 		catch error
 			
 			# Suppress missing package errors.
 			# `TODO`: Should we let this throw?
-			continue if error.toString() is "Error: Cannot find module 'packages/#{name}'"
+			continue if error.toString() is "Error: Cannot find module '#{name}'"
 			throw error
 			
 		defaultLogger.info "Loaded package #{name}."
 	
 	# Recur down the package tree and collect hooks.		
 	cacheRecursive = (path, parent) ->
+		return unless _.isObject parent
 		
 		for key, objectOrFunction of parent
 			
@@ -64,7 +67,7 @@ exports.invoke = (hook, args...) ->
 # 
 # Invoke a hook with arguments. Return the result as an array.
 exports.invokeFlat = (hook, args...) ->
+	
 	exports.rebuildPackageCache() unless packageCache?
 	
 	fn args... for {fn} in packageCache[hook] ? []
-	
