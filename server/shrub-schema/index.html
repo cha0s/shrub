@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="en"><head><title>server/shrub-schema/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="server/shrub-schema/index"><meta name="groc-project-path" content="server/shrub-schema/index.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/server/shrub-schema/index.coffee">server/shrub-schema/index.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="database-schema">Database schema</h1>
+
+<p>Tools for working with the database schema.</p></div></div><div class="code"><div class="wrapper"><span class="nv">config = </span><span class="nx">require</span> <span class="s">&#39;config&#39;</span>
+
+<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookconfig">Implements hook <code>config</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;config&#39;</span><span class="p">,</span> <span class="nf">(req) -&gt;</span>
+    
+    <span class="nv">apiRoot: </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;packageSettings:shrub-schema:apiRoot&#39;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookhttpinitializing">Implements hook <code>httpInitializing</code></h2>
+
+<p>Serve the database schema as an authenticated REST API.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;httpInitializing&#39;</span><span class="p">,</span> <span class="nf">({_app}) -&gt;</span>
+    
+    <span class="c1"># DRY.</span>
+    <span class="nv">interceptError = </span><span class="nf">(res) -&gt;</span>
+      <span class="nf">(error) -&gt;</span> <span class="nx">serveJson</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">error</span><span class="p">.</span><span class="nx">code</span> <span class="o">?</span> <span class="mi">500</span><span class="p">,</span> <span class="nv">message: </span><span class="nx">error</span><span class="p">.</span><span class="nx">message</span>
+    
+    <span class="c1"># DRY,</span>
+    <span class="nv">serveJson = </span><span class="nf">(res, code, data) -&gt;</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>CORS policy enforcement.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">corsHeaders = </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;packageSettings:shrub-schema:corsHeaders&#39;</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">set</span> <span class="nx">corsHeaders</span> <span class="k">if</span> <span class="nx">corsHeaders</span><span class="o">?</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Serve JSON manually, breaking it to protect against XSRF.
+See: <a href="http://docs.angularjs.org/api/ng/service/$http#json-vulnerability-protection">http://docs.angularjs.org/api/ng/service/$http#json-vulnerability-protection</a></p></div></div><div class="code"><div class="wrapper">      <span class="nx">res</span><span class="p">.</span><span class="nx">set</span> <span class="s">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s">&#39;application/json&#39;</span>
+      <span class="nv">res.statusCode = </span><span class="nx">code</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">send</span> <span class="s">&quot;)]}&#39;,\n</span><span class="si">#{</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span> <span class="nx">data</span><span class="si">}</span><span class="s">&quot;</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Gross...</p></div></div><div class="code"><div class="wrapper">    <span class="nv">app = </span><span class="nx">_app</span>
+    <span class="nv">app._usedRouter = </span><span class="kc">true</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Serve the models. For each model, we'll define REST paths to allow
+interaction with a model, or set of models.</p></div></div><div class="code"><div class="wrapper">    <span class="k">for</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">Model</span> <span class="k">of</span> <span class="nx">schema</span><span class="p">.</span><span class="nx">models</span>
+      
+      <span class="nx">do</span> <span class="nf">(Model) -&gt;</span>
+        
+        <span class="nv">keyify = </span><span class="nf">(key, value) -&gt;</span>
+          <span class="nv">O = </span><span class="p">{}</span>
+          <span class="nx">O</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span>
+          <span class="nx">O</span>
+        
+        <span class="p">{</span><span class="nx">resource</span><span class="p">,</span> <span class="nx">collection</span><span class="p">}</span> <span class="o">=</span> <span class="nx">schema</span><span class="p">.</span><span class="nx">resourcePaths</span> <span class="nx">name</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Supposing we're handling the <code>User</code> model, and apiRoot is its
+default (<code>/api</code>), the values will be:</p>
+
+<pre><code>collectionPath = "/api/users"
+resourcePath = "/api/user/:id"
+</code></pre>
+
+<p>We'll assume these defaults for each path's explanation.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">apiRoot = </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;packageSettings:shrub-schema:apiRoot&#39;</span>
+        <span class="nv">collectionPath = </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">apiRoot</span><span class="si">}</span><span class="s">/</span><span class="si">#{</span><span class="nx">collection</span><span class="si">}</span><span class="s">&quot;</span>
+        <span class="nv">resourcePath = </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">apiRoot</span><span class="si">}</span><span class="s">/</span><span class="si">#{</span><span class="nx">resource</span><span class="si">}</span><span class="s">/:id&quot;</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Get the entire collection.
+GET <code>/api/users</code></p></div></div><div class="code"><div class="wrapper">        <span class="nx">app</span><span class="p">.</span><span class="nx">get</span> <span class="nx">collectionPath</span><span class="p">,</span> <span class="nf">(req, res) -&gt;</span>
+          
+          <span class="nv">query = </span><span class="k">if</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">query</span><span class="p">).</span><span class="nx">length</span> <span class="k">then</span> <span class="nx">req</span><span class="p">.</span><span class="nx">query</span>
+          <span class="nx">Model</span><span class="p">.</span><span class="nx">authenticatedAll</span><span class="p">(</span>
+            <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">,</span> <span class="nx">query</span>
+  
+          <span class="p">).</span><span class="nx">then</span><span class="p">(</span>
+            <span class="nf">(models) -&gt;</span> <span class="nx">serveJson</span> <span class="nx">res</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="nx">keyify</span> <span class="nx">collection</span><span class="p">,</span> <span class="nx">models</span>
+  
+          <span class="p">).</span><span class="nx">catch</span> <span class="nx">interceptError</span> <span class="nx">res</span>
+          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Get how many resources are in the collection.
+GET <code>/api/users/count</code></p></div></div><div class="code"><div class="wrapper">        <span class="nx">app</span><span class="p">.</span><span class="nx">get</span> <span class="s">&quot;</span><span class="si">#{</span><span class="nx">collectionPath</span><span class="si">}</span><span class="s">/count&quot;</span><span class="p">,</span> <span class="nf">(req, res) -&gt;</span>
+          
+          <span class="nx">Model</span><span class="p">.</span><span class="nx">authenticatedCount</span><span class="p">(</span>
+            <span class="nx">req</span><span class="p">.</span><span class="nx">user</span>
+  
+          <span class="p">).</span><span class="nx">then</span><span class="p">(</span>
+            <span class="nf">(count) -&gt;</span> <span class="nx">serveJson</span> <span class="nx">res</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="nx">keyify</span> <span class="s">&#39;count&#39;</span><span class="p">,</span> <span class="nx">count</span>
+  
+          <span class="p">).</span><span class="nx">catch</span> <span class="nx">interceptError</span> <span class="nx">res</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Create a new resource in the collection.
+POST <code>/api/users</code></p></div></div><div class="code"><div class="wrapper">        <span class="nx">app</span><span class="p">.</span><span class="nx">post</span> <span class="nx">collectionPath</span><span class="p">,</span> <span class="nf">(req, res) -&gt;</span>
+  
+          <span class="nx">Model</span><span class="p">.</span><span class="nx">authenticatedCreate</span><span class="p">(</span>
+            <span class="nx">req</span><span class="p">.</span><span class="nx">user</span>
+            <span class="nx">req</span><span class="p">.</span><span class="nx">body</span>
+  
+          <span class="p">).</span><span class="nx">then</span><span class="p">(</span>
+            <span class="nf">(model) -&gt;</span> <span class="nx">serveJson</span> <span class="nx">res</span><span class="p">,</span> <span class="mi">201</span><span class="p">,</span> <span class="nx">keyify</span> <span class="nx">resource</span><span class="p">,</span> <span class="nx">model</span>
+  
+          <span class="p">).</span><span class="nx">catch</span> <span class="nx">interceptError</span> <span class="nx">res</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Delete all resources in a collection.
+DELETE <code>/api/users</code></p></div></div><div class="code"><div class="wrapper">        <span class="nx">app</span><span class="p">.</span><span class="nx">delete</span> <span class="nx">collectionPath</span><span class="p">,</span> <span class="nf">(req, res) -&gt;</span>
+          
+          <span class="nx">Model</span><span class="p">.</span><span class="nx">authenticatedDestroyAll</span><span class="p">(</span>
+            <span class="nx">req</span><span class="p">.</span><span class="nx">user</span>
+          
+          <span class="p">).</span><span class="nx">then</span><span class="p">(</span>
+            <span class="nf">-&gt;</span> <span class="nx">serveJson</span> <span class="nx">res</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="nv">message: </span><span class="s">&quot;Collection deleted.&quot;</span>
+  
+          <span class="p">).</span><span class="nx">catch</span> <span class="nx">interceptError</span> <span class="nx">res</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Get a resource.
+GET <code>/api/user/1</code></p></div></div><div class="code"><div class="wrapper">        <span class="nx">app</span><span class="p">.</span><span class="nx">get</span> <span class="nx">resourcePath</span><span class="p">,</span> <span class="nf">(req, res) -&gt;</span>
+          
+          <span class="nx">Model</span><span class="p">.</span><span class="nx">authenticatedFind</span><span class="p">(</span>
+            <span class="nx">req</span><span class="p">.</span><span class="nx">user</span>
+            <span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">id</span>
+          
+          <span class="p">).</span><span class="nx">then</span><span class="p">(</span>
+            <span class="nf">(model) -&gt;</span> <span class="nx">serveJson</span> <span class="nx">res</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="nx">keyify</span> <span class="nx">resource</span><span class="p">,</span> <span class="nx">model</span>
+  
+          <span class="p">).</span><span class="nx">catch</span> <span class="nx">interceptError</span> <span class="nx">res</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Update a resource.
+PUT <code>/api/user/1</code></p></div></div><div class="code"><div class="wrapper">        <span class="nx">app</span><span class="p">.</span><span class="nx">put</span> <span class="nx">resourcePath</span><span class="p">,</span> <span class="nf">(req, res) -&gt;</span>
+          
+          <span class="nx">Model</span><span class="p">.</span><span class="nx">authenticatedUpdate</span><span class="p">(</span>
+            <span class="nx">req</span><span class="p">.</span><span class="nx">user</span>
+            <span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">id</span>
+            <span class="nx">req</span><span class="p">.</span><span class="nx">body</span>
+          <span class="p">).</span><span class="nx">then</span><span class="p">(</span>
+            <span class="nf">-&gt;</span> <span class="nx">serveJson</span> <span class="nx">res</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="nv">message: </span><span class="s">&quot;Resource updated.&quot;</span>
+  
+          <span class="p">).</span><span class="nx">catch</span> <span class="nx">interceptError</span> <span class="nx">res</span>
+                </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Delete a resource.
+DELETE <code>/api/user/1</code></p></div></div><div class="code"><div class="wrapper">        <span class="nx">app</span><span class="p">.</span><span class="nx">delete</span> <span class="nx">resourcePath</span><span class="p">,</span> <span class="nf">(req, res) -&gt;</span>
+          
+          <span class="nx">Model</span><span class="p">.</span><span class="nx">authenticatedDestroy</span><span class="p">(</span>
+            <span class="nx">req</span><span class="p">.</span><span class="nx">user</span>
+            <span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">id</span>
+          <span class="p">).</span><span class="nx">then</span><span class="p">(</span>
+            <span class="nf">-&gt;</span> <span class="nx">serveJson</span> <span class="nx">res</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="nv">message: </span><span class="s">&quot;Resource deleted.&quot;</span>
+  
+          <span class="p">).</span><span class="nx">catch</span> <span class="nx">interceptError</span> <span class="nx">res</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookpackagesettings">Implements hook <code>packageSettings</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;packageSettings&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+    
+    <span class="c1"># The URL root where the schema REST API is served.</span>
+    <span class="nv">apiRoot: </span><span class="s">&#39;/api&#39;</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p><a href="http://en.wikipedia.org/wiki/Cross-origin_resource_sharing">CORS</a>
+headers.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">corsHeaders: </span><span class="kc">null</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookreplcontext">Implements hook <code>replContext</code></h2>
+
+<p>Provide the database schema to the REPL context.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;replContext&#39;</span><span class="p">,</span> <span class="nf">(context) -&gt;</span>
+    
+    <span class="nv">context.schema = </span><span class="nx">schema</span>
+
+<span class="nv">schema = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;client/modules/shrub-schema&#39;</span><span class="p">).</span><span class="nx">define</span><span class="p">(</span>
+  <span class="nx">require</span> <span class="s">&quot;jugglingdb-redis&quot;</span>
+<span class="p">)</span>
+
+<span class="nv">exports.schema = </span><span class="nf">-&gt;</span> <span class="nx">schema</span></div></div></div></div></body></html>

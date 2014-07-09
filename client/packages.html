@@ -1,99 +1,99 @@
-<!DOCTYPE html><html lang="en"><head><title>client/packages</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="client/packages"><meta name="groc-project-path" content="client/packages.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/client/packages.coffee">client/packages.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><p>A module that allows packages to provide Angular components.</p></div></div><div class="code"><div class="wrapper"><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;shrub.packages&#39;</span><span class="p">,</span> <span class="p">[</span>
-  <span class="s1">&#39;shrub.require&#39;</span>
-  <span class="s1">&#39;shrub.pkgman&#39;</span>
+<!DOCTYPE html><html lang="en"><head><title>client/packages</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="client/packages"><meta name="groc-project-path" content="client/packages.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/client/packages.coffee">client/packages.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><p>A module that allows packages to provide Angular components.</p></div></div><div class="code"><div class="wrapper"><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s">&#39;shrub.packages&#39;</span><span class="p">,</span> <span class="p">[</span>
+  <span class="s">&#39;shrub.require&#39;</span>
+  <span class="s">&#39;shrub.pkgman&#39;</span>
 <span class="p">])</span>
 
   <span class="p">.</span><span class="nx">config</span><span class="p">([</span>
-    <span class="s1">&#39;$compileProvider&#39;</span><span class="p">,</span> <span class="s1">&#39;$controllerProvider&#39;</span><span class="p">,</span> <span class="s1">&#39;$filterProvider&#39;</span><span class="p">,</span> <span class="s1">&#39;$provide&#39;</span><span class="p">,</span> <span class="s1">&#39;pkgmanProvider&#39;</span><span class="p">,</span> <span class="s1">&#39;requireProvider&#39;</span>
+    <span class="s">&#39;$compileProvider&#39;</span><span class="p">,</span> <span class="s">&#39;$controllerProvider&#39;</span><span class="p">,</span> <span class="s">&#39;$filterProvider&#39;</span><span class="p">,</span> <span class="s">&#39;$provide&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-pkgmanProvider&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-requireProvider&#39;</span>
     <span class="nf">($compileProvider, $controllerProvider, $filterProvider, $provide, {invoke}, {require}) -&gt;</span>
       
-      <span class="nv">config = </span><span class="nx">require</span> <span class="s1">&#39;config&#39;</span>
+      <span class="nv">config = </span><span class="nx">require</span> <span class="s">&#39;config&#39;</span>
       
-      <span class="p">{</span><span class="nx">defaultLogger</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;logging&#39;</span>
+      <span class="p">{</span><span class="nx">defaultLogger</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">&#39;logging&#39;</span>
       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Use normalized names for directives and filters:
-'core/foo/bar' -> 'coreFooBar'</p></div></div><div class="code"><div class="wrapper">      <span class="nv">i8n = </span><span class="nx">require</span> <span class="s1">&#39;inflection&#39;</span>
+'core/foo/bar' -> 'coreFooBar'</p></div></div><div class="code"><div class="wrapper">      <span class="nv">i8n = </span><span class="nx">require</span> <span class="s">&#39;inflection&#39;</span>
       <span class="nv">normalize = </span><span class="nf">(path) -&gt;</span>
-        <span class="nv">parts = </span><span class="k">for</span> <span class="nx">part</span><span class="p">,</span> <span class="nx">i</span> <span class="k">in</span> <span class="nx">path</span><span class="p">.</span><span class="nx">split</span> <span class="s1">&#39;/&#39;</span>
+        <span class="nv">parts = </span><span class="k">for</span> <span class="nx">part</span><span class="p">,</span> <span class="nx">i</span> <span class="k">in</span> <span class="nx">path</span><span class="p">.</span><span class="nx">split</span> <span class="s">&#39;/&#39;</span>
           <span class="nx">i8n</span><span class="p">.</span><span class="nx">camelize</span><span class="p">(</span>
-            <span class="nx">part</span><span class="p">.</span><span class="nx">replace</span> <span class="sr">/[^\w]/g</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span>
+            <span class="nx">part</span><span class="p">.</span><span class="nx">replace</span> <span class="sr">/[^\w]/g</span><span class="p">,</span> <span class="s">&#39;_&#39;</span>
             <span class="mi">0</span> <span class="o">is</span> <span class="nx">i</span>
           <span class="p">)</span>
           
-        <span class="nx">i8n</span><span class="p">.</span><span class="nx">camelize</span> <span class="p">(</span><span class="nx">i8n</span><span class="p">.</span><span class="nx">underscore</span> <span class="nx">parts</span><span class="p">.</span><span class="nx">join</span> <span class="s1">&#39;&#39;</span><span class="p">),</span> <span class="kc">true</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>controller</code>.
+        <span class="nx">i8n</span><span class="p">.</span><span class="nx">camelize</span> <span class="p">(</span><span class="nx">i8n</span><span class="p">.</span><span class="nx">underscore</span> <span class="nx">parts</span><span class="p">.</span><span class="nx">join</span> <span class="s">&#39;&#39;</span><span class="p">),</span> <span class="kc">true</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>controller</code>.
 Allows packages to define Angular controllers. Implementations
-should return an <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s2">&quot;Registering controllers...&quot;</span>
+should return an <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s">&quot;Registering controllers...&quot;</span>
       
-      <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span> <span class="k">of</span> <span class="nx">invoke</span> <span class="s1">&#39;controller&#39;</span>
+      <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span> <span class="k">of</span> <span class="nx">invoke</span> <span class="s">&#39;controller&#39;</span>
         <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="nx">path</span>
         
         <span class="nx">$controllerProvider</span><span class="p">.</span><span class="nx">register</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span>
 
-      <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s2">&quot;Controllers registered.&quot;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>directive</code>.
+      <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s">&quot;Controllers registered.&quot;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>directive</code>.
 Allows packages to define Angular directives. Implementations
-should return an <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s2">&quot;Registering directives...&quot;</span>
+should return an <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s">&quot;Registering directives...&quot;</span>
       
-      <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span> <span class="k">of</span> <span class="nx">invoke</span> <span class="s1">&#39;directive&#39;</span>
+      <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span> <span class="k">of</span> <span class="nx">invoke</span> <span class="s">&#39;directive&#39;</span>
         <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="nx">normalize</span> <span class="nx">path</span>
 
         <span class="nx">$compileProvider</span><span class="p">.</span><span class="nx">directive</span> <span class="p">(</span><span class="nx">normalize</span> <span class="nx">path</span><span class="p">),</span> <span class="nx">injected</span>
 
-      <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s2">&quot;Directives registered.&quot;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>filter</code>.
+      <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s">&quot;Directives registered.&quot;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>filter</code>.
 Allows packages to define Angular filters. Implementations
-should return a function.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s2">&quot;Registering filters...&quot;</span>
+should return a function.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s">&quot;Registering filters...&quot;</span>
       
-      <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span> <span class="k">of</span> <span class="nx">invoke</span> <span class="s1">&#39;filter&#39;</span>
+      <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span> <span class="k">of</span> <span class="nx">invoke</span> <span class="s">&#39;filter&#39;</span>
         <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="nx">normalize</span> <span class="nx">path</span>
 
         <span class="nx">$filterProvider</span><span class="p">.</span><span class="nx">register</span> <span class="p">(</span><span class="nx">normalize</span> <span class="nx">path</span><span class="p">),</span> <span class="nx">injected</span>
 
-      <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s2">&quot;Filters registered.&quot;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>service</code>.
+      <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s">&quot;Filters registered.&quot;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>service</code>.
 Allows packages to define Angular services. Implementations
-should return an <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s2">&quot;Registering services...&quot;</span>
+should return an <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s">&quot;Registering services...&quot;</span>
       
-      <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span> <span class="k">of</span> <span class="nx">invoke</span> <span class="s1">&#39;service&#39;</span>
+      <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span> <span class="k">of</span> <span class="nx">invoke</span> <span class="s">&#39;service&#39;</span>
         <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="nx">path</span>
 
         <span class="nx">$provide</span><span class="p">.</span><span class="nx">service</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span>
       
-      <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s2">&quot;Services registered.&quot;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>If we are testing, decorate the services with their mock
-versions.</p></div></div><div class="code"><div class="wrapper">      <span class="k">if</span> <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;testMode&#39;</span>
+      <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s">&quot;Services registered.&quot;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>If we are testing, decorate the services with their mock
+versions.</p></div></div><div class="code"><div class="wrapper">      <span class="k">if</span> <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;testMode&#39;</span>
         </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>serviceMock</code>.
 Allows packages to decorate mock Angular services.
 Implementations should return an
-<a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s2">&quot;Registering mock services...&quot;</span>
+<a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s">&quot;Registering mock services...&quot;</span>
         
-        <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span> <span class="k">of</span> <span class="nx">invoke</span> <span class="s1">&#39;serviceMock&#39;</span>
+        <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span> <span class="k">of</span> <span class="nx">invoke</span> <span class="s">&#39;serviceMock&#39;</span>
           <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="nx">path</span>
 
           <span class="nx">$provide</span><span class="p">.</span><span class="nx">decorator</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span>
       
-        <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s2">&quot;Mock services registered.&quot;</span>
+        <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s">&quot;Mock services registered.&quot;</span>
 
-  <span class="p">])</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>A module that implements a package manager provider/service.</p></div></div><div class="code"><div class="wrapper"><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;shrub.pkgman&#39;</span><span class="p">,</span> <span class="p">[</span>
-  <span class="s1">&#39;shrub.require&#39;</span>
+  <span class="p">])</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>A module that implements a package manager provider/service.</p></div></div><div class="code"><div class="wrapper"><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s">&#39;shrub.pkgman&#39;</span><span class="p">,</span> <span class="p">[</span>
+  <span class="s">&#39;shrub.require&#39;</span>
 <span class="p">])</span>
 
-  <span class="p">.</span><span class="nx">provider</span> <span class="s1">&#39;pkgman&#39;</span><span class="p">,</span> <span class="p">[</span>
-    <span class="s1">&#39;$provide&#39;</span><span class="p">,</span> <span class="s1">&#39;requireProvider&#39;</span>
+  <span class="p">.</span><span class="nx">provider</span> <span class="s">&#39;shrub-pkgman&#39;</span><span class="p">,</span> <span class="p">[</span>
+    <span class="s">&#39;$provide&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-requireProvider&#39;</span>
     <span class="nf">($provide, {require}) -&gt;</span>
       
-      <span class="nv">_ = </span><span class="nx">require</span> <span class="s1">&#39;underscore&#39;</span>
-      <span class="nv">config = </span><span class="nx">require</span> <span class="s1">&#39;config&#39;</span>
-      <span class="nv">pkgman = </span><span class="nx">require</span> <span class="s1">&#39;pkgman&#39;</span>
+      <span class="nv">_ = </span><span class="nx">require</span> <span class="s">&#39;underscore&#39;</span>
+      <span class="nv">config = </span><span class="nx">require</span> <span class="s">&#39;config&#39;</span>
+      <span class="nv">pkgman = </span><span class="nx">require</span> <span class="s">&#39;pkgman&#39;</span>
       
-      <span class="p">{</span><span class="nx">defaultLogger</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;logging&#39;</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Load the package list from configuration.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s2">&quot;Loading packages...&quot;</span>
+      <span class="p">{</span><span class="nx">defaultLogger</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">&#39;logging&#39;</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Load the package list from configuration.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s">&quot;Loading packages...&quot;</span>
       
-      <span class="nx">pkgman</span><span class="p">.</span><span class="nx">registerPackageList</span> <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageList&#39;</span>
+      <span class="nx">pkgman</span><span class="p">.</span><span class="nx">registerPackageList</span> <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;packageList&#39;</span>
 
-      <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s2">&quot;Packages loaded.&quot;</span>
+      <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s">&quot;Packages loaded.&quot;</span>
       
       <span class="nv">service = </span><span class="p">{}</span>
       
       <span class="nv">service.invoke = </span><span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span>
       <span class="nv">service.invokeFlat = </span><span class="nx">pkgman</span><span class="p">.</span><span class="nx">invokeFlat</span>
       
-      <span class="nx">service</span><span class="p">.</span><span class="nv">$get = </span><span class="o">-&gt;</span> <span class="nx">service</span>
+      <span class="nv">service.$get = </span><span class="nf">-&gt;</span> <span class="nx">service</span>
       
       <span class="nx">service</span>
   <span class="p">]</span></div></div></div></div></body></html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html><html lang="en"><head><title>server/shrub-user/login</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="server/shrub-user/login"><meta name="groc-project-path" content="server/shrub-user/login.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/server/shrub-user/login.coffee">server/shrub-user/login.coffee</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nv">i8n = </span><span class="nx">require</span> <span class="s">&#39;inflection&#39;</span>
+<span class="nv">passport = </span><span class="nx">require</span> <span class="s">&#39;passport&#39;</span>
+<span class="nv">Promise = </span><span class="nx">require</span> <span class="s">&#39;bluebird&#39;</span>
+
+<span class="nv">crypto = </span><span class="nx">require</span> <span class="s">&#39;server/crypto&#39;</span>
+<span class="nv">errors = </span><span class="nx">require</span> <span class="s">&#39;errors&#39;</span>
+<span class="nv">middleware = </span><span class="nx">require</span> <span class="s">&#39;middleware&#39;</span>
+<span class="nv">schema = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;shrub-schema&#39;</span><span class="p">).</span><span class="nx">schema</span><span class="p">()</span>
+
+<span class="p">{</span><span class="nx">defaultLogger</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">&#39;logging&#39;</span>
+<span class="p">{</span><span class="nx">threshold</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">&#39;limits&#39;</span>
+
+<span class="nv">clientModule = </span><span class="nx">require</span> <span class="s">&#39;client/modules/shrub-user/login&#39;</span>
+<span class="nv">userPackage = </span><span class="nx">require</span> <span class="s">&#39;shrub-user&#39;</span>
+
+<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookendpoint">Implements hook <code>endpoint</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;endpoint&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+    
+    <span class="nv">limiter:</span>
+      <span class="nv">message: </span><span class="s">&quot;You are logging in too much.&quot;</span>
+      <span class="nv">threshold: </span><span class="nx">threshold</span><span class="p">(</span><span class="mi">3</span><span class="p">).</span><span class="nx">every</span><span class="p">(</span><span class="mi">30</span><span class="p">).</span><span class="nx">seconds</span><span class="p">()</span>
+  
+    <span class="nv">receiver: </span><span class="nf">(req, fn) -&gt;</span>
+      
+      <span class="nv">passport = </span><span class="nx">req</span><span class="p">.</span><span class="nx">_passport</span><span class="p">.</span><span class="nx">instance</span>
+      
+      <span class="nv">loginPromise = </span><span class="k">switch</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">method</span>
+        
+        <span class="k">when</span> <span class="s">&#39;local&#39;</span>
+          
+          <span class="nv">res = </span><span class="p">{}</span>
+          
+          <span class="nv">deferred = </span><span class="nx">Promise</span><span class="p">.</span><span class="nx">defer</span><span class="p">()</span>
+          <span class="nx">passport</span><span class="p">.</span><span class="nx">authenticate</span><span class="p">(</span><span class="s">&#39;local&#39;</span><span class="p">,</span> <span class="nx">deferred</span><span class="p">.</span><span class="nx">callback</span><span class="p">)</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">fn</span>
+          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Log the user in (if it exists), and redact it for the
+response.</p></div></div><div class="code"><div class="wrapper">          <span class="nx">deferred</span><span class="p">.</span><span class="nx">promise</span><span class="p">.</span><span class="nx">bind</span><span class="p">({}).</span><span class="nx">spread</span><span class="p">(</span><span class="nf">(@user, info) -&gt;</span>
+            <span class="k">throw</span> <span class="nx">errors</span><span class="p">.</span><span class="nx">instantiate</span> <span class="s">&#39;login&#39;</span> <span class="k">unless</span> <span class="nx">@user</span>
+            
+            <span class="nx">req</span><span class="p">.</span><span class="nx">logIn</span> <span class="nx">@user</span>
+            
+          <span class="p">).</span><span class="nx">then</span> <span class="nf">-&gt;</span>
+            </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Join a channel for the username.</p></div></div><div class="code"><div class="wrapper">            <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="p">.</span><span class="nx">join</span> <span class="nx">@user</span><span class="p">.</span><span class="nx">name</span>
+            
+            <span class="nx">@user</span><span class="p">.</span><span class="nx">redactFor</span> <span class="nx">@user</span>
+          
+      <span class="c1"># Using nodeify here crashes the app. It may be a bluebird bug.</span>
+      <span class="nx">loginPromise</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nf">(user) -&gt;</span> <span class="nx">fn</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">user</span>
+      <span class="p">).</span><span class="nx">catch</span> <span class="nx">fn</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookinitialize">Implements hook <code>initialize</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;initialize&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+    
+    <span class="p">{</span><span class="nx">User</span><span class="p">}</span> <span class="o">=</span> <span class="nx">schema</span><span class="p">.</span><span class="nx">models</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Implement a local passport strategy.
+<code>TODO</code>: Strategies should be dynamically defined, probably through a
+hook.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">LocalStrategy = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;passport-local&#39;</span><span class="p">).</span><span class="nx">Strategy</span>
+    <span class="nx">passport</span><span class="p">.</span><span class="nx">use</span> <span class="k">new</span> <span class="nx">LocalStrategy</span> <span class="nf">(username, password, done) -&gt;</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Load a user and compare the hashed password.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">userPackage</span><span class="p">.</span><span class="nx">loadByName</span><span class="p">(</span><span class="nx">username</span><span class="p">).</span><span class="nx">bind</span><span class="p">({}).</span><span class="nx">then</span><span class="p">(</span><span class="nf">(@user)-&gt;</span>
+        <span class="k">return</span> <span class="k">unless</span> <span class="nx">@user</span><span class="o">?</span>
+        
+        <span class="nx">crypto</span><span class="p">.</span><span class="nx">hasher</span><span class="p">(</span>
+          <span class="nv">plaintext: </span><span class="nx">password</span>
+          <span class="nv">salt: </span><span class="k">new</span> <span class="nx">Buffer</span> <span class="nx">@user</span><span class="p">.</span><span class="nx">salt</span><span class="p">,</span> <span class="s">&#39;hex&#39;</span>
+        <span class="p">)</span>
+        
+      <span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">(hashed) -&gt;</span>
+        <span class="k">return</span> <span class="k">unless</span> <span class="nx">@user</span><span class="o">?</span>
+        <span class="k">return</span> <span class="k">unless</span> <span class="nx">@user</span><span class="p">.</span><span class="nx">passwordHash</span> <span class="o">is</span> <span class="nx">hashed</span><span class="p">.</span><span class="nx">key</span><span class="p">.</span><span class="nx">toString</span> <span class="s">&#39;hex&#39;</span>
+        
+        <span class="nx">@user</span>
+        
+      <span class="p">).</span><span class="nx">nodeify</span> <span class="nx">done</span>
+      
+    <span class="nx">passport</span><span class="p">.</span><span class="nx">serializeUser</span> <span class="nf">(user, done) -&gt;</span> <span class="nx">done</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">user</span><span class="p">.</span><span class="nx">id</span>
+    
+    <span class="nx">passport</span><span class="p">.</span><span class="nx">deserializeUser</span> <span class="nf">(id, done) -&gt;</span> <span class="nx">User</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">id</span><span class="p">).</span><span class="nx">nodeify</span> <span class="nx">done</span>
+    
+    <span class="nx">monkeyPatchLogin</span><span class="p">()</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshooktransmittableerror">Implements hook <code>transmittableError</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;transmittableError&#39;</span><span class="p">,</span> <span class="nx">clientModule</span><span class="p">.</span><span class="nx">transmittableError</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Monkey patch http.IncomingMessage.prototype.login to run our middleware,
+and return a promise.</p></div></div><div class="code"><div class="wrapper"><span class="nv">monkeyPatchLogin = </span><span class="nf">-&gt;</span>
+    
+  <span class="p">{</span><span class="nx">IncomingMessage</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">&#39;http&#39;</span>
+  
+  <span class="nv">req = </span><span class="nx">IncomingMessage</span><span class="p">.</span><span class="nx">prototype</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>userBeforeLoginMiddleware</code>.
+Invoked before a user logs in.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">userBeforeLoginMiddleware = </span><span class="nx">middleware</span><span class="p">.</span><span class="nx">fromShortName</span><span class="p">(</span>
+    <span class="s">&#39;user before login&#39;</span>
+    <span class="s">&#39;shrub-user&#39;</span>
+  <span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>userAfterLoginMiddleware</code>.
+Invoked after a user logs in.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">userAfterLoginMiddleware = </span><span class="nx">middleware</span><span class="p">.</span><span class="nx">fromShortName</span><span class="p">(</span>
+    <span class="s">&#39;user after login&#39;</span>
+    <span class="s">&#39;shrub-user&#39;</span>
+  <span class="p">)</span>
+  
+  <span class="nv">login = req.passportLogIn = </span><span class="nx">req</span><span class="p">.</span><span class="nx">login</span>
+  <span class="nv">req.login = req.logIn = </span><span class="nf">(user, fn) -&gt;</span>
+    
+    <span class="k">new</span> <span class="nx">Promise</span> <span class="nf">(resolve, reject) =&gt;</span>
+    
+      <span class="nv">loginReq = req: </span><span class="k">this</span><span class="p">,</span> <span class="nv">user: </span><span class="nx">user</span>
+      
+      <span class="nx">userBeforeLoginMiddleware</span><span class="p">.</span><span class="nx">dispatch</span> <span class="nx">loginReq</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nf">(error) =&gt;</span>
+        <span class="k">return</span> <span class="nx">reject</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
+        
+        <span class="nx">login</span><span class="p">.</span><span class="nx">call</span> <span class="k">this</span><span class="p">,</span> <span class="nx">loginReq</span><span class="p">.</span><span class="nx">user</span><span class="p">,</span> <span class="nf">(error) -&gt;</span>
+          <span class="k">return</span> <span class="nx">reject</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
+          
+          <span class="nx">userAfterLoginMiddleware</span><span class="p">.</span><span class="nx">dispatch</span> <span class="nx">loginReq</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nf">(error) -&gt;</span>
+            <span class="k">return</span> <span class="nx">reject</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
+            
+            <span class="nx">resolve</span><span class="p">()</span></div></div></div></div></body></html>

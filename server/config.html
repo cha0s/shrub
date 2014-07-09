@@ -1,38 +1,38 @@
 <!DOCTYPE html><html lang="en"><head><title>server/config</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="server/config"><meta name="groc-project-path" content="server/config.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/server/config.coffee">server/config.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="configuration">Configuration</h1>
 
-<p>Manages server and package configuration.</p></div></div><div class="code"><div class="wrapper"><span class="nv">nconf = </span><span class="nx">require</span> <span class="s1">&#39;nconf&#39;</span>
-<span class="nv">fs = </span><span class="nx">require</span> <span class="s1">&#39;fs&#39;</span>
+<p>Manages server and package configuration.</p></div></div><div class="code"><div class="wrapper"><span class="nv">nconf = </span><span class="nx">require</span> <span class="s">&#39;nconf&#39;</span>
+<span class="nv">fs = </span><span class="nx">require</span> <span class="s">&#39;fs&#39;</span>
 
-<span class="nv">pkgman = </span><span class="nx">require</span> <span class="s1">&#39;pkgman&#39;</span>
+<span class="nv">pkgman = </span><span class="nx">require</span> <span class="s">&#39;pkgman&#39;</span>
 
-<span class="p">{</span><span class="nx">defaultLogger</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;logging&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="get">get</h3>
+<span class="p">{</span><span class="nx">defaultLogger</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">&#39;logging&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="get">get</h3>
 
 <p><em>Get a configuration value by key.</em></p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.get = </span><span class="nf">(key) -&gt;</span> <span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="nx">key</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="has">has</h3>
 
 <p><em>Check if a configuration value exists by key.</em></p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.has = </span><span class="nf">(key) -&gt;</span> <span class="nx">nconf</span><span class="p">.</span><span class="nx">has</span> <span class="nx">key</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="load">load</h3>
 
-<p><em>Load configuration from the settings file and package defaults.</em></p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.load = </span><span class="o">-&gt;</span>
+<p><em>Load configuration from the settings file and package defaults.</em></p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.load = </span><span class="nf">-&gt;</span>
 
   <span class="c1"># Ensure the configuration file exists.</span>
-  <span class="nx">unless</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">existsSync</span> <span class="nv">settingsFilename = </span><span class="s2">&quot;./config/settings.json&quot;</span>
-    <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span> <span class="s2">&quot;Settings file not found! You should copy config/settings.default.json to config/settings.json&quot;</span>
+  <span class="k">unless</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">existsSync</span> <span class="nv">settingsFilename = </span><span class="s">&quot;./config/settings.json&quot;</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span> <span class="s">&quot;Settings file not found! You should copy config/settings.default.json to config/settings.json&quot;</span>
   
   <span class="nx">nconf</span><span class="p">.</span><span class="nx">argv</span><span class="p">().</span><span class="nx">env</span><span class="p">().</span><span class="nx">file</span> <span class="nx">settingsFilename</span>
   
-  <span class="nx">nconf</span><span class="p">.</span><span class="nx">defaults</span> <span class="nv">path: </span><span class="s2">&quot;#{__dirname}/..&quot;</span>
+  <span class="nx">nconf</span><span class="p">.</span><span class="nx">defaults</span> <span class="nv">path: </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">__dirname</span><span class="si">}</span><span class="s">/..&quot;</span>
     
   <span class="c1"># Register packages.</span>
-  <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s2">&quot;Registering packages...&quot;</span>
+  <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s">&quot;Registering packages...&quot;</span>
   
-  <span class="nx">pkgman</span><span class="p">.</span><span class="nx">registerPackageList</span> <span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s1">&#39;packageList&#39;</span>
+  <span class="nx">pkgman</span><span class="p">.</span><span class="nx">registerPackageList</span> <span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;packageList&#39;</span>
   
-  <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s2">&quot;Packages registered.&quot;</span>
+  <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s">&quot;Packages registered.&quot;</span>
 
   <span class="nx">nconf</span><span class="p">.</span><span class="nx">defaults</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>packageSettings</code>.
 Invoked when the server application is loading configuration. Allows
-packages to define their own default settings.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">packageSettings: </span><span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s1">&#39;packageSettings&#39;</span>
+packages to define their own default settings.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">packageSettings: </span><span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s">&#39;packageSettings&#39;</span>
     
-    <span class="nv">path: </span><span class="s2">&quot;#{__dirname}/..&quot;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="set">set</h3>
+    <span class="nv">path: </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">__dirname</span><span class="si">}</span><span class="s">/..&quot;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="set">set</h3>
 
-<p><em>Set a configuration value by key.</em></p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.set = </span><span class="nf">(key, value) -&gt;</span> <span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span></div></div></div></div></body></html>
+<p><em>Set a configuration value by key.</em></p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.set = </span><span class="nf">(key, value) -&gt;</span> <span class="nx">nconf</span><span class="p">.</span><span class="nx">set</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span></div></div></div></div></body></html>

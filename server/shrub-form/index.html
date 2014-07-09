@@ -1,0 +1,44 @@
+<!DOCTYPE html><html lang="en"><head><title>server/shrub-form/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="server/shrub-form/index"><meta name="groc-project-path" content="server/shrub-form/index.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/server/shrub-form/index.coffee">server/shrub-form/index.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="form-processing">Form processing.</h1>
+
+<p>Handle form and method parsing, and submission of POST'ed data into the
+Angular sandbox.</p></div></div><div class="code"><div class="wrapper"><span class="nv">express = </span><span class="nx">require</span> <span class="s">&#39;express&#39;</span>
+
+<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookangularnavigationmiddleware">Implements hook <code>angularNavigationMiddleware</code></h2>
+
+<p>If the client made a POST request, inject that request into the Angular
+sandbox and let it do its thing.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;angularNavigationMiddleware&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+  
+    <span class="nv">label: </span><span class="s">&#39;Handle form submission&#39;</span>
+    <span class="nv">middleware: </span><span class="p">[</span>
+    
+      <span class="nf">(req, res, next) -&gt;</span>
+        
+        <span class="p">{</span><span class="nx">body</span><span class="p">,</span> <span class="nx">sandbox</span><span class="p">}</span> <span class="o">=</span> <span class="nx">req</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Make sure there's a formKey in the submission.
+<code>TODO</code>: CRSF check needed here.</p></div></div><div class="code"><div class="wrapper">        <span class="k">return</span> <span class="nx">next</span><span class="p">()</span> <span class="k">unless</span> <span class="nx">body</span><span class="p">.</span><span class="nx">formKey</span><span class="o">?</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Lookup the cached form.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">formService = </span><span class="kc">null</span>
+        
+        <span class="nx">sandbox</span><span class="p">.</span><span class="nx">inject</span> <span class="p">[</span>
+          <span class="s">&#39;form&#39;</span>
+          <span class="nf">(form) -&gt;</span> <span class="nv">formService = </span><span class="nx">form</span>
+        <span class="p">]</span>
+      
+        <span class="k">return</span> <span class="nx">next</span><span class="p">()</span> <span class="k">unless</span> <span class="p">(</span><span class="nv">form = </span><span class="nx">formService</span><span class="p">.</span><span class="nx">forms</span><span class="p">[</span><span class="nx">body</span><span class="p">.</span><span class="nx">formKey</span><span class="p">])</span><span class="o">?</span>
+          
+        <span class="p">{</span><span class="nx">element</span><span class="p">,</span> <span class="nx">scope</span><span class="p">}</span> <span class="o">=</span> <span class="nx">form</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Assign the scope values from the POST body. (Is this safe?)</p></div></div><div class="code"><div class="wrapper">        <span class="nv">form = </span><span class="nx">scope</span><span class="p">[</span><span class="nx">body</span><span class="p">.</span><span class="nx">formKey</span><span class="p">]</span>
+        <span class="k">for</span> <span class="nx">named</span> <span class="k">in</span> <span class="nx">element</span><span class="p">.</span><span class="nx">find</span> <span class="s">&#39;[name]&#39;</span>
+          <span class="k">continue</span> <span class="k">unless</span> <span class="p">(</span><span class="nv">value = </span><span class="nx">body</span><span class="p">[</span><span class="nx">named</span><span class="p">.</span><span class="nx">name</span><span class="p">])</span><span class="o">?</span>
+          <span class="nx">scope</span><span class="p">[</span><span class="nx">named</span><span class="p">.</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span>
+          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Submit the form into Angular.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">scope</span><span class="p">.</span><span class="nx">$apply</span> <span class="o">=&gt;</span> <span class="nx">form</span><span class="p">.</span><span class="nx">submit</span><span class="p">.</span><span class="nx">handler</span><span class="p">().</span><span class="nx">finally</span> <span class="o">=&gt;</span> <span class="nx">next</span><span class="p">()</span>
+  
+    <span class="p">]</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookhttpmiddleware">Implements hook <code>httpMiddleware</code></h2>
+
+<p>Parse POST submissions, and allow arbitrary method form attribute.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;httpMiddleware&#39;</span><span class="p">,</span> <span class="nf">(http) -&gt;</span>
+    
+    <span class="nv">label: </span><span class="s">&#39;Parse form submissions&#39;</span>
+    <span class="nv">middleware: </span><span class="p">[</span>
+      <span class="nx">express</span><span class="p">.</span><span class="nx">bodyParser</span><span class="p">()</span>
+      <span class="nx">express</span><span class="p">.</span><span class="nx">methodOverride</span><span class="p">()</span>
+    <span class="p">]</span></div></div></div></div></body></html>

@@ -1,125 +1,125 @@
 <!DOCTYPE html><html lang="en"><head><title>client/modules/jugglingdb-rest</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="client/modules/jugglingdb-rest"><meta name="groc-project-path" content="client/modules/jugglingdb-rest.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/client/modules/jugglingdb-rest.coffee">client/modules/jugglingdb-rest.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="jugglingdbangular-rest-adapter">JugglingDB/Angular REST adapter</h1>
 
-<p>Forwards all adapter methods through HTTP/rest using Angular.</p></div></div><div class="code"><div class="wrapper"><span class="nv">i8n = </span><span class="nx">require</span> <span class="s1">&#39;inflection&#39;</span>
+<p>Forwards all adapter methods through HTTP/rest using Angular.</p></div></div><div class="code"><div class="wrapper"><span class="nv">i8n = </span><span class="nx">require</span> <span class="s">&#39;inflection&#39;</span>
 
 <span class="k">class</span> <span class="nx">RestAdapter</span>
   
   <span class="nv">constructor: </span><span class="nf">(@schema, @$http) -&gt;</span>
   
   <span class="c1"># DRY.</span>
-  <span class="nv">promiseCallback = </span><span class="nf">(fn, promise) -&gt;</span> <span class="nx">promise</span><span class="p">.</span><span class="k">then</span><span class="p">(</span>
+  <span class="nv">promiseCallback = </span><span class="nf">(fn, promise) -&gt;</span> <span class="nx">promise</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span>
     <span class="nf">({data}) -&gt;</span> <span class="nx">fn</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">data</span>
     <span class="nf">({data}) -&gt;</span> <span class="nx">fn</span> <span class="k">new</span> <span class="nb">Error</span> <span class="nx">data</span><span class="p">.</span><span class="nx">message</span>
   <span class="p">)</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Translate a query object into a REST query.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">translateQuery = </span><span class="nf">(query) -&gt;</span>
     
     <span class="nv">params = </span><span class="p">[]</span>
-    <span class="nx">params</span><span class="p">.</span><span class="nx">push</span> <span class="s2">&quot;limit=#{query.limit}&quot;</span> <span class="k">if</span> <span class="nx">query</span><span class="p">.</span><span class="nx">limit</span><span class="o">?</span>
-    <span class="nx">params</span><span class="p">.</span><span class="nx">push</span> <span class="s2">&quot;order=#{query.order}&quot;</span> <span class="k">if</span> <span class="nx">query</span><span class="p">.</span><span class="nx">order</span><span class="o">?</span>
-    <span class="nx">params</span><span class="p">.</span><span class="nx">push</span> <span class="s2">&quot;skip=#{query.skip}&quot;</span> <span class="k">if</span> <span class="nx">query</span><span class="p">.</span><span class="nx">skip</span><span class="o">?</span>
+    <span class="nx">params</span><span class="p">.</span><span class="nx">push</span> <span class="s">&quot;limit=</span><span class="si">#{</span><span class="nx">query</span><span class="p">.</span><span class="nx">limit</span><span class="si">}</span><span class="s">&quot;</span> <span class="k">if</span> <span class="nx">query</span><span class="p">.</span><span class="nx">limit</span><span class="o">?</span>
+    <span class="nx">params</span><span class="p">.</span><span class="nx">push</span> <span class="s">&quot;order=</span><span class="si">#{</span><span class="nx">query</span><span class="p">.</span><span class="nx">order</span><span class="si">}</span><span class="s">&quot;</span> <span class="k">if</span> <span class="nx">query</span><span class="p">.</span><span class="nx">order</span><span class="o">?</span>
+    <span class="nx">params</span><span class="p">.</span><span class="nx">push</span> <span class="s">&quot;skip=</span><span class="si">#{</span><span class="nx">query</span><span class="p">.</span><span class="nx">skip</span><span class="si">}</span><span class="s">&quot;</span> <span class="k">if</span> <span class="nx">query</span><span class="p">.</span><span class="nx">skip</span><span class="o">?</span>
     <span class="k">if</span> <span class="nx">query</span><span class="p">.</span><span class="nx">where</span><span class="o">?</span> <span class="o">and</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">query</span><span class="p">.</span><span class="nx">where</span><span class="p">).</span><span class="nx">length</span>
       <span class="k">for</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span> <span class="k">of</span> <span class="nx">query</span><span class="p">.</span><span class="nx">where</span>
-        <span class="nx">params</span><span class="p">.</span><span class="nx">push</span> <span class="s2">&quot;where[#{key}]=#{value}&quot;</span>
-    <span class="nx">params</span><span class="p">.</span><span class="nx">join</span> <span class="s1">&#39;&amp;&#39;</span>
+        <span class="nx">params</span><span class="p">.</span><span class="nx">push</span> <span class="s">&quot;where[</span><span class="si">#{</span><span class="nx">key</span><span class="si">}</span><span class="s">]=</span><span class="si">#{</span><span class="nx">value</span><span class="si">}</span><span class="s">&quot;</span>
+    <span class="nx">params</span><span class="p">.</span><span class="nx">join</span> <span class="s">&#39;&amp;&#39;</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Connect/disconnect are nops, gotta invoke the callback though.</p></div></div><div class="code"><div class="wrapper">  <span class="p">[</span>
-    <span class="s1">&#39;connect&#39;</span><span class="p">,</span> <span class="s1">&#39;disconnect&#39;</span>
-  <span class="p">].</span><span class="nx">forEach</span> <span class="p">(</span><span class="nx">prop</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="err">@</span><span class="o">::</span><span class="p">[</span><span class="nx">prop</span><span class="p">]</span> <span class="o">=</span> <span class="nf">(fn) -&gt;</span> <span class="nx">fn</span><span class="p">()</span>
+    <span class="s">&#39;connect&#39;</span><span class="p">,</span> <span class="s">&#39;disconnect&#39;</span>
+  <span class="p">].</span><span class="nx">forEach</span> <span class="nf">(prop) =&gt;</span> <span class="nx">@</span><span class="o">::</span><span class="p">[</span><span class="nx">prop</span><span class="p">]</span> <span class="o">=</span> <span class="nf">(fn) -&gt;</span> <span class="nx">fn</span><span class="p">()</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>These adapter methods aren't necessary to run on the client. They are
 responsible for underlying schema management and only make sense when
 the adapter is actually touching the database e.g. server-side.</p></div></div><div class="code"><div class="wrapper">  <span class="p">[</span>
-    <span class="s1">&#39;define&#39;</span><span class="p">,</span> <span class="s1">&#39;defineForeignKey&#39;</span><span class="p">,</span> <span class="s1">&#39;possibleIndexes&#39;</span><span class="p">,</span> <span class="s1">&#39;updateIndexes&#39;</span>
+    <span class="s">&#39;define&#39;</span><span class="p">,</span> <span class="s">&#39;defineForeignKey&#39;</span><span class="p">,</span> <span class="s">&#39;possibleIndexes&#39;</span><span class="p">,</span> <span class="s">&#39;updateIndexes&#39;</span>
     
     <span class="c1"># and our ugly duckling.</span>
-    <span class="s1">&#39;transaction&#39;</span>
-  <span class="p">].</span><span class="nx">forEach</span> <span class="p">(</span><span class="nx">prop</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="err">@</span><span class="o">::</span><span class="p">[</span><span class="nx">prop</span><span class="p">]</span> <span class="o">=</span> <span class="o">-&gt;</span>
+    <span class="s">&#39;transaction&#39;</span>
+  <span class="p">].</span><span class="nx">forEach</span> <span class="nf">(prop) =&gt;</span> <span class="nx">@</span><span class="o">::</span><span class="p">[</span><span class="nx">prop</span><span class="p">]</span> <span class="o">=</span> <span class="nf">-&gt;</span>
   
   <span class="nv">all: </span><span class="nf">(model, query, fn) -&gt;</span>
     
     <span class="p">{</span><span class="nx">collection</span><span class="p">}</span> <span class="o">=</span> <span class="nx">@schema</span><span class="p">.</span><span class="nx">resourcePaths</span> <span class="nx">model</span>
     <span class="nv">query = </span><span class="nx">translateQuery</span> <span class="nx">query</span> <span class="o">?</span> <span class="p">{}</span>
     
-    <span class="nx">promiseCallback</span> <span class="nx">fn</span><span class="p">,</span> <span class="nx">@$http</span><span class="p">.</span><span class="nx">get</span> <span class="s2">&quot;#{</span>
-<span class="s2">      @schema.settings.apiRoot</span>
-<span class="s2">    }/#{</span>
-<span class="s2">      collection</span>
-<span class="s2">    }?#{</span>
-<span class="s2">      query</span>
-<span class="s2">    }&quot;</span>
+    <span class="nx">promiseCallback</span> <span class="nx">fn</span><span class="p">,</span> <span class="nx">@$http</span><span class="p">.</span><span class="nx">get</span> <span class="s">&quot;</span><span class="si">#{</span>
+      <span class="nx">@schema</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">apiRoot</span>
+    <span class="si">}</span><span class="s">/</span><span class="si">#{</span>
+      <span class="nx">collection</span>
+    <span class="si">}</span><span class="s">?</span><span class="si">#{</span>
+      <span class="nx">query</span>
+    <span class="si">}</span><span class="s">&quot;</span>
   
   <span class="nv">count: </span><span class="nf">(model, fn) -&gt;</span>
   
     <span class="p">{</span><span class="nx">collection</span><span class="p">}</span> <span class="o">=</span> <span class="nx">@schema</span><span class="p">.</span><span class="nx">resourcePaths</span> <span class="nx">model</span>
     
-    <span class="nx">promiseCallback</span> <span class="nx">fn</span><span class="p">,</span> <span class="nx">@$http</span><span class="p">.</span><span class="nx">get</span> <span class="s2">&quot;#{</span>
-<span class="s2">      @schema.settings.apiRoot</span>
-<span class="s2">    }/#{</span>
-<span class="s2">      collection</span>
-<span class="s2">    }/count&quot;</span>
+    <span class="nx">promiseCallback</span> <span class="nx">fn</span><span class="p">,</span> <span class="nx">@$http</span><span class="p">.</span><span class="nx">get</span> <span class="s">&quot;</span><span class="si">#{</span>
+      <span class="nx">@schema</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">apiRoot</span>
+    <span class="si">}</span><span class="s">/</span><span class="si">#{</span>
+      <span class="nx">collection</span>
+    <span class="si">}</span><span class="s">/count&quot;</span>
   
   <span class="nv">create: </span><span class="nf">(model, data, fn) -&gt;</span>
   
     <span class="p">{</span><span class="nx">collection</span><span class="p">}</span> <span class="o">=</span> <span class="nx">@schema</span><span class="p">.</span><span class="nx">resourcePaths</span> <span class="nx">model</span>
     
-    <span class="nx">promiseCallback</span> <span class="nx">fn</span><span class="p">,</span> <span class="nx">@$http</span><span class="p">.</span><span class="nx">post</span> <span class="s2">&quot;#{</span>
-<span class="s2">      @schema.settings.apiRoot</span>
-<span class="s2">    }/#{</span>
-<span class="s2">      collection</span>
-<span class="s2">    }&quot;</span><span class="p">,</span> <span class="nx">data</span>
+    <span class="nx">promiseCallback</span> <span class="nx">fn</span><span class="p">,</span> <span class="nx">@$http</span><span class="p">.</span><span class="nx">post</span> <span class="s">&quot;</span><span class="si">#{</span>
+      <span class="nx">@schema</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">apiRoot</span>
+    <span class="si">}</span><span class="s">/</span><span class="si">#{</span>
+      <span class="nx">collection</span>
+    <span class="si">}</span><span class="s">&quot;</span><span class="p">,</span> <span class="nx">data</span>
   
   <span class="nv">destroy: </span><span class="nf">(model, id, fn) -&gt;</span>
     
     <span class="p">{</span><span class="nx">resource</span><span class="p">}</span> <span class="o">=</span> <span class="nx">@schema</span><span class="p">.</span><span class="nx">resourcePaths</span> <span class="nx">model</span>
     
-    <span class="nx">promiseCallback</span> <span class="nx">fn</span><span class="p">,</span> <span class="nx">@$http</span><span class="p">.</span><span class="k">delete</span> <span class="s2">&quot;#{</span>
-<span class="s2">      @schema.settings.apiRoot</span>
-<span class="s2">    }/#{</span>
-<span class="s2">      resource</span>
-<span class="s2">    }/#{</span>
-<span class="s2">      id</span>
-<span class="s2">    }&quot;</span>
+    <span class="nx">promiseCallback</span> <span class="nx">fn</span><span class="p">,</span> <span class="nx">@$http</span><span class="p">.</span><span class="nx">delete</span> <span class="s">&quot;</span><span class="si">#{</span>
+      <span class="nx">@schema</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">apiRoot</span>
+    <span class="si">}</span><span class="s">/</span><span class="si">#{</span>
+      <span class="nx">resource</span>
+    <span class="si">}</span><span class="s">/</span><span class="si">#{</span>
+      <span class="nx">id</span>
+    <span class="si">}</span><span class="s">&quot;</span>
   
   <span class="nv">destroyAll: </span><span class="nf">(model, fn) -&gt;</span>
   
     <span class="p">{</span><span class="nx">collection</span><span class="p">}</span> <span class="o">=</span> <span class="nx">@schema</span><span class="p">.</span><span class="nx">resourcePaths</span> <span class="nx">model</span>
     
-    <span class="nx">promiseCallback</span> <span class="nx">fn</span><span class="p">,</span> <span class="nx">@$http</span><span class="p">.</span><span class="k">delete</span> <span class="s2">&quot;#{</span>
-<span class="s2">      @schema.settings.apiRoot</span>
-<span class="s2">    }/#{</span>
-<span class="s2">      collection</span>
-<span class="s2">    }&quot;</span>
+    <span class="nx">promiseCallback</span> <span class="nx">fn</span><span class="p">,</span> <span class="nx">@$http</span><span class="p">.</span><span class="nx">delete</span> <span class="s">&quot;</span><span class="si">#{</span>
+      <span class="nx">@schema</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">apiRoot</span>
+    <span class="si">}</span><span class="s">/</span><span class="si">#{</span>
+      <span class="nx">collection</span>
+    <span class="si">}</span><span class="s">&quot;</span>
   
   <span class="nv">exists: </span><span class="nf">(model, id, fn) -&gt;</span>
   
     <span class="p">{</span><span class="nx">resource</span><span class="p">}</span> <span class="o">=</span> <span class="nx">@schema</span><span class="p">.</span><span class="nx">resourcePaths</span> <span class="nx">model</span>
     
-    <span class="nx">promiseCallback</span> <span class="nx">fn</span><span class="p">,</span> <span class="nx">@$http</span><span class="p">.</span><span class="nx">get</span> <span class="s2">&quot;#{</span>
-<span class="s2">      @schema.settings.apiRoot</span>
-<span class="s2">    }/#{</span>
-<span class="s2">      resource</span>
-<span class="s2">    }/#{</span>
-<span class="s2">      id</span>
-<span class="s2">    }/exists&quot;</span>
+    <span class="nx">promiseCallback</span> <span class="nx">fn</span><span class="p">,</span> <span class="nx">@$http</span><span class="p">.</span><span class="nx">get</span> <span class="s">&quot;</span><span class="si">#{</span>
+      <span class="nx">@schema</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">apiRoot</span>
+    <span class="si">}</span><span class="s">/</span><span class="si">#{</span>
+      <span class="nx">resource</span>
+    <span class="si">}</span><span class="s">/</span><span class="si">#{</span>
+      <span class="nx">id</span>
+    <span class="si">}</span><span class="s">/exists&quot;</span>
   
-  <span class="nv">find: </span><span class="o">-&gt;</span>
+  <span class="nv">find: </span><span class="nf">-&gt;</span>
   
   <span class="nv">save: </span><span class="nf">(model, data, fn) -&gt;</span>
   
     <span class="p">{</span><span class="nx">id</span><span class="p">}</span> <span class="o">=</span> <span class="nx">data</span>
     <span class="p">{</span><span class="nx">resource</span><span class="p">}</span> <span class="o">=</span> <span class="nx">@schema</span><span class="p">.</span><span class="nx">resourcePaths</span> <span class="nx">model</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Create if there's no ID.</p></div></div><div class="code"><div class="wrapper">    <span class="k">return</span> <span class="nx">@create</span> <span class="nx">model</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">fn</span> <span class="nx">unless</span> <span class="nx">id</span><span class="o">?</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Otherwise, update.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">promiseCallback</span> <span class="nx">fn</span><span class="p">,</span> <span class="nx">@$http</span><span class="p">.</span><span class="nx">put</span> <span class="s2">&quot;#{</span>
-<span class="s2">      @schema.settings.apiRoot</span>
-<span class="s2">    }/#{</span>
-<span class="s2">      resource</span>
-<span class="s2">    }/#{</span>
-<span class="s2">      id</span>
-<span class="s2">    }&quot;</span><span class="p">,</span> <span class="nx">data</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Create if there's no ID.</p></div></div><div class="code"><div class="wrapper">    <span class="k">return</span> <span class="nx">@create</span> <span class="nx">model</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">fn</span> <span class="k">unless</span> <span class="nx">id</span><span class="o">?</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Otherwise, update.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">promiseCallback</span> <span class="nx">fn</span><span class="p">,</span> <span class="nx">@$http</span><span class="p">.</span><span class="nx">put</span> <span class="s">&quot;</span><span class="si">#{</span>
+      <span class="nx">@schema</span><span class="p">.</span><span class="nx">settings</span><span class="p">.</span><span class="nx">apiRoot</span>
+    <span class="si">}</span><span class="s">/</span><span class="si">#{</span>
+      <span class="nx">resource</span>
+    <span class="si">}</span><span class="s">/</span><span class="si">#{</span>
+      <span class="nx">id</span>
+    <span class="si">}</span><span class="s">&quot;</span><span class="p">,</span> <span class="nx">data</span>
   
   <span class="nv">updateAttributes: </span><span class="nf">(model, id, data, fn) -&gt;</span>
     <span class="nv">data.id = </span><span class="nx">id</span>
     <span class="nx">@save</span> <span class="nx">model</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">fn</span>
   
-  <span class="nv">updateOrCreate: </span><span class="err">@</span><span class="o">::</span><span class="nx">save</span>
+  <span class="nv">updateOrCreate: </span><span class="nx">@</span><span class="o">::</span><span class="nx">save</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Initialization method; instantiate the RestAdapter.</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.initialize = </span><span class="nf">(schema) -&gt;</span>
   <span class="p">{</span><span class="nx">$http</span><span class="p">,</span> <span class="nx">inflection</span><span class="p">}</span> <span class="o">=</span> <span class="nx">schema</span><span class="p">.</span><span class="nx">settings</span>
   <span class="nv">schema.adapter = </span><span class="k">new</span> <span class="nx">RestAdapter</span> <span class="nx">schema</span><span class="p">,</span> <span class="nx">$http</span><span class="p">,</span> <span class="nx">inflection</span>

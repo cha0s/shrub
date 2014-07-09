@@ -1,9 +1,9 @@
-<!DOCTYPE html><html lang="en"><head><title>client/modules/middleware</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="client/modules/middleware"><meta name="groc-project-path" content="client/modules/middleware.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/client/modules/middleware.coffee">client/modules/middleware.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="middleware">Middleware</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nv">i8n = </span><span class="nx">require</span> <span class="s1">&#39;inflection&#39;</span>
+<!DOCTYPE html><html lang="en"><head><title>client/modules/middleware</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="client/modules/middleware"><meta name="groc-project-path" content="client/modules/middleware.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/client/modules/middleware.coffee">client/modules/middleware.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="middleware">Middleware</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nv">i8n = </span><span class="nx">require</span> <span class="s">&#39;inflection&#39;</span>
 
-<span class="nv">config = </span><span class="nx">require</span> <span class="s1">&#39;config&#39;</span>
-<span class="nv">pkgman = </span><span class="nx">require</span> <span class="s1">&#39;pkgman&#39;</span>
+<span class="nv">config = </span><span class="nx">require</span> <span class="s">&#39;config&#39;</span>
+<span class="nv">pkgman = </span><span class="nx">require</span> <span class="s">&#39;pkgman&#39;</span>
 
-<span class="p">{</span><span class="nx">defaultLogger</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;logging&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="middleware">Middleware</h2>
+<span class="p">{</span><span class="nx">defaultLogger</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">&#39;logging&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="middleware">Middleware</h2>
 
 <p>Implements a middleware stack. middleware functions can be added to the
 stack with <code>use</code>. Calling <code>dispatch</code> invokes the middleware functions
@@ -20,7 +20,7 @@ called if a previous middleware threw or passed an error. Conversely,
 non-error-handling middleware are skipped if a previous error occurred.</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.Middleware = </span><span class="k">class</span> <span class="nx">Middleware</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="constructor"><em>constructor</em></h2>
 
-<p><em>Create a middleware stack.</em></p></div></div><div class="code"><div class="wrapper">  <span class="nv">constructor: </span><span class="o">-&gt;</span>
+<p><em>Create a middleware stack.</em></p></div></div><div class="code"><div class="wrapper">  <span class="nv">constructor: </span><span class="nf">-&gt;</span>
     
     <span class="vi">@_middleware = </span><span class="p">[]</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="use">::use</h2>
@@ -44,7 +44,7 @@ argument. </p></li>
     
     <span class="nv">index = </span><span class="mi">0</span>
     
-    <span class="nv">invoke = </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span>
+    <span class="nv">invoke = </span><span class="nf">(error) =&gt;</span>
       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Call <code>fn</code> with any error if we're done.</p></div></div><div class="code"><div class="wrapper">      <span class="k">return</span> <span class="nx">fn</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">index</span> <span class="o">is</span> <span class="nx">@_middleware</span><span class="p">.</span><span class="nx">length</span>
       
       <span class="nv">current = </span><span class="nx">@_middleware</span><span class="p">[</span><span class="nx">index</span><span class="o">++</span><span class="p">]</span>
@@ -72,19 +72,20 @@ the error and pass it along.</p></div></div><div class="code"><div class="wrappe
 
 <p>Create a middleware stack from the results of a hook and path configuration.</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.fromHook = </span><span class="nf">(hook, paths, args...) -&gt;</span>
   
-  <span class="nv">middleware = </span><span class="k">new</span> <span class="nx">Middleware</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke the hook and <code>use</code> the middleware in the paths configuration
+  <span class="nv">middleware = </span><span class="k">new</span> <span class="nx">Middleware</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke the hook and <code>use</code> the middleware in the paths configuration
 order.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">args</span><span class="p">.</span><span class="nx">unshift</span> <span class="nx">hook</span>
   <span class="nv">hookResults = </span><span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="nx">args</span><span class="p">...</span>
   <span class="k">for</span> <span class="nx">path</span> <span class="k">in</span> <span class="nx">paths</span>
-    <span class="k">continue</span> <span class="nx">unless</span> <span class="p">(</span><span class="nv">spec = </span><span class="nx">hookResults</span><span class="p">[</span><span class="nx">path</span><span class="p">])</span><span class="o">?</span>
+    <span class="k">continue</span> <span class="k">unless</span> <span class="p">(</span><span class="nv">spec = </span><span class="nx">hookResults</span><span class="p">[</span><span class="nx">path</span><span class="p">])</span><span class="o">?</span>
     
-    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="nx">spec</span><span class="p">.</span><span class="nx">label</span>
+    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s">&quot;- - </span><span class="si">#{</span><span class="nx">spec</span><span class="p">.</span><span class="nx">label</span><span class="si">}</span><span class="s">&quot;</span>
     
     <span class="nx">middleware</span><span class="p">.</span><span class="nx">use</span> <span class="nx">_</span> <span class="k">for</span> <span class="nx">_</span> <span class="k">in</span> <span class="nx">spec</span><span class="p">.</span><span class="nx">middleware</span> <span class="o">?</span> <span class="p">[]</span>
   
   <span class="nx">middleware</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="fromshortname">fromShortName</h2>
 
-<p>Create a middleware stack from a short name. e.g. "user before login".</p>
+<p>Create a middleware stack from a short name. e.g. "example thing hook".</p>
 
 <p>The short name is converted into log messages, a hook name, and configuration
 key. In the case where we passed in "user before login", this would look
@@ -93,25 +94,26 @@ like:</p>
 <p>defaultLogger.info "Loading user before login middleware..."</p>
 
 <p>middleware = exports.fromHook(
-    "userBeforeLoginMiddleware"
-    config.get "packageSettings:user:beforeLoginMiddleware"
+    "exampleThingHook"
+    config.get "packageSettings:example:thingHook"
 )</p>
 
-<p>defaultLogger.info "User before login middleware loaded."</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.fromShortName = </span><span class="nf">(shortName) -&gt;</span>
+<p>defaultLogger.info "User before login middleware loaded."</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.fromShortName = </span><span class="nf">(shortName, packageName) -&gt;</span>
 
-  <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s2">&quot;Loading #{shortName} middleware...&quot;</span>
+  <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s">&quot;- Loading </span><span class="si">#{</span><span class="nx">shortName</span><span class="si">}</span><span class="s"> middleware...&quot;</span>
   
-  <span class="p">[</span><span class="nx">packageName</span><span class="p">,</span> <span class="nx">keyParts</span><span class="p">...]</span> <span class="o">=</span> <span class="nx">shortName</span><span class="p">.</span><span class="nx">split</span> <span class="s1">&#39; &#39;</span>
-  <span class="nv">key = </span><span class="nx">keyParts</span><span class="p">.</span><span class="nx">join</span> <span class="s1">&#39;_&#39;</span>
+  <span class="p">[</span><span class="nx">firstPart</span><span class="p">,</span> <span class="nx">keyParts</span><span class="p">...]</span> <span class="o">=</span> <span class="nx">shortName</span><span class="p">.</span><span class="nx">split</span> <span class="s">&#39; &#39;</span>
+  <span class="nx">packageName</span> <span class="o">?=</span> <span class="nx">firstPart</span>
+  <span class="nv">key = </span><span class="nx">keyParts</span><span class="p">.</span><span class="nx">join</span> <span class="s">&#39;_&#39;</span>
   
   <span class="nv">middleware = </span><span class="nx">exports</span><span class="p">.</span><span class="nx">fromHook</span><span class="p">(</span>
-    <span class="s2">&quot;#{packageName}#{i8n.camelize key}Middleware&quot;</span>
+    <span class="s">&quot;</span><span class="si">#{</span><span class="nx">firstPart</span><span class="si">}#{</span><span class="nx">i8n</span><span class="p">.</span><span class="nx">camelize</span> <span class="nx">key</span><span class="si">}</span><span class="s">Middleware&quot;</span>
     
-    <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s2">&quot;packageSettings:#{packageName}:#{</span>
-<span class="s2">      i8n.camelize key, true</span>
-<span class="s2">    }Middleware&quot;</span>
+    <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&quot;packageSettings:</span><span class="si">#{</span><span class="nx">packageName</span><span class="si">}</span><span class="s">:</span><span class="si">#{</span>
+      <span class="nx">i8n</span><span class="p">.</span><span class="nx">camelize</span> <span class="nx">key</span><span class="p">,</span> <span class="kc">true</span>
+    <span class="si">}</span><span class="s">Middleware&quot;</span>
   <span class="p">)</span>
   
-  <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s2">&quot;#{i8n.capitalize shortName} middleware loaded.&quot;</span>
+  <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s">&quot;- </span><span class="si">#{</span><span class="nx">i8n</span><span class="p">.</span><span class="nx">capitalize</span> <span class="nx">shortName</span><span class="si">}</span><span class="s"> middleware loaded.&quot;</span>
   
   <span class="nx">middleware</span></div></div></div></div></body></html>

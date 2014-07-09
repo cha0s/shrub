@@ -5,10 +5,10 @@
   
   <span class="nv">checkModuleName = </span><span class="nf">(name) -&gt;</span>
     <span class="k">return</span> <span class="nx">name</span> <span class="k">if</span> <span class="nx">requires_</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span><span class="o">?</span>
-    <span class="k">return</span> <span class="s2">&quot;#{name}/index&quot;</span> <span class="k">if</span> <span class="nx">requires_</span><span class="p">[</span><span class="s2">&quot;#{name}/index&quot;</span><span class="p">]</span><span class="o">?</span>
+    <span class="k">return</span> <span class="s">&quot;</span><span class="si">#{</span><span class="nx">name</span><span class="si">}</span><span class="s">/index&quot;</span> <span class="k">if</span> <span class="nx">requires_</span><span class="p">[</span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">name</span><span class="si">}</span><span class="s">/index&quot;</span><span class="p">]</span><span class="o">?</span>
     
   <span class="k">return</span> <span class="nx">checked</span> <span class="k">if</span> <span class="p">(</span><span class="nv">checked = </span><span class="nx">checkModuleName</span> <span class="nx">name</span><span class="p">)</span><span class="o">?</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Resolve relative paths.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">path = </span><span class="nx">_require</span> <span class="s1">&#39;path&#39;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Resolve relative paths.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">path = </span><span class="nx">_require</span> <span class="s">&#39;path&#39;</span>
   <span class="k">return</span> <span class="nx">checked</span> <span class="k">if</span> <span class="p">(</span><span class="nv">checked = </span><span class="nx">checkModuleName</span><span class="p">(</span>
     <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span>
       <span class="nx">path</span><span class="p">.</span><span class="nx">dirname</span> <span class="nx">parentFilename</span>
@@ -16,20 +16,20 @@
     <span class="p">).</span><span class="nx">substr</span> <span class="mi">1</span>
   <span class="p">))</span><span class="o">?</span>
   
-  <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span> <span class="s2">&quot;Cannot find module &#39;#{name}&#39;&quot;</span>
+  <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span> <span class="s">&quot;Cannot find module &#39;</span><span class="si">#{</span><span class="nx">name</span><span class="si">}</span><span class="s">&#39;&quot;</span>
 
 <span class="nv">_require = </span><span class="nf">(name, parentFilename) -&gt;</span>
   
   <span class="nv">name = </span><span class="nx">_resolveModuleName</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">parentFilename</span>
   
-  <span class="nx">unless</span> <span class="nx">requires_</span><span class="p">[</span><span class="nx">name</span><span class="p">].</span><span class="nx">module</span><span class="o">?</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Extract the module function.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">f = </span><span class="nx">requires_</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span>
+  <span class="k">unless</span> <span class="nx">requires_</span><span class="p">[</span><span class="nx">name</span><span class="p">].</span><span class="nx">module</span><span class="o">?</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Extract the module function.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">f = </span><span class="nx">requires_</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Set up module and exports. Assign it to the requires_ object, to
 allow require cycles.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">exports = </span><span class="p">{}</span>
     <span class="nv">module = exports: </span><span class="nx">exports</span>
     <span class="nx">requires_</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="nv">module: </span><span class="nx">module</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Need to check for dirname, since when 'path' is required the first
-time, it won't be available.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">path = </span><span class="nx">_require</span> <span class="s1">&#39;path&#39;</span>
-    <span class="nv">__dirname = </span><span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nx">dirname</span><span class="o">?</span> <span class="nx">name</span><span class="p">)</span> <span class="o">?</span> <span class="s1">&#39;&#39;</span>
+time, it won't be available.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">path = </span><span class="nx">_require</span> <span class="s">&#39;path&#39;</span>
+    <span class="nv">__dirname = </span><span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nx">dirname</span><span class="o">?</span> <span class="nx">name</span><span class="p">)</span> <span class="o">?</span> <span class="s">&#39;&#39;</span>
     <span class="nv">__filename = </span><span class="nx">name</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Execute the module body.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">f</span><span class="p">(</span>
       <span class="nx">module</span><span class="p">,</span> <span class="nx">exports</span>
@@ -39,6 +39,6 @@ time, it won't be available.</p></div></div><div class="code"><div class="wrappe
     
   <span class="nx">requires_</span><span class="p">[</span><span class="nx">name</span><span class="p">].</span><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span>
 
-<span class="nv">require = </span><span class="nf">(name) -&gt;</span> <span class="nx">_require</span> <span class="nx">name</span><span class="p">,</span> <span class="s1">&#39;&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Implement an Angular module to provide require functionality.</p></div></div><div class="code"><div class="wrapper"><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;shrub.require&#39;</span><span class="p">,</span> <span class="p">[]).</span><span class="nx">provider</span> <span class="s1">&#39;require&#39;</span><span class="p">,</span> <span class="o">-&gt;</span>
+<span class="nv">require = </span><span class="nf">(name) -&gt;</span> <span class="nx">_require</span> <span class="nx">name</span><span class="p">,</span> <span class="s">&#39;&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Implement an Angular module to provide require functionality.</p></div></div><div class="code"><div class="wrapper"><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s">&#39;shrub.require&#39;</span><span class="p">,</span> <span class="p">[]).</span><span class="nx">provider</span> <span class="s">&#39;shrub-require&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
   <span class="nv">require: </span><span class="nx">require</span>
-  <span class="nv">$get: </span><span class="o">-&gt;</span> <span class="nx">require</span></div></div></div></div></body></html>
+  <span class="nv">$get: </span><span class="nf">-&gt;</span> <span class="nx">require</span></div></div></div></div></body></html>

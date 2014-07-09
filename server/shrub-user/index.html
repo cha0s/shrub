@@ -1,0 +1,132 @@
+<!DOCTYPE html><html lang="en"><head><title>server/shrub-user/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="server/shrub-user/index"><meta name="groc-project-path" content="server/shrub-user/index.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/server/shrub-user/index.coffee">server/shrub-user/index.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="user">User</h1>
+
+<p>User oprations. </p></div></div><div class="code"><div class="wrapper"><span class="nv">passport = </span><span class="nx">require</span> <span class="s">&#39;passport&#39;</span>
+<span class="nv">Promise = </span><span class="nx">require</span> <span class="s">&#39;bluebird&#39;</span>
+
+<span class="nv">crypto = </span><span class="nx">require</span> <span class="s">&#39;server/crypto&#39;</span>
+<span class="nv">schema = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;shrub-schema&#39;</span><span class="p">).</span><span class="nx">schema</span><span class="p">()</span>
+
+<span class="nv">clientModule = </span><span class="nx">require</span> <span class="s">&#39;client/modules/shrub-user&#39;</span>
+
+<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookconfig">Implements hook <code>config</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;config&#39;</span><span class="p">,</span> <span class="nf">(req) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Send a redacted version of the request user.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">redactFor</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">).</span><span class="nx">then</span> <span class="nf">(redacted) -&gt;</span> <span class="nv">user: </span><span class="nx">redacted</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookendpointfinished">Implements hook <code>endpointFinished</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;endpointFinished&#39;</span><span class="p">,</span> <span class="nf">(routeReq, result, req) -&gt;</span>
+    <span class="k">return</span> <span class="k">unless</span> <span class="nx">routeReq</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span><span class="o">?</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Propagate changes back up to the original request.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">req.user = </span><span class="nx">routeReq</span><span class="p">.</span><span class="nx">user</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookfingerprint">Implements hook <code>fingerprint</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;fingerprint&#39;</span><span class="p">,</span> <span class="nf">(req) -&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>User (ID).</p></div></div><div class="code"><div class="wrapper">    <span class="nv">user: </span><span class="k">if</span> <span class="nx">req</span><span class="o">?</span><span class="p">.</span><span class="nx">user</span><span class="o">?</span><span class="p">.</span><span class="nx">id</span><span class="o">?</span> <span class="k">then</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookhttpmiddleware">Implements hook <code>httpMiddleware</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;httpMiddleware&#39;</span><span class="p">,</span> <span class="nf">(http) -&gt;</span>
+    
+    <span class="p">{</span><span class="nx">User</span><span class="p">}</span> <span class="o">=</span> <span class="nx">schema</span><span class="p">.</span><span class="nx">models</span>
+    
+    <span class="nv">label: </span><span class="s">&#39;Load user using passport&#39;</span>
+    <span class="nv">middleware: </span><span class="p">[</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Passport middleware.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">passport</span><span class="p">.</span><span class="nx">initialize</span><span class="p">()</span>
+      <span class="nx">passport</span><span class="p">.</span><span class="nx">session</span><span class="p">()</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Set the user into the request.</p></div></div><div class="code"><div class="wrapper">      <span class="nf">(req, res, next) -&gt;</span>
+        
+        <span class="nv">req.user = </span><span class="k">new</span> <span class="nx">User</span><span class="p">()</span> <span class="k">unless</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="o">?</span>
+        
+        <span class="nx">next</span><span class="p">()</span>
+      
+    <span class="p">]</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookmodels">Implements hook <code>models</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;models&#39;</span><span class="p">,</span> <span class="nf">(schema) -&gt;</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke the client hook implementation.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">clientModule</span><span class="p">.</span><span class="nx">models</span> <span class="nx">schema</span>
+    
+    <span class="nv">User = </span><span class="nx">schema</span><span class="p">.</span><span class="nx">models</span><span class="p">[</span><span class="s">&#39;User&#39;</span><span class="p">]</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Extend the redaction function with server-specific information.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">User::redactFor = </span><span class="nf">(user) -&gt;</span>
+      
+      <span class="nx">Promise</span><span class="p">.</span><span class="nx">cast</span><span class="p">(</span>
+        <span class="nv">name: </span><span class="nx">@name</span>
+        <span class="nv">id: </span><span class="nx">@id</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Decrypt the e-mail if redacting for the same user.</p></div></div><div class="code"><div class="wrapper">      <span class="p">).</span><span class="nx">bind</span><span class="p">({}).</span><span class="nx">then</span><span class="p">(</span><span class="nf">(@redacted) -&gt;</span>
+        <span class="k">return</span> <span class="kc">null</span> <span class="k">unless</span> <span class="nx">@redacted</span><span class="p">.</span><span class="nx">email</span><span class="o">?</span>
+        <span class="k">return</span> <span class="nx">@redacted</span><span class="p">.</span><span class="nx">email</span> <span class="k">unless</span> <span class="nx">user</span><span class="p">.</span><span class="nx">id</span><span class="o">?</span>
+        <span class="k">return</span> <span class="nx">@redacted</span><span class="p">.</span><span class="nx">email</span> <span class="k">if</span> <span class="nx">user</span><span class="p">.</span><span class="nx">id</span> <span class="o">isnt</span> <span class="nx">@redacted</span><span class="p">.</span><span class="nx">id</span>
+        
+        <span class="nx">crypto</span><span class="p">.</span><span class="nx">decrypt</span> <span class="nx">@redacted</span><span class="p">.</span><span class="nx">email</span>
+      
+      <span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">(email) -&gt;</span> <span class="vi">@redacted.email = </span><span class="nx">email</span>
+      
+      <span class="p">).</span><span class="nx">then</span> <span class="nf">-&gt;</span> <span class="nx">@redacted</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookmodelsalter">Implements hook <code>modelsAlter</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;modelsAlter&#39;</span><span class="p">,</span> <span class="nx">clientModule</span><span class="p">.</span><span class="nx">modelsAlter</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookpackagesettings">Implements hook <code>packageSettings</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;packageSettings&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+    
+    <span class="nv">beforeLoginMiddleware: </span><span class="p">[]</span>
+    
+    <span class="nv">afterLoginMiddleware: </span><span class="p">[]</span>
+    
+    <span class="nv">beforeLogoutMiddleware: </span><span class="p">[</span>
+      <span class="s">&#39;shrub-user&#39;</span>
+    <span class="p">]</span>
+  
+    <span class="nv">afterLogoutMiddleware: </span><span class="p">[</span>
+      <span class="s">&#39;shrub-user&#39;</span>
+    <span class="p">]</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshooksocketauthorizationmiddleware">Implements hook <code>socketAuthorizationMiddleware</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;socketAuthorizationMiddleware&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+    
+    <span class="p">{</span><span class="nx">User</span><span class="p">}</span> <span class="o">=</span> <span class="nx">schema</span><span class="p">.</span><span class="nx">models</span>
+    
+    <span class="nv">label: </span><span class="s">&#39;Load user using passport&#39;</span>
+    <span class="nv">middleware: </span><span class="p">[</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Passport middleware.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">passport</span><span class="p">.</span><span class="nx">initialize</span><span class="p">()</span>
+      <span class="nx">passport</span><span class="p">.</span><span class="nx">session</span><span class="p">()</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Set the user into the request.</p></div></div><div class="code"><div class="wrapper">      <span class="nf">(req, res, next) -&gt;</span>
+        
+        <span class="nv">req.user = </span><span class="k">new</span> <span class="nx">User</span><span class="p">()</span> <span class="k">unless</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="o">?</span>
+        
+        <span class="nx">next</span><span class="p">()</span>
+    
+    <span class="p">]</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshooksocketconnectionmiddleware">Implements hook <code>socketConnectionMiddleware</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;socketConnectionMiddleware&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+    
+    <span class="p">{</span><span class="nx">User</span><span class="p">}</span> <span class="o">=</span> <span class="nx">schema</span><span class="p">.</span><span class="nx">models</span>
+    
+    <span class="nv">label: </span><span class="s">&#39;Join channel for user&#39;</span>
+    <span class="nv">middleware: </span><span class="p">[</span>
+    
+      <span class="nf">(req, res, next) -&gt;</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Join a channel for the username.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="p">.</span><span class="nx">join</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">name</span> <span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span><span class="o">?</span>
+        
+        <span class="nx">next</span><span class="p">()</span>
+    
+    <span class="p">]</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookuserbeforelogoutmiddleware">Implements hook <code>userBeforeLogoutMiddleware</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;userBeforeLogoutMiddleware&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+    
+    <span class="nv">label: </span><span class="s">&#39;Tell client to log out, and leave the user channel&#39;</span>
+    <span class="nv">middleware: </span><span class="p">[</span>
+    
+      <span class="nf">({req, user}, res, next) -&gt;</span>
+        
+        <span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="o">?</span>
+          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Tell client to log out.</p></div></div><div class="code"><div class="wrapper">          <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="p">.</span><span class="nx">emit</span> <span class="s">&#39;user.logout&#39;</span>
+          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Leave the user channel.</p></div></div><div class="code"><div class="wrapper">          <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="p">.</span><span class="nx">leave</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">name</span>
+        
+        <span class="nx">next</span><span class="p">()</span>
+        
+    <span class="p">]</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookuserafterlogoutmiddleware">Implements hook <code>userAfterLogoutMiddleware</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;userAfterLogoutMiddleware&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+    
+    <span class="p">{</span><span class="nx">User</span><span class="p">}</span> <span class="o">=</span> <span class="nx">schema</span><span class="p">.</span><span class="nx">models</span>
+        
+    <span class="nv">label: </span><span class="s">&#39;Instantiate anonymous user&#39;</span>
+    <span class="nv">middleware: </span><span class="p">[</span>
+    
+      <span class="nf">({req, user}, res, next) -&gt;</span>
+        
+        <span class="nv">req.user = </span><span class="k">new</span> <span class="nx">User</span><span class="p">()</span>
+        
+        <span class="nx">next</span><span class="p">()</span>
+        
+    <span class="p">]</span>
+  
+  <span class="nx">registrar</span><span class="p">.</span><span class="nx">recur</span> <span class="p">[</span>
+    <span class="s">&#39;forgot&#39;</span><span class="p">,</span> <span class="s">&#39;login&#39;</span><span class="p">,</span> <span class="s">&#39;logout&#39;</span><span class="p">,</span> <span class="s">&#39;register&#39;</span><span class="p">,</span> <span class="s">&#39;reset&#39;</span>
+  <span class="p">]</span> </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="loadbyname">loadByName</h2>
+
+<p><em>Load a user by name.</em></p>
+
+<p>(string) <code>name</code> - The name of the user to load.</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.loadByName = </span><span class="nf">(name) -&gt;</span>
+  
+  <span class="p">{</span><span class="nx">User</span><span class="p">}</span> <span class="o">=</span> <span class="nx">schema</span><span class="p">.</span><span class="nx">models</span>
+  
+  <span class="nx">User</span><span class="p">.</span><span class="nx">findOne</span> <span class="nv">where: iname: </span><span class="nx">name</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span></div></div></div></div></body></html>

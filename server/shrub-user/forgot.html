@@ -1,0 +1,84 @@
+<!DOCTYPE html><html lang="en"><head><title>server/shrub-user/forgot</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="server/shrub-user/forgot"><meta name="groc-project-path" content="server/shrub-user/forgot.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/server/shrub-user/forgot.coffee">server/shrub-user/forgot.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="user-forgot-password">User - forgot password</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nv">Promise = </span><span class="nx">require</span> <span class="s">&#39;bluebird&#39;</span>
+
+<span class="nv">crypto = </span><span class="nx">require</span> <span class="s">&#39;server/crypto&#39;</span>
+<span class="nv">config = </span><span class="nx">require</span> <span class="s">&#39;config&#39;</span>
+<span class="nv">nodemailer = </span><span class="nx">require</span> <span class="s">&#39;shrub-nodemailer&#39;</span>
+
+<span class="p">{</span><span class="nx">threshold</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">&#39;limits&#39;</span>
+<span class="nv">schema = </span><span class="nx">require</span> <span class="s">&#39;shrub-schema&#39;</span>
+
+<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookendpoint">Implements hook <code>endpoint</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;endpoint&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+    
+    <span class="nv">limiter: threshold: </span><span class="nx">threshold</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nx">every</span><span class="p">(</span><span class="mi">30</span><span class="p">).</span><span class="nx">seconds</span><span class="p">()</span>
+  
+    <span class="nv">receiver: </span><span class="nf">(req, fn) -&gt;</span>
+      
+      <span class="p">{</span><span class="nx">User</span><span class="p">}</span> <span class="o">=</span> <span class="nx">schema</span><span class="p">.</span><span class="nx">models</span>
+      
+      <span class="nx">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nf">-&gt;</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Search for username or encrypted email.</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="o">-</span><span class="mi">1</span> <span class="o">is</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">usernameOrEmail</span><span class="p">.</span><span class="nx">indexOf</span> <span class="s">&#39;@&#39;</span>
+          
+          <span class="nv">where: iname: </span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">usernameOrEmail</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span>
+        
+        <span class="k">else</span>
+          
+          <span class="nx">crypto</span><span class="p">.</span><span class="nx">encrypt</span><span class="p">(</span>
+            <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">usernameOrEmail</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span>
+          
+          <span class="p">).</span><span class="nx">then</span> <span class="nf">(encryptedEmail) -&gt;</span>
+            <span class="nv">where: email: </span><span class="nx">encryptedEmail</span>
+      
+      <span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">(filter) -&gt;</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Find the user.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">User</span><span class="p">.</span><span class="nx">findOne</span> <span class="nx">filter</span>
+        
+      <span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">(@user) -&gt;</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Generate a one-time login token.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">crypto</span><span class="p">.</span><span class="nx">randomBytes</span> <span class="mi">24</span>
+        
+      <span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">(token) -&gt;</span>
+        <span class="k">return</span> <span class="k">unless</span> <span class="nx">@user</span><span class="o">?</span>
+        
+        <span class="vi">@user.resetPasswordToken = </span><span class="nx">token</span><span class="p">.</span><span class="nx">toString</span> <span class="s">&#39;hex&#39;</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Decrypt the user's email address.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">crypto</span><span class="p">.</span><span class="nx">decrypt</span> <span class="nx">@user</span><span class="p">.</span><span class="nx">email</span>
+        
+      <span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">(email) -&gt;</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Send an email to the user with a one-time login link.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">hostname = </span><span class="s">&quot;http://</span><span class="si">#{</span>
+          <span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">host</span>
+        <span class="si">}</span><span class="s">&quot;</span>
+        
+        <span class="nv">siteName = </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;packageSettings:shrub-core:siteName&#39;</span>
+        
+        <span class="nv">tokens =</span>
+          
+          <span class="nv">hostname: </span><span class="nx">hostname</span>
+          
+          <span class="nv">email: </span><span class="nx">email</span>
+          
+          <span class="nv">loginUrl: </span><span class="s">&quot;</span><span class="si">#{</span>
+            <span class="nx">hostname</span>
+          <span class="si">}</span><span class="s">/user/reset/</span><span class="si">#{</span>
+            <span class="nx">@user</span><span class="p">.</span><span class="nx">resetPasswordToken</span>
+          <span class="si">}</span><span class="s">&quot;</span>
+          
+          <span class="nv">siteName: </span><span class="nx">siteName</span>
+          
+          <span class="nv">title: </span><span class="s">&quot;Password recovery request&quot;</span>
+          
+          <span class="nv">username: </span><span class="nx">@user</span><span class="p">.</span><span class="nx">name</span>
+        
+        <span class="nx">nodemailer</span><span class="p">.</span><span class="nx">sendMail</span><span class="p">(</span>
+          <span class="s">&#39;user/forgot&#39;</span>
+          <span class="nv">to: </span><span class="nx">email</span>
+          <span class="nv">subject: </span><span class="s">&quot;Password recovery request for your account at </span><span class="si">#{</span>
+            <span class="nx">siteName</span>
+          <span class="si">}</span><span class="s">&quot;</span>
+          <span class="nv">tokens: </span><span class="nx">tokens</span>
+        <span class="p">)</span>
+      
+        <span class="nx">@user</span><span class="p">.</span><span class="nx">save</span><span class="p">()</span>
+    
+      <span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">-&gt;</span>
+        
+        <span class="nx">fn</span><span class="p">()</span>
+        
+      <span class="p">).</span><span class="nx">catch</span> <span class="nx">fn</span></div></div></div></div></body></html>

@@ -4,7 +4,15 @@
 a dynamically generated listing of TODO items, each with a line of code
 context.</p>
 
-<p><a href="./client/modules/packages/core/index.html">client/modules/packages/core/index.coffee</a></p>
+<p><a href="./client/modules/pkgman.html">client/modules/pkgman.coffee</a></p>
+
+<ul>
+<li><h4 id="continueiferrortostringiserrorcannotfindmodulename"><code>continue if error.toString() is "Error: Cannot find module '#{name}'"</code></h4>
+
+<p>Should we let this throw? </p></li>
+</ul>
+
+<p><a href="./client/modules/shrub-core/index.html">client/modules/shrub-core/index.coffee</a></p>
 
 <ul>
 <li><h4 id="routetemplate"><code>route.template ?= ' '</code></h4>
@@ -12,7 +20,7 @@ context.</p>
 <p>Some method of allowing <code>templateUrl</code>. </p></li>
 </ul>
 
-<p><a href="./client/modules/packages/form/index.html">client/modules/packages/form/index.coffee</a></p>
+<p><a href="./client/modules/shrub-form/index.html">client/modules/shrub-form/index.coffee</a></p>
 
 <ul>
 <li><h4 id="fornamefieldofformspec"><code>for name, field of formSpec</code></h4>
@@ -23,7 +31,7 @@ context.</p>
 <p>This should be middleware'd, <code>rpc</code> should be implementing it. </p></li>
 </ul>
 
-<p><a href="./client/modules/packages/socket/index.html">client/modules/packages/socket/index.coffee</a></p>
+<p><a href="./client/modules/shrub-socket/index.html">client/modules/shrub-socket/index.coffee</a></p>
 
 <ul>
 <li><h4 id="socketioconnect"><code>socket = io.connect()</code></h4>
@@ -31,40 +39,32 @@ context.</p>
 <p>Only Socket.IO at the moment. </p></li>
 </ul>
 
-<p><a href="./client/modules/packages/ui/nav.html">client/modules/packages/ui/nav.coffee</a></p>
+<p><a href="./client/modules/shrub-ui/nav.html">client/modules/shrub-ui/nav.coffee</a></p>
 
 <ul>
 <li><h4 id="scopelinkslinks"><code>scope.links = links</code></h4>
 
 <p>This whole thing needs to be overhauled. </p></li>
-<li><h4 id="exportsdservice"><code>exports.$service = -&gt; [</code></h4>
+<li><h4 id="registrarregisterhookservice"><code>registrar.registerHook 'service', -&gt; [</code></h4>
 
 <p>Overhaul this. </p></li>
 </ul>
 
-<p><a href="./client/modules/packages/user/index.html">client/modules/packages/user/index.coffee</a></p>
+<p><a href="./client/modules/shrub-user/index.html">client/modules/shrub-user/index.coffee</a></p>
 
 <ul>
-<li><h4 id="userhaspermissionpermfalse"><code>User::hasPermission = (perm) -&gt; false</code></h4>
-
-<p>Access control structure. </p></li>
 <li><h4 id="serviceloginmethodusernamepassword"><code>service.login = (method, username, password) -&gt;</code></h4>
 
 <p>username and password are tightly coupled to local strategy. Change that. </p></li>
 <li><h4 id="ddelegatefakeloginusernamepasswordpasswordid1"><code>$delegate.fakeLogin = (username, password = 'password', id = 1) -&gt;</code></h4>
 
 <p>This will change when login method generalization happens. </p></li>
+<li><h4 id="userhaspermissionpermfalse"><code>User::hasPermission = (perm) -&gt; false</code></h4>
+
+<p>Access control structure. </p></li>
 </ul>
 
-<p><a href="./client/modules/pkgman.html">client/modules/pkgman.coffee</a></p>
-
-<ul>
-<li><h4 id="continueiferrortostringiserrorcannotfindmodulepackagesname"><code>continue if error.toString() is "Error: Cannot find module 'packages/#{name}'"</code></h4>
-
-<p>Should we let this throw? </p></li>
-</ul>
-
-<p><a href="./server/packages/angular/index.html">server/packages/angular/index.coffee</a></p>
+<p><a href="./server/shrub-angular/index.html">server/shrub-angular/index.coffee</a></p>
 
 <ul>
 <li><h4 id="return"><code>return</code></h4>
@@ -72,7 +72,7 @@ context.</p>
 <p>need to extract params to build redirectTo, small enough mismatch to ignore for now. </p></li>
 </ul>
 
-<p><a href="./server/packages/form/index.html">server/packages/form/index.coffee</a></p>
+<p><a href="./server/shrub-form/index.html">server/shrub-form/index.coffee</a></p>
 
 <ul>
 <li><h4 id="returnnextunlessbodyformkey"><code>return next() unless body.formKey?</code></h4>
@@ -80,7 +80,7 @@ context.</p>
 <p>CRSF check needed here. </p></li>
 </ul>
 
-<p><a href="./server/packages/http/manager.html">server/packages/http/manager.coffee</a></p>
+<p><a href="./server/shrub-http/manager.html">server/shrub-http/manager.coffee</a></p>
 
 <ul>
 <li><h4 id="_middlewaremiddlewarefromhook"><code>@_middleware = middleware.fromHook(</code></h4>
@@ -88,7 +88,7 @@ context.</p>
 <p>Rename express to http, so we can use a short name. </p></li>
 </ul>
 
-<p><a href="./server/packages/limiter/index.html">server/packages/limiter/index.coffee</a></p>
+<p><a href="./server/shrub-limiter/index.html">server/shrub-limiter/index.coffee</a></p>
 
 <ul>
 <li><h4 id="promiseifreqreportvilliany"><code>promise = if req.reportVilliany?</code></h4>
@@ -96,7 +96,7 @@ context.</p>
 <p>Should this be added by <a href="/server/packages/villiany/index.html">villiany</a>? </p></li>
 </ul>
 
-<p><a href="./server/packages/nodemailer/index.html">server/packages/nodemailer/index.coffee</a></p>
+<p><a href="./server/shrub-nodemailer/index.html">server/shrub-nodemailer/index.coffee</a></p>
 
 <ul>
 <li><h4 id="ddatauinavdbodyhtml"><code>$('[data-ui-nav]', $body).html """</code></h4>
@@ -104,7 +104,7 @@ context.</p>
 <p>this kind of thing should be configurable and handled by the theme/skin when we get to that point. </p></li>
 </ul>
 
-<p><a href="./server/packages/user/login.html">server/packages/user/login.coffee</a></p>
+<p><a href="./server/shrub-user/login.html">server/shrub-user/login.coffee</a></p>
 
 <ul>
 <li><h4 id="localstrategyrequirepassportlocalstrategy"><code>LocalStrategy = require('passport-local').Strategy</code></h4>

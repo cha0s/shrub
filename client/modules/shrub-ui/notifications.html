@@ -1,0 +1,93 @@
+<!DOCTYPE html><html lang="en"><head><title>client/modules/shrub-ui/notifications</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="client/modules/shrub-ui/notifications"><meta name="groc-project-path" content="client/modules/shrub-ui/notifications.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/client/modules/shrub-ui/notifications.coffee">client/modules/shrub-ui/notifications.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="notifications">Notifications</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nv">errors = </span><span class="nx">require</span> <span class="s">&#39;errors&#39;</span>
+
+<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookdirective">Implements hook <code>directive</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;directive&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
+    <span class="s">&#39;$timeout&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-ui/notifications&#39;</span>
+    <span class="nf">($timeout, {count, removeTop, top}) -&gt;</span>
+    
+      <span class="nv">link: </span><span class="nf">(scope, elm, attr) -&gt;</span>
+        
+        <span class="nv">activeNotification = </span><span class="kc">null</span>
+        
+        <span class="nv">$notificationWrapper = </span><span class="nx">elm</span><span class="p">.</span><span class="nx">find</span> <span class="s">&#39;.notification-wrapper&#39;</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>User closed the notification.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">scope.close = </span><span class="nf">-&gt;</span>
+          <span class="nx">$timeout</span><span class="p">.</span><span class="nx">cancel</span> <span class="nx">activeNotification</span>
+          <span class="nx">$notificationWrapper</span><span class="p">.</span><span class="nx">fadeOut</span> <span class="s">&#39;2000&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="nx">scope</span><span class="p">.</span><span class="nx">$apply</span> <span class="nf">-&gt;</span>
+            <span class="nx">removeTop</span><span class="p">()</span>
+            
+          <span class="k">return</span>
+        
+        <span class="nx">scope</span><span class="p">.</span><span class="nx">$watch</span><span class="p">(</span>
+          <span class="nf">-&gt;</span> <span class="nx">top</span><span class="p">()</span>
+          <span class="nf">-&gt;</span>
+            </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>When we get a new notification, make it our active
+notification.</p></div></div><div class="code"><div class="wrapper">            <span class="nv">scope.notification = </span><span class="nx">top</span><span class="p">()</span>
+            <span class="k">return</span> <span class="k">if</span> <span class="nx">count</span><span class="p">()</span> <span class="o">is</span> <span class="mi">0</span>
+            </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Fade it in and keep it on the screen for 15 seconds.</p></div></div><div class="code"><div class="wrapper">            <span class="nx">$notificationWrapper</span><span class="p">.</span><span class="nx">fadeIn</span> <span class="s">&#39;2000&#39;</span>
+                
+            <span class="nv">activeNotification = </span><span class="nx">$timeout</span><span class="p">(</span>
+              <span class="nf">-&gt;</span> <span class="nx">scope</span><span class="p">.</span><span class="nx">close</span><span class="p">()</span>
+              <span class="mi">15000</span>
+            <span class="p">)</span>
+            
+        <span class="p">)</span>
+        
+      <span class="nv">template: </span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">  </span>
+<span class="s">&lt;div class=&quot;notification-wrapper&quot;&gt;</span>
+<span class="s">  </span>
+<span class="s">  &lt;div</span>
+<span class="s">    data-ng-show=&quot;!!notification&quot;</span>
+<span class="s">    data-ng-class=&quot;notification.class&quot;</span>
+<span class="s">    class=&quot;alert notification fade in&quot;</span>
+<span class="s">  &gt;</span>
+<span class="s">    &lt;button</span>
+<span class="s">      type=&quot;button&quot;</span>
+<span class="s">      class=&quot;close&quot;</span>
+<span class="s">      data-ng-click=&quot;close()&quot;</span>
+<span class="s">    &gt;&amp;times;&lt;/button&gt;</span>
+<span class="s">    &lt;span data-ng-bind-html=&quot;notification.text&quot;&gt;&lt;/span&gt;</span>
+<span class="s">  &lt;/div&gt;</span>
+<span class="s">  </span>
+<span class="s">&lt;/div&gt;</span>
+
+<span class="s">&quot;&quot;&quot;</span>
+      
+  <span class="p">]</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookrpccall">Implements hook <code>rpcCall</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;rpcCall&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
+    <span class="s">&#39;shrub-ui/notifications&#39;</span><span class="p">,</span> <span class="s">&#39;result&#39;</span>
+    <span class="nf">(notifications, result) -&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Add a notification with the error text.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">result</span><span class="p">.</span><span class="nx">catch</span> <span class="nf">(error) -&gt;</span> <span class="nx">notifications</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span>
+        <span class="k">class</span><span class="o">:</span> <span class="s">&#39;alert-danger&#39;</span><span class="p">,</span> <span class="nv">text: </span><span class="nx">errors</span><span class="p">.</span><span class="nx">message</span> <span class="nx">error</span>
+      <span class="p">)</span>
+  
+  <span class="p">]</span> 
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookservice">Implements hook <code>service</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;service&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
+    <span class="s">&#39;shrub-socket&#39;</span>
+    <span class="nf">(socket) -&gt;</span>
+    
+      <span class="nv">service = </span><span class="p">{}</span>
+      
+      <span class="nv">_notifications = </span><span class="p">[]</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="notificationsadd">notifications.add</h2>
+
+<p>Add a notification to be displayed.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">service.add = </span><span class="nf">(notification) -&gt;</span>
+        
+        <span class="nx">notification</span><span class="p">.</span><span class="nx">class</span> <span class="o">?=</span> <span class="s">&#39;alert-info&#39;</span>
+        
+        <span class="nx">_notifications</span><span class="p">.</span><span class="nx">push</span> <span class="nx">notification</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="notificationstop">notifications.top</h2>
+
+<p>Get the top notification.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">service.top = </span><span class="nf">-&gt;</span> <span class="nx">_notifications</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="notificationsremovetop">notifications.removeTop</h2>
+
+<p>Remove the top notification.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">service.removeTop = </span><span class="nf">-&gt;</span> <span class="nx">_notifications</span><span class="p">.</span><span class="nx">shift</span><span class="p">()</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="notificationscount">notifications.count</h2>
+
+<p>The number of notifications to show.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">service.count = </span><span class="nf">-&gt;</span> <span class="nx">_notifications</span><span class="p">.</span><span class="nx">length</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Accept notifications from the server.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">socket</span><span class="p">.</span><span class="nx">on</span> <span class="s">&#39;notifications&#39;</span><span class="p">,</span> <span class="nf">(data) -&gt;</span>
+        
+        <span class="nx">service</span><span class="p">.</span><span class="nx">add</span> <span class="nx">notification</span> <span class="k">for</span> <span class="nx">notification</span> <span class="k">in</span> <span class="nx">data</span><span class="p">.</span><span class="nx">notifications</span>
+        
+      <span class="nx">service</span>
+      
+  <span class="p">]</span></div></div></div></div></body></html>

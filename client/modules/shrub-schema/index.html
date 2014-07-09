@@ -1,0 +1,43 @@
+<!DOCTYPE html><html lang="en"><head><title>client/modules/shrub-schema/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="client/modules/shrub-schema/index"><meta name="groc-project-path" content="client/modules/shrub-schema/index.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/client/modules/shrub-schema/index.coffee">client/modules/shrub-schema/index.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="schema">Schema</h1>
+
+<p>Provide the JugglingDB schema as an Angular service.</p></div></div><div class="code"><div class="wrapper"><span class="nv">i8n = </span><span class="nx">require</span> <span class="s">&#39;inflection&#39;</span>
+<span class="nv">pkgman = </span><span class="nx">require</span> <span class="s">&#39;pkgman&#39;</span>
+<span class="p">{</span><span class="nx">Schema</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">&#39;promised-jugglingdb&#39;</span>
+
+<span class="nv">config = </span><span class="nx">require</span> <span class="s">&#39;config&#39;</span>
+
+<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookservice">Implements hook <code>service</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;service&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
+    <span class="s">&#39;$http&#39;</span>
+    <span class="nf">($http) -&gt;</span>
+  
+      <span class="nv">schema = </span><span class="nx">define</span><span class="p">(</span>
+        <span class="nx">require</span> <span class="s">&#39;jugglingdb-rest&#39;</span>
+        <span class="nv">$http: </span><span class="nx">$http</span>
+        <span class="nv">apiRoot: </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;apiRoot&#39;</span>
+      <span class="p">)</span>
+      
+      <span class="nx">schema</span><span class="p">.</span><span class="nx">definePackageModels</span><span class="p">()</span>
+      
+      <span class="nx">schema</span>
+      
+  <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Translate model names to REST resource/collection paths.
+<code>'CatalogEntry'</code> -> <code>['catalog-entry', 'catalog-entries']</code></p></div></div><div class="code"><div class="wrapper"><span class="nv">Schema::resourcePaths = </span><span class="nf">(name) -&gt;</span>
+
+  <span class="nv">resource = </span><span class="nx">i8n</span><span class="p">.</span><span class="nx">dasherize</span><span class="p">(</span><span class="nx">i8n</span><span class="p">.</span><span class="nx">underscore</span> <span class="nx">name</span><span class="p">).</span><span class="nx">toLowerCase</span><span class="p">()</span>
+  
+  <span class="nv">resource: </span><span class="nx">resource</span>
+  <span class="nv">collection: </span><span class="nx">i8n</span><span class="p">.</span><span class="nx">pluralize</span> <span class="nx">resource</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="define">define</h2>
+
+<p>Define the JugglingDB schema.</p></div></div><div class="code"><div class="wrapper"><span class="nv">define = exports.define = </span><span class="nf">(adapter, options = {}) -&gt;</span>
+  
+  <span class="nv">schema = </span><span class="k">new</span> <span class="nx">Schema</span> <span class="nx">adapter</span><span class="p">,</span> <span class="nx">options</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="schemadefinepackagemodels">schema.definePackageModels</h2>
+
+<p>Let packages define JugglingDB models.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">schema.definePackageModels = </span><span class="nf">-&gt;</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>models</code>.
+Allows packages to create models in the database schema.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s">&#39;models&#39;</span><span class="p">,</span> <span class="nx">schema</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>modelsAlter</code>.
+Allows packages to alter any models defined.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s">&#39;modelsAlter&#39;</span><span class="p">,</span> <span class="nx">schema</span><span class="p">.</span><span class="nx">models</span><span class="p">,</span> <span class="nx">schema</span>
+    
+  <span class="nx">schema</span></div></div></div></div></body></html>

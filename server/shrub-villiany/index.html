@@ -1,0 +1,196 @@
+<!DOCTYPE html><html lang="en"><head><title>server/shrub-villiany/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="server/shrub-villiany/index"><meta name="groc-project-path" content="server/shrub-villiany/index.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/server/shrub-villiany/index.coffee">server/shrub-villiany/index.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="villiany">Villiany</h1>
+
+<p>Watch for and punish bad behavior.</p></div></div><div class="code"><div class="wrapper"><span class="nv">moment = </span><span class="nx">require</span> <span class="s">&#39;moment&#39;</span>
+<span class="nv">i8n = </span><span class="nx">require</span> <span class="s">&#39;inflection&#39;</span>
+<span class="nv">Promise = </span><span class="nx">require</span> <span class="s">&#39;bluebird&#39;</span>
+
+<span class="nv">audit = </span><span class="nx">require</span> <span class="s">&#39;audit&#39;</span>
+<span class="nv">config = </span><span class="nx">require</span> <span class="s">&#39;config&#39;</span>
+<span class="nv">logging = </span><span class="nx">require</span> <span class="s">&#39;logging&#39;</span>
+
+<span class="p">{</span><span class="nx">AuthorizationFailure</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">&#39;shrub-socket/manager&#39;</span>
+<span class="p">{</span><span class="nx">Limiter</span><span class="p">,</span> <span class="nx">threshold</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">&#39;limits&#39;</span>
+<span class="nv">schema = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;shrub-schema&#39;</span><span class="p">).</span><span class="nx">schema</span><span class="p">()</span>
+
+<span class="nv">logger = </span><span class="nx">logging</span><span class="p">.</span><span class="nx">create</span> <span class="s">&#39;logs/villiany.log&#39;</span>
+  
+<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookendpointalter">Implements hook <code>endpointAlter</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;endpointAlter&#39;</span><span class="p">,</span> <span class="nf">(endpoints) -&gt;</span>
+    
+    <span class="k">for</span> <span class="nx">route</span><span class="p">,</span> <span class="nx">endpoint</span> <span class="k">of</span> <span class="nx">endpoints</span>
+    
+      <span class="nx">endpoint</span><span class="p">.</span><span class="nx">villianyScore</span> <span class="o">?=</span> <span class="mi">20</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookmodels">Implements hook <code>models</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;models&#39;</span><span class="p">,</span> <span class="nf">(schema) -&gt;</span>
+    
+    <span class="nv">fingerprintKeys = </span><span class="nx">audit</span><span class="p">.</span><span class="nx">fingerprintKeys</span><span class="p">()</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Bans.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">model = expires: type: </span><span class="nb">Number</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The structure of a ban is dictated by the fingerprint structure.</p></div></div><div class="code"><div class="wrapper">    <span class="k">for</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">fingerprintKeys</span>
+      <span class="nx">model</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span>
+        <span class="nv">index: </span><span class="kc">true</span>
+        <span class="nv">type: </span><span class="nb">String</span>
+    
+    <span class="nv">Ban = </span><span class="nx">schema</span><span class="p">.</span><span class="nx">define</span> <span class="s">&#39;Ban&#39;</span><span class="p">,</span> <span class="nx">model</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Generate a test for whether each fingerprint key has been banned.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">fingerprintKeys</span><span class="p">.</span><span class="nx">forEach</span> <span class="nf">(key) -&gt;</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p><code>session</code> -> <code>isSessionBanned</code></p></div></div><div class="code"><div class="wrapper">      <span class="nx">Ban</span><span class="p">[</span><span class="nx">i8n</span><span class="p">.</span><span class="nx">camelize</span> <span class="s">&quot;is_</span><span class="si">#{</span><span class="nx">key</span><span class="si">}</span><span class="s">_banned&quot;</span><span class="p">,</span> <span class="kc">true</span><span class="p">]</span> <span class="o">=</span> <span class="nf">(value) -&gt;</span>
+        <span class="nv">where = </span><span class="p">{}</span>
+        <span class="nx">where</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span>
+        
+        <span class="nx">Ban</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nv">where: </span><span class="nx">where</span><span class="p">).</span><span class="nx">bind</span><span class="p">({}).</span><span class="nx">then</span><span class="p">(</span><span class="nf">(@bans) -&gt;</span>
+          <span class="k">return</span> <span class="kc">false</span> <span class="k">if</span> <span class="nx">@bans</span><span class="p">.</span><span class="nx">length</span> <span class="o">is</span> <span class="mi">0</span>
+          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Destroy all expired bans.</p></div></div><div class="code"><div class="wrapper">          <span class="nv">expired = </span><span class="nx">@bans</span><span class="p">.</span><span class="nx">filter</span> <span class="nf">(ban) -&gt;</span> <span class="nx">ban</span><span class="p">.</span><span class="nx">expires</span> <span class="o">&lt;=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span>
+          <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span> <span class="nx">expired</span><span class="p">.</span><span class="nx">map</span> <span class="nf">(ban) -&gt;</span> <span class="nx">ban</span><span class="p">.</span><span class="nx">destroy</span><span class="p">()</span>
+          
+        <span class="p">).</span><span class="nx">then</span> <span class="nf">(expired) -&gt;</span>
+          
+          <span class="nv">active = </span><span class="nx">@bans</span><span class="p">.</span><span class="nx">filter</span> <span class="nf">(ban) -&gt;</span> <span class="nx">ban</span><span class="p">.</span><span class="nx">expires</span> <span class="o">&gt;</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span>
+          
+          <span class="p">[</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>More bans than those that expired?</p></div></div><div class="code"><div class="wrapper">            <span class="nx">@bans</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="nx">expired</span><span class="p">.</span><span class="nx">length</span>
+            </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Ban ttl.</p></div></div><div class="code"><div class="wrapper">            <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span> <span class="p">(</span><span class="nx">active</span><span class="p">.</span><span class="nx">reduce</span><span class="p">(</span>
+              <span class="nf">(l, r) -&gt;</span>
+                
+                <span class="k">if</span> <span class="nx">l</span><span class="p">.</span><span class="nx">expires</span> <span class="o">&gt;</span> <span class="nx">r</span><span class="p">.</span><span class="nx">expires</span>
+                  <span class="nx">l</span><span class="p">.</span><span class="nx">expires</span>
+                <span class="k">else</span>
+                  <span class="nx">r</span><span class="p">.</span><span class="nx">expires</span>
+                
+              <span class="o">-</span><span class="kc">Infinity</span>
+            </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>It's a timestamp, and it's in ms.</p></div></div><div class="code"><div class="wrapper">            <span class="p">)</span> <span class="o">-</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">())</span> <span class="o">/</span> <span class="mi">1000</span>
+          <span class="p">]</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Create a ban from a fingerprint.    </p></div></div><div class="code"><div class="wrapper">    <span class="nv">Ban.createFromFingerprint = </span><span class="nf">(fingerprint, expires) -&gt;</span>
+      <span class="k">return</span> <span class="k">unless</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">fingerprint</span><span class="p">).</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span>
+      
+      <span class="k">unless</span> <span class="nx">expires</span><span class="o">?</span>
+        <span class="nv">settings = </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;packageSettings:shrub-villiany:ban&#39;</span>
+        <span class="nv">expires = </span><span class="nx">settings</span><span class="p">.</span><span class="nx">defaultExpiration</span>
+      
+      <span class="nv">ban = </span><span class="k">new</span> <span class="nx">Ban</span> <span class="nv">expires: </span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span> <span class="o">+</span> <span class="nx">expires</span>
+      <span class="nx">ban</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">fingerprint</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="k">for</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">fingerprintKeys</span>
+        
+      <span class="nx">ban</span><span class="p">.</span><span class="nx">save</span><span class="p">()</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookhttpmiddleware">Implements hook <code>httpMiddleware</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;httpMiddleware&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+    
+    <span class="nv">label: </span><span class="s">&#39;Provide villiany management&#39;</span>
+    <span class="nv">middleware: </span><span class="p">[</span>
+      
+      <span class="nf">(req, res, next) -&gt;</span>
+        
+        <span class="nv">req.villianyKick = </span><span class="nf">(subject, ttl) -&gt;</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Destroy any session.</p></div></div><div class="code"><div class="wrapper">          <span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="o">?</span><span class="p">.</span><span class="nx">destroy</span><span class="p">()</span>
+          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Log the user out.</p></div></div><div class="code"><div class="wrapper">          <span class="nx">req</span><span class="p">.</span><span class="nx">logOut</span><span class="p">().</span><span class="nx">then</span> <span class="nf">-&gt;</span>
+            
+            <span class="nx">res</span><span class="p">.</span><span class="nx">status</span> <span class="mi">401</span>
+            <span class="nx">res</span><span class="p">.</span><span class="nx">end</span> <span class="nx">buildBanMessage</span> <span class="nx">subject</span><span class="p">,</span> <span class="nx">ttl</span>
+            
+        <span class="nx">next</span><span class="p">()</span>
+      
+      <span class="nx">reporterMiddleware</span>
+      
+      <span class="nx">enforcementMiddleware</span>
+        
+    <span class="p">]</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshooksettings">Implements hook <code>settings</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;packageSettings&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+    
+    <span class="nv">ban:</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>10 minute ban time by default.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">defaultExpiration: </span><span class="mi">1000</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">10</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshooksocketauthorizationmiddleware">Implements hook <code>socketAuthorizationMiddleware</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;socketAuthorizationMiddleware&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+    
+    <span class="nv">label: </span><span class="s">&#39;Provide villiany management&#39;</span>
+    <span class="nv">middleware: </span><span class="p">[</span>
+    
+      <span class="nf">(req, res, next) -&gt;</span>
+        
+        <span class="nv">req.villianyKick = </span><span class="nf">(subject, ttl) -&gt;</span>
+          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Destroy any session.</p></div></div><div class="code"><div class="wrapper">          <span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="o">?</span><span class="p">.</span><span class="nx">destroy</span><span class="p">()</span>
+          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Log the user out.</p></div></div><div class="code"><div class="wrapper">          <span class="nx">req</span><span class="p">.</span><span class="nx">logOut</span><span class="p">().</span><span class="nx">then</span> <span class="nf">-&gt;</span>
+            </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Already authorized?</p></div></div><div class="code"><div class="wrapper">            <span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="o">?</span>
+              
+              <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="p">.</span><span class="nx">emit</span> <span class="s">&#39;core.reload&#39;</span>
+            
+            <span class="k">else</span>
+              
+              <span class="k">throw</span> <span class="k">new</span> <span class="nx">AuthorizationFailure</span>
+              
+      
+        <span class="nx">next</span><span class="p">()</span>
+      
+      <span class="nx">reporterMiddleware</span>
+      
+      <span class="nx">enforcementMiddleware</span>
+      
+    <span class="p">]</span>
+  
+<span class="nv">villianyLimiter = </span><span class="k">new</span> <span class="nx">Limiter</span><span class="p">(</span>
+  <span class="s">&quot;villiany&quot;</span>
+  <span class="nx">threshold</span><span class="p">(</span><span class="mi">1000</span><span class="p">).</span><span class="nx">every</span><span class="p">(</span><span class="mi">10</span><span class="p">).</span><span class="nx">minutes</span><span class="p">()</span>
+<span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Define <code>req.reportVilliany()</code>.</p></div></div><div class="code"><div class="wrapper"><span class="nv">reporterMiddleware = </span><span class="nf">(req, res, next) -&gt;</span>
+  
+  <span class="p">{</span><span class="nx">Ban</span><span class="p">}</span> <span class="o">=</span> <span class="nx">schema</span><span class="p">.</span><span class="nx">models</span>     
+
+  <span class="nv">req.reportVilliany = </span><span class="nf">(score, type) -&gt;</span>
+    
+    <span class="nv">fingerprint = </span><span class="nx">audit</span><span class="p">.</span><span class="nx">fingerprint</span> <span class="nx">req</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Terminate the chain if not a villian.</p></div></div><div class="code"><div class="wrapper">    <span class="k">class</span> <span class="nx">NotAVillian</span> <span class="k">extends</span> <span class="nb">Error</span>
+      <span class="nv">constructor: </span><span class="nf">(@message) -&gt;</span>
+    
+    <span class="nv">keys = </span><span class="p">(</span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">key</span><span class="si">}</span><span class="s">:</span><span class="si">#{</span><span class="nx">value</span><span class="si">}</span><span class="s">&quot;</span> <span class="k">for</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span> <span class="k">of</span> <span class="nx">fingerprint</span><span class="p">)</span>
+    <span class="nx">villianyLimiter</span><span class="p">.</span><span class="nx">accrueAndCheckThreshold</span><span class="p">(</span>
+      <span class="nx">keys</span><span class="p">,</span> <span class="nx">score</span>
+    
+    <span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">(isVillian) -&gt;</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Log this transgression.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">message = </span><span class="s">&quot;Logged villiany score </span><span class="si">#{</span>
+        <span class="nx">score</span>
+      <span class="si">}</span><span class="s"> for </span><span class="si">#{</span>
+        <span class="nx">type</span>
+      <span class="si">}</span><span class="s">, audit keys: </span><span class="si">#{</span>
+        <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span> <span class="nx">fingerprint</span>
+      <span class="si">}</span><span class="s">&quot;</span>
+      <span class="nx">message</span> <span class="o">+=</span> <span class="s">&quot;, which resulted in a ban.&quot;</span> <span class="k">if</span> <span class="nx">isVillian</span>
+      <span class="nx">logger</span><span class="p">[</span><span class="k">if</span> <span class="nx">isVillian</span> <span class="k">then</span> <span class="s">&#39;error&#39;</span> <span class="k">else</span> <span class="s">&#39;warn&#39;</span><span class="p">]</span> <span class="nx">message</span> 
+      
+      <span class="k">throw</span> <span class="k">new</span> <span class="nx">NotAVillian</span> <span class="k">unless</span> <span class="nx">isVillian</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Ban.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">Ban</span><span class="p">.</span><span class="nx">createFromFingerprint</span> <span class="nx">fingerprint</span>
+      <span class="nx">villianyLimiter</span><span class="p">.</span><span class="nx">ttl</span> <span class="nx">keys</span>
+          
+    <span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">(ttl) -&gt;</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Kick.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">req</span><span class="p">.</span><span class="nx">villianyKick</span> <span class="nx">ttl</span>
+    
+    <span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">-&gt;</span> <span class="kc">true</span>
+    <span class="p">).</span><span class="nx">catch</span> <span class="nx">NotAVillian</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="kc">false</span>
+    
+  <span class="nx">next</span><span class="p">()</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Enforce bans.</p></div></div><div class="code"><div class="wrapper"><span class="nv">enforcementMiddleware = </span><span class="nf">(req, res, next) -&gt;</span>
+
+  <span class="p">{</span><span class="nx">Ban</span><span class="p">}</span> <span class="o">=</span> <span class="nx">schema</span><span class="p">.</span><span class="nx">models</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Terminate the request if a ban is enforced.</p></div></div><div class="code"><div class="wrapper">  <span class="k">class</span> <span class="nx">RequestBanned</span> <span class="k">extends</span> <span class="nb">Error</span>
+    <span class="nv">constructor: </span><span class="nf">(@message) -&gt;</span>
+  
+  <span class="nv">fingerprint = </span><span class="nx">audit</span><span class="p">.</span><span class="nx">fingerprint</span> <span class="nx">req</span>
+
+  <span class="nv">banPromises = </span><span class="k">for</span> <span class="nx">enforced</span> <span class="k">in</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span> <span class="nx">fingerprint</span>
+  
+    <span class="nv">method = </span><span class="nx">i8n</span><span class="p">.</span><span class="nx">camelize</span> <span class="s">&quot;is_</span><span class="si">#{</span><span class="nx">enforced</span><span class="si">}</span><span class="s">_banned&quot;</span><span class="p">,</span> <span class="kc">true</span>
+    
+    <span class="nx">Ban</span><span class="p">[</span><span class="nx">method</span><span class="p">](</span><span class="nx">fingerprint</span><span class="p">[</span><span class="nx">enforced</span><span class="p">]).</span><span class="nx">spread</span> <span class="nf">(isBanned, ttl) -&gt;</span>
+      <span class="k">return</span> <span class="k">unless</span> <span class="nx">isBanned</span>
+      
+      <span class="nx">req</span><span class="p">.</span><span class="nx">villianyKick</span><span class="p">(</span><span class="nx">enforced</span><span class="p">,</span> <span class="nx">ttl</span><span class="p">).</span><span class="nx">then</span> <span class="nf">-&gt;</span>
+        
+        <span class="k">throw</span> <span class="k">new</span> <span class="nx">RequestBanned</span><span class="p">()</span>
+      
+  <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">banPromises</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">-&gt;</span>
+    
+    <span class="nx">next</span><span class="p">()</span>
+  
+  <span class="p">).</span><span class="nx">catch</span><span class="p">(</span><span class="nx">RequestBanned</span><span class="p">,</span> <span class="nf">-&gt;</span>
+
+  <span class="p">).</span><span class="nx">catch</span> <span class="nf">(error) -&gt;</span> <span class="nx">next</span> <span class="nx">error</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Build a nice message for the villian.</p></div></div><div class="code"><div class="wrapper"><span class="nv">buildBanMessage = </span><span class="nf">(subject, ttl) -&gt;</span>
+  
+  <span class="nv">message = </span><span class="k">if</span> <span class="nx">subject</span><span class="o">?</span>
+    <span class="s">&quot;Your </span><span class="si">#{</span><span class="nx">subject</span><span class="si">}</span><span class="s"> is banned.&quot;</span>
+  <span class="k">else</span>
+    <span class="s">&quot;You are banned.&quot;</span>
+    
+  <span class="k">if</span> <span class="nx">ttl</span><span class="o">?</span>
+    
+    <span class="nx">message</span> <span class="o">+=</span> <span class="s">&quot; The ban will be lifted </span><span class="si">#{</span>
+      <span class="nx">moment</span><span class="p">().</span><span class="nx">add</span><span class="p">(</span><span class="s">&#39;seconds&#39;</span><span class="p">,</span> <span class="nx">ttl</span><span class="p">).</span><span class="nx">fromNow</span><span class="p">()</span>
+    <span class="si">}</span><span class="s">.&quot;</span>
+    
+  <span class="nx">message</span></div></div></div></div></body></html>
