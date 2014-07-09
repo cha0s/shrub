@@ -18,4 +18,6 @@ class LimiterThresholdError extends TransmittableError
 exports.pkgmanRegister = (registrar) ->
 	
 	# ## Implements hook `transmittableError`
-	registrar.registerHook 'transmittableError', -> LimiterThresholdError
+	registrar.registerHook 'transmittableError', exports.transmittableError
+
+exports.transmittableError = -> LimiterThresholdError
