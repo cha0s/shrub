@@ -36,7 +36,7 @@ exports.load = ->
 	# } Register packages.
 	defaultLogger.info "Registering packages..."
 	
-	pkgman.registerPackageList nconf.get 'packageList'
+	pkgman.registerPackageList nconf.get('packageList'), 'server'
 	
 	defaultLogger.info "Packages registered."
 

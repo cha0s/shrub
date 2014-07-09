@@ -23,7 +23,7 @@ module.exports = (grunt) ->
 		coffeeMapping: (coffees, output = 'build/js') ->
 			grunt.file.expandMapping coffees, "#{output}/",
 				rename: (destBase, destPath) ->
-					destPath = destPath.replace 'client/', ''
+					destPath = destPath.replace /^client\//, ''
 					destBase + destPath.replace /\.coffee$/, '.js'
 		
 	grunt.shrub.loadModule name for name in [

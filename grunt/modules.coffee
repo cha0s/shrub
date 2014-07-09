@@ -6,6 +6,7 @@ module.exports = (grunt, config) ->
 		'client/packages.coffee'
 		'client/require.coffee'
 		'client/modules/**/*.coffee'
+		'custom/*/client/**/*.coffee'
 		
 		'!client/modules/**/test-e2e.coffee'
 		'!client/modules/**/test-unit.coffee'
@@ -43,10 +44,18 @@ module.exports = (grunt, config) ->
 		dest: 'build/js/modules.js'
 	
 	config.copy.modules =
-		expand: true
-		cwd: 'client/modules'
-		src: ['**/*.js']
-		dest: 'build/js/modules'
+		
+		files: [
+			expand: true
+			cwd: 'client/modules'
+			src: ['**/*.js']
+			dest: 'build/js/modules'
+		,
+			expand: true
+			cwd: 'custom'
+			src: ['*/client/**/*.js']
+			dest: 'build/js/modules'
+		]
 	
 	config.uglify.modules =
 		files: 'build/js/modules.min.js': ['build/js/modules.js']
@@ -64,16 +73,20 @@ module.exports = (grunt, config) ->
 		files:
 			'build/js/modules.js': [
 				'build/js/modules/**/*.js'
+				'build/js/custom/*/client/**/*.js'
 			]
 		options:
 			indent: '  '
 			wrapper: (filepath) ->
 				
-				moduleName = filepath.substr 'build/js/modules/'.length
-				
+				matches = filepath.match /build\/js\/[^/]+\/(.*)/
+				moduleName = matches[1]
+
 				dirname = path.dirname moduleName
+				if dirname is '.' then dirname = '' else dirname += '/'
+				
 				extname = path.extname moduleName
-				moduleName = path.join dirname, path.basename moduleName, extname 
+				moduleName = "#{dirname}#{path.basename moduleName, extname}"
 				
 				if moduleName?
 					[

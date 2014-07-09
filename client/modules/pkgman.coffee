@@ -34,25 +34,34 @@ class PkgmanRegistrar
 			
 		(packageCache[hook] ?= []).push path: path, impl: impl
 
+optionalModule = (name) ->
+
+	try
+		
+		require name
+	
+	catch error
+		
+		# Suppress missing package errors.
+		# `TODO`: Should we let this throw?
+		return if error.toString() is "Error: Cannot find module '#{name}'"
+		throw error
+
 # ## rebuildPackageCache
-exports.rebuildPackageCache = ->
+exports.rebuildPackageCache = (type) ->
 	packageCache = {}
 	
 	modules = {}
 	for name in _packages
-	
-		try
-			
-			modules[name] = require name
 		
-		catch error
+		# First try package/`type` e.g. package/client
+		unless (module_ = optionalModule "#{name}/#{type}")?
+			module_ = optionalModule name
 			
-			# Suppress missing package errors.
-			# `TODO`: Should we let this throw?
-			continue if error.toString() is "Error: Cannot find module '#{name}'"
-			throw error
+		if module_?
 			
-		defaultLogger.info "Found package #{name}."
+			modules[name] = module_
+			defaultLogger.info "Found package #{name}."
 	
 	# Collect hooks.
 	for path, module_ of modules
@@ -61,9 +70,9 @@ exports.rebuildPackageCache = ->
 	return
 
 # ## registerPackageList
-exports.registerPackageList = (packages) ->
+exports.registerPackageList = (packages, type) ->
 	_packages.push.apply _packages, packages
-	exports.rebuildPackageCache()
+	exports.rebuildPackageCache type
 
 # ## invoke
 # 

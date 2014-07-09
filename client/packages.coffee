@@ -110,7 +110,7 @@ angular.module('shrub.pkgman', [
 			# Load the package list from configuration.
 			defaultLogger.info "Loading packages..."
 			
-			pkgman.registerPackageList config.get 'packageList'
+			pkgman.registerPackageList config.get('packageList'), 'client'
 
 			defaultLogger.info "Packages loaded."
 			
