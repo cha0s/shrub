@@ -24,55 +24,57 @@ templateCache = {}
 # nodemailer transport. Defaults to sendmail.
 transport = null
 
-# ## Implements hook `clearCaches`
-exports.$clearCaches = ->
-	
-	templateCache = {}
-	
-# ## Implements hook `httpListening`
-exports.$httpListening = (http) ->
-	
-	settings = config.get 'packageSettings:shrub-nodemailer'
-	
-	# Instantiate the email transport.
-	transport = nodemailer.createTransport(
-		settings.transport.type
-		settings.transport.options
-	)
-	
-	# Inject scripts we'll need into the sandbox, e.g. jQuery.
-	locals =
-		assets:
-			js: [
-				"/lib/jquery/jquery-1.11.0.js"
-			]
-	
-	# Render the app HTML and create a sandbox with it.
-	http.renderAppHtml(locals).then((html) ->
-		
-		sandbox = new Sandbox()
-		sandbox.createDocument html
-		
-	).then((_sandbox_) ->
-		
-		# Augment it with functionality we'll find useful and convenient.
-		augmentSandbox sandbox = _sandbox_
-		
-	)
+exports.pkgmanRegister = (registrar) ->
 
-# ## Implements hook `packageSettings`
-exports.$packageSettings = ->
+	# ## Implements hook `clearCaches`
+	registrar.registerHook 'clearCaches', ->
+		
+		templateCache = {}
+		
+	# ## Implements hook `httpListening`
+	registrar.registerHook 'httpListening', (http) ->
+		
+		settings = config.get 'packageSettings:shrub-nodemailer'
+		
+		# Instantiate the email transport.
+		transport = nodemailer.createTransport(
+			settings.transport.type
+			settings.transport.options
+		)
+		
+		# Inject scripts we'll need into the sandbox, e.g. jQuery.
+		locals =
+			assets:
+				js: [
+					"/lib/jquery/jquery-1.11.0.js"
+				]
+		
+		# Render the app HTML and create a sandbox with it.
+		http.renderAppHtml(locals).then((html) ->
+			
+			sandbox = new Sandbox()
+			sandbox.createDocument html
+			
+		).then((_sandbox_) ->
+			
+			# Augment it with functionality we'll find useful and convenient.
+			augmentSandbox sandbox = _sandbox_
+			
+		)
 	
-	# Default site email information.
-	siteEmail:
-		address: 'admin@example.com'
-		name: 'Site administrator'
-	
-	# Passed through directly to nodemailer.
-	transport:
-		type: 'sendmail'
-		options: {}
-	
+	# ## Implements hook `packageSettings`
+	registrar.registerHook 'packageSettings', ->
+		
+		# Default site email information.
+		siteEmail:
+			address: 'admin@example.com'
+			name: 'Site administrator'
+		
+		# Passed through directly to nodemailer.
+		transport:
+			type: 'sendmail'
+			options: {}
+		
 # ## sendMail
 # 
 # *Send an email.*

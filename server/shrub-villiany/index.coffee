@@ -17,80 +17,151 @@ schema = require('shrub-schema').schema()
 
 logger = logging.create 'logs/villiany.log'
 	
-# ## Implements hook `endpointAlter`
-exports.$endpointAlter = (endpoints) ->
-	
-	for route, endpoint of endpoints
-	
-		endpoint.villianyScore ?= 20
+exports.pkgmanRegister = (registrar) ->
 
-# ## Implements hook `models`
-exports.$models = (schema) ->
-	
-	fingerprintKeys = audit.fingerprintKeys()
-	
-	# Bans.
-	model = expires: type: Number
-	
-	# The structure of a ban is dictated by the fingerprint structure.
-	for key in fingerprintKeys
-		model[key] =
-			index: true
-			type: String
-	
-	Ban = schema.define 'Ban', model
-	
-	# Generate a test for whether each fingerprint key has been banned.
-	fingerprintKeys.forEach (key) ->
+	# ## Implements hook `endpointAlter`
+	registrar.registerHook 'endpointAlter', (endpoints) ->
 		
-		# `session` -> `isSessionBanned`
-		Ban[i8n.camelize "is_#{key}_banned", true] = (value) ->
-			where = {}
-			where[key] = value
+		for route, endpoint of endpoints
+		
+			endpoint.villianyScore ?= 20
+	
+	# ## Implements hook `models`
+	registrar.registerHook 'models', (schema) ->
+		
+		fingerprintKeys = audit.fingerprintKeys()
+		
+		# Bans.
+		model = expires: type: Number
+		
+		# The structure of a ban is dictated by the fingerprint structure.
+		for key in fingerprintKeys
+			model[key] =
+				index: true
+				type: String
+		
+		Ban = schema.define 'Ban', model
+		
+		# Generate a test for whether each fingerprint key has been banned.
+		fingerprintKeys.forEach (key) ->
 			
-			Ban.all(where: where).bind({}).then((@bans) ->
-				return false if @bans.length is 0
+			# `session` -> `isSessionBanned`
+			Ban[i8n.camelize "is_#{key}_banned", true] = (value) ->
+				where = {}
+				where[key] = value
 				
-				# Destroy all expired bans.
-				expired = @bans.filter (ban) -> ban.expires <= Date.now()
-				Promise.all expired.map (ban) -> ban.destroy()
-				
-			).then (expired) ->
-				
-				active = @bans.filter (ban) -> ban.expires > Date.now()
-				
-				[
-					# More bans than those that expired?
-					@bans.length > expired.length
+				Ban.all(where: where).bind({}).then((@bans) ->
+					return false if @bans.length is 0
 					
-					# Ban ttl.
-					Math.round (active.reduce(
-						(l, r) ->
-							
-							if l.expires > r.expires
-								l.expires
-							else
-								r.expires
-							
-						-Infinity
+					# Destroy all expired bans.
+					expired = @bans.filter (ban) -> ban.expires <= Date.now()
+					Promise.all expired.map (ban) -> ban.destroy()
 					
-					# It's a timestamp, and it's in ms.
-					) - Date.now()) / 1000
-				]
-	
-	# Create a ban from a fingerprint.	
-	Ban.createFromFingerprint = (fingerprint, expires) ->
-		return unless Object.keys(fingerprint).length > 0
+				).then (expired) ->
+					
+					active = @bans.filter (ban) -> ban.expires > Date.now()
+					
+					[
+						# More bans than those that expired?
+						@bans.length > expired.length
+						
+						# Ban ttl.
+						Math.round (active.reduce(
+							(l, r) ->
+								
+								if l.expires > r.expires
+									l.expires
+								else
+									r.expires
+								
+							-Infinity
+						
+						# It's a timestamp, and it's in ms.
+						) - Date.now()) / 1000
+					]
 		
-		unless expires?
-			settings = config.get 'packageSettings:shrub-villiany:ban'
-			expires = settings.defaultExpiration
-		
-		ban = new Ban expires: Date.now() + expires
-		ban[key] = fingerprint[key] for key in fingerprintKeys
+		# Create a ban from a fingerprint.	
+		Ban.createFromFingerprint = (fingerprint, expires) ->
+			return unless Object.keys(fingerprint).length > 0
 			
-		ban.save()
+			unless expires?
+				settings = config.get 'packageSettings:shrub-villiany:ban'
+				expires = settings.defaultExpiration
+			
+			ban = new Ban expires: Date.now() + expires
+			ban[key] = fingerprint[key] for key in fingerprintKeys
+				
+			ban.save()
+			
+	# ## Implements hook `httpMiddleware`
+	registrar.registerHook 'httpMiddleware', ->
 		
+		label: 'Provide villiany management'
+		middleware: [
+			
+			(req, res, next) ->
+				
+				req.villianyKick = (subject, ttl) ->
+			
+					# Destroy any session.
+					req.session?.destroy()
+					
+					# Log the user out.
+					req.logOut().then ->
+						
+						res.status 401
+						res.end buildBanMessage subject, ttl
+						
+				next()
+			
+			reporterMiddleware
+			
+			enforcementMiddleware
+				
+		]
+	
+	# ## Implements hook `settings`
+	registrar.registerHook 'packageSettings', ->
+		
+		ban:
+			
+			# 10 minute ban time by default.
+			defaultExpiration: 1000 * 60 * 10
+	
+	# ## Implements hook `socketAuthorizationMiddleware`
+	registrar.registerHook 'socketAuthorizationMiddleware', ->
+		
+		label: 'Provide villiany management'
+		middleware: [
+		
+			(req, res, next) ->
+				
+				req.villianyKick = (subject, ttl) ->
+					
+					# Destroy any session.
+					req.session?.destroy()
+					
+					# Log the user out.
+					req.logOut().then ->
+						
+						# Already authorized?
+						if req.socket?
+							
+							req.socket.emit 'core.reload'
+						
+						else
+							
+							throw new AuthorizationFailure
+							
+			
+				next()
+			
+			reporterMiddleware
+			
+			enforcementMiddleware
+			
+		]
+	
 villianyLimiter = new Limiter(
 	"villiany"
 	threshold(1000).every(10).minutes()
@@ -187,72 +258,3 @@ buildBanMessage = (subject, ttl) ->
 		}."
 		
 	message
-
-# ## Implements hook `httpMiddleware`
-exports.$httpMiddleware = ->
-	
-	label: 'Provide villiany management'
-	middleware: [
-		
-		(req, res, next) ->
-			
-			req.villianyKick = (subject, ttl) ->
-		
-				# Destroy any session.
-				req.session?.destroy()
-				
-				# Log the user out.
-				req.logOut().then ->
-					
-					res.status 401
-					res.end buildBanMessage subject, ttl
-					
-			next()
-		
-		reporterMiddleware
-		
-		enforcementMiddleware
-			
-	]
-
-# ## Implements hook `settings`
-exports.$packageSettings = ->
-	
-	ban:
-		
-		# 10 minute ban time by default.
-		defaultExpiration: 1000 * 60 * 10
-
-# ## Implements hook `socketAuthorizationMiddleware`
-exports.$socketAuthorizationMiddleware = ->
-	
-	label: 'Provide villiany management'
-	middleware: [
-	
-		(req, res, next) ->
-			
-			req.villianyKick = (subject, ttl) ->
-				
-				# Destroy any session.
-				req.session?.destroy()
-				
-				# Log the user out.
-				req.logOut().then ->
-					
-					# Already authorized?
-					if req.socket?
-						
-						req.socket.emit 'core.reload'
-					
-					else
-						
-						throw new AuthorizationFailure
-						
-		
-			next()
-		
-		reporterMiddleware
-		
-		enforcementMiddleware
-		
-	]

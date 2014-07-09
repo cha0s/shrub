@@ -6,53 +6,55 @@
 
 express = require 'express'
 
-# ## Implements hook `angularNavigationMiddleware`
-# 
-# If the client made a POST request, inject that request into the Angular
-# sandbox and let it do its thing.
-exports.$angularNavigationMiddleware = ->
+exports.pkgmanRegister = (registrar) ->
 
-	label: 'Handle form submission'
-	middleware: [
+	# ## Implements hook `angularNavigationMiddleware`
+	# 
+	# If the client made a POST request, inject that request into the Angular
+	# sandbox and let it do its thing.
+	registrar.registerHook 'angularNavigationMiddleware', ->
 	
-		(req, res, next) ->
-			
-			{body, sandbox} = req
-			
-			# Make sure there's a formKey in the submission.
-			# `TODO`: CRSF check needed here.
-			return next() unless body.formKey?
-
-			# Lookup the cached form.
-			formService = null
-			
-			sandbox.inject [
-				'form'
-				(form) -> formService = form
-			]
+		label: 'Handle form submission'
+		middleware: [
 		
-			return next() unless (form = formService.forms[body.formKey])?
+			(req, res, next) ->
 				
-			{element, scope} = form
-			
-			# Assign the scope values from the POST body. (Is this safe?)
-			form = scope[body.formKey]
-			for named in element.find '[name]'
-				continue unless (value = body[named.name])?
-				scope[named.name] = value
+				{body, sandbox} = req
 				
-			# Submit the form into Angular.
-			scope.$apply => form.submit.handler().finally => next()
-
-	]
-
-# ## Implements hook `httpMiddleware`
-# 
-# Parse POST submissions, and allow arbitrary method form attribute.
-exports.$httpMiddleware = (http) ->
+				# Make sure there's a formKey in the submission.
+				# `TODO`: CRSF check needed here.
+				return next() unless body.formKey?
 	
-	label: 'Parse form submissions'
-	middleware: [
-		express.bodyParser()
-		express.methodOverride()
-	]
+				# Lookup the cached form.
+				formService = null
+				
+				sandbox.inject [
+					'form'
+					(form) -> formService = form
+				]
+			
+				return next() unless (form = formService.forms[body.formKey])?
+					
+				{element, scope} = form
+				
+				# Assign the scope values from the POST body. (Is this safe?)
+				form = scope[body.formKey]
+				for named in element.find '[name]'
+					continue unless (value = body[named.name])?
+					scope[named.name] = value
+					
+				# Submit the form into Angular.
+				scope.$apply => form.submit.handler().finally => next()
+	
+		]
+	
+	# ## Implements hook `httpMiddleware`
+	# 
+	# Parse POST submissions, and allow arbitrary method form attribute.
+	registrar.registerHook 'httpMiddleware', (http) ->
+		
+		label: 'Parse form submissions'
+		middleware: [
+			express.bodyParser()
+			express.methodOverride()
+		]

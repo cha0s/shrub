@@ -1,17 +1,19 @@
 
 # # About page
 
-# ## Implements hook `route`
-exports.$route = ->
+exports.pkgmanRegister = (registrar) ->
 
-	path: 'about'
-	title: 'About'
+	# ## Implements hook `route`
+	registrar.registerHook 'route', ->
 	
-	controller: [
-		'$scope'
-		($scope) ->
-			
-			$scope.about = """
+		path: 'about'
+		title: 'About'
+		
+		controller: [
+			'$scope'
+			($scope) ->
+				
+				$scope.about = """
 Shrub
 =====
 
@@ -96,16 +98,16 @@ There is always more to do!
 
 * Client-side config should be handled better
 """
+		
+				$scope.$emit 'shrubFinishedRendering'
+		]
+		
+		template: """
 	
-			$scope.$emit 'shrubFinishedRendering'
-	]
-	
-	template: """
-
 <span
 	class="about"
 	data-ng-bind-html="about | shrubUiMarkdown:false"
 ></span>
-
+	
 """
-
+	

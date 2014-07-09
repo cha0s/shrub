@@ -2,31 +2,32 @@ angular.module(
   'shrub.config', ['shrub.require']
 )
 
-  .config(['requireProvider', function(requireProvider) {
+  .config(['shrub-requireProvider', function(requireProvider) {
 
     requireProvider.require('config').from({
       testMode: "unit",
       packageList: [
-        "angular",
-        "assets",
-        "config",
-        "core",
-        "example",
-        "express",
-        "files",
-        "form",
-        "limiter",
-        "logger",
-        "nodemailer",
-        "repl",
-        "rpc",
-        "schema",
-        "session",
-        "socket",
-        "ui",
-        "user",
-        "villiany"
+        "shrub-angular",
+        "shrub-assets",
+        "shrub-config",
+        "shrub-core",
+        "shrub-example",
+        "shrub-express",
+        "shrub-files",
+        "shrub-form",
+        "shrub-limiter",
+        "shrub-logger",
+        "shrub-nodemailer",
+        "shrub-repl",
+        "shrub-rpc",
+        "shrub-schema",
+        "shrub-session",
+        "shrub-socket",
+        "shrub-ui",
+        "shrub-user",
+        "shrub-villiany"
       ],
+      siteName: "Shrub",
       user: {
         name: "Anonymous",
         email: null

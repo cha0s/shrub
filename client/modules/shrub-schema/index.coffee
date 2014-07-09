@@ -9,22 +9,24 @@ pkgman = require 'pkgman'
 
 config = require 'config'
 
-# ## Implements hook `service`
-exports.$service = -> [
-	'$http'
-	($http) ->
-
-		schema = define(
-			require 'jugglingdb-rest'
-			$http: $http
-			apiRoot: config.get 'apiRoot'
-		)
-		
-		schema.definePackageModels()
-		
-		schema
-		
-]
+exports.pkgmanRegister = (registrar) ->
+	
+	# ## Implements hook `service`
+	registrar.registerHook 'service', -> [
+		'$http'
+		($http) ->
+	
+			schema = define(
+				require 'jugglingdb-rest'
+				$http: $http
+				apiRoot: config.get 'apiRoot'
+			)
+			
+			schema.definePackageModels()
+			
+			schema
+			
+	]
 
 # Translate model names to REST resource/collection paths.
 # `'CatalogEntry'` -> `['catalog-entry', 'catalog-entries']`

@@ -3,6 +3,8 @@
 # 
 # Define user interface components.
 
-exports[path] = require "./#{path}" for path in [
-	'markdown', 'nav', 'notifications', 'title', 'window'
-]
+exports.pkgmanRegister = (registrar) ->
+
+	registrar.recur [
+		'markdown', 'nav', 'notifications', 'title', 'window'
+	]	

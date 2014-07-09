@@ -1,45 +1,47 @@
 
 # # Navigation
 
-# ## Implements hook `directive`
-exports.$directive = -> [
-	'$location', 'shrub-ui/nav', 'shrub-ui/title', 'shrub-user'
-	($location, {links}, {page}, {instance}) ->
-	
-		link: (scope, elm, attr) ->
-			
-			# `TODO`: This whole thing needs to be overhauled.
-			scope.links = links
-			scope.navClass = if attr['uiNav'] then attr['uiNav'] else 'ui-nav'
-			scope.user = instance()
-			
-			scope.$watch(
-				-> page()
-				-> scope.pageTitle = page()
-			)
-			
-			(navActiveLinks = ->
-			
-				path = $location.path()
-				for link in scope.links()
+exports.pkgmanRegister = (registrar) ->
+
+	# ## Implements hook `directive`
+	registrar.registerHook 'directive', -> [
+		'$location', 'shrub-ui/nav', 'shrub-ui/title', 'shrub-user'
+		($location, {links}, {page}, {instance}) ->
+		
+			link: (scope, elm, attr) ->
 				
-					regexp = new RegExp "^#{link.pattern}$", ['i']
-					link.active = if regexp.test path then 'active'
+				# `TODO`: This whole thing needs to be overhauled.
+				scope.links = links
+				scope.navClass = if attr['uiNav'] then attr['uiNav'] else 'ui-nav'
+				scope.user = instance()
+				
+				scope.$watch(
+					-> page()
+					-> scope.pageTitle = page()
+				)
+				
+				(navActiveLinks = ->
+				
+					path = $location.path()
+					for link in scope.links()
 					
-			)()
-			
-			scope.$watch(
-				-> scope.links()
-				navActiveLinks	
-			)
-
-			scope.$watch(
-				-> $location.path()
-				navActiveLinks	
-			)
-			
-		template: """
-
+						regexp = new RegExp "^#{link.pattern}$", ['i']
+						link.active = if regexp.test path then 'active'
+						
+				)()
+				
+				scope.$watch(
+					-> scope.links()
+					navActiveLinks	
+				)
+	
+				scope.$watch(
+					-> $location.path()
+					navActiveLinks	
+				)
+				
+			template: """
+	
 <nav class="navbar navbar-default" role="navigation">
 	<div class="container-fluid">
 		
@@ -72,37 +74,37 @@ exports.$directive = -> [
 </nav>
 
 """
-		
-]
-
-# ## Implements hook `service`
-# 
-# This API allows you to dynamically change the navigation links.
-# `TODO`: Overhaul this.
-exports.$service = -> [
-	->
-		
-		service = {}
-		
-		_links = []
-		
-# Get and set the navigation links. The links are objects structured like so:
-# 
-# * pattern: A string or regex containing the path to match to set this item
-# active.
-# * href: Target navigation path when this item is clicked.
-# * name: Human readable name for the item.
-# 
-# e.g.
-# 
-#     item =
-#         pattern: '/home'
-#         href: '#/home'
-#         name: 'Home'
-		
-		service.links = -> _links
-		service.setLinks = (links) -> _links = links
-		
-		service
-		
-]
+			
+	]
+	
+	# ## Implements hook `service`
+	# 
+	# This API allows you to dynamically change the navigation links.
+	# `TODO`: Overhaul this.
+	registrar.registerHook 'service', -> [
+		->
+			
+			service = {}
+			
+			_links = []
+			
+	# Get and set the navigation links. The links are objects structured like so:
+	# 
+	# * pattern: A string or regex containing the path to match to set this item
+	# active.
+	# * href: Target navigation path when this item is clicked.
+	# * name: Human readable name for the item.
+	# 
+	# e.g.
+	# 
+	#     item =
+	#         pattern: '/home'
+	#         href: '#/home'
+	#         name: 'Home'
+			
+			service.links = -> _links
+			service.setLinks = (links) -> _links = links
+			
+			service
+			
+	]

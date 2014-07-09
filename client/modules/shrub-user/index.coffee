@@ -7,8 +7,94 @@ Promise = require 'bluebird'
 
 config = require 'config'
 
-# ## Implements hook `models`
-exports.$models = (schema) ->
+exports.pkgmanRegister = (registrar) ->
+
+	# ## Implements hook `models`
+	registrar.registerHook 'models', exports.models
+		
+	# ## Implements hook `modelsAlter`
+	registrar.registerHook 'modelsAlter', exports.modelsAlter
+			
+	# ## Implements hook `service`		
+	registrar.registerHook 'service', -> [
+		'shrub-rpc', 'shrub-schema', 'shrub-socket'
+		({call}, {models: User: User}, socket) ->
+			
+			service = {}
+			
+			user = new User config.get 'user'
+			
+			# Log a user out if we get a socket call.
+			logout = -> user.fromObject (new User).toObject()
+			socket.on 'user.logout', logout
+			
+			# ## user.isLoggedIn
+			# 
+			# *Whether the current application user is logged in.*
+			service.isLoggedIn = -> service.instance().id? 
+				
+			# ## user.login
+			# 
+			# *Log in with method and args.*
+			# 
+			# `TODO`: username and password are tightly coupled to local
+			# strategy. Change that.
+			service.login = (method, username, password) ->
+				
+				call(
+					'user.login'
+					method: method
+					username: username
+					password: password
+				
+				).then (O) ->
+					user.fromObject O
+					user
+	
+			# ## user.logout
+			# 
+			# *Log out.*
+			service.logout = ->
+				
+				call(
+					'user.logout'
+	
+				).then logout
+			
+			# ## user.instance
+			# 
+			# *Retrieve the user instance.*
+			service.instance = -> user
+			
+			service
+			
+	]
+	
+	# ## Implements hook `serviceMock`
+	registrar.registerHook 'serviceMock', -> [
+		'$delegate', 'shrub-socket'
+		($delegate, socket) ->
+			
+			# ## user.fakeLogin
+			# 
+			# *Mock a login process.*
+			# 
+			# `TODO`: This will change when login method generalization happens.
+			$delegate.fakeLogin = (username, password = 'password', id = 1) ->
+				socket.catchEmit 'rpc://user.login', (data, fn) ->
+					fn result: id: id, name: username
+					
+				$delegate.login 'local', username, password
+				
+			$delegate
+		
+	]
+	
+	registrar.recur [
+		'forgot', 'login', 'logout', 'register', 'reset'
+	]
+	
+exports.models = (schema) ->
 	
 	# Define the User model.
 	User = schema.define 'User',
@@ -49,11 +135,8 @@ exports.$models = (schema) ->
 	# `TODO`: Access control structure.
 	User::hasPermission = (perm) -> false
 	User::isAccessibleBy = (user) -> false
-	
-authenticatedModel = (User, Model, name) ->
-	
-# ## Implements hook `modelsAlter`
-exports.$modelsAlter = (models) ->
+
+exports.modelsAlter = (models) ->
 	
 	{User} = models
 	
@@ -170,82 +253,3 @@ exports.$modelsAlter = (models) ->
 			Model::isEditableBy ?= (user) -> false
 			Model::isDeletableBy ?= (user) -> false
 			Model::redactFor ?= (user) -> Promise.resolve this
-		
-# ## Implements hook `service`		
-exports.$service = -> [
-	'shrub-rpc', 'shrub-schema', 'shrub-socket'
-	({call}, {models: User: User}, socket) ->
-		
-		service = {}
-		
-		user = new User config.get 'user'
-		
-		# Log a user out if we get a socket call.
-		logout = -> user.fromObject (new User).toObject()
-		socket.on 'user.logout', logout
-		
-		# ## user.isLoggedIn
-		# 
-		# *Whether the current application user is logged in.*
-		service.isLoggedIn = -> service.instance().id? 
-			
-		# ## user.login
-		# 
-		# *Log in with method and args.*
-		# 
-		# `TODO`: username and password are tightly coupled to local
-		# strategy. Change that.
-		service.login = (method, username, password) ->
-			
-			call(
-				'user.login'
-				method: method
-				username: username
-				password: password
-			
-			).then (O) ->
-				user.fromObject O
-				user
-
-		# ## user.logout
-		# 
-		# *Log out.*
-		service.logout = ->
-			
-			call(
-				'user.logout'
-
-			).then logout
-		
-		# ## user.instance
-		# 
-		# *Retrieve the user instance.*
-		service.instance = -> user
-		
-		service
-		
-]
-
-# ## Implements hook `serviceMock`
-exports.$serviceMock = -> [
-	'$delegate', 'shrub-socket'
-	($delegate, socket) ->
-		
-		# ## user.fakeLogin
-		# 
-		# *Mock a login process.*
-		# 
-		# `TODO`: This will change when login method generalization happens.
-		$delegate.fakeLogin = (username, password = 'password', id = 1) ->
-			socket.catchEmit 'rpc://user.login', (data, fn) ->
-				fn result: id: id, name: username
-				
-			$delegate.login 'local', username, password
-			
-		$delegate
-	
-]
-
-exports[path] = require "./#{path}" for path in [
-	'forgot', 'login', 'logout', 'register', 'reset'
-]

@@ -1,31 +1,33 @@
 
 # # Home page
 
-# ## Implements hook `appConfig`
-exports.$appConfig = -> [
-	'$routeProvider'
-	($routeProvider) ->
-		
-		# We'll gank the default route.
-		$routeProvider.otherwise redirectTo: '/home'
-]
+exports.pkgmanRegister = (registrar) ->
 
-# ## Implements hook `route`
-exports.$route = ->
-
-	path: 'home'
-	title: 'Home'
-	
-	controller: [
-		'$scope'
-		($scope) ->
+	# ## Implements hook `appConfig`
+	registrar.registerHook 'appConfig', -> [
+		'$routeProvider'
+		($routeProvider) ->
 			
-			$scope.$emit 'shrubFinishedRendering'
-			
+			# We'll gank the default route.
+			$routeProvider.otherwise redirectTo: '/home'
 	]
 	
-	template: """
-
+	# ## Implements hook `route`
+	registrar.registerHook 'route', ->
+	
+		path: 'home'
+		title: 'Home'
+		
+		controller: [
+			'$scope'
+			($scope) ->
+				
+				$scope.$emit 'shrubFinishedRendering'
+				
+		]
+		
+		template: """
+	
 <div class="jumbotron">
 	
 	<h1>Shrub</h1>
@@ -35,5 +37,5 @@ exports.$route = ->
 	<hr>
 
 </div>
-
+	
 """

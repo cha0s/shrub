@@ -8,6 +8,32 @@ _ = require 'underscore'
 packageCache = null
 _packages = []
 
+class PkgmanRegistrar
+
+	constructor: (@_path) ->
+	
+	recur: (paths) ->
+		
+		for path in paths
+			
+			subpath = "#{@_path}/#{path}"
+			submodule = require subpath
+			submodule.pkgmanRegister? new PkgmanRegistrar subpath
+		
+	registerHook: (submodule, hook, impl) ->
+		
+		if impl?
+			
+			path = "#{submodule}/#{@_path}"
+		
+		else
+			
+			path = @_path
+			impl = hook
+			hook = submodule
+			
+		(packageCache[hook] ?= []).push path: path, impl: impl
+
 # ## rebuildPackageCache
 exports.rebuildPackageCache = ->
 	packageCache = {}
@@ -16,7 +42,9 @@ exports.rebuildPackageCache = ->
 	for name in _packages
 	
 		try
+			
 			modules[name] = require name
+		
 		catch error
 			
 			# Suppress missing package errors.
@@ -24,27 +52,12 @@ exports.rebuildPackageCache = ->
 			continue if error.toString() is "Error: Cannot find module '#{name}'"
 			throw error
 			
-		defaultLogger.info "Loaded package #{name}."
+		defaultLogger.info "Found package #{name}."
 	
-	# Recur down the package tree and collect hooks.		
-	cacheRecursive = (path, parent) ->
-		return unless _.isObject parent
-		
-		for key, objectOrFunction of parent
-			
-			# It's a hook, cache it.
-			if key.charCodeAt(0) is '$'.charCodeAt(0)
-				(packageCache[key.slice 1] ?= []).push
-					path: path
-					fn: objectOrFunction
+	# Collect hooks.
+	for path, module_ of modules
+		module_.pkgmanRegister? new PkgmanRegistrar path
 	
-			else
-				
-				# Recur.
-				cacheRecursive "#{path}/#{key}", objectOrFunction
-				
-	cacheRecursive path, module for path, module of modules
-		
 	return
 
 # ## registerPackageList
@@ -57,17 +70,17 @@ exports.registerPackageList = (packages) ->
 # Invoke a hook with arguments. Return the result as an object, keyed by
 # package path.
 exports.invoke = (hook, args...) ->
-	exports.rebuildPackageCache() unless packageCache?
 	
 	results = {}
-	results[path] = fn args... for {path, fn} in packageCache[hook] ? []
+	return results unless packageCache?
+	
+	results[path] = impl args... for {path, impl} in packageCache[hook] ? []
 	results
 
 # ## invokeFlat
 # 
 # Invoke a hook with arguments. Return the result as an array.
 exports.invokeFlat = (hook, args...) ->
-	
-	exports.rebuildPackageCache() unless packageCache?
-	
-	fn args... for {fn} in packageCache[hook] ? []
+	return [] unless packageCache?
+
+	impl args... for {impl} in packageCache[hook] ? []

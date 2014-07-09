@@ -4,13 +4,13 @@ describe 'form', ->
 	it 'should automagically register a form when compiling a directive', ->
 
 		inject [
-			'$compile', '$rootScope', 'form'
+			'$compile', '$rootScope', 'shrub-form'
 			($compile, $rootScope, {forms}) ->
 				
 				# Sanity
 				expect(forms.test).not.toBeDefined()
 				
-				tpl = $compile '<div data-form="test"></div>'
+				tpl = $compile '<div data-shrub-form="test"></div>'
 				
 				scope = $rootScope.$new()
 				scope.test = {}
@@ -28,7 +28,7 @@ describe 'form', ->
 			'$compile', '$rootScope'
 			($compile, $rootScope) ->
 				
-				tpl = $compile '<div data-form="test"></div>'
+				tpl = $compile '<div data-shrub-form="test"></div>'
 				
 				scope = $rootScope.$new()
 				
@@ -92,7 +92,7 @@ describe 'form', ->
 			'$compile', '$rootScope'
 			($compile, $rootScope) ->
 				
-				tpl = $compile '<div data-form="test"></div>'
+				tpl = $compile '<div data-shrub-form="test"></div>'
 				
 				scope = $rootScope.$new()
 				
@@ -129,10 +129,10 @@ describe 'form', ->
 	it 'should handle rpc submission', ->
 
 		inject [
-			'$compile', '$rootScope', '$timeout', 'socket'
+			'$compile', '$rootScope', '$timeout', 'shrub-socket'
 			($compile, $rootScope, $timeout, socket) ->
 				
-				tpl = $compile '<div data-form="test"></div>'
+				tpl = $compile '<div data-shrub-form="test"></div>'
 				
 				scope = $rootScope.$new()
 				

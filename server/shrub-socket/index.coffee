@@ -8,47 +8,49 @@ config = require 'config'
 # The socket manager.
 socketManager = null
 
-# ## Implements hook `httpInitializing`
-exports.$httpInitializing = (http) ->
+exports.pkgmanRegister = (registrar) ->
+
+	# ## Implements hook `httpInitializing`
+	registrar.registerHook 'httpInitializing', (http) ->
+		
+		Manager = require config.get 'packageSettings:shrub-socket:manager:module'
+		
+		# Spin up the socket server, and have it listen on the HTTP server.
+		socketManager = new Manager()
+		socketManager.loadMiddleware()
+		socketManager.listen http
+		
+	# ## Implements hook `packageSettings`
+	registrar.registerHook 'packageSettings', ->
 	
-	{Manager} = require config.get 'packageSettings:shrub-socket:manager:module'
+		# Middleware stack dispatched to authorize or reject a socket connection.
+		authorizationMiddleware: [
+			'shrub-core'
+			'shrub-session/express'
+			'shrub-user'
+			'shrub-villiany'
+		]
 	
-	# Spin up the socket server, and have it listen on the HTTP server.
-	socketManager = new Manager
-	socketManager.loadMiddleware()
-	socketManager.listen http
+		# Middleware stack dispatched once a socket connection is authorized.
+		connectionMiddleware: [
+			'shrub-session'
+			'shrub-user'
+			'shrub-rpc'
+		]
 	
-# ## Implements hook `packageSettings`
-exports.$packageSettings = ->
-
-	# Middleware stack dispatched to authorize or reject a socket connection.
-	authorizationMiddleware: [
-		'shrub-core'
-		'shrub-session/express'
-		'shrub-user'
-		'shrub-villiany'
-	]
-
-	# Middleware stack dispatched once a socket connection is authorized.
-	connectionMiddleware: [
-		'shrub-session'
-		'shrub-user'
-		'shrub-rpc'
-	]
-
-	# Middleware stack dispatched when socket disconnects.
-	disconnectionMiddleware: []
-
-	manager:
+		# Middleware stack dispatched when socket disconnects.
+		disconnectionMiddleware: []
 	
-		# Module implementing the socket manager.
-		module: 'shrub-socket.io'
-
-# ## Implements hook `replContext`
-exports.$replContext = (context) ->
+		manager:
+		
+			# Module implementing the socket manager.
+			module: 'shrub-socket.io'
 	
-	# Provide the socketManager to REPL.
-	context.socketManager = socketManager
-
+	# ## Implements hook `replContext`
+	registrar.registerHook 'replContext', (context) ->
+		
+		# Provide the socketManager to REPL.
+		context.socketManager = socketManager
+	
 # ## manager
 exports.manager = -> socketManager

@@ -61,7 +61,7 @@ module.exports = class HttpManager
 	# *Gather and initialize HTTP middleware.*
 	registerMiddleware: ->
 		
-		defaultLogger.info 'Loading HTTP middleware...'
+		defaultLogger.info '- Loading HTTP middleware...'
 		
 		# Invoke hook `httpMiddleware`.
 		# Invoked every time an HTTP connection is established.
@@ -72,7 +72,7 @@ module.exports = class HttpManager
 			this
 		)
 		
-		defaultLogger.info 'HTTP middleware loaded.'
+		defaultLogger.info '- HTTP middleware loaded.'
 
 	# } Ensure any subclass implements these methods.
 	@::[method] = (-> throw new ReferenceError(

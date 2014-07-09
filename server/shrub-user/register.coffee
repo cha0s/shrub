@@ -9,66 +9,68 @@ schema = require('shrub-schema').schema()
 
 {threshold} = require 'limits'
 
-# ## Implements hook `endpoint`
-exports.$endpoint = ->
-
-	limiter:
-		message: "You are trying to register too much."
-		threshold: threshold(5).every(2).minutes()
-
-	receiver: (req, fn) ->
-		
-		{body} = req
-		{email, password, username} = body
-		
-		# Register a new user.
-		exports.register(username, email, password).then((user) ->
+exports.pkgmanRegister = (registrar) ->
+	
+	# ## Implements hook `endpoint`
+	registrar.registerHook 'endpoint', ->
+	
+		limiter:
+			message: "You are trying to register too much."
+			threshold: threshold(5).every(2).minutes()
+	
+		receiver: (req, fn) ->
 			
-			# Send an email to the new user's email with a one-time login
-			# link.
-			hostname = "http://#{
-				req.headers.host
-			}"
+			{body} = req
+			{email, password, username} = body
 			
-			siteName = config.get 'packageSettings:shrub-core:siteName'
-			
-			tokens =
+			# Register a new user.
+			exports.register(username, email, password).then((user) ->
 				
-				hostname: hostname
-				
-				email: email
-				
-				loginUrl: "#{
-					hostname
-				}/user/reset/#{
-					user.resetPasswordToken
+				# Send an email to the new user's email with a one-time login
+				# link.
+				hostname = "http://#{
+					req.headers.host
 				}"
 				
-				password: user.plaintext
+				siteName = config.get 'packageSettings:shrub-core:siteName'
 				
-				siteName: siteName
+				tokens =
+					
+					hostname: hostname
+					
+					email: email
+					
+					loginUrl: "#{
+						hostname
+					}/user/reset/#{
+						user.resetPasswordToken
+					}"
+					
+					password: user.plaintext
+					
+					siteName: siteName
+					
+					title: "Account registration details"
+					
+					username: username
 				
-				title: "Account registration details"
-				
-				username: username
+				nodemailer.sendMail(
+					'user/register'
+					to: email
+					subject: "Account registration details for #{siteName}"
+					tokens: tokens
+				)
 			
-			nodemailer.sendMail(
-				'user/register'
-				to: email
-				subject: "Account registration details for #{siteName}"
-				tokens: tokens
+			).then(
+				-> fn()
+				(error) -> fn error
 			)
+			
+	# ## Implements hook `replContext`
+	registrar.registerHook 'replContext', (context) ->
 		
-		).then(
-			-> fn()
-			(error) -> fn error
-		)
-		
-# ## Implements hook `replContext`
-exports.$replContext = (context) ->
+		context.registerUser = exports.register
 	
-	context.registerUser = exports.register
-
 # ## register
 # 
 # *Register a user in the system.*

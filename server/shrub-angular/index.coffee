@@ -15,6 +15,128 @@ middleware = require 'middleware'
 # } The middleware dispatched every time sandboxed angular is navigated.
 navigationMiddleware = []
 
+exports.pkgmanRegister = (registrar) ->
+
+	# ## Implements hook `endpoint`
+	# 
+	# Allow a JSful client to call us back and inform us that we don't need to
+	# hold their sandbox.
+	registrar.registerHook 'endpoint', ->
+		
+		route: 'hangup'
+		receiver: (req, fn) ->
+			
+			id = req.session?.id
+			if (sandbox = sandboxManager.lookup id)?
+				sandbox.close().finally -> fn()
+			else
+				fn()
+	
+	# ## Implements hook `httpMiddleware`
+	# 
+	# If configuration dictates, render the client-side Angular application in a
+	# sandbox.
+	registrar.registerHook 'httpMiddleware', (http) ->
+		
+		label: 'Render page with Angular'
+		middleware: [
+		
+			(req, res, next) ->
+				
+				settings = config.get 'packageSettings:shrub-angular'
+				
+				# } Render app.html
+				htmlPromise = http.renderAppHtml res.locals
+				
+				# } Skip render in a sandbox?
+				return htmlPromise.then(
+					(html) -> res.end html
+					(error) -> next error
+				) unless settings.render
+					
+				# } Thrown when a request is complete.
+				class ResponseComplete extends Error
+					constructor: (@message) ->
+				
+				# } After the template is rendered, lookup or create the sandbox.
+				htmlPromise.bind({}).then((html) ->
+					
+					sandboxManager.lookupOrCreate(
+						html
+					,
+						cookie: req.headers.cookie
+						url: "http://localhost:#{
+							config.get 'packageSettings:shrub-http:port'
+						}/shrub-entry-point"
+					,
+						req.session.id
+					)
+					
+				).then((@sandbox) ->
+					
+					# } Emit the HTML from before the last redirection.
+					if (redirectionHtml = @sandbox.redirectionHtml())?
+						@sandbox.setRedirectionHtml null
+						res.end redirectionHtml
+						throw new ResponseComplete()
+						
+					# } Check for any new redirection and handle it.
+					if (redirectionPath = @sandbox.redirectionPath())?
+						@sandbox.setRedirectionPath null
+						res.redirect redirectionPath
+						throw new ResponseComplete()
+						
+					{path} = url.parse req.url
+					@sandbox.navigate path, req.body
+					
+				).then(->
+					
+					emission = @sandbox.emitHtml()
+					
+					# } If a redirect happened in the sandbox, actually redirect
+					# } the browser and save the emission for the next request.
+					if (redirectionPath = @sandbox.redirectionPath())?
+						@sandbox.setRedirectionPath null
+						@sandbox.setRedirectionHtml emission
+						res.redirect redirectionPath
+					
+					# } Otherwise, just emit.	
+					else
+						
+						res.end emission
+					
+				# } The request was completed early.
+				).catch(ResponseComplete, ->
+				
+				).catch next
+				
+	]
+	
+	# ## Implements hook `initialize`
+	registrar.registerHook 'initialize', ->
+		
+		# Always disable sandbox rendering in end-to-end testing mode.
+		config.set 'packageSettings:shrub-angular:render', false if config.get 'E2E'
+		
+		# } Load the navigation middleware.
+		navigationMiddleware = middleware.fromShortName(
+			'angular navigation'
+			'shrub-angular'
+		)
+		
+	# ## Implements hook `packageSettings`
+	registrar.registerHook 'packageSettings', ->
+	
+		navigationMiddleware: [
+			'shrub-form'
+		]
+	
+		# } Should we render in the sandbox?
+		render: true
+		
+		# } Time-to-live for rendering sandboxes.
+		ttl: 1000 * 60 * 5
+
 # ## SandboxManager
 # This class handles instantiation of new sandboxes, as well as providing a
 # mechanism for registering and looking up persistent sandboxes using an id.
@@ -90,126 +212,6 @@ sandboxManager = new class SandboxManager
 			@create(html, options, id).then (sandbox) ->
 				exports.augmentSandbox sandbox
 	
-# ## Implements hook `endpoint`
-# 
-# Allow a JSful client to call us back and inform us that we don't need to
-# hold their sandbox.
-exports.$endpoint = ->
-	
-	route: 'hangup'
-	receiver: (req, fn) ->
-		
-		id = req.session?.id
-		if (sandbox = sandboxManager.lookup id)?
-			sandbox.close().finally -> fn()
-		else
-			fn()
-
-# ## Implements hook `httpMiddleware`
-# 
-# If configuration dictates, render the client-side Angular application in a
-# sandbox.
-exports.$httpMiddleware = (http) ->
-	
-	label: 'Render page with Angular'
-	middleware: [
-	
-		(req, res, next) ->
-			
-			settings = config.get 'packageSettings:shrub-angular'
-			
-			# } Render app.html
-			htmlPromise = http.renderAppHtml res.locals
-			
-			# } Skip render in a sandbox?
-			return htmlPromise.then(
-				(html) -> res.end html
-				(error) -> next error
-			) unless settings.render
-				
-			# } Thrown when a request is complete.
-			class ResponseComplete extends Error
-				constructor: (@message) ->
-			
-			# } After the template is rendered, lookup or create the sandbox.
-			htmlPromise.bind({}).then((html) ->
-				
-				sandboxManager.lookupOrCreate(
-					html
-				,
-					cookie: req.headers.cookie
-					url: "http://localhost:#{
-						config.get 'packageSettings:shrub-http:port'
-					}/shrub-entry-point"
-				,
-					req.session.id
-				)
-				
-			).then((@sandbox) ->
-				
-				# } Emit the HTML from before the last redirection.
-				if (redirectionHtml = @sandbox.redirectionHtml())?
-					@sandbox.setRedirectionHtml null
-					res.end redirectionHtml
-					throw new ResponseComplete()
-					
-				# } Check for any new redirection and handle it.
-				if (redirectionPath = @sandbox.redirectionPath())?
-					@sandbox.setRedirectionPath null
-					res.redirect redirectionPath
-					throw new ResponseComplete()
-					
-				{path} = url.parse req.url
-				@sandbox.navigate path, req.body
-				
-			).then(->
-				
-				emission = @sandbox.emitHtml()
-				
-				# } If a redirect happened in the sandbox, actually redirect
-				# } the browser and save the emission for the next request.
-				if (redirectionPath = @sandbox.redirectionPath())?
-					@sandbox.setRedirectionPath null
-					@sandbox.setRedirectionHtml emission
-					res.redirect redirectionPath
-				
-				# } Otherwise, just emit.	
-				else
-					
-					res.end emission
-				
-			# } The request was completed early.
-			).catch(ResponseComplete, ->
-			
-			).catch next
-			
-]
-
-# ## Implements hook `initialize`
-exports.$initialize = ->
-
-	# Always disable sandbox rendering in end-to-end testing mode.
-	config.set 'packageSettings:shrub-angular:render', false if config.get 'E2E'
-	
-	# } Load the navigation middleware.
-	navigationMiddleware = middleware.fromShortName(
-		'angular navigation'
-		'shrub-angular'
-	)
-	
-# ## Implements hook `packageSettings`
-exports.$packageSettings = ->
-
-	navigationMiddleware: [
-		'shrub-form'
-	]
-
-	# } Should we render in the sandbox?
-	render: true
-	
-	# } Time-to-live for rendering sandboxes.
-	ttl: 1000 * 60 * 5
-
 # ## augmentSandbox
 # 
 # *Augment a sandbox with Angular-specific functionality.*
@@ -366,7 +368,7 @@ exports.augmentSandbox = (sandbox) ->
 		new Promise (resolve) ->
 		
 			sandbox.inject [
-				'socket'
+				'shrub-socket'
 				(socket) ->
 				
 					socket.on 'disconnect', -> resolve()
@@ -377,7 +379,7 @@ exports.augmentSandbox = (sandbox) ->
 	new Promise (resolve) ->
 	
 		sandbox.inject [
-			'$sniffer', 'socket'
+			'$sniffer', 'shrub-socket'
 			($sniffer, socket) ->
 				
 				# } Don't even try HTML 5 history on the server side.

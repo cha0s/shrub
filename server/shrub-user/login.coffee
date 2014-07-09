@@ -14,78 +14,82 @@ schema = require('shrub-schema').schema()
 clientModule = require 'client/modules/shrub-user/login'
 userPackage = require 'shrub-user'
 
-# ## Implements hook `endpoint`
-exports.$endpoint = ->
+exports.pkgmanRegister = (registrar) ->
 	
-	limiter:
-		message: "You are logging in too much."
-		threshold: threshold(3).every(30).seconds()
-
-	receiver: (req, fn) ->
+	# ## Implements hook `endpoint`
+	registrar.registerHook 'endpoint', ->
 		
-		passport = req._passport.instance
-		
-		loginPromise = switch req.body.method
+		limiter:
+			message: "You are logging in too much."
+			threshold: threshold(3).every(30).seconds()
+	
+		receiver: (req, fn) ->
 			
-			when 'local'
+			passport = req._passport.instance
+			
+			loginPromise = switch req.body.method
 				
-				res = {}
-				
-				deferred = Promise.defer()
-				passport.authenticate('local', deferred.callback) req, res, fn
-				
-				# Log the user in (if it exists), and redact it for the
-				# response.
-				deferred.promise.bind({}).spread((@user, info) ->
-					throw errors.instantiate 'login' unless @user
+				when 'local'
 					
-					req.logIn @user
+					res = {}
 					
-				).then ->
+					deferred = Promise.defer()
+					passport.authenticate('local', deferred.callback) req, res, fn
 					
-					# Join a channel for the username.
-					req.socket.join @user.name
+					# Log the user in (if it exists), and redact it for the
+					# response.
+					deferred.promise.bind({}).spread((@user, info) ->
+						throw errors.instantiate 'login' unless @user
+						
+						req.logIn @user
+						
+					).then ->
+						
+						# Join a channel for the username.
+						req.socket.join @user.name
+						
+						@user.redactFor @user
 					
-					@user.redactFor @user
-				
-# } Using nodeify here crashes the app. It may be a bluebird bug.
+			# } Using nodeify here crashes the app. It may be a bluebird bug.
+			loginPromise.then((user) -> fn null, user
+			).catch fn
+	
+	# ## Implements hook `initialize`
+	registrar.registerHook 'initialize', ->
 		
-		loginPromise.then((user) -> fn null, user
-		).catch fn
-
-# ## Implements hook `initialize`
-exports.$initialize = ->
-	
-	{User} = schema.models
-	
-	# Implement a local passport strategy.
-	# `TODO`: Strategies should be dynamically defined, probably through a
-	# hook.
-	LocalStrategy = require('passport-local').Strategy
-	passport.use new LocalStrategy (username, password, done) ->
+		{User} = schema.models
 		
-		# Load a user and compare the hashed password.
-		userPackage.loadByName(username).bind({}).then((@user)->
-			return unless @user?
+		# Implement a local passport strategy.
+		# `TODO`: Strategies should be dynamically defined, probably through a
+		# hook.
+		LocalStrategy = require('passport-local').Strategy
+		passport.use new LocalStrategy (username, password, done) ->
 			
-			crypto.hasher(
-				plaintext: password
-				salt: new Buffer @user.salt, 'hex'
-			)
+			# Load a user and compare the hashed password.
+			userPackage.loadByName(username).bind({}).then((@user)->
+				return unless @user?
+				
+				crypto.hasher(
+					plaintext: password
+					salt: new Buffer @user.salt, 'hex'
+				)
+				
+			).then((hashed) ->
+				return unless @user?
+				return unless @user.passwordHash is hashed.key.toString 'hex'
+				
+				@user
+				
+			).nodeify done
 			
-		).then((hashed) ->
-			return unless @user?
-			return unless @user.passwordHash is hashed.key.toString 'hex'
-			
-			@user
-			
-		).nodeify done
+		passport.serializeUser (user, done) -> done null, user.id
 		
-	passport.serializeUser (user, done) -> done null, user.id
+		passport.deserializeUser (id, done) -> User.find(id).nodeify done
+		
+		monkeyPatchLogin()
 	
-	passport.deserializeUser (id, done) -> User.find(id).nodeify done
-	
-	monkeyPatchLogin()
+	# ## Implements hook `transmittableError`
+	registrar.registerHook 'transmittableError', clientModule.transmittableError
 	
 # Monkey patch http.IncomingMessage.prototype.login to run our middleware,
 # and return a promise.
@@ -126,6 +130,3 @@ monkeyPatchLogin = ->
 						return reject error if error?
 						
 						resolve()
-
-# ## Implements hook `transmittableError`
-exports.$transmittableError = clientModule.$transmittableError

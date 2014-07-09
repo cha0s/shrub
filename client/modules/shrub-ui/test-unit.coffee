@@ -5,7 +5,7 @@ describe 'md', ->
 	
 	beforeEach ->
 		
-		inject (uiMarkdownFilter) -> markdown = uiMarkdownFilter
+		inject (shrubUiMarkdownFilter) -> markdown = shrubUiMarkdownFilter
 		
 	it 'should be able to parse markdown into HTML', ->
 		

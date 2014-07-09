@@ -52,4 +52,4 @@ exports.load = ->
 # ### set
 # 
 # *Set a configuration value by key.*
-exports.set = (key, value) -> nconf.get key, value
+exports.set = (key, value) -> nconf.set key, value

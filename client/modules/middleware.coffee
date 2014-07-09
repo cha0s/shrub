@@ -115,7 +115,7 @@ exports.fromHook = (hook, paths, args...) ->
 	for path in paths
 		continue unless (spec = hookResults[path])?
 		
-		defaultLogger.info spec.label
+		defaultLogger.info "- - #{spec.label}"
 		
 		middleware.use _ for _ in spec.middleware ? []
 	
@@ -140,7 +140,7 @@ exports.fromHook = (hook, paths, args...) ->
 #
 exports.fromShortName = (shortName, packageName) ->
 
-	defaultLogger.info "Loading #{shortName} middleware..."
+	defaultLogger.info "- Loading #{shortName} middleware..."
 	
 	[firstPart, keyParts...] = shortName.split ' '
 	packageName ?= firstPart
@@ -154,6 +154,6 @@ exports.fromShortName = (shortName, packageName) ->
 		}Middleware"
 	)
 	
-	defaultLogger.info "#{i8n.capitalize shortName} middleware loaded."
+	defaultLogger.info "- #{i8n.capitalize shortName} middleware loaded."
 	
 	middleware
