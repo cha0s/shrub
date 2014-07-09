@@ -74,14 +74,16 @@ generateHookDocumentation = do ->
 
 Shrub implements message passing between packages through a hook system. Hooks
 may be invoked with [pkgman.invoke()](./client/modules/pkgman.html), and are
-implemented in packages by prefixing a `$` to the hook name.
+implemented in packages by exporting `pkgmanRegister`.
 
 For instance, if we are implementing a package and want to implement the
 `httpListening` hook, our code would look like:
 
-	exports.$httpListening = ->
+	exports.pkgmanRegister = (registrar) ->
 		
-		# Your code goes here...
+		registrar.registerHook 'httpListening', ->
+
+			# Your code goes here...
 
 The list below was dynamically generated from the source code. There is a
 description and a list of implementing packages for each hook.
