@@ -37,9 +37,9 @@ packageTypeAndName = (filename) ->
 	regex = ///
 
 ^(?:
-	(server)\/packages\/([^/]+)
+	(server)\/(shrub-[^/]+)
 	|
-	(client)\/modules\/packages\/([^/]+)
+	(client)\/modules\/(shrub-[^/]+)
 )
 
 ///
@@ -101,7 +101,7 @@ description and a list of implementing packages for each hook.
 		for filename, {commentLines} of sources
 			continue unless (typeAndName = packageTypeAndName filename)?
 			
-			matches = filename.match /packages\/(.*)\./
+			matches = filename.match /(shrub-.*)\./
 			typeAndName.name = matches[1]
 			typeAndName.filename = filename
 			
