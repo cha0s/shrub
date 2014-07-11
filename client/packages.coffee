@@ -6,10 +6,13 @@ angular.module('shrub.packages', [
 ])
 
 	.config([
-		'$compileProvider', '$controllerProvider', '$filterProvider', '$provide', 'shrub-pkgmanProvider', 'shrub-requireProvider'
-		($compileProvider, $controllerProvider, $filterProvider, $provide, {invoke}, {require}) ->
+		'$compileProvider', '$controllerProvider', '$filterProvider', '$injector', '$provide', 'shrub-pkgmanProvider', 'shrub-requireProvider'
+		($compileProvider, $controllerProvider, $filterProvider, $injector, $provide, {invoke}, {require}) ->
+			
+			_ = require 'underscore'
 			
 			config = require 'config'
+			skin = require 'skin'
 			
 			{defaultLogger} = require 'logging'
 			
@@ -43,10 +46,48 @@ angular.module('shrub.packages', [
 			defaultLogger.info "Registering directives..."
 			
 			for path, injected of invoke 'directive'
-				defaultLogger.info normalize path
+				
+				do (path, injected) ->
+				
+					name = normalize path
+					
+					defaultLogger.info name
+					
+					# This gets run over immediately, but it's required due to
+					# the way Angular caches directives internally.
+					$compileProvider.directive name, injected
 
-				$compileProvider.directive (normalize path), injected
-
+					$provide.factory "#{name}Directive", [
+						'$injector'
+						($injector) ->
+						
+							directive = $injector.invoke injected
+							compiler = skin.registerDirective "#{path}.html"
+							
+							link = directive.link
+							directive.link = (scope, element) ->
+								compiler.compile scope, element
+								
+								link.apply null, arguments if link?
+									
+							if _.isFunction directive
+								
+								directive = compile: -> directive
+								
+							else if not directive.compile and directive.link
+								
+								directive.compile = -> directive.link
+								
+							directive.priority = directive.priority ? 0
+							directive.index = 0
+							directive.name = directive.name ? name
+							directive.require = directive.require ? directive.controller and directive.name
+							directive.restrict = directive.restrict ? 'A'
+							
+							[directive]
+							
+					]
+						
 			defaultLogger.info "Directives registered."
 
 			# Invoke hook `filter`.

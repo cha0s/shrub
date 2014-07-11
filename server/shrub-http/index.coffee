@@ -43,6 +43,7 @@ exports.pkgmanRegister = (registrar) ->
 			'shrub-express/routes'
 			'shrub-express/static'
 			'shrub-config'
+			'shrub-skin'
 			'shrub-assets'
 			'shrub-angular'
 			'shrub-express/errors'
