@@ -36,17 +36,6 @@ class PkgmanRegistrar
 
 optionalModule = (name) ->
 
-	try
-		
-		require name
-	
-	catch error
-		
-		# Suppress missing package errors.
-		# `TODO`: Should we let this throw?
-		return if error.toString() is "Error: Cannot find module '#{name}'"
-		throw error
-
 # ## rebuildPackageCache
 exports.rebuildPackageCache = (type) ->
 	packageCache = {}
@@ -54,10 +43,17 @@ exports.rebuildPackageCache = (type) ->
 	modules = {}
 	for name in _packages
 		
-		# First try package/`type` e.g. package/client
-		unless (module_ = optionalModule "#{name}/#{type}")?
-			module_ = optionalModule name
+		try
 			
+			module_ = require name
+		
+		catch error
+			
+			# Suppress missing package errors.
+			# `TODO`: Should we let this throw?
+			continue if error.toString() is "Error: Cannot find module '#{name}'"
+			throw error
+	
 		if module_?
 			
 			modules[name] = module_

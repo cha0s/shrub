@@ -80,7 +80,13 @@ module.exports = (grunt, config) ->
 			wrapper: (filepath) ->
 				
 				matches = filepath.match /build\/js\/[^/]+\/(.*)/
-				moduleName = matches[1]
+				
+				if filepath.match /^build\/js\/custom\//
+					parts = matches[1].split '/'
+					parts.splice 1, 1
+					moduleName = parts.join '/'
+				else
+					moduleName = matches[1]
 
 				dirname = path.dirname moduleName
 				if dirname is '.' then dirname = '' else dirname += '/'
