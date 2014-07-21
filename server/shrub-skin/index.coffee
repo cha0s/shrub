@@ -3,6 +3,13 @@ config = require 'config'
 
 exports.pkgmanRegister = (registrar) ->
 
+	# ## Implements hook `config`
+	registrar.registerHook 'config', (req) ->
+		
+		skin:
+			
+			default: config.get 'packageSettings:shrub-skin:default'
+	
 	# ## Implements hook `httpMiddleware`
 	registrar.registerHook 'httpMiddleware', (http) ->
 
@@ -17,3 +24,9 @@ exports.pkgmanRegister = (registrar) ->
 					
 				next()
 		]
+
+	# ## Implements hook `packageSettings`
+	registrar.registerHook 'packageSettings', ->
+		
+		# Default skin
+		default: 'strapped'

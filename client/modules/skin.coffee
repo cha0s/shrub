@@ -10,18 +10,19 @@ exports.registerDirective = (uri) ->
 			($compile, $http) ->
 				
 				do relink = ->
-					return unless skinKey = config.get 'shrub:skin:key'
+					return unless skinKey = config.get 'skin:default'
 					
-					element.hide()
+					wasVisible = element.is ':visible'
 					
 					promise = $http.get "/skin/#{skinKey}/#{uri}"
 					
 					promise.success (data, status, headers, config) ->
-						
+					
+						element.hide() if wasVisible
 						element.html data
 						$compile(element.contents())(scope)
 						
-					promise.finally -> element.show()
+					promise.finally -> element.show() if wasVisible
 					
 				scope.$on 'shrub.skin.update', relink
 				
