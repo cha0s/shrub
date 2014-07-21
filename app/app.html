@@ -4,34 +4,29 @@
 	data-ng-class="pathClass"
 	data-ng-app="shrub"
 >
-<head>
-	
-	<title data-ui-title data-ng-bind="windowTitle"></title>
-	
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
-	
-	<link rel="shortcut icon" href="/favicon.ico" />
-	
-	<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"></link>
-	<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap-theme.min.css"></link>
-	
-	<link rel="stylesheet" href="/css/style.css"></link>
-	
-</head>
-<body>
+	<head>
+		
+		<style>
 
-	<div class="container">
-	
-		<div data-shrub-ui-nav></div>
+.shrub-skin-cloak {
+  display: none;
+}
+
+		</style>
+
+		<title data-shrub-ui-title data-ng-bind="windowTitle"></title>
 		
-		<div data-shrub-ui-notifications></div>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
 		
-		<div class="main" data-ng-view></div>
-	</div>
-	
-{{#each assets.js}}
-	<script src="{{this}}"></script>{{/each}}
-	
-</body>
+		<link rel="shortcut icon" href="/favicon.ico" />
+		
+	</head>
+	<body>
+		
+		<div data-shrub-ui-body class="shrub-skin-cloak"></div>
+		
+		{{#each assets.js}}<script src="{{this}}"></script>
+		{{/each}}
+	</body>
 </html>
