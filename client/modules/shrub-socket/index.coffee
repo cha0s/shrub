@@ -29,10 +29,9 @@ exports.pkgmanRegister = (registrar) ->
 			socket.on 'initialized', =>
 				service.emit.apply this, args for args in initializedQueue
 			
-			# Connection and disconnection.
-			service.connect = -> socket.socket.connect()
-			service.connected = -> socket.socket.connected
-			service.disconnect = -> socket.disconnect()
+			# Check for connection so we can queue unsendable messages.
+			isConnected = false
+			socket.on 'connect', -> isConnected = true
 			
 			# ## socket.on
 			service.on = (eventName, fn) ->
@@ -50,7 +49,7 @@ exports.pkgmanRegister = (registrar) ->
 			
 			# ## socket.emit
 			service.emit = (eventName, data, fn) ->
-				return initializedQueue.push arguments unless service.connected()
+				return initializedQueue.push arguments unless isConnected
 			
 				# Log.
 				message = "sent: #{eventName}"

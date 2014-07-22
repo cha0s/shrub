@@ -9,7 +9,7 @@
 
 config = require 'config'
 Promise = require 'bluebird'
-WebSocket = require 'socket.io/node_modules/socket.io-client/node_modules/ws/lib/WebSocket'
+WebSocket = require 'socket.io/node_modules/socket.io-client/node_modules/engine.io-client/node_modules/ws/lib/WebSocket'
 
 errors = require 'errors'
 logging = require 'logging'
