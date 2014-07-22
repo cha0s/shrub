@@ -130,7 +130,7 @@ exports.pkgmanRegister = (registrar) ->
 			(req, res, next) ->
 				
 				# Join a channel for the username.
-				req.socket.join req.user.name if req.user.id?
+				return req.socket.join req.user.name, next if req.user.id?
 				
 				next()
 		

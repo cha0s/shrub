@@ -44,9 +44,7 @@ module.exports = class SocketIoManager extends SocketManager
 	# *Get a list of channels a socket is in.*
 	# 
 	# * (socket) `socket` - A socket.
-	channelsSocketIsIn: (socket) ->
-	
-		@io.sockets.manager.roomClients[socket.id]
+	channelsSocketIsIn: (socket) -> socket.rooms
 	
 	# ## ::listen
 	# Implements `SocketManager::listen`.
@@ -78,22 +76,31 @@ module.exports = class SocketIoManager extends SocketManager
 		@io.on 'connection', (socket) =>
 			
 			# Join a '$global' channel.
-			socket.join '$global'
-			
-			# Run the disconnection middleware on disconnect.
-			socket.on 'disconnect', =>
-				@_disconnectionMiddleware.dispatch socket.request, null, (error) ->
-					return logger.error errors.stack error if error?
-			
-			# Dispatch the connection middleware.
-			@_connectionMiddleware.dispatch socket.request, null, (error) ->
+			socket.join '$global', (error) =>
 				return logger.error errors.stack error if error?
+			
+				# Run the disconnection middleware on disconnect.
+				socket.on 'disconnect', =>
+					@_disconnectionMiddleware.dispatch socket.request, null, (error) ->
+						return logger.error errors.stack error if error?
 				
-				socket.emit 'initialized'
+				# Dispatch the connection middleware.
+				@_connectionMiddleware.dispatch socket.request, null, (error) =>
+					return logger.error errors.stack error if error?
+					
+					socket.emit 'initialized'
 			
 	# ## ::socketsInChannel
 	# 
 	# *Get a list of sockets in a channel.*
 	# 
+	# `TODO`: This only works on a single node. socket.io needs to implement
+	# this.
+	# 
 	# * (string) `channelName` - The channel or 'room' name.
-	socketsInChannel: (channelName) -> @io.sockets.clients channelName
+	socketsInChannel: (channelName) ->
+		
+		for socketId, isConnected of @io.sockets.adapter.rooms[channelName]
+			continue unless isConnected
+			
+			@io.sockets.adapter.nsp.connected[socketId]

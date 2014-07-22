@@ -43,10 +43,17 @@ exports.pkgmanRegister = (registrar) ->
 						
 						req.logIn @user
 						
-					).then ->
+					).then(->
 						
-						# Join a channel for the username.
-						req.socket.join @user.name
+						new Promise (resolve, reject) ->
+						
+							# Join a channel for the username.
+							req.socket.join @user.name, (error) ->
+								reject error if error?
+								
+								resolve()
+						
+					).then ->
 						
 						@user.redactFor @user
 					
