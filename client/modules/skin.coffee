@@ -1,18 +1,11 @@
 
 config = require 'config'
 
-exports.registerDirective = (uri) ->
+exports.registerDirective = ($injector, uri) ->
 
 	compile: (scope, element) ->
 		
-		# Hack for unit testing, not sure the "right" way to do this.
-		injector = if inject?
-			inject
-		else
-			injector = angular.element(element).injector()
-			injector.invoke.bind injector
-		
-		injector [
+		$injector.invoke [
 			'$compile', '$http'
 			($compile, $http) ->
 				

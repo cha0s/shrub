@@ -61,7 +61,9 @@ angular.module('shrub.packages', [
 						($injector) ->
 						
 							directive = $injector.invoke injected
-							compiler = skin.registerDirective "#{path}.html"
+							compiler = skin.registerDirective(
+								$injector, "#{path}.html"
+							)
 							
 							link = directive.link
 							directive.link = (scope, element) ->
