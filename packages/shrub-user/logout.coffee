@@ -6,8 +6,6 @@ Promise = require 'bluebird'
 
 middleware = require 'middleware'
 
-{defaultLogger} = require 'logging'
-
 exports.pkgmanRegister = (registrar) ->
 	
 	# ## Implements hook `endpoint`

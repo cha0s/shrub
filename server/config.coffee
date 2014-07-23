@@ -3,12 +3,11 @@
 # 
 # Manages server and package configuration.
 
+debug = require('debug') 'shrub:config'
 nconf = require 'nconf'
 fs = require 'fs'
 
 pkgman = require 'pkgman'
-
-{defaultLogger} = require 'logging'
 
 # ### get
 # 
@@ -34,11 +33,11 @@ exports.load = ->
 	nconf.defaults path: "#{__dirname}/.."
 		
 	# } Register packages.
-	defaultLogger.info "Registering packages..."
+	debug "Registering packages..."
 	
 	pkgman.registerPackageList nconf.get 'packageList'
 	
-	defaultLogger.info "Packages registered."
+	debug "Packages registered."
 
 	nconf.defaults
 		

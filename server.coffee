@@ -6,18 +6,17 @@
 
 Promise = require 'bluebird'
 
+debug = require('debug') 'shrub'
 errors = require 'errors'
 pkgman = require 'pkgman'
 schema = require('shrub-schema').schema()
 
-{defaultLogger} = require 'logging'
-
 # } Set up config.
-defaultLogger.info "Loading config..."
+debug "Loading config..."
 
 config = require('config').load()
 
-defaultLogger.info "Config loaded."
+debug "Config loaded."
 
 # } Let packages define their models in the schema.
 schema.definePackageModels()
@@ -38,7 +37,7 @@ Promise.all(
 	-> pkgman.invoke 'ready'
 	(error) ->
 		
-		defaultLogger.error errors.stack error
+		console.error errors.stack error
 		
 		# } Rethrow any error.
 		throw error

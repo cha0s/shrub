@@ -3,7 +3,7 @@
 
 _ = require 'underscore'
 
-{defaultLogger} = require 'logging'
+debug = require('debug') 'shrub:pkgman'
 
 packageCache = null
 _packages = []
@@ -57,7 +57,7 @@ exports.rebuildPackageCache = (type) ->
 		if module_?
 			
 			modules[name] = module_
-			defaultLogger.info "Found package #{name}."
+			debug "Found package #{name}."
 	
 	# Collect hooks.
 	for path, module_ of modules

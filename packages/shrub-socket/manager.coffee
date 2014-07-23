@@ -6,8 +6,6 @@
 middleware = require 'middleware'
 pkgman = require 'pkgman'
 
-{defaultLogger} = require 'logging'
-
 # This class implements an abstract interface to be implemented by a socket
 # server (e.g. [Socket.io](./packages/socket/SocketIo.html)).
 module.exports = class SocketManager extends EventEmitter

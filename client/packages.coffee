@@ -12,9 +12,8 @@ angular.module('shrub.packages', [
 			_ = require 'underscore'
 			
 			config = require 'config'
+			debug = require('debug') 'shrub:angular'
 			skin = require 'skin'
-			
-			{defaultLogger} = require 'logging'
 			
 			# Use normalized names for directives and filters:
 			# 'core/foo/bar' -> 'coreFooBar'
@@ -31,19 +30,19 @@ angular.module('shrub.packages', [
 			# Invoke hook `controller`.
 			# Allows packages to define Angular controllers. Implementations
 			# should return an [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
-			defaultLogger.info "Registering controllers..."
+			debug "Registering controllers..."
 			
 			for path, injected of invoke 'controller'
-				defaultLogger.info path
+				debug path
 				
 				$controllerProvider.register path, injected
 
-			defaultLogger.info "Controllers registered."
+			debug "Controllers registered."
 
 			# Invoke hook `directive`.
 			# Allows packages to define Angular directives. Implementations
 			# should return an [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
-			defaultLogger.info "Registering directives..."
+			debug "Registering directives..."
 			
 			for path, injected of invoke 'directive'
 				
@@ -51,7 +50,7 @@ angular.module('shrub.packages', [
 				
 					name = normalize path
 					
-					defaultLogger.info name
+					debug name
 					
 					# This gets run over immediately, but it's required due to
 					# the way Angular caches directives internally.
@@ -88,31 +87,31 @@ angular.module('shrub.packages', [
 							
 					]
 						
-			defaultLogger.info "Directives registered."
+			debug "Directives registered."
 
 			# Invoke hook `filter`.
 			# Allows packages to define Angular filters. Implementations
 			# should return a function.
-			defaultLogger.info "Registering filters..."
+			debug "Registering filters..."
 			
 			for path, injected of invoke 'filter'
-				defaultLogger.info normalize path
+				debug normalize path
 
 				$filterProvider.register (normalize path), injected
 
-			defaultLogger.info "Filters registered."
+			debug "Filters registered."
 
 			# Invoke hook `service`.
 			# Allows packages to define Angular services. Implementations
 			# should return an [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
-			defaultLogger.info "Registering services..."
+			debug "Registering services..."
 			
 			for path, injected of invoke 'service'
-				defaultLogger.info path
+				debug path
 
 				$provide.service path, injected
 			
-			defaultLogger.info "Services registered."
+			debug "Services registered."
 
 			# If we are testing, decorate the services with their mock
 			# versions.
@@ -122,14 +121,14 @@ angular.module('shrub.packages', [
 				# Allows packages to decorate mock Angular services.
 				# Implementations should return an
 				# [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
-				defaultLogger.info "Registering mock services..."
+				debug "Registering mock services..."
 				
 				for path, injected of invoke 'serviceMock'
-					defaultLogger.info path
+					debug path
 
 					$provide.decorator path, injected
 			
-				defaultLogger.info "Mock services registered."
+				debug "Mock services registered."
 
 	])
 
@@ -144,16 +143,15 @@ angular.module('shrub.pkgman', [
 			
 			_ = require 'underscore'
 			config = require 'config'
+			debug = require('debug') 'shrub:pkgman'
 			pkgman = require 'pkgman'
 			
-			{defaultLogger} = require 'logging'
-			
 			# Load the package list from configuration.
-			defaultLogger.info "Loading packages..."
+			debug "Loading packages..."
 			
 			pkgman.registerPackageList config.get 'packageList'
 
-			defaultLogger.info "Packages loaded."
+			debug "Packages loaded."
 			
 			service = {}
 			

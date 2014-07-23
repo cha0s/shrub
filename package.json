@@ -16,6 +16,7 @@
     "coffee-script": "~1.7.1",
     "connect-redis": "~1.4.7",
     "cookie-signature": "^1.0.3",
+    "debug": "^1.0.4",
     "express": "3.1.0",
     "hbs": "~2.0.2",
     "jsdom": "~0.8.11",

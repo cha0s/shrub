@@ -4,9 +4,8 @@
 Promise = require 'bluebird'
 
 config = require 'config'
+debug = require('debug') 'shrub:middleware:http'
 pkgman = require 'pkgman'
-
-{defaultLogger} = require 'logging'
 
 middleware = require 'middleware'
 
@@ -61,7 +60,7 @@ module.exports = class HttpManager
 	# *Gather and initialize HTTP middleware.*
 	registerMiddleware: ->
 		
-		defaultLogger.info '- Loading HTTP middleware...'
+		debug '- Loading HTTP middleware...'
 		
 		# Invoke hook `httpMiddleware`.
 		# Invoked every time an HTTP connection is established.
@@ -72,7 +71,7 @@ module.exports = class HttpManager
 			this
 		)
 		
-		defaultLogger.info '- HTTP middleware loaded.'
+		debug '- HTTP middleware loaded.'
 
 	# } Ensure any subclass implements these methods.
 	@::[method] = (-> throw new ReferenceError(

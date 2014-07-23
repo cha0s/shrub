@@ -6,7 +6,7 @@ i8n = require 'inflection'
 config = require 'config'
 pkgman = require 'pkgman'
 
-{defaultLogger} = require 'logging'
+debug = require('debug') 'shrub:middleware'
 
 # ## Middleware
 # 
@@ -115,7 +115,7 @@ exports.fromHook = (hook, paths, args...) ->
 	for path in paths
 		continue unless (spec = hookResults[path])?
 		
-		defaultLogger.info "- - #{spec.label}"
+		debug "- - #{spec.label}"
 		
 		middleware.use _ for _ in spec.middleware ? []
 	
@@ -129,18 +129,18 @@ exports.fromHook = (hook, paths, args...) ->
 # key. In the case where we passed in "user before login", this would look
 # like:
 # 
-#	defaultLogger.info "Loading user before login middleware..."
+#	debug "Loading user before login middleware..."
 #	
 #	middleware = exports.fromHook(
 #		"exampleThingHook"
 #		config.get "packageSettings:example:thingHook"
 #	)
 #	
-#	defaultLogger.info "User before login middleware loaded."
+#	debug "User before login middleware loaded."
 #
 exports.fromShortName = (shortName, packageName) ->
 
-	defaultLogger.info "- Loading #{shortName} middleware..."
+	debug "- Loading #{shortName} middleware..."
 	
 	[firstPart, keyParts...] = shortName.split ' '
 	packageName ?= firstPart
@@ -154,6 +154,6 @@ exports.fromShortName = (shortName, packageName) ->
 		}Middleware"
 	)
 	
-	defaultLogger.info "- #{i8n.capitalize shortName} middleware loaded."
+	debug "- #{i8n.capitalize shortName} middleware loaded."
 	
 	middleware

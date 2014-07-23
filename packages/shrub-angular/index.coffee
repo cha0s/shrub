@@ -8,7 +8,7 @@ Promise = require 'bluebird'
 url = require 'url'
 
 config = require 'config'
-{defaultLogger} = require 'logging'
+debug = require('debug') 'shrub:angular'
 middleware = require 'middleware'
 {Sandbox} = require 'sandboxes'
 
@@ -158,7 +158,7 @@ sandboxManager = new class SandboxManager
 	# * (string) `id`? - An ID for looking up this sandbox later.
 	create: (html, options, id = null) ->
 		
-		defaultLogger.info "Creating sandbox ID: #{id}"
+		debug "Creating sandbox ID: #{id}"
 		
 		sandbox = new Sandbox()
 		sandbox.id = id
@@ -169,7 +169,7 @@ sandboxManager = new class SandboxManager
 		ttl = config.get 'packageSettings:shrub-angular:ttl'
 		toucher = _.debounce (=> sandbox.close()), ttl
 		do sandbox.touch = ->
-			defaultLogger.info "Touched sandbox ID: #{id}"
+			debug "Touched sandbox ID: #{id}"
 		
 			toucher()
 			sandbox
@@ -177,7 +177,7 @@ sandboxManager = new class SandboxManager
 		# Remove from the manager when closing.
 		close = sandbox.close
 		sandbox.close = =>
-			defaultLogger.info "Closing sandbox ID: #{id}"
+			debug "Closing sandbox ID: #{id}"
 		
 			@_sandboxes[id] = null
 			close.apply sandbox

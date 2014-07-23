@@ -8,7 +8,6 @@ errors = require 'errors'
 middleware = require 'middleware'
 schema = require('shrub-schema').schema()
 
-{defaultLogger} = require 'logging'
 {threshold} = require 'limits'
 
 clientModule = require './client/login'

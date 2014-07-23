@@ -4,9 +4,6 @@
 # Provide an Angular service wrapping Socket.IO.
 
 config = require 'config'
-logging = require 'logging'
-
-logger = logging.create 'socket'
 
 Socket = require 'shrub-socket/socket'
 

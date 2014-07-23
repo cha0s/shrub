@@ -4,9 +4,7 @@
 # Provide an Angular service wrapping Socket.IO.
 
 config = require 'config'
-logging = require 'logging'
-
-logger = logging.create 'socket'
+debug = require('debug') 'shrub:socket.io'
 
 Socket = require 'shrub-socket/socket'
 
@@ -36,7 +34,7 @@ module.exports = class SocketIoSocket extends Socket
 		# Log.
 		message = "sent: #{eventName}"
 		message += ", #{JSON.stringify data, null, '  '}" if data?
-		logger.debug message
+		debug message
 		
 		@_socket.emit eventName, data, (response) =>
 			
@@ -48,7 +46,7 @@ module.exports = class SocketIoSocket extends Socket
 			message += ", #{
 				JSON.stringify response, null, '  '
 			}" if response.result? or response.error?
-			logger.debug message
+			debug message
 			
 			# We need to digest the scope after the response.
 			@_$rootScope.$apply -> fn response
@@ -61,7 +59,7 @@ module.exports = class SocketIoSocket extends Socket
 			# Log.
 			message = "received: #{eventName}"
 			message += ", #{JSON.stringify data, null, '  '}" if data?
-			logger.debug message
+			debug message
 			
 			onArguments = arguments
 			@_$rootScope.$apply => fn.apply @_socket, onArguments

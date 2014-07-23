@@ -4,8 +4,7 @@
 # Manage HTTP connections.
 
 config = require 'config'
-
-{defaultLogger} = require 'logging'
+debug = require('debug') 'shrub:http'
 
 httpManager = null
 
@@ -22,7 +21,7 @@ exports.pkgmanRegister = (registrar) ->
 		httpManager = new Manager()
 		httpManager.initialize().then ->
 		
-			defaultLogger.info "Shrub HTTP server up and running on port #{port}!"
+			debug "Shrub HTTP server up and running on port #{port}!"
 		
 	# ## Implements hook `packageSettings`
 	registrar.registerHook 'packageSettings', ->
