@@ -51,7 +51,7 @@ exports.pkgmanRegister = (registrar) ->
 						
 							# Join a channel for the username.
 							req.socket.join @user.name, (error) ->
-								reject error if error?
+								return reject error if error?
 								
 								resolve()
 						
