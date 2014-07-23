@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "author": "cha0s <cha0s@cha0s.io>",
   "scripts": {
-    "debug": "NODE_PATH=.:custom:server:client/modules coffee --nodejs debug server.coffee",
+    "debug": "NODE_PATH=.:custom:packages:server:client/modules coffee --nodejs debug server.coffee",
     "doc": "mkdir -p gh-pages && coffee generate-docs.coffee && node_modules/groc/bin/groc",
-    "start": "NODE_PATH=.:custom:server:client/modules coffee server.coffee"
+    "start": "NODE_PATH=.:custom:packages:server:client/modules coffee server.coffee"
   },
   "repository": {
     "type": "git",

@@ -94,4 +94,4 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `transmittableError`
 	# 
 	# Just defer to client, where the error is defined.
-	registrar.registerHook 'transmittableError', require('client/modules/shrub-limiter').transmittableError
+	registrar.registerHook 'transmittableError', require('./client').transmittableError

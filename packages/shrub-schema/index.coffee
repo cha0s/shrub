@@ -167,7 +167,7 @@ exports.pkgmanRegister = (registrar) ->
 		
 		context.schema = schema
 
-schema = require('client/modules/shrub-schema').define(
+schema = require('./client').define(
 	require "jugglingdb-redis"
 )
 

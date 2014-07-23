@@ -9,7 +9,7 @@ Promise = require 'bluebird'
 crypto = require 'server/crypto'
 schema = require('shrub-schema').schema()
 
-clientModule = require 'client/modules/shrub-user'
+clientModule = require './client'
 
 exports.pkgmanRegister = (registrar) ->
 	

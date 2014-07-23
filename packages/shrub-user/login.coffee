@@ -11,7 +11,7 @@ schema = require('shrub-schema').schema()
 {defaultLogger} = require 'logging'
 {threshold} = require 'limits'
 
-clientModule = require 'client/modules/shrub-user/login'
+clientModule = require './client/login'
 userPackage = require 'shrub-user'
 
 exports.pkgmanRegister = (registrar) ->
