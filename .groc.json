@@ -12,7 +12,9 @@
 		"documentation/**/*.md",
 		"server.coffee",
 		"client/**/*.coffee",
-		"server/**/*.coffee"
+		"server/**/*.coffee",
+		"custom/**/*.coffee",
+		"packages/**/*.coffee"
 	],
 	"index": "./documentation/index.md",
 	"index-page-title": "Shrub documentation",

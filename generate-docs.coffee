@@ -33,21 +33,24 @@ for filename of files
 
 # } Get the type and name of this package (if any).
 packageTypeAndName = (filename) ->
-
-	regex = ///
-
-^(?:
-	(server)\/(shrub-[^/]+)
-	|
-	(client)\/modules\/(shrub-[^/]+)
-)
-
-///
-
-	return unless (matches = filename.match regex)?
 	
-	type: matches[1] ? matches[3]
-	name: matches[2] ? matches[4]
+	return unless (matches = filename.match /([^/]+)\/([^/]+)\/([^/]+)/)?
+	return if -1 is ['custom', 'packages'].indexOf matches[1]
+	
+	parts = filename.split '/'
+	parts = parts.slice 1
+	
+	if matches[3] is 'client'
+		
+		parts.splice 1, 1
+		
+		name: parts.join('/').replace '.coffee', ''
+		type: 'client'
+		
+	else
+		
+		name: parts.join('/').replace '.coffee', ''
+		type: 'server'
 	
 packageInformation = {}
 packageLookup = {}
@@ -100,9 +103,6 @@ description and a list of implementing packages for each hook.
 		
 		for filename, {commentLines} of sources
 			continue unless (typeAndName = packageTypeAndName filename)?
-			
-			matches = filename.match /(shrub-.*)\./
-			typeAndName.name = matches[1]
 			typeAndName.filename = filename
 			
 			some = commentLines.some (line) -> line.match implementsPattern
@@ -150,7 +150,7 @@ description and a list of implementing packages for each hook.
 		# } Top-level list: filenames
 		markdown += """
 
-[#{filename}](./#{filename.replace /(coffee|js)/, 'html'})
+Invoked in [#{filename}](./#{filename.replace /(coffee|js)/, 'html'}):
 
 """
 		
@@ -195,7 +195,7 @@ description and a list of implementing packages for each hook.
 	fs.writeFileSync "documentation/hooks.md", markdown
 
 # Generate TODO documentation.
-generateHookDocumentation = do ->
+generateTodoDocumentation = do ->
 	
 	markdown = """
 
