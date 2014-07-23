@@ -17,7 +17,7 @@ exports.registerDirective = (uri) ->
 			($compile, $http) ->
 				
 				do relink = ->
-					return unless skinKey = config.get 'skin:default'
+					return unless skinKey = config.get 'packageConfig:shrub-skin:default'
 					
 					wasVisible = element.is ':visible'
 					
