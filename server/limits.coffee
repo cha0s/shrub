@@ -2,7 +2,7 @@
 # # Limits
 
 Promise = require 'bluebird'
-redis = require 'connect-redis/node_modules/redis'
+redis = require 'redis'
 redback = require('redback').use redis.createClient()
 
 pkgman = require 'pkgman'

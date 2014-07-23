@@ -32,7 +32,7 @@ module.exports = class SocketIoManager extends SocketManager
 			
 			when 'redis'
 				
-				redis = require 'connect-redis/node_modules/redis'
+				redis = require 'redis'
 
 				require('socket.io-redis')(
 					pubClient: redis.createClient()
