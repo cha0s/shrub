@@ -3,7 +3,7 @@
 <span class="nv">config = </span><span class="nx">require</span> <span class="s">&#39;config&#39;</span>
 <span class="nv">pkgman = </span><span class="nx">require</span> <span class="s">&#39;pkgman&#39;</span>
 
-<span class="p">{</span><span class="nx">defaultLogger</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">&#39;logging&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="middleware">Middleware</h2>
+<span class="nv">debug = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;debug&#39;</span><span class="p">)</span> <span class="s">&#39;shrub:middleware&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="middleware">Middleware</h2>
 
 <p>Implements a middleware stack. middleware functions can be added to the
 stack with <code>use</code>. Calling <code>dispatch</code> invokes the middleware functions
@@ -79,7 +79,7 @@ order.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">
   <span class="k">for</span> <span class="nx">path</span> <span class="k">in</span> <span class="nx">paths</span>
     <span class="k">continue</span> <span class="k">unless</span> <span class="p">(</span><span class="nv">spec = </span><span class="nx">hookResults</span><span class="p">[</span><span class="nx">path</span><span class="p">])</span><span class="o">?</span>
     
-    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s">&quot;- - </span><span class="si">#{</span><span class="nx">spec</span><span class="p">.</span><span class="nx">label</span><span class="si">}</span><span class="s">&quot;</span>
+    <span class="nx">debug</span> <span class="s">&quot;- - </span><span class="si">#{</span><span class="nx">spec</span><span class="p">.</span><span class="nx">label</span><span class="si">}</span><span class="s">&quot;</span>
     
     <span class="nx">middleware</span><span class="p">.</span><span class="nx">use</span> <span class="nx">_</span> <span class="k">for</span> <span class="nx">_</span> <span class="k">in</span> <span class="nx">spec</span><span class="p">.</span><span class="nx">middleware</span> <span class="o">?</span> <span class="p">[]</span>
   
@@ -91,16 +91,16 @@ order.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">
 key. In the case where we passed in "user before login", this would look
 like:</p>
 
-<p>defaultLogger.info "Loading user before login middleware..."</p>
+<p>debug "Loading user before login middleware..."</p>
 
 <p>middleware = exports.fromHook(
     "exampleThingHook"
     config.get "packageSettings:example:thingHook"
 )</p>
 
-<p>defaultLogger.info "User before login middleware loaded."</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.fromShortName = </span><span class="nf">(shortName, packageName) -&gt;</span>
+<p>debug "User before login middleware loaded."</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.fromShortName = </span><span class="nf">(shortName, packageName) -&gt;</span>
 
-  <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s">&quot;- Loading </span><span class="si">#{</span><span class="nx">shortName</span><span class="si">}</span><span class="s"> middleware...&quot;</span>
+  <span class="nx">debug</span> <span class="s">&quot;- Loading </span><span class="si">#{</span><span class="nx">shortName</span><span class="si">}</span><span class="s"> middleware...&quot;</span>
   
   <span class="p">[</span><span class="nx">firstPart</span><span class="p">,</span> <span class="nx">keyParts</span><span class="p">...]</span> <span class="o">=</span> <span class="nx">shortName</span><span class="p">.</span><span class="nx">split</span> <span class="s">&#39; &#39;</span>
   <span class="nx">packageName</span> <span class="o">?=</span> <span class="nx">firstPart</span>
@@ -114,6 +114,6 @@ like:</p>
     <span class="si">}</span><span class="s">Middleware&quot;</span>
   <span class="p">)</span>
   
-  <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s">&quot;- </span><span class="si">#{</span><span class="nx">i8n</span><span class="p">.</span><span class="nx">capitalize</span> <span class="nx">shortName</span><span class="si">}</span><span class="s"> middleware loaded.&quot;</span>
+  <span class="nx">debug</span> <span class="s">&quot;- </span><span class="si">#{</span><span class="nx">i8n</span><span class="p">.</span><span class="nx">capitalize</span> <span class="nx">shortName</span><span class="si">}</span><span class="s"> middleware loaded.&quot;</span>
   
   <span class="nx">middleware</span></div></div></div></div></body></html>

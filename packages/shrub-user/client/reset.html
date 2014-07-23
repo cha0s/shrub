@@ -1,0 +1,43 @@
+<!DOCTYPE html><html lang="en"><head><title>packages/shrub-user/client/reset</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="packages/shrub-user/client/reset"><meta name="groc-project-path" content="packages/shrub-user/client/reset.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-user/client/reset.coffee">packages/shrub-user/client/reset.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="user-reset">User reset</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nv">errors = </span><span class="nx">require</span> <span class="s">&#39;errors&#39;</span>
+
+<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookroute">Implements hook <code>route</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;route&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+    
+    <span class="nv">path: </span><span class="s">&#39;user/reset/:token&#39;</span>
+    <span class="nv">title: </span><span class="s">&#39;Reset your password&#39;</span>
+    
+    <span class="nv">controller: </span><span class="p">[</span>
+      <span class="s">&#39;$location&#39;</span><span class="p">,</span> <span class="s">&#39;$routeParams&#39;</span><span class="p">,</span> <span class="s">&#39;$scope&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-ui/notifications&#39;</span>
+      <span class="nf">($location, {token}, $scope, {add}) -&gt;</span>
+        
+        <span class="nv">$scope.userReset =</span>
+          
+          <span class="nv">password:</span>
+            <span class="nv">type: </span><span class="s">&#39;password&#39;</span>
+            <span class="nv">label: </span><span class="s">&quot;New password&quot;</span>
+            <span class="nv">required: </span><span class="kc">true</span>
+          
+          <span class="nv">token:</span>
+            <span class="nv">type: </span><span class="s">&#39;hidden&#39;</span>
+            <span class="nv">value: </span><span class="nx">token</span>
+          
+          <span class="nv">submit:</span>
+            <span class="nv">type: </span><span class="s">&#39;submit&#39;</span>
+            <span class="nv">label: </span><span class="s">&quot;Reset password&quot;</span>
+            <span class="nv">rpc: </span><span class="kc">true</span>
+            <span class="nv">handler: </span><span class="nf">(error, result) -&gt;</span>
+              <span class="k">return</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
+              
+              <span class="nx">add</span> <span class="nv">text: </span><span class="s">&quot;You may now log in with your new password.&quot;</span>
+              
+              <span class="nx">$location</span><span class="p">.</span><span class="nx">path</span> <span class="s">&#39;/user/login&#39;</span>
+  
+        <span class="nx">$scope</span><span class="p">.</span><span class="nx">$emit</span> <span class="s">&#39;shrubFinishedRendering&#39;</span>
+        
+    <span class="p">]</span>
+    
+    <span class="nv">template: </span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">  </span>
+<span class="s">&lt;div data-shrub-form=&quot;userReset&quot;&gt;&lt;/div&gt;</span>
+
+<span class="s">&quot;&quot;&quot;</span></div></div></div></div></body></html>

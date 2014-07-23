@@ -7,19 +7,9 @@
 <ul>
 <li>(string) <code>filename</code> - The filename where the log will be written.</li>
 </ul></div></div><div class="code"><div class="wrapper"><span class="nv">exports.create = </span><span class="nf">(filename) -&gt;</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>In production, we'll only log errors to the file, and skip console output
-altogether.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">transports = </span><span class="k">if</span> <span class="s">&#39;production&#39;</span> <span class="o">is</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_ENV</span>
-
-    <span class="p">[</span>
-      <span class="k">new</span> <span class="nx">winston</span><span class="p">.</span><span class="nx">transports</span><span class="p">.</span><span class="nx">File</span> <span class="nv">level: </span><span class="s">&#39;error&#39;</span><span class="p">,</span> <span class="nv">filename: </span><span class="nx">filename</span>
-    <span class="p">]</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Otherwise, we will show ALL the logs, in the console as well as in their
-files.</p></div></div><div class="code"><div class="wrapper">  <span class="k">else</span>
-
-    <span class="p">[</span>
-      <span class="k">new</span> <span class="nx">winston</span><span class="p">.</span><span class="nx">transports</span><span class="p">.</span><span class="nx">Console</span> <span class="nv">level: </span><span class="s">&#39;silly&#39;</span><span class="p">,</span> <span class="nv">colorize: </span><span class="kc">true</span>
-      <span class="k">new</span> <span class="nx">winston</span><span class="p">.</span><span class="nx">transports</span><span class="p">.</span><span class="nx">File</span> <span class="nv">level: </span><span class="s">&#39;silly&#39;</span><span class="p">,</span> <span class="nv">filename: </span><span class="nx">filename</span>
-    <span class="p">]</span>
-    
-  <span class="k">new</span> <span class="nx">winston</span><span class="p">.</span><span class="nx">Logger</span> <span class="nv">transports: </span><span class="nx">transports</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Create a default logger, for convenience.</p></div></div><div class="code"><div class="wrapper"><span class="nv">defaultLogger = </span><span class="nx">exports</span><span class="p">.</span><span class="nx">create</span> <span class="s">&#39;logs/shrub.log&#39;</span>
+  
+  <span class="k">new</span> <span class="nx">winston</span><span class="p">.</span><span class="nx">Logger</span> <span class="nv">transports: </span><span class="p">[</span>
+    <span class="k">new</span> <span class="nx">winston</span><span class="p">.</span><span class="nx">transports</span><span class="p">.</span><span class="nx">Console</span> <span class="nv">level: </span><span class="s">&#39;warn&#39;</span><span class="p">,</span> <span class="nv">colorize: </span><span class="kc">true</span>
+    <span class="k">new</span> <span class="nx">winston</span><span class="p">.</span><span class="nx">transports</span><span class="p">.</span><span class="nx">File</span> <span class="nv">level: </span><span class="s">&#39;silly&#39;</span><span class="p">,</span> <span class="nv">filename: </span><span class="nx">filename</span>
+  <span class="p">]</span>   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Create a default logger, for convenience.</p></div></div><div class="code"><div class="wrapper"><span class="nv">defaultLogger = </span><span class="nx">exports</span><span class="p">.</span><span class="nx">create</span> <span class="s">&#39;logs/shrub.log&#39;</span>
 <span class="nv">exports.defaultLogger = </span><span class="nx">defaultLogger</span></div></div></div></div></body></html>

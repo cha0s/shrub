@@ -1,0 +1,40 @@
+<!DOCTYPE html><html lang="en"><head><title>packages/shrub-socket/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="packages/shrub-socket/index"><meta name="groc-project-path" content="packages/shrub-socket/index.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-socket/index.coffee">packages/shrub-socket/index.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="socket">Socket</h1>
+
+<p>Manage socket connections.</p></div></div><div class="code"><div class="wrapper"><span class="nv">config = </span><span class="nx">require</span> <span class="s">&#39;config&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The socket manager.</p></div></div><div class="code"><div class="wrapper"><span class="nv">socketManager = </span><span class="kc">null</span>
+
+<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookconfig">Implements hook <code>config</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;config&#39;</span><span class="p">,</span> <span class="nf">(http) -&gt;</span>
+    
+    <span class="nv">module = </span><span class="k">if</span> <span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;E2E&#39;</span><span class="p">)</span><span class="o">?</span>
+      
+      <span class="s">&#39;shrub-socket/dummy&#39;</span>
+      
+    <span class="k">else</span>
+      
+      <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;packageSettings:shrub-socket:manager:module&#39;</span>
+    
+    <span class="nv">manager: module: </span><span class="nx">module</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookhttpinitializing">Implements hook <code>httpInitializing</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;httpInitializing&#39;</span><span class="p">,</span> <span class="nf">(http) -&gt;</span>
+    
+    <span class="nv">Manager = </span><span class="nx">require</span> <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;packageSettings:shrub-socket:manager:module&#39;</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Spin up the socket server, and have it listen on the HTTP server.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">socketManager = </span><span class="k">new</span> <span class="nx">Manager</span><span class="p">()</span>
+    <span class="nx">socketManager</span><span class="p">.</span><span class="nx">loadMiddleware</span><span class="p">()</span>
+    <span class="nx">socketManager</span><span class="p">.</span><span class="nx">listen</span> <span class="nx">http</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookpackagesettings">Implements hook <code>packageSettings</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;packageSettings&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Middleware stack dispatched to authorize or reject a socket connection.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">authorizationMiddleware: </span><span class="p">[</span>
+      <span class="s">&#39;shrub-core&#39;</span>
+      <span class="s">&#39;shrub-session/express&#39;</span>
+      <span class="s">&#39;shrub-user&#39;</span>
+      <span class="s">&#39;shrub-villiany&#39;</span>
+    <span class="p">]</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Middleware stack dispatched once a socket connection is authorized.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">connectionMiddleware: </span><span class="p">[</span>
+      <span class="s">&#39;shrub-session&#39;</span>
+      <span class="s">&#39;shrub-user&#39;</span>
+      <span class="s">&#39;shrub-rpc&#39;</span>
+    <span class="p">]</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Middleware stack dispatched when socket disconnects.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">disconnectionMiddleware: </span><span class="p">[]</span>
+  
+    <span class="nv">manager:</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Module implementing the socket manager.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">module: </span><span class="s">&#39;shrub-socket.io&#39;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookreplcontext">Implements hook <code>replContext</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;replContext&#39;</span><span class="p">,</span> <span class="nf">(context) -&gt;</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Provide the socketManager to REPL.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">context.socketManager = </span><span class="nx">socketManager</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="manager">manager</h2></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nv">exports.manager = </span><span class="nf">-&gt;</span> <span class="nx">socketManager</span></div></div></div></div></body></html>

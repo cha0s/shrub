@@ -1,0 +1,78 @@
+<!DOCTYPE html><html lang="en"><head><title>packages/shrub-socket.io/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="packages/shrub-socket.io/index"><meta name="groc-project-path" content="packages/shrub-socket.io/index.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-socket.io/index.coffee">packages/shrub-socket.io/index.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="socketio">Socket.IO</h1>
+
+<p>SocketManager implementation using <a href="http://socket.io/">Socket.IO</a>.</p></div></div><div class="code"><div class="wrapper"><span class="nv">Promise = </span><span class="nx">require</span> <span class="s">&#39;bluebird&#39;</span>
+
+<span class="nv">config = </span><span class="nx">require</span> <span class="s">&#39;config&#39;</span>
+<span class="nv">errors = </span><span class="nx">require</span> <span class="s">&#39;errors&#39;</span>
+<span class="nv">logging = </span><span class="nx">require</span> <span class="s">&#39;logging&#39;</span>
+<span class="nv">pkgman = </span><span class="nx">require</span> <span class="s">&#39;pkgman&#39;</span>
+
+<span class="nv">logger = </span><span class="k">new</span> <span class="nx">logging</span><span class="p">.</span><span class="nx">create</span> <span class="s">&#39;logs/socket.io.log&#39;</span>
+  
+<span class="nv">SocketManager = </span><span class="nx">require</span> <span class="s">&#39;../shrub-socket/manager&#39;</span>
+<span class="p">{</span><span class="nx">AuthorizationFailure</span><span class="p">}</span> <span class="o">=</span> <span class="nx">SocketManager</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="socketiomanager">SocketIoManager</h2>
+
+<p>Implements <code>SocketManager</code>.</p>
+
+<p>A socket factory implemented with <a href="http://socket.io/">Socket.IO</a>.</p></div></div><div class="code"><div class="wrapper"><span class="nv">module.exports = </span><span class="k">class</span> <span class="nx">SocketIoManager</span> <span class="k">extends</span> <span class="nx">SocketManager</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="constructor"><em>constructor</em></h2></div></div><div class="code"><div class="wrapper">  <span class="nv">constructor: </span><span class="nf">-&gt;</span>
+    <span class="k">super</span>
+    
+    <span class="nv">options = </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;packageSettings:shrub-socket:manager:options&#39;</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Load the adapter.</p></div></div><div class="code"><div class="wrapper">    <span class="vi">@_adapter = </span><span class="k">switch</span> <span class="nx">options</span><span class="o">?</span><span class="p">.</span><span class="nx">store</span> <span class="o">?</span> <span class="s">&#39;redis&#39;</span>
+      
+      <span class="k">when</span> <span class="s">&#39;redis&#39;</span>
+        
+        <span class="nv">redis = </span><span class="nx">require</span> <span class="s">&#39;connect-redis/node_modules/redis&#39;</span>
+
+        <span class="nx">require</span><span class="p">(</span><span class="s">&#39;socket.io-redis&#39;</span><span class="p">)(</span>
+          <span class="nv">pubClient: </span><span class="nx">redis</span><span class="p">.</span><span class="nx">createClient</span><span class="p">()</span>
+          <span class="nv">subClient: </span><span class="nx">redis</span><span class="p">.</span><span class="nx">createClient</span><span class="p">()</span>
+        <span class="p">)</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="channelssocketisin">::channelsSocketIsIn</h2>
+
+<p><em>Get a list of channels a socket is in.</em></p>
+
+<ul>
+<li>(socket) <code>socket</code> - A socket.</li>
+</ul></div></div><div class="code"><div class="wrapper">  <span class="nv">channelsSocketIsIn: </span><span class="nf">(socket) -&gt;</span> <span class="nx">socket</span><span class="p">.</span><span class="nx">rooms</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="listen">::listen</h2>
+
+<p>Implements <code>SocketManager::listen</code>.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">listen: </span><span class="nf">(http) -&gt;</span>
+  
+    <span class="nv">options = </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;packageSettings:shrub-socket:manager:options&#39;</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Set up the socket.io server.</p></div></div><div class="code"><div class="wrapper">    <span class="vi">@io = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;socket.io&#39;</span><span class="p">)</span> <span class="nx">http</span><span class="p">.</span><span class="nx">server</span><span class="p">()</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Set the adapter.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">@io</span><span class="p">.</span><span class="nx">adapter</span> <span class="nx">@_adapter</span> <span class="k">if</span> <span class="nx">@_adapter</span><span class="o">?</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Authorization.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">@io</span><span class="p">.</span><span class="nx">use</span> <span class="nf">(socket, next) =&gt;</span>
+      
+      <span class="nv">socket.request.http = </span><span class="nx">http</span>
+      <span class="nv">socket.request.socket = </span><span class="nx">socket</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Dispatch the authorization middleware.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">@_authorizationMiddleware</span><span class="p">.</span><span class="nx">dispatch</span> <span class="nx">socket</span><span class="p">.</span><span class="nx">request</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nf">(error) -&gt;</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>If any kind of error was thrown, propagate it.</p></div></div><div class="code"><div class="wrapper">        <span class="k">return</span> <span class="nx">next</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
+        
+        <span class="nx">next</span><span class="p">()</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Connection (post-authorization).</p></div></div><div class="code"><div class="wrapper">    <span class="nx">@io</span><span class="p">.</span><span class="nx">on</span> <span class="s">&#39;connection&#39;</span><span class="p">,</span> <span class="nf">(socket) =&gt;</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Join a '$global' channel.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">socket</span><span class="p">.</span><span class="nx">join</span> <span class="s">&#39;$global&#39;</span><span class="p">,</span> <span class="nf">(error) =&gt;</span>
+        <span class="k">return</span> <span class="nx">logger</span><span class="p">.</span><span class="nx">error</span> <span class="nx">errors</span><span class="p">.</span><span class="nx">stack</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Run the disconnection middleware on disconnect.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">socket</span><span class="p">.</span><span class="nx">on</span> <span class="s">&#39;disconnect&#39;</span><span class="p">,</span> <span class="o">=&gt;</span>
+          <span class="nx">@_disconnectionMiddleware</span><span class="p">.</span><span class="nx">dispatch</span> <span class="nx">socket</span><span class="p">.</span><span class="nx">request</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nf">(error) -&gt;</span>
+            <span class="k">return</span> <span class="nx">logger</span><span class="p">.</span><span class="nx">error</span> <span class="nx">errors</span><span class="p">.</span><span class="nx">stack</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Dispatch the connection middleware.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">@_connectionMiddleware</span><span class="p">.</span><span class="nx">dispatch</span> <span class="nx">socket</span><span class="p">.</span><span class="nx">request</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nf">(error) =&gt;</span>
+          <span class="k">return</span> <span class="nx">logger</span><span class="p">.</span><span class="nx">error</span> <span class="nx">errors</span><span class="p">.</span><span class="nx">stack</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
+          
+          <span class="nx">socket</span><span class="p">.</span><span class="nx">emit</span> <span class="s">&#39;initialized&#39;</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="socketsinchannel">::socketsInChannel</h2>
+
+<p><em>Get a list of sockets in a channel.</em></p>
+
+<p><code>TODO</code>: This only works on a single node. socket.io needs to implement
+this.</p>
+
+<ul>
+<li>(string) <code>channelName</code> - The channel or 'room' name.</li>
+</ul></div></div><div class="code"><div class="wrapper">  <span class="nv">socketsInChannel: </span><span class="nf">(channelName) -&gt;</span>
+    
+    <span class="k">for</span> <span class="nx">socketId</span><span class="p">,</span> <span class="nx">isConnected</span> <span class="k">of</span> <span class="nx">@io</span><span class="p">.</span><span class="nx">sockets</span><span class="p">.</span><span class="nx">adapter</span><span class="p">.</span><span class="nx">rooms</span><span class="p">[</span><span class="nx">channelName</span><span class="p">]</span>
+      <span class="k">continue</span> <span class="k">unless</span> <span class="nx">isConnected</span>
+      
+      <span class="nx">@io</span><span class="p">.</span><span class="nx">sockets</span><span class="p">.</span><span class="nx">adapter</span><span class="p">.</span><span class="nx">nsp</span><span class="p">.</span><span class="nx">connected</span><span class="p">[</span><span class="nx">socketId</span><span class="p">]</span></div></div></div></div></body></html>

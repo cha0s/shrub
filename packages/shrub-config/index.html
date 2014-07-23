@@ -1,0 +1,67 @@
+<!DOCTYPE html><html lang="en"><head><title>packages/shrub-config/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="packages/shrub-config/index"><meta name="groc-project-path" content="packages/shrub-config/index.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-config/index.coffee">packages/shrub-config/index.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="configuration">Configuration</h1>
+
+<p>Client-side configuration.</p></div></div><div class="code"><div class="wrapper"><span class="nv">_ = </span><span class="nx">require</span> <span class="s">&#39;underscore&#39;</span>
+<span class="nv">Promise = </span><span class="nx">require</span> <span class="s">&#39;bluebird&#39;</span>
+<span class="nv">url = </span><span class="nx">require</span> <span class="s">&#39;url&#39;</span>
+
+<span class="nv">config = </span><span class="nx">require</span> <span class="s">&#39;config&#39;</span>
+<span class="nv">pkgman = </span><span class="nx">require</span> <span class="s">&#39;pkgman&#39;</span>
+
+<span class="p">{</span><span class="nx">Config</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">&#39;client/modules/config&#39;</span>
+
+<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookhttpmiddleware">Implements hook <code>httpMiddleware</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;httpMiddleware&#39;</span><span class="p">,</span> <span class="nf">(http) -&gt;</span>
+    
+    <span class="nv">label: </span><span class="s">&#39;Serve package configuration&#39;</span>
+    <span class="nv">middleware: </span><span class="p">[</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Serve the configuration module.</p></div></div><div class="code"><div class="wrapper">      <span class="nf">(req, res, next) -&gt;</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Only if the path matches.</p></div></div><div class="code"><div class="wrapper">        <span class="k">return</span> <span class="nx">next</span><span class="p">()</span> <span class="k">unless</span> <span class="nx">req</span><span class="p">.</span><span class="nx">url</span> <span class="o">is</span> <span class="s">&#39;/js/config.js&#39;</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>config</code>.
+Allows packages to specify configuration that will be sent to
+the client. Implementations may return an object, or a promise
+that resolves to an object.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">subconfigs = </span><span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s">&#39;config&#39;</span><span class="p">,</span> <span class="nx">req</span>
+          
+        <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span>
+          
+          <span class="nx">promise</span> <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">promise</span> <span class="k">of</span> <span class="nx">subconfigs</span>
+          
+        <span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">(fulfilledSubconfigs) -&gt;</span>
+  
+          <span class="c1"># Merge ALL the configs.</span>
+          <span class="nv">config_ = </span><span class="k">new</span> <span class="nx">Config</span><span class="p">()</span>
+          
+          <span class="c1"># Package-independent...</span>
+          <span class="nx">config_</span><span class="p">.</span><span class="nx">set</span> <span class="s">&#39;packageList&#39;</span><span class="p">,</span> <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;packageList&#39;</span>
+          
+          <span class="nv">index = </span><span class="mi">0</span>
+          <span class="k">for</span> <span class="nx">path</span> <span class="k">of</span> <span class="nx">subconfigs</span>
+            <span class="nv">subconfig = </span><span class="nx">fulfilledSubconfigs</span><span class="p">[</span><span class="nx">index</span><span class="o">++</span><span class="p">]</span>
+            <span class="k">for</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span> <span class="k">of</span> <span class="nx">subconfig</span>
+              
+              <span class="nx">config_</span><span class="p">.</span><span class="nx">set</span> <span class="s">&quot;packageConfig:</span><span class="si">#{</span>
+                <span class="nx">path</span><span class="p">.</span><span class="nx">replace</span> <span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="s">&#39;:&#39;</span>
+              <span class="si">}</span><span class="s">:</span><span class="si">#{</span>
+                <span class="nx">key</span>
+              <span class="si">}</span><span class="s">&quot;</span><span class="p">,</span> <span class="nx">value</span>
+          
+          <span class="c1"># Format the configuration to look nice.</span>
+          <span class="nv">prettyPrintConfig = </span><span class="nf">-&gt;</span>
+            <span class="nv">stringified = </span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span> <span class="nx">config_</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="s">&#39;  &#39;</span>
+            <span class="p">[</span><span class="nx">first</span><span class="p">,</span> <span class="nx">rest</span><span class="p">...]</span> <span class="o">=</span> <span class="nx">stringified</span><span class="p">.</span><span class="nx">split</span> <span class="s">&#39;\n&#39;</span>
+            <span class="p">([</span><span class="nx">first</span><span class="p">].</span><span class="nx">concat</span> <span class="nx">rest</span><span class="p">.</span><span class="nx">map</span> <span class="nf">(line) -&gt;</span> <span class="s">&#39;    &#39;</span> <span class="o">+</span> <span class="nx">line</span><span class="p">).</span><span class="nx">join</span> <span class="s">&#39;\n&#39;</span>
+          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Emit the configuration module.</p></div></div><div class="code"><div class="wrapper">          <span class="nx">res</span><span class="p">.</span><span class="nx">setHeader</span> <span class="s">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s">&#39;text/javascript&#39;</span>
+          
+          <span class="nx">res</span><span class="p">.</span><span class="nx">send</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">angular.module(</span>
+<span class="s">  &#39;shrub.config&#39;, [&#39;shrub.require&#39;]</span>
+<span class="s">)</span>
+
+<span class="s">  .config([&#39;shrub-requireProvider&#39;, function(requireProvider) {</span>
+
+<span class="s">    requireProvider.require(&#39;config&#39;).from(</span><span class="si">#{</span><span class="nx">prettyPrintConfig</span><span class="p">()</span><span class="si">}</span><span class="s">);</span>
+
+<span class="s">  }]);</span>
+<span class="s">  &quot;&quot;&quot;</span>
+          
+        <span class="p">).</span><span class="nx">catch</span> <span class="nx">next</span>
+        
+    <span class="p">]</span></div></div></div></div></body></html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html><html lang="en"><head><title>packages/shrub-rpc/client/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="packages/shrub-rpc/client/index"><meta name="groc-project-path" content="packages/shrub-rpc/client/index.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-rpc/client/index.coffee">packages/shrub-rpc/client/index.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="rpc">RPC</h1>
+
+<p>Define an Angular service to issue <a href="http://en.wikipedia.org/wiki/Remote_procedure_call#Message_passing">remote procedure calls</a>.</p></div></div><div class="code"><div class="wrapper"><span class="nv">errors = </span><span class="nx">require</span> <span class="s">&#39;errors&#39;</span>
+
+<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookservice">Implements hook <code>service</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;service&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
+    <span class="s">&#39;$injector&#39;</span><span class="p">,</span> <span class="s">&#39;$q&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-pkgman&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-socket&#39;</span>
+    <span class="nf">({invoke}, {defer}, pkgman, socket) -&gt;</span>
+      
+      <span class="nv">service = </span><span class="p">{}</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="rpccall">rpc.call</h2>
+
+<p>Call the server with some data.</p>
+
+<ul>
+<li><p>(string) <code>route</code> - The RPC endpoint route, e.g. <code>user.login</code>.</p></li>
+<li><p>(mixed) <code>data</code> - The data to send to the server.</p></li>
+</ul>
+
+<p>Returns a promise, either resolved with the result of the response
+from the server, or rejected with the error from the server.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">service.call = </span><span class="nf">(route, data) -&gt;</span>
+        
+        <span class="nv">deferred = </span><span class="nx">defer</span><span class="p">()</span>
+        
+        <span class="nx">socket</span><span class="p">.</span><span class="nx">emit</span> <span class="s">&quot;rpc://</span><span class="si">#{</span><span class="nx">route</span><span class="si">}</span><span class="s">&quot;</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="nf">({error, result}) -&gt;</span>
+          <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
+            <span class="nx">deferred</span><span class="p">.</span><span class="nx">reject</span> <span class="nx">errors</span><span class="p">.</span><span class="nx">unserialize</span> <span class="nx">error</span>
+          <span class="k">else</span>
+            <span class="nx">deferred</span><span class="p">.</span><span class="nx">resolve</span> <span class="nx">result</span>
+        
+        <span class="nx">invoke</span><span class="p">(</span>
+          <span class="nx">injectable</span><span class="p">,</span> <span class="kc">null</span>
+          
+          <span class="nv">route: </span><span class="nx">route</span>
+          <span class="nv">data: </span><span class="nx">data</span>
+          <span class="nv">result: </span><span class="nx">deferred</span><span class="p">.</span><span class="nx">promise</span>
+        
+        <span class="p">)</span> <span class="k">for</span> <span class="nx">injectable</span> <span class="k">in</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invokeFlat</span> <span class="s">&#39;rpcCall&#39;</span>
+          
+        <span class="nx">deferred</span><span class="p">.</span><span class="nx">promise</span>
+      
+      <span class="nx">service</span>
+      
+  <span class="p">]</span></div></div></div></div></body></html>

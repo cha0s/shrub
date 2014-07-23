@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><title>client/modules/pkgman</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="client/modules/pkgman"><meta name="groc-project-path" content="client/modules/pkgman.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/client/modules/pkgman.coffee">client/modules/pkgman.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="package-manager">Package manager</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nv">_ = </span><span class="nx">require</span> <span class="s">&#39;underscore&#39;</span>
 
-<span class="p">{</span><span class="nx">defaultLogger</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">&#39;logging&#39;</span>
+<span class="nv">debug = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;debug&#39;</span><span class="p">)</span> <span class="s">&#39;shrub:pkgman&#39;</span>
 
 <span class="nv">packageCache = </span><span class="kc">null</span>
 <span class="nv">_packages = </span><span class="p">[]</span>
@@ -21,7 +21,7 @@
     
     <span class="k">if</span> <span class="nx">impl</span><span class="o">?</span>
       
-      <span class="nv">path = </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">submodule</span><span class="si">}</span><span class="s">/</span><span class="si">#{</span><span class="nx">@_path</span><span class="si">}</span><span class="s">&quot;</span>
+      <span class="nv">path = </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">@_path</span><span class="si">}</span><span class="s">/</span><span class="si">#{</span><span class="nx">submodule</span><span class="si">}</span><span class="s">&quot;</span>
     
     <span class="k">else</span>
       
@@ -29,28 +29,31 @@
       <span class="nv">impl = </span><span class="nx">hook</span>
       <span class="nv">hook = </span><span class="nx">submodule</span>
       
-    <span class="p">(</span><span class="nx">packageCache</span><span class="p">[</span><span class="nx">hook</span><span class="p">]</span> <span class="o">?=</span> <span class="p">[]).</span><span class="nx">push</span> <span class="nv">path: </span><span class="nx">path</span><span class="p">,</span> <span class="nv">impl: </span><span class="nx">impl</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="rebuildpackagecache">rebuildPackageCache</h2></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nv">exports.rebuildPackageCache = </span><span class="nf">-&gt;</span>
+    <span class="p">(</span><span class="nx">packageCache</span><span class="p">[</span><span class="nx">hook</span><span class="p">]</span> <span class="o">?=</span> <span class="p">[]).</span><span class="nx">push</span> <span class="nv">path: </span><span class="nx">path</span><span class="p">,</span> <span class="nv">impl: </span><span class="nx">impl</span>
+
+<span class="nv">optionalModule = </span><span class="nf">(name) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="rebuildpackagecache">rebuildPackageCache</h2></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nv">exports.rebuildPackageCache = </span><span class="nf">(type) -&gt;</span>
   <span class="nv">packageCache = </span><span class="p">{}</span>
   
   <span class="nv">modules = </span><span class="p">{}</span>
   <span class="k">for</span> <span class="nx">name</span> <span class="k">in</span> <span class="nx">_packages</span>
-  
+    
     <span class="k">try</span>
       
-      <span class="nx">modules</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="nx">require</span> <span class="nx">name</span>
+      <span class="nv">module_ = </span><span class="nx">require</span> <span class="nx">name</span>
     
     <span class="k">catch</span> <span class="nx">error</span>
       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Suppress missing package errors.
 <code>TODO</code>: Should we let this throw?</p></div></div><div class="code"><div class="wrapper">      <span class="k">continue</span> <span class="k">if</span> <span class="nx">error</span><span class="p">.</span><span class="nx">toString</span><span class="p">()</span> <span class="o">is</span> <span class="s">&quot;Error: Cannot find module &#39;</span><span class="si">#{</span><span class="nx">name</span><span class="si">}</span><span class="s">&#39;&quot;</span>
       <span class="k">throw</span> <span class="nx">error</span>
-      
-    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s">&quot;Found package </span><span class="si">#{</span><span class="nx">name</span><span class="si">}</span><span class="s">.&quot;</span>
+  
+    <span class="nx">modules</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="nx">module_</span>
+    <span class="nx">debug</span> <span class="s">&quot;Found package </span><span class="si">#{</span><span class="nx">name</span><span class="si">}</span><span class="s">.&quot;</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Collect hooks.</p></div></div><div class="code"><div class="wrapper">  <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">module_</span> <span class="k">of</span> <span class="nx">modules</span>
     <span class="nx">module_</span><span class="p">.</span><span class="nx">pkgmanRegister</span><span class="o">?</span> <span class="k">new</span> <span class="nx">PkgmanRegistrar</span> <span class="nx">path</span>
   
-  <span class="k">return</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="registerpackagelist">registerPackageList</h2></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nv">exports.registerPackageList = </span><span class="nf">(packages) -&gt;</span>
+  <span class="k">return</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="registerpackagelist">registerPackageList</h2></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nv">exports.registerPackageList = </span><span class="nf">(packages, type) -&gt;</span>
   <span class="nx">_packages</span><span class="p">.</span><span class="nx">push</span><span class="p">.</span><span class="nx">apply</span> <span class="nx">_packages</span><span class="p">,</span> <span class="nx">packages</span>
-  <span class="nx">exports</span><span class="p">.</span><span class="nx">rebuildPackageCache</span><span class="p">()</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="invoke">invoke</h2>
+  <span class="nx">exports</span><span class="p">.</span><span class="nx">rebuildPackageCache</span> <span class="nx">type</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="invoke">invoke</h2>
 
 <p>Invoke a hook with arguments. Return the result as an object, keyed by
 package path.</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.invoke = </span><span class="nf">(hook, args...) -&gt;</span>

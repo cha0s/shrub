@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="en"><head><title>packages/shrub-ui/client/nav</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="packages/shrub-ui/client/nav"><meta name="groc-project-path" content="packages/shrub-ui/client/nav.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-ui/client/nav.coffee">packages/shrub-ui/client/nav.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="navigation">Navigation</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookdirective">Implements hook <code>directive</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;directive&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
+    <span class="s">&#39;$location&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-ui/nav&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-ui/title&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-user&#39;</span>
+    <span class="nf">($location, {links}, {page}, {instance}) -&gt;</span>
+    
+      <span class="nv">link: </span><span class="nf">(scope, elm, attr) -&gt;</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p><code>TODO</code>: This whole thing needs to be overhauled.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">scope.links = </span><span class="nx">links</span>
+        <span class="nv">scope.navClass = </span><span class="k">if</span> <span class="nx">attr</span><span class="p">[</span><span class="s">&#39;uiNav&#39;</span><span class="p">]</span> <span class="k">then</span> <span class="nx">attr</span><span class="p">[</span><span class="s">&#39;uiNav&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="s">&#39;ui-nav&#39;</span>
+        <span class="nv">scope.user = </span><span class="nx">instance</span><span class="p">()</span>
+        
+        <span class="nx">scope</span><span class="p">.</span><span class="nx">$watch</span><span class="p">(</span>
+          <span class="nf">-&gt;</span> <span class="nx">page</span><span class="p">()</span>
+          <span class="nf">-&gt;</span> <span class="nv">scope.pageTitle = </span><span class="nx">page</span><span class="p">()</span>
+        <span class="p">)</span>
+        
+        <span class="p">(</span><span class="nv">navActiveLinks = </span><span class="nf">-&gt;</span>
+        
+          <span class="nv">path = </span><span class="nx">$location</span><span class="p">.</span><span class="nx">path</span><span class="p">()</span>
+          <span class="k">for</span> <span class="nx">link</span> <span class="k">in</span> <span class="nx">scope</span><span class="p">.</span><span class="nx">links</span><span class="p">()</span>
+          
+            <span class="nv">regexp = </span><span class="k">new</span> <span class="nb">RegExp</span> <span class="s">&quot;^</span><span class="si">#{</span><span class="nx">link</span><span class="p">.</span><span class="nx">pattern</span><span class="si">}</span><span class="s">$&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;i&#39;</span><span class="p">]</span>
+            <span class="nv">link.active = </span><span class="k">if</span> <span class="nx">regexp</span><span class="p">.</span><span class="nx">test</span> <span class="nx">path</span> <span class="k">then</span> <span class="s">&#39;active&#39;</span>
+            
+        <span class="p">)()</span>
+        
+        <span class="nx">scope</span><span class="p">.</span><span class="nx">$watch</span><span class="p">(</span>
+          <span class="nf">-&gt;</span> <span class="nx">scope</span><span class="p">.</span><span class="nx">links</span><span class="p">()</span>
+          <span class="nx">navActiveLinks</span>  
+        <span class="p">)</span>
+  
+        <span class="nx">scope</span><span class="p">.</span><span class="nx">$watch</span><span class="p">(</span>
+          <span class="nf">-&gt;</span> <span class="nx">$location</span><span class="p">.</span><span class="nx">path</span><span class="p">()</span>
+          <span class="nx">navActiveLinks</span>  
+        <span class="p">)</span>
+        
+      <span class="nv">template: </span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">  </span>
+<span class="s">&lt;nav class=&quot;navbar navbar-default&quot; role=&quot;navigation&quot;&gt;</span>
+<span class="s">  &lt;div class=&quot;container-fluid&quot;&gt;</span>
+<span class="s">    </span>
+<span class="s">    &lt;div class=&quot;navbar-header&quot;&gt;</span>
+<span class="s">      &lt;button type=&quot;button&quot; class=&quot;navbar-toggle&quot; data-toggle=&quot;collapse&quot; data-target=&quot;.{{navClass}}&quot;&gt;</span>
+<span class="s">        &lt;span class=&quot;sr-only&quot;&gt;Toggle navigation&lt;/span&gt;</span>
+<span class="s">        &lt;span class=&quot;icon-bar&quot;&gt;&lt;/span&gt;</span>
+<span class="s">        &lt;span class=&quot;icon-bar&quot;&gt;&lt;/span&gt;</span>
+<span class="s">        &lt;span class=&quot;icon-bar&quot;&gt;&lt;/span&gt;</span>
+<span class="s">      &lt;/button&gt;</span>
+
+<span class="s">      &lt;a class=&quot;navbar-brand&quot; href=&quot;</span><span class="err">#</span><span class="s">&quot;&gt;&lt;span data-ng-bind=&quot;pageTitle&quot;&gt;&lt;/span&gt;&lt;/a&gt;</span>
+<span class="s">      </span>
+<span class="s">    &lt;/div&gt;</span>
+<span class="s">    </span>
+<span class="s">    &lt;div class=&quot;navbar-collapse collapse&quot; data-ng-class=&quot;navClass&quot;&gt;</span>
+<span class="s">      &lt;p class=&quot;navbar-text navbar-right identity-wrapper&quot;&gt;</span>
+<span class="s">        &lt;span class=&quot;identity&quot;&gt;</span>
+<span class="s">          You are &lt;span class=&quot;username&quot; data-ng-bind=&quot;user.name&quot;&gt;&lt;/span&gt;</span>
+<span class="s">        &lt;/span&gt;</span>
+<span class="s">      &lt;/p&gt;</span>
+<span class="s">      &lt;ul class=&quot;nav navbar-nav navbar-right&quot;&gt;</span>
+<span class="s">        &lt;li data-ng-class=&quot;link.active&quot; data-match-route=&quot;{{link.pattern}}&quot; data-ng-repeat=&quot;link in links()&quot;&gt;</span>
+<span class="s">          &lt;a target=&quot;{{link.target}}&quot; data-ng-href=&quot;{{link.href}}&quot; data-ng-bind=&quot;link.name&quot;&gt;&lt;/a&gt;</span>
+<span class="s">        &lt;/li&gt;</span>
+<span class="s">      &lt;/ul&gt;</span>
+<span class="s">    &lt;/div&gt;</span>
+<span class="s">    </span>
+<span class="s">  &lt;/div&gt;</span>
+<span class="s">&lt;/nav&gt;</span>
+
+<span class="s">&quot;&quot;&quot;</span>
+      
+  <span class="p">]</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookservice">Implements hook <code>service</code></h2>
+
+<p>This API allows you to dynamically change the navigation links.
+<code>TODO</code>: Overhaul this.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;service&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
+    <span class="nf">-&gt;</span>
+      
+      <span class="nv">service = </span><span class="p">{}</span>
+      
+      <span class="nv">_links = </span><span class="p">[]</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Get and set the navigation links. The links are objects structured like so:</p>
+
+<ul>
+<li>pattern: A string or regex containing the path to match to set this item
+active.</li>
+<li>href: Target navigation path when this item is clicked.</li>
+<li>name: Human readable name for the item.</li>
+</ul>
+
+<p>e.g.</p>
+
+<pre><code>item =
+    pattern: '/home'
+    href: '#/home'
+    name: 'Home'
+</code></pre></div></div><div class="code"><div class="wrapper">      
+      <span class="nv">service.links = </span><span class="nf">-&gt;</span> <span class="nx">_links</span>
+      <span class="nv">service.setLinks = </span><span class="nf">(links) -&gt;</span> <span class="nv">_links = </span><span class="nx">links</span>
+      
+      <span class="nx">service</span>
+      
+  <span class="p">]</span></div></div></div></div></body></html>

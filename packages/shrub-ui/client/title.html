@@ -1,0 +1,79 @@
+<!DOCTYPE html><html lang="en"><head><title>packages/shrub-ui/client/title</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="packages/shrub-ui/client/title"><meta name="groc-project-path" content="packages/shrub-ui/client/title.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-ui/client/title.coffee">packages/shrub-ui/client/title.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="titles">Titles</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookdirective">Implements hook <code>directive</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;directive&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
+    <span class="s">&#39;shrub-ui/title&#39;</span>
+    <span class="nf">({window}) -&gt;</span>
+    
+      <span class="nv">link: </span><span class="nf">(scope, elm, attr) -&gt;</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Keep the window title synchronized. </p></div></div><div class="code"><div class="wrapper">        <span class="nx">scope</span><span class="p">.</span><span class="nx">$watch</span><span class="p">(</span>
+          <span class="nf">-&gt;</span> <span class="nb">window</span><span class="p">()</span>
+          <span class="nf">-&gt;</span> <span class="nv">scope.windowTitle = </span><span class="nb">window</span><span class="p">()</span>
+        <span class="p">)</span>
+      
+  <span class="p">]</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookroutecontrollerstart">Implements hook <code>routeControllerStart</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;routeControllerStart&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
+    <span class="s">&#39;route&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-ui/title&#39;</span>
+    <span class="nf">(route, title) -&gt;</span> <span class="nx">title</span><span class="p">.</span><span class="nx">setPage</span> <span class="nx">route</span><span class="p">.</span><span class="nx">title</span> <span class="o">?</span> <span class="s">&#39;&#39;</span>  
+  <span class="p">]</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookservice">Implements hook <code>service</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;service&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
+    <span class="s">&#39;$interval&#39;</span>
+    <span class="nf">($interval) -&gt;</span>
+      
+      <span class="nv">service = </span><span class="p">{}</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Get and set the page title.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">_page = </span><span class="s">&#39;&#39;</span>
+      
+      <span class="nv">service.page = </span><span class="nf">-&gt;</span> <span class="nx">_page</span>
+      <span class="nv">service.setPage = </span><span class="nf">(page, setWindow = true) -&gt;</span>
+        
+        <span class="nv">_page = </span><span class="nx">page</span>
+        
+        <span class="nx">service</span><span class="p">.</span><span class="nx">setWindow</span> <span class="p">[</span><span class="nx">_page</span><span class="p">,</span> <span class="nx">_site</span><span class="p">].</span><span class="nx">join</span> <span class="nx">_separator</span> <span class="k">if</span> <span class="nx">setWindow</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Get and set the token that separates the page and window title.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">_separator = </span><span class="s">&#39; · &#39;</span>
+  
+      <span class="nv">service.separator = </span><span class="nf">-&gt;</span> <span class="nx">_separator</span>
+      <span class="nv">service.setSeparator = </span><span class="nf">(separator) -&gt;</span> <span class="nv">_separator = </span><span class="nx">separator</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Get and set the site name.        </p></div></div><div class="code"><div class="wrapper">      <span class="nv">_site = </span><span class="s">&#39;&#39;</span>
+  
+      <span class="nv">service.site = </span><span class="nf">-&gt;</span> <span class="nx">_site</span>
+      <span class="nv">service.setSite = </span><span class="nf">(site) -&gt;</span> <span class="nv">_site = </span><span class="nx">site</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Get and set the window title.        </p></div></div><div class="code"><div class="wrapper">      <span class="nv">_window = </span><span class="s">&#39;&#39;</span>
+  
+      <span class="nv">service.window = </span><span class="nf">-&gt;</span> <span class="nx">_windowWrapper</span> <span class="nx">_window</span>
+      <span class="nv">service.setWindow = </span><span class="nf">(window) -&gt;</span> <span class="nv">_window = </span><span class="nb">window</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Certain things will want to make the window/tab title flash for
+attention. Those things will use this API to do so.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">_flashUpWrapper = </span><span class="nf">(text) -&gt;</span> <span class="s">&quot;¯¯¯</span><span class="si">#{</span><span class="nx">text</span><span class="p">.</span><span class="nx">toUpperCase</span><span class="p">()</span><span class="si">}</span><span class="s">¯¯¯&quot;</span>
+      <span class="nv">_flashDownWrapper = </span><span class="nf">(text) -&gt;</span> <span class="s">&quot;___</span><span class="si">#{</span><span class="nx">text</span><span class="si">}</span><span class="s">___&quot;</span>
+      <span class="nv">_windowWrapper = </span><span class="nx">angular</span><span class="p">.</span><span class="nx">identity</span>
+      
+      <span class="nv">flashInProgress = </span><span class="kc">null</span>
+      
+      <span class="nv">service.flash = </span><span class="nf">-&gt;</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Don't queue up a million timeouts.</p></div></div><div class="code"><div class="wrapper">        <span class="k">return</span> <span class="k">if</span> <span class="nx">flashInProgress</span><span class="o">?</span>
+        
+        <span class="nv">flashInProgress = </span><span class="nx">$interval</span><span class="p">(</span>
+          <span class="nf">-&gt;</span>
+          
+            <span class="k">if</span> <span class="nx">_windowWrapper</span> <span class="o">is</span> <span class="nx">_flashUpWrapper</span>
+              <span class="nv">_windowWrapper = </span><span class="nx">_flashDownWrapper</span>
+            <span class="k">else</span>
+              <span class="nv">_windowWrapper = </span><span class="nx">_flashUpWrapper</span>
+            
+          <span class="mi">600</span>
+        <span class="p">)</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Restore the window/tab title to normal again.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">service.stopFlashing = </span><span class="nf">-&gt;</span>
+        
+        <span class="nx">$interval</span><span class="p">.</span><span class="nx">cancel</span> <span class="nx">flashInProgress</span> <span class="k">if</span> <span class="nx">flashInProgress</span><span class="o">?</span>
+        <span class="nv">flashInProgress = </span><span class="kc">null</span>
+        
+        <span class="nv">_windowWrapper = </span><span class="nx">angular</span><span class="p">.</span><span class="nx">identity</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The wrappers below handle rendering the window title and flash
+states. The wrappers are passed in a single argument, the title text.
+The wrapper function returns another string, which is the text after
+whatever wrapping you'd like to do.</p></div></div><div class="code"><div class="wrapper">      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Get and set the window title wrapper.        </p></div></div><div class="code"><div class="wrapper">      <span class="nv">service.windowWrapper = </span><span class="nf">-&gt;</span> <span class="nx">_windowWrapper</span>
+      <span class="nv">service.setWindowWrapper = </span><span class="nf">(windowWrapper) -&gt;</span> <span class="nv">_windowWrapper = </span><span class="nx">windowWrapper</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Get and set the flash down state wrapper.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">service.flashDownWrapper = </span><span class="nf">-&gt;</span> <span class="nx">_flashDownWrapper</span>
+      <span class="nv">service.setFlashDownWrapper = </span><span class="nf">(flashDownWrapper) -&gt;</span> <span class="nv">_flashDownWrapper = </span><span class="nx">flashDownWrapper</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Get and set the flash up state wrapper.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">service.flashUpWrapper = </span><span class="nf">-&gt;</span> <span class="nx">_flashUpWrapper</span>
+      <span class="nv">service.setFlashUpWrapper = </span><span class="nf">(flashUpWrapper) -&gt;</span> <span class="nv">_flashUpWrapper = </span><span class="nx">flashUpWrapper</span>
+  
+      <span class="nx">service</span>
+      
+  <span class="p">]</span></div></div></div></div></body></html>

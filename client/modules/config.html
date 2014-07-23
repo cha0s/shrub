@@ -49,7 +49,7 @@ wrapped.has 'child:tag'
 
 <ul>
 <li>(object) <code>config</code> - The configuration tree.</li>
-</ul></div></div><div class="code"><div class="wrapper">  <span class="nv">constructor: </span><span class="nf">(@config) -&gt;</span>
+</ul></div></div><div class="code"><div class="wrapper">  <span class="nv">constructor: </span><span class="nf">(@config = {}) -&gt;</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="from">.from</h3>
 
 <p><em>Set configuration from one object.</em></p>
@@ -96,4 +96,9 @@ wrapped.has 'child:tag'
     <span class="k">for</span> <span class="nx">part</span> <span class="k">in</span> <span class="nx">parts</span>
       <span class="nv">current = </span><span class="p">(</span><span class="nx">current</span><span class="p">[</span><span class="nx">part</span><span class="p">]</span> <span class="o">?=</span> <span class="p">{})</span>
     
-    <span class="nx">current</span><span class="p">[</span><span class="nx">last</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span></div></div></div></div></body></html>
+    <span class="nx">current</span><span class="p">[</span><span class="nx">last</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="tojson">.toJSON</h3>
+
+<p><em>Return config object for serialization.</em></p></div></div><div class="code"><div class="wrapper">  <span class="nv">toJSON: </span><span class="nf">-&gt;</span> <span class="nx">@config</span>
+
+<span class="nv">module.exports.Config = </span><span class="nx">Config</span></div></div></div></div></body></html>

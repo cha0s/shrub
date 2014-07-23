@@ -3,18 +3,17 @@
 <p>The server application entry point. We load the configuration, invoke the
 initialization hooks, and listen for signals and process exit.</p></div></div><div class="code"><div class="wrapper"><span class="nv">Promise = </span><span class="nx">require</span> <span class="s">&#39;bluebird&#39;</span>
 
+<span class="nv">debug = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;debug&#39;</span><span class="p">)</span> <span class="s">&#39;shrub&#39;</span>
 <span class="nv">errors = </span><span class="nx">require</span> <span class="s">&#39;errors&#39;</span>
 <span class="nv">pkgman = </span><span class="nx">require</span> <span class="s">&#39;pkgman&#39;</span>
 <span class="nv">schema = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;shrub-schema&#39;</span><span class="p">).</span><span class="nx">schema</span><span class="p">()</span>
 
-<span class="p">{</span><span class="nx">defaultLogger</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">&#39;logging&#39;</span>
-
 <span class="c1"># Set up config.</span>
-<span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s">&quot;Loading config...&quot;</span>
+<span class="nx">debug</span> <span class="s">&quot;Loading config...&quot;</span>
 
 <span class="nv">config = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;config&#39;</span><span class="p">).</span><span class="nx">load</span><span class="p">()</span>
 
-<span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">info</span> <span class="s">&quot;Config loaded.&quot;</span>
+<span class="nx">debug</span> <span class="s">&quot;Config loaded.&quot;</span>
 
 <span class="c1"># Let packages define their models in the schema.</span>
 <span class="nx">schema</span><span class="p">.</span><span class="nx">definePackageModels</span><span class="p">()</span>
@@ -30,7 +29,7 @@ continues.</p></div></div><div class="code"><div class="wrapper">  <span class="
 Invoked after the server is initialized and ready.</p></div></div><div class="code"><div class="wrapper">  <span class="nf">-&gt;</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s">&#39;ready&#39;</span>
   <span class="nf">(error) -&gt;</span>
     
-    <span class="nx">defaultLogger</span><span class="p">.</span><span class="nx">error</span> <span class="nx">errors</span><span class="p">.</span><span class="nx">stack</span> <span class="nx">error</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span> <span class="nx">errors</span><span class="p">.</span><span class="nx">stack</span> <span class="nx">error</span>
     
     <span class="c1"># Rethrow any error.</span>
     <span class="k">throw</span> <span class="nx">error</span>

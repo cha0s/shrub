@@ -12,7 +12,15 @@ context.</p>
 <p>Should we let this throw? </p></li>
 </ul>
 
-<p><a href="./client/modules/shrub-core/index.html">client/modules/shrub-core/index.coffee</a></p>
+<p><a href="./packages/shrub-angular/index.html">packages/shrub-angular/index.coffee</a></p>
+
+<ul>
+<li><h4 id="return"><code>return</code></h4>
+
+<p>need to extract params to build redirectTo, small enough mismatch to ignore for now. </p></li>
+</ul>
+
+<p><a href="./packages/shrub-core/client/index.html">packages/shrub-core/client/index.coffee</a></p>
 
 <ul>
 <li><h4 id="routetemplate"><code>route.template ?= ' '</code></h4>
@@ -20,7 +28,7 @@ context.</p>
 <p>Some method of allowing <code>templateUrl</code>. </p></li>
 </ul>
 
-<p><a href="./client/modules/shrub-form/index.html">client/modules/shrub-form/index.coffee</a></p>
+<p><a href="./packages/shrub-form/client/index.html">packages/shrub-form/client/index.coffee</a></p>
 
 <ul>
 <li><h4 id="fornamefieldofformspec"><code>for name, field of formSpec</code></h4>
@@ -31,15 +39,47 @@ context.</p>
 <p>This should be middleware'd, <code>rpc</code> should be implementing it. </p></li>
 </ul>
 
-<p><a href="./client/modules/shrub-socket/index.html">client/modules/shrub-socket/index.coffee</a></p>
+<p><a href="./packages/shrub-form/index.html">packages/shrub-form/index.coffee</a></p>
 
 <ul>
-<li><h4 id="socketioconnect"><code>socket = io.connect()</code></h4>
+<li><h4 id="returnnextunlessbodyformkey"><code>return next() unless body.formKey?</code></h4>
 
-<p>Only Socket.IO at the moment. </p></li>
+<p>CRSF check needed here. </p></li>
 </ul>
 
-<p><a href="./client/modules/shrub-ui/nav.html">client/modules/shrub-ui/nav.coffee</a></p>
+<p><a href="./packages/shrub-http/manager.html">packages/shrub-http/manager.coffee</a></p>
+
+<ul>
+<li><h4 id="_middlewaremiddlewarefromhook"><code>@_middleware = middleware.fromHook(</code></h4>
+
+<p>Rename express to http, so we can use a short name. </p></li>
+</ul>
+
+<p><a href="./packages/shrub-limiter/index.html">packages/shrub-limiter/index.coffee</a></p>
+
+<ul>
+<li><h4 id="promiseifreqreportvilliany"><code>promise = if req.reportVilliany?</code></h4>
+
+<p>Should this be added by <a href="/server/packages/villiany/index.html">villiany</a>? </p></li>
+</ul>
+
+<p><a href="./packages/shrub-nodemailer/index.html">packages/shrub-nodemailer/index.coffee</a></p>
+
+<ul>
+<li><h4 id="ddatauinavdbodyhtml"><code>$('[data-ui-nav]', $body).html """</code></h4>
+
+<p>this kind of thing should be configurable and handled by the theme/skin when we get to that point. </p></li>
+</ul>
+
+<p><a href="./packages/shrub-socket.io/index.html">packages/shrub-socket.io/index.coffee</a></p>
+
+<ul>
+<li><h4 id="socketsinchannelchannelname"><code>socketsInChannel: (channelName) -&gt;</code></h4>
+
+<p>This only works on a single node. socket.io needs to implement this. </p></li>
+</ul>
+
+<p><a href="./packages/shrub-ui/client/nav.html">packages/shrub-ui/client/nav.coffee</a></p>
 
 <ul>
 <li><h4 id="scopelinkslinks"><code>scope.links = links</code></h4>
@@ -50,7 +90,7 @@ context.</p>
 <p>Overhaul this. </p></li>
 </ul>
 
-<p><a href="./client/modules/shrub-user/index.html">client/modules/shrub-user/index.coffee</a></p>
+<p><a href="./packages/shrub-user/client/index.html">packages/shrub-user/client/index.coffee</a></p>
 
 <ul>
 <li><h4 id="serviceloginmethodusernamepassword"><code>service.login = (method, username, password) -&gt;</code></h4>
@@ -64,47 +104,7 @@ context.</p>
 <p>Access control structure. </p></li>
 </ul>
 
-<p><a href="./server/shrub-angular/index.html">server/shrub-angular/index.coffee</a></p>
-
-<ul>
-<li><h4 id="return"><code>return</code></h4>
-
-<p>need to extract params to build redirectTo, small enough mismatch to ignore for now. </p></li>
-</ul>
-
-<p><a href="./server/shrub-form/index.html">server/shrub-form/index.coffee</a></p>
-
-<ul>
-<li><h4 id="returnnextunlessbodyformkey"><code>return next() unless body.formKey?</code></h4>
-
-<p>CRSF check needed here. </p></li>
-</ul>
-
-<p><a href="./server/shrub-http/manager.html">server/shrub-http/manager.coffee</a></p>
-
-<ul>
-<li><h4 id="_middlewaremiddlewarefromhook"><code>@_middleware = middleware.fromHook(</code></h4>
-
-<p>Rename express to http, so we can use a short name. </p></li>
-</ul>
-
-<p><a href="./server/shrub-limiter/index.html">server/shrub-limiter/index.coffee</a></p>
-
-<ul>
-<li><h4 id="promiseifreqreportvilliany"><code>promise = if req.reportVilliany?</code></h4>
-
-<p>Should this be added by <a href="/server/packages/villiany/index.html">villiany</a>? </p></li>
-</ul>
-
-<p><a href="./server/shrub-nodemailer/index.html">server/shrub-nodemailer/index.coffee</a></p>
-
-<ul>
-<li><h4 id="ddatauinavdbodyhtml"><code>$('[data-ui-nav]', $body).html """</code></h4>
-
-<p>this kind of thing should be configurable and handled by the theme/skin when we get to that point. </p></li>
-</ul>
-
-<p><a href="./server/shrub-user/login.html">server/shrub-user/login.coffee</a></p>
+<p><a href="./packages/shrub-user/login.html">packages/shrub-user/login.coffee</a></p>
 
 <ul>
 <li><h4 id="localstrategyrequirepassportlocalstrategy"><code>LocalStrategy = require('passport-local').Strategy</code></h4>

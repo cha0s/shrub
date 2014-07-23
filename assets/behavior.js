@@ -17,20 +17,9 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
         "projectPath": "documentation/index.md",
         "targetPath": "index",
         "pageTitle": "Shrub documentation",
-        "firstHeader": {
-          "type": "heading",
-          "data": {
-            "level": 1,
-            "title": "Shrub",
-            "slug": "shrub",
-            "isFileHeader": true
-          },
-          "depth": 1
-        },
-        "title": "Shrub"
+        "title": "Shrub documentation"
       },
-      "depth": 1,
-      "outline": []
+      "depth": 1
     }, {
       "type": "file",
       "data": {
@@ -43,89 +32,9 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
         "projectPath": "README.md",
         "targetPath": "README",
         "pageTitle": "README",
-        "firstHeader": {
-          "type": "heading",
-          "data": {
-            "level": 1,
-            "title": "Shrub",
-            "slug": "shrub",
-            "isFileHeader": true
-          },
-          "depth": 1,
-          "children": [
-            {
-              "type": "heading",
-              "data": {
-                "level": 3,
-                "title": "Get rolling",
-                "slug": "get-rolling"
-              },
-              "depth": 3
-            }, {
-              "type": "heading",
-              "data": {
-                "level": 3,
-                "title": "Documentation",
-                "slug": "documentation"
-              },
-              "depth": 3
-            }, {
-              "type": "heading",
-              "data": {
-                "level": 3,
-                "title": "Awesome example of a package",
-                "slug": "awesome-example-of-a-package"
-              },
-              "depth": 3
-            }, {
-              "type": "heading",
-              "data": {
-                "level": 3,
-                "title": "TODO",
-                "slug": "todo"
-              },
-              "depth": 3
-            }
-          ]
-        },
-        "title": "Shrub"
+        "title": "README"
       },
-      "depth": 1,
-      "outline": [
-        {
-          "type": "heading",
-          "data": {
-            "level": 3,
-            "title": "Get rolling",
-            "slug": "get-rolling"
-          },
-          "depth": 3
-        }, {
-          "type": "heading",
-          "data": {
-            "level": 3,
-            "title": "Documentation",
-            "slug": "documentation"
-          },
-          "depth": 3
-        }, {
-          "type": "heading",
-          "data": {
-            "level": 3,
-            "title": "Awesome example of a package",
-            "slug": "awesome-example-of-a-package"
-          },
-          "depth": 3
-        }, {
-          "type": "heading",
-          "data": {
-            "level": 3,
-            "title": "TODO",
-            "slug": "todo"
-          },
-          "depth": 3
-        }
-      ]
+      "depth": 1
     }, {
       "type": "folder",
       "data": {
@@ -153,18 +62,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "client/app",
             "title": "app"
           },
-          "depth": 2,
-          "outline": [
-            {
-              "type": "heading",
-              "data": {
-                "level": 1,
-                "title": "Application entry point.",
-                "slug": "application-entry-point"
-              },
-              "depth": 1
-            }
-          ]
+          "depth": 2
         }, {
           "type": "folder",
           "data": {
@@ -192,53 +90,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 "pageTitle": "client/modules/config",
                 "title": "config"
               },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "Config",
-                    "slug": "config"
-                  },
-                  "depth": 1,
-                  "children": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".from",
-                        "slug": "from"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".get",
-                        "slug": "get"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".has",
-                        "slug": "has"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".set",
-                        "slug": "set"
-                      },
-                      "depth": 3
-                    }
-                  ]
-                }
-              ]
+              "depth": 3
             }, {
               "type": "file",
               "data": {
@@ -258,77 +110,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 "pageTitle": "client/modules/errors",
                 "title": "errors"
               },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "Error handling",
-                    "slug": "error-handling"
-                  },
-                  "depth": 1,
-                  "children": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "TransmittableError",
-                        "slug": "transmittableerror"
-                      },
-                      "depth": 2
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "instantiate",
-                        "slug": "instantiate"
-                      },
-                      "depth": 2
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "message",
-                        "slug": "message"
-                      },
-                      "depth": 2
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "serialize",
-                        "slug": "serialize"
-                      },
-                      "depth": 2
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "stack",
-                        "slug": "stack"
-                      },
-                      "depth": 2
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "transmittableErrors",
-                        "slug": "transmittableerrors"
-                      },
-                      "depth": 2
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "unserialize",
-                        "slug": "unserialize"
-                      },
-                      "depth": 2
-                    }
-                  ]
-                }
-              ]
+              "depth": 3
             }, {
               "type": "file",
               "data": {
@@ -348,18 +130,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 "pageTitle": "client/modules/jugglingdb-rest",
                 "title": "jugglingdb-rest"
               },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "JugglingDB/Angular REST adapter",
-                    "slug": "jugglingdbangular-rest-adapter"
-                  },
-                  "depth": 1
-                }
-              ]
+              "depth": 3
             }, {
               "type": "file",
               "data": {
@@ -379,29 +150,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 "pageTitle": "client/modules/logging",
                 "title": "logging"
               },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "Logging",
-                    "slug": "logging"
-                  },
-                  "depth": 1,
-                  "children": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": ".create",
-                        "slug": "create"
-                      },
-                      "depth": 2
-                    }
-                  ]
-                }
-              ]
+              "depth": 3
             }, {
               "type": "file",
               "data": {
@@ -421,61 +170,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 "pageTitle": "client/modules/middleware",
                 "title": "middleware"
               },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "Middleware",
-                    "slug": "middleware"
-                  },
-                  "depth": 1,
-                  "children": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "Middleware",
-                        "slug": "middleware"
-                      },
-                      "depth": 2
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "::use",
-                        "slug": "use"
-                      },
-                      "depth": 2
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "::dispatch",
-                        "slug": "dispatch"
-                      },
-                      "depth": 2
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "fromHook",
-                        "slug": "fromhook"
-                      },
-                      "depth": 2
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "fromShortName",
-                        "slug": "fromshortname"
-                      },
-                      "depth": 2
-                    }
-                  ]
-                }
-              ]
+              "depth": 3
             }, {
               "type": "file",
               "data": {
@@ -495,973 +190,27 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 "pageTitle": "client/modules/pkgman",
                 "title": "pkgman"
               },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "Package manager",
-                    "slug": "package-manager"
-                  },
-                  "depth": 1,
-                  "children": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "rebuildPackageCache",
-                        "slug": "rebuildpackagecache"
-                      },
-                      "depth": 2
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "registerPackageList",
-                        "slug": "registerpackagelist"
-                      },
-                      "depth": 2
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "invoke",
-                        "slug": "invoke"
-                      },
-                      "depth": 2
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "invokeFlat",
-                        "slug": "invokeflat"
-                      },
-                      "depth": 2
-                    }
-                  ]
-                }
-              ]
+              "depth": 3
             }, {
-              "type": "folder",
+              "type": "file",
               "data": {
-                "path": "client/modules/shrub-angular",
-                "title": "shrub-angular"
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/client/modules/skin.coffee",
+                "projectPath": "client/modules/skin.coffee",
+                "targetPath": "client/modules/skin",
+                "pageTitle": "client/modules/skin",
+                "title": "skin"
               },
-              "depth": 3,
-              "children": [
-                {
-                  "type": "file",
-                  "data": {
-                    "language": {
-                      "nameMatchers": [".coffee", "Cakefile"],
-                      "pygmentsLexer": "coffee-script",
-                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                      "strictMultiLineEnd": false,
-                      "singleLineComment": ["#"],
-                      "ignorePrefix": "}",
-                      "foldPrefix": "^",
-                      "name": "CoffeeScript"
-                    },
-                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/client/modules/shrub-angular/index.coffee",
-                    "projectPath": "client/modules/shrub-angular/index.coffee",
-                    "targetPath": "client/modules/shrub-angular/index",
-                    "pageTitle": "client/modules/shrub-angular/index",
-                    "title": "index"
-                  },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Angular",
-                        "slug": "angular"
-                      },
-                      "depth": 1
-                    }
-                  ]
-                }
-              ]
-            }, {
-              "type": "folder",
-              "data": {
-                "path": "client/modules/shrub-core",
-                "title": "shrub-core"
-              },
-              "depth": 3,
-              "children": [
-                {
-                  "type": "file",
-                  "data": {
-                    "language": {
-                      "nameMatchers": [".coffee", "Cakefile"],
-                      "pygmentsLexer": "coffee-script",
-                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                      "strictMultiLineEnd": false,
-                      "singleLineComment": ["#"],
-                      "ignorePrefix": "}",
-                      "foldPrefix": "^",
-                      "name": "CoffeeScript"
-                    },
-                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/client/modules/shrub-core/index.coffee",
-                    "projectPath": "client/modules/shrub-core/index.coffee",
-                    "targetPath": "client/modules/shrub-core/index",
-                    "pageTitle": "client/modules/shrub-core/index",
-                    "title": "index"
-                  },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Core",
-                        "slug": "core"
-                      },
-                      "depth": 1
-                    }
-                  ]
-                }
-              ]
-            }, {
-              "type": "folder",
-              "data": {
-                "path": "client/modules/shrub-example",
-                "title": "shrub-example"
-              },
-              "depth": 3,
-              "children": [
-                {
-                  "type": "file",
-                  "data": {
-                    "language": {
-                      "nameMatchers": [".coffee", "Cakefile"],
-                      "pygmentsLexer": "coffee-script",
-                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                      "strictMultiLineEnd": false,
-                      "singleLineComment": ["#"],
-                      "ignorePrefix": "}",
-                      "foldPrefix": "^",
-                      "name": "CoffeeScript"
-                    },
-                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/client/modules/shrub-example/about.coffee",
-                    "projectPath": "client/modules/shrub-example/about.coffee",
-                    "targetPath": "client/modules/shrub-example/about",
-                    "pageTitle": "client/modules/shrub-example/about",
-                    "title": "about"
-                  },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "About page",
-                        "slug": "about-page"
-                      },
-                      "depth": 1
-                    }
-                  ]
-                }, {
-                  "type": "file",
-                  "data": {
-                    "language": {
-                      "nameMatchers": [".coffee", "Cakefile"],
-                      "pygmentsLexer": "coffee-script",
-                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                      "strictMultiLineEnd": false,
-                      "singleLineComment": ["#"],
-                      "ignorePrefix": "}",
-                      "foldPrefix": "^",
-                      "name": "CoffeeScript"
-                    },
-                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/client/modules/shrub-example/home.coffee",
-                    "projectPath": "client/modules/shrub-example/home.coffee",
-                    "targetPath": "client/modules/shrub-example/home",
-                    "pageTitle": "client/modules/shrub-example/home",
-                    "title": "home"
-                  },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Home page",
-                        "slug": "home-page"
-                      },
-                      "depth": 1
-                    }
-                  ]
-                }, {
-                  "type": "file",
-                  "data": {
-                    "language": {
-                      "nameMatchers": [".coffee", "Cakefile"],
-                      "pygmentsLexer": "coffee-script",
-                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                      "strictMultiLineEnd": false,
-                      "singleLineComment": ["#"],
-                      "ignorePrefix": "}",
-                      "foldPrefix": "^",
-                      "name": "CoffeeScript"
-                    },
-                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/client/modules/shrub-example/index.coffee",
-                    "projectPath": "client/modules/shrub-example/index.coffee",
-                    "targetPath": "client/modules/shrub-example/index",
-                    "pageTitle": "client/modules/shrub-example/index",
-                    "title": "index"
-                  },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Example!",
-                        "slug": "example"
-                      },
-                      "depth": 1
-                    }
-                  ]
-                }
-              ]
-            }, {
-              "type": "folder",
-              "data": {
-                "path": "client/modules/shrub-form",
-                "title": "shrub-form"
-              },
-              "depth": 3,
-              "children": [
-                {
-                  "type": "file",
-                  "data": {
-                    "language": {
-                      "nameMatchers": [".coffee", "Cakefile"],
-                      "pygmentsLexer": "coffee-script",
-                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                      "strictMultiLineEnd": false,
-                      "singleLineComment": ["#"],
-                      "ignorePrefix": "}",
-                      "foldPrefix": "^",
-                      "name": "CoffeeScript"
-                    },
-                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/client/modules/shrub-form/index.coffee",
-                    "projectPath": "client/modules/shrub-form/index.coffee",
-                    "targetPath": "client/modules/shrub-form/index",
-                    "pageTitle": "client/modules/shrub-form/index",
-                    "title": "index"
-                  },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Form",
-                        "slug": "form"
-                      },
-                      "depth": 1,
-                      "children": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "form.cache",
-                            "slug": "formcache"
-                          },
-                          "depth": 2
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }, {
-              "type": "folder",
-              "data": {
-                "path": "client/modules/shrub-limiter",
-                "title": "shrub-limiter"
-              },
-              "depth": 3,
-              "children": [
-                {
-                  "type": "file",
-                  "data": {
-                    "language": {
-                      "nameMatchers": [".coffee", "Cakefile"],
-                      "pygmentsLexer": "coffee-script",
-                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                      "strictMultiLineEnd": false,
-                      "singleLineComment": ["#"],
-                      "ignorePrefix": "}",
-                      "foldPrefix": "^",
-                      "name": "CoffeeScript"
-                    },
-                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/client/modules/shrub-limiter/index.coffee",
-                    "projectPath": "client/modules/shrub-limiter/index.coffee",
-                    "targetPath": "client/modules/shrub-limiter/index",
-                    "pageTitle": "client/modules/shrub-limiter/index",
-                    "title": "index"
-                  },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Limiter",
-                        "slug": "limiter"
-                      },
-                      "depth": 1
-                    }
-                  ]
-                }
-              ]
-            }, {
-              "type": "folder",
-              "data": {
-                "path": "client/modules/shrub-rpc",
-                "title": "shrub-rpc"
-              },
-              "depth": 3,
-              "children": [
-                {
-                  "type": "file",
-                  "data": {
-                    "language": {
-                      "nameMatchers": [".coffee", "Cakefile"],
-                      "pygmentsLexer": "coffee-script",
-                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                      "strictMultiLineEnd": false,
-                      "singleLineComment": ["#"],
-                      "ignorePrefix": "}",
-                      "foldPrefix": "^",
-                      "name": "CoffeeScript"
-                    },
-                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/client/modules/shrub-rpc/index.coffee",
-                    "projectPath": "client/modules/shrub-rpc/index.coffee",
-                    "targetPath": "client/modules/shrub-rpc/index",
-                    "pageTitle": "client/modules/shrub-rpc/index",
-                    "title": "index"
-                  },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "RPC",
-                        "slug": "rpc"
-                      },
-                      "depth": 1,
-                      "children": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "rpc.call",
-                            "slug": "rpccall"
-                          },
-                          "depth": 2
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }, {
-              "type": "folder",
-              "data": {
-                "path": "client/modules/shrub-schema",
-                "title": "shrub-schema"
-              },
-              "depth": 3,
-              "children": [
-                {
-                  "type": "file",
-                  "data": {
-                    "language": {
-                      "nameMatchers": [".coffee", "Cakefile"],
-                      "pygmentsLexer": "coffee-script",
-                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                      "strictMultiLineEnd": false,
-                      "singleLineComment": ["#"],
-                      "ignorePrefix": "}",
-                      "foldPrefix": "^",
-                      "name": "CoffeeScript"
-                    },
-                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/client/modules/shrub-schema/index.coffee",
-                    "projectPath": "client/modules/shrub-schema/index.coffee",
-                    "targetPath": "client/modules/shrub-schema/index",
-                    "pageTitle": "client/modules/shrub-schema/index",
-                    "title": "index"
-                  },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Schema",
-                        "slug": "schema"
-                      },
-                      "depth": 1,
-                      "children": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "define",
-                            "slug": "define"
-                          },
-                          "depth": 2
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "schema.definePackageModels",
-                            "slug": "schemadefinepackagemodels"
-                          },
-                          "depth": 2
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }, {
-              "type": "folder",
-              "data": {
-                "path": "client/modules/shrub-socket",
-                "title": "shrub-socket"
-              },
-              "depth": 3,
-              "children": [
-                {
-                  "type": "file",
-                  "data": {
-                    "language": {
-                      "nameMatchers": [".coffee", "Cakefile"],
-                      "pygmentsLexer": "coffee-script",
-                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                      "strictMultiLineEnd": false,
-                      "singleLineComment": ["#"],
-                      "ignorePrefix": "}",
-                      "foldPrefix": "^",
-                      "name": "CoffeeScript"
-                    },
-                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/client/modules/shrub-socket/index.coffee",
-                    "projectPath": "client/modules/shrub-socket/index.coffee",
-                    "targetPath": "client/modules/shrub-socket/index",
-                    "pageTitle": "client/modules/shrub-socket/index",
-                    "title": "index"
-                  },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Socket",
-                        "slug": "socket"
-                      },
-                      "depth": 1,
-                      "children": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "socket.on",
-                            "slug": "socketon"
-                          },
-                          "depth": 2
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "socket.emit",
-                            "slug": "socketemit"
-                          },
-                          "depth": 2
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }, {
-              "type": "folder",
-              "data": {
-                "path": "client/modules/shrub-ui",
-                "title": "shrub-ui"
-              },
-              "depth": 3,
-              "children": [
-                {
-                  "type": "file",
-                  "data": {
-                    "language": {
-                      "nameMatchers": [".coffee", "Cakefile"],
-                      "pygmentsLexer": "coffee-script",
-                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                      "strictMultiLineEnd": false,
-                      "singleLineComment": ["#"],
-                      "ignorePrefix": "}",
-                      "foldPrefix": "^",
-                      "name": "CoffeeScript"
-                    },
-                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/client/modules/shrub-ui/index.coffee",
-                    "projectPath": "client/modules/shrub-ui/index.coffee",
-                    "targetPath": "client/modules/shrub-ui/index",
-                    "pageTitle": "client/modules/shrub-ui/index",
-                    "title": "index"
-                  },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "User Interface",
-                        "slug": "user-interface"
-                      },
-                      "depth": 1
-                    }
-                  ]
-                }, {
-                  "type": "file",
-                  "data": {
-                    "language": {
-                      "nameMatchers": [".coffee", "Cakefile"],
-                      "pygmentsLexer": "coffee-script",
-                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                      "strictMultiLineEnd": false,
-                      "singleLineComment": ["#"],
-                      "ignorePrefix": "}",
-                      "foldPrefix": "^",
-                      "name": "CoffeeScript"
-                    },
-                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/client/modules/shrub-ui/markdown.coffee",
-                    "projectPath": "client/modules/shrub-ui/markdown.coffee",
-                    "targetPath": "client/modules/shrub-ui/markdown",
-                    "pageTitle": "client/modules/shrub-ui/markdown",
-                    "title": "markdown"
-                  },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Markdown filter",
-                        "slug": "markdown-filter"
-                      },
-                      "depth": 1
-                    }
-                  ]
-                }, {
-                  "type": "file",
-                  "data": {
-                    "language": {
-                      "nameMatchers": [".coffee", "Cakefile"],
-                      "pygmentsLexer": "coffee-script",
-                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                      "strictMultiLineEnd": false,
-                      "singleLineComment": ["#"],
-                      "ignorePrefix": "}",
-                      "foldPrefix": "^",
-                      "name": "CoffeeScript"
-                    },
-                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/client/modules/shrub-ui/nav.coffee",
-                    "projectPath": "client/modules/shrub-ui/nav.coffee",
-                    "targetPath": "client/modules/shrub-ui/nav",
-                    "pageTitle": "client/modules/shrub-ui/nav",
-                    "title": "nav"
-                  },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Navigation",
-                        "slug": "navigation"
-                      },
-                      "depth": 1
-                    }
-                  ]
-                }, {
-                  "type": "file",
-                  "data": {
-                    "language": {
-                      "nameMatchers": [".coffee", "Cakefile"],
-                      "pygmentsLexer": "coffee-script",
-                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                      "strictMultiLineEnd": false,
-                      "singleLineComment": ["#"],
-                      "ignorePrefix": "}",
-                      "foldPrefix": "^",
-                      "name": "CoffeeScript"
-                    },
-                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/client/modules/shrub-ui/notifications.coffee",
-                    "projectPath": "client/modules/shrub-ui/notifications.coffee",
-                    "targetPath": "client/modules/shrub-ui/notifications",
-                    "pageTitle": "client/modules/shrub-ui/notifications",
-                    "title": "notifications"
-                  },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Notifications",
-                        "slug": "notifications"
-                      },
-                      "depth": 1,
-                      "children": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "notifications.add",
-                            "slug": "notificationsadd"
-                          },
-                          "depth": 2
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "notifications.top",
-                            "slug": "notificationstop"
-                          },
-                          "depth": 2
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "notifications.removeTop",
-                            "slug": "notificationsremovetop"
-                          },
-                          "depth": 2
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "notifications.count",
-                            "slug": "notificationscount"
-                          },
-                          "depth": 2
-                        }
-                      ]
-                    }
-                  ]
-                }, {
-                  "type": "file",
-                  "data": {
-                    "language": {
-                      "nameMatchers": [".coffee", "Cakefile"],
-                      "pygmentsLexer": "coffee-script",
-                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                      "strictMultiLineEnd": false,
-                      "singleLineComment": ["#"],
-                      "ignorePrefix": "}",
-                      "foldPrefix": "^",
-                      "name": "CoffeeScript"
-                    },
-                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/client/modules/shrub-ui/title.coffee",
-                    "projectPath": "client/modules/shrub-ui/title.coffee",
-                    "targetPath": "client/modules/shrub-ui/title",
-                    "pageTitle": "client/modules/shrub-ui/title",
-                    "title": "title"
-                  },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Titles",
-                        "slug": "titles"
-                      },
-                      "depth": 1
-                    }
-                  ]
-                }, {
-                  "type": "file",
-                  "data": {
-                    "language": {
-                      "nameMatchers": [".coffee", "Cakefile"],
-                      "pygmentsLexer": "coffee-script",
-                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                      "strictMultiLineEnd": false,
-                      "singleLineComment": ["#"],
-                      "ignorePrefix": "}",
-                      "foldPrefix": "^",
-                      "name": "CoffeeScript"
-                    },
-                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/client/modules/shrub-ui/window.coffee",
-                    "projectPath": "client/modules/shrub-ui/window.coffee",
-                    "targetPath": "client/modules/shrub-ui/window",
-                    "pageTitle": "client/modules/shrub-ui/window",
-                    "title": "window"
-                  },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "Window",
-                        "slug": "window"
-                      },
-                      "depth": 1
-                    }
-                  ]
-                }
-              ]
-            }, {
-              "type": "folder",
-              "data": {
-                "path": "client/modules/shrub-user",
-                "title": "shrub-user"
-              },
-              "depth": 3,
-              "children": [
-                {
-                  "type": "file",
-                  "data": {
-                    "language": {
-                      "nameMatchers": [".coffee", "Cakefile"],
-                      "pygmentsLexer": "coffee-script",
-                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                      "strictMultiLineEnd": false,
-                      "singleLineComment": ["#"],
-                      "ignorePrefix": "}",
-                      "foldPrefix": "^",
-                      "name": "CoffeeScript"
-                    },
-                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/client/modules/shrub-user/forgot.coffee",
-                    "projectPath": "client/modules/shrub-user/forgot.coffee",
-                    "targetPath": "client/modules/shrub-user/forgot",
-                    "pageTitle": "client/modules/shrub-user/forgot",
-                    "title": "forgot"
-                  },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "User forgot password",
-                        "slug": "user-forgot-password"
-                      },
-                      "depth": 1
-                    }
-                  ]
-                }, {
-                  "type": "file",
-                  "data": {
-                    "language": {
-                      "nameMatchers": [".coffee", "Cakefile"],
-                      "pygmentsLexer": "coffee-script",
-                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                      "strictMultiLineEnd": false,
-                      "singleLineComment": ["#"],
-                      "ignorePrefix": "}",
-                      "foldPrefix": "^",
-                      "name": "CoffeeScript"
-                    },
-                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/client/modules/shrub-user/index.coffee",
-                    "projectPath": "client/modules/shrub-user/index.coffee",
-                    "targetPath": "client/modules/shrub-user/index",
-                    "pageTitle": "client/modules/shrub-user/index",
-                    "title": "index"
-                  },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "User",
-                        "slug": "user"
-                      },
-                      "depth": 1,
-                      "children": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "user.isLoggedIn",
-                            "slug": "userisloggedin"
-                          },
-                          "depth": 2
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "user.login",
-                            "slug": "userlogin"
-                          },
-                          "depth": 2
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "user.logout",
-                            "slug": "userlogout"
-                          },
-                          "depth": 2
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "user.instance",
-                            "slug": "userinstance"
-                          },
-                          "depth": 2
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 2,
-                            "title": "user.fakeLogin",
-                            "slug": "userfakelogin"
-                          },
-                          "depth": 2
-                        }
-                      ]
-                    }
-                  ]
-                }, {
-                  "type": "file",
-                  "data": {
-                    "language": {
-                      "nameMatchers": [".coffee", "Cakefile"],
-                      "pygmentsLexer": "coffee-script",
-                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                      "strictMultiLineEnd": false,
-                      "singleLineComment": ["#"],
-                      "ignorePrefix": "}",
-                      "foldPrefix": "^",
-                      "name": "CoffeeScript"
-                    },
-                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/client/modules/shrub-user/login.coffee",
-                    "projectPath": "client/modules/shrub-user/login.coffee",
-                    "targetPath": "client/modules/shrub-user/login",
-                    "pageTitle": "client/modules/shrub-user/login",
-                    "title": "login"
-                  },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "User login",
-                        "slug": "user-login"
-                      },
-                      "depth": 1
-                    }
-                  ]
-                }, {
-                  "type": "file",
-                  "data": {
-                    "language": {
-                      "nameMatchers": [".coffee", "Cakefile"],
-                      "pygmentsLexer": "coffee-script",
-                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                      "strictMultiLineEnd": false,
-                      "singleLineComment": ["#"],
-                      "ignorePrefix": "}",
-                      "foldPrefix": "^",
-                      "name": "CoffeeScript"
-                    },
-                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/client/modules/shrub-user/logout.coffee",
-                    "projectPath": "client/modules/shrub-user/logout.coffee",
-                    "targetPath": "client/modules/shrub-user/logout",
-                    "pageTitle": "client/modules/shrub-user/logout",
-                    "title": "logout"
-                  },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "User logout",
-                        "slug": "user-logout"
-                      },
-                      "depth": 1
-                    }
-                  ]
-                }, {
-                  "type": "file",
-                  "data": {
-                    "language": {
-                      "nameMatchers": [".coffee", "Cakefile"],
-                      "pygmentsLexer": "coffee-script",
-                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                      "strictMultiLineEnd": false,
-                      "singleLineComment": ["#"],
-                      "ignorePrefix": "}",
-                      "foldPrefix": "^",
-                      "name": "CoffeeScript"
-                    },
-                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/client/modules/shrub-user/register.coffee",
-                    "projectPath": "client/modules/shrub-user/register.coffee",
-                    "targetPath": "client/modules/shrub-user/register",
-                    "pageTitle": "client/modules/shrub-user/register",
-                    "title": "register"
-                  },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "User register",
-                        "slug": "user-register"
-                      },
-                      "depth": 1
-                    }
-                  ]
-                }, {
-                  "type": "file",
-                  "data": {
-                    "language": {
-                      "nameMatchers": [".coffee", "Cakefile"],
-                      "pygmentsLexer": "coffee-script",
-                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                      "strictMultiLineEnd": false,
-                      "singleLineComment": ["#"],
-                      "ignorePrefix": "}",
-                      "foldPrefix": "^",
-                      "name": "CoffeeScript"
-                    },
-                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/client/modules/shrub-user/reset.coffee",
-                    "projectPath": "client/modules/shrub-user/reset.coffee",
-                    "targetPath": "client/modules/shrub-user/reset",
-                    "pageTitle": "client/modules/shrub-user/reset",
-                    "title": "reset"
-                  },
-                  "depth": 4,
-                  "outline": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 1,
-                        "title": "User reset",
-                        "slug": "user-reset"
-                      },
-                      "depth": 1
-                    }
-                  ]
-                }
-              ]
+              "depth": 3
             }
           ]
         }, {
@@ -1483,8 +232,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "client/packages",
             "title": "packages"
           },
-          "depth": 2,
-          "outline": []
+          "depth": 2
         }, {
           "type": "file",
           "data": {
@@ -1504,18 +252,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "client/require",
             "title": "require"
           },
-          "depth": 2,
-          "outline": [
-            {
-              "type": "heading",
-              "data": {
-                "level": 1,
-                "title": "Require",
-                "slug": "require"
-              },
-              "depth": 1
-            }
-          ]
+          "depth": 2
         }
       ]
     }, {
@@ -1606,6 +343,1679 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
           },
           "depth": 2
         }
+      ],
+      "children": [
+        {
+          "type": "folder",
+          "data": {
+            "path": "packages/shrub-angular",
+            "title": "shrub-angular"
+          },
+          "depth": 2,
+          "children": [
+            {
+              "type": "folder",
+              "data": {
+                "path": "packages/shrub-angular/client",
+                "title": "client"
+              },
+              "depth": 3,
+              "children": [
+                {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-angular/client/index.coffee",
+                    "projectPath": "packages/shrub-angular/client/index.coffee",
+                    "targetPath": "packages/shrub-angular/client/index",
+                    "pageTitle": "packages/shrub-angular/client/index",
+                    "title": "index"
+                  },
+                  "depth": 4
+                }
+              ]
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-angular/index.coffee",
+                "projectPath": "packages/shrub-angular/index.coffee",
+                "targetPath": "packages/shrub-angular/index",
+                "pageTitle": "packages/shrub-angular/index",
+                "title": "index"
+              },
+              "depth": 3
+            }
+          ]
+        }, {
+          "type": "folder",
+          "data": {
+            "path": "packages/shrub-assets",
+            "title": "shrub-assets"
+          },
+          "depth": 2,
+          "children": [
+            {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-assets/index.coffee",
+                "projectPath": "packages/shrub-assets/index.coffee",
+                "targetPath": "packages/shrub-assets/index",
+                "pageTitle": "packages/shrub-assets/index",
+                "title": "index"
+              },
+              "depth": 3
+            }
+          ]
+        }, {
+          "type": "folder",
+          "data": {
+            "path": "packages/shrub-config",
+            "title": "shrub-config"
+          },
+          "depth": 2,
+          "children": [
+            {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-config/index.coffee",
+                "projectPath": "packages/shrub-config/index.coffee",
+                "targetPath": "packages/shrub-config/index",
+                "pageTitle": "packages/shrub-config/index",
+                "title": "index"
+              },
+              "depth": 3
+            }
+          ]
+        }, {
+          "type": "folder",
+          "data": {
+            "path": "packages/shrub-core",
+            "title": "shrub-core"
+          },
+          "depth": 2,
+          "children": [
+            {
+              "type": "folder",
+              "data": {
+                "path": "packages/shrub-core/client",
+                "title": "client"
+              },
+              "depth": 3,
+              "children": [
+                {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-core/client/index.coffee",
+                    "projectPath": "packages/shrub-core/client/index.coffee",
+                    "targetPath": "packages/shrub-core/client/index",
+                    "pageTitle": "packages/shrub-core/client/index",
+                    "title": "index"
+                  },
+                  "depth": 4
+                }, {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-core/client/test-e2e.coffee",
+                    "projectPath": "packages/shrub-core/client/test-e2e.coffee",
+                    "targetPath": "packages/shrub-core/client/test-e2e",
+                    "pageTitle": "packages/shrub-core/client/test-e2e",
+                    "title": "test-e2e"
+                  },
+                  "depth": 4
+                }
+              ]
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-core/index.coffee",
+                "projectPath": "packages/shrub-core/index.coffee",
+                "targetPath": "packages/shrub-core/index",
+                "pageTitle": "packages/shrub-core/index",
+                "title": "index"
+              },
+              "depth": 3
+            }
+          ]
+        }, {
+          "type": "folder",
+          "data": {
+            "path": "packages/shrub-example",
+            "title": "shrub-example"
+          },
+          "depth": 2,
+          "children": [
+            {
+              "type": "folder",
+              "data": {
+                "path": "packages/shrub-example/client",
+                "title": "client"
+              },
+              "depth": 3,
+              "children": [
+                {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-example/client/about.coffee",
+                    "projectPath": "packages/shrub-example/client/about.coffee",
+                    "targetPath": "packages/shrub-example/client/about",
+                    "pageTitle": "packages/shrub-example/client/about",
+                    "title": "about"
+                  },
+                  "depth": 4
+                }, {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-example/client/home.coffee",
+                    "projectPath": "packages/shrub-example/client/home.coffee",
+                    "targetPath": "packages/shrub-example/client/home",
+                    "pageTitle": "packages/shrub-example/client/home",
+                    "title": "home"
+                  },
+                  "depth": 4
+                }, {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-example/client/index.coffee",
+                    "projectPath": "packages/shrub-example/client/index.coffee",
+                    "targetPath": "packages/shrub-example/client/index",
+                    "pageTitle": "packages/shrub-example/client/index",
+                    "title": "index"
+                  },
+                  "depth": 4
+                }, {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-example/client/test-e2e.coffee",
+                    "projectPath": "packages/shrub-example/client/test-e2e.coffee",
+                    "targetPath": "packages/shrub-example/client/test-e2e",
+                    "pageTitle": "packages/shrub-example/client/test-e2e",
+                    "title": "test-e2e"
+                  },
+                  "depth": 4
+                }
+              ]
+            }
+          ]
+        }, {
+          "type": "folder",
+          "data": {
+            "path": "packages/shrub-express",
+            "title": "shrub-express"
+          },
+          "depth": 2,
+          "children": [
+            {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-express/errors.coffee",
+                "projectPath": "packages/shrub-express/errors.coffee",
+                "targetPath": "packages/shrub-express/errors",
+                "pageTitle": "packages/shrub-express/errors",
+                "title": "errors"
+              },
+              "depth": 3
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-express/index.coffee",
+                "projectPath": "packages/shrub-express/index.coffee",
+                "targetPath": "packages/shrub-express/index",
+                "pageTitle": "packages/shrub-express/index",
+                "title": "index"
+              },
+              "depth": 3
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-express/logger.coffee",
+                "projectPath": "packages/shrub-express/logger.coffee",
+                "targetPath": "packages/shrub-express/logger",
+                "pageTitle": "packages/shrub-express/logger",
+                "title": "logger"
+              },
+              "depth": 3
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-express/routes.coffee",
+                "projectPath": "packages/shrub-express/routes.coffee",
+                "targetPath": "packages/shrub-express/routes",
+                "pageTitle": "packages/shrub-express/routes",
+                "title": "routes"
+              },
+              "depth": 3
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-express/static.coffee",
+                "projectPath": "packages/shrub-express/static.coffee",
+                "targetPath": "packages/shrub-express/static",
+                "pageTitle": "packages/shrub-express/static",
+                "title": "static"
+              },
+              "depth": 3
+            }
+          ]
+        }, {
+          "type": "folder",
+          "data": {
+            "path": "packages/shrub-form",
+            "title": "shrub-form"
+          },
+          "depth": 2,
+          "children": [
+            {
+              "type": "folder",
+              "data": {
+                "path": "packages/shrub-form/client",
+                "title": "client"
+              },
+              "depth": 3,
+              "children": [
+                {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-form/client/index.coffee",
+                    "projectPath": "packages/shrub-form/client/index.coffee",
+                    "targetPath": "packages/shrub-form/client/index",
+                    "pageTitle": "packages/shrub-form/client/index",
+                    "title": "index"
+                  },
+                  "depth": 4
+                }, {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-form/client/test-unit.coffee",
+                    "projectPath": "packages/shrub-form/client/test-unit.coffee",
+                    "targetPath": "packages/shrub-form/client/test-unit",
+                    "pageTitle": "packages/shrub-form/client/test-unit",
+                    "title": "test-unit"
+                  },
+                  "depth": 4
+                }
+              ]
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-form/index.coffee",
+                "projectPath": "packages/shrub-form/index.coffee",
+                "targetPath": "packages/shrub-form/index",
+                "pageTitle": "packages/shrub-form/index",
+                "title": "index"
+              },
+              "depth": 3
+            }
+          ]
+        }, {
+          "type": "folder",
+          "data": {
+            "path": "packages/shrub-http",
+            "title": "shrub-http"
+          },
+          "depth": 2,
+          "children": [
+            {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-http/index.coffee",
+                "projectPath": "packages/shrub-http/index.coffee",
+                "targetPath": "packages/shrub-http/index",
+                "pageTitle": "packages/shrub-http/index",
+                "title": "index"
+              },
+              "depth": 3
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-http/manager.coffee",
+                "projectPath": "packages/shrub-http/manager.coffee",
+                "targetPath": "packages/shrub-http/manager",
+                "pageTitle": "packages/shrub-http/manager",
+                "title": "manager"
+              },
+              "depth": 3
+            }
+          ]
+        }, {
+          "type": "folder",
+          "data": {
+            "path": "packages/shrub-limiter",
+            "title": "shrub-limiter"
+          },
+          "depth": 2,
+          "children": [
+            {
+              "type": "folder",
+              "data": {
+                "path": "packages/shrub-limiter/client",
+                "title": "client"
+              },
+              "depth": 3,
+              "children": [
+                {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-limiter/client/index.coffee",
+                    "projectPath": "packages/shrub-limiter/client/index.coffee",
+                    "targetPath": "packages/shrub-limiter/client/index",
+                    "pageTitle": "packages/shrub-limiter/client/index",
+                    "title": "index"
+                  },
+                  "depth": 4
+                }
+              ]
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-limiter/index.coffee",
+                "projectPath": "packages/shrub-limiter/index.coffee",
+                "targetPath": "packages/shrub-limiter/index",
+                "pageTitle": "packages/shrub-limiter/index",
+                "title": "index"
+              },
+              "depth": 3
+            }
+          ]
+        }, {
+          "type": "folder",
+          "data": {
+            "path": "packages/shrub-nodemailer",
+            "title": "shrub-nodemailer"
+          },
+          "depth": 2,
+          "children": [
+            {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-nodemailer/index.coffee",
+                "projectPath": "packages/shrub-nodemailer/index.coffee",
+                "targetPath": "packages/shrub-nodemailer/index",
+                "pageTitle": "packages/shrub-nodemailer/index",
+                "title": "index"
+              },
+              "depth": 3
+            }
+          ]
+        }, {
+          "type": "folder",
+          "data": {
+            "path": "packages/shrub-repl",
+            "title": "shrub-repl"
+          },
+          "depth": 2,
+          "children": [
+            {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-repl/index.coffee",
+                "projectPath": "packages/shrub-repl/index.coffee",
+                "targetPath": "packages/shrub-repl/index",
+                "pageTitle": "packages/shrub-repl/index",
+                "title": "index"
+              },
+              "depth": 3
+            }
+          ]
+        }, {
+          "type": "folder",
+          "data": {
+            "path": "packages/shrub-rpc",
+            "title": "shrub-rpc"
+          },
+          "depth": 2,
+          "children": [
+            {
+              "type": "folder",
+              "data": {
+                "path": "packages/shrub-rpc/client",
+                "title": "client"
+              },
+              "depth": 3,
+              "children": [
+                {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-rpc/client/index.coffee",
+                    "projectPath": "packages/shrub-rpc/client/index.coffee",
+                    "targetPath": "packages/shrub-rpc/client/index",
+                    "pageTitle": "packages/shrub-rpc/client/index",
+                    "title": "index"
+                  },
+                  "depth": 4
+                }, {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-rpc/client/test-unit.coffee",
+                    "projectPath": "packages/shrub-rpc/client/test-unit.coffee",
+                    "targetPath": "packages/shrub-rpc/client/test-unit",
+                    "pageTitle": "packages/shrub-rpc/client/test-unit",
+                    "title": "test-unit"
+                  },
+                  "depth": 4
+                }
+              ]
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-rpc/index.coffee",
+                "projectPath": "packages/shrub-rpc/index.coffee",
+                "targetPath": "packages/shrub-rpc/index",
+                "pageTitle": "packages/shrub-rpc/index",
+                "title": "index"
+              },
+              "depth": 3
+            }
+          ]
+        }, {
+          "type": "folder",
+          "data": {
+            "path": "packages/shrub-schema",
+            "title": "shrub-schema"
+          },
+          "depth": 2,
+          "children": [
+            {
+              "type": "folder",
+              "data": {
+                "path": "packages/shrub-schema/client",
+                "title": "client"
+              },
+              "depth": 3,
+              "children": [
+                {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-schema/client/index.coffee",
+                    "projectPath": "packages/shrub-schema/client/index.coffee",
+                    "targetPath": "packages/shrub-schema/client/index",
+                    "pageTitle": "packages/shrub-schema/client/index",
+                    "title": "index"
+                  },
+                  "depth": 4
+                }
+              ]
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-schema/forward.coffee",
+                "projectPath": "packages/shrub-schema/forward.coffee",
+                "targetPath": "packages/shrub-schema/forward",
+                "pageTitle": "packages/shrub-schema/forward",
+                "title": "forward"
+              },
+              "depth": 3
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-schema/index.coffee",
+                "projectPath": "packages/shrub-schema/index.coffee",
+                "targetPath": "packages/shrub-schema/index",
+                "pageTitle": "packages/shrub-schema/index",
+                "title": "index"
+              },
+              "depth": 3
+            }
+          ]
+        }, {
+          "type": "folder",
+          "data": {
+            "path": "packages/shrub-session",
+            "title": "shrub-session"
+          },
+          "depth": 2,
+          "children": [
+            {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-session/express.coffee",
+                "projectPath": "packages/shrub-session/express.coffee",
+                "targetPath": "packages/shrub-session/express",
+                "pageTitle": "packages/shrub-session/express",
+                "title": "express"
+              },
+              "depth": 3
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-session/index.coffee",
+                "projectPath": "packages/shrub-session/index.coffee",
+                "targetPath": "packages/shrub-session/index",
+                "pageTitle": "packages/shrub-session/index",
+                "title": "index"
+              },
+              "depth": 3
+            }
+          ]
+        }, {
+          "type": "folder",
+          "data": {
+            "path": "packages/shrub-skin",
+            "title": "shrub-skin"
+          },
+          "depth": 2,
+          "children": [
+            {
+              "type": "folder",
+              "data": {
+                "path": "packages/shrub-skin/client",
+                "title": "client"
+              },
+              "depth": 3,
+              "children": [
+                {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-skin/client/index.coffee",
+                    "projectPath": "packages/shrub-skin/client/index.coffee",
+                    "targetPath": "packages/shrub-skin/client/index",
+                    "pageTitle": "packages/shrub-skin/client/index",
+                    "title": "index"
+                  },
+                  "depth": 4
+                }
+              ]
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-skin/index.coffee",
+                "projectPath": "packages/shrub-skin/index.coffee",
+                "targetPath": "packages/shrub-skin/index",
+                "pageTitle": "packages/shrub-skin/index",
+                "title": "index"
+              },
+              "depth": 3
+            }
+          ]
+        }, {
+          "type": "folder",
+          "data": {
+            "path": "packages/shrub-socket.io",
+            "title": "shrub-socket.io"
+          },
+          "depth": 2,
+          "children": [
+            {
+              "type": "folder",
+              "data": {
+                "path": "packages/shrub-socket.io/client",
+                "title": "client"
+              },
+              "depth": 3,
+              "children": [
+                {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-socket.io/client/index.coffee",
+                    "projectPath": "packages/shrub-socket.io/client/index.coffee",
+                    "targetPath": "packages/shrub-socket.io/client/index",
+                    "pageTitle": "packages/shrub-socket.io/client/index",
+                    "title": "index"
+                  },
+                  "depth": 4
+                }
+              ]
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-socket.io/index.coffee",
+                "projectPath": "packages/shrub-socket.io/index.coffee",
+                "targetPath": "packages/shrub-socket.io/index",
+                "pageTitle": "packages/shrub-socket.io/index",
+                "title": "index"
+              },
+              "depth": 3
+            }
+          ]
+        }, {
+          "type": "folder",
+          "data": {
+            "path": "packages/shrub-socket",
+            "title": "shrub-socket"
+          },
+          "depth": 2,
+          "children": [
+            {
+              "type": "folder",
+              "data": {
+                "path": "packages/shrub-socket/client",
+                "title": "client"
+              },
+              "depth": 3,
+              "children": [
+                {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-socket/client/dummy.coffee",
+                    "projectPath": "packages/shrub-socket/client/dummy.coffee",
+                    "targetPath": "packages/shrub-socket/client/dummy",
+                    "pageTitle": "packages/shrub-socket/client/dummy",
+                    "title": "dummy"
+                  },
+                  "depth": 4
+                }, {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-socket/client/index.coffee",
+                    "projectPath": "packages/shrub-socket/client/index.coffee",
+                    "targetPath": "packages/shrub-socket/client/index",
+                    "pageTitle": "packages/shrub-socket/client/index",
+                    "title": "index"
+                  },
+                  "depth": 4
+                }, {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-socket/client/socket.coffee",
+                    "projectPath": "packages/shrub-socket/client/socket.coffee",
+                    "targetPath": "packages/shrub-socket/client/socket",
+                    "pageTitle": "packages/shrub-socket/client/socket",
+                    "title": "socket"
+                  },
+                  "depth": 4
+                }
+              ]
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-socket/index.coffee",
+                "projectPath": "packages/shrub-socket/index.coffee",
+                "targetPath": "packages/shrub-socket/index",
+                "pageTitle": "packages/shrub-socket/index",
+                "title": "index"
+              },
+              "depth": 3
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-socket/manager.coffee",
+                "projectPath": "packages/shrub-socket/manager.coffee",
+                "targetPath": "packages/shrub-socket/manager",
+                "pageTitle": "packages/shrub-socket/manager",
+                "title": "manager"
+              },
+              "depth": 3
+            }
+          ]
+        }, {
+          "type": "folder",
+          "data": {
+            "path": "packages/shrub-ui",
+            "title": "shrub-ui"
+          },
+          "depth": 2,
+          "children": [
+            {
+              "type": "folder",
+              "data": {
+                "path": "packages/shrub-ui/client",
+                "title": "client"
+              },
+              "depth": 3,
+              "children": [
+                {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-ui/client/body.coffee",
+                    "projectPath": "packages/shrub-ui/client/body.coffee",
+                    "targetPath": "packages/shrub-ui/client/body",
+                    "pageTitle": "packages/shrub-ui/client/body",
+                    "title": "body"
+                  },
+                  "depth": 4
+                }, {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-ui/client/index.coffee",
+                    "projectPath": "packages/shrub-ui/client/index.coffee",
+                    "targetPath": "packages/shrub-ui/client/index",
+                    "pageTitle": "packages/shrub-ui/client/index",
+                    "title": "index"
+                  },
+                  "depth": 4
+                }, {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-ui/client/markdown.coffee",
+                    "projectPath": "packages/shrub-ui/client/markdown.coffee",
+                    "targetPath": "packages/shrub-ui/client/markdown",
+                    "pageTitle": "packages/shrub-ui/client/markdown",
+                    "title": "markdown"
+                  },
+                  "depth": 4
+                }, {
+                  "type": "folder",
+                  "data": {
+                    "path": "packages/shrub-ui/client/menu",
+                    "title": "menu"
+                  },
+                  "depth": 4,
+                  "children": [
+                    {
+                      "type": "file",
+                      "data": {
+                        "language": {
+                          "nameMatchers": [".coffee", "Cakefile"],
+                          "pygmentsLexer": "coffee-script",
+                          "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                          "strictMultiLineEnd": false,
+                          "singleLineComment": ["#"],
+                          "ignorePrefix": "}",
+                          "foldPrefix": "^",
+                          "name": "CoffeeScript"
+                        },
+                        "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-ui/client/menu/index.coffee",
+                        "projectPath": "packages/shrub-ui/client/menu/index.coffee",
+                        "targetPath": "packages/shrub-ui/client/menu/index",
+                        "pageTitle": "packages/shrub-ui/client/menu/index",
+                        "title": "index"
+                      },
+                      "depth": 5
+                    }, {
+                      "type": "file",
+                      "data": {
+                        "language": {
+                          "nameMatchers": [".coffee", "Cakefile"],
+                          "pygmentsLexer": "coffee-script",
+                          "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                          "strictMultiLineEnd": false,
+                          "singleLineComment": ["#"],
+                          "ignorePrefix": "}",
+                          "foldPrefix": "^",
+                          "name": "CoffeeScript"
+                        },
+                        "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-ui/client/menu/item.coffee",
+                        "projectPath": "packages/shrub-ui/client/menu/item.coffee",
+                        "targetPath": "packages/shrub-ui/client/menu/item",
+                        "pageTitle": "packages/shrub-ui/client/menu/item",
+                        "title": "item"
+                      },
+                      "depth": 5
+                    }
+                  ]
+                }, {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-ui/client/nav.coffee",
+                    "projectPath": "packages/shrub-ui/client/nav.coffee",
+                    "targetPath": "packages/shrub-ui/client/nav",
+                    "pageTitle": "packages/shrub-ui/client/nav",
+                    "title": "nav"
+                  },
+                  "depth": 4
+                }, {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-ui/client/notifications.coffee",
+                    "projectPath": "packages/shrub-ui/client/notifications.coffee",
+                    "targetPath": "packages/shrub-ui/client/notifications",
+                    "pageTitle": "packages/shrub-ui/client/notifications",
+                    "title": "notifications"
+                  },
+                  "depth": 4
+                }, {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-ui/client/test-unit.coffee",
+                    "projectPath": "packages/shrub-ui/client/test-unit.coffee",
+                    "targetPath": "packages/shrub-ui/client/test-unit",
+                    "pageTitle": "packages/shrub-ui/client/test-unit",
+                    "title": "test-unit"
+                  },
+                  "depth": 4
+                }, {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-ui/client/title.coffee",
+                    "projectPath": "packages/shrub-ui/client/title.coffee",
+                    "targetPath": "packages/shrub-ui/client/title",
+                    "pageTitle": "packages/shrub-ui/client/title",
+                    "title": "title"
+                  },
+                  "depth": 4
+                }, {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-ui/client/window.coffee",
+                    "projectPath": "packages/shrub-ui/client/window.coffee",
+                    "targetPath": "packages/shrub-ui/client/window",
+                    "pageTitle": "packages/shrub-ui/client/window",
+                    "title": "window"
+                  },
+                  "depth": 4
+                }
+              ]
+            }
+          ]
+        }, {
+          "type": "folder",
+          "data": {
+            "path": "packages/shrub-user",
+            "title": "shrub-user"
+          },
+          "depth": 2,
+          "children": [
+            {
+              "type": "folder",
+              "data": {
+                "path": "packages/shrub-user/client",
+                "title": "client"
+              },
+              "depth": 3,
+              "children": [
+                {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-user/client/forgot.coffee",
+                    "projectPath": "packages/shrub-user/client/forgot.coffee",
+                    "targetPath": "packages/shrub-user/client/forgot",
+                    "pageTitle": "packages/shrub-user/client/forgot",
+                    "title": "forgot"
+                  },
+                  "depth": 4
+                }, {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-user/client/index.coffee",
+                    "projectPath": "packages/shrub-user/client/index.coffee",
+                    "targetPath": "packages/shrub-user/client/index",
+                    "pageTitle": "packages/shrub-user/client/index",
+                    "title": "index"
+                  },
+                  "depth": 4
+                }, {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-user/client/login.coffee",
+                    "projectPath": "packages/shrub-user/client/login.coffee",
+                    "targetPath": "packages/shrub-user/client/login",
+                    "pageTitle": "packages/shrub-user/client/login",
+                    "title": "login"
+                  },
+                  "depth": 4
+                }, {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-user/client/logout.coffee",
+                    "projectPath": "packages/shrub-user/client/logout.coffee",
+                    "targetPath": "packages/shrub-user/client/logout",
+                    "pageTitle": "packages/shrub-user/client/logout",
+                    "title": "logout"
+                  },
+                  "depth": 4
+                }, {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-user/client/register.coffee",
+                    "projectPath": "packages/shrub-user/client/register.coffee",
+                    "targetPath": "packages/shrub-user/client/register",
+                    "pageTitle": "packages/shrub-user/client/register",
+                    "title": "register"
+                  },
+                  "depth": 4
+                }, {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-user/client/reset.coffee",
+                    "projectPath": "packages/shrub-user/client/reset.coffee",
+                    "targetPath": "packages/shrub-user/client/reset",
+                    "pageTitle": "packages/shrub-user/client/reset",
+                    "title": "reset"
+                  },
+                  "depth": 4
+                }, {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-user/client/test-e2e.coffee",
+                    "projectPath": "packages/shrub-user/client/test-e2e.coffee",
+                    "targetPath": "packages/shrub-user/client/test-e2e",
+                    "pageTitle": "packages/shrub-user/client/test-e2e",
+                    "title": "test-e2e"
+                  },
+                  "depth": 4
+                }, {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-user/client/test-unit.coffee",
+                    "projectPath": "packages/shrub-user/client/test-unit.coffee",
+                    "targetPath": "packages/shrub-user/client/test-unit",
+                    "pageTitle": "packages/shrub-user/client/test-unit",
+                    "title": "test-unit"
+                  },
+                  "depth": 4
+                }
+              ]
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-user/forgot.coffee",
+                "projectPath": "packages/shrub-user/forgot.coffee",
+                "targetPath": "packages/shrub-user/forgot",
+                "pageTitle": "packages/shrub-user/forgot",
+                "title": "forgot"
+              },
+              "depth": 3
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-user/index.coffee",
+                "projectPath": "packages/shrub-user/index.coffee",
+                "targetPath": "packages/shrub-user/index",
+                "pageTitle": "packages/shrub-user/index",
+                "title": "index"
+              },
+              "depth": 3
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-user/login.coffee",
+                "projectPath": "packages/shrub-user/login.coffee",
+                "targetPath": "packages/shrub-user/login",
+                "pageTitle": "packages/shrub-user/login",
+                "title": "login"
+              },
+              "depth": 3
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-user/logout.coffee",
+                "projectPath": "packages/shrub-user/logout.coffee",
+                "targetPath": "packages/shrub-user/logout",
+                "pageTitle": "packages/shrub-user/logout",
+                "title": "logout"
+              },
+              "depth": 3
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-user/register.coffee",
+                "projectPath": "packages/shrub-user/register.coffee",
+                "targetPath": "packages/shrub-user/register",
+                "pageTitle": "packages/shrub-user/register",
+                "title": "register"
+              },
+              "depth": 3
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-user/reset.coffee",
+                "projectPath": "packages/shrub-user/reset.coffee",
+                "targetPath": "packages/shrub-user/reset",
+                "pageTitle": "packages/shrub-user/reset",
+                "title": "reset"
+              },
+              "depth": 3
+            }
+          ]
+        }, {
+          "type": "folder",
+          "data": {
+            "path": "packages/shrub-villiany",
+            "title": "shrub-villiany"
+          },
+          "depth": 2,
+          "children": [
+            {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-villiany/index.coffee",
+                "projectPath": "packages/shrub-villiany/index.coffee",
+                "targetPath": "packages/shrub-villiany/index",
+                "pageTitle": "packages/shrub-villiany/index",
+                "title": "index"
+              },
+              "depth": 3
+            }
+          ]
+        }
       ]
     }, {
       "type": "file",
@@ -1627,17 +2037,6 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
         "title": "server"
       },
       "depth": 1,
-      "outline": [
-        {
-          "type": "heading",
-          "data": {
-            "level": 1,
-            "title": "Server",
-            "slug": "server"
-          },
-          "depth": 1
-        }
-      ],
       "children": [
         {
           "type": "file",
@@ -1658,45 +2057,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "server/audit",
             "title": "audit"
           },
-          "depth": 2,
-          "outline": [
-            {
-              "type": "heading",
-              "data": {
-                "level": 1,
-                "title": "Audit",
-                "slug": "audit"
-              },
-              "depth": 1,
-              "children": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 3,
-                    "title": "fingerprint",
-                    "slug": "fingerprint"
-                  },
-                  "depth": 3
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 3,
-                    "title": "fingerprintKeys",
-                    "slug": "fingerprintkeys"
-                  },
-                  "depth": 3
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 3,
-                    "title": "fingerprintRaw",
-                    "slug": "fingerprintraw"
-                  },
-                  "depth": 3
-                }
-              ]
-            }
-          ]
+          "depth": 2
         }, {
           "type": "file",
           "data": {
@@ -1716,53 +2077,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "server/config",
             "title": "config"
           },
-          "depth": 2,
-          "outline": [
-            {
-              "type": "heading",
-              "data": {
-                "level": 1,
-                "title": "Configuration",
-                "slug": "configuration"
-              },
-              "depth": 1,
-              "children": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 3,
-                    "title": "get",
-                    "slug": "get"
-                  },
-                  "depth": 3
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 3,
-                    "title": "has",
-                    "slug": "has"
-                  },
-                  "depth": 3
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 3,
-                    "title": "load",
-                    "slug": "load"
-                  },
-                  "depth": 3
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 3,
-                    "title": "set",
-                    "slug": "set"
-                  },
-                  "depth": 3
-                }
-              ]
-            }
-          ]
+          "depth": 2
         }, {
           "type": "file",
           "data": {
@@ -1782,45 +2097,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "server/crypto",
             "title": "crypto"
           },
-          "depth": 2,
-          "outline": [
-            {
-              "type": "heading",
-              "data": {
-                "level": 1,
-                "title": "Crypto",
-                "slug": "crypto"
-              },
-              "depth": 1,
-              "children": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 3,
-                    "title": "encrypt",
-                    "slug": "encrypt"
-                  },
-                  "depth": 3
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 3,
-                    "title": "decrypt",
-                    "slug": "decrypt"
-                  },
-                  "depth": 3
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 3,
-                    "title": "hasher",
-                    "slug": "hasher"
-                  },
-                  "depth": 3
-                }
-              ]
-            }
-          ]
+          "depth": 2
         }, {
           "type": "file",
           "data": {
@@ -1840,153 +2117,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "server/limits",
             "title": "limits"
           },
-          "depth": 2,
-          "outline": [
-            {
-              "type": "heading",
-              "data": {
-                "level": 1,
-                "title": "Limits",
-                "slug": "limits"
-              },
-              "depth": 1,
-              "children": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 2,
-                    "title": "Limiter",
-                    "slug": "limiter"
-                  },
-                  "depth": 2,
-                  "children": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".add",
-                        "slug": "add"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".accrueAndCheckThreshold",
-                        "slug": "accrueandcheckthreshold"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".score",
-                        "slug": "score"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".ttl",
-                        "slug": "ttl"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".checkThreshold",
-                        "slug": "checkthreshold"
-                      },
-                      "depth": 3,
-                      "children": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 4,
-                            "title": "._largest",
-                            "slug": "-largest"
-                          },
-                          "depth": 4
-                        }
-                      ]
-                    }
-                  ]
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 2,
-                    "title": "ThresholdBase",
-                    "slug": "thresholdbase"
-                  },
-                  "depth": 2,
-                  "children": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".every",
-                        "slug": "every"
-                      },
-                      "depth": 3
-                    }
-                  ]
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 2,
-                    "title": "ThresholdMultiplier",
-                    "slug": "thresholdmultiplier"
-                  },
-                  "depth": 2
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 2,
-                    "title": "ThresholdFinal",
-                    "slug": "thresholdfinal"
-                  },
-                  "depth": 2
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 2,
-                    "title": "threshold",
-                    "slug": "threshold"
-                  },
-                  "depth": 2,
-                  "children": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".add",
-                        "slug": "add"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".score",
-                        "slug": "score"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".ttl",
-                        "slug": "ttl"
-                      },
-                      "depth": 3
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
+          "depth": 2
         }, {
           "type": "file",
           "data": {
@@ -2006,29 +2137,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "server/logging",
             "title": "logging"
           },
-          "depth": 2,
-          "outline": [
-            {
-              "type": "heading",
-              "data": {
-                "level": 1,
-                "title": "Logging",
-                "slug": "logging"
-              },
-              "depth": 1,
-              "children": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 2,
-                    "title": ".create",
-                    "slug": "create"
-                  },
-                  "depth": 2
-                }
-              ]
-            }
-          ]
+          "depth": 2
         }, {
           "type": "file",
           "data": {
@@ -2048,1399 +2157,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             "pageTitle": "server/sandboxes",
             "title": "sandboxes"
           },
-          "depth": 2,
-          "outline": [
-            {
-              "type": "heading",
-              "data": {
-                "level": 1,
-                "title": "Sandboxes",
-                "slug": "sandboxes"
-              },
-              "depth": 1,
-              "children": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 2,
-                    "title": "Sandbox",
-                    "slug": "sandbox"
-                  },
-                  "depth": 2,
-                  "children": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".close",
-                        "slug": "close"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".emitHtml",
-                        "slug": "emithtml"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".registerCleanupFunction",
-                        "slug": "registercleanupfunction"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".url",
-                        "slug": "url"
-                      },
-                      "depth": 3
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }, {
-          "type": "folder",
-          "data": {
-            "path": "server/shrub-angular",
-            "title": "shrub-angular"
-          },
-          "depth": 2,
-          "children": [
-            {
-              "type": "file",
-              "data": {
-                "language": {
-                  "nameMatchers": [".coffee", "Cakefile"],
-                  "pygmentsLexer": "coffee-script",
-                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                  "strictMultiLineEnd": false,
-                  "singleLineComment": ["#"],
-                  "ignorePrefix": "}",
-                  "foldPrefix": "^",
-                  "name": "CoffeeScript"
-                },
-                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/server/shrub-angular/index.coffee",
-                "projectPath": "server/shrub-angular/index.coffee",
-                "targetPath": "server/shrub-angular/index",
-                "pageTitle": "server/shrub-angular/index",
-                "title": "index"
-              },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "Angular",
-                    "slug": "angular"
-                  },
-                  "depth": 1,
-                  "children": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "SandboxManager",
-                        "slug": "sandboxmanager"
-                      },
-                      "depth": 2,
-                      "children": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 3,
-                            "title": ".create",
-                            "slug": "create"
-                          },
-                          "depth": 3
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 3,
-                            "title": "sandbox.touch",
-                            "slug": "sandboxtouch"
-                          },
-                          "depth": 3
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 3,
-                            "title": ".lookup",
-                            "slug": "lookup"
-                          },
-                          "depth": 3
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 3,
-                            "title": ".lookupOrCreate",
-                            "slug": "lookuporcreate"
-                          },
-                          "depth": 3
-                        }
-                      ]
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "augmentSandbox",
-                        "slug": "augmentsandbox"
-                      },
-                      "depth": 2,
-                      "children": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 3,
-                            "title": "sandbox.(setR|r)edirectionHtml",
-                            "slug": "sandboxsetrredirectionhtml"
-                          },
-                          "depth": 3
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 3,
-                            "title": "sandbox.(setR|r)edirectionPath",
-                            "slug": "sandboxsetrredirectionpath"
-                          },
-                          "depth": 3
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 3,
-                            "title": "sandbox.catchAngularRedirection",
-                            "slug": "sandboxcatchangularredirection"
-                          },
-                          "depth": 3
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 3,
-                            "title": "sandbox.checkPathChanges",
-                            "slug": "sandboxcheckpathchanges"
-                          },
-                          "depth": 3
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 3,
-                            "title": "sandbox.navigate",
-                            "slug": "sandboxnavigate"
-                          },
-                          "depth": 3
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 3,
-                            "title": "sandbox.pathRedirectsTo",
-                            "slug": "sandboxpathredirectsto"
-                          },
-                          "depth": 3
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 3,
-                            "title": "sandbox.inject",
-                            "slug": "sandboxinject"
-                          },
-                          "depth": 3
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }, {
-          "type": "folder",
-          "data": {
-            "path": "server/shrub-assets",
-            "title": "shrub-assets"
-          },
-          "depth": 2,
-          "children": [
-            {
-              "type": "file",
-              "data": {
-                "language": {
-                  "nameMatchers": [".coffee", "Cakefile"],
-                  "pygmentsLexer": "coffee-script",
-                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                  "strictMultiLineEnd": false,
-                  "singleLineComment": ["#"],
-                  "ignorePrefix": "}",
-                  "foldPrefix": "^",
-                  "name": "CoffeeScript"
-                },
-                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/server/shrub-assets/index.coffee",
-                "projectPath": "server/shrub-assets/index.coffee",
-                "targetPath": "server/shrub-assets/index",
-                "pageTitle": "server/shrub-assets/index",
-                "title": "index"
-              },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "Assets",
-                    "slug": "assets"
-                  },
-                  "depth": 1
-                }
-              ]
-            }
-          ]
-        }, {
-          "type": "folder",
-          "data": {
-            "path": "server/shrub-config",
-            "title": "shrub-config"
-          },
-          "depth": 2,
-          "children": [
-            {
-              "type": "file",
-              "data": {
-                "language": {
-                  "nameMatchers": [".coffee", "Cakefile"],
-                  "pygmentsLexer": "coffee-script",
-                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                  "strictMultiLineEnd": false,
-                  "singleLineComment": ["#"],
-                  "ignorePrefix": "}",
-                  "foldPrefix": "^",
-                  "name": "CoffeeScript"
-                },
-                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/server/shrub-config/index.coffee",
-                "projectPath": "server/shrub-config/index.coffee",
-                "targetPath": "server/shrub-config/index",
-                "pageTitle": "server/shrub-config/index",
-                "title": "index"
-              },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "Configuration",
-                    "slug": "configuration"
-                  },
-                  "depth": 1
-                }
-              ]
-            }
-          ]
-        }, {
-          "type": "folder",
-          "data": {
-            "path": "server/shrub-core",
-            "title": "shrub-core"
-          },
-          "depth": 2,
-          "children": [
-            {
-              "type": "file",
-              "data": {
-                "language": {
-                  "nameMatchers": [".coffee", "Cakefile"],
-                  "pygmentsLexer": "coffee-script",
-                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                  "strictMultiLineEnd": false,
-                  "singleLineComment": ["#"],
-                  "ignorePrefix": "}",
-                  "foldPrefix": "^",
-                  "name": "CoffeeScript"
-                },
-                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/server/shrub-core/index.coffee",
-                "projectPath": "server/shrub-core/index.coffee",
-                "targetPath": "server/shrub-core/index",
-                "pageTitle": "server/shrub-core/index",
-                "title": "index"
-              },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "Core",
-                    "slug": "core"
-                  },
-                  "depth": 1
-                }
-              ]
-            }
-          ]
-        }, {
-          "type": "folder",
-          "data": {
-            "path": "server/shrub-express",
-            "title": "shrub-express"
-          },
-          "depth": 2,
-          "children": [
-            {
-              "type": "file",
-              "data": {
-                "language": {
-                  "nameMatchers": [".coffee", "Cakefile"],
-                  "pygmentsLexer": "coffee-script",
-                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                  "strictMultiLineEnd": false,
-                  "singleLineComment": ["#"],
-                  "ignorePrefix": "}",
-                  "foldPrefix": "^",
-                  "name": "CoffeeScript"
-                },
-                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/server/shrub-express/errors.coffee",
-                "projectPath": "server/shrub-express/errors.coffee",
-                "targetPath": "server/shrub-express/errors",
-                "pageTitle": "server/shrub-express/errors",
-                "title": "errors"
-              },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "Express error handler",
-                    "slug": "express-error-handler"
-                  },
-                  "depth": 1
-                }
-              ]
-            }, {
-              "type": "file",
-              "data": {
-                "language": {
-                  "nameMatchers": [".coffee", "Cakefile"],
-                  "pygmentsLexer": "coffee-script",
-                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                  "strictMultiLineEnd": false,
-                  "singleLineComment": ["#"],
-                  "ignorePrefix": "}",
-                  "foldPrefix": "^",
-                  "name": "CoffeeScript"
-                },
-                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/server/shrub-express/index.coffee",
-                "projectPath": "server/shrub-express/index.coffee",
-                "targetPath": "server/shrub-express/index",
-                "pageTitle": "server/shrub-express/index",
-                "title": "index"
-              },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "Express",
-                    "slug": "express"
-                  },
-                  "depth": 1,
-                  "children": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": "::listen",
-                        "slug": "listen"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": "::renderAppHtml",
-                        "slug": "renderapphtml"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": "::server",
-                        "slug": "server"
-                      },
-                      "depth": 3
-                    }
-                  ]
-                }
-              ]
-            }, {
-              "type": "file",
-              "data": {
-                "language": {
-                  "nameMatchers": [".coffee", "Cakefile"],
-                  "pygmentsLexer": "coffee-script",
-                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                  "strictMultiLineEnd": false,
-                  "singleLineComment": ["#"],
-                  "ignorePrefix": "}",
-                  "foldPrefix": "^",
-                  "name": "CoffeeScript"
-                },
-                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/server/shrub-express/logger.coffee",
-                "projectPath": "server/shrub-express/logger.coffee",
-                "targetPath": "server/shrub-express/logger",
-                "pageTitle": "server/shrub-express/logger",
-                "title": "logger"
-              },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "Express logger",
-                    "slug": "express-logger"
-                  },
-                  "depth": 1
-                }
-              ]
-            }, {
-              "type": "file",
-              "data": {
-                "language": {
-                  "nameMatchers": [".coffee", "Cakefile"],
-                  "pygmentsLexer": "coffee-script",
-                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                  "strictMultiLineEnd": false,
-                  "singleLineComment": ["#"],
-                  "ignorePrefix": "}",
-                  "foldPrefix": "^",
-                  "name": "CoffeeScript"
-                },
-                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/server/shrub-express/routes.coffee",
-                "projectPath": "server/shrub-express/routes.coffee",
-                "targetPath": "server/shrub-express/routes",
-                "pageTitle": "server/shrub-express/routes",
-                "title": "routes"
-              },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "Express routes",
-                    "slug": "express-routes"
-                  },
-                  "depth": 1
-                }
-              ]
-            }, {
-              "type": "file",
-              "data": {
-                "language": {
-                  "nameMatchers": [".coffee", "Cakefile"],
-                  "pygmentsLexer": "coffee-script",
-                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                  "strictMultiLineEnd": false,
-                  "singleLineComment": ["#"],
-                  "ignorePrefix": "}",
-                  "foldPrefix": "^",
-                  "name": "CoffeeScript"
-                },
-                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/server/shrub-express/static.coffee",
-                "projectPath": "server/shrub-express/static.coffee",
-                "targetPath": "server/shrub-express/static",
-                "pageTitle": "server/shrub-express/static",
-                "title": "static"
-              },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "Express static files",
-                    "slug": "express-static-files"
-                  },
-                  "depth": 1
-                }
-              ]
-            }
-          ]
-        }, {
-          "type": "folder",
-          "data": {
-            "path": "server/shrub-form",
-            "title": "shrub-form"
-          },
-          "depth": 2,
-          "children": [
-            {
-              "type": "file",
-              "data": {
-                "language": {
-                  "nameMatchers": [".coffee", "Cakefile"],
-                  "pygmentsLexer": "coffee-script",
-                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                  "strictMultiLineEnd": false,
-                  "singleLineComment": ["#"],
-                  "ignorePrefix": "}",
-                  "foldPrefix": "^",
-                  "name": "CoffeeScript"
-                },
-                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/server/shrub-form/index.coffee",
-                "projectPath": "server/shrub-form/index.coffee",
-                "targetPath": "server/shrub-form/index",
-                "pageTitle": "server/shrub-form/index",
-                "title": "index"
-              },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "Form processing.",
-                    "slug": "form-processing"
-                  },
-                  "depth": 1
-                }
-              ]
-            }
-          ]
-        }, {
-          "type": "folder",
-          "data": {
-            "path": "server/shrub-http",
-            "title": "shrub-http"
-          },
-          "depth": 2,
-          "children": [
-            {
-              "type": "file",
-              "data": {
-                "language": {
-                  "nameMatchers": [".coffee", "Cakefile"],
-                  "pygmentsLexer": "coffee-script",
-                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                  "strictMultiLineEnd": false,
-                  "singleLineComment": ["#"],
-                  "ignorePrefix": "}",
-                  "foldPrefix": "^",
-                  "name": "CoffeeScript"
-                },
-                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/server/shrub-http/index.coffee",
-                "projectPath": "server/shrub-http/index.coffee",
-                "targetPath": "server/shrub-http/index",
-                "pageTitle": "server/shrub-http/index",
-                "title": "index"
-              },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "HTTP",
-                    "slug": "http"
-                  },
-                  "depth": 1
-                }
-              ]
-            }, {
-              "type": "file",
-              "data": {
-                "language": {
-                  "nameMatchers": [".coffee", "Cakefile"],
-                  "pygmentsLexer": "coffee-script",
-                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                  "strictMultiLineEnd": false,
-                  "singleLineComment": ["#"],
-                  "ignorePrefix": "}",
-                  "foldPrefix": "^",
-                  "name": "CoffeeScript"
-                },
-                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/server/shrub-http/manager.coffee",
-                "projectPath": "server/shrub-http/manager.coffee",
-                "targetPath": "server/shrub-http/manager",
-                "pageTitle": "server/shrub-http/manager",
-                "title": "manager"
-              },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "AbstractHttp",
-                    "slug": "abstracthttp"
-                  },
-                  "depth": 1,
-                  "children": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "HttpManager",
-                        "slug": "httpmanager"
-                      },
-                      "depth": 2,
-                      "children": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 3,
-                            "title": ".initialize",
-                            "slug": "initialize"
-                          },
-                          "depth": 3
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 3,
-                            "title": "::path",
-                            "slug": "path"
-                          },
-                          "depth": 3
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 3,
-                            "title": ".port",
-                            "slug": "port"
-                          },
-                          "depth": 3
-                        }, {
-                          "type": "heading",
-                          "data": {
-                            "level": 3,
-                            "title": ".registerMiddleware",
-                            "slug": "registermiddleware"
-                          },
-                          "depth": 3
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }, {
-          "type": "folder",
-          "data": {
-            "path": "server/shrub-limiter",
-            "title": "shrub-limiter"
-          },
-          "depth": 2,
-          "children": [
-            {
-              "type": "file",
-              "data": {
-                "language": {
-                  "nameMatchers": [".coffee", "Cakefile"],
-                  "pygmentsLexer": "coffee-script",
-                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                  "strictMultiLineEnd": false,
-                  "singleLineComment": ["#"],
-                  "ignorePrefix": "}",
-                  "foldPrefix": "^",
-                  "name": "CoffeeScript"
-                },
-                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/server/shrub-limiter/index.coffee",
-                "projectPath": "server/shrub-limiter/index.coffee",
-                "targetPath": "server/shrub-limiter/index",
-                "pageTitle": "server/shrub-limiter/index",
-                "title": "index"
-              },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "Rate limiter",
-                    "slug": "rate-limiter"
-                  },
-                  "depth": 1
-                }
-              ]
-            }
-          ]
-        }, {
-          "type": "folder",
-          "data": {
-            "path": "server/shrub-nodemailer",
-            "title": "shrub-nodemailer"
-          },
-          "depth": 2,
-          "children": [
-            {
-              "type": "file",
-              "data": {
-                "language": {
-                  "nameMatchers": [".coffee", "Cakefile"],
-                  "pygmentsLexer": "coffee-script",
-                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                  "strictMultiLineEnd": false,
-                  "singleLineComment": ["#"],
-                  "ignorePrefix": "}",
-                  "foldPrefix": "^",
-                  "name": "CoffeeScript"
-                },
-                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/server/shrub-nodemailer/index.coffee",
-                "projectPath": "server/shrub-nodemailer/index.coffee",
-                "targetPath": "server/shrub-nodemailer/index",
-                "pageTitle": "server/shrub-nodemailer/index",
-                "title": "index"
-              },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "nodemailer",
-                    "slug": "nodemailer"
-                  },
-                  "depth": 1,
-                  "children": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "sendMail",
-                        "slug": "sendmail"
-                      },
-                      "depth": 2
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }, {
-          "type": "folder",
-          "data": {
-            "path": "server/shrub-repl",
-            "title": "shrub-repl"
-          },
-          "depth": 2,
-          "children": [
-            {
-              "type": "file",
-              "data": {
-                "language": {
-                  "nameMatchers": [".coffee", "Cakefile"],
-                  "pygmentsLexer": "coffee-script",
-                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                  "strictMultiLineEnd": false,
-                  "singleLineComment": ["#"],
-                  "ignorePrefix": "}",
-                  "foldPrefix": "^",
-                  "name": "CoffeeScript"
-                },
-                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/server/shrub-repl/index.coffee",
-                "projectPath": "server/shrub-repl/index.coffee",
-                "targetPath": "server/shrub-repl/index",
-                "pageTitle": "server/shrub-repl/index",
-                "title": "index"
-              },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "REPL",
-                    "slug": "repl"
-                  },
-                  "depth": 1
-                }
-              ]
-            }
-          ]
-        }, {
-          "type": "folder",
-          "data": {
-            "path": "server/shrub-rpc",
-            "title": "shrub-rpc"
-          },
-          "depth": 2,
-          "children": [
-            {
-              "type": "file",
-              "data": {
-                "language": {
-                  "nameMatchers": [".coffee", "Cakefile"],
-                  "pygmentsLexer": "coffee-script",
-                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                  "strictMultiLineEnd": false,
-                  "singleLineComment": ["#"],
-                  "ignorePrefix": "}",
-                  "foldPrefix": "^",
-                  "name": "CoffeeScript"
-                },
-                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/server/shrub-rpc/index.coffee",
-                "projectPath": "server/shrub-rpc/index.coffee",
-                "targetPath": "server/shrub-rpc/index",
-                "pageTitle": "server/shrub-rpc/index",
-                "title": "index"
-              },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "RPC",
-                    "slug": "rpc"
-                  },
-                  "depth": 1
-                }
-              ]
-            }
-          ]
-        }, {
-          "type": "folder",
-          "data": {
-            "path": "server/shrub-schema",
-            "title": "shrub-schema"
-          },
-          "depth": 2,
-          "children": [
-            {
-              "type": "file",
-              "data": {
-                "language": {
-                  "nameMatchers": [".coffee", "Cakefile"],
-                  "pygmentsLexer": "coffee-script",
-                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                  "strictMultiLineEnd": false,
-                  "singleLineComment": ["#"],
-                  "ignorePrefix": "}",
-                  "foldPrefix": "^",
-                  "name": "CoffeeScript"
-                },
-                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/server/shrub-schema/index.coffee",
-                "projectPath": "server/shrub-schema/index.coffee",
-                "targetPath": "server/shrub-schema/index",
-                "pageTitle": "server/shrub-schema/index",
-                "title": "index"
-              },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "Database schema",
-                    "slug": "database-schema"
-                  },
-                  "depth": 1
-                }
-              ]
-            }
-          ]
-        }, {
-          "type": "folder",
-          "data": {
-            "path": "server/shrub-session",
-            "title": "shrub-session"
-          },
-          "depth": 2,
-          "children": [
-            {
-              "type": "file",
-              "data": {
-                "language": {
-                  "nameMatchers": [".coffee", "Cakefile"],
-                  "pygmentsLexer": "coffee-script",
-                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                  "strictMultiLineEnd": false,
-                  "singleLineComment": ["#"],
-                  "ignorePrefix": "}",
-                  "foldPrefix": "^",
-                  "name": "CoffeeScript"
-                },
-                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/server/shrub-session/express.coffee",
-                "projectPath": "server/shrub-session/express.coffee",
-                "targetPath": "server/shrub-session/express",
-                "pageTitle": "server/shrub-session/express",
-                "title": "express"
-              },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "Express routes",
-                    "slug": "express-routes"
-                  },
-                  "depth": 1
-                }
-              ]
-            }, {
-              "type": "file",
-              "data": {
-                "language": {
-                  "nameMatchers": [".coffee", "Cakefile"],
-                  "pygmentsLexer": "coffee-script",
-                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                  "strictMultiLineEnd": false,
-                  "singleLineComment": ["#"],
-                  "ignorePrefix": "}",
-                  "foldPrefix": "^",
-                  "name": "CoffeeScript"
-                },
-                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/server/shrub-session/index.coffee",
-                "projectPath": "server/shrub-session/index.coffee",
-                "targetPath": "server/shrub-session/index",
-                "pageTitle": "server/shrub-session/index",
-                "title": "index"
-              },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "Session",
-                    "slug": "session"
-                  },
-                  "depth": 1
-                }
-              ]
-            }
-          ]
-        }, {
-          "type": "folder",
-          "data": {
-            "path": "server/shrub-socket.io",
-            "title": "shrub-socket.io"
-          },
-          "depth": 2,
-          "children": [
-            {
-              "type": "file",
-              "data": {
-                "language": {
-                  "nameMatchers": [".coffee", "Cakefile"],
-                  "pygmentsLexer": "coffee-script",
-                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                  "strictMultiLineEnd": false,
-                  "singleLineComment": ["#"],
-                  "ignorePrefix": "}",
-                  "foldPrefix": "^",
-                  "name": "CoffeeScript"
-                },
-                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/server/shrub-socket.io/index.coffee",
-                "projectPath": "server/shrub-socket.io/index.coffee",
-                "targetPath": "server/shrub-socket.io/index",
-                "pageTitle": "server/shrub-socket.io/index",
-                "title": "index"
-              },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "Socket.IO",
-                    "slug": "socketio"
-                  },
-                  "depth": 1,
-                  "children": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "SocketIoManager",
-                        "slug": "socketiomanager"
-                      },
-                      "depth": 2
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "::channelsSocketIsIn",
-                        "slug": "channelssocketisin"
-                      },
-                      "depth": 2
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "::listen",
-                        "slug": "listen"
-                      },
-                      "depth": 2
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "::socketsInChannel",
-                        "slug": "socketsinchannel"
-                      },
-                      "depth": 2
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }, {
-          "type": "folder",
-          "data": {
-            "path": "server/shrub-socket",
-            "title": "shrub-socket"
-          },
-          "depth": 2,
-          "children": [
-            {
-              "type": "file",
-              "data": {
-                "language": {
-                  "nameMatchers": [".coffee", "Cakefile"],
-                  "pygmentsLexer": "coffee-script",
-                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                  "strictMultiLineEnd": false,
-                  "singleLineComment": ["#"],
-                  "ignorePrefix": "}",
-                  "foldPrefix": "^",
-                  "name": "CoffeeScript"
-                },
-                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/server/shrub-socket/index.coffee",
-                "projectPath": "server/shrub-socket/index.coffee",
-                "targetPath": "server/shrub-socket/index",
-                "pageTitle": "server/shrub-socket/index",
-                "title": "index"
-              },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "Socket",
-                    "slug": "socket"
-                  },
-                  "depth": 1,
-                  "children": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "manager",
-                        "slug": "manager"
-                      },
-                      "depth": 2
-                    }
-                  ]
-                }
-              ]
-            }, {
-              "type": "file",
-              "data": {
-                "language": {
-                  "nameMatchers": [".coffee", "Cakefile"],
-                  "pygmentsLexer": "coffee-script",
-                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                  "strictMultiLineEnd": false,
-                  "singleLineComment": ["#"],
-                  "ignorePrefix": "}",
-                  "foldPrefix": "^",
-                  "name": "CoffeeScript"
-                },
-                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/server/shrub-socket/manager.coffee",
-                "projectPath": "server/shrub-socket/manager.coffee",
-                "targetPath": "server/shrub-socket/manager",
-                "pageTitle": "server/shrub-socket/manager",
-                "title": "manager"
-              },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "SocketManager",
-                    "slug": "socketmanager"
-                  },
-                  "depth": 1,
-                  "children": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".loadMiddleware",
-                        "slug": "loadmiddleware"
-                      },
-                      "depth": 3
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }, {
-          "type": "folder",
-          "data": {
-            "path": "server/shrub-user",
-            "title": "shrub-user"
-          },
-          "depth": 2,
-          "children": [
-            {
-              "type": "file",
-              "data": {
-                "language": {
-                  "nameMatchers": [".coffee", "Cakefile"],
-                  "pygmentsLexer": "coffee-script",
-                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                  "strictMultiLineEnd": false,
-                  "singleLineComment": ["#"],
-                  "ignorePrefix": "}",
-                  "foldPrefix": "^",
-                  "name": "CoffeeScript"
-                },
-                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/server/shrub-user/forgot.coffee",
-                "projectPath": "server/shrub-user/forgot.coffee",
-                "targetPath": "server/shrub-user/forgot",
-                "pageTitle": "server/shrub-user/forgot",
-                "title": "forgot"
-              },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "User - forgot password",
-                    "slug": "user-forgot-password"
-                  },
-                  "depth": 1
-                }
-              ]
-            }, {
-              "type": "file",
-              "data": {
-                "language": {
-                  "nameMatchers": [".coffee", "Cakefile"],
-                  "pygmentsLexer": "coffee-script",
-                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                  "strictMultiLineEnd": false,
-                  "singleLineComment": ["#"],
-                  "ignorePrefix": "}",
-                  "foldPrefix": "^",
-                  "name": "CoffeeScript"
-                },
-                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/server/shrub-user/index.coffee",
-                "projectPath": "server/shrub-user/index.coffee",
-                "targetPath": "server/shrub-user/index",
-                "pageTitle": "server/shrub-user/index",
-                "title": "index"
-              },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "User",
-                    "slug": "user"
-                  },
-                  "depth": 1,
-                  "children": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "loadByName",
-                        "slug": "loadbyname"
-                      },
-                      "depth": 2
-                    }
-                  ]
-                }
-              ]
-            }, {
-              "type": "file",
-              "data": {
-                "language": {
-                  "nameMatchers": [".coffee", "Cakefile"],
-                  "pygmentsLexer": "coffee-script",
-                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                  "strictMultiLineEnd": false,
-                  "singleLineComment": ["#"],
-                  "ignorePrefix": "}",
-                  "foldPrefix": "^",
-                  "name": "CoffeeScript"
-                },
-                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/server/shrub-user/login.coffee",
-                "projectPath": "server/shrub-user/login.coffee",
-                "targetPath": "server/shrub-user/login",
-                "pageTitle": "server/shrub-user/login",
-                "title": "login"
-              },
-              "depth": 3,
-              "outline": []
-            }, {
-              "type": "file",
-              "data": {
-                "language": {
-                  "nameMatchers": [".coffee", "Cakefile"],
-                  "pygmentsLexer": "coffee-script",
-                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                  "strictMultiLineEnd": false,
-                  "singleLineComment": ["#"],
-                  "ignorePrefix": "}",
-                  "foldPrefix": "^",
-                  "name": "CoffeeScript"
-                },
-                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/server/shrub-user/logout.coffee",
-                "projectPath": "server/shrub-user/logout.coffee",
-                "targetPath": "server/shrub-user/logout",
-                "pageTitle": "server/shrub-user/logout",
-                "title": "logout"
-              },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "User logout",
-                    "slug": "user-logout"
-                  },
-                  "depth": 1
-                }
-              ]
-            }, {
-              "type": "file",
-              "data": {
-                "language": {
-                  "nameMatchers": [".coffee", "Cakefile"],
-                  "pygmentsLexer": "coffee-script",
-                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                  "strictMultiLineEnd": false,
-                  "singleLineComment": ["#"],
-                  "ignorePrefix": "}",
-                  "foldPrefix": "^",
-                  "name": "CoffeeScript"
-                },
-                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/server/shrub-user/register.coffee",
-                "projectPath": "server/shrub-user/register.coffee",
-                "targetPath": "server/shrub-user/register",
-                "pageTitle": "server/shrub-user/register",
-                "title": "register"
-              },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "User registration",
-                    "slug": "user-registration"
-                  },
-                  "depth": 1,
-                  "children": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "register",
-                        "slug": "register"
-                      },
-                      "depth": 2
-                    }
-                  ]
-                }
-              ]
-            }, {
-              "type": "file",
-              "data": {
-                "language": {
-                  "nameMatchers": [".coffee", "Cakefile"],
-                  "pygmentsLexer": "coffee-script",
-                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                  "strictMultiLineEnd": false,
-                  "singleLineComment": ["#"],
-                  "ignorePrefix": "}",
-                  "foldPrefix": "^",
-                  "name": "CoffeeScript"
-                },
-                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/server/shrub-user/reset.coffee",
-                "projectPath": "server/shrub-user/reset.coffee",
-                "targetPath": "server/shrub-user/reset",
-                "pageTitle": "server/shrub-user/reset",
-                "title": "reset"
-              },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "User password reset",
-                    "slug": "user-password-reset"
-                  },
-                  "depth": 1
-                }
-              ]
-            }
-          ]
-        }, {
-          "type": "folder",
-          "data": {
-            "path": "server/shrub-villiany",
-            "title": "shrub-villiany"
-          },
-          "depth": 2,
-          "children": [
-            {
-              "type": "file",
-              "data": {
-                "language": {
-                  "nameMatchers": [".coffee", "Cakefile"],
-                  "pygmentsLexer": "coffee-script",
-                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-                  "strictMultiLineEnd": false,
-                  "singleLineComment": ["#"],
-                  "ignorePrefix": "}",
-                  "foldPrefix": "^",
-                  "name": "CoffeeScript"
-                },
-                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/server/shrub-villiany/index.coffee",
-                "projectPath": "server/shrub-villiany/index.coffee",
-                "targetPath": "server/shrub-villiany/index",
-                "pageTitle": "server/shrub-villiany/index",
-                "title": "index"
-              },
-              "depth": 3,
-              "outline": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 1,
-                    "title": "Villiany",
-                    "slug": "villiany"
-                  },
-                  "depth": 1
-                }
-              ]
-            }
-          ]
+          "depth": 2
         }
       ]
     }, {

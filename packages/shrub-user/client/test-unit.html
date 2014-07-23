@@ -1,0 +1,53 @@
+<!DOCTYPE html><html lang="en"><head><title>packages/shrub-user/client/test-unit</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="packages/shrub-user/client/test-unit"><meta name="groc-project-path" content="packages/shrub-user/client/test-unit.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-user/client/test-unit.coffee">packages/shrub-user/client/test-unit.coffee</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nx">describe</span> <span class="s">&#39;user&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+  
+  <span class="nv">user = </span><span class="kc">null</span>
+  
+  <span class="nx">beforeEach</span> <span class="nf">-&gt;</span>
+    
+    <span class="nx">inject</span> <span class="p">[</span>
+      <span class="s">&#39;shrub-user&#39;</span>
+      <span class="nf">(_user_) -&gt;</span> <span class="nv">user = </span><span class="nx">_user_</span>
+    <span class="p">]</span>
+    
+  <span class="nx">it</span> <span class="s">&#39;should provide an anonymous user by default&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+    
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">instance</span><span class="p">().</span><span class="nx">id</span><span class="o">?</span><span class="p">).</span><span class="nx">toBe</span> <span class="kc">false</span>
+
+  <span class="nx">it</span> <span class="s">&#39;should log in a user through RPC&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+    
+    <span class="nx">inject</span> <span class="p">[</span>
+      <span class="s">&#39;$rootScope&#39;</span><span class="p">,</span> <span class="s">&#39;$timeout&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-socket&#39;</span>
+      <span class="nf">($rootScope, $timeout, socket) -&gt;</span>
+        
+        <span class="nx">socket</span><span class="p">.</span><span class="nx">catchEmit</span> <span class="s">&#39;rpc://user.login&#39;</span><span class="p">,</span> <span class="nf">(data, fn) -&gt;</span>
+          <span class="nx">fn</span> <span class="nv">result: id: </span><span class="mi">1</span><span class="p">,</span> <span class="nv">name: </span><span class="s">&#39;cha0s&#39;</span>
+        
+        <span class="nx">user</span><span class="p">.</span><span class="nx">login</span> <span class="s">&#39;local&#39;</span><span class="p">,</span> <span class="s">&#39;cha0s&#39;</span><span class="p">,</span> <span class="s">&#39;password&#39;</span>
+        
+        <span class="nx">$timeout</span><span class="p">.</span><span class="nx">flush</span><span class="p">()</span>
+        <span class="nx">$rootScope</span><span class="p">.</span><span class="nx">$apply</span><span class="p">()</span>
+        
+        <span class="nx">expect</span><span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">isLoggedIn</span><span class="p">()).</span><span class="nx">toBe</span> <span class="kc">true</span>
+      
+    <span class="p">]</span>
+
+  <span class="nx">it</span> <span class="s">&#39;should log out a user through RPC&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+    
+    <span class="nx">inject</span> <span class="p">[</span>
+      <span class="s">&#39;$rootScope&#39;</span><span class="p">,</span> <span class="s">&#39;$timeout&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-socket&#39;</span>
+      <span class="nf">($rootScope, $timeout, socket) -&gt;</span>
+        
+        <span class="nx">socket</span><span class="p">.</span><span class="nx">catchEmit</span> <span class="s">&#39;rpc://user.login&#39;</span><span class="p">,</span> <span class="nf">(data, fn) -&gt;</span>
+          <span class="nx">fn</span> <span class="nv">result: id: </span><span class="mi">1</span><span class="p">,</span> <span class="nv">name: </span><span class="s">&#39;cha0s&#39;</span>
+        
+        <span class="nx">socket</span><span class="p">.</span><span class="nx">catchEmit</span> <span class="s">&#39;rpc://user.logout&#39;</span><span class="p">,</span> <span class="nf">(data, fn) -&gt;</span>
+          <span class="nx">fn</span> <span class="nv">result: </span><span class="kc">null</span>
+        
+        <span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">login</span> <span class="s">&#39;local&#39;</span><span class="p">,</span> <span class="s">&#39;cha0s&#39;</span><span class="p">,</span> <span class="s">&#39;password&#39;</span><span class="p">).</span><span class="nx">then</span> <span class="nf">-&gt;</span> <span class="nx">user</span><span class="p">.</span><span class="nx">logout</span><span class="p">()</span>
+        
+        <span class="nx">$timeout</span><span class="p">.</span><span class="nx">flush</span><span class="p">()</span>
+        <span class="nx">$rootScope</span><span class="p">.</span><span class="nx">$apply</span><span class="p">()</span>
+        
+        <span class="nx">expect</span><span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">isLoggedIn</span><span class="p">()).</span><span class="nx">toBe</span> <span class="kc">false</span>
+      
+    <span class="p">]</span></div></div></div></div></body></html>

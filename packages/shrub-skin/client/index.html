@@ -1,0 +1,107 @@
+<!DOCTYPE html><html lang="en"><head><title>packages/shrub-skin/client/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="packages/shrub-skin/client/index"><meta name="groc-project-path" content="packages/shrub-skin/client/index.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-skin/client/index.coffee">packages/shrub-skin/client/index.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="skinning">Skinning</h1>
+
+<p>Define skinning components.</p></div></div><div class="code"><div class="wrapper"><span class="nv">config = </span><span class="nx">require</span> <span class="s">&#39;config&#39;</span>
+
+<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookapprun">Implements hook <code>appRun</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;appRun&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
+    <span class="s">&#39;$http&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-skin&#39;</span>
+    <span class="nf">($http, skin) -&gt;</span>
+      
+      <span class="nx">skin</span><span class="p">.</span><span class="nx">change</span> <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;packageConfig:shrub-skin:default&#39;</span>
+      
+  <span class="p">]</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookservice">Implements hook <code>service</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;service&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
+    <span class="s">&#39;$http&#39;</span><span class="p">,</span> <span class="s">&#39;$interval&#39;</span><span class="p">,</span> <span class="s">&#39;$q&#39;</span><span class="p">,</span> <span class="s">&#39;$window&#39;</span>
+    <span class="nf">($http, $interval, $q, $window) -&gt;</span>
+      
+      <span class="nv">service = </span><span class="p">{}</span>
+      
+      <span class="nv">service.addStylesheet = </span><span class="nf">(href) -&gt;</span>
+        
+        <span class="nv">deferred = </span><span class="nx">$q</span><span class="p">.</span><span class="nx">defer</span><span class="p">()</span>
+        
+        <span class="nv">styleSheets = </span><span class="nx">$window</span><span class="p">.</span><span class="nb">document</span><span class="p">.</span><span class="nx">styleSheets</span>
+        <span class="nv">index = </span><span class="nx">styleSheets</span><span class="p">.</span><span class="nx">length</span>
+        
+        <span class="nv">element = </span><span class="nx">$window</span><span class="p">.</span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span> <span class="s">&#39;link&#39;</span>
+        <span class="nv">element.type = </span><span class="s">&#39;text/css&#39;</span>
+        <span class="nv">element.rel = </span><span class="s">&#39;stylesheet&#39;</span>
+        <span class="nv">element.href = </span><span class="nx">href</span>
+        <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s">&#39;head&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">].</span><span class="nx">appendChild</span> <span class="nx">element</span>
+        
+        <span class="nv">resolve = </span><span class="nf">-&gt;</span> <span class="nx">deferred</span><span class="p">.</span><span class="nx">resolve</span> <span class="nx">element</span>
+        
+        <span class="nv">wasParsed = </span><span class="nf">-&gt;</span>
+          
+          <span class="k">try</span>
+
+            <span class="nv">styleSheet = </span><span class="nx">styleSheets</span><span class="p">[</span><span class="nx">index</span><span class="p">]</span>
+            
+            <span class="k">return</span> <span class="kc">true</span> <span class="k">if</span> <span class="nx">styleSheet</span><span class="p">.</span><span class="nx">cssRules</span>
+            <span class="k">return</span> <span class="kc">true</span> <span class="k">if</span> <span class="nx">styleSheet</span><span class="p">.</span><span class="nx">rules</span><span class="o">?</span><span class="p">.</span><span class="nx">length</span>
+          
+          <span class="k">catch</span> <span class="nx">error</span>
+            
+            <span class="k">return</span> <span class="kc">false</span>
+            </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>A rare case where IE actually does the right thing!
+(and Opera).</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="nx">$window</span><span class="p">.</span><span class="nx">opera</span> <span class="o">or</span> <span class="o">-</span><span class="mi">1</span> <span class="o">isnt</span> <span class="nx">$window</span><span class="p">.</span><span class="nx">navigator</span><span class="p">.</span><span class="nx">userAgent</span><span class="p">.</span><span class="nx">indexOf</span> <span class="s">&#39;MSIE&#39;</span>
+          
+          <span class="nv">element.onload = </span><span class="nx">resolve</span>
+          <span class="nv">element.onreadystatechange = </span><span class="nf">-&gt;</span>
+            <span class="k">switch</span> <span class="nx">@readyState</span>
+              <span class="k">when</span> <span class="s">&#39;loaded&#39;</span><span class="p">,</span> <span class="s">&#39;complete&#39;</span>
+                <span class="nx">resolve</span><span class="p">()</span>
+          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Everyone else needs to resort to polling.</p></div></div><div class="code"><div class="wrapper">        <span class="k">else</span>
+        
+          <span class="nv">poll = </span><span class="nx">$interval</span><span class="p">(</span>
+            <span class="nf">-&gt;</span>
+              <span class="k">if</span> <span class="nx">wasParsed</span><span class="p">()</span>
+                <span class="nx">$interval</span><span class="p">.</span><span class="nx">cancel</span> <span class="nx">poll</span>
+                <span class="nx">resolve</span><span class="p">()</span>
+            <span class="mi">10</span>
+          <span class="p">)</span>
+        
+        <span class="nx">deferred</span><span class="p">.</span><span class="nx">promise</span>
+      
+      <span class="nv">service.addStylesheets = </span><span class="nf">(hrefs) -&gt;</span>
+        <span class="nx">$q</span><span class="p">.</span><span class="nx">all</span> <span class="p">(</span><span class="nx">service</span><span class="p">.</span><span class="nx">addStylesheet</span> <span class="nx">href</span> <span class="k">for</span> <span class="nx">href</span> <span class="k">in</span> <span class="nx">hrefs</span><span class="p">)</span>
+      
+      <span class="nv">currentSkin = </span><span class="kc">null</span>
+      
+      <span class="nv">service.change = </span><span class="nf">(key) -&gt;</span>
+        
+        <span class="k">if</span> <span class="nx">currentSkin</span><span class="o">?</span>
+          
+          <span class="k">for</span> <span class="nx">link</span> <span class="k">in</span> <span class="nx">currentSkin</span><span class="p">.</span><span class="nx">links</span>
+            <span class="nx">link</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">removeChild</span> <span class="nx">link</span>
+        
+        <span class="k">if</span> <span class="nx">key</span>
+          
+          <span class="nv">currentSkin = links: </span><span class="p">[]</span>
+        
+          <span class="nv">promise = </span><span class="nx">$http</span><span class="p">.</span><span class="nx">get</span> <span class="s">&quot;/skin/</span><span class="si">#{</span><span class="nx">key</span><span class="si">}</span><span class="s">/index.json&quot;</span>
+          
+          <span class="nx">promise</span><span class="p">.</span><span class="nx">success</span> <span class="nf">(data) -&gt;</span>
+            
+            <span class="nv">stylesheets = </span><span class="nx">data</span><span class="p">.</span><span class="nx">stylesheets</span> <span class="o">?</span> <span class="p">[]</span>
+            
+            <span class="nx">service</span><span class="p">.</span><span class="nx">addStylesheets</span><span class="p">(</span><span class="nx">stylesheets</span><span class="p">).</span><span class="nx">then</span> <span class="nf">(links) -&gt;</span>
+              
+              <span class="nv">currentSkin.links = </span><span class="nx">links</span>
+              
+              <span class="nx">service</span><span class="p">.</span><span class="nx">removeCloak</span><span class="p">()</span>
+              
+          <span class="nx">promise</span><span class="p">.</span><span class="nx">error</span> <span class="nf">-&gt;</span> <span class="nx">service</span><span class="p">.</span><span class="nx">removeCloak</span><span class="p">()</span>
+          
+        <span class="k">else</span>
+          
+          <span class="nv">currentSkin = </span><span class="kc">null</span>
+        
+          <span class="nx">service</span><span class="p">.</span><span class="nx">removeCloak</span><span class="p">()</span>
+      
+      <span class="nv">service.removeCloak = </span><span class="nf">-&gt;</span>
+        <span class="nx">angular</span><span class="p">.</span><span class="nx">element</span><span class="p">(</span><span class="s">&#39;.shrub-skin-cloak&#39;</span><span class="p">).</span><span class="nx">each</span> <span class="nf">-&gt;</span>
+          <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">removeClass</span> <span class="s">&#39;shrub-skin-cloak&#39;</span>
+      
+      <span class="nx">service</span>
+    
+  <span class="p">]</span></div></div></div></div></body></html>
