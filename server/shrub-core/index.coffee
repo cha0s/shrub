@@ -12,6 +12,15 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `config`
 	registrar.registerHook 'config', (req) ->
 		
+		# The URL that the site was accessed at.
+		hostname: "//#{req.headers.host}"
+		
+		# Is the server running in test mode?
+		testMode: if (config.get 'E2E')? then 'e2e' else false
+		
+		# Execution environment, `production`, or...
+		environment: config.get 'NODE_ENV'
+		
 		siteName: config.get 'packageSettings:shrub-core:siteName'
 	
 	# ## Implements hook `fingerprint`

@@ -22,7 +22,7 @@ exports.pkgmanRegister = (registrar) ->
 			
 			service = {}
 			
-			user = new User config.get 'user'
+			user = new User config.get 'packageConfig:shrub-user'
 			
 			# Log a user out if we get a socket call.
 			logout = -> user.fromObject (new User).toObject()

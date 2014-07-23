@@ -38,7 +38,7 @@
 #     wrapped.has 'child:tag'
 # 
 # `true`
-#     
+#
 module.exports = new class Config
 	
 	# ### *constructor*
@@ -46,7 +46,7 @@ module.exports = new class Config
 	# *Create a configuration wrapper.*
 	# 
 	# * (object) `config` - The configuration tree.
-	constructor: (@config) ->
+	constructor: (@config = {}) ->
 	
 	# ### .from
 	# 
@@ -94,3 +94,10 @@ module.exports = new class Config
 			current = (current[part] ?= {})
 		
 		current[last] = value
+		
+	# ### .toJSON
+	# 
+	# *Return config object for serialization.*
+	toJSON: -> @config
+
+module.exports.Config = Config

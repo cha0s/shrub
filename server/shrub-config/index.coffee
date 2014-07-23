@@ -11,23 +11,10 @@ url = require 'url'
 config = require 'config'
 pkgman = require 'pkgman'
 
+{Config} = require 'client/modules/config'
+
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `config`
-	registrar.registerHook 'config', (req) ->
-		
-		# The URL that the site was accessed at.
-		hostname: "//#{req.headers.host}"
-		
-		# Is the server running in test mode?
-		testMode: if (config.get 'E2E')? then 'e2e' else false
-		
-		# Execution environment, `production`, or...
-		environment: config.get 'NODE_ENV'
-		
-		# The list of enabled packages.
-		packageList: config.get 'packageList'
-	
 	# ## Implements hook `httpMiddleware`
 	registrar.registerHook 'httpMiddleware', (http) ->
 		
@@ -44,15 +31,31 @@ exports.pkgmanRegister = (registrar) ->
 				# Allows packages to specify configuration that will be sent to
 				# the client. Implementations may return an object, or a promise
 				# that resolves to an object.
-				Promise.all(
-					pkgman.invokeFlat 'config', req
+				subconfigs = pkgman.invoke 'config', req
 					
-				).then((subconfigs) ->
+				Promise.all(
+					
+					promise for path, promise of subconfigs
+					
+				).then((fulfilledSubconfigs) ->
 	
 					# } Merge ALL the configs.
-					config_ = {}
-					_.extend config_, subconfig for subconfig in subconfigs				
-				
+					config_ = new Config()
+					
+					# } Package-independent...
+					config_.set 'packageList', config.get 'packageList'
+					
+					index = 0
+					for path of subconfigs
+						subconfig = fulfilledSubconfigs[index++]
+						for key, value of subconfig
+							
+							config_.set "packageConfig:#{
+								path.replace '/', ':'
+							}:#{
+								key
+							}", value
+					
 					# } Format the configuration to look nice.
 					prettyPrintConfig = ->
 						stringified = JSON.stringify config_, null, '  '

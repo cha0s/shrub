@@ -6,9 +6,7 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `config`
 	registrar.registerHook 'config', (req) ->
 		
-		skin:
-			
-			default: config.get 'packageSettings:shrub-skin:default'
+		default: config.get 'packageSettings:shrub-skin:default'
 	
 	# ## Implements hook `httpMiddleware`
 	registrar.registerHook 'httpMiddleware', (http) ->

@@ -31,7 +31,7 @@ exports.pkgmanRegister = (registrar) ->
 			# Invoke hook `routeMock`.
 			# Allow packages to define routes in the Angular application which are
 			# only defined during test mode.
-			if config.get 'testMode'
+			if config.get 'packageConfig:shrub-core:testMode'
 				for path, route of pkgmanProvider.invoke 'routeMock'
 					routes[route.path ? path] = route
 				
@@ -107,7 +107,7 @@ exports.pkgmanRegister = (registrar) ->
 			# Reload the client.
 			socket.on 'core.reload', -> $window.location.reload()
 			
-			setSite config.get 'siteName'
+			setSite config.get 'packageConfig:shrub-core:siteName'
 			
 	]
 	

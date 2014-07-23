@@ -21,7 +21,7 @@ exports.pkgmanRegister = (registrar) ->
 			
 			config.get 'packageSettings:shrub-socket:manager:module'
 		
-		'shrub-socket': manager: module: module
+		manager: module: module
 		
 	# ## Implements hook `httpInitializing`
 	registrar.registerHook 'httpInitializing', (http) ->

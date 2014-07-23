@@ -17,7 +17,7 @@ exports.pkgmanRegister = (registrar) ->
 	registrar.registerHook 'config', (req) ->
 
 		# Send a redacted version of the request user.
-		req.user.redactFor(req.user).then (redacted) -> user: redacted
+		req.user.redactFor(req.user).then (redacted) -> redacted
 
 	# ## Implements hook `endpointFinished`
 	registrar.registerHook 'endpointFinished', (routeReq, result, req) ->

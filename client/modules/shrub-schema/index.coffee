@@ -19,7 +19,7 @@ exports.pkgmanRegister = (registrar) ->
 			schema = exports.define(
 				require 'jugglingdb-rest'
 				$http: $http
-				apiRoot: config.get 'apiRoot'
+				apiRoot: config.get 'packageConfig:shrub-schema:apiRoot'
 			)
 			
 			schema.definePackageModels()

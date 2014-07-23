@@ -12,7 +12,7 @@ exports.pkgmanRegister = (registrar) ->
 		'$http', 'shrub-skin'
 		($http, skin) ->
 			
-			skin.change config.get 'skin:default'
+			skin.change config.get 'packageConfig:shrub-skin:default'
 			
 	]
 	

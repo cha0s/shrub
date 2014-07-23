@@ -116,7 +116,7 @@ angular.module('shrub.packages', [
 
 			# If we are testing, decorate the services with their mock
 			# versions.
-			if config.get 'testMode'
+			if config.get 'packageConfig:shrub-core:testMode'
 				
 				# Invoke hook `serviceMock`.
 				# Allows packages to decorate mock Angular services.

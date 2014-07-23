@@ -18,7 +18,7 @@ exports.create = (type) ->
 		console[key].apply console, args
 	
 	# In production, we'll only log errors.
-	if 'production' is config.get 'environment'
+	if 'production' is config.get 'packageConfig:shrub-core:environment'
 		
 		debug: ->
 		error: augmentedConsoleFunction 'error'
