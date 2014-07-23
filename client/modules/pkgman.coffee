@@ -24,7 +24,7 @@ class PkgmanRegistrar
 		
 		if impl?
 			
-			path = "#{submodule}/#{@_path}"
+			path = "#{@_path}/#{submodule}"
 		
 		else
 			
@@ -54,10 +54,8 @@ exports.rebuildPackageCache = (type) ->
 			continue if error.toString() is "Error: Cannot find module '#{name}'"
 			throw error
 	
-		if module_?
-			
-			modules[name] = module_
-			debug "Found package #{name}."
+		modules[name] = module_
+		debug "Found package #{name}."
 	
 	# Collect hooks.
 	for path, module_ of modules
