@@ -10,6 +10,19 @@ socketManager = null
 
 exports.pkgmanRegister = (registrar) ->
 
+	# ## Implements hook `config`
+	registrar.registerHook 'config', (http) ->
+		
+		module = if (config.get 'E2E')?
+			
+			'shrub-socket/dummy'
+			
+		else
+			
+			config.get 'packageSettings:shrub-socket:manager:module'
+		
+		'shrub-socket': manager: module: module
+		
 	# ## Implements hook `httpInitializing`
 	registrar.registerHook 'httpInitializing', (http) ->
 		

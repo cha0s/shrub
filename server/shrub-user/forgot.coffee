@@ -16,7 +16,9 @@ exports.pkgmanRegister = (registrar) ->
 	registrar.registerHook 'endpoint', ->
 		
 		limiter: threshold: threshold(1).every(30).seconds()
-	
+		
+		route: 'user.forgot'
+		
 		receiver: (req, fn) ->
 			
 			{User} = schema.models

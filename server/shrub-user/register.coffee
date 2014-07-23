@@ -17,7 +17,9 @@ exports.pkgmanRegister = (registrar) ->
 		limiter:
 			message: "You are trying to register too much."
 			threshold: threshold(5).every(2).minutes()
-	
+		
+		route: 'user.register'
+		
 		receiver: (req, fn) ->
 			
 			{body} = req

@@ -12,6 +12,7 @@ exports.pkgmanRegister = (registrar) ->
 	registrar.registerHook 'endpoint', ->
 	
 		limiter: threshold: threshold(1).every(5).minutes()
+		route: 'user.reset'
 	
 		receiver: (req, fn) ->
 			

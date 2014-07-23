@@ -10,7 +10,7 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `service`
 	registrar.registerHook 'service', -> [
 		'$injector', '$q', 'shrub-pkgman', 'shrub-socket'
-		({invoke}, {defer}, pkgman, {emit}) ->
+		({invoke}, {defer}, pkgman, socket) ->
 			
 			service = {}
 			
@@ -28,7 +28,7 @@ exports.pkgmanRegister = (registrar) ->
 				
 				deferred = defer()
 				
-				emit "rpc://#{route}", data, ({error, result}) ->
+				socket.emit "rpc://#{route}", data, ({error, result}) ->
 					if error?
 						deferred.reject errors.unserialize error
 					else

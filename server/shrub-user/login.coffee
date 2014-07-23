@@ -22,7 +22,9 @@ exports.pkgmanRegister = (registrar) ->
 		limiter:
 			message: "You are logging in too much."
 			threshold: threshold(3).every(30).seconds()
-	
+		
+		route: 'user.login'
+		
 		receiver: (req, fn) ->
 			
 			passport = req._passport.instance
@@ -45,7 +47,7 @@ exports.pkgmanRegister = (registrar) ->
 						
 					).then(->
 						
-						new Promise (resolve, reject) ->
+						new Promise (resolve, reject) =>
 						
 							# Join a channel for the username.
 							req.socket.join @user.name, (error) ->

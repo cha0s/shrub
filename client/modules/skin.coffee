@@ -5,7 +5,14 @@ exports.registerDirective = (uri) ->
 
 	compile: (scope, element) ->
 		
-		angular.element(element).injector().invoke [
+		# Hack for unit testing, not sure the "right" way to do this.
+		injector = if inject?
+			inject
+		else
+			injector = angular.element(element).injector()
+			injector.invoke.bind injector
+		
+		injector [
 			'$compile', '$http'
 			($compile, $http) ->
 				

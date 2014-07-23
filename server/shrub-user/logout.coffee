@@ -11,10 +11,14 @@ middleware = require 'middleware'
 exports.pkgmanRegister = (registrar) ->
 	
 	# ## Implements hook `endpoint`
-	registrar.registerHook 'endpoint', -> (req, fn) ->
+	registrar.registerHook 'endpoint', ->
 		
-		# Log out.
-		req.logOut().nodeify fn
+		route: 'user.logout'
+		
+		receiver: (req, fn) ->
+		
+			# Log out.
+			req.logOut().nodeify fn
 	
 	# ## Implements hook `initialize`
 	# Monkey patch http.IncomingMessage.prototype.logout to run our middleware,

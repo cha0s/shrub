@@ -28,6 +28,11 @@ angular.module(
         "shrub-villiany"
       ],
       siteName: "Shrub",
+      "shrub-socket": {
+        manager: {
+          module: "shrub-socket/dummy"
+        }
+      },      
       user: {
         name: "Anonymous",
         email: null
