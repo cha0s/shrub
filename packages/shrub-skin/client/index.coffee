@@ -9,10 +9,19 @@ exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `appRun`
 	registrar.registerHook 'appRun', -> [
-		'$http', 'shrub-skin'
-		($http, skin) ->
+		'$http', '$window', 'shrub-skin'
+		($http, $window, skin) ->
 			
-			skin.change config.get 'packageConfig:shrub-skin:default'
+			cloak = document.createElement 'style'
+			cloak.type = 'text/css';
+			cloak.innerHTML = '.shrub-skin-cloak { display: none; }'
+			document.getElementsByTagName('head')[0].appendChild cloak
+			
+			promise = skin.change config.get 'packageConfig:shrub-skin:default'
+			promise.then ->
+				
+				angular.element('link.initial').remove()
+				skin.removeCloak()
 			
 	]
 	
@@ -60,15 +69,20 @@ exports.pkgmanRegister = (registrar) ->
 						switch @readyState
 							when 'loaded', 'complete'
 								resolve()
-					
+				
 				# Everyone else needs to resort to polling.
 				else
 				
 					poll = $interval(
 						->
+							
 							if wasParsed()
+								
 								$interval.cancel poll
 								resolve()
+								
+							return
+							
 						10
 					)
 				
@@ -89,26 +103,31 @@ exports.pkgmanRegister = (registrar) ->
 				if key
 					
 					currentSkin = links: []
+					
+					angularSucksAtPromises = $q.defer()
 				
 					promise = $http.get "/skin/#{key}/index.json"
 					
-					promise.success (data) ->
+					promise.then ({data}) ->
 						
 						stylesheets = data.stylesheets ? []
 						
 						service.addStylesheets(stylesheets).then (links) ->
 							
 							currentSkin.links = links
+							angularSucksAtPromises.resolve()
 							
-							service.removeCloak()
-							
-					promise.error -> service.removeCloak()
+					promise.error (error) ->
+						
+						angularSucksAtPromises.reject error
+					
+					angularSucksAtPromises.promise
 					
 				else
 					
 					currentSkin = null
 				
-					service.removeCloak()
+					$q.when()
 			
 			service.removeCloak = ->
 				angular.element('.shrub-skin-cloak').each ->
