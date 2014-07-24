@@ -47,11 +47,11 @@ exports.pkgmanRegister = (registrar) ->
 					
 					index = 0
 					for path of subconfigs
+						
 						subconfig = fulfilledSubconfigs[index++]
 						for key, value of subconfig
-							
 							config_.set "packageConfig:#{
-								path.replace '/', ':'
+								path.replace /\//g, ':'
 							}:#{
 								key
 							}", value
