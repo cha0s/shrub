@@ -5,65 +5,67 @@
 
 _ = require 'underscore'
 config = require 'config'
+middleware = require 'middleware'
 pkgman = require 'pkgman'
 
 exports.pkgmanRegister = (registrar) ->
 
+	# ## Implements hook `assetScriptMiddleware`
+	registrar.registerHook 'assetScriptMiddleware', ->
+		
+		label: 'Shrub'
+		middleware: [
+	
+			(req, res, next) ->
+				
+				if 'production' is config.get 'NODE_ENV'
+					
+					res.locals.scripts.push '/shrub.min.js'
+					
+				else
+					
+					res.locals.scripts.push '/shrub.js'
+					
+				next()
+				
+		]
+
 	# ## Implements hook `httpMiddleware`
 	registrar.registerHook 'httpMiddleware', (http) ->
+		
+		# Invoke hook `assetScriptMiddleware`.
+		# Invoked to gather script assets for requests.
+		scriptMiddleware = middleware.fromShortName(
+			'asset script'
+			'shrub-assets'
+		)
 		
 		label: 'Serve dynamic assets'
 		middleware: [
 	
 			(req, res, next) ->
 				
-				res.locals.assets =
+				res.locals ?= {}
+				res.locals.scripts ?= []
 				
-					js: if 'production' is config.get 'NODE_ENV'
-						
-	
-						[
-							'//code.jquery.com/jquery-1.11.0.min.js'
-	
-							'/lib/bootstrap/js/bootstrap.min.js'
-							
-							'/lib/socket.io/socket.io.min.js'
-							
-							'/before-angular.js'
-	
-							'//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js'
-							'//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-route.min.js'						
-							'//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-sanitize.min.js'						
-	
-							'/lib/angular-ui/bootstrap/ui-bootstrap-tpls-0.10.0.min.js'
-							
-							'/shrub.min.js'
-	
-							'/js/config.js'
-						]
-			
-					else
-						
-						[
-							'/lib/jquery/jquery-1.11.0.js'
-							
-							'/lib/bootstrap/js/bootstrap.js'
-			
-							'/lib/socket.io/socket.io.js'
-							
-							'/before-angular.js'
-							
-							'/lib/angular/angular.js'
-							'/lib/angular/angular-route.js'
-							'/lib/angular/angular-sanitize.js'
-	
-							'/lib/angular-ui/bootstrap/ui-bootstrap-tpls-0.10.0.js'
-							
-							'/shrub.js'
-							
-							'/js/config.js'
-						]
-						
-				next()
-		
+				# Gather script asset list.
+				scriptMiddleware.dispatch req, res, next
+				
 		]
+
+	# ## Implements hook `packageSettings`
+	registrar.registerHook 'packageSettings', ->
+		
+		scriptMiddleware: [
+			'shrub-assets/jquery'
+			'shrub-assets/bootstrap'
+			'shrub-socket.io'
+			'shrub-assets/angular'
+			'shrub-assets/ui-bootstrap'
+			'shrub-assets'
+			'shrub-config'
+		]
+		
+	registrar.recur [
+		'angular', 'bootstrap', 'jquery', 'ui-bootstrap'
+	]

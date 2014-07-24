@@ -3,7 +3,6 @@
 # 
 # Client-side configuration.
 
-
 _ = require 'underscore'
 Promise = require 'bluebird'
 url = require 'url'
@@ -14,6 +13,20 @@ pkgman = require 'pkgman'
 {Config} = require 'client/modules/config'
 
 exports.pkgmanRegister = (registrar) ->
+
+	# ## Implements hook `assetScriptMiddleware`
+	registrar.registerHook 'assetScriptMiddleware', ->
+		
+		label: 'Config'
+		middleware: [
+	
+			(req, res, next) ->
+				
+				res.locals.scripts.push '/js/config.js'
+				
+				next()
+				
+		]
 
 	# ## Implements hook `httpMiddleware`
 	registrar.registerHook 'httpMiddleware', (http) ->

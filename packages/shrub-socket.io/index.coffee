@@ -104,3 +104,26 @@ module.exports = class SocketIoManager extends SocketManager
 			continue unless isConnected
 			
 			@io.sockets.adapter.nsp.connected[socketId]
+
+# Not ideal...
+SocketIoManager.pkgmanRegister = (registrar) ->
+
+	# ## Implements hook `assetScriptMiddleware`
+	registrar.registerHook 'assetScriptMiddleware', ->
+		
+		label: 'Socket.IO'
+		middleware: [
+	
+			(req, res, next) ->
+				
+				if 'production' is config.get 'NODE_ENV'
+					
+					res.locals.scripts.push '/lib/socket.io/socket.io.min.js'
+					
+				else
+					
+					res.locals.scripts.push '/lib/socket.io/socket.io.js'
+					
+				next()
+				
+		]
