@@ -27,8 +27,8 @@ exports.pkgmanRegister = (registrar) ->
 	
 	# ## Implements hook `service`
 	registrar.registerHook 'service', -> [
-		'$http', '$interval', '$q', '$window'
-		($http, $interval, $q, $window) ->
+		'$http', '$interval', '$q', '$rootScope', '$window'
+		($http, $interval, $q, $rootScope, $window) ->
 			
 			service = {}
 			
@@ -100,7 +100,7 @@ exports.pkgmanRegister = (registrar) ->
 					for link in currentSkin.links
 						link.parentNode.removeChild link
 				
-				if key
+				finalPromise = if key
 					
 					currentSkin = links: []
 					
@@ -128,6 +128,8 @@ exports.pkgmanRegister = (registrar) ->
 					currentSkin = null
 				
 					$q.when()
+					
+				finalPromise.then -> $rootScope.$broadcast 'shrub.skin.changed'
 			
 			service.removeCloak = ->
 				angular.element('.shrub-skin-cloak').each ->
