@@ -146,10 +146,13 @@ exports.fromShortName = (shortName, packageName) ->
 	packageName ?= firstPart
 	key = keyParts.join '_'
 	
+	# `TODO`: this really should be unified, making this unnecessary.
+	configKey = if global? then 'packageSettings' else 'packageConfig'
+	
 	middleware = exports.fromHook(
 		"#{firstPart}#{i8n.camelize key}Middleware"
 		
-		config.get "packageSettings:#{packageName}:#{
+		config.get "#{configKey}:#{packageName}:#{
 			i8n.camelize key, true
 		}Middleware"
 	)
