@@ -18,10 +18,7 @@ exports.pkgmanRegister = (registrar) ->
 			document.getElementsByTagName('head')[0].appendChild cloak
 			
 			promise = skin.change config.get 'packageConfig:shrub-skin:default'
-			promise.then ->
-				
-				angular.element('link.initial').remove()
-				skin.removeCloak()
+			promise.then -> angular.element('link.initial').remove()
 			
 	]
 	
@@ -129,7 +126,10 @@ exports.pkgmanRegister = (registrar) ->
 				
 					$q.when()
 					
-				finalPromise.then -> $rootScope.$broadcast 'shrub.skin.changed'
+				finalPromise.then ->
+					
+					service.removeCloak()
+					$rootScope.$broadcast 'shrub.skin.changed'
 			
 			service.removeCloak = ->
 				angular.element('.shrub-skin-cloak').each ->
