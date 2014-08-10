@@ -1,1 +1,1 @@
-rlwrap -C qmp socat STDIO UNIX:server/packages/repl/socket
+rlwrap -C qmp socat STDIO UNIX:packages/shrub-repl/socket
