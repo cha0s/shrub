@@ -11,8 +11,8 @@ exports.pkgmanRegister = (registrar) ->
 		path: 'e2e/user/login/:destination'
 		
 		controller: [
-			'$location', '$routeParams', 'shrub-socket', 'shrub-user'
-			($location, {destination}, socket, {fakeLogin}) ->
+			'$location', '$routeParams', 'shrub-rpc', 'shrub-socket', 'shrub-user'
+			($location, {destination}, rpc, socket, {fakeLogin}) ->
 				
 				fakeLogin('cha0s').then -> 
 					$location.path "/user/#{destination}"
@@ -30,10 +30,33 @@ exports.pkgmanRegister = (registrar) ->
 		
 		controller: [
 			'$location', '$scope', 'shrub-ui/notifications', 'shrub-user'
-			($location, $scope, {add}, {isLoggedIn, login}) ->
-				return $location.path '/' if isLoggedIn()
+			($location, $scope, notifications, user) ->
+				return $location.path '/' if user.isLoggedIn()
 					
 				$scope.userLogin =
+					
+					handlers: submit: [
+					
+						[
+							'scope'
+							(scope) ->
+							
+								user.login(
+									'local'
+									scope.username
+									scope.password
+								).then ->
+									
+									notifications.add(
+										class: 'alert-success'
+										text: 'Logged in successfully.'
+									)
+									
+									$location.path '/'
+						
+						]
+					
+					]
 					
 					username:
 						type: 'text'
@@ -48,22 +71,7 @@ exports.pkgmanRegister = (registrar) ->
 					submit:
 						type: 'submit'
 						label: "Sign in"
-						handler: ->
-					
-							login(
-								'local'
-								$scope.username
-								$scope.password
-	
-							).then ->
-								
-								add(
-									class: 'alert-success'
-									text: "Logged in successfully."
-								)
-								
-								$location.path '/'
-				
+						
 				$scope.$emit 'shrubFinishedRendering'
 				
 		]

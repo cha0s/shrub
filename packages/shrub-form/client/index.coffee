@@ -4,124 +4,97 @@
 # Define a directive for Angular forms, and a service to cache and look them
 # up later.
 
+_ = require 'underscore'
+i8n = require 'inflection'
+
+pkgman = require 'pkgman'
+
 exports.pkgmanRegister = (registrar) ->
 	
+	widgets_ = {}
+	
+	# ## Implements hook `appRun`
+	registrar.registerHook 'appRun', -> [
+		->
+
+			# Invoke hook `formWidgets`.
+			for formWidgets in pkgman.invokeFlat 'formWidgets'
+				formWidgets = [formWidgets] unless _.isArray formWidgets
+				
+				for formWidget in formWidgets
+					continue unless formWidget.injected?
+					widgets_[formWidget.type] = formWidget
+					
+			return
+					
+	]
+
 	# ## Implements hook `directive`
 	registrar.registerHook 'directive', -> [
 		'$compile', '$injector', '$q', 'shrub-form', 'shrub-require'
-		($compile, {invoke}, $q, {cache}, require) ->
+		($compile, $injector, $q, {cache}, require) ->
 			
 			link: (scope, element, attrs) ->
-				return unless (formSpec = scope[formKey = attrs.shrubForm])?
+				return unless (form = scope[key = attrs.shrubForm])?
 				
 				# Create the form element.
-				$form = angular.element(
-					'<form>'
-				).attr(
-					
-					# Set submit handler, if any
-					'data-ng-submit': "#{formKey}.submit.handler()"
-					
-					# Default method to POST.
-					method: attrs.method ? 'POST'
+				$form = angular.element '<form />'
+				$form.addClass key
 				
-				).addClass formKey
+				# Default method to POST.
+				$form.attr 'method', attrs.method ? 'POST'
+				$form.attr 'data-ng-submit', 'shrubFormSubmit($event)'
+				
+				locals = form: form, key: key
+				
+				scope.shrubFormSubmit = ($event) ->
+					
+					submitLocals = angular.copy locals
+					submitLocals.$event = $event
+					submitLocals.scope = scope
+					
+					promises = for handler in form.handlers.submit
+						$injector.invoke handler, null, submitLocals
+						
+					$q.all promises
 				
 				# Build the form fields.
-				# `TODO`: Form field types should be defined by hook.
-				for name, field of formSpec
-					continue unless field.type?
+				for name, field of form
+					continue unless (widget = widgets_[field.type])?
 					
-					$wrapper = angular.element '<div class="form-group">'
-					$wrapper.append $field = switch field.type
-						
-						when 'hidden'
-							
-							scope[name] = field.value
-							
-							angular.element(
-								'<input type="hidden">'
-							).attr(
-								name: name
-							)
-							
-						when 'email', 'password', 'text'
-							$wrapper.append(
-								angular.element('<label>').text field.label
-							) if field.label?
-							
-							$input = angular.element(
-								'<input type="' + field.type + '">'
-							).attr(
-								name: name
-								'data-ng-model': name
-							).addClass(
-								'form-control'
-							)
-							
-							if field.defaultValue?
-								$input.attr 'value', field.defaultValue
-							
-							$input.attr 'required', 'required' if field.required
-							
-							$input
-							
-						when 'submit'
-							
-							# Handle RPC calls.
-							# `TODO`: This should be middleware'd, `rpc` should be
-							# implementing it.
-							if field.rpc?
-								field.handler ?= ->
-								handler = field.handler
-								field.handler = ->
-									
-									i8n = require 'inflection'
-	
-									dottedFormKey = i8n.underscore formKey
-									dottedFormKey = i8n.dasherize dottedFormKey.toLowerCase()
-									dottedFormKey = dottedFormKey.replace '-', '.'
-									
-									fields = {}
-									for name, field of formSpec
-										continue if field.type is 'submit'
-										fields[name] = scope[name]
-									
-									invoke [
-										'shrub-rpc'
-										(rpc) ->
-											
-											rpc.call(
-												dottedFormKey
-												fields
-											).then(
-												(result) -> handler null, result
-												(error) -> handler error
-											)
-									]
-									
-							$input = angular.element(
-								'<input type="submit">'
-							)
-							$input.attr 'value', field.label ? "Submit"
-							$input.addClass 'btn btn-default'
-							
-					$form.append $wrapper
+					wrapper = angular.element '<div class="form-group" />'
+					
+					fieldLocals = angular.copy locals
+					fieldLocals.field = field
+					fieldLocals.name = name
+					fieldLocals.scope = scope
+					fieldLocals.wrapper = wrapper
+					
+					$field = $injector.invoke widget.injected, null, fieldLocals
+					
+					wrapper.append $field
+					
+					$form.append wrapper
 				
-				# Add hidden form key to allow server-side interception/processing.
-				$formKeyElement = angular.element '<input type="hidden"/>'
-				$formKeyElement.attr name: 'formKey', value: formKey
+				# Add hidden form key to allow server-side
+				# interception/processing.
+				$formKeyElement = angular.element '<input type="hidden" />'
+				$formKeyElement.attr name: 'formKey', value: key
 				$form.append $formKeyElement
+				
+				# Invoke hook `formAlter`.
+				pkgman.invokeFlat 'formAlter', form, $form				
+
+				# Invoke hook `formFormIdAlter`.
+				hookName = "form#{i8n.camelize i8n.underscore key}Alter"
+				pkgman.invokeFlat hookName, form, $form
 				
 				# Insert and compile the form element.
 				element.append $form
 				$compile($form) scope
 				
 				# Register the form in the system.
-				cache formKey, scope, $form
-				
-				# Guarantee a submit handler.
-				(formSpec.submit ?= {}).handler ?= -> $q.when true
+				cache key, scope, $form
 				
 	]
 	
@@ -147,4 +120,10 @@ exports.pkgmanRegister = (registrar) ->
 			service
 	
 	]
-	
+
+	registrar.recur [
+		'widget/hidden'
+		'widget/submit'
+		'widget/select'
+		'widget/text'
+	]

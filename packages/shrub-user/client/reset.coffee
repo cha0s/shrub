@@ -12,10 +12,23 @@ exports.pkgmanRegister = (registrar) ->
 		title: 'Reset your password'
 		
 		controller: [
-			'$location', '$routeParams', '$scope', 'shrub-ui/notifications'
-			($location, {token}, $scope, {add}) ->
+			'$location', '$scope', 'shrub-ui/notifications', 'shrub-rpc'
+			($location, $scope, notifications, rpc) ->
 				
 				$scope.userReset =
+					
+					handlers: submit: [
+						
+						rpc.formSubmitHandler (error, result) ->
+							return if error?
+							
+							notifications.add(
+								text: "You may now log in with your new password."
+							)
+							
+							$location.path '/user/login'
+
+					]
 					
 					password:
 						type: 'password'
@@ -29,13 +42,6 @@ exports.pkgmanRegister = (registrar) ->
 					submit:
 						type: 'submit'
 						label: "Reset password"
-						rpc: true
-						handler: (error, result) ->
-							return if error?
-							
-							add text: "You may now log in with your new password."
-							
-							$location.path '/user/login'
 	
 				$scope.$emit 'shrubFinishedRendering'
 				

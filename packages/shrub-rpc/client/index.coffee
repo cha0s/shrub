@@ -3,6 +3,8 @@
 # 
 # Define an Angular service to issue [remote procedure calls](http://en.wikipedia.org/wiki/Remote_procedure_call#Message_passing).
 
+i8n = require 'inflection'
+
 errors = require 'errors'
 
 exports.pkgmanRegister = (registrar) ->
@@ -44,6 +46,31 @@ exports.pkgmanRegister = (registrar) ->
 				) for injectable in pkgman.invokeFlat 'rpcCall'
 					
 				deferred.promise
+			
+			# Handle RPC calls.
+			service.formSubmitHandler = (handler) -> [
+				
+				'form', 'key', 'scope'
+				(form, key, scope) ->
+				
+					dottedFormKey = i8n.underscore key
+					dottedFormKey = i8n.dasherize dottedFormKey.toLowerCase()
+					dottedFormKey = dottedFormKey.replace '-', '.'
+					
+					fields = {}
+					for name, field of form
+						continue if field.type is 'submit'
+						fields[name] = scope[name]
+					
+					service.call(
+						dottedFormKey
+						fields
+					).then(
+						(result) -> handler null, result
+						(error) -> handler error
+					)
+			
+			]
 			
 			service
 			

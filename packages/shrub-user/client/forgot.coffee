@@ -12,11 +12,24 @@ exports.pkgmanRegister = (registrar) ->
 		title: 'Forgot password'
 		
 		controller: [
-			'$location', '$scope', 'shrub-ui/notifications', 'shrub-user'
-			($location, $scope, {add}, {isLoggedIn}) ->
-				return $location.path '/' if isLoggedIn()
-					
+			'$location', '$scope', 'shrub-ui/notifications', 'shrub-rpc', 'shrub-user'
+			($location, $scope, notifications, rpc, user) ->
+				return $location.path '/' if user.isLoggedIn()
+				
 				$scope.userForgot =
+					
+					handlers: submit: [
+						
+						rpc.formSubmitHandler (error, result) ->
+							return if error?
+							
+							notifications.add(
+								text: "A reset link will be emailed."
+							)
+							
+							$location.path '/'
+
+					]
 					
 					usernameOrEmail:
 						type: 'text'
@@ -26,15 +39,6 @@ exports.pkgmanRegister = (registrar) ->
 					submit:
 						type: 'submit'
 						label: "Email reset link"
-						rpc: true
-						handler: (error, result) ->
-							return if error?
-							
-							add(
-								text: "A reset link will be emailed."
-							)
-							
-							$location.path '/'
 							
 				$scope.$emit 'shrubFinishedRendering'
 		]

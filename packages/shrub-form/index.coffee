@@ -29,7 +29,7 @@ exports.pkgmanRegister = (registrar) ->
 				formService = null
 				
 				sandbox.inject [
-					'form'
+					'shrub-form'
 					(form) -> formService = form
 				]
 			
@@ -44,7 +44,7 @@ exports.pkgmanRegister = (registrar) ->
 					scope[named.name] = value
 					
 				# Submit the form into Angular.
-				scope.$apply => form.submit.handler().finally => next()
+				scope.$apply => scope.shrubFormSubmit().finally => next()
 	
 		]
 	

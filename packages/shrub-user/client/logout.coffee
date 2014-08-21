@@ -10,9 +10,9 @@ exports.pkgmanRegister = (registrar) ->
 		
 		controller: [
 			'$location', 'shrub-user'
-			($location, {isLoggedIn, logout}) ->
-				return $location.path '/' unless isLoggedIn()
+			($location, user) ->
+				return $location.path '/' unless user.isLoggedIn()
 				
-				logout().then -> $location.path '/'
+				user.logout().then -> $location.path '/'
 	
 		]
