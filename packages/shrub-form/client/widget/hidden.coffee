@@ -1,20 +1,35 @@
 
 exports.pkgmanRegister = (registrar) ->
 	
+	# ## Implements hook `directive`
+	registrar.registerHook 'directive', -> [
+		->
+			
+			scope: field: '=?'
+			
+			template: """
+
+<input
+	name="{{field.name}}"
+	type="hidden"
+	value="{{field.value}}"
+>
+
+"""
+				
+	]
+
+	assignToElement = (element, value) -> element.attr 'value', value
+	
 	# ## Implements hook `formWidgets`
 	registrar.registerHook 'formWidgets', ->
 		
 		widgets = []
 		
 		widgets.push
-
+			
 			type: 'hidden'
-			injected: [
-				'name', 'field', 'scope'
-				(name, field, scope) ->
-				
-					scope[name] = field.value
-					angular.element('<input type="hidden">').attr name: name
-			]
-				
+			assignToElement: assignToElement
+			directive: 'shrub-form-widget-hidden'
+			
 		widgets

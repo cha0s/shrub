@@ -1,4 +1,6 @@
 
+_ = require 'underscore'
+
 exports.pkgmanRegister = (registrar) ->
 	
 	# ## Implements hook `directive`
@@ -7,23 +9,22 @@ exports.pkgmanRegister = (registrar) ->
 			
 			scope: field: '=?'
 			
-			link: (scope, element) ->
-				
-				{field} = scope
-				
-				field.value ?= 'Submit'
-				
 			template: """
 
-<div class="form-group">
+<div class="checkbox">
 
-	<input
-		class="btn btn-default"
-		name="{{field.name}}"
-		type="submit"
+	<label>
+		
+		<input
+			name="{{field.name}}"
+			type="checkbox"
+		
+			data-ng-model="field.value"
+		>
+		
+		{{field.label}}
 	
-		data-ng-value="field.value"
-	>
+	</label>
 
 </div>
 
@@ -31,8 +32,8 @@ exports.pkgmanRegister = (registrar) ->
 				
 	]
 	
-	assignToElement = (element, value) -> element.val value
-
+	assignToElement = (element, value) -> element.prop 'checked', 'on' is value
+		
 	# ## Implements hook `formWidgets`
 	registrar.registerHook 'formWidgets', ->
 		
@@ -40,8 +41,8 @@ exports.pkgmanRegister = (registrar) ->
 		
 		widgets.push
 			
-			type: 'submit'
+			type: 'checkbox'
 			assignToElement: assignToElement
-			directive: 'shrub-form-widget-submit'
+			directive: 'shrub-form-widget-checkbox'
 
 		widgets

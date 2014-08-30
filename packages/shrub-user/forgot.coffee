@@ -17,7 +17,7 @@ exports.pkgmanRegister = (registrar) ->
 		
 		limiter: threshold: threshold(1).every(30).seconds()
 		
-		route: 'user.forgot'
+		route: 'shrub.user.forgot'
 		
 		receiver: (req, fn) ->
 			

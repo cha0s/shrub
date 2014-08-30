@@ -23,7 +23,7 @@ exports.pkgmanRegister = (registrar) ->
 	# hold their sandbox.
 	registrar.registerHook 'endpoint', ->
 		
-		route: 'hangup'
+		route: 'shrub.hangup'
 		receiver: (req, fn) ->
 			
 			id = req.session?.id

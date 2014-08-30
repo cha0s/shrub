@@ -1,27 +1,48 @@
 
 exports.pkgmanRegister = (registrar) ->
 	
-	injectedText = [
-		'name', 'field', 'wrapper'
-		(name, field, wrapper) ->
+	# ## Implements hook `directive`
+	registrar.registerHook 'directive', -> [
+		->
 			
-			wrapper.append(
-				angular.element('<label>').text field.label
-			) if field.label?
+			scope: field: '=?'
 			
-			$input = angular.element '<input type="' + field.type + '">'
-			
-			$input.attr name: name, 'data-ng-model': name
-			$input.attr 'required', 'required' if field.required
+			link: (scope, element) ->
+				
+				{field} = scope
+				
+				field.minLength ?= 0
+				field.maxLength ?= Infinity
+				field.pattern ?= /.*/
+				
+			template: """
 
-			$input.addClass 'form-control'
-			
-			if field.defaultValue?
-				$input.attr 'value', field.defaultValue
-			
-			$input
-			
+<div class="form-group">
+
+	<label
+		data-ng-bind="field.label"
+	></label>
+	
+	<input
+		class="form-control"
+		name="{{field.name}}"
+		type="{{field.type}}"
+		
+		data-ng-model="field.value"
+		data-ng-required="field.required"
+		data-ng-minlength="{{field.minlength}}"
+		data-ng-maxlength="{{field.maxlength}}"
+		data-ng-pattern="field.pattern"
+		data-ng-trim="{{field.trim}}"
+	>
+
+</div>
+
+"""
+				
 	]
+	
+	assignToElement = (element, value) -> element.val value
 
 	# ## Implements hook `formWidgets`
 	registrar.registerHook 'formWidgets', ->
@@ -31,16 +52,19 @@ exports.pkgmanRegister = (registrar) ->
 		widgets.push
 			
 			type: 'email'
-			injected: injectedText
+			assignToElement: assignToElement
+			directive: 'shrub-form-widget-text'
 			
 		widgets.push
 			
 			type: 'password'
-			injected: injectedText
+			assignToElement: assignToElement
+			directive: 'shrub-form-widget-text'
 			
 		widgets.push
 			
 			type: 'text'
-			injected: injectedText
+			assignToElement: assignToElement
+			directive: 'shrub-form-widget-text'
 			
 		widgets

@@ -22,7 +22,7 @@ exports.pkgmanRegister = (registrar) ->
 			message: "You are logging in too much."
 			threshold: threshold(3).every(30).seconds()
 		
-		route: 'user.login'
+		route: 'shrub.user.login'
 		
 		receiver: (req, fn) ->
 			

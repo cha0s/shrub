@@ -11,7 +11,7 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `endpoint`
 	registrar.registerHook 'endpoint', ->
 		
-		route: 'user.logout'
+		route: 'shrub.user.logout'
 		
 		receiver: (req, fn) ->
 		

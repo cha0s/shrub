@@ -15,9 +15,11 @@ exports.pkgmanRegister = (registrar) ->
 			'$location', '$scope', 'shrub-ui/notifications', 'shrub-rpc'
 			($location, $scope, notifications, rpc) ->
 				
-				$scope.userReset =
+				$scope.form =
 					
-					handlers: submit: [
+					key: 'shrub-user-reset'
+					
+					submits: [
 						
 						rpc.formSubmitHandler (error, result) ->
 							return if error?
@@ -30,18 +32,20 @@ exports.pkgmanRegister = (registrar) ->
 
 					]
 					
-					password:
-						type: 'password'
-						label: "New password"
-						required: true
+					fields:
 					
-					token:
-						type: 'hidden'
-						value: token
-					
-					submit:
-						type: 'submit'
-						label: "Reset password"
+						password:
+							type: 'password'
+							label: "New password"
+							required: true
+						
+						token:
+							type: 'hidden'
+							value: token
+						
+						submit:
+							type: 'submit'
+							label: "Reset password"
 	
 				$scope.$emit 'shrubFinishedRendering'
 				
@@ -49,6 +53,9 @@ exports.pkgmanRegister = (registrar) ->
 		
 		template: """
 	
-<div data-shrub-form="userReset"></div>
+<div
+	data-shrub-form
+	data-form="form"
+></div>
 
 """

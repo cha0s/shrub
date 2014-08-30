@@ -147,7 +147,7 @@ exports.pkgmanRegister = (registrar) ->
 				if req.socket?
 					
 					# Tell client to log out.
-					req.socket.emit 'user.logout'
+					req.socket.emit 'shrub.user.logout'
 					
 					# Leave the user channel.
 					req.socket.leave req.user.name

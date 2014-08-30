@@ -18,7 +18,7 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `service`		
 	registrar.registerHook 'service', -> [
 		'shrub-rpc', 'shrub-schema', 'shrub-socket'
-		({call}, {models: User: User}, socket) ->
+		(rpc, {models: User: User}, socket) ->
 			
 			service = {}
 			
@@ -26,7 +26,7 @@ exports.pkgmanRegister = (registrar) ->
 			
 			# Log a user out if we get a socket call.
 			logout = -> user.fromObject (new User).toObject()
-			socket.on 'user.logout', logout
+			socket.on 'shrub.user.logout', logout
 			
 			# ## user.isLoggedIn
 			# 
@@ -41,8 +41,8 @@ exports.pkgmanRegister = (registrar) ->
 			# strategy. Change that.
 			service.login = (method, username, password) ->
 				
-				call(
-					'user.login'
+				rpc.call(
+					'shrub.user.login'
 					method: method
 					username: username
 					password: password
@@ -56,8 +56,8 @@ exports.pkgmanRegister = (registrar) ->
 			# *Log out.*
 			service.logout = ->
 				
-				call(
-					'user.logout'
+				rpc.call(
+					'shrub.user.logout'
 	
 				).then logout
 			
@@ -81,7 +81,7 @@ exports.pkgmanRegister = (registrar) ->
 			# 
 			# `TODO`: This will change when login method generalization happens.
 			$delegate.fakeLogin = (username, password = 'password', id = 1) ->
-				socket.catchEmit 'rpc://user.login', (data, fn) ->
+				socket.catchEmit 'rpc://shrub.user.login', (data, fn) ->
 					fn result: id: id, name: username
 					
 				$delegate.login 'local', username, password

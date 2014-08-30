@@ -13,32 +13,34 @@ exports.pkgmanRegister = (registrar) ->
 				
 				{field} = scope
 				
+				element.find('input').attr 'data-ng-model', field.value
+			
 			template: """
 
-<div class="form-group">
+<div class="radio">
 
-	<label
-		data-ng-bind="field.label"
-	></label>
-	
-	<select
-		class="form-control"
-		name="{{field.name}}"
+	<label>
 		
-		data-ng-model="field.value"
-		data-ng-required="field.required"
-		data-ng-options="{{field.options}}"
-	></select>
+		<input
+			name="{{field.name}}"
+			type="radio"
+		
+			data-ng-value="field.selectedValue"
+		>
+		
+		{{field.label}}
+	
+	</label>
 
 </div>
 
 """
 				
 	]
-
+	
 	assignToElement = (element, value) ->
 		
-		element.find("option[value=\"#{value}\"]").prop 'selected', true
+		element.prop 'checked', true
 
 	# ## Implements hook `formWidgets`
 	registrar.registerHook 'formWidgets', ->
@@ -47,8 +49,8 @@ exports.pkgmanRegister = (registrar) ->
 		
 		widgets.push
 			
-			type: 'select'
+			type: 'radio'
 			assignToElement: assignToElement
-			directive: 'shrub-form-widget-select'
-			
+			directive: 'shrub-form-widget-radio'
+
 		widgets

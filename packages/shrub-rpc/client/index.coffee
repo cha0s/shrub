@@ -48,30 +48,24 @@ exports.pkgmanRegister = (registrar) ->
 				deferred.promise
 			
 			# Handle RPC calls.
-			service.formSubmitHandler = (handler) -> [
+			service.formSubmitHandler = (route, handler) ->
 				
-				'form', 'key', 'scope'
-				(form, key, scope) ->
+				unless handler?
+					handler = route
+					route = null
 				
-					dottedFormKey = i8n.underscore key
-					dottedFormKey = i8n.dasherize dottedFormKey.toLowerCase()
-					dottedFormKey = dottedFormKey.replace '-', '.'
+				(values, form) ->
 					
-					fields = {}
-					for name, field of form
-						continue if field.type is 'submit'
-						fields[name] = scope[name]
+					route ?= form.key
+					route = i8n.underscore route
+					route = i8n.dasherize route.toLowerCase()
+					route = route.replace /-/g, '.'
 					
-					service.call(
-						dottedFormKey
-						fields
-					).then(
+					service.call(route, values).then(
 						(result) -> handler null, result
 						(error) -> handler error
 					)
-			
-			]
-			
+
 			service
 			
 	]

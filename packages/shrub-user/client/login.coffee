@@ -32,45 +32,45 @@ exports.pkgmanRegister = (registrar) ->
 			'$location', '$scope', 'shrub-ui/notifications', 'shrub-user'
 			($location, $scope, notifications, user) ->
 				return $location.path '/' if user.isLoggedIn()
+				
+				$scope.form =
 					
-				$scope.userLogin =
+					key: 'shrub-user-login'
 					
-					handlers: submit: [
+					submits: [
 					
-						[
-							'scope'
-							(scope) ->
+						(values) ->
 							
-								user.login(
-									'local'
-									scope.username
-									scope.password
-								).then ->
-									
-									notifications.add(
-										class: 'alert-success'
-										text: 'Logged in successfully.'
-									)
-									
-									$location.path '/'
-						
-						]
-					
+							user.login(
+								'local'
+								values.username
+								values.password
+							).then ->
+								
+								notifications.add(
+									class: 'alert-success'
+									text: 'Logged in successfully.'
+								)
+								
+								$location.path '/'
+								
 					]
+
+					fields:
 					
-					username:
-						type: 'text'
-						label: "Username"
-						required: true
-					
-					password:
-						type: 'password'
-						label: "Password"
-						required: true
-					
-					submit:
-						type: 'submit'
-						label: "Sign in"
+						username:
+							type: 'text'
+							label: "Username"
+							required: true
+						
+						password:
+							type: 'password'
+							label: "Password"
+							required: true
+						
+						submit:
+							type: 'submit'
+							value: "Sign in"
 						
 				$scope.$emit 'shrubFinishedRendering'
 				
@@ -78,7 +78,10 @@ exports.pkgmanRegister = (registrar) ->
 		
 		template: """
 	
-<div data-shrub-form="userLogin"></div>
+<div
+	data-shrub-form
+	data-form="form"
+></div>
 
 <a class="forgot" href="/user/forgot">Forgot your password?</a>
 	

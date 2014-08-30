@@ -33,18 +33,28 @@ exports.pkgmanRegister = (registrar) ->
 					(form) -> formService = form
 				]
 			
-				return next() unless (form = formService.forms[body.formKey])?
+				return next() unless (formCache = formService.forms[body.formKey])?
 					
-				{element, scope} = form
+				{element, scope} = formCache
+				widgets = formService.widgets
 				
-				# Assign the scope values from the POST body. (Is this safe?)
-				form = scope[body.formKey]
-				for named in element.find '[name]'
-					continue unless (value = body[named.name])?
-					scope[named.name] = value
+				form = scope.form
+				for k, v of body
+					continue if 'formKey' is k
+					
+					element = element.find "[name='#{k}']"
+					
+					formService.widgets[form.fields[k].type].assignToElement(
+						element
+						v
+					)
+					
+					element.trigger 'change'
 					
 				# Submit the form into Angular.
-				scope.$apply => scope.shrubFormSubmit().finally => next()
+				scope.$digest()
+				scope.$apply ->
+					scope.$shrubSubmit[body.formKey]().finally => next()
 	
 		]
 	

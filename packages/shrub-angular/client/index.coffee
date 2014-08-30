@@ -8,9 +8,10 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `appRun`
 	registrar.registerHook 'appRun', -> [
 		'$window', 'shrub-rpc'
-		($window, {call}) ->
+		($window, rpc) ->
 		
 			# Hang up the socket unless it's the local (Node.js) client.
-			call 'hangup' unless $window.navigator.userAgent.match /^Node\.js .*$/
+			unless $window.navigator.userAgent.match /^Node\.js .*$/
+				rpc.call 'shrub.hangup'
 	
 	]

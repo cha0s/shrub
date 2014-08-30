@@ -18,7 +18,7 @@ exports.pkgmanRegister = (registrar) ->
 			message: "You are trying to register too much."
 			threshold: threshold(5).every(2).minutes()
 		
-		route: 'user.register'
+		route: 'shrub.user.register'
 		
 		receiver: (req, fn) ->
 			

@@ -16,9 +16,11 @@ exports.pkgmanRegister = (registrar) ->
 			($location, $scope, notifications, rpc, user) ->
 				return $location.path '/' if user.isLoggedIn()
 					
-				$scope.userRegister =
+				$scope.form =
 					
-					handlers: submit: [
+					key: 'shrub-user-register'
+					
+					submits: [
 						
 						rpc.formSubmitHandler (error, result) ->
 							return if error?
@@ -31,19 +33,21 @@ exports.pkgmanRegister = (registrar) ->
 
 					]
 					
-					username:
-						type: 'text'
-						label: "Username"
-						required: true
+					fields:
 					
-					email:
-						type: 'email'
-						label: "Email"
-						required: true
-					
-					submit:
-						type: 'submit'
-						label: "Register"
+						username:
+							type: 'text'
+							label: "Username"
+							required: true
+						
+						email:
+							type: 'email'
+							label: "Email"
+							required: true
+						
+						submit:
+							type: 'submit'
+							label: "Register"
 						
 				$scope.$emit 'shrubFinishedRendering'
 				
@@ -51,6 +55,9 @@ exports.pkgmanRegister = (registrar) ->
 		
 		template: """
 	
-<div data-shrub-form="userRegister"></div>
+<div
+	data-shrub-form
+	data-form="form"
+></div>
 
 """

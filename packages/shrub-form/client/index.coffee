@@ -11,31 +11,26 @@ pkgman = require 'pkgman'
 
 exports.pkgmanRegister = (registrar) ->
 	
-	widgets_ = {}
-	
-	# ## Implements hook `appRun`
-	registrar.registerHook 'appRun', -> [
-		->
-
-			# Invoke hook `formWidgets`.
-			for formWidgets in pkgman.invokeFlat 'formWidgets'
-				formWidgets = [formWidgets] unless _.isArray formWidgets
-				
-				for formWidget in formWidgets
-					continue unless formWidget.injected?
-					widgets_[formWidget.type] = formWidget
-					
-			return
-					
-	]
-
 	# ## Implements hook `directive`
 	registrar.registerHook 'directive', -> [
-		'$compile', '$injector', '$q', 'shrub-form', 'shrub-require'
-		($compile, $injector, $q, {cache}, require) ->
+		'$compile', '$injector', '$log', '$q', 'shrub-form', 'shrub-require'
+		($compile, $injector, $log, $q, formService, require) ->
 			
 			link: (scope, element, attrs) ->
-				return unless (form = scope[key = attrs.shrubForm])?
+				return unless (form = scope[attrs.form])?
+				
+				key = form.key ? attrs.form
+				
+				(scope['$shrubSubmit'] ?= {})[key] = ($event) ->
+				
+					values = {}
+					for name, field of form.fields
+						values[field.name] = field.value
+					
+					promises = for submit in form.submits
+						submit values, form, $event
+					
+					$q.all promises
 				
 				# Create the form element.
 				$form = angular.element '<form />'
@@ -43,39 +38,31 @@ exports.pkgmanRegister = (registrar) ->
 				
 				# Default method to POST.
 				$form.attr 'method', attrs.method ? 'POST'
-				$form.attr 'data-ng-submit', 'shrubFormSubmit($event)'
-				
-				locals = form: form, key: key
-				
-				scope.shrubFormSubmit = ($event) ->
-					
-					submitLocals = angular.copy locals
-					submitLocals.$event = $event
-					submitLocals.scope = scope
-					
-					promises = for handler in form.handlers.submit
-						$injector.invoke handler, null, submitLocals
-						
-					$q.all promises
+				$form.attr 'data-ng-submit', "$shrubSubmit['#{key}']($event)"
 				
 				# Build the form fields.
-				for name, field of form
-					continue unless (widget = widgets_[field.type])?
+				for name, field of form.fields
 					
-					wrapper = angular.element '<div class="form-group" />'
+					field.name ?= name
 					
-					fieldLocals = angular.copy locals
-					fieldLocals.field = field
-					fieldLocals.name = name
-					fieldLocals.scope = scope
-					fieldLocals.wrapper = wrapper
+					unless (widget = formService.widgets[field.type])?
+						
+						$log.warn "Form `#{
+							key
+						}` contains non-existent field type `#{
+							field.type
+						}`!"
+						continue
 					
-					$field = $injector.invoke widget.injected, null, fieldLocals
-					
-					wrapper.append $field
-					
-					$form.append wrapper
-				
+					$form.append """
+
+<div
+	data-#{widget.directive}
+	data-field="#{attrs.form}.fields['#{name}']"
+></div>
+
+"""
+
 				# Add hidden form key to allow server-side
 				# interception/processing.
 				$formKeyElement = angular.element '<input type="hidden" />'
@@ -94,7 +81,7 @@ exports.pkgmanRegister = (registrar) ->
 				$compile($form) scope
 				
 				# Register the form in the system.
-				cache key, scope, $form
+				formService.cache key, scope, $form
 				
 	]
 	
@@ -103,7 +90,7 @@ exports.pkgmanRegister = (registrar) ->
 		
 		->
 			
-			service = forms: {}
+			service = forms: {}, widgets: {}
 			
 			# ## form.cache
 			# 
@@ -117,13 +104,26 @@ exports.pkgmanRegister = (registrar) ->
 			service.cache = (key, scope, element) ->
 				service.forms[key] = scope: scope, element: element
 						
+			# Invoke hook `formWidgets`.
+			for formWidgets in pkgman.invokeFlat 'formWidgets'
+				formWidgets = [formWidgets] unless _.isArray formWidgets
+				
+				for formWidget in formWidgets
+					continue unless formWidget.directive?
+					service.widgets[formWidget.type] = formWidget
+					
 			service
 	
 	]
 
 	registrar.recur [
+		'widget/checkbox'
+		'widget/checkboxes'
 		'widget/hidden'
+		'widget/radio'
+		'widget/radios'
 		'widget/submit'
 		'widget/select'
 		'widget/text'
+		'widget/toggle'
 	]

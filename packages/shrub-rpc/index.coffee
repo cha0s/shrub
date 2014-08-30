@@ -5,6 +5,7 @@
 # [RPC](http://en.wikipedia.org/wiki/Remote_procedure_call#Message_passing)
 
 _ = require 'underscore'
+debug = require('debug') 'shrub:rpc'
 Promise = require 'bluebird'
 
 config = require 'config'
@@ -64,6 +65,7 @@ exports.pkgmanRegister = (registrar) ->
 				
 		# Invoke hook `endpoint`.
 		# Gather all endpoints.
+		debug '- Registering RPC endpoints...'
 		for path, endpoint of pkgman.invoke 'endpoint'
 			
 			endpoint = receiver: endpoint if _.isFunction endpoint
@@ -71,6 +73,8 @@ exports.pkgmanRegister = (registrar) ->
 			# Default the RPC route to the package path, replacing slashes with
 			# dots.
 			endpoint.route ?= endpoint.route ? path.replace /\//g, '.'
+			debug "- - rpc://#{endpoint.route}"
+			
 			endpoint.validators ?= []
 			
 			endpoints[endpoint.route] = endpoint
