@@ -16,9 +16,6 @@ logging = require 'logging'
 
 {jsdom} = require 'jsdom'
 
-# We'll keep our own logs.
-logger = logging.create 'logs/sandbox.log'
-
 # } Hax: Fix document.domain since jsdom has a stub here.
 level2Html = require 'jsdom/lib/jsdom/level2/html'
 Object.defineProperties(
@@ -87,8 +84,7 @@ exports.Sandbox = class Sandbox
 					else
 						arg
 				
-				# } Let our logger log them.
-				logger[level] args... 
+				console[level] args... 
 				
 		# } Hack in WebSocket.
 		window.WebSocket = WebSocket
