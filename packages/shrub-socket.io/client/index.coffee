@@ -28,6 +28,8 @@ module.exports = class SocketIoSocket extends Socket
 		
 		return	
 	
+	disconnect: -> @_socket.disconnect()
+	
 	emit: (eventName, data, fn) ->
 		return @_initializedQueue.push arguments unless @_isConnected
 	
