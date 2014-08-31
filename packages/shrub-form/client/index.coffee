@@ -125,5 +125,4 @@ exports.pkgmanRegister = (registrar) ->
 		'widget/submit'
 		'widget/select'
 		'widget/text'
-		'widget/toggle'
 	]
