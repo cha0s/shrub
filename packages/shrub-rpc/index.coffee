@@ -21,6 +21,8 @@ logger = logging.create 'logs/rpc.log'
 {Middleware} = require 'middleware'
 {TransmittableError} = errors
 
+clientModule = require './client'
+
 # RPC endpoint information.
 endpoints = {}
 
@@ -72,7 +74,7 @@ exports.pkgmanRegister = (registrar) ->
 			
 			# Default the RPC route to the package path, replacing slashes with
 			# dots.
-			endpoint.route ?= endpoint.route ? path.replace /\//g, '.'
+			endpoint.route ?= clientModule.normalizeRouteName path
 			debug "- - rpc://#{endpoint.route}"
 			
 			endpoint.validators ?= []

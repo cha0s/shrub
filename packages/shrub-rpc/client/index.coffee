@@ -56,12 +56,10 @@ exports.pkgmanRegister = (registrar) ->
 				
 				(values, form) ->
 					
-					route ?= form.key
-					route = i8n.underscore route
-					route = i8n.dasherize route.toLowerCase()
-					route = route.replace /-/g, '.'
-					
-					service.call(route, values).then(
+					service.call(
+						exports.normalizeRouteName route ? form.key
+						values
+					).then(
 						(result) -> handler null, result
 						(error) -> handler error
 					)
@@ -69,3 +67,10 @@ exports.pkgmanRegister = (registrar) ->
 			service
 			
 	]
+	
+exports.normalizeRouteName = (name) ->
+
+	name = i8n.underscore name
+	name = i8n.dasherize name.toLowerCase()
+	name = i8n.underscore name
+	name.replace /[-\/]/g, '.'
