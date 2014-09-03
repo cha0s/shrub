@@ -9,6 +9,7 @@ Promise = require 'bluebird'
 
 audit = require 'audit'
 config = require 'config'
+errors = require 'errors'
 logging = require 'logging'
 
 {AuthorizationFailure} = require 'shrub-socket/manager'
@@ -26,6 +27,44 @@ exports.pkgmanRegister = (registrar) ->
 		
 			endpoint.villianyScore ?= 20
 	
+	# ## Implements hook `limiterApplicationMiddleware`
+	registrar.registerHook 'limiterApplicationMiddleware', ->
+		
+		label: 'Report villiany upon crossing limiter threshold'
+		middleware: [
+			
+			(req, res, next) ->
+				
+				{endpoint} = req
+				{instance, message, villianyScore} = endpoint.limiter
+				
+				# Report villiany for crossing the limiter threshold.
+				promise = if req.reportVilliany?
+				
+					req.reportVilliany(
+						villianyScore ? 20
+						"rpc://#{req.route}:limiter"
+					)
+					
+				else
+					
+					Promise.resolve false
+				
+				promise.then (isVillian) ->
+					return if isVillian
+					
+					# Build a nice error message for the client, so they
+					# hopefully will stop doing that.
+					instance.ttl(req.keys).then (ttl) ->
+					
+						next errors.instantiate(
+							'limiterThreshold'
+							message
+							moment().add('seconds', ttl).fromNow()
+						)
+					
+		]
+
 	# ## Implements hook `models`
 	registrar.registerHook 'models', (schema) ->
 		
