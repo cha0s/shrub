@@ -9,6 +9,8 @@ fs = require 'fs'
 
 pkgman = require 'pkgman'
 
+{Config} = require 'client/modules/config'
+
 # ### get
 # 
 # *Get a configuration value by key.*
@@ -39,16 +41,16 @@ exports.load = ->
 	
 	debug "Packages registered."
 
-	packageSettings = {}
+	packageSettings = new Config()
 	for key, value of pkgman.invoke 'packageSettings'
-		packageSettings[key.replace /\//g, ':'] = value
-	
+		packageSettings.set key.replace(/\//g, ':'), value
+		
 	nconf.defaults
 		
 		# Invoke hook `packageSettings`.
 		# Invoked when the server application is loading configuration. Allows
 		# packages to define their own default settings.
-		packageSettings: packageSettings
+		packageSettings: packageSettings.toJSON()
 		
 		path: "#{__dirname}/.."
 
