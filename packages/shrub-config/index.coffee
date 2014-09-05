@@ -66,7 +66,7 @@ exports.pkgmanRegister = (registrar) ->
 							config_.set "packageConfig:#{
 								path.replace /\//g, ':'
 							}:#{
-								key
+								key.replace /\//g, ':'
 							}", value
 					
 					# } Format the configuration to look nice.

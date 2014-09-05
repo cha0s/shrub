@@ -39,12 +39,16 @@ exports.load = ->
 	
 	debug "Packages registered."
 
+	packageSettings = {}
+	for key, value of pkgman.invoke 'packageSettings'
+		packageSettings[key.replace /\//g, ':'] = value
+	
 	nconf.defaults
 		
 		# Invoke hook `packageSettings`.
 		# Invoked when the server application is loading configuration. Allows
 		# packages to define their own default settings.
-		packageSettings: pkgman.invoke 'packageSettings'
+		packageSettings: packageSettings
 		
 		path: "#{__dirname}/.."
 
