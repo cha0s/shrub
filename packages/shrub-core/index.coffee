@@ -40,7 +40,7 @@ exports.pkgmanRegister = (registrar) ->
 				
 				req.normalizedIp = resolvedAddress(
 					config.get 'packageSettings:shrub-core:trustedProxies'
-					req.socket.client.conn.remoteAddress
+					req.connection.remoteAddress
 					req.headers['x-forwarded-for']
 				)
 					
@@ -79,7 +79,7 @@ exports.pkgmanRegister = (registrar) ->
 				
 				req.normalizedIp = resolvedAddress(
 					config.get 'packageSettings:shrub-core:trustedProxies'
-					req.socket.remoteAddress
+					req.socket.client.conn.remoteAddress
 					req.headers['x-forwarded-for']
 				)
 					
