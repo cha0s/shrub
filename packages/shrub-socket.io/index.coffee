@@ -75,15 +75,18 @@ module.exports = class SocketIoManager extends SocketManager
 		# Connection (post-authorization).
 		@io.on 'connection', (socket) =>
 			
+			# Run the disconnection middleware on socket close.
+			oncloseProxy = socket.onclose
+			socket.onclose = =>
+				@_disconnectionMiddleware.dispatch socket.request, null, (error) ->
+					return logger.error errors.stack error if error?
+					
+				oncloseProxy.call socket
+			
 			# Join a '$global' channel.
 			socket.join '$global', (error) =>
 				return logger.error errors.stack error if error?
 			
-				# Run the disconnection middleware on disconnect.
-				socket.on 'disconnect', =>
-					@_disconnectionMiddleware.dispatch socket.request, null, (error) ->
-						return logger.error errors.stack error if error?
-				
 				# Dispatch the connection middleware.
 				@_connectionMiddleware.dispatch socket.request, null, (error) =>
 					return logger.error errors.stack error if error?
