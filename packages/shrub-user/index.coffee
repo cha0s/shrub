@@ -23,8 +23,12 @@ exports.pkgmanRegister = (registrar) ->
 	registrar.registerHook 'endpointFinished', (routeReq, result, req) ->
 		return unless routeReq.user.id?
 		
+		# Touch and save the session after every RPC call finishes.
+		deferred = Promise.defer()
+		routeReq.user.touch().save deferred.callback
+		
 		# Propagate changes back up to the original request.
-		req.user = routeReq.user
+		deferred.promise.then -> req.user = routeReq.user
 	
 	# ## Implements hook `fingerprint`
 	registrar.registerHook 'fingerprint', (req) ->

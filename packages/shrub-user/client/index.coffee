@@ -99,6 +99,16 @@ exports.models = (schema) ->
 	# Define the User model.
 	User = schema.define 'User',
 		
+		# When this user was created.
+		created:
+			type: Date
+			default: -> new Date()
+		
+		# Last time this user was accessed.
+		lastAccessed:
+			type: Date
+			default: -> new Date()
+		
 		# Email address.
 		email:
 			type: String
@@ -130,6 +140,11 @@ exports.models = (schema) ->
 		salt:
 			type: String
 			length: 128
+	
+	# Update a user's last accessed time. Return the user for chaining.
+	User::touch = ->
+		@lastAccessed = new Date()
+		this
 			
 	# Temporary... secure by default.
 	# `TODO`: Access control structure.
