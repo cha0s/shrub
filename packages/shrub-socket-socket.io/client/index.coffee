@@ -8,7 +8,9 @@ debug = require('debug') 'shrub:socket.io'
 
 Socket = require 'shrub-socket/socket'
 
-module.exports = class SocketIoSocket extends Socket
+exports.Manager = class SocketIoSocket extends Socket
+
+	@$inject = ['$rootScope']
 
 	constructor: ($rootScope) ->
 		super
@@ -65,6 +67,3 @@ module.exports = class SocketIoSocket extends Socket
 			
 			onArguments = arguments
 			@_$rootScope.$apply => fn.apply @_socket, onArguments
-	
-SocketIoSocket.$inject = ['$rootScope']
-			

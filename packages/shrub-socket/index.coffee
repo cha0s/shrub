@@ -13,7 +13,7 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `config`
 	registrar.registerHook 'config', (http) ->
 		
-		module = if (config.get 'E2E')?
+		socketModule = if (config.get 'E2E')?
 			
 			'shrub-socket/dummy'
 			
@@ -21,12 +21,12 @@ exports.pkgmanRegister = (registrar) ->
 			
 			config.get 'packageSettings:shrub-socket:manager:module'
 		
-		manager: module: module
+		manager: module: socketModule
 		
 	# ## Implements hook `httpInitializing`
 	registrar.registerHook 'httpInitializing', (http) ->
 		
-		Manager = require config.get 'packageSettings:shrub-socket:manager:module'
+		{Manager} = require config.get 'packageSettings:shrub-socket:manager:module'
 		
 		# Spin up the socket server, and have it listen on the HTTP server.
 		socketManager = new Manager()
@@ -57,7 +57,7 @@ exports.pkgmanRegister = (registrar) ->
 		manager:
 		
 			# Module implementing the socket manager.
-			module: 'shrub-socket.io'
+			module: 'shrub-socket-socket.io'
 	
 	# ## Implements hook `replContext`
 	registrar.registerHook 'replContext', (context) ->

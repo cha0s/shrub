@@ -7,7 +7,7 @@ config = require 'config'
 
 Socket = require 'shrub-socket/socket'
 
-module.exports = class DummySocket extends Socket
+exports.Manager = class DummySocket extends Socket
 
 	constructor: ($q, $rootScope, $timeout) ->
 		super

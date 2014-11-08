@@ -59,7 +59,7 @@ exports.pkgmanRegister = (registrar) ->
 		scriptMiddleware: [
 			'shrub-assets/jquery'
 			'shrub-assets/bootstrap'
-			'shrub-socket.io'
+			'shrub-socket-socket.io'
 			'shrub-assets/angular'
 			'shrub-assets/ui-bootstrap'
 			'shrub-assets'

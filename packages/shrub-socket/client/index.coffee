@@ -7,8 +7,7 @@ config = require 'config'
 
 exports.pkgmanRegister = (registrar) ->
 	
+	{Manager} = require config.get 'packageConfig:shrub-socket:manager:module'
+	
 	# ## Implements hook `service`
-	registrar.registerHook(
-		'service'
-		-> require config.get 'packageConfig:shrub-socket:manager:module'
-	)
+	registrar.registerHook 'service', -> Manager

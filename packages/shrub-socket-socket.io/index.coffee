@@ -15,11 +15,33 @@ logger = new logging.create 'logs/socket.io.log'
 SocketManager = require '../shrub-socket/manager'
 {AuthorizationFailure} = SocketManager
 
+exports.pkgmanRegister = (registrar) ->
+
+	# ## Implements hook `assetScriptMiddleware`
+	registrar.registerHook 'assetScriptMiddleware', ->
+		
+		label: 'Socket.IO'
+		middleware: [
+	
+			(req, res, next) ->
+				
+				if 'production' is config.get 'NODE_ENV'
+					
+					res.locals.scripts.push '/lib/socket.io/socket.io.min.js'
+					
+				else
+					
+					res.locals.scripts.push '/lib/socket.io/socket.io.js'
+					
+				next()
+				
+		]
+
 # ## SocketIoManager
 # Implements `SocketManager`.
 # 
 # A socket factory implemented with [Socket.IO](http://socket.io/).
-module.exports = class SocketIoManager extends SocketManager
+exports.Manager = class SocketIoManager extends SocketManager
 	
 	# ## *constructor*
 	constructor: ->
@@ -107,26 +129,3 @@ module.exports = class SocketIoManager extends SocketManager
 			continue unless isConnected
 			
 			@io.sockets.adapter.nsp.connected[socketId]
-
-# Not ideal...
-SocketIoManager.pkgmanRegister = (registrar) ->
-
-	# ## Implements hook `assetScriptMiddleware`
-	registrar.registerHook 'assetScriptMiddleware', ->
-		
-		label: 'Socket.IO'
-		middleware: [
-	
-			(req, res, next) ->
-				
-				if 'production' is config.get 'NODE_ENV'
-					
-					res.locals.scripts.push '/lib/socket.io/socket.io.min.js'
-					
-				else
-					
-					res.locals.scripts.push '/lib/socket.io/socket.io.js'
-					
-				next()
-				
-		]
