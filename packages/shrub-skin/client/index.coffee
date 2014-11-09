@@ -12,11 +12,6 @@ exports.pkgmanRegister = (registrar) ->
 		'$http', '$window', 'shrub-skin'
 		($http, $window, skin) ->
 			
-			cloak = document.createElement 'style'
-			cloak.type = 'text/css';
-			cloak.innerHTML = '.shrub-skin-cloak { display: none; }'
-			document.getElementsByTagName('head')[0].appendChild cloak
-			
 			promise = skin.change config.get 'packageConfig:shrub-skin:default'
 			promise.then -> angular.element('link.initial').remove()
 			
