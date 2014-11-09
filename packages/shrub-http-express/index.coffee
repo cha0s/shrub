@@ -14,16 +14,16 @@ readFile = Promise.promisify fs.readFile, fs
 
 {defaultLogger} = require 'logging'
 
+exports.pkgmanRegister = (registrar) ->
+	
+	registrar.recur [
+		'errors', 'logger', 'routes', 'static'
+	]
+	
 # An implementation of [HttpManager](../http/manager.html) using the
 # Express framework.
-module.exports = class Express extends (require '../shrub-http/manager')
+exports.Manager = class Express extends (require '../shrub-http/manager')
 
-	@pkgmanRegister: (registrar) ->
-		
-		registrar.recur [
-			'errors', 'logger', 'routes', 'static'
-		]
-	
 	# ### *constructor*
 	# 
 	# *Create the server.*

@@ -15,7 +15,7 @@ exports.pkgmanRegister = (registrar) ->
 		
 		{manager, port} = config.get 'packageSettings:shrub-http'
 		
-		Manager = require manager.module
+		{Manager} = require manager.module
 		
 		# Spin up the HTTP server, and initialize it.
 		httpManager = new Manager()
@@ -29,7 +29,7 @@ exports.pkgmanRegister = (registrar) ->
 		manager:
 		
 			# Module implementing the socket manager.
-			module: 'shrub-express'
+			module: 'shrub-http-express'
 	
 		middleware: [
 			'shrub-core'
@@ -38,14 +38,14 @@ exports.pkgmanRegister = (registrar) ->
 			'shrub-session/express'
 			'shrub-session'
 			'shrub-user'
-			'shrub-express/logger'
-			'shrub-express/routes'
-			'shrub-express/static'
+			'shrub-http-express/logger'
+			'shrub-http-express/routes'
+			'shrub-http-express/static'
 			'shrub-config'
 			'shrub-skin'
 			'shrub-assets'
 			'shrub-angular'
-			'shrub-express/errors'
+			'shrub-http-express/errors'
 		]
 	
 		path: "#{config.get 'path'}/app"
