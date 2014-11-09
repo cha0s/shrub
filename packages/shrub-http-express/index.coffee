@@ -17,7 +17,7 @@ readFile = Promise.promisify fs.readFile, fs
 exports.pkgmanRegister = (registrar) ->
 	
 	registrar.recur [
-		'errors', 'logger', 'routes', 'static'
+		'errors', 'logger', 'routes', 'session', 'static'
 	]
 	
 # An implementation of [HttpManager](../http/manager.html) using the

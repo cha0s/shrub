@@ -39,7 +39,7 @@ exports.pkgmanRegister = (registrar) ->
 		# Middleware stack dispatched to authorize or reject a socket connection.
 		authorizationMiddleware: [
 			'shrub-core'
-			'shrub-session/express'
+			'shrub-http-express/session'
 			'shrub-user'
 			'shrub-villiany'
 		]
