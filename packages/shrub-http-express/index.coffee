@@ -10,9 +10,8 @@ http = require 'http'
 Promise = require 'bluebird'
 
 {handlebars} = require 'hbs'
-readFile = Promise.promisify fs.readFile, fs
 
-{defaultLogger} = require 'logging'
+readFile = Promise.promisify fs.readFile, fs
 
 exports.pkgmanRegister = (registrar) ->
 	
@@ -42,27 +41,17 @@ exports.Manager = class Express extends (require '../shrub-http/manager')
 		# } Connect (no pun) Express's middleware system to ours.
 		@_app.use (req, res, next) => @_middleware.dispatch req, res, next
 	
-	# ### ::listen
+	# ### ::listener
 	# 
 	# *Listen for HTTP connections.*
-	# 
-	# * (function) `fn` - The function to call when the server is listening.
-	listen: ->
+	listener: ->
 		
 		new Promise (resolve, reject) =>
 		
-			# } Catch errors. If it's an address in use error then complain
-			# } about it, but try again.
-			errorCallback = (error) =>
-				return reject error unless 'EADDRINUSE' is error.code
-				
-				defaultLogger.error "Address in use... retrying in 2 seconds"
-				setTimeout (=> @_server.listen @port()), 2000
-			
-			@_server.on 'error', errorCallback
+			@_server.on 'error', reject
 			
 			@_server.once 'listening', =>
-				@_server.removeListener 'error', errorCallback
+				@_server.removeListener 'error', reject
 				resolve()
 			
 			# } Bind to the listen port.
@@ -70,7 +59,7 @@ exports.Manager = class Express extends (require '../shrub-http/manager')
 	
 	# ### ::renderAppHtml
 	# 
-	# * (object) `locals` - The locals to pass to handlebars.
+	# * (object) `locals` - The locals to pass to the templating engine.
 	# 
 	# *Render the application HTML.*
 	renderAppHtml: (locals) ->
@@ -79,7 +68,7 @@ exports.Manager = class Express extends (require '../shrub-http/manager')
 			"#{@_config.path}/app.html", encoding: 'utf8'
 		
 		).then (html) -> handlebars.compile(html) locals
-			
+
 	# ### ::server
 	# 
 	# *The node HTTP server instance.*

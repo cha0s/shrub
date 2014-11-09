@@ -4,10 +4,13 @@
 Promise = require 'bluebird'
 
 config = require 'config'
-debug = require('debug') 'shrub:middleware:http'
 pkgman = require 'pkgman'
+Promise = require 'bluebird'
 
 middleware = require 'middleware'
+
+httpDebug = require('debug') 'shrub:http'
+httpMiddlewareDebug = require('debug') 'shrub:middleware:http'
 
 # ## HttpManager
 # 
@@ -44,7 +47,27 @@ module.exports = class HttpManager
 			pkgman.invokeFlat 'httpListening', this
 		
 		)
-			
+	
+	# ### ::listen
+	# 
+	# *Listen for HTTP connections.*
+	listen: ->
+		
+		new Promise (resolve, reject) =>
+		
+			do tryListener = =>
+		
+				@listener().done(
+					resolve
+					
+					(error) ->
+						return reject error unless 'EADDRINUSE' is error.code
+					
+						httpDebug "HTTP port in use... retrying in 2 seconds"
+						setTimeout tryListener, 2000
+						
+				)
+
 	# ### ::path
 	# 
 	# *The path where static files are served from.*
@@ -60,7 +83,7 @@ module.exports = class HttpManager
 	# *Gather and initialize HTTP middleware.*
 	registerMiddleware: ->
 		
-		debug '- Loading HTTP middleware...'
+		httpMiddlewareDebug '- Loading HTTP middleware...'
 		
 		# Invoke hook `httpMiddleware`.
 		# Invoked every time an HTTP connection is established.
@@ -71,7 +94,7 @@ module.exports = class HttpManager
 			this
 		)
 		
-		debug '- HTTP middleware loaded.'
+		httpMiddlewareDebug '- HTTP middleware loaded.'
 
 	# } Ensure any subclass implements these methods.
 	@::[method] = (-> throw new ReferenceError(
@@ -80,5 +103,5 @@ module.exports = class HttpManager
 	# "Pure virtual" methods.
 	)) for method in [
 		
-		'listen', 'renderAppHtml', 'server'
+		'listener', 'renderAppHtml', 'server'
 	]
