@@ -50,8 +50,10 @@ exports.rebuildPackageCache = (type) ->
 		catch error
 			
 			# Suppress missing package errors.
-			# `TODO`: Should we let this throw?
-			continue if error.toString() is "Error: Cannot find module '#{name}'"
+			if error.toString() is "Error: Cannot find module '#{name}'"
+				debug "Missing package #{name}."
+				continue 
+			
 			throw error
 	
 		modules[name] = module_
