@@ -34,13 +34,20 @@ exports.load = ->
 	
 	nconf.defaults path: "#{__dirname}/.."
 		
+	return
+
+# ### loadPackageSettings
+# 
+# *Load package settings as defaults in the configuration*
+exports.loadPackageSettings = ->
+
 	# } Register packages.
 	debug "Registering packages..."
 	
 	pkgman.registerPackageList nconf.get 'packageList'
 	
 	debug "Packages registered."
-
+	
 	packageSettings = new Config()
 	for key, value of pkgman.invoke 'packageSettings'
 		packageSettings.set key.replace(/\//g, ':'), value
@@ -53,7 +60,9 @@ exports.load = ->
 		packageSettings: packageSettings.toJSON()
 		
 		path: "#{__dirname}/.."
-
+		
+	return
+		
 # ### set
 # 
 # *Set a configuration value by key.*
