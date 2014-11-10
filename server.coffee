@@ -4,39 +4,11 @@
 # The server application entry point. We load the configuration, invoke the
 # initialization hooks, and listen for signals and process exit.
 
-# First make sure we have default require paths.
-if process.env.SHRUB_REQUIRE_PATH?
+{fork} = require './environment'
 
-	SHRUB_REQUIRE_PATH = process.env.SHRUB_REQUIRE_PATH
-
-else
-
-	SHRUB_REQUIRE_PATH = 'custom:.:packages:server:client/modules'
-		
 # Fork the process to inject require paths into it.
-unless process.env.SHRUB_FORKED?
+unless fork()
 
-	# Pass arguments to the child process.
-	args = process.argv.slice 2
-	
-	# Pass the environment to the child process.
-	options = env: process.env
-	
-	# Integrate any NODE_PATH after the shrub require paths.
-	if process.env.NODE_PATH?
-		SHRUB_REQUIRE_PATH += ":#{process.env.NODE_PATH}"
-	
-	# Inject shrub require paths as the new NODE_PATH
-	options.env.NODE_PATH = SHRUB_REQUIRE_PATH
-	options.env.SHRUB_FORKED = true
-	
-	# Fork it
-	{fork} = require 'child_process'
-	fork process.argv[1], args, options
-	
-# If it's already been forked, enter the application.
-else
-	
 	Promise = require 'bluebird'
 	
 	debug = require('debug') 'shrub'
@@ -47,7 +19,9 @@ else
 	# } Load configuration.
 	debug "Loading config..."
 	
-	config = require('config').load()
+	config = require 'config'
+	config.load()
+	config.loadPackageSettings()
 	
 	debug "Config loaded."
 	
