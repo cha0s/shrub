@@ -1,50 +1,53 @@
 
+{fork} = require './environment'
+
 module.exports = (grunt) ->
 	
-	config =
+	# Fork so we can have a Shrub environment.
+	if child = fork()
+		grunt.registerTask 'shrub-environment', -> child.on 'close', this.async()
+		
+		# Forward all tasks.
+		{tasks} = require 'grunt/lib/grunt/cli'
+		grunt.registerTask tasks[0] ? 'default', ['shrub-environment']
+		grunt.registerTask(task, ->) for task in tasks.slice 1
+			
+		return
+	
+	# } Load configuration.
+	config = require 'config'
+	pkgman = require 'pkgman'
+
+	config.load()
+	config.loadPackageSettings()
+	
+	# Load grunt configuration.
+	gruntConfig =
+		
 		pkg: grunt.file.readJSON 'package.json'
 		
 		shrub:
 			
+			npmTasks: []
+			
 			tasks:
-				'compile-clean': []
-				'compile-coffee': []
-				'compile-less': ['less']
-				'compile': ['compile-coffee', 'compile-less', 'compile-clean']
-				'default': ['compile']
-				'production': ['compile', 'uglify']
+				'build': []
+				'default': ['build']
 		
 		uglify: options: report: 'min'
-	
-	grunt.shrub =
 		
-		loadModule: (name) -> (require "./grunt/#{name}") grunt, config
-			
-		coffeeMapping: (coffees, output = 'build/js') ->
-			grunt.file.expandMapping coffees, "#{output}/",
-				rename: (destBase, destPath) ->
-					destPath = destPath.replace /^client\//, ''
-					destBase + destPath.replace /\.coffee$/, '.js'
-		
-	grunt.shrub.loadModule name for name in [
-		'dependencies'
-		'angular'
-		'less'
-		'modules'
-		'shrub'
-		'test'
-	]
+	pkgman.invoke 'gruntConfig', gruntConfig
+	pkgman.invoke 'gruntConfigAlter', gruntConfig
 	
-	grunt.initConfig config
+	grunt.initConfig gruntConfig
 	
-	grunt.loadNpmTasks 'grunt-browserify'
-	grunt.loadNpmTasks 'grunt-contrib-clean'
-	grunt.loadNpmTasks 'grunt-contrib-coffee'
-	grunt.loadNpmTasks 'grunt-contrib-concat'
-	grunt.loadNpmTasks 'grunt-contrib-copy'
-	grunt.loadNpmTasks 'grunt-contrib-less'
-	grunt.loadNpmTasks 'grunt-contrib-uglify'
-	grunt.loadNpmTasks 'grunt-contrib-watch'
-	grunt.loadNpmTasks 'grunt-wrap'
+	# Load NPM tasks.
+	npmTasksLoaded = {}
+	for task in gruntConfig.shrub.npmTasks
+		continue if npmTasksLoaded[task]?
+		npmTasksLoaded[task] = true
+		grunt.loadNpmTasks task
 	
-	grunt.registerTask task, actions for task, actions of config.shrub.tasks
+	# Register custom tasks.
+	for task, actions of gruntConfig.shrub.tasks
+		grunt.registerTask task, actions
