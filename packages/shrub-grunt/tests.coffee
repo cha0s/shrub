@@ -230,10 +230,15 @@ describe('#{gruntConfig.pkg.name}', function() {
 				stdio: 'inherit'
 			).on 'close', @async()
 		
-		gruntConfig.shrub.tasks['tests:e2e'] = [
-			'build'
-			'tests:e2eFunction'
-		]
+		built = false
+		
+		gruntConfig.shrub.tasks['tests:e2e'] = ->
+			
+			unless built
+				built = true
+				gruntConfig.grunt.task.run 'build'
+				
+			gruntConfig.grunt.task.run 'tests:e2eFunction'
 		
 		gruntConfig.shrub.tasks['tests:unitFunction'] = ->
 		
@@ -243,35 +248,37 @@ describe('#{gruntConfig.pkg.name}', function() {
 				stdio: 'inherit'
 			).on 'close', @async()
 		
-		gruntConfig.shrub.tasks['tests:unit'] = [
-			'build'
-			'tests:unitFunction'
-			'tests:e2eFunction'
-		]
+		gruntConfig.shrub.tasks['tests:unit'] = -> 
 		
+			unless built
+				built = true
+				gruntConfig.grunt.task.run 'build'
+				
+			gruntConfig.grunt.task.run 'tests:unitFunction'
+
 		gruntConfig.shrub.tasks['tests'] = [
 			 'tests:unit'
+			 'tests:e2e'
 		]
 		
 	# ## Implements hook `gruntConfigAlter`
 	registrar.registerHook 'gruntConfigAlter', (gruntConfig) ->
-	
-		gruntConfig.watch.modules.files.push '!client/modules/**/test-e2e.coffee'
-		gruntConfig.watch.modules.files.push '!custom/*/client/**/test-e2e.coffee'
-		gruntConfig.watch.modules.files.push '!packages/*/client/**/test-e2e.coffee'
-	
-		src = gruntConfig.coffee.modules.files[0].src
 		
-		src.push '!modules/**/test-e2e.coffee'
-		src.push '!modules/**/test-unit.coffee'
-		src.push '!modules/**/*.spec.coffee'
-
-		src = gruntConfig.coffee.modules.files[1].src
-
-		src.push  '!custom/*/client/**/test-e2e.coffee'
-		src.push  '!custom/*/client/**/test-unit.coffee'
-		src.push  '!custom/*/client/**/*.spec.coffee'
+		ignoreFiles = (array, directory) ->
+			array.push "!#{directory}/**/#{spec}" for spec in [
+				'test-e2e.coffee'
+				'test-unit.coffee'
+				'*.spec.coffee'
+			]
+		
+		for directory in [
+			'client/modules'
+			'custom/*/client'
+			'packages/*/client'
+		]
+			ignoreFiles gruntConfig.watch.modules.files, directory
 	
-		src.push  '!packages/*/client/**/test-e2e.coffee'
-		src.push  '!packages/*/client/**/test-unit.coffee'
-		src.push  '!packages/*/client/**/*.spec.coffee'
+		files = gruntConfig.coffee.modules.files
+		ignoreFiles files[0].src, 'modules'
+		ignoreFiles files[1].src, 'custom/*/client'
+		ignoreFiles files[1].src, 'packages/*/client'

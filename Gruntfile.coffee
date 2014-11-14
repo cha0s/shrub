@@ -24,6 +24,8 @@ module.exports = (grunt) ->
 	# Load grunt configuration.
 	gruntConfig =
 		
+		grunt: grunt
+		
 		pkg: grunt.file.readJSON 'package.json'
 		
 		shrub:
