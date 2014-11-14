@@ -12,30 +12,37 @@ angular.module(
         "shrub-config",
         "shrub-core",
         "shrub-example",
-        "shrub-express",
+        "shrub-http-express",
         "shrub-files",
         "shrub-form",
+        "shrub-http",
         "shrub-limiter",
         "shrub-logger",
         "shrub-nodemailer",
         "shrub-repl",
         "shrub-rpc",
         "shrub-schema",
+        "shrub-skin",
         "shrub-session",
         "shrub-socket",
+        "shrub-socket-socket.io",
         "shrub-ui",
         "shrub-user",
         "shrub-villiany"
       ],
-      siteName: "Shrub",
-      "shrub-socket": {
-        manager: {
-          module: "shrub-socket/dummy"
+      "packageConfig": {
+        "shrub-core": {
+          siteName: "Shrub"
+        },
+        "shrub-socket": {
+          manager: {
+            module: "shrub-socket/dummy"
+          }
+        },      
+        "shrub-user": {
+          name: "Anonymous",
+          email: null
         }
-      },      
-      user: {
-        name: "Anonymous",
-        email: null
       }
     });
 

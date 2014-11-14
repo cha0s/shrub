@@ -89,8 +89,7 @@ exports.pkgmanRegister = (registrar) ->
 				'packages/*/client/**/*.coffee'
 			]
 			tasks: [
-				'compile-modules'
-				'clean:modulesBuild'
+				'build:modules'
 			]
 		
 		gruntConfig.wrap.modules =

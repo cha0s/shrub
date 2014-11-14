@@ -20,7 +20,7 @@ describe 'user', ->
 			'$rootScope', '$timeout', 'shrub-socket'
 			($rootScope, $timeout, socket) ->
 				
-				socket.catchEmit 'rpc://user.login', (data, fn) ->
+				socket.catchEmit 'rpc://shrub.user.login', (data, fn) ->
 					fn result: id: 1, name: 'cha0s'
 				
 				user.login 'local', 'cha0s', 'password'

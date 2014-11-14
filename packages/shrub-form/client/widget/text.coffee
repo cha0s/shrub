@@ -14,6 +14,7 @@ exports.pkgmanRegister = (registrar) ->
 				field.minLength ?= 0
 				field.maxLength ?= Infinity
 				field.pattern ?= /.*/
+				field.value ?= ''
 				
 			template: """
 

@@ -12,8 +12,8 @@ exports.pkgmanRegister = (registrar) ->
 		title: 'Reset your password'
 		
 		controller: [
-			'$location', '$scope', 'shrub-ui/notifications', 'shrub-rpc'
-			($location, $scope, notifications, rpc) ->
+			'$location', '$routeParams', '$scope', 'shrub-ui/notifications', 'shrub-rpc'
+			($location, $routeParams, $scope, notifications, rpc) ->
 				
 				$scope.form =
 					
@@ -41,7 +41,7 @@ exports.pkgmanRegister = (registrar) ->
 						
 						token:
 							type: 'hidden'
-							value: token
+							value: $routeParams.token
 						
 						submit:
 							type: 'submit'

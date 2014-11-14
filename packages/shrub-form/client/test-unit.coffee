@@ -5,12 +5,12 @@ describe 'form', ->
 
 		inject [
 			'$compile', '$rootScope', 'shrub-form'
-			($compile, $rootScope, {forms}) ->
+			($compile, $rootScope, shrubForm) ->
 				
 				# Sanity
-				expect(forms.test).not.toBeDefined()
+				expect(shrubForm.forms.test).not.toBeDefined()
 				
-				tpl = $compile '<div data-shrub-form="test"></div>'
+				tpl = $compile '<div data-shrub-form data-form="test"></div>'
 				
 				scope = $rootScope.$new()
 				scope.test = {}
@@ -18,7 +18,7 @@ describe 'form', ->
 				tpl scope
 				
 				# Registered.
-				expect(forms.test).toBeDefined()
+				expect(shrubForm.forms.test).toBeDefined()
 				
 		]
 
@@ -28,24 +28,28 @@ describe 'form', ->
 			'$compile', '$rootScope'
 			($compile, $rootScope) ->
 				
-				tpl = $compile '<div data-shrub-form="test"></div>'
+				tpl = $compile '<div data-shrub-form data-form="test"></div>'
 				
 				scope = $rootScope.$new()
 				
 				scope.test =
-					email:
-						type: 'email'
-						label: "email"
-					password:
-						type: 'password'
-						label: "password"
-						required: true
-					text:
-						defaultValue: 'test'
-						type: 'text'
-						label: "text"
+				
+					fields:
+					
+						email:
+							type: 'email'
+							label: "email"
+						password:
+							type: 'password'
+							label: "password"
+							required: true
+						text:
+							value: 'test'
+							type: 'text'
+							label: "text"
 					
 				elm = tpl scope
+				scope.$digest()
 				
 				$form = elm.find 'form'
 
@@ -67,14 +71,14 @@ describe 'form', ->
 						expect(input.type).toBe input.name
 					
 					# Check required fields.
-					if scope.test[name]?.required
+					if scope.test.fields[name]?.required
 						expect($input.attr 'required').toBeDefined()
 					else
 						expect($input.attr 'required').not.toBeDefined()
 					
 					# Check default values.
-					if scope.test[name]?.defaultValue?
-						expect(scope.test[name].defaultValue).toBe input.value
+					if scope.test.fields[name]?.value?
+						expect(scope.test.fields[name].value).toBe input.value
 						
 					hasFormKey = true if name is 'formKey'
 				
@@ -92,33 +96,44 @@ describe 'form', ->
 			'$compile', '$rootScope'
 			($compile, $rootScope) ->
 				
-				tpl = $compile '<div data-shrub-form="test"></div>'
+				tpl = $compile '<div data-shrub-form data-form="test"></div>'
 				
 				scope = $rootScope.$new()
 				
 				submissionCleared = false
 				
 				scope.test =
-					text:
-						type: 'text'
-						label: "text"
-					submit:
-						type: 'submit'
-						label: "Submit"
-						handler: ->
-							submissionCleared = scope.text is 'test'
 					
+					fields:
+					
+						text:
+							type: 'text'
+							label: "text"
+
+						submit:
+							type: 'submit'
+							label: "Submit"
+							handler: ->
+								submissionCleared = scope.text is 'test'
+								
+					submits: [
+					
+						(values) ->
+							
+							submissionCleared = values.text is 'test'
+							
+					]
+						
 				elm = tpl scope
 				
-				scope.text = 'test'
+				scope.test.fields['text'].value = 'test'
 				
-				scope.$digest()
+				scope.$apply()
 				
 				$form = elm.find 'form'
 				
 				for input in $form.find 'input'
 					$input = angular.element input
-					
 					input.click() if 'submit' is input.type
 				
 				# Form was submitted with correct values.
@@ -129,10 +144,10 @@ describe 'form', ->
 	it 'should handle rpc submission', ->
 
 		inject [
-			'$compile', '$rootScope', '$timeout', 'shrub-socket'
-			($compile, $rootScope, $timeout, socket) ->
+			'$compile', '$rootScope', '$timeout', 'shrub-rpc', 'shrub-socket'
+			($compile, $rootScope, $timeout, rpc, socket) ->
 				
-				tpl = $compile '<div data-shrub-form="test"></div>'
+				tpl = $compile '<div data-shrub-form data-form="test"></div>'
 				
 				scope = $rootScope.$new()
 				
@@ -145,21 +160,31 @@ describe 'form', ->
 					fn result: 420
 				
 				scope.test =
-					text:
-						type: 'text'
-						label: "text"
-					submit:
-						rpc: true
-						type: 'submit'
-						label: "Submit"
-						handler: (error, result) ->
+					
+					fields:
+
+						text:
+							type: 'text'
+							label: "text"
+							
+						submit:
+							type: 'submit'
+							label: "Submit"
+								
+					submits: [
+					
+						rpc.formSubmitHandler (error, result) ->
+							return if error?
+							
 							submissionCleared = result is 420
+							
+					]
 					
 				elm = tpl scope
 				
-				scope.text = 'test'
+				scope.test.fields['text'].value = 'test'
 				
-				scope.$digest()
+				scope.$apply()
 				
 				$form = elm.find 'form'
 				

@@ -1,5 +1,7 @@
 path = require 'path'
 
+{spawn} = require 'child_process'
+
 exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `gruntConfig`
@@ -121,9 +123,9 @@ exports.pkgmanRegister = (registrar) ->
 		gruntConfig.watch.testsE2e =
 
 			files: [
-				'client/modules/**/test-e2e.js'
-				'custom/*/client/**/test-e2e.js'
-				'packages/*/client/**/test-e2e.js'
+				'client/modules/**/test-e2e.coffee'
+				'custom/*/client/**/test-e2e.coffee'
+				'packages/*/client/**/test-e2e.coffee'
 			]
 			tasks: ['build:testsE2e']
 		
@@ -220,8 +222,43 @@ describe('#{gruntConfig.pkg.name}', function() {
 		
 		gruntConfig.shrub.tasks['build'].push 'build:tests'
 		
+		gruntConfig.shrub.tasks['tests:e2eFunction'] = ->
+		
+			spawn(
+				"#{__dirname}/../../scripts/e2e-test.sh"
+				[]
+				stdio: 'inherit'
+			).on 'close', @async()
+		
+		gruntConfig.shrub.tasks['tests:e2e'] = [
+			'build'
+			'tests:e2eFunction'
+		]
+		
+		gruntConfig.shrub.tasks['tests:unitFunction'] = ->
+		
+			spawn(
+				"#{__dirname}/../../scripts/test.sh"
+				['--single-run']
+				stdio: 'inherit'
+			).on 'close', @async()
+		
+		gruntConfig.shrub.tasks['tests:unit'] = [
+			'build'
+			'tests:unitFunction'
+			'tests:e2eFunction'
+		]
+		
+		gruntConfig.shrub.tasks['tests'] = [
+			 'tests:unit'
+		]
+		
 	# ## Implements hook `gruntConfigAlter`
 	registrar.registerHook 'gruntConfigAlter', (gruntConfig) ->
+	
+		gruntConfig.watch.modules.files.push '!client/modules/**/test-e2e.coffee'
+		gruntConfig.watch.modules.files.push '!custom/*/client/**/test-e2e.coffee'
+		gruntConfig.watch.modules.files.push '!packages/*/client/**/test-e2e.coffee'
 	
 		src = gruntConfig.coffee.modules.files[0].src
 		

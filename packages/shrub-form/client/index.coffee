@@ -19,9 +19,9 @@ exports.pkgmanRegister = (registrar) ->
 			link: (scope, element, attrs) ->
 				return unless (form = scope[attrs.form])?
 				
-				key = form.key ? attrs.form
+				form.key ?= attrs.form
 				
-				(scope['$shrubSubmit'] ?= {})[key] = ($event) ->
+				(scope['$shrubSubmit'] ?= {})[form.key] = ($event) ->
 				
 					values = {}
 					for name, field of form.fields
@@ -34,11 +34,11 @@ exports.pkgmanRegister = (registrar) ->
 				
 				# Create the form element.
 				$form = angular.element '<form />'
-				$form.addClass key
+				$form.addClass form.key
 				
 				# Default method to POST.
 				$form.attr 'method', attrs.method ? 'POST'
-				$form.attr 'data-ng-submit', "$shrubSubmit['#{key}']($event)"
+				$form.attr 'data-ng-submit', "$shrubSubmit['#{form.key}']($event)"
 				
 				# Build the form fields.
 				for name, field of form.fields
@@ -48,7 +48,7 @@ exports.pkgmanRegister = (registrar) ->
 					unless (widget = formService.widgets[field.type])?
 						
 						$log.warn "Form `#{
-							key
+							form.key
 						}` contains non-existent field type `#{
 							field.type
 						}`!"
@@ -66,14 +66,14 @@ exports.pkgmanRegister = (registrar) ->
 				# Add hidden form key to allow server-side
 				# interception/processing.
 				$formKeyElement = angular.element '<input type="hidden" />'
-				$formKeyElement.attr name: 'formKey', value: key
+				$formKeyElement.attr name: 'formKey', value: form.key
 				$form.append $formKeyElement
 				
 				# Invoke hook `formAlter`.
 				pkgman.invokeFlat 'formAlter', form, $form				
 
 				# Invoke hook `formFormIdAlter`.
-				hookName = "form#{i8n.camelize i8n.underscore key}Alter"
+				hookName = "form#{i8n.camelize i8n.underscore form.key}Alter"
 				pkgman.invokeFlat hookName, form, $form
 				
 				# Insert and compile the form element.
@@ -81,7 +81,7 @@ exports.pkgmanRegister = (registrar) ->
 				$compile($form) scope
 				
 				# Register the form in the system.
-				formService.cache key, scope, $form
+				formService.cache form.key, scope, $form
 				
 	]
 	
