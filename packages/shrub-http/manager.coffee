@@ -10,13 +10,13 @@ Promise = require 'bluebird'
 middleware = require 'middleware'
 
 httpDebug = require('debug') 'shrub:http'
-httpMiddlewareDebug = require('debug') 'shrub:middleware:http'
+httpMiddlewareDebug = require('debug') 'shrub:http:middleware'
 
 # ## HttpManager
 # 
 # An abstract interface to be implemented by an HTTP server (e.g.
 # [Express](./packages/http/Express.html)).
-module.exports = class HttpManager
+exports.Manager = class HttpManager
 
 	# ### *constructor*
 	# 
@@ -85,13 +85,14 @@ module.exports = class HttpManager
 		
 		httpMiddlewareDebug '- Loading HTTP middleware...'
 		
+		httpMiddleware = @_config.middleware.slice 0
+		httpMiddleware.push 'shrub-http'
+		
 		# Invoke hook `httpMiddleware`.
 		# Invoked every time an HTTP connection is established.
 		# `TODO`: Rename express to http, so we can use a short name.
 		@_middleware = middleware.fromHook(
-			'httpMiddleware'
-			@_config.middleware
-			this
+			'httpMiddleware', httpMiddleware, this
 		)
 		
 		httpMiddlewareDebug '- HTTP middleware loaded.'
@@ -103,5 +104,5 @@ module.exports = class HttpManager
 	# "Pure virtual" methods.
 	)) for method in [
 		
-		'listener', 'renderAppHtml', 'server'
+		'listener', 'server'
 	]

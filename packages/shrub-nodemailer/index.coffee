@@ -11,6 +11,8 @@ config = require 'config'
 pkgman = require 'pkgman'
 {Sandbox} = require 'sandboxes'
 
+skin = require 'shrub-skin'
+
 {handlebars} = require 'hbs'
 
 readFile = Promise.promisify fs.readFile, fs
@@ -34,6 +36,8 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `httpListening`
 	registrar.registerHook 'httpListening', (http) ->
 		
+		return
+		
 		settings = config.get 'packageSettings:shrub-nodemailer'
 		
 		# Instantiate the email transport.
@@ -50,7 +54,7 @@ exports.pkgmanRegister = (registrar) ->
 				]
 		
 		# Render the app HTML and create a sandbox with it.
-		http.renderAppHtml(locals).then((html) ->
+		skin.renderAppHtml(locals).then((html) ->
 			
 			sandbox = new Sandbox()
 			sandbox.createDocument html

@@ -4,7 +4,7 @@
 # The server application entry point. We load the configuration, invoke the
 # initialization hooks, and listen for signals and process exit.
 
-{fork} = require './environment'
+{fork} = require "#{__dirname}/server/bootstrap"
 
 # Fork the process to inject require paths into it.
 unless fork()

@@ -21,7 +21,8 @@ exports.pkgmanRegister = (registrar) ->
 	
 # An implementation of [HttpManager](../http/manager.html) using the
 # Express framework.
-exports.Manager = class Express extends (require '../shrub-http/manager')
+{Manager: HttpManager} = require '../shrub-http/manager'
+exports.Manager = class Express extends HttpManager
 
 	# ### *constructor*
 	# 
@@ -57,18 +58,6 @@ exports.Manager = class Express extends (require '../shrub-http/manager')
 			# } Bind to the listen port.
 			@_server.listen @port()
 	
-	# ### ::renderAppHtml
-	# 
-	# * (object) `locals` - The locals to pass to the templating engine.
-	# 
-	# *Render the application HTML.*
-	renderAppHtml: (locals) ->
-		
-		readFile(
-			"#{@_config.path}/app.html", encoding: 'utf8'
-		
-		).then (html) -> handlebars.compile(html) locals
-
 	# ### ::server
 	# 
 	# *The node HTTP server instance.*

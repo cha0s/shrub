@@ -23,6 +23,25 @@ exports.pkgmanRegister = (registrar) ->
 		
 			debug "Shrub HTTP server up and running on port #{port}!"
 		
+	# ## Implements hook `httpMiddleware`
+	registrar.registerHook 'httpMiddleware', (http) ->
+
+		label: 'Finalize HTTP request'
+		middleware: [
+			
+			(req, res, next) ->
+				
+				if req.delivery?
+					
+					res.send req.delivery
+				
+				else
+				
+					res.status 501
+					res.end '<h1>501 Internal Server Error</h1>'
+				
+		]
+
 	# ## Implements hook `packageSettings`
 	registrar.registerHook 'packageSettings', ->
 		
@@ -41,8 +60,9 @@ exports.pkgmanRegister = (registrar) ->
 			'shrub-http-express/routes'
 			'shrub-http-express/static'
 			'shrub-config'
-			'shrub-skin'
+			'shrub-skin/path'
 			'shrub-assets'
+			'shrub-skin/render'
 			'shrub-angular'
 			'shrub-http-express/errors'
 		]

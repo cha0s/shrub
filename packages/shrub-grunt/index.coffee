@@ -12,8 +12,8 @@ exports.pkgmanRegister = (registrar) ->
 		(gruntConfig.uglify.options ?= {}).report = 'min'
 		
 		gruntConfig.clean.shrub = [
-			'app/shrub.js'
-			'app/shrub.min.js'
+			'app/lib/shrub/shrub.js'
+			'app/lib/shrub/shrub.min.js'
 		]
 		
 		gruntConfig.concat.shrub =
@@ -23,16 +23,16 @@ exports.pkgmanRegister = (registrar) ->
 					'build/js/modules.js'
 					'build/js/app.js'
 				]
-				dest: 'app/shrub.js'
+				dest: 'app/lib/shrub/shrub.js'
 			]
 		
 		gruntConfig.uglify.shrub =
 			
 			files: [
 				src: [
-					'app/shrub.js'
+					'app/lib/shrub/shrub.js'
 				]
-				dest: 'app/shrub.min.js'
+				dest: 'app/lib/shrub/shrub.min.js'
 			]
 					
 		gruntConfig.watch.shrub =

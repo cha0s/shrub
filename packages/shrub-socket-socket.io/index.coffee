@@ -17,21 +17,21 @@ SocketManager = require '../shrub-socket/manager'
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `assetScriptMiddleware`
-	registrar.registerHook 'assetScriptMiddleware', ->
+	# ## Implements hook `assetMiddleware`
+	registrar.registerHook 'assetMiddleware', ->
 		
 		label: 'Socket.IO'
 		middleware: [
 	
-			(req, res, next) ->
+			(assets, next) ->
 				
 				if 'production' is config.get 'NODE_ENV'
 					
-					res.locals.scripts.push '/lib/socket.io/socket.io.min.js'
+					assets.scripts.push '/lib/socket.io/socket.io.min.js'
 					
 				else
 					
-					res.locals.scripts.push '/lib/socket.io/socket.io.js'
+					assets.scripts.push '/lib/socket.io/socket.io.js'
 					
 				next()
 				

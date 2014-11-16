@@ -1,0 +1,14 @@
+{
+	"templates": [],
+	"scripts": [
+		"js/bootstrap.js",
+		"js/bootstrap.min.js"
+	],
+	"styleSheets": [
+		"css/bootstrap-theme.css",
+		"css/bootstrap-theme.min.css",
+		"css/bootstrap.css",
+		"css/bootstrap.min.css",
+		"css/style.css"
+	]
+}

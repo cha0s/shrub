@@ -8,60 +8,44 @@ config = require 'config'
 middleware = require 'middleware'
 pkgman = require 'pkgman'
 
+assets = null
+
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `assetScriptMiddleware`
-	registrar.registerHook 'assetScriptMiddleware', ->
+	# ## Implements hook `clearCaches`
+	registrar.registerHook 'clearCaches', ->
+		
+		assets = null
+	
+	# ## Implements hook `assetMiddleware`
+	registrar.registerHook 'assetMiddleware', ->
 		
 		label: 'Shrub'
 		middleware: [
 	
-			(req, res, next) ->
+			(assets, next) ->
 				
 				if 'production' is config.get 'NODE_ENV'
 					
-					res.locals.scripts.push '/shrub.min.js'
+					assets.scripts.push '/lib/shrub/shrub.min.js'
 					
 				else
 					
-					res.locals.scripts.push '/shrub.js'
+					assets.scripts.push '/lib/shrub/shrub.js'
+					
+				assets.styleSheets.push '/css/shrub.css'
 					
 				next()
-				
-		]
-
-	# ## Implements hook `httpMiddleware`
-	registrar.registerHook 'httpMiddleware', (http) ->
-		
-		# Invoke hook `assetScriptMiddleware`.
-		# Invoked to gather script assets for requests.
-		scriptMiddleware = middleware.fromShortName(
-			'asset script'
-			'shrub-assets'
-		)
-		
-		label: 'Serve dynamic assets'
-		middleware: [
-	
-			(req, res, next) ->
-				
-				res.locals ?= {}
-				res.locals.scripts ?= []
-				
-				# Gather script asset list.
-				scriptMiddleware.dispatch req, res, next
 				
 		]
 
 	# ## Implements hook `packageSettings`
 	registrar.registerHook 'packageSettings', ->
 		
-		scriptMiddleware: [
+		assetMiddleware: [
 			'shrub-assets/jquery'
-			'shrub-assets/bootstrap'
 			'shrub-socket-socket.io'
 			'shrub-assets/angular'
-			'shrub-assets/ui-bootstrap'
 			'shrub-assets'
 			'shrub-config'
 		]
@@ -69,3 +53,20 @@ exports.pkgmanRegister = (registrar) ->
 	registrar.recur [
 		'angular', 'bootstrap', 'jquery', 'ui-bootstrap'
 	]
+	
+exports.assets = ->
+	return assets if assets?
+	
+	assets = scripts: [], styleSheets: []
+
+	# Invoke hook `assetMiddleware`.
+	# Invoked to gather script assets for requests.
+	assetMiddleware = middleware.fromHook(
+		'assetMiddleware'
+		config.get "packageSettings:shrub-assets:assetMiddleware"
+	)
+	
+	assetMiddleware.dispatch assets, (error) -> throw error if error?
+	
+	assets
+	

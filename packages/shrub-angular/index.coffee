@@ -45,21 +45,15 @@ exports.pkgmanRegister = (registrar) ->
 				
 				settings = config.get 'packageSettings:shrub-angular'
 				
-				# } Render app.html
-				htmlPromise = http.renderAppHtml res.locals
-				
 				# } Skip render in a sandbox?
-				return htmlPromise.then(
-					(html) -> res.end html
-					(error) -> next error
-				) unless settings.render
-					
+				return next() unless settings.render
+				
 				# } Thrown when a request is complete.
 				class ResponseComplete extends Error
 					constructor: (@message) ->
 				
 				# } After the template is rendered, lookup or create the sandbox.
-				htmlPromise.bind({}).then((html) ->
+				Promise.resolve(req.delivery).bind({}).then((html) ->
 					
 					sandboxManager.lookupOrCreate(
 						html
@@ -103,7 +97,8 @@ exports.pkgmanRegister = (registrar) ->
 					# } Otherwise, just emit.	
 					else
 						
-						res.end emission
+						req.delivery = emission
+						next()
 					
 				# } The request was completed early.
 				).catch(ResponseComplete, ->

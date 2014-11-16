@@ -1,11 +1,19 @@
 
-{fork} = require './environment'
+{fork} = require "#{__dirname}/server/bootstrap"
 
 module.exports = (grunt) ->
 	
 	# Fork so we can have a Shrub environment.
 	if child = fork()
-		grunt.registerTask 'shrub-environment', -> child.on 'close', this.async()
+		grunt.registerTask 'shrub-environment', ->
+			
+			done = @async()
+			
+			child.on 'close', (code) ->
+			
+				return done() if code is 0
+				
+				grunt.fail.fatal "Child process failed", code
 		
 		# Forward all tasks.
 		{tasks} = require 'grunt/lib/grunt/cli'

@@ -223,13 +223,19 @@ describe('#{gruntConfig.pkg.name}', function() {
 		gruntConfig.shrub.tasks['build'].push 'build:tests'
 		
 		gruntConfig.shrub.tasks['tests:e2eFunction'] = ->
-		
+			
+			done = @async()
+			
 			spawn(
 				"#{__dirname}/../../scripts/e2e-test.sh"
 				[]
 				stdio: 'inherit'
-			).on 'close', @async()
-		
+			).on 'close', (code) ->
+				
+				return done() if code is 0
+					
+				gruntConfig.grunt.fail.fatal "End-to-end tests failed", 1
+
 		built = false
 		
 		gruntConfig.shrub.tasks['tests:e2e'] = ->
@@ -241,12 +247,18 @@ describe('#{gruntConfig.pkg.name}', function() {
 			gruntConfig.grunt.task.run 'tests:e2eFunction'
 		
 		gruntConfig.shrub.tasks['tests:unitFunction'] = ->
-		
+			
+			done = @async()
+			
 			spawn(
 				"#{__dirname}/../../scripts/test.sh"
 				['--single-run']
 				stdio: 'inherit'
-			).on 'close', @async()
+			).on 'close', (code) ->
+				
+				return done() if code is 0
+					
+				gruntConfig.grunt.fail.fatal "Unit tests failed", 1
 		
 		gruntConfig.shrub.tasks['tests:unit'] = -> 
 		

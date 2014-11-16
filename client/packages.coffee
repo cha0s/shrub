@@ -7,7 +7,7 @@ angular.module('shrub.packages', [
 
 	.config([
 		'$compileProvider', '$controllerProvider', '$filterProvider', '$injector', '$provide', 'shrub-pkgmanProvider', 'shrub-requireProvider'
-		($compileProvider, $controllerProvider, $filterProvider, $injector, $provide, {invoke}, {require}) ->
+		($compileProvider, $controllerProvider, $filterProvider, $injector, $provide, pkgman, {require}) ->
 			
 			_ = require 'underscore'
 			
@@ -15,24 +15,12 @@ angular.module('shrub.packages', [
 			debug = require('debug') 'shrub:angular'
 			skin = require 'skin'
 			
-			# Use normalized names for directives and filters:
-			# 'core/foo/bar' -> 'coreFooBar'
-			i8n = require 'inflection'
-			normalize = (path) ->
-				parts = for part, i in path.split '/'
-					i8n.camelize(
-						part.replace /[^\w]/g, '_'
-						0 is i
-					)
-					
-				i8n.camelize (i8n.underscore parts.join ''), true
-
 			# Invoke hook `controller`.
 			# Allows packages to define Angular controllers. Implementations
 			# should return an [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
 			debug "Registering controllers..."
 			
-			for path, injected of invoke 'controller'
+			for path, injected of pkgman.invoke 'controller'
 				debug path
 				
 				$controllerProvider.register path, injected
@@ -44,49 +32,42 @@ angular.module('shrub.packages', [
 			# should return an [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
 			debug "Registering directives..."
 			
-			for path, injected of invoke 'directive'
-				
+			for path, injected of pkgman.invoke 'directive'
 				do (path, injected) ->
-				
-					name = normalize path
+					name = pkgman.normalizePath path
 					
 					debug name
 					
-					# This gets run over immediately, but it's required due to
-					# the way Angular caches directives internally.
 					$compileProvider.directive name, injected
-
+					
 					$provide.factory "#{name}Directive", [
 						'$injector'
 						($injector) ->
 						
 							directive = $injector.invoke injected
-							compiler = skin.registerDirective(
-								$injector, "#{path}.html"
-							)
-							
-							link = directive.link
-							directive.link = (scope, element) ->
-								compiler.compile scope, element
 								
-								link.apply null, arguments if link?
-									
-							if _.isFunction directive
-								
+							# Normalize directive.	
+							if angular.isFunction directive
 								directive = compile: -> directive
-								
 							else if not directive.compile and directive.link
-								
 								directive.compile = -> directive.link
-								
-							directive.priority = directive.priority ? 0
+							directive.priority ?= 0
 							directive.index = 0
-							directive.name = directive.name ? name
-							directive.require = directive.require ? directive.controller and directive.name
-							directive.restrict = directive.restrict ? 'A'
+							directive.name ?= name
+							directive.require ?= directive.controller and directive.name
+							directive.restrict ?= 'A'
+							
+							# Invoke hook `augmentDirective`.
+							# Allows packages to augment the directives
+							# defined by packages. One example is the automatic
+							# relinking functionality implemented by [shrub-skin](/packages/shrub-skin/client/index.html#implementshookaugmentdirective).
+							for injectedDirective in pkgman.invokeFlat(
+								'augmentDirective', directive, path
+							)
+								$injector.invoke injectedDirective
 							
 							[directive]
-							
+			
 					]
 						
 			debug "Directives registered."
@@ -96,19 +77,33 @@ angular.module('shrub.packages', [
 			# should return a function.
 			debug "Registering filters..."
 			
-			for path, injected of invoke 'filter'
-				debug normalize path
+			for path, injected of pkgman.invoke 'filter'
+				name = pkgman.normalizePath path
+				
+				debug name
 
-				$filterProvider.register (normalize path), injected
+				$filterProvider.register name, injected
 
 			debug "Filters registered."
+
+			# Invoke hook `provider`.
+			# Allows packages to define Angular providers. Implementations
+			# should return an [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
+			debug "Registering providers..."
+			
+			for path, provider of pkgman.invoke 'provider'
+				debug path
+
+				$provide.provider path, provider
+			
+			debug "Providers registered."
 
 			# Invoke hook `service`.
 			# Allows packages to define Angular services. Implementations
 			# should return an [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
 			debug "Registering services..."
 			
-			for path, injected of invoke 'service'
+			for path, injected of pkgman.invoke 'service'
 				debug path
 
 				$provide.service path, injected
@@ -125,7 +120,7 @@ angular.module('shrub.packages', [
 				# [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
 				debug "Registering mock services..."
 				
-				for path, injected of invoke 'serviceMock'
+				for path, injected of pkgman.invoke 'serviceMock'
 					debug path
 
 					$provide.decorator path, injected
@@ -160,6 +155,18 @@ angular.module('shrub.pkgman', [
 			service.invoke = pkgman.invoke
 			service.invokeFlat = pkgman.invokeFlat
 			
+			# Use normalized names for directives and filters:
+			# 'core/foo/bar' -> 'coreFooBar'
+			i8n = require 'inflection'
+			service.normalizePath = (path) ->
+				parts = for part, i in path.split '/'
+					i8n.camelize(
+						part.replace /[^\w]/g, '_'
+						0 is i
+					)
+					
+				i8n.camelize (i8n.underscore parts.join ''), true
+
 			service.$get = -> service
 			
 			service

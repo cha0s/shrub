@@ -4,11 +4,10 @@
 
 # Top-level module, includes UI as well as core.
 angular.module 'shrub', [
-	'ui.bootstrap'
 	'shrub.core'
 ]
 
-# Core module: pulls in some Angular modules, and our own modules.
+ # Core module: pulls in some Angular modules, and our own modules.
 angular.module('shrub.core', [
 	'ngRoute'
 	'ngSanitize'

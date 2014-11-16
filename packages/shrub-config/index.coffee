@@ -14,15 +14,15 @@ pkgman = require 'pkgman'
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `assetScriptMiddleware`
-	registrar.registerHook 'assetScriptMiddleware', ->
+	# ## Implements hook `assetMiddleware`
+	registrar.registerHook 'assetMiddleware', ->
 		
 		label: 'Config'
 		middleware: [
 	
-			(req, res, next) ->
+			(assets, next) ->
 				
-				res.locals.scripts.push '/js/config.js'
+				assets.scripts.push '/js/config.js'
 				
 				next()
 				
@@ -88,7 +88,7 @@ angular.module(
     requireProvider.require('config').from(#{prettyPrintConfig()});
 
   }]);
-	"""
+"""
 					
 				).catch next
 				

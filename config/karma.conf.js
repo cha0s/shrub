@@ -6,7 +6,7 @@ module.exports = function(config) {
 			'app/lib/angular/angular.js',
 			'app/lib/angular/angular-*.js',
 			'test/lib/angular/angular-mocks.js',
-			'app/shrub.js',
+			'app/lib/shrub/shrub.js',
 			'test/unit/config.js',
 			'test/unit/tests.js'
 		],

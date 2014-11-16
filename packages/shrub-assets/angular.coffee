@@ -3,25 +3,25 @@ config = require 'config'
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `assetScriptMiddleware`
-	registrar.registerHook 'assetScriptMiddleware', ->
+	# ## Implements hook `assetMiddleware`
+	registrar.registerHook 'assetMiddleware', ->
 		
 		label: 'Angular'
 		middleware: [
 	
-			(req, res, next) ->
+			(assets, next) ->
 				
 				if 'production' is config.get 'NODE_ENV'
 					
-					res.locals.scripts.push '//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js'
-					res.locals.scripts.push '//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-route.min.js'						
-					res.locals.scripts.push '//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-sanitize.min.js'						
+					assets.scripts.push '//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js'
+					assets.scripts.push '//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-route.min.js'						
+					assets.scripts.push '//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-sanitize.min.js'						
 					
 				else
 					
-					res.locals.scripts.push '/lib/angular/angular.js'
-					res.locals.scripts.push '/lib/angular/angular-route.js'
-					res.locals.scripts.push '/lib/angular/angular-sanitize.js'
+					assets.scripts.push '/lib/angular/angular.js'
+					assets.scripts.push '/lib/angular/angular-route.js'
+					assets.scripts.push '/lib/angular/angular-sanitize.js'
 					
 				next()
 				

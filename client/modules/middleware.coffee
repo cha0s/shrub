@@ -14,15 +14,16 @@ debug = require('debug') 'shrub:middleware'
 # stack with `use`. Calling `dispatch` invokes the middleware functions
 # serially.
 # 
-# Each middleware takes three parameters: `req`, `res`, and `next`. When a
-# middleware finishes, it must call the `next` function. If there was an error,
-# it must be thrown or passed as the first argument to `next`. If no error
-# occurred, `next` must be invoked without arguments.
+# Each middleware accepts an arbitrary parameters and finally a `next`
+# function. When a middleware finishes, it must call the `next` function. If
+# there was an error, it must be thrown or passed as the first argument to
+# `next`. If no error occurred, `next` must be invoked without arguments.
 # 
-# Error-handling middleware can also be defined. These middleware take four
-# parameters: `error`, `req`, `res`, `next`. Error-handling middleware are only
-# called if a previous middleware threw or passed an error. Conversely,
-# non-error-handling middleware are skipped if a previous error occurred.
+# Error-handling middleware can also be defined. These middleware take an
+# additional parameter at the beginning of the function signature: `error`.
+# Error-handling middleware are only called if a previous middleware threw or
+# passed an error. Conversely, non-error-handling middleware are skipped if a
+# previous error occurred.
 exports.Middleware = class Middleware
 	
 	# ## *constructor*
@@ -43,14 +44,12 @@ exports.Middleware = class Middleware
 	# 
 	# *Invoke the middleware functions serially.*
 	# 
-	# * (object) `request` - A request object. 
-	# 
-	# * (mixed) `response` - A response object. Can be null. 
+	# * (mixed) `...` - One or more values to pass to the middleware. 
 	# 
 	# * (function) `fn` - A function invoked when the middleware stack has
 	#   finished. If an error occurred, it will be passed as the first
 	#   argument. 
-	dispatch: (request, response, fn) ->
+	dispatch: (args..., fn) ->
 		
 		index = 0
 		
@@ -62,7 +61,7 @@ exports.Middleware = class Middleware
 			current = @_middleware[index++]
 			
 			# Error-handling middleware.
-			if current.length is 4
+			if current.length is args.length + 2
 				
 				# An error occurred previously.
 				if error?
@@ -70,8 +69,10 @@ exports.Middleware = class Middleware
 					# Try to invoke the middleware, if it throws, just catch
 					# the error and pass it along.
 					try
-						current error, request, response, (error) ->
-							invoke error
+						localArgs = args.slice 0
+						localArgs.unshift error
+						localArgs.push (error) -> invoke error
+						current localArgs...
 					catch error
 						invoke error
 					
@@ -94,7 +95,9 @@ exports.Middleware = class Middleware
 					# Try to invoke the middleware, if it throws, just catch
 					# the error and pass it along.
 					try
-						current request, response, (error) -> invoke error
+						localArgs = args.slice 0
+						localArgs.push (error) -> invoke error
+						current localArgs...
 					catch error
 						invoke error
 
@@ -132,8 +135,8 @@ exports.fromHook = (hook, paths, args...) ->
 #	debug "Loading user before login middleware..."
 #	
 #	middleware = exports.fromHook(
-#		"exampleThingHook"
-#		config.get "packageSettings:example:thingHook"
+#		"userBeforeLoginMiddleware"
+#		config.get "packageSettings:user:beforeLoginMiddleware"
 #	)
 #	
 #	debug "User before login middleware loaded."

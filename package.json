@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "bluebird": "~1.0.5",
+    "cheerio": "^0.18.0",
     "coffee-script": "~1.7.1",
     "connect-redis": "~1.4.7",
     "cookie-signature": "^1.0.3",
