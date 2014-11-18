@@ -58,6 +58,9 @@ exports.pkgmanRegister = (registrar) ->
 				# } Define our own eval function, using CoffeeScript.
 				opts.eval = (cmd, context, filename, callback) ->
 					
+					# } Handle blank lines correctly.
+					return callback null, undefined if cmd is '(\n)'
+						
 					try
 					
 						callback null, CoffeeScript.eval(
