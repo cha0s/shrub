@@ -173,7 +173,7 @@ exports.pkgmanRegister = (registrar) ->
 		
 			options:
 			
-				configFile: 'config/protractor-conf.js'
+				configFile: 'config/protractor.conf.js'
 				keepAlive: false
 				noColor: true
 	
@@ -334,6 +334,7 @@ describe('#{gruntConfig.pkg.name}', function() {
 			
 			done = @async()
 			
+			# Spawn node Jasmine
 			child_process.spawn(
 				'node'
 				[
