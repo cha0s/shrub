@@ -3,6 +3,8 @@ exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `gruntConfig`
 	registrar.registerHook 'gruntConfig', (gruntConfig) ->
+	
+		{grunt} = gruntConfig
 		
 		gruntConfig.clean ?= {}
 		gruntConfig.concat ?= {}
@@ -61,7 +63,7 @@ exports.pkgmanRegister = (registrar) ->
 			
 				return done() if code is 0
 				
-				gruntConfig.grunt.fail.fatal "Server process failed", code
+				grunt.fail.fatal "Server process failed", code
 			
 		gruntConfig.shrub.tasks['build:shrub'] = [
 			'concat:shrub'
@@ -78,6 +80,6 @@ exports.pkgmanRegister = (registrar) ->
 		gruntConfig.shrub.tasks['build'].push 'build:shrub'
 	
 	registrar.recur [
-		'angular', 'modules', 'tests'
+		'angular', 'dox', 'modules', 'tests'
 	]
 	

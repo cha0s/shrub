@@ -5,6 +5,8 @@ exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `gruntConfig`
 	registrar.registerHook 'gruntConfig', (gruntConfig) ->
+	
+		{grunt} = gruntConfig
 		
 		gruntConfig.clean ?= {}
 		gruntConfig.coffee ?= {}

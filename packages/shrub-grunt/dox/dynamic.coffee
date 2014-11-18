@@ -4,6 +4,7 @@
 # Various parts of the documentation are generated dynamically. This file
 # parses the source files and generates the respective documentation files.
 
+child_process = require 'child_process'
 fs = require 'fs'
 
 glob = require 'groc/node_modules/glob'

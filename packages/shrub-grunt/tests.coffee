@@ -9,6 +9,8 @@ exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `gruntConfig`
 	registrar.registerHook 'gruntConfig', (gruntConfig) ->
+		
+		{grunt} = gruntConfig
 	
 		gruntConfig.clean ?= {}
 		gruntConfig.coffee ?= {}
@@ -305,14 +307,14 @@ describe('#{gruntConfig.pkg.name}', function() {
 				gruntConfig.protractor.testsE2e.options.args = baseUrl: baseUrl
 				
 				# Wait for the server to come up.
-				gruntConfig.grunt.log.write "Waiting for E2E server to come up..."
+				grunt.log.write "Waiting for E2E server to come up..."
 				tcpPortUsed.waitUntilUsed(port, 400, 30000).then(
 
 					->
-						gruntConfig.grunt.task.run 'protractor:testsE2e'
+						grunt.task.run 'protractor:testsE2e'
 						done()
 
-					(error) -> gruntConfig.grunt.fail.fatal "E2E server never came up after 30 seconds!"
+					(error) -> grunt.fail.fatal "E2E server never came up after 30 seconds!"
 				)
 				
 		gruntConfig.shrub.tasks['tests:e2eServerDown'] = ->	
@@ -344,7 +346,7 @@ describe('#{gruntConfig.pkg.name}', function() {
 				stdio: 'inherit'
 			).on 'close', (code) ->
 				return done() if code is 0
-				gruntConfig.grunt.fail.fatal "Jasmine tests not passing!"
+				grunt.fail.fatal "Jasmine tests not passing!"
 		
 		gruntConfig.shrub.tasks['tests:jasmine'] = [
 			'buildOnce'
@@ -359,7 +361,6 @@ describe('#{gruntConfig.pkg.name}', function() {
 		
 		gruntConfig.shrub.tasks['build'].push 'build:tests'
 		
-		gruntConfig.shrub.npmTasks.push 'grunt-contrib-jasmine'
 		gruntConfig.shrub.npmTasks.push 'grunt-karma'
 		gruntConfig.shrub.npmTasks.push 'grunt-protractor-runner'
 		
