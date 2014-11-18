@@ -32,7 +32,7 @@ describe 'rpc', ->
 				expect(error).toBe 'invalid'
 		]
 		
-	it 'should handle errors gracefully', (done) ->
+	it 'should handle errors gracefully', ->
 
 		inject [
 			'$rootScope', 'shrub-socket'
@@ -48,9 +48,10 @@ describe 'rpc', ->
 				promise.then (_) -> result = _
 				promise.catch (_) -> error = _
 					
+				$rootScope.$apply()
+				
 				expect(result).toBe 'invalid'
 				expect(error).toBeDefined()
 				
-				$rootScope.$apply()
 		]
 		

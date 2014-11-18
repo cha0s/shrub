@@ -3,9 +3,9 @@
 
 module.exports = (grunt) ->
 	
-	# Fork so we can have a Shrub environment.
+	# Fork so we can bootstrap a Shrub environment.
 	if child = fork()
-		grunt.registerTask 'shrub-environment', ->
+		grunt.registerTask 'bootstrap', ->
 			
 			done = @async()
 			
@@ -17,7 +17,7 @@ module.exports = (grunt) ->
 		
 		# Forward all tasks.
 		{tasks} = require 'grunt/lib/grunt/cli'
-		grunt.registerTask tasks[0] ? 'default', ['shrub-environment']
+		grunt.registerTask tasks[0] ? 'default', ['bootstrap']
 		grunt.registerTask(task, ->) for task in tasks.slice 1
 			
 		return
@@ -41,10 +41,18 @@ module.exports = (grunt) ->
 			npmTasks: []
 			
 			tasks:
-				'build': []
-				'default': ['build']
+				build: []
+				default: ['buildOnce']
 		
 		uglify: options: report: 'min'
+	
+	built = false
+	
+	gruntConfig.shrub.tasks['buildOnce'] = ->
+		return if built
+		built = true
+		
+		grunt.task.run 'build'
 		
 	pkgman.invoke 'gruntConfig', gruntConfig
 	pkgman.invoke 'gruntConfigAlter', gruntConfig

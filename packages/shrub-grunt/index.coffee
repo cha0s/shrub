@@ -42,11 +42,36 @@ exports.pkgmanRegister = (registrar) ->
 				'build/js/app.js'
 			]
 			tasks: 'build:shrub'
+		
+		gruntConfig.shrub.tasks['executeFunction:shrub'] = ->
+		
+			done = @async()
+			
+			# Pass arguments to the child process.
+			args = process.argv.slice 2
+			
+			# Pass the environment to the child process.
+			options = env: process.env
+			
+			# Fork it
+			{fork} = require 'child_process'
+			child = fork "#{__dirname}/../../server.coffee", args, options
+			
+			child.on 'close', (code) ->
+			
+				return done() if code is 0
+				
+				gruntConfig.grunt.fail.fatal "Server process failed", code
 			
 		gruntConfig.shrub.tasks['build:shrub'] = [
 			'concat:shrub'
 		]
 		
+		gruntConfig.shrub.tasks['execute'] = [
+			'buildOnce'
+			'executeFunction:shrub'
+		]
+
 	# ## Implements hook `gruntConfigAlter`
 	registrar.registerHook 'gruntConfigAlter', (gruntConfig) ->
 		
