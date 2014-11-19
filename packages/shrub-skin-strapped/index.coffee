@@ -1,4 +1,8 @@
 
+# # Strapped
+# 
+# The default skin.
+
 path = require 'path'
 
 exports.pkgmanRegister = (registrar) ->

@@ -1,4 +1,8 @@
 
+# # Skin
+# 
+# Allows the visual aspects of the site to be controlled by skin packages.
+
 cheerio = require 'cheerio'
 fs = require 'fs'
 path = require 'path'

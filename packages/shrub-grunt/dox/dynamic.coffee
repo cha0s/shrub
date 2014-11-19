@@ -5,6 +5,7 @@
 # parses the source files and generates the respective documentation files.
 
 child_process = require 'child_process'
+path = require 'path'
 fs = require 'fs'
 
 glob = require 'groc/node_modules/glob'
@@ -33,7 +34,7 @@ for filename of files
 		commentLines: commentLines
 
 # } Get the type and name of this package (if any).
-packageTypeAndName = (filename) ->
+packageTypeAndName = (filename, onlyParent) ->
 	
 	return unless (matches = filename.match /([^/]+)\/([^/]+)\/([^/]+)/)?
 	return if -1 is ['custom', 'packages'].indexOf matches[1]
@@ -41,23 +42,34 @@ packageTypeAndName = (filename) ->
 	parts = filename.split '/'
 	parts = parts.slice 1
 	
-	if matches[3] is 'client'
+	type = if matches[3] is 'client'
 		
 		parts.splice 1, 1
 		
-		name: parts.join('/').replace '.coffee', ''
-		type: 'client'
+		'client'
 		
 	else
-		
-		name: parts.join('/').replace '.coffee', ''
-		type: 'server'
+
+		'server'
+
+	lastPart = parts[parts.length - 1]
+	parts[parts.length - 1] = "#{
+		path.basename lastPart, path.extname lastPart
+	}"
+
+	# } Chop off trailing 'index'
+	parts.pop() if parts[parts.length - 1] is 'index'
+	
+	# } Only return parent package?
+	parts = parts.slice 0, 1 if onlyParent
+	
+	type: type, name: parts.join '/'
 	
 packageInformation = {}
 packageLookup = {}
 for filename, {commentLines} of sources
 	
-	continue unless (typeAndName = packageTypeAndName filename)?
+	continue unless (typeAndName = packageTypeAndName filename, true)?
 	{type, name} = typeAndName
 	
 	packageInformation[type] ?= {}
@@ -77,7 +89,7 @@ generateHookDocumentation = do ->
 # Hook overview
 
 Shrub implements message passing between packages through a hook system. Hooks
-may be invoked with [pkgman.invoke()](./client/modules/pkgman.html), and are
+may be invoked with [pkgman.invoke()](/client/modules/pkgman.html), and are
 implemented in packages by exporting `pkgmanRegister`.
 
 For instance, if we are implementing a package and want to implement the
@@ -103,7 +115,7 @@ description and a list of implementing packages for each hook.
 		packages = {}
 		
 		for filename, {commentLines} of sources
-			continue unless (typeAndName = packageTypeAndName filename)?
+			continue unless (typeAndName = packageTypeAndName filename, false)?
 			typeAndName.filename = filename
 			
 			some = commentLines.some (line) -> line.match implementsPattern
