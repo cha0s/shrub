@@ -11,6 +11,8 @@ replServer = require 'repl'
 config = require 'config'
 pkgman = require 'pkgman'
 
+debug = require('debug') 'shrub:repl'
+
 # The socket server.
 server = null
 
@@ -80,4 +82,8 @@ exports.pkgmanRegister = (registrar) ->
 			repl.on 'exit', -> socket.end()
 		
 		# } Try to be tidy about things.	
-		fs.unlink settings.socket, -> server.listen settings.socket
+		fs.unlink(
+			settings.socket
+			-> server.listen settings.socket, ->
+				debug "REPL server listening at #{settings.socket}"
+		)
