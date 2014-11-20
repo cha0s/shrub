@@ -13,7 +13,6 @@ angular.module('shrub.packages', [
 			
 			config = require 'config'
 			debug = require('debug') 'shrub:angular'
-			skin = require 'skin'
 			
 			# Invoke hook `controller`.
 			# Allows packages to define Angular controllers. Implementations
