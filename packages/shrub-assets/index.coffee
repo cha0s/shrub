@@ -26,15 +26,12 @@ exports.pkgmanRegister = (registrar) ->
 			(assets, next) ->
 				
 				if 'production' is config.get 'NODE_ENV'
-					
 					assets.scripts.push '/lib/shrub/shrub.min.js'
-					
 				else
-					
 					assets.scripts.push '/lib/shrub/shrub.js'
 					
 				assets.styleSheets.push '/css/shrub.css'
-					
+				
 				next()
 				
 		]

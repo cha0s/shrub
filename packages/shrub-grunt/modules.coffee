@@ -19,9 +19,9 @@ exports.pkgmanRegister = (registrar) ->
 		gruntConfig.clean.modules = [
 			'build/js/packages.js'
 			'build/js/require.js'
-			'build/js/modules/**/*.js'
-			'build/js/custom/*/client/**/*.js'
-			'build/js/packages/*/client/**/*.js'
+			'build/js/modules'
+			'build/js/custom'
+			'build/js/packages'
 			'build/js/modules.js'
 		]
 
