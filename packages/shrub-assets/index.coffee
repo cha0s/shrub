@@ -45,6 +45,7 @@ exports.pkgmanRegister = (registrar) ->
 			'shrub-assets/angular'
 			'shrub-assets'
 			'shrub-notification'
+			'shrub-local-storage'
 			'shrub-config'
 		]
 		
