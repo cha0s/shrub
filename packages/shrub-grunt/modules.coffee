@@ -12,7 +12,6 @@ exports.pkgmanRegister = (registrar) ->
 		gruntConfig.coffee ?= {}
 		gruntConfig.concat ?= {}
 		gruntConfig.copy ?= {}
-		gruntConfig.uglify ?= {}
 		gruntConfig.watch ?= {}
 		gruntConfig.wrap ?= {}
 
@@ -67,18 +66,12 @@ exports.pkgmanRegister = (registrar) ->
 				dest: 'build/js/modules'
 			,
 				expand: true
-				cwd: 'custom'
-				src: ['*/client/**/*.js']
-				dest: 'build/js/modules'
-			]
-
-		gruntConfig.uglify.modules =
-		
-			files: [
-				src: [
-					'build/js/modules.js'
-				]
-				dest: 'build/js/modules.min.js'
+				src: ['packages/*/client/**/*.js']
+				dest: 'build/js'
+			,
+				expand: true
+				src: ['custom/*/client/**/*.js']
+				dest: 'build/js'
 			]
 
 		gruntConfig.watch.modules =
@@ -165,14 +158,6 @@ requires_['#{moduleName}'] = function(module, exports, require, __dirname, __fil
 """
 				]
 
-		gruntConfig.shrub.npmTasks.push 'grunt-contrib-clean'
-		gruntConfig.shrub.npmTasks.push 'grunt-contrib-coffee'
-		gruntConfig.shrub.npmTasks.push 'grunt-contrib-concat'
-		gruntConfig.shrub.npmTasks.push 'grunt-contrib-copy'
-		gruntConfig.shrub.npmTasks.push 'grunt-contrib-uglify'
-		gruntConfig.shrub.npmTasks.push 'grunt-contrib-watch'
-		gruntConfig.shrub.npmTasks.push 'grunt-wrap'
-		
 		gruntConfig.shrub.tasks['build:modules'] = [
 			'coffee:modules'
 			'copy:modules'

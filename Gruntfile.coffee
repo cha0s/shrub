@@ -42,10 +42,13 @@ module.exports = (grunt) ->
 			
 			tasks:
 				build: []
-				default: ['buildOnce']
+				production: [
+					'build'
+				]
+				default: [
+					'buildOnce'
+				]
 		
-		uglify: options: report: 'min'
-	
 	built = false
 	
 	gruntConfig.shrub.tasks['buildOnce'] = ->

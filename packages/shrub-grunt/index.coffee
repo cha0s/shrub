@@ -23,7 +23,7 @@ exports.pkgmanRegister = (registrar) ->
 			files: [
 				src: [
 					'build/js/modules.js'
-					'build/js/app.js'
+					'build/js/app-bundled.js'
 				]
 				dest: 'app/lib/shrub/shrub.js'
 			]
@@ -41,7 +41,7 @@ exports.pkgmanRegister = (registrar) ->
 
 			files: [
 				'build/js/modules.js'
-				'build/js/app.js'
+				'build/js/app-bundled.js'
 			]
 			tasks: 'build:shrub'
 		
@@ -69,15 +69,28 @@ exports.pkgmanRegister = (registrar) ->
 			'concat:shrub'
 		]
 		
+		gruntConfig.shrub.tasks['production:shrub'] = [
+			'uglify:shrub'
+		]
+		
 		gruntConfig.shrub.tasks['execute'] = [
 			'buildOnce'
 			'executeFunction:shrub'
 		]
+		
+		gruntConfig.shrub.npmTasks.push 'grunt-contrib-clean'
+		gruntConfig.shrub.npmTasks.push 'grunt-contrib-coffee'
+		gruntConfig.shrub.npmTasks.push 'grunt-contrib-concat'
+		gruntConfig.shrub.npmTasks.push 'grunt-contrib-copy'
+		gruntConfig.shrub.npmTasks.push 'grunt-contrib-uglify'
+		gruntConfig.shrub.npmTasks.push 'grunt-contrib-watch'
+		gruntConfig.shrub.npmTasks.push 'grunt-wrap'
 
 	# ## Implements hook `gruntConfigAlter`
 	registrar.registerHook 'gruntConfigAlter', (gruntConfig) ->
 		
 		gruntConfig.shrub.tasks['build'].push 'build:shrub'
+		gruntConfig.shrub.tasks['production'].push 'production:shrub'
 	
 	registrar.recur [
 		'angular', 'dox', 'modules', 'tests'

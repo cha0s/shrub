@@ -1,14 +1,23 @@
 {
 	"templates": [],
-	"scripts": [
-		"js/bootstrap.js",
-		"js/bootstrap.min.js"
-	],
-	"styleSheets": [
-		"css/bootstrap-theme.css",
-		"css/bootstrap-theme.min.css",
-		"css/bootstrap.css",
-		"css/bootstrap.min.css",
-		"css/style.css"
-	]
+	"scripts": {
+		"default": [
+			"js/bootstrap.js"
+		],
+		"production": [
+			"js/bootstrap.min.js"
+		]
+	},
+	"styleSheets": {
+		"default": [
+			"css/bootstrap-theme.css",
+			"css/bootstrap.css",
+			"css/style.css"
+		],
+		"production": [
+			"css/bootstrap-theme.min.css",
+			"css/bootstrap.min.css",
+			"css/style.css"
+		]
+	}
 }

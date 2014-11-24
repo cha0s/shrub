@@ -44,6 +44,7 @@ exports.pkgmanRegister = (registrar) ->
 			'shrub-socket-socket.io'
 			'shrub-assets/angular'
 			'shrub-assets'
+			'shrub-notification'
 			'shrub-config'
 		]
 		

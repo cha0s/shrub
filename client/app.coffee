@@ -1,21 +1,22 @@
-'use strict'
 
 # # Application entry point.
 
-# Top-level module, includes UI as well as core.
-angular.module 'shrub', [
-	'shrub.core'
-]
+# Top-level module.
+angular.module 'shrub', ['shrub.core']
+
+coreDependencies = []
+
+coreDependencies.push 'ngRoute'
+coreDependencies.push 'ngSanitize'
+
+coreDependencies.push dependencies... if dependencies?
+
+coreDependencies.push 'shrub.config'
+coreDependencies.push 'shrub.packages'
+coreDependencies.push 'shrub.require'
 
  # Core module: pulls in some Angular modules, and our own modules.
-angular.module('shrub.core', [
-	'ngRoute'
-	'ngSanitize'
-
-	'shrub.config'
-	'shrub.packages'
-	'shrub.require'
-])
+angular.module('shrub.core', coreDependencies)
 
 	.config([
 		'$injector', 'shrub-pkgmanProvider'

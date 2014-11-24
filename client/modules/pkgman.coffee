@@ -69,7 +69,7 @@ exports.rebuildPackageCache = (type) ->
 exports.registerPackageList = (packages, type) ->
 	_packages.push.apply _packages, packages
 	exports.rebuildPackageCache type
-
+	
 # ## invoke
 # 
 # Invoke a hook with arguments. Return the result as an object, keyed by

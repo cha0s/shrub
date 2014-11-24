@@ -183,6 +183,11 @@ exports.pkgmanRegister = (registrar) ->
 							
 						return
 							
+					environmentKey = if 'production' is cache.get 'environment'
+						'production'
+					else
+						'default'
+					
 					service.change = (key) ->
 						
 						# Check the cache before hitting the server.
@@ -205,7 +210,7 @@ exports.pkgmanRegister = (registrar) ->
 						assetsPromise.then ({data}) ->
 							cacheData = cache.get skinKey
 							
-							cacheData.styleSheets = data.styleSheets
+							cacheData.styleSheets = data.styleSheets[environmentKey]
 							cache.put skinKey, cacheData
 							
 							# Cloak the body.
