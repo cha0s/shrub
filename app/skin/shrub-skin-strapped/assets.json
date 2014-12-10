@@ -1,5 +1,7 @@
 {
-	"templates": [],
+	"templates": [
+		"shrub-ui/-notifications.html"
+	],
 	"scripts": {
 		"default": [
 			"js/bootstrap.js"

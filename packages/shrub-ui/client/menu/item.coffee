@@ -6,20 +6,28 @@ exports.pkgmanRegister = (registrar) ->
 		
 		->
 			
-			link: (scope, lElement) ->
+			directive = {}
+			
+			directive.candidateKeys = [
+				'parentName'
+			]
+			
+			directive.link = (scope) ->
 					
 				scope.item ?= {}
+				scope.parentName ?= ''
 				
-				scope.item.children ?= []
+				scope.item.submenu ?= null
 				scope.item.class ?= ''
 				scope.item.href ?= '#'
 				scope.item.text ?= ''
 				
-			scope:
+			directive.scope =
 				
 				item: '=?'
+				parentName: '=?'
 				
-			template: """
+			directive.template = """
 
 <a
 	class="menu-item"
@@ -34,14 +42,17 @@ exports.pkgmanRegister = (registrar) ->
 </a>
 
 <div
-	data-ng-if="item.children.length"
+	data-ng-if="item.submenu"
 	
 	data-shrub-ui-menu
-	data-items="item.children"
+	data-items="item.submenu.items"
+	data-name="item.submenu.name"
 
 	data-class="children"
 ></div>
 
 """
+
+			directive
 			
 	]

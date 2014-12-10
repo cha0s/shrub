@@ -4,6 +4,7 @@
 # Define skinning components.
 
 config = require 'config'
+pkgman = require 'pkgman'
 
 cache = null
 
@@ -20,11 +21,8 @@ exports.pkgmanRegister = (registrar) ->
 			# Proxy link function to add our own directive retrieval and
 			# compilation step.
 			link = directive.link
-			directive.link = (scope, element) ->
+			directive.link = (scope, element, attr) ->
 				topLevelArgs = arguments
-				
-				# Call original link function if one exists.
-				link.apply null, topLevelArgs if link?
 				
 				# Kick off relinking.
 				do relink = ->
@@ -32,7 +30,6 @@ exports.pkgmanRegister = (registrar) ->
 					# Check the cache before hitting the server.
 					# `TODO`: This will become active, not default.
 					skinKey = config.get 'packageConfig:shrub-skin:default'
-					uri = "#{path}.html"
 					
 					cacheData = cache.get skinKey
 					cacheData ?= {}
@@ -53,29 +50,69 @@ exports.pkgmanRegister = (registrar) ->
 						# Cloak the element.
 						element.addClass 'shrub-skin-cloak'
 						
-						if -1 is data.templates.indexOf uri
-							cacheData.templates[uri] ?= $q.when data: false
-						else
-							cacheData.templates[uri] = $http.get(
-								"/skin/#{skinKey}/#{uri}"
-							) unless cacheData.templates[uri]?
+						# Gather candidates.
+						candidateList = ->
+							list = []
+							
+							for key in directive.candidateKeys
+								if specific = scope[key] ? attr[key]
+									list.push specific
+								
+							list
+						
+						candidateTemplates = for candidate in candidateList()
+							"#{path}--#{candidate}.html"
+						candidateTemplates.push "#{path}.html"
+						
+						candidate = do firstCandidate = ->
+							for uri in candidateTemplates
+								if -1 isnt data.templates.indexOf uri
+									return uri
+							
+							return
+						
+						unless cacheData.templates[candidate]?
+							cacheData.templates[candidate] = if candidate?
+								$http.get "/skin/#{skinKey}/#{candidate}"
+							else
+								$q.when data: false
 							
 						cache.put skinKey, cacheData
 						
-						templatePromise = $q.when cacheData.templates[uri]
+						templatePromise = $q.when(
 							
-						templatePromise.then ({data}) ->
-							return unless data
+							cacheData.templates[candidate]
+						
+						).then(({data}) ->
 							
-							element.html data
-							$compile(element.contents())(scope)
+							# If we got any HTML, insert and compile it.
+							if data
+								element.html data
+								$compile(element.contents())(scope)
 							
-							# Call original link function if one exists.
-							link.apply null, topLevelArgs if link?
+							hookInvoke = (key) ->
+								invocations = [
+									key
+									"#{key}--#{directive.name}"
+								]
+								
+								invocations.push(
+									"#{key}--#{directive.name}--#{c}"
+								) for c in candidateList()
+								
+								for hook in invocations
+									for f in pkgman.invokeFlat hook
+										f topLevelArgs... 
+								
+								return
 							
+							# Link.
+							hookInvoke 'skinPreLink'
+							link topLevelArgs... if link?
+							hookInvoke 'skinPostLink'
+
 						# Uncloak the element when finished.
-						templatePromise.finally ->
-							element.removeClass 'shrub-skin-cloak'
+						).finally -> element.removeClass 'shrub-skin-cloak'
 						
 				# Relink again every time the skin changes.
 				scope.$on 'shrub.skin.update', relink
@@ -85,8 +122,8 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `provider`
 	registrar.registerHook 'provider', -> [
 	
-		'$injector', '$provide', 'shrub-pkgmanProvider', 'shrub-requireProvider'
-		($injector, $provide, pkgman, {require}) ->
+		'$injector', '$provide'
+		($injector, $provide) ->
 			
 			provider = {}
 			

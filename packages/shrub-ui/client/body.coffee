@@ -8,7 +8,9 @@ exports.pkgmanRegister = (registrar) ->
 		
 		->
 			
-			template: """
+			directive = {}
+			
+			directive.template = """
 
 <div class="container">
 	<div data-shrub-ui-nav></div>
@@ -19,6 +21,7 @@ exports.pkgmanRegister = (registrar) ->
 </div>
 
 """
+
+			directive
 		
 	]
-	

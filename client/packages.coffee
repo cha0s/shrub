@@ -47,7 +47,8 @@ angular.module('shrub.packages', [
 								
 							# Normalize directive.	
 							if angular.isFunction directive
-								directive = compile: -> directive
+								directive = link: directive
+								directive.compile = -> directive.link
 							else if not directive.compile and directive.link
 								directive.compile = -> directive.link
 							directive.priority ?= 0
@@ -55,6 +56,10 @@ angular.module('shrub.packages', [
 							directive.name ?= name
 							directive.require ?= directive.controller and directive.name
 							directive.restrict ?= 'A'
+							
+							# Shrub stuff
+							directive.candidateKeys ?= []
+							directive.candidateKeys.unshift 'id'
 							
 							# Invoke hook `augmentDirective`.
 							# Allows packages to augment the directives

@@ -7,26 +7,33 @@ exports.pkgmanRegister = (registrar) ->
 		'$compile'
 		($compile) ->
 			
-			compile: (cElement, attrs) ->
-				
-				contents = cElement.contents().remove()
+			directive = {}
 			
-				(scope, lElement) ->
-					
-					scope.class ?= ''
-					scope.items ?= []
+			# Prevent infinite recursion when compiling nested menus.
+			directive.compile = (cElement) ->
+			
+				contents = cElement.contents().remove()
 				
-					if contents?
-
-						compiled = $compile contents
-						lElement.append compiled scope, angular.identity
+				(scope, lElement, attrs) ->
 					
-			scope:
+					directive.link scope, lElement, attrs
+			
+					compiled = $compile contents
+					lElement.append compiled scope, angular.identity
+					
+			directive.link = (scope, element, attrs) ->
+					
+				scope.class ?= ''
+				scope.items ?= []
+				scope.name ?= ''
+				
+			directive.scope =
 				
 				class: '=?'
 				items: '=?'
+				name: '=?'
 				
-			template: """
+			directive.template = """
 
 <ul
 	class="menu"
@@ -37,10 +44,13 @@ exports.pkgmanRegister = (registrar) ->
 
 		data-shrub-ui-menu-item
 		data-item="item"
+		data-parent-name="name"
 	></li>
 </ul>
 
 """
+			
+			directive
 			
 	]
 
