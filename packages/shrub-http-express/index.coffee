@@ -42,6 +42,11 @@ exports.Manager = class Express extends HttpManager
 		# } Connect (no pun) Express's middleware system to ours.
 		@_app.use (req, res, next) => @_middleware.dispatch req, res, next
 	
+	# ### ::addRoute
+	# 
+	# *Add HTTP routes.*
+	addRoute: ({verb, path, receiver}) -> @_app[verb] path, receiver
+	
 	# ### ::listener
 	# 
 	# *Listen for HTTP connections.*

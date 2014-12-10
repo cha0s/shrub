@@ -80,6 +80,7 @@ exports.pkgmanRegister = (registrar) ->
 			endpoint.validators ?= []
 			
 			endpoints[endpoint.route] = endpoint
+		debug '- RPC endpoints registered.'
 		
 		# Invoke hook `endpointAlter`.
 		# Allows packages to modify any endpoints defined.

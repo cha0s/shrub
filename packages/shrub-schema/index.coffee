@@ -12,16 +12,17 @@ exports.pkgmanRegister = (registrar) ->
 		
 		apiRoot: config.get 'packageSettings:shrub-schema:apiRoot'
 	
-	# ## Implements hook `httpInitializing`
+	# ## Implements hook `httpRoutes`
 	# 
 	# Serve the database schema as an authenticated REST API.
-	registrar.registerHook 'httpInitializing', ({_app}) ->
-		
+	registrar.registerHook 'httpRoutes', (http) ->
+		routes = []
+
 		# } DRY.
 		interceptError = (res) ->
 			(error) -> serveJson res, error.code ? 500, message: error.message
 		
-		# } DRY,
+		# } DRY.
 		serveJson = (res, code, data) ->
 			
 			# CORS policy enforcement.
@@ -33,10 +34,6 @@ exports.pkgmanRegister = (registrar) ->
 			res.set 'Content-Type', 'application/json'
 			res.statusCode = code
 			res.send ")]}',\n#{JSON.stringify data}"
-		
-		# Gross...
-		app = _app
-		app._usedRouter = true
 		
 		# Serve the models. For each model, we'll define REST paths to allow
 		# interaction with a model, or set of models.
@@ -64,91 +61,99 @@ exports.pkgmanRegister = (registrar) ->
 				
 				# Get the entire collection.
 				# GET `/api/users`
-				app.get collectionPath, (req, res) ->
+				routes.push
+					path: collectionPath
+					receiver: (req, res) ->
 					
-					query = if Object.keys(req.query).length then req.query
-					Model.authenticatedAll(
-						req.user, query
-	
-					).then(
-						(models) -> serveJson res, 200, keyify collection, models
-	
-					).catch interceptError res
+						query = if Object.keys(req.query).length then req.query
+
+						Model.authenticatedAll(
+							req.user, query
+						).then((models) ->
+							serveJson res, 200, keyify collection, models
+						).catch interceptError res
 					
 				# Get how many resources are in the collection.
 				# GET `/api/users/count`
-				app.get "#{collectionPath}/count", (req, res) ->
+				routes.push
+					path: "#{collectionPath}/count"
+					receiver: (req, res) ->
 					
-					Model.authenticatedCount(
-						req.user
-	
-					).then(
-						(count) -> serveJson res, 200, keyify 'count', count
-	
-					).catch interceptError res
+						Model.authenticatedCount(
+							req.user
+						).then((count) ->
+							serveJson res, 200, keyify 'count', count
+						).catch interceptError res
 				
 				# Create a new resource in the collection.
 				# POST `/api/users`
-				app.post collectionPath, (req, res) ->
+				routes.push
+					verb: 'post'
+					path: collectionPath
+					receiver: (req, res) ->
 	
-					Model.authenticatedCreate(
-						req.user
-						req.body
-	
-					).then(
-						(model) -> serveJson res, 201, keyify resource, model
-	
-					).catch interceptError res
+						Model.authenticatedCreate(
+							req.user, req.body
+						).then((model) ->
+							serveJson res, 201, keyify resource, model
+						).catch interceptError res
 	
 				# Delete all resources in a collection.
 				# DELETE `/api/users`
-				app.delete collectionPath, (req, res) ->
+				routes.push
+					verb: 'delete'
+					path: collectionPath
+					receiver: (req, res) ->
 					
-					Model.authenticatedDestroyAll(
-						req.user
-					
-					).then(
-						-> serveJson res, 200, message: "Collection deleted."
-	
-					).catch interceptError res
+						Model.authenticatedDestroyAll(
+							req.user
+						).then(->
+							serveJson res, 200, message: "Collection deleted."
+						).catch interceptError res
 				
 				# Get a resource.
 				# GET `/api/user/1`
-				app.get resourcePath, (req, res) ->
-					
-					Model.authenticatedFind(
-						req.user
-						req.params.id
-					
-					).then(
-						(model) -> serveJson res, 200, keyify resource, model
-	
-					).catch interceptError res
+				routes.push
+					path: resourcePath
+					receiver: (req, res) ->
+
+						Model.authenticatedFind(
+							req.user
+							req.params.id
+						).then((model) ->
+							serveJson res, 200, keyify resource, model
+						).catch interceptError res
 		
 				# Update a resource.
 				# PUT `/api/user/1`
-				app.put resourcePath, (req, res) ->
+				routes.push
+					verb: 'put'
+					path: resourcePath
+					receiver: (req, res) ->
 					
-					Model.authenticatedUpdate(
-						req.user
-						req.params.id
-						req.body
-					).then(
-						-> serveJson res, 200, message: "Resource updated."
-	
-					).catch interceptError res
+						Model.authenticatedUpdate(
+							req.user
+							req.params.id
+							req.body
+						).then(->
+							serveJson res, 200, message: "Resource updated."
+						).catch interceptError res
 								
 				# Delete a resource.
 				# DELETE `/api/user/1`
-				app.delete resourcePath, (req, res) ->
+				routes.push
+					verb: 'delete'
+					path: resourcePath
+					receiver: (req, res) ->
 					
-					Model.authenticatedDestroy(
-						req.user
-						req.params.id
-					).then(
-						-> serveJson res, 200, message: "Resource deleted."
-	
-					).catch interceptError res
+						Model.authenticatedDestroy(
+							req.user
+							req.params.id
+						).then(->
+							serveJson res, 200, message: "Resource deleted."
+						).catch interceptError res
+					
+		routes
 		
 	# ## Implements hook `packageSettings`
 	registrar.registerHook 'packageSettings', ->

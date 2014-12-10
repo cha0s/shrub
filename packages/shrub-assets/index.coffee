@@ -8,6 +8,8 @@ config = require 'config'
 middleware = require 'middleware'
 pkgman = require 'pkgman'
 
+debug = require('debug') 'shrub:assets:middleware'
+
 assets = null
 
 exports.pkgmanRegister = (registrar) ->
@@ -60,10 +62,12 @@ exports.assets = ->
 
 	# Invoke hook `assetMiddleware`.
 	# Invoked to gather script assets for requests.
+	debug "- Loading asset middleware..."
 	assetMiddleware = middleware.fromHook(
 		'assetMiddleware'
 		config.get "packageSettings:shrub-assets:assetMiddleware"
 	)
+	debug "- Asset middleware loaded."
 	
 	assetMiddleware.dispatch assets, (error) -> throw error if error?
 	

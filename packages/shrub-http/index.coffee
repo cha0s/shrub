@@ -4,6 +4,8 @@
 # Manage HTTP connections.
 
 config = require 'config'
+pkgman = require 'pkgman'
+
 debug = require('debug') 'shrub:http'
 
 httpManager = null
@@ -23,6 +25,30 @@ exports.pkgmanRegister = (registrar) ->
 		
 			debug "Shrub HTTP server up and running on port #{port}!"
 		
+	# ## Implements hook `httpInitializing`
+	registrar.registerHook 'httpInitializing', (http) ->
+	
+		# Invoke hook `httpRoutes`.
+		# Allows packages to specify HTTP routes. Implementations should
+		# return an array of route specifications. See
+		# [shrub-schema's implementation]
+		# (/packages/shrub-schema/index.coffee#implementshookhttproutes) as an
+		# example.
+		debug "- Registering routes..."
+		for routeList in pkgman.invokeFlat 'httpRoutes', http
+			
+			for route in routeList
+				route.verb ?= 'get'
+				
+				debug "- - #{
+					route.verb.toUpperCase()
+				} #{
+					route.path
+				}"
+				
+				http.addRoute route
+		debug "- Routes registered."
+
 	# ## Implements hook `httpMiddleware`
 	registrar.registerHook 'httpMiddleware', (http) ->
 

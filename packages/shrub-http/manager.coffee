@@ -96,7 +96,7 @@ exports.Manager = class HttpManager
 		)
 		
 		httpMiddlewareDebug '- HTTP middleware loaded.'
-
+		
 	# } Ensure any subclass implements these methods.
 	@::[method] = (-> throw new ReferenceError(
 		"HttpManager::#{method} is a pure virtual method!"
@@ -104,5 +104,5 @@ exports.Manager = class HttpManager
 	# "Pure virtual" methods.
 	)) for method in [
 		
-		'listener', 'server'
+		'addRoute', 'listener', 'server'
 	]
