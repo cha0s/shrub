@@ -14,6 +14,9 @@ angular.module('shrub.packages', [
 			config = require 'config'
 			debug = require('debug') 'shrub:angular'
 			
+			angular_ = require 'angular'
+			angular_.setInjector $injector
+			
 			# Invoke hook `controller`.
 			# Allows packages to define Angular controllers. Implementations
 			# should return an [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
