@@ -4,6 +4,7 @@
 # The server application entry point. We load the configuration, invoke the
 # initialization hooks, and listen for signals and process exit.
 
+# Fully qualified because before bootstrap we don't have good require paths.
 {fork} = require "#{__dirname}/server/bootstrap"
 
 # Fork the process to inject require paths into it.
@@ -13,8 +14,9 @@ unless fork()
 	
 	debug = require('debug') 'shrub'
 	errors = require 'errors'
+	
+	middleware = require 'middleware'
 	pkgman = require 'pkgman'
-	schema = require('shrub-schema').schema()
 	
 	# } Load configuration.
 	debug "Loading config..."
@@ -25,30 +27,23 @@ unless fork()
 	
 	debug "Config loaded."
 	
-	# } Let packages define their models in the schema.
-	schema.definePackageModels()
+	debug "Loading bootstrap middleware..."
+	bootstrapMiddleware = middleware.fromHook(
+		'bootstrapMiddleware'
+		config.get 'packageSettings:shrub-core:bootstrapMiddleware'
+	)
+	debug "Bootstrap middleware loaded."
 	
-	Promise.all(
+	bootstrapMiddleware.dispatch (error) ->
 		
-		# Invoke hook `initialize`.
-		# Invoked when the server is just starting. Implementations should
-		# return a promise. When all returned promises are fulfilled,
-		# initialization continues.
-		pkgman.invokeFlat 'initialize'
-	
-	# } After initialization.
-	).done(
-	
 		# Invoke hook `ready`.
 		# Invoked after the server is initialized and ready.
-		-> pkgman.invoke 'ready'
-		(error) ->
-			
-			console.error errors.stack error
-			
-			# } Rethrow any error.
-			throw error
-	)
+		# `TODO`: Remove this; implementations should use
+		# `bootstrapMiddleware`.
+		return pkgman.invoke 'ready' unless error?
+	
+		console.error errors.stack error
+		throw error
 	
 	# Do our best to guarantee that hook `processExit` will always be invoked.
 	

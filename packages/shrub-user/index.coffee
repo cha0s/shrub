@@ -1,13 +1,13 @@
 
 # # User
 # 
-# User oprations. 
+# User operations. 
 
 passport = require 'passport'
 Promise = require 'bluebird'
 
 crypto = require 'server/crypto'
-schema = require('shrub-schema').schema()
+orm = require 'shrub-orm'
 
 clientModule = require './client'
 
@@ -15,9 +15,9 @@ exports.pkgmanRegister = (registrar) ->
 	
 	# ## Implements hook `config`
 	registrar.registerHook 'config', (req) ->
-
+		
 		# Send a redacted version of the request user.
-		req.user.redactFor(req.user).then (redacted) -> redacted
+		req.user.redactFor req.user
 
 	# ## Implements hook `endpointFinished`
 	registrar.registerHook 'endpointFinished', (routeReq, result, req) ->
@@ -39,8 +39,6 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `httpMiddleware`
 	registrar.registerHook 'httpMiddleware', (http) ->
 		
-		{User} = schema.models
-		
 		label: 'Load user using passport'
 		middleware: [
 			
@@ -51,42 +49,57 @@ exports.pkgmanRegister = (registrar) ->
 			# Set the user into the request.
 			(req, res, next) ->
 				
-				req.user = new User() unless req.user?
+				User = orm.collection 'shrub-user'
+				req.user = User.instantiate() unless req.user?
 				
 				next()
 			
 		]
 	
-	# ## Implements hook `models`
-	registrar.registerHook 'models', (schema) ->
+	# ## Implements hook `collections`
+	registrar.registerHook 'collections', ->
 		
 		# Invoke the client hook implementation.
-		clientModule.models schema
+		collections = clientModule.collections()
 		
-		User = schema.models['User']
+		{'shrub-user': User} = collections
 		
-		# Extend the redaction function with server-specific information.
-		User::redactFor = (user) ->
+		(User.redactors = []).push (redacted) ->
+		
+			delete redacted.iname
+			delete redacted.plaintext if redacted.plaintext?
+			delete redacted.salt
+			delete redacted.passwordHash
+			delete redacted.resetPasswordToken
+			return unless redacted.email?
+
+			# Different redacted means full email redaction.
+			if @id isnt redacted.id
+				delete redacted.email
+				return
 			
-			Promise.cast(
-				name: @name
-				id: @id
-	
 			# Decrypt the e-mail if redacting for the same user.
-			).bind({}).then((@redacted) ->
-				return null unless @redacted.email?
-				return @redacted.email unless user.id?
-				return @redacted.email if user.id isnt @redacted.id
-				
-				crypto.decrypt @redacted.email
+			crypto.decrypt(redacted.email).then (email) ->
+				redacted.email = email
+
+		collections
 			
-			).then((email) -> @redacted.email = email
+	# ## Implements hook `collectionsAlter`
+	registrar.registerHook 'collectionsAlter', (collections) ->
+		clientModule.collectionsAlter collections
+		
+		for identity, collection of collections
+			do (identity, collection) ->
 			
-			).then -> @redacted
-			
-	# ## Implements hook `modelsAlter`
-	registrar.registerHook 'modelsAlter', clientModule.modelsAlter
-	
+				collection.redactors ?= []
+				collection.attributes.redactFor = (user) ->
+					redacted = user.toJSON()
+					
+					Promise.all(
+						for redactor in collection.redactors
+							redactor.call user, redacted
+					).then -> redacted
+
 	# ## Implements hook `packageSettings`
 	registrar.registerHook 'packageSettings', ->
 		
@@ -105,8 +118,6 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `socketAuthorizationMiddleware`
 	registrar.registerHook 'socketAuthorizationMiddleware', ->
 		
-		{User} = schema.models
-		
 		label: 'Load user using passport'
 		middleware: [
 		
@@ -117,7 +128,8 @@ exports.pkgmanRegister = (registrar) ->
 			# Set the user into the request.
 			(req, res, next) ->
 				
-				req.user = new User() unless req.user?
+				User = orm.collection 'shrub-user'
+				req.user = User.instantiate() unless req.user?
 				
 				next()
 		
@@ -125,8 +137,6 @@ exports.pkgmanRegister = (registrar) ->
 	
 	# ## Implements hook `socketConnectionMiddleware`
 	registrar.registerHook 'socketConnectionMiddleware', ->
-		
-		{User} = schema.models
 		
 		label: 'Join channel for user'
 		middleware: [
@@ -163,14 +173,13 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `userAfterLogoutMiddleware`
 	registrar.registerHook 'userAfterLogoutMiddleware', ->
 		
-		{User} = schema.models
-				
 		label: 'Instantiate anonymous user'
 		middleware: [
 		
 			({req, user}, res, next) ->
 				
-				req.user = new User()
+				User = orm.collection 'shrub-user'
+				req.user = User.instantiate()
 				
 				next()
 				
@@ -178,7 +187,7 @@ exports.pkgmanRegister = (registrar) ->
 	
 	registrar.recur [
 		'forgot', 'login', 'logout', 'register', 'reset'
-	]	
+	]
 
 # ## loadByName
 # 
@@ -187,6 +196,5 @@ exports.pkgmanRegister = (registrar) ->
 # (string) `name` - The name of the user to load.
 exports.loadByName = (name) ->
 	
-	{User} = schema.models
-	
-	User.findOne where: iname: name.toLowerCase()
+	User = orm.collection 'shrub-user'
+	User.findOne iname: name.toLowerCase()

@@ -96,7 +96,7 @@ exports.Manager = class SocketIoManager extends SocketManager
 				
 		# Connection (post-authorization).
 		@io.on 'connection', (socket) =>
-			
+		
 			# Run the disconnection middleware on socket close.
 			oncloseProxy = socket.onclose
 			socket.onclose = =>

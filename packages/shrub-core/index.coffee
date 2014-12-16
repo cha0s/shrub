@@ -51,6 +51,17 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `packageSettings`
 	registrar.registerHook 'packageSettings', ->
 		
+		# Middleware for server bootstrap phase.
+		bootstrapMiddleware: [
+			'shrub-orm'
+			'shrub-http-express/session'
+			'shrub-http'
+			'shrub-rpc'
+			'shrub-user/login'
+			'shrub-user/logout'
+			'shrub-angular'
+		]
+	
 		# Global site crypto key.
 		cryptoKey: "***CHANGE THIS***"
 		
@@ -86,7 +97,7 @@ exports.pkgmanRegister = (registrar) ->
 				next()
 				
 		]
-	
+		
 # Walk up the X-Forwarded-For header until we hit an untrusted address.
 resolvedAddress = (trustedProxies, address, forwardedFor) ->
 	return address unless forwardedFor?

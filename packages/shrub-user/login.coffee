@@ -6,7 +6,8 @@ Promise = require 'bluebird'
 crypto = require 'server/crypto'
 errors = require 'errors'
 middleware = require 'middleware'
-schema = require('shrub-schema').schema()
+
+orm = require 'shrub-orm'
 
 {threshold} = require 'limits'
 
@@ -33,7 +34,6 @@ exports.pkgmanRegister = (registrar) ->
 				when 'local'
 					
 					res = {}
-					
 					deferred = Promise.defer()
 					passport.authenticate('local', deferred.callback) req, res, fn
 					
@@ -62,39 +62,52 @@ exports.pkgmanRegister = (registrar) ->
 			loginPromise.then((user) -> fn null, user
 			).catch fn
 	
-	# ## Implements hook `initialize`
-	registrar.registerHook 'initialize', ->
+	# ## Implements hook `bootstrapMiddleware`
+	registrar.registerHook 'bootstrapMiddleware', ->
+	
+		label: 'Bootstrap user login'
+		middleware: [
 		
-		{User} = schema.models
-		
-		# Implement a local passport strategy.
-		# `TODO`: Strategies should be dynamically defined, probably through a
-		# hook.
-		LocalStrategy = require('passport-local').Strategy
-		passport.use new LocalStrategy (username, password, done) ->
+			(next) ->
 			
-			# Load a user and compare the hashed password.
-			userPackage.loadByName(username).bind({}).then((@user)->
-				return unless @user?
+				# Implement a local passport strategy.
+				# `TODO`: Strategies should be dynamically defined through a
+				# hook.
+				LocalStrategy = require('passport-local').Strategy
+				passport.use new LocalStrategy (username, password, done) ->
+					
+					# Load a user and compare the hashed password.
+					Promise.cast(
+						userPackage.loadByName username
+					).bind({}).then((@user)->
+						return unless @user?
+						
+						crypto.hasher(
+							plaintext: password
+							salt: new Buffer @user.salt, 'hex'
+						)
+						
+					).then((hashed) ->
+						return unless @user?
+						return unless @user.passwordHash is hashed.key.toString(
+							'hex'
+						)
+						
+						@user
+						
+					).nodeify done
+					
+				passport.serializeUser (user, done) -> done null, user.id
 				
-				crypto.hasher(
-					plaintext: password
-					salt: new Buffer @user.salt, 'hex'
-				)
+				passport.deserializeUser (id, done) ->
+					User = orm.collection 'shrub-user'
+					User.findOne id: id, done
 				
-			).then((hashed) ->
-				return unless @user?
-				return unless @user.passwordHash is hashed.key.toString 'hex'
+				monkeyPatchLogin()
 				
-				@user
+				next()
 				
-			).nodeify done
-			
-		passport.serializeUser (user, done) -> done null, user.id
-		
-		passport.deserializeUser (id, done) -> User.find(id).nodeify done
-		
-		monkeyPatchLogin()
+		]
 	
 	# ## Implements hook `transmittableError`
 	registrar.registerHook 'transmittableError', clientModule.transmittableError

@@ -34,6 +34,8 @@ exports.Manager = class HttpManager
 		
 		# Invoke hook `httpInitializing`.
 		# Invoked before the server is bound on the listening port.
+		# `TODO`: Remove this hook; implementations should be using
+		# `bootstrapMiddleware`.
 		pkgman.invoke 'httpInitializing', this
 		
 		# Start listening.
@@ -44,6 +46,8 @@ exports.Manager = class HttpManager
 			# initialization finishes. Implementations should return a
 			# promise. When all promises are fulfilled, initialization
 			# finishes.
+			# `TODO`: Remove this hook; implementations should be using
+			# `bootstrapMiddleware`.
 			pkgman.invokeFlat 'httpListening', this
 		
 		)

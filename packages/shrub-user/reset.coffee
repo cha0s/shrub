@@ -4,7 +4,8 @@
 crypto = require 'server/crypto'
 
 {threshold} = require 'limits'
-schema = require('shrub-schema').schema()
+
+orm = require 'shrub-orm'
 
 exports.pkgmanRegister = (registrar) ->
 
@@ -16,12 +17,11 @@ exports.pkgmanRegister = (registrar) ->
 	
 		receiver: (req, fn) ->
 			
-			{User} = schema.models
+			User = orm.collection 'shrub-user'
 			
 			# Look up the user.
-			User.findOne(
-				where: resetPasswordToken: req.body.token
-			
+			Promise.cast(
+				User.findOne resetPasswordToken: req.body.token
 			).bind({}).then((@user) ->
 				return unless @user?
 				

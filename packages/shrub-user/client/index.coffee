@@ -9,23 +9,38 @@ config = require 'config'
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `models`
-	registrar.registerHook 'models', exports.models
+	# ## Implements hook `collections`
+	registrar.registerHook 'collections', exports.collections
 		
-	# ## Implements hook `modelsAlter`
-	registrar.registerHook 'modelsAlter', exports.modelsAlter
+	# ## Implements hook `collectionsAlter`
+	registrar.registerHook 'collectionsAlter', exports.collectionsAlter
 			
 	# ## Implements hook `service`		
 	registrar.registerHook 'service', -> [
-		'shrub-rpc', 'shrub-schema', 'shrub-socket'
-		(rpc, {models: User: User}, socket) ->
+		'shrub-orm', 'shrub-rpc', 'shrub-socket'
+		(orm, rpc, socket) ->
 			
 			service = {}
 			
-			user = new User config.get 'packageConfig:shrub-user'
+			_instance = {}
+			
+			_instance = name: 'Loading...'
+			
+			orm.collection('shrub-user').then (User) ->
+				_instance = User.instantiate(
+					config.get 'packageConfig:shrub-user'
+				)
 			
 			# Log a user out if we get a socket call.
-			logout = -> user.fromObject (new User).toObject()
+			logout = ->
+			
+				orm.collection('shrub-user').then (User) ->
+					blank = User.instantiate()
+					delete _instance[k] for k of _instance
+					delete _instance[k] = v for k, v of blank
+				
+				return
+			
 			socket.on 'shrub.user.logout', logout
 			
 			# ## user.isLoggedIn
@@ -47,9 +62,9 @@ exports.pkgmanRegister = (registrar) ->
 					username: username
 					password: password
 				
-				).then (O) ->
-					user.fromObject O
-					user
+				).then (O) -> orm.collection('shrub-user').then (User) ->
+					_instance[k] = v for k, v of O
+					return
 	
 			# ## user.logout
 			# 
@@ -64,7 +79,7 @@ exports.pkgmanRegister = (registrar) ->
 			# ## user.instance
 			# 
 			# *Retrieve the user instance.*
-			service.instance = -> user
+			service.instance = -> _instance
 			
 			service
 			
@@ -94,77 +109,77 @@ exports.pkgmanRegister = (registrar) ->
 		'forgot', 'login', 'logout', 'register', 'reset'
 	]
 	
-exports.models = (schema) ->
-	
-	# Define the User model.
-	User = schema.define 'User',
-		
-		# When this user was created.
-		created:
-			type: Date
-			default: -> new Date()
-		
-		# Last time this user was accessed.
-		lastAccessed:
-			type: Date
-			default: -> new Date()
-		
-		# Email address.
-		email:
-			type: String
-			index: true
-		
-		# Case-insensitivized name.
-		iname:
-			type: String
-			length: 24
-			index: true
-			
-		# Name.
-		name:
-			type: String
-			default: 'Anonymous'
-			length: 24
-			
-		# Hash of the plaintext password.
-		passwordHash:
-			type: String
-		
-		# A token which can be used to reset the user's password (once).
-		resetPasswordToken:
-			type: String
-			length: 48
-			index: true
-		
-		# A 512-bit salt used to cryptographically hash the user's password.
-		salt:
-			type: String
-			length: 128
-	
-	# Update a user's last accessed time. Return the user for chaining.
-	User::touch = ->
-		@lastAccessed = new Date()
-		this
-			
-	# Temporary... secure by default.
-	# `TODO`: Access control structure.
-	User::hasPermission = (perm) -> false
-	User::isAccessibleBy = (user) -> false
+exports.collections = ->
 
-exports.modelsAlter = (models) ->
+	return 'shrub-user':
 	
-	{User} = models
+		attributes:
 	
-	# Implement all the built-in model methods as authenticated versions, which
-	# take a user.
-	for name, Model of models
-		do (name, Model) ->
+			# Last time this user was accessed.
+			lastAccessed:
+				type: 'datetime'
+				defaultsTo: -> new Date()
+			
+			# Email address.
+			email:
+				type: 'string'
+				index: true
+			
+			# Case-insensitivized name.
+			iname:
+				type: 'string'
+				size: 24
+				index: true
+				
+			# Name.
+			name:
+				type: 'string'
+				defaultsTo: 'Anonymous'
+				size: 24
+				maxLength: 24
+				
+			# Hash of the plaintext password.
+			passwordHash:
+				type: 'string'
+			
+			# A token which can be used to reset the user's password (once).
+			resetPasswordToken:
+				type: 'string'
+				size: 48
+				index: true
+			
+			# A 512-bit salt used to cryptographically hash the user's password.
+			salt:
+				type: 'string'
+				size: 128
+
+			# Update a user's last accessed time. Return the user for chaining.
+			touch: ->
+				@lastAccessed = (new Date()).toISOString()
+				this
+					
+			# Temporary... secure by default.
+			# `TODO`: Access control structure.
+			hasPermission: (perm) -> false
+			isAccessibleBy: (user) -> false
+		
+exports.collectionsAlter = (collections) ->
+
+	# `TODO`: This is broken since ORM change
+	{'shrub-user': User} = collections
+	
+	# Implement all the built-in collection methods as authenticated versions,
+	# which take a user.
+	for identity, collection of collections
+		do (identity, collection) ->
 	
 			validateUser = (user) ->
 				
 				new Promise (resolve, reject) ->
 				
-					return resolve() if user instanceof User
+					# `TODO`: See if we can do this without using the internal
+					# _model property.
+					return resolve()# if user instanceof User._model
 						
 					error = new Error "Invalid user."
 					error.code = 500
@@ -178,13 +193,13 @@ exports.modelsAlter = (models) ->
 				error.code = 403
 				throw error
 					
-			Model.authenticatedAll = (user, params) ->
+			collection.authenticatedAll = (user, params) ->
 				
 				validateUser(user).then(->
-					checkPermission user, "schema:#{name}:all"
+					checkPermission user, "shrub-orm:#{name}:all"
 				
 				).then(->
-					Model.all params
+					orm.collection(identity).all params
 				
 				).then (models) ->
 					return models if models.length > 0
@@ -193,27 +208,27 @@ exports.modelsAlter = (models) ->
 					error.code = 404
 					Promise.reject error
 			
-			Model.authenticatedCount = (user) ->
+			collection.authenticatedCount = (user) ->
 				
 				validateUser(user).then(->
-					checkPermission user, "schema:#{name}:count"
+					checkPermission user, "shrub-orm:#{name}:count"
 				
-				).then -> Model.count()
+				).then -> orm.collection(identity).count()
 				
-			Model.authenticatedCreate = (user, properties) ->
+			collection.authenticatedCreate = (user, attributes) ->
 		
 				validateUser(user).then(->
-					checkPermission user, "schema:#{name}:create"
+					checkPermission user, "shrub-orm:#{name}:create"
 				
-				).then -> Model.create properties
+				).then -> orm.collection(identity).create attributes
 		
-			Model.authenticatedDestroy = (user, id) ->
+			collection.authenticatedDestroy = (user, id) ->
 			
 				validateUser(user).then(->
-					checkPermission user, "schema:#{name}:create"
+					checkPermission user, "shrub-orm:#{name}:create"
 				
 				).then(->
-					Model.authenticatedFind user, id
+					collection.authenticatedFind user, id
 				
 				).then (model) ->
 					return model.destroy() if model.isDeletableBy user
@@ -227,17 +242,17 @@ exports.modelsAlter = (models) ->
 					
 					Promise.reject error
 			
-			Model.authenticatedDestroyAll = (user) ->
+			collection.authenticatedDestroyAll = (user) ->
 			
 				validateUser(user).then(->
-					checkPermission "schema:#{name}:destroyAll"
+					checkPermission "shrub-orm:#{name}:destroyAll"
 				
-				).then -> Model.destroyAll()
+				).then -> orm.collection(identity).destroyAll()
 				
-			Model.authenticatedFind = (user, id) ->
+			collection.authenticatedFind = (user, id) ->
 		
 				validateUser(user).then(->
-					Model.find id
+					orm.collection(identity).find id
 			
 				).then (model) ->
 					return model if model? and model.isAccessibleBy user
@@ -246,14 +261,17 @@ exports.modelsAlter = (models) ->
 					error.code = 404
 					Promise.reject error
 			
-			Model.authenticatedUpdate = (user, id, properties) ->
+			collection.authenticatedUpdate = (user, id, attributes) ->
 		
 				validateUser(user).then(->
-					Model.authenticatedFind user, id
+					collection.authenticatedFind user, id
 				
 				).then (model) ->
 					if model.isEditableBy user
-						return model.updateAttributes properties
+						for k, v of attributes
+							model[k] = v
+						model.id = id
+						return model.save()
 						
 					if model.isAccessibleBy user
 						error = new Error "Access denied."
@@ -264,7 +282,8 @@ exports.modelsAlter = (models) ->
 					
 					Promise.reject error
 				
-			Model::isAccessibleBy ?= (user) -> true
-			Model::isEditableBy ?= (user) -> false
-			Model::isDeletableBy ?= (user) -> false
-			Model::redactFor ?= (user) -> Promise.resolve this
+			collection.attributes.isAccessibleBy ?= (user) -> false
+			collection.attributes.isEditableBy ?= (user) -> false
+			collection.attributes.isDeletableBy ?= (user) -> false
+			
+	return

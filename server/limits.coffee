@@ -17,6 +17,8 @@ pkgman = require 'pkgman'
 # number of requests per time period. For instance, by default the
 # [user login](./packages/user/login.html) endpoint limits the number of logins
 # a user may attempt to 3 every 30 seconds.
+# 
+# `TODO`: Do this with ORM so it isn't tied to redis.
 exports.Limiter = class Limiter
 	
 	# ### *constructor*

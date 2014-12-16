@@ -18,42 +18,51 @@ exports.pkgmanRegister = (registrar) ->
 			# Log out.
 			req.logOut().nodeify fn
 	
-	# ## Implements hook `initialize`
-	# Monkey patch http.IncomingMessage.prototype.logout to run our middleware,
-	# and return a promise.
-	registrar.registerHook 'initialize', ->
-		
-		{IncomingMessage} = require 'http'
-		
-		req = IncomingMessage.prototype
-		
-		# Invoke hook `userBeforeLogoutMiddleware`.
-		# Invoked before a user logs out.
-		userBeforeLogoutMiddleware = middleware.fromShortName(
-			'user before logout'
-			'shrub-user'
-		)
+	# ## Implements hook `bootstrapMiddleware`
+	registrar.registerHook 'bootstrapMiddleware', ->
 	
-		# Invoke hook `userAfterLogoutMiddleware`.
-		# Invoked after a user logs out.
-		userAfterLogoutMiddleware = middleware.fromShortName(
-			'user after logout'
-			'shrub-user'
-		)
+		label: 'Bootstrap user logout'
+		middleware: [
 		
-		logout = req.passportLogOut = req.logout
-		req.logout = req.logOut = ->
+			(next) ->
 			
-			new Promise (resolve, reject) =>
-		
-				logoutReq = req: this, user: @user
+				{IncomingMessage} = require 'http'
 				
-				userBeforeLogoutMiddleware.dispatch logoutReq, null, (error) =>
-					return reject error if error?
+				req = IncomingMessage.prototype
+				
+				# Invoke hook `userBeforeLogoutMiddleware`.
+				# Invoked before a user logs out.
+				# `TODO`: Remove res param from implementations.
+				userBeforeLogoutMiddleware = middleware.fromShortName(
+					'user before logout'
+					'shrub-user'
+				)
+			
+				# Invoke hook `userAfterLogoutMiddleware`.
+				# Invoked after a user logs out.
+				# `TODO`: Remove res param from implementations.
+				userAfterLogoutMiddleware = middleware.fromShortName(
+					'user after logout'
+					'shrub-user'
+				)
+				
+				logout = req.passportLogOut = req.logout
+				req.logout = req.logOut = ->
 					
-					logout.call this
-					
-					userAfterLogoutMiddleware.dispatch logoutReq, null, (error) ->
-						return reject error if error?
+					new Promise (resolve, reject) =>
+				
+						logoutReq = req: this, user: @user
 						
-						resolve()
+						userBeforeLogoutMiddleware.dispatch logoutReq, null, (error) =>
+							return reject error if error?
+							
+							logout.call this
+							
+							userAfterLogoutMiddleware.dispatch logoutReq, null, (error) ->
+								return reject error if error?
+								
+								resolve()
+								
+				next()
+								
+		]

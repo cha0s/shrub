@@ -38,7 +38,7 @@ exports.Middleware = class Middleware
 	# *Add a middleware function to the stack.*
 	# 
 	# * (function) `fn` - A middleware function. 
-	use: (fn) -> @_middleware.push fn
+	use: (fn, label) -> @_middleware.push fn: fn, label: label
 	
 	# ## ::dispatch
 	# 
@@ -54,11 +54,17 @@ exports.Middleware = class Middleware
 		index = 0
 		
 		invoke = (error) =>
+		
+			if index > 0
+				if (label = @_middleware[index - 1].label)?
+					debug "Invoked `#{label}`."
 			
 			# Call `fn` with any error if we're done.
 			return fn error if index is @_middleware.length
 			
-			current = @_middleware[index++]
+			{fn: current, label} = @_middleware[index++]
+			
+			debug "Invoking `#{label}`..." if label?
 			
 			# Error-handling middleware.
 			if current.length is args.length + 2
@@ -120,7 +126,7 @@ exports.fromHook = (hook, paths, args...) ->
 		
 		debug "- - #{spec.label}"
 		
-		middleware.use _ for _ in spec.middleware ? []
+		middleware.use _, spec.label for _ in spec.middleware ? []
 	
 	middleware
 

@@ -1,7 +1,9 @@
 
-# # Database schema
+# # REST API for database schema
 # 
-# Tools for working with the database schema.
+# Serve the database schema over a REST API.
+
+i8n = require 'inflection'
 
 config = require 'config'
 
@@ -164,16 +166,11 @@ exports.pkgmanRegister = (registrar) ->
 		# [CORS](http://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
 		# headers.
 		corsHeaders: null
-		
-	# ## Implements hook `replContext`
-	# 
-	# Provide the database schema to the REPL context.
-	registrar.registerHook 'replContext', (context) ->
-		
-		context.schema = schema
 
-schema = require('./client').define(
-	require "jugglingdb-redis"
-)
 
-exports.schema = -> schema
+exports.resourcePaths = (name) ->
+
+	resource = i8n.dasherize(i8n.underscore name).toLowerCase()
+	
+	resource: resource
+	collection: i8n.pluralize resource

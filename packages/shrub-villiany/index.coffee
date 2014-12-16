@@ -12,9 +12,10 @@ config = require 'config'
 errors = require 'errors'
 logging = require 'logging'
 
+orm = require 'shrub-orm'
+
 {AuthorizationFailure} = require 'shrub-socket/manager'
 {Limiter, threshold} = require 'limits'
-schema = require('shrub-schema').schema()
 
 logger = logging.create 'logs/villiany.log'
 	
@@ -65,31 +66,35 @@ exports.pkgmanRegister = (registrar) ->
 					
 		]
 
-	# ## Implements hook `models`
-	registrar.registerHook 'models', (schema) ->
+	# ## Implements hook `collections`
+	registrar.registerHook 'collections', ->
 		
 		fingerprintKeys = audit.fingerprintKeys()
 		
 		# Bans.
-		model = expires: type: Number
-		
+		Ban =
+			
+			attributes:
+			
+				expires: 'number'
+				
 		# The structure of a ban is dictated by the fingerprint structure.
 		for key in fingerprintKeys
-			model[key] =
+			Ban.attributes[key] =
 				index: true
-				type: String
-		
-		Ban = schema.define 'Ban', model
+				type: 'string'
 		
 		# Generate a test for whether each fingerprint key has been banned.
 		fingerprintKeys.forEach (key) ->
 			
 			# `session` -> `isSessionBanned`
 			Ban[i8n.camelize "is_#{key}_banned", true] = (value) ->
-				where = {}
-				where[key] = value
+				criteria = {}
+				criteria[key] = value
 				
-				Ban.all(where: where).bind({}).then((@bans) ->
+				Promise.cast(
+					orm.collection('shrub-ban').find criteria
+				).bind({}).then((@bans) ->
 					return false if @bans.length is 0
 					
 					# Destroy all expired bans.
@@ -127,10 +132,11 @@ exports.pkgmanRegister = (registrar) ->
 				settings = config.get 'packageSettings:shrub-villiany:ban'
 				expires = settings.defaultExpiration
 			
-			ban = new Ban expires: Date.now() + expires
-			ban[key] = fingerprint[key] for key in fingerprintKeys
-				
-			ban.save()
+			data = expires: Date.now() + expires
+			data[key] = fingerprint[key] for key in fingerprintKeys
+			orm.collection('shrub-ban').create data
+			
+		'shrub-ban': Ban
 			
 	# ## Implements hook `httpMiddleware`
 	registrar.registerHook 'httpMiddleware', ->
@@ -209,7 +215,7 @@ villianyLimiter = new Limiter(
 # Define `req.reportVilliany()`.
 reporterMiddleware = (req, res, next) ->
 	
-	{Ban} = schema.models			
+	Ban = orm.collection 'shrub-ban'			
 
 	req.reportVilliany = (score, type) ->
 		
@@ -240,12 +246,11 @@ reporterMiddleware = (req, res, next) ->
 			
 			# Ban.
 			Ban.createFromFingerprint fingerprint
-			villianyLimiter.ttl keys
-					
-		).then((ttl) ->
+		
+		).then(->
 			
 			# Kick.
-			req.villianyKick ttl
+			req.villianyKick villianyLimiter.ttl keys
 		
 		).then(-> true
 		).catch NotAVillian, -> false
@@ -255,7 +260,7 @@ reporterMiddleware = (req, res, next) ->
 # Enforce bans.
 enforcementMiddleware = (req, res, next) ->
 
-	{Ban} = schema.models
+	Ban = orm.collection 'shrub-ban'
 
 	# Terminate the request if a ban is enforced.
 	class RequestBanned extends Error

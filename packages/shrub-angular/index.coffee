@@ -107,17 +107,26 @@ exports.pkgmanRegister = (registrar) ->
 				
 	]
 	
-	# ## Implements hook `initialize`
-	registrar.registerHook 'initialize', ->
+	# ## Implements hook `bootstrapMiddleware`
+	registrar.registerHook 'bootstrapMiddleware', ->
+	
+		label: 'Bootstrap Angular'
+		middleware: [
 		
-		# Always disable sandbox rendering in end-to-end testing mode.
-		config.set 'packageSettings:shrub-angular:render', false if config.get 'E2E'
-		
-		# } Load the navigation middleware.
-		navigationMiddleware = middleware.fromShortName(
-			'angular navigation'
-			'shrub-angular'
-		)
+			(next) ->
+			
+				# Always disable sandbox rendering in end-to-end testing mode.
+				if config.get 'E2E'
+					config.set 'packageSettings:shrub-angular:render', false
+				
+				# } Load the navigation middleware.
+				navigationMiddleware = middleware.fromShortName(
+					'angular navigation', 'shrub-angular'
+				)
+				
+				next()
+
+		]
 		
 	# ## Implements hook `packageSettings`
 	registrar.registerHook 'packageSettings', ->

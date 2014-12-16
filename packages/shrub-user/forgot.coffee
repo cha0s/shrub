@@ -5,10 +5,11 @@ Promise = require 'bluebird'
 
 crypto = require 'server/crypto'
 config = require 'config'
+
 nodemailer = require 'shrub-nodemailer'
+orm = require 'shrub-orm'
 
 {threshold} = require 'limits'
-schema = require 'shrub-schema'
 
 exports.pkgmanRegister = (registrar) ->
 	
@@ -21,22 +22,21 @@ exports.pkgmanRegister = (registrar) ->
 		
 		receiver: (req, fn) ->
 			
-			{User} = schema.models
+			User = orm.collection 'shrub-user'
 			
 			Promise.resolve().then(->
 			
 				# Search for username or encrypted email.
 				if -1 is req.body.usernameOrEmail.indexOf '@'
 					
-					where: iname: req.body.usernameOrEmail.toLowerCase()
+					iname: req.body.usernameOrEmail.toLowerCase()
 				
 				else
 					
 					crypto.encrypt(
 						req.body.usernameOrEmail.toLowerCase()
 					
-					).then (encryptedEmail) ->
-						where: email: encryptedEmail
+					).then (encryptedEmail) -> email: encryptedEmail
 			
 			).then((filter) ->
 				

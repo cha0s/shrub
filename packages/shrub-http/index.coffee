@@ -12,18 +12,28 @@ httpManager = null
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `initialize`
-	registrar.registerHook 'initialize', ->
+	# ## Implements hook `bootstrapMiddleware`
+	registrar.registerHook 'bootstrapMiddleware', ->
+	
+		label: 'Bootstrap HTTP server'
+		middleware: [
 		
-		{manager, port} = config.get 'packageSettings:shrub-http'
-		
-		{Manager} = require manager.module
-		
-		# Spin up the HTTP server, and initialize it.
-		httpManager = new Manager()
-		httpManager.initialize().then ->
-		
-			debug "Shrub HTTP server up and running on port #{port}!"
+			(next) ->
+			
+				{manager, port} = config.get 'packageSettings:shrub-http'
+				
+				{Manager} = require manager.module
+				
+				# Spin up the HTTP server, and initialize it.
+				httpManager = new Manager()
+				httpManager.initialize().then(->
+				
+					debug "Shrub HTTP server up and running on port #{port}!"
+					next()
+					
+				).catch next
+					
+		]
 		
 	# ## Implements hook `httpInitializing`
 	registrar.registerHook 'httpInitializing', (http) ->
@@ -31,9 +41,9 @@ exports.pkgmanRegister = (registrar) ->
 		# Invoke hook `httpRoutes`.
 		# Allows packages to specify HTTP routes. Implementations should
 		# return an array of route specifications. See
-		# [shrub-schema's implementation]
-		# (/packages/shrub-schema/index.coffee#implementshookhttproutes) as an
-		# example.
+		# [shrub-orm-rest's implementation]
+		# (/packages/shrub-orm-rest/index.coffee#implementshookhttproutes) as
+		# an example.
 		debug "- Registering routes..."
 		for routeList in pkgman.invokeFlat 'httpRoutes', http
 			

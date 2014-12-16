@@ -10,7 +10,7 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `appConfig`
 	registrar.registerHook 'appConfig', -> [
 		'$injector', '$routeProvider', '$locationProvider', 'shrub-pkgmanProvider'
-		({invoke}, $routeProvider, {html5Mode}, pkgmanProvider) ->
+		({invoke}, $routeProvider, $locationProvider, pkgmanProvider) ->
 			
 			routes = {}
 			
@@ -49,8 +49,8 @@ exports.pkgmanRegister = (registrar) ->
 					# behavior.
 					routeController = route.controller
 					route.controller = [
-						'$injector', '$scope'
-						({invoke}, $scope) ->
+						'$controller', '$injector', '$scope'
+						($controller, $injector, $scope) ->
 							
 							# Invoke hook `routeControllerStart`.
 							# Allow packages to act before a new route controller
@@ -61,7 +61,7 @@ exports.pkgmanRegister = (registrar) ->
 							
 							injectables.push routeController
 							
-							invoke(
+							$injector.invoke(
 								injectable, null
 								$scope: $scope
 								route: route
@@ -78,7 +78,7 @@ exports.pkgmanRegister = (registrar) ->
 			$routeProvider.when '/shrub-entry-point', {}
 			
 			# Turn on HTML5 mode: "Real" URLs.
-			html5Mode true
+			$locationProvider.html5Mode true
 	]
 	
 	# ## Implements hook `appRun`

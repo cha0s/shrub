@@ -14,21 +14,30 @@ sessionStore = null
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `initialize`
-	# 
-	# Initialize cookie parser and session store.
-	registrar.registerHook 'initialize', (http) ->
-
-		{cookie, sessionStore: sessionStoreConfig} = config.get 'packageSettings:shrub-session'
+	# ## Implements hook `bootstrapMiddleware`
+	registrar.registerHook 'bootstrapMiddleware', ->
+	
+		label: 'Bootstrap session handling'
+		middleware: [
 		
-		cookieParser = express.cookieParser cookie.cryptoKey
-		
-		sessionStore = switch sessionStoreConfig
+			(next) ->
 			
-			when 'redis'
+				{cookie, sessionStore: sessionStoreConfig} = config.get(
+					'packageSettings:shrub-session'
+				)
 				
-				RedisStore = require('connect-redis') express
-				new RedisStore client: redis.createClient()
+				cookieParser = express.cookieParser cookie.cryptoKey
+				
+				sessionStore = switch sessionStoreConfig
+					
+					when 'redis'
+						
+						RedisStore = require('connect-redis') express
+						new RedisStore client: redis.createClient()
+						
+				next()
+						
+		]
 		
 	# ## Implements hook `httpMiddleware`
 	# 
@@ -41,7 +50,7 @@ exports.pkgmanRegister = (registrar) ->
 		middleware: [
 			
 			# Express cookie parser.
-			cookieParser
+			-> cookieParser arguments...
 			
 			# Session reification.
 			express.session(

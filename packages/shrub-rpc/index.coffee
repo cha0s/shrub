@@ -28,71 +28,81 @@ endpoints = {}
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `initialize`
-	registrar.registerHook 'initialize', ->
+	# ## Implements hook `bootstrapMiddleware`
+	registrar.registerHook 'bootstrapMiddleware', ->
 	
-		# A route is defined like:
-		# 
-		# * `validators`: Validators are run before the call is received. They are
-		#   defined as middleware.
-		# 
-		# * `receiver`: The receiver is called if none of the validators throw an
-		#   error.
-		# 
-		# Example:
-		validators: [
+		label: 'Bootstrap RPC'
+		middleware: [
+		
+			(next) ->
 			
-			(req, res, next) ->
+				# A route is defined like:
+				# 
+				# * `validators`: Validators are run before the call is
+				#   received. They are defined as middleware.
+				# 
+				# * `receiver`: The receiver is called if none of the
+				#   validators throw an error.
+				# 
+				# Example:
+				validators: [
+					
+					(req, res, next) ->
+						
+						if req.badStuffHappened
+							
+							next new Error "YIKES!"
+							
+						else
+							
+							next()
+				]
 				
-				if req.badStuffHappened
+				receiver: (req, fn) ->
+				
+					if req.badStuffHappened
+						
+						fn new Error "YIKES!"
+						
+					else
+						
+						# Anything you pass to the second parameter of fn will
+						# be passed back to the client. Keep this in mind when
+						# handlind sensitive data.
+						fn null, message: "Woohoo!"
+						
+				# Invoke hook `endpoint`.
+				# Gather all endpoints.
+				debug '- Registering RPC endpoints...'
+				for path, endpoint of pkgman.invoke 'endpoint'
 					
-					next new Error "YIKES!"
+					endpoint = receiver: endpoint if _.isFunction endpoint
 					
-				else
+					# Default the RPC route to the package path, replacing
+					# slashes with dots.
+					endpoint.route ?= clientModule.normalizeRouteName path
+					debug "- - rpc://#{endpoint.route}"
 					
-					next()
+					endpoint.validators ?= []
+					
+					endpoints[endpoint.route] = endpoint
+				debug '- RPC endpoints registered.'
+				
+				# Invoke hook `endpointAlter`.
+				# Allows packages to modify any endpoints defined.
+				pkgman.invoke 'endpointAlter', endpoints
+				
+				# Set up the validators as middleware.
+				for route, endpoint of endpoints
+					validators = new Middleware()
+					for validator in endpoint.validators
+						validators.use validator
+					endpoint.validators = validators
+					
+				next()
+		
 		]
-		
-		receiver: (req, fn) ->
-		
-			if req.badStuffHappened
-				
-				fn new Error "YIKES!"
-				
-			else
-				
-				# Anything you pass to the second parameter of fn will be passed
-				# back to the client. Keep this in mind.
-				fn null, message: "Everything went better than expected!"
-				
-		# Invoke hook `endpoint`.
-		# Gather all endpoints.
-		debug '- Registering RPC endpoints...'
-		for path, endpoint of pkgman.invoke 'endpoint'
-			
-			endpoint = receiver: endpoint if _.isFunction endpoint
-			
-			# Default the RPC route to the package path, replacing slashes with
-			# dots.
-			endpoint.route ?= clientModule.normalizeRouteName path
-			debug "- - rpc://#{endpoint.route}"
-			
-			endpoint.validators ?= []
-			
-			endpoints[endpoint.route] = endpoint
-		debug '- RPC endpoints registered.'
-		
-		# Invoke hook `endpointAlter`.
-		# Allows packages to modify any endpoints defined.
-		pkgman.invoke 'endpointAlter', endpoints
-		
-		# Set up the validators as middleware.
-		for route, endpoint of endpoints
-		
-			validators = new Middleware()
-			validators.use validator for validator in endpoint.validators
-			endpoint.validators = validators
-			
+					
 	# ## Implements hook `socketConnectionMiddleware`
 	registrar.registerHook 'socketConnectionMiddleware', ->
 		

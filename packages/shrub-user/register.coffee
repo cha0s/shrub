@@ -5,7 +5,8 @@ config = require 'config'
 nodemailer = require 'shrub-nodemailer'
 
 crypto = require 'server/crypto'
-schema = require('shrub-schema').schema()
+
+orm = require 'shrub-orm'
 
 {threshold} = require 'limits'
 
@@ -82,30 +83,34 @@ exports.pkgmanRegister = (registrar) ->
 # * (string) `email` - Email address of the new user.
 # 
 # * (string) `password` - The new user's password.
+# 
+# `TODO`: Should be a class method on the shrub-user collection.
 exports.register = (name, email, password) ->
 	
-	{User} = schema.models
-	user = new User name: name, iname: name.toLowerCase()
+	User = orm.collection 'shrub-user'
+	User.create(name: name, iname: name.toLowerCase()).then((user) ->
 	
-	# Encrypt the email.
-	crypto.encrypt(email.toLowerCase()).then((encryptedEmail) ->
-
-		user.email = encryptedEmail
-
-		# Set the password encryption details.
-		crypto.hasher plaintext: password
-		
-	).then((hashed) ->
-		
-		user.plaintext = hashed.plaintext
-		user.salt = hashed.salt.toString 'hex'
-		user.passwordHash = hashed.key.toString 'hex'
+		# Encrypt the email.
+		crypto.encrypt(email.toLowerCase()).then((encryptedEmail) ->
 	
-		# Generate a one-time login token.
-		crypto.randomBytes 24
+			user.email = encryptedEmail
+	
+			# Set the password encryption details.
+			crypto.hasher plaintext: password
+			
+		).then((hashed) ->
+			
+			user.plaintext = hashed.plaintext
+			user.salt = hashed.salt.toString 'hex'
+			user.passwordHash = hashed.key.toString 'hex'
 		
-	).then (token) ->
-		
-		user.resetPasswordToken = token.toString 'hex'
-		
-		user.save()
+			# Generate a one-time login token.
+			crypto.randomBytes 24
+			
+		).then (token) ->
+			
+			user.resetPasswordToken = token.toString 'hex'
+			
+			user.save()
+	)
+	
