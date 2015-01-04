@@ -84,22 +84,20 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `appRun`
 	registrar.registerHook 'appRun', -> [
 		'$rootScope', '$location', '$window', 'shrub-socket', 'shrub-ui/title'
-		($rootScope, $location, $window, socket, {setSite}) ->
+		($rootScope, $location, $window, socket, title) ->
 			
-			$rootScope.$watch(
-				-> $location.path()
-				->
+			# Split the path into the corresponding classes, e.g.
+			#
+			# foo/bar/baz -> class="foo foo-bar foo-bar-baz"
+			$rootScope.$watch (-> $location.path()), ->
 				
-					# Split the path into the corresponding classes, e.g.
-					#
-					# foo/bar/baz -> class="foo foo-bar foo-bar-baz"
-					parts = $location.path().substr(1).split '/'
-					parts = for i in [1..parts.length]
-						part = parts.slice(0, i).join '-'
-						part.replace /[^_a-zA-Z0-9-]/g, '-'
-						
-					$rootScope.pathClass = parts.join ' '
-			)
+				parts = $location.path().substr(1).split '/'
+				parts = parts.map (part) -> part.replace /[^_a-zA-Z0-9-]/g, '-'
+				
+				classes = for i in [1..parts.length]
+					parts.slice(0, i).join '-'
+					
+				$rootScope.pathClass = classes.join ' '
 			
 			# Navigate the client to `href`.
 			socket.on 'core.navigateTo', (href) -> $window.location.href = href
@@ -107,7 +105,12 @@ exports.pkgmanRegister = (registrar) ->
 			# Reload the client.
 			socket.on 'core.reload', -> $window.location.reload()
 			
-			setSite config.get 'packageConfig:shrub-core:siteName'
+			# Set the site name into the window title.
+			title.setSite config.get 'packageConfig:shrub-core:siteName'
+			
+			# Set up application close behavior.
+			$window.addEventListener 'beforeunload', ->
+				true if $rootScope.emit('shrub.core.appClose').defaultPrevented
 			
 	]
 	

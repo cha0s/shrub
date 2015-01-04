@@ -13,9 +13,9 @@ exports.pkgmanRegister = (registrar) ->
 				
 				if 'production' is config.get 'NODE_ENV'
 					
-					assets.scripts.push '//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js'
-					assets.scripts.push '//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-route.min.js'						
-					assets.scripts.push '//ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-sanitize.min.js'						
+					assets.scripts.push '//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js'
+					assets.scripts.push '//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular-route.min.js'						
+					assets.scripts.push '//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular-sanitize.min.js'						
 					
 				else
 					

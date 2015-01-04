@@ -68,8 +68,6 @@ exports.pkgmanRegister = (registrar) ->
 			flashInProgress = null
 			
 			service.flash = ->
-				
-				# Don't queue up a million timeouts.
 				return if flashInProgress?
 				
 				flashInProgress = $interval(

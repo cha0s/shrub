@@ -23,9 +23,11 @@ angular.module('shrub.packages', [
 			debug "Registering controllers..."
 			
 			for path, injected of pkgman.invoke 'controller'
-				debug path
+				controllerName = pkgman.normalizePath path
 				
-				$controllerProvider.register path, injected
+				debug controllerName
+				
+				$controllerProvider.register controllerName, injected
 
 			debug "Controllers registered."
 
@@ -36,33 +38,71 @@ angular.module('shrub.packages', [
 			
 			for path, injected of pkgman.invoke 'directive'
 				do (path, injected) ->
-					name = pkgman.normalizePath path
+					directiveName = pkgman.normalizePath path
 					
-					debug name
+					debug directiveName
 					
-					$compileProvider.directive name, injected
-					
-					$provide.factory "#{name}Directive", [
-						'$injector'
-						($injector) ->
+					$compileProvider.directive directiveName, injected
+					$provide.factory "#{directiveName}Directive", [
+						'$controller', '$injector'
+						($controller, $injector) ->
 						
-							directive = $injector.invoke injected
-								
 							# Normalize directive.	
+							directive = $injector.invoke injected
+							
+							# Ensure compile exists.
 							if angular.isFunction directive
 								directive = link: directive
 								directive.compile = -> directive.link
-							else if not directive.compile and directive.link
+							else if not directive.compile
 								directive.compile = -> directive.link
+							
+							# Automatic link function attachment to controller.
+							link = directive.link
+							directive.link = (scope, element, attrs, controllers) ->
+								if controllers?
+									unless angular.isArray controllers
+										controllers = [controllers]
+										
+									for controller in controllers
+										controller.link? scope, element, attrs
+								
+								link? arguments...
+
+							directive.name ?= directiveName
+
+							# Automatic directive controller discovery.
+							if directive.bindToController
+								directive.controller ?= directive.name
+								
+							directive.require ?= directive.controller and directive.name
 							directive.priority ?= 0
 							directive.index = 0
-							directive.name ?= name
-							directive.require ?= directive.controller and directive.name
-							directive.restrict ?= 'A'
+							directive.restrict ?= 'EA'
 							
-							# Shrub stuff
-							directive.candidateKeys ?= []
-							directive.candidateKeys.unshift 'id'
+							if angular.isObject directive.scope
+								
+								directive.$$isolateBindings = do ->
+									LOCAL_REGEXP = /^\s*([@&]|=(\*?))(\??)\s*(\w*)\s*$/;
+									
+									bindings = {}
+									
+									for scopeName, definition of directive.scope
+										match = definition.match LOCAL_REGEXP
+							
+										unless match
+											throw angular.$$minErr('$compile')('iscp',
+													"Invalid isolate scope definition for directive '{0}'." +
+													" Definition: {... {1}: '{2}' ...}",
+													directive.name, scopeName, definition);
+							
+										bindings[scopeName] =
+											mode: match[1][0]
+											collection: match[2] is '*'
+											optional: match[3] is '?'
+											attrName: match[4] or scopeName
+									
+									bindings
 							
 							# Invoke hook `augmentDirective`.
 							# Allows packages to augment the directives
@@ -85,11 +125,11 @@ angular.module('shrub.packages', [
 			debug "Registering filters..."
 			
 			for path, injected of pkgman.invoke 'filter'
-				name = pkgman.normalizePath path
+				filterName = pkgman.normalizePath path
 				
-				debug name
+				debug filterName
 
-				$filterProvider.register name, injected
+				$filterProvider.register filterName, injected
 
 			debug "Filters registered."
 

@@ -20,8 +20,6 @@ exports.Manager = class SocketIoSocket extends Socket
 		@_$rootScope = $rootScope
 		@_socket = io.connect()
 		
-		console.log 'yo'
-		
 		@_$rootScope.$on 'shrub.debug.log', (error) =>
 			@emit 'shrub.debug.log', errors.serialize error
 	

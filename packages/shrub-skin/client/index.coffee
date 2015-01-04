@@ -16,12 +16,17 @@ exports.pkgmanRegister = (registrar) ->
 		'$cacheFactory', '$compile', '$http', '$q'
 		($cacheFactory, $compile, $http, $q) ->
 			
+			# Ensure ID is a candidate.
+			directive.candidateKeys ?= []
+			directive.candidateKeys.unshift 'id'
+			
 			cache = $cacheFactory 'shrub-skin' unless cache?
 			
 			# Proxy link function to add our own directive retrieval and
 			# compilation step.
 			link = directive.link
-			directive.link = (scope, element, attr) ->
+			directive.link = (scope, element, attr, controller) ->
+				
 				topLevelArgs = arguments
 				
 				# Kick off relinking.
@@ -51,7 +56,7 @@ exports.pkgmanRegister = (registrar) ->
 						element.addClass 'shrub-skin-cloak'
 						
 						# Gather candidates.
-						candidateList = ->
+						candidateList = do ->
 							list = []
 							
 							for key in directive.candidateKeys
@@ -60,7 +65,7 @@ exports.pkgmanRegister = (registrar) ->
 								
 							list
 						
-						candidateTemplates = for candidate in candidateList()
+						candidateTemplates = for candidate in candidateList
 							"#{path}--#{candidate}.html"
 						candidateTemplates.push "#{path}.html"
 						
@@ -98,7 +103,7 @@ exports.pkgmanRegister = (registrar) ->
 								
 								invocations.push(
 									"#{key}--#{directive.name}--#{c}"
-								) for c in candidateList()
+								) for c in candidateList
 								
 								for hook in invocations
 									for f in pkgman.invokeFlat hook

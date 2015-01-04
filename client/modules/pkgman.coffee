@@ -12,6 +12,8 @@ class PkgmanRegistrar
 
 	constructor: (@_path) ->
 	
+	path: -> @_path
+	
 	recur: (paths) ->
 		
 		for path in paths
