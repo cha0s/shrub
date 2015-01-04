@@ -8,6 +8,15 @@ pkgman = require 'pkgman'
 
 cache = null
 
+loadCacheData = (skinKey) ->
+
+	cacheData = cache.get skinKey
+	cacheData ?= {}
+	cacheData.templates ?= {}
+	cacheData.styleSheets ?= []
+	
+	cacheData
+
 exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `augmentDirective`
@@ -36,10 +45,7 @@ exports.pkgmanRegister = (registrar) ->
 					# `TODO`: This will become active, not default.
 					skinKey = config.get 'packageConfig:shrub-skin:default'
 					
-					cacheData = cache.get skinKey
-					cacheData ?= {}
-					cacheData.templates ?= {}
-					cacheData.styleSheets ?= []
+					cacheData = loadCacheData skinKey
 					
 					cacheData.assets = $http.get(
 						"/skin/#{skinKey}/assets.json"
@@ -162,6 +168,8 @@ exports.pkgmanRegister = (registrar) ->
 								
 								return true if styleSheet.cssRules
 								return true if styleSheet.rules?.length
+								
+								return false
 							
 							catch error
 								
@@ -180,18 +188,16 @@ exports.pkgmanRegister = (registrar) ->
 						# Everyone else needs to resort to polling.
 						else
 						
-							poll = $interval(
-								->
+							poll = $interval ->
 									
-									if wasParsed()
-										
-										$interval.cancel poll
-										resolve()
-										
-									return
+								if wasParsed()
 									
-								10
-							)
+									$interval.cancel poll
+									resolve()
+									
+								return
+								
+							, 10
 						
 						deferred.promise
 					
@@ -236,10 +242,7 @@ exports.pkgmanRegister = (registrar) ->
 						# `TODO`: This will become active, not default.
 						skinKey = config.get 'packageConfig:shrub-skin:default'
 						
-						cacheData = cache.get skinKey
-						cacheData ?= {}
-						cacheData.templates ?= {}
-						cacheData.styleSheets ?= []
+						cacheData = loadCacheData skinKey
 						
 						cacheData.assets = $http.get(
 							"/skin/#{skinKey}/assets.json"
