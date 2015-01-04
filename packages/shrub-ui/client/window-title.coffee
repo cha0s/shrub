@@ -1,27 +1,55 @@
 
 # # Titles
 
+config = require 'config'
+
 exports.pkgmanRegister = (registrar) ->
 
+	# ## Implements hook `controller`
+	registrar.registerHook 'controller', -> [
+		'shrub-ui/window-title'
+		class WindowTitleController
+			
+			constructor: (@_windowTitle) ->
+		
+			link: (scope, element, attrs) ->
+				
+				scope.$watch(
+					-> @_windowTitle.get()
+					-> scope.windowTitle = @_windowTitle.get()
+				)
+				
+	]
+	
 	# ## Implements hook `directive`
 	registrar.registerHook 'directive', -> [
-		'shrub-ui/title'
-		({window}) ->
 		
-			link: (scope, elm, attr) ->
-				
-				# Keep the window title synchronized. 
-				scope.$watch(
-					-> window()
-					-> scope.windowTitle = window()
-				)
+		->
+		
+			directive = {}
+			
+			directive.bindToController = true
+			
+			directive.scope = {}
+			
+			directive
+			
+	]
+	
+	# ## Implements hook `appRun`
+	registrar.registerHook 'appRun', -> [
+		'shrub-ui/window-title'
+		(windowTitle) ->
+		
+			# Set the site name into the window title.
+			windowTitle.setSite config.get 'packageConfig:shrub-core:siteName'
 			
 	]
 	
 	# ## Implements hook `routeControllerStart`
 	registrar.registerHook 'routeControllerStart', -> [
-		'route', 'shrub-ui/title'
-		(route, title) -> title.setPage route.title ? ''	
+		'route', 'shrub-ui/window-title'
+		(route, windowTitle) -> windowTitle.setPage route.title ? ''	
 	]
 	
 	# ## Implements hook `service`
@@ -39,7 +67,7 @@ exports.pkgmanRegister = (registrar) ->
 				
 				_page = page
 				
-				service.setWindow [_page, _site].join _separator if setWindow
+				service.set [_page, _site].join _separator if setWindow
 			
 			# Get and set the token that separates the page and window title.
 			_separator = ' · '
@@ -56,8 +84,8 @@ exports.pkgmanRegister = (registrar) ->
 			# Get and set the window title.		
 			_window = ''
 	
-			service.window = -> _windowWrapper _window
-			service.setWindow = (window) -> _window = window
+			service.get = -> _windowWrapper _window
+			service.set = (window) -> _window = window
 			
 			# Certain things will want to make the window/tab title flash for
 			# attention. Those things will use this API to do so.

@@ -66,24 +66,30 @@ describe 'notifications', ->
 
 describe 'title', ->
 	
-	title = null
+	windowTitle = null
 	
 	beforeEach ->
 		
 		inject [
-			'shrub-ui/title'
-			(_title_) -> title = _title_
+			'shrub-ui/window-title'
+			(_windowTitle_) -> windowTitle = _windowTitle_
 		]
 		
 	it 'should set window title to page title [separator] site title by default when the page title is set', ->
 		
-		title.setPage 'Home'
+		windowTitle.setPage 'Home'
 		
-		expect(title.window()).toBe "#{title.page()}#{title.separator()}#{title.site()}"
+		expect(windowTitle.get()).toBe "#{
+			windowTitle.page()
+		}#{
+			windowTitle.separator()
+		}#{
+			windowTitle.site()
+		}"
 
 	it 'should allow page title to be set without altering the window title', ->
 		
-		title.setPage 'Home', false
+		windowTitle.setPage 'Home', false
 		
-		expect(title.site()).not.toContain 'Home'
+		expect(windowTitle.get()).not.toContain 'Home'
 		

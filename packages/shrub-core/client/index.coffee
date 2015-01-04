@@ -83,8 +83,8 @@ exports.pkgmanRegister = (registrar) ->
 	
 	# ## Implements hook `appRun`
 	registrar.registerHook 'appRun', -> [
-		'$rootScope', '$location', '$window', 'shrub-socket', 'shrub-ui/title'
-		($rootScope, $location, $window, socket, title) ->
+		'$rootScope', '$location', '$window', 'shrub-socket'
+		($rootScope, $location, $window, socket) ->
 			
 			# Split the path into the corresponding classes, e.g.
 			#
@@ -104,9 +104,6 @@ exports.pkgmanRegister = (registrar) ->
 			
 			# Reload the client.
 			socket.on 'core.reload', -> $window.location.reload()
-			
-			# Set the site name into the window title.
-			title.setSite config.get 'packageConfig:shrub-core:siteName'
 			
 			# Set up application close behavior.
 			$window.addEventListener 'beforeunload', ->

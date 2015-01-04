@@ -6,5 +6,5 @@
 exports.pkgmanRegister = (registrar) ->
 
 	registrar.recur [
-		'body', 'list', 'markdown', 'nav', 'notifications', 'title', 'window'
+		'body', 'list', 'markdown', 'nav', 'notifications', 'window-title'
 	]

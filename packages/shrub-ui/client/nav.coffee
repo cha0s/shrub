@@ -5,7 +5,7 @@ exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `directive`
 	registrar.registerHook 'directive', -> [
-		'$location', 'shrub-ui/nav', 'shrub-ui/title', 'shrub-user'
+		'$location', 'shrub-ui/nav', 'shrub-ui/window-title', 'shrub-user'
 		($location, {links}, {page}, {instance}) ->
 		
 			link: (scope, elm, attr) ->
