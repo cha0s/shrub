@@ -8,8 +8,23 @@ exports.pkgmanRegister = (registrar) ->
 		
 			link: (scope, element, attrs) ->
 				
+				scope.$watchGroup(
+					[
+						-> scope.list?.name
+						-> scope.parentName
+					]
+					->
+						
+						parts = []
+						
+						parts.push scope.parentName if scope.parentName
+						parts.push scope.list.name if scope.list?.name
+						
+						scope.fullParentName = parts.join '-'
+				)
+				
 				scope.$watch(
-					-> scope.list.name
+					-> scope.list?.name
 					-> element.addClass scope.list.name
 				)
 				
@@ -26,7 +41,8 @@ exports.pkgmanRegister = (registrar) ->
 			directive.bindToController = true
 			
 			directive.candidateKeys = [
-				'name'
+				'list.name'
+				'fullParentName'
 			]
 			
 			# Prevent infinite recursion when compiling nested lists.
@@ -44,6 +60,7 @@ exports.pkgmanRegister = (registrar) ->
 			directive.scope =
 				
 				list: '='
+				parentName: '=?'
 				
 			directive.template = """
 
@@ -52,7 +69,7 @@ exports.pkgmanRegister = (registrar) ->
 
 	data-shrub-ui-list-item
 	data-item="item"
-	data-parent-name="list.name"
+	data-parent-name="fullParentName"
 ></li>
 
 """

@@ -22,8 +22,8 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `augmentDirective`
 	registrar.registerHook 'augmentDirective', (directive, path) -> [
 	
-		'$cacheFactory', '$compile', '$http', '$q'
-		($cacheFactory, $compile, $http, $q) ->
+		'$cacheFactory', '$compile', '$http', '$interpolate', '$q', '$rootScope'
+		($cacheFactory, $compile, $http, $interpolate, $q, $rootScope) ->
 			
 			# Ensure ID is a candidate.
 			directive.candidateKeys ?= []
@@ -34,100 +34,167 @@ exports.pkgmanRegister = (registrar) ->
 			# Proxy link function to add our own directive retrieval and
 			# compilation step.
 			link = directive.link
-			directive.link = (scope, element, attr, controller) ->
-				
+			directive.link = (scope, element, attrs, controller) ->
+			
+				# Save top-level arguments for later calls to link functions.
 				topLevelArgs = arguments
 				
-				# Kick off relinking.
-				do relink = ->
-					
-					# Check the cache before hitting the server.
-					# `TODO`: This will become active, not default.
-					skinKey = config.get 'packageConfig:shrub-skin:default'
-					
-					cacheData = loadCacheData skinKey
-					
-					cacheData.assets = $http.get(
-						"/skin/#{skinKey}/assets.json"
-					) unless cacheData.assets?
-					
+				# Current template candidate.
+				candidate = null
+				
+				# Check the cache before hitting the server.
+				# `TODO`: This will become active, not default.
+				skinKey = config.get 'packageConfig:shrub-skin:default'
+				cacheData = loadCacheData skinKey
+				
+				# Fetch assets.
+				# `TODO`: This should be sent along through config.
+				unless cacheData.assets?
+					cacheData.assets = $http.get "/skin/#{skinKey}/assets.json"
 					cache.put skinKey, cacheData
+				
+				$q.when(cacheData.assets).then ({data}) ->
+				
+					candidateHooksInvoked = {}
+				
+					recalculateCandidate = ->
 					
-					assetsPromise = $q.when cacheData.assets
-					
-					assetsPromise.then ({data}) ->
-						cacheData = cache.get skinKey
+						# Track changes to the current template candidate.
+						oldCandidate = candidate
 						
-						# Cloak the element.
-						element.addClass 'shrub-skin-cloak'
-						
-						# Gather candidates.
-						candidateList = do ->
+						# Build a list of all candidates by first attempting to
+						# interpolate candidate keys, and falling back to
+						# attribute values, if any. Candidate arrays are
+						# joined by single dashes.
+						candidateList = do (scope, attrs) ->
 							list = []
 							
-							for key in directive.candidateKeys
-								if specific = scope[key] ? attr[key]
-									list.push specific
+							for keys in directive.candidateKeys
+								keys = [keys] unless angular.isArray keys
+								
+								item = []
+								for key in keys
+									specific = $interpolate("{{#{key}}}")(scope)
+									specific ?= attrs[key]
+									
+									item.push specific if specific
+								
+								item = item.join '-'
+								list.push item if item
 								
 							list
-						
-						candidateTemplates = for candidate in candidateList
-							"#{path}--#{candidate}.html"
+					
+						# Map the candidate list to template filenames and
+						# add the base path template candidate.
+						candidateTemplates = for candidate_ in candidateList
+							"#{path}--#{candidate_}.html"
 						candidateTemplates.push "#{path}.html"
 						
-						candidate = do firstCandidate = ->
+						# Return the first existing template. The asset
+						# templates are already sorted by descending
+						# specificity.
+						candidate = do ->
 							for uri in candidateTemplates
 								if -1 isnt data.templates.indexOf uri
 									return uri
 							
 							return
-						
+							
+						# Load the template if necessary, or stub it out to
+						# denote no available candidate.
 						unless cacheData.templates[candidate]?
 							cacheData.templates[candidate] = if candidate?
 								$http.get "/skin/#{skinKey}/#{candidate}"
 							else
-								$q.when data: false
+								false
 							
 						cache.put skinKey, cacheData
 						
-						templatePromise = $q.when(
-							
-							cacheData.templates[candidate]
+						# Invoke a skinLink hook once for every candidate.
+						invokeHooks = ->
 						
-						).then(({data}) ->
+							invocations = [
+								'skinLink'
+								"skinLink--#{directive.name}"
+							]
 							
-							# If we got any HTML, insert and compile it.
-							if data
-								element.html data
-								$compile(element.contents())(scope)
+							# Add the candidates in reverse order, so they
+							# ascend in specificity.
+							invocations.push(
+								"skinLink--#{directive.name}--#{c}"
+							) for c in candidateList.reverse()
 							
-							hookInvoke = (key) ->
-								invocations = [
-									key
-									"#{key}--#{directive.name}"
-								]
-								
-								invocations.push(
-									"#{key}--#{directive.name}--#{c}"
-								) for c in candidateList
-								
-								for hook in invocations
-									for f in pkgman.invokeFlat hook
-										f topLevelArgs... 
-								
-								return
+							for hook in invocations
+								continue if candidateHooksInvoked[hook]
+								candidateHooksInvoked[hook] = true
+								console.log hook
+								for f in pkgman.invokeFlat hook
+									f topLevelArgs... 
 							
-							# Link.
-							hookInvoke 'skinPreLink'
-							link topLevelArgs... if link?
-							hookInvoke 'skinPostLink'
-
-						# Uncloak the element when finished.
-						).finally -> element.removeClass 'shrub-skin-cloak'
-						
-				# Relink again every time the skin changes.
-				scope.$on 'shrub.skin.update', relink
+							return
+					
+						# If the candidate changed, clear the hook invocation
+						# cache and relink, followed by invoking the
+						# candidate link hooks. 
+						if candidate isnt oldCandidate
+							candidateHooksInvoked = {}
+							if linkPromise = relink()
+								linkPromise.then invokeHooks
+							else
+								invokeHooks()
+						else
+							invokeHooks()
+							
+					# Set watches for all candidate-related values.
+					keysSeen = {}
+					watchers = []
+					for keys in directive.candidateKeys
+	
+						keys = [keys] unless angular.isArray keys
+						for key in keys
+							continue if keysSeen[key]
+							keysSeen[key] = true
+							
+							watchers.push -> scope[attrs[key]]
+							watchers.push -> $interpolate("{{#{key}}}")(scope)
+							
+					scope.$watchGroup watchers, recalculateCandidate
+							
+					# Relink again every time the skin changes.
+					$rootScope.$on 'shrub.skin.update', recalculateCandidate
+					
+				# Kick off relinking.
+				relink = ->
+					
+					# Call directive link function.
+					executeRelink = -> link topLevelArgs... if link?
+					
+					# Uncloak the element when finished.
+					uncloak = -> element.removeClass 'shrub-skin-cloak'
 				
+					# No template...
+					unless cacheData.templates[candidate]
+					
+						executeRelink()
+						uncloak()
+						
+						return
+
+					# Wait for the template to be loaded.
+					templatePromise = $q.when(
+						
+						cacheData.templates[candidate]
+					
+					).then(({data}) ->
+
+						# Insert and compile HTML.
+						element.html data
+						$compile(element.contents())(scope)
+
+						executeRelink()
+						
+					).finally uncloak
+					
 	]
 	
 	# ## Implements hook `provider`
