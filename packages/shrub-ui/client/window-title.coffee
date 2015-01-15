@@ -10,13 +10,14 @@ exports.pkgmanRegister = (registrar) ->
 		'shrub-ui/window-title'
 		class WindowTitleController
 			
-			constructor: (@_windowTitle) ->
-		
-			link: (scope, element, attrs) ->
+			constructor: (@windowTitle) ->
+				
+			link: (scope, element) ->
+				self = this
 				
 				scope.$watch(
-					-> @_windowTitle.get()
-					-> scope.windowTitle = @_windowTitle.get()
+					-> self.windowTitle.get()
+					-> element.text self.windowTitle.get()
 				)
 				
 	]
@@ -66,7 +67,6 @@ exports.pkgmanRegister = (registrar) ->
 			service.setPage = (page, setWindow = true) ->
 				
 				_page = page
-				
 				service.set [_page, _site].join _separator if setWindow
 			
 			# Get and set the token that separates the page and window title.
