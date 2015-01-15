@@ -107,7 +107,8 @@ exports.pkgmanRegister = (registrar) ->
 			
 			# Set up application close behavior.
 			$window.addEventListener 'beforeunload', ->
-				true if $rootScope.emit('shrub.core.appClose').defaultPrevented
+				appCloseEvent = $rootScope.$emit 'shrub.core.appClose'
+				true if appCloseEvent.defaultPrevented
 			
 	]
 	
