@@ -127,7 +127,6 @@ exports.pkgmanRegister = (registrar) ->
 							for hook in invocations
 								continue if candidateHooksInvoked[hook]
 								candidateHooksInvoked[hook] = true
-								console.log hook
 								for f in pkgman.invokeFlat hook
 									f topLevelArgs... 
 							
