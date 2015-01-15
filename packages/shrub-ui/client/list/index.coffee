@@ -6,26 +6,26 @@ exports.pkgmanRegister = (registrar) ->
 
 		class ListController
 		
-			link: (scope, element, attrs) ->
+			link: (scope, element, attr) ->
 				
+				# Maintain the full ancestor path for list and item.
 				scope.$watchGroup(
 					[
 						-> scope.list?.name
-						-> scope.parentName
+						-> scope.parentAncestorPath
 					]
 					->
 						
 						parts = []
 						
-						parts.push scope.parentName if scope.parentName
+						parts.push scope.parentAncestorPath if scope.parentAncestorPath
 						parts.push scope.list.name if scope.list?.name
 						
-						scope.fullParentName = parts.join '-'
-				)
-				
-				scope.$watch(
-					-> scope.list?.name
-					-> element.addClass scope.list.name
+						scope.ancestorPath = parts.join '-'
+						
+						# `TODO`: Fix this when menu handles existing classes
+						# more intelligently.
+#						element.addClass scope.list.name if scope.list?.name
 				)
 				
 	]
@@ -41,26 +41,29 @@ exports.pkgmanRegister = (registrar) ->
 			directive.bindToController = true
 			
 			directive.candidateKeys = [
+				'list.attributes.id'
 				'list.name'
-				'fullParentName'
+				'ancestorPath'
 			]
 			
 			# Prevent infinite recursion when compiling nested lists.
 			directive.compile = (cElement) ->
 			
 				contents = cElement.contents().remove()
-				
-				(scope, lElement, attrs, controller) ->
+										
+				(scope, lElement, attr, controller) ->
 					
 					compiled = $compile contents
 					lElement.append compiled scope
 					
 					directive.link arguments...
-
+			
+#			directive.priority = 1000
+			
 			directive.scope =
 				
 				list: '='
-				parentName: '=?'
+				parentAncestorPath: '=?'
 				
 			directive.template = """
 
@@ -68,8 +71,9 @@ exports.pkgmanRegister = (registrar) ->
 	data-ng-repeat="item in list.items"
 
 	data-shrub-ui-list-item
+	data-shrub-ui-attributes="item.attributes"
 	data-item="item"
-	data-parent-name="fullParentName"
+	data-parent-ancestor-path="parentAncestorPath"
 ></li>
 
 """
