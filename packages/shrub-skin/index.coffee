@@ -21,7 +21,14 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `config`
 	registrar.registerHook 'config', (req) ->
 		
-		default: config.get 'packageSettings:shrub-skin:default'
+		defaultSkinKey = config.get 'packageSettings:shrub-skin:default'
+		
+		readFile(
+			"app/skin/#{defaultSkinKey}/assets.json", encoding: 'utf8'
+		).then (jsonText) ->
+		
+			default: defaultSkinKey
+			assets: JSON.parse jsonText
 	
 	# ## Implements hook `httpMiddleware`
 	registrar.registerHook 'path', 'httpMiddleware', (http) ->
