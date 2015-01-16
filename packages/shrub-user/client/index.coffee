@@ -158,10 +158,8 @@ exports.collections = ->
 				@lastAccessed = (new Date()).toISOString()
 				this
 					
-			# Temporary... secure by default.
 			# `TODO`: Access control structure.
 			hasPermission: (perm) -> false
-			isAccessibleBy: (user) -> false
 		
 exports.collectionsAlter = (collections) ->
 
@@ -193,6 +191,9 @@ exports.collectionsAlter = (collections) ->
 				error.code = 403
 				throw error
 					
+			# Secure by default.
+			collection.attributes.isAccessibleBy ?= (user) -> false
+
 			collection.authenticatedAll = (user, params) ->
 				
 				validateUser(user).then(->
