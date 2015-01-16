@@ -51,7 +51,7 @@ exports.pkgmanRegister = (registrar) ->
 			]
 		
 		gruntConfig.shrub.tasks['build:shrub-socket.io'] = [
-			'copy:shrub-socket.io'
+			'newer:copy:shrub-socket.io'
 		]
 		
 		gruntConfig.shrub.tasks['build'].push 'build:shrub-socket.io'

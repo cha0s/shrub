@@ -17,7 +17,7 @@ exports.pkgmanRegister = (registrar) ->
 			]
 		
 		gruntConfig.shrub.tasks['build:shrub-html5-local-storage'] = [
-			'copy:shrub-html5-local-storage'
+			'newer:copy:shrub-html5-local-storage'
 		]
 		
 		gruntConfig.shrub.tasks['build'].push 'build:shrub-html5-local-storage'

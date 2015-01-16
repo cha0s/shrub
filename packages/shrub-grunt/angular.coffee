@@ -87,9 +87,9 @@ var dependencies = [];
 			grunt.file.write 'build/js/app-dependencies.js', js
 		
 		gruntConfig.shrub.tasks['build:angular'] = [
-			'coffee:angular'
+			'newer:coffee:angular'
 			'angularCoreDependencies:angular'
-			'concat:angular'
+			'newer:concat:angular'
 		]
 		
 		gruntConfig.shrub.tasks['build'].push 'build:angular'

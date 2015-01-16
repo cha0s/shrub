@@ -255,22 +255,22 @@ describe('#{gruntConfig.pkg.name}', function() {
 				]
 		
 		gruntConfig.shrub.tasks['build:testsE2e'] = [
-			'coffee:testsE2e'
-			'copy:testsE2e'
-			'concat:testsE2e'
-			'wrap:testsE2e'
+			'newer:coffee:testsE2e'
+			'newer:copy:testsE2e'
+			'newer:concat:testsE2e'
+			'newer:wrap:testsE2e'
 		]
 		
 		gruntConfig.shrub.tasks['build:testsE2eExtensions'] = [
-			'coffee:testsE2eExtensions'
-			'concat:testsE2eExtensions'
+			'newer:coffee:testsE2eExtensions'
+			'newer:concat:testsE2eExtensions'
 		]
 		
 		gruntConfig.shrub.tasks['build:testsUnit'] = [
-			'coffee:testsUnit'
-			'copy:testsUnit'
-			'concat:testsUnit'
-			'wrap:testsUnit'
+			'newer:coffee:testsUnit'
+			'newer:copy:testsUnit'
+			'newer:concat:testsUnit'
+			'newer:wrap:testsUnit'
 		]
 		
 		gruntConfig.shrub.tasks['build:tests'] = [

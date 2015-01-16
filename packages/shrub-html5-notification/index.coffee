@@ -17,7 +17,7 @@ exports.pkgmanRegister = (registrar) ->
 			]
 		
 		gruntConfig.shrub.tasks['build:shrub-html5-notification'] = [
-			'copy:shrub-html5-notification'
+			'newer:copy:shrub-html5-notification'
 		]
 		
 		gruntConfig.shrub.tasks['build'].push 'build:shrub-html5-notification'

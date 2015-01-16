@@ -159,11 +159,11 @@ requires_['#{moduleName}'] = function(module, exports, require, __dirname, __fil
 				]
 
 		gruntConfig.shrub.tasks['build:modules'] = [
-			'coffee:modules'
-			'copy:modules'
-			'wrap:modules'
-			'concat:modules'
-			'wrap:modulesAll'
+			'newer:coffee:modules'
+			'newer:copy:modules'
+			'newer:wrap:modules'
+			'newer:concat:modules'
+			'newer:wrap:modulesAll'
 		]
 		
 		gruntConfig.shrub.tasks['build'].push 'build:modules'

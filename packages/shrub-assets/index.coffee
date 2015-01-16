@@ -53,7 +53,7 @@ exports.pkgmanRegister = (registrar) ->
 			]
 		
 		gruntConfig.shrub.tasks['build:shrub-assets'] = [
-			'copy:shrub-assets'
+			'newer:copy:shrub-assets'
 		]
 		
 		gruntConfig.shrub.tasks['build'].push 'build:shrub-assets'

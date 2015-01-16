@@ -38,13 +38,13 @@ exports.pkgmanRegister = (registrar) ->
 				"#{__dirname}/app/less/**/*.less"
 			]
 			tasks: [
-				'less:shrub-skin-strapped'
+				'newer:less:shrub-skin-strapped'
 			]
 		
 		gruntConfig.shrub.tasks['build:shrub-skin-strapped'] = [
-			'clean:shrub-skin-strapped'
-			'copy:shrub-skin-strapped'
-			'less:shrub-skin-strapped'
+			'newer:clean:shrub-skin-strapped'
+			'newer:copy:shrub-skin-strapped'
+			'newer:less:shrub-skin-strapped'
 		]
 		
 		gruntConfig.shrub.tasks['build'].push 'build:shrub-skin-strapped'

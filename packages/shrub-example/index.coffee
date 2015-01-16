@@ -13,7 +13,7 @@ exports.pkgmanRegister = (registrar) ->
 			]
 		
 		gruntConfig.shrub.tasks['build:shrub-example'] = [
-			'copy:shrub-example'
+			'newer:copy:shrub-example'
 		]
 		
 		gruntConfig.shrub.tasks['build'].push 'build:shrub-example'

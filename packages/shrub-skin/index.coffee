@@ -111,7 +111,7 @@ exports.gruntSkin = (gruntConfig, key) ->
 			((l, r) -> l.concat r), []
 		)
 		tasks: [
-			"copy:#{key}"
+			"newer:copy:#{key}"
 		]
 	
 # ### ::renderAppHtml

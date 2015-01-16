@@ -66,11 +66,11 @@ exports.pkgmanRegister = (registrar) ->
 				grunt.fail.fatal "Server process failed", code
 			
 		gruntConfig.shrub.tasks['build:shrub'] = [
-			'concat:shrub'
+			'newer:concat:shrub'
 		]
 		
 		gruntConfig.shrub.tasks['production:shrub'] = [
-			'uglify:shrub'
+			'newer:uglify:shrub'
 		]
 		
 		gruntConfig.shrub.tasks['execute'] = [
@@ -84,6 +84,7 @@ exports.pkgmanRegister = (registrar) ->
 		gruntConfig.shrub.npmTasks.push 'grunt-contrib-copy'
 		gruntConfig.shrub.npmTasks.push 'grunt-contrib-uglify'
 		gruntConfig.shrub.npmTasks.push 'grunt-contrib-watch'
+		gruntConfig.shrub.npmTasks.push 'grunt-newer'
 		gruntConfig.shrub.npmTasks.push 'grunt-wrap'
 
 	# ## Implements hook `gruntConfigAlter`
