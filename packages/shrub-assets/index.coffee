@@ -38,6 +38,26 @@ exports.pkgmanRegister = (registrar) ->
 				
 		]
 
+
+	# ## Implements hook `gruntConfig`
+	registrar.registerHook 'gruntConfig', (gruntConfig) ->
+		
+		gruntConfig.copy ?= {}
+		
+		gruntConfig.copy['shrub-assets'] =
+			files: [
+				src: '**/*'
+				dest: 'app'
+				expand: true
+				cwd: "#{__dirname}/app"
+			]
+		
+		gruntConfig.shrub.tasks['build:shrub-assets'] = [
+			'copy:shrub-assets'
+		]
+		
+		gruntConfig.shrub.tasks['build'].push 'build:shrub-assets'
+
 	# ## Implements hook `packageSettings`
 	registrar.registerHook 'packageSettings', ->
 		

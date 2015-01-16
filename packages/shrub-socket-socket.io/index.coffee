@@ -37,6 +37,25 @@ exports.pkgmanRegister = (registrar) ->
 				
 		]
 
+	# ## Implements hook `gruntConfig`
+	registrar.registerHook 'gruntConfig', (gruntConfig) ->
+		
+		gruntConfig.copy ?= {}
+		
+		gruntConfig.copy['shrub-socket.io'] =
+			files: [
+				src: '**/*'
+				dest: 'app'
+				expand: true
+				cwd: "#{__dirname}/app"
+			]
+		
+		gruntConfig.shrub.tasks['build:shrub-socket.io'] = [
+			'copy:shrub-socket.io'
+		]
+		
+		gruntConfig.shrub.tasks['build'].push 'build:shrub-socket.io'
+
 # ## SocketIoManager
 # Implements `SocketManager`.
 # 
