@@ -100,4 +100,4 @@ exports.invokeFlat = (hook, args...) ->
 exports.invokePackage = (path, hook, args...) ->
 	pathIndex?[path]?[hook]? args...
 
-exports.packagesImplementing = (hook) -> packageIndex[hook] ? []
+exports.packagesImplementing = (hook) -> packageIndex?[hook] ? []
