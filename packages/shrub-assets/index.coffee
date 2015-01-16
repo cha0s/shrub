@@ -43,6 +43,7 @@ exports.pkgmanRegister = (registrar) ->
 	registrar.registerHook 'gruntConfig', (gruntConfig) ->
 		
 		gruntConfig.copy ?= {}
+		gruntConfig.watch ?= {}
 		
 		gruntConfig.copy['shrub-assets'] =
 			files: [
@@ -51,6 +52,13 @@ exports.pkgmanRegister = (registrar) ->
 				expand: true
 				cwd: "#{__dirname}/app"
 			]
+
+		gruntConfig.watch['shrub-assets'] =
+
+			files: [
+				"#{__dirname}/app/**/*"
+			]
+			tasks: 'build:shrub-assets'
 		
 		gruntConfig.shrub.tasks['build:shrub-assets'] = [
 			'newer:copy:shrub-assets'

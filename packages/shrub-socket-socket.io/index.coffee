@@ -41,6 +41,7 @@ exports.pkgmanRegister = (registrar) ->
 	registrar.registerHook 'gruntConfig', (gruntConfig) ->
 		
 		gruntConfig.copy ?= {}
+		gruntConfig.watch ?= {}
 		
 		gruntConfig.copy['shrub-socket.io'] =
 			files: [
@@ -49,6 +50,13 @@ exports.pkgmanRegister = (registrar) ->
 				expand: true
 				cwd: "#{__dirname}/app"
 			]
+		
+		gruntConfig.watch['shrub-socket.io'] =
+
+			files: [
+				"#{__dirname}/app/**/*"
+			]
+			tasks: 'build:shrub-socket.io'
 		
 		gruntConfig.shrub.tasks['build:shrub-socket.io'] = [
 			'newer:copy:shrub-socket.io'

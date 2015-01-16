@@ -132,6 +132,9 @@ exports.renderAppHtml = (locals) ->
 	).then (html) ->
 		
 		$ = cheerio.load html
+		
+		pkgman.invoke 'skinRenderAppHtml', $
+		
 		$head = $('head')
 		$body = $('body')
 		

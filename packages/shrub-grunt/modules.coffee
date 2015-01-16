@@ -162,7 +162,7 @@ requires_['#{moduleName}'] = function(module, exports, require, __dirname, __fil
 			'newer:coffee:modules'
 			'newer:copy:modules'
 			'newer:wrap:modules'
-			'newer:concat:modules'
+			'concat:modules'
 			'newer:wrap:modulesAll'
 		]
 		

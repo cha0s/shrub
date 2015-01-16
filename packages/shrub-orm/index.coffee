@@ -43,6 +43,13 @@ exports.pkgmanRegister = (registrar) ->
 				cwd: "#{__dirname}/app"
 			]
 		
+		gruntConfig.watch['shrub-orm'] =
+
+			files: [
+				"#{__dirname}/app/**/*"
+			]
+			tasks: 'build:shrub-orm'
+		
 		gruntConfig.shrub.tasks['build:shrub-orm'] = [
 			'newer:copy:shrub-orm'
 		]

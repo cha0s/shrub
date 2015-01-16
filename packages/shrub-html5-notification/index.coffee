@@ -16,6 +16,13 @@ exports.pkgmanRegister = (registrar) ->
 				cwd: "#{__dirname}/app"
 			]
 		
+		gruntConfig.watch['shrub-html5-notification'] =
+
+			files: [
+				"#{__dirname}/app/**/*"
+			]
+			tasks: 'build:shrub-html5-notification'
+		
 		gruntConfig.shrub.tasks['build:shrub-html5-notification'] = [
 			'newer:copy:shrub-html5-notification'
 		]

@@ -1,4 +1,6 @@
 
+config = require 'config'
+
 exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `gruntConfig`
@@ -44,6 +46,7 @@ exports.pkgmanRegister = (registrar) ->
 				'build/js/app-bundled.js'
 			]
 			tasks: 'build:shrub'
+			options: livereload: true
 		
 		gruntConfig.shrub.tasks['executeFunction:shrub'] = ->
 		
@@ -93,6 +96,15 @@ exports.pkgmanRegister = (registrar) ->
 		gruntConfig.shrub.tasks['build'].push 'build:shrub'
 		gruntConfig.shrub.tasks['production'].push 'production:shrub'
 	
+	# ## Implements hook `skinRenderAppHtml`
+	registrar.registerHook 'skinRenderAppHtml', ($) ->
+		
+		if 'production' isnt config.get 'NODE_ENV'
+			
+			$('body').append $('<script />').attr(
+				src: 'http://localhost:35729/livereload.js'
+			)
+		
 	registrar.recur [
 		'angular', 'dox', 'modules', 'tests'
 	]

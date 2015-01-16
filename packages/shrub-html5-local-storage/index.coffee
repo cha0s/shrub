@@ -7,6 +7,7 @@ exports.pkgmanRegister = (registrar) ->
 	registrar.registerHook 'gruntConfig', (gruntConfig) ->
 		
 		gruntConfig.copy ?= {}
+		gruntConfig.watch ?= {}
 		
 		gruntConfig.copy['shrub-html5-local-storage'] =
 			files: [
@@ -15,6 +16,13 @@ exports.pkgmanRegister = (registrar) ->
 				expand: true
 				cwd: "#{__dirname}/app"
 			]
+		
+		gruntConfig.watch['shrub-html5-local-storage'] =
+
+			files: [
+				"#{__dirname}/app/**/*"
+			]
+			tasks: 'build:shrub-html5-local-storage'
 		
 		gruntConfig.shrub.tasks['build:shrub-html5-local-storage'] = [
 			'newer:copy:shrub-html5-local-storage'
