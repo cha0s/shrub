@@ -11,7 +11,6 @@ exports.pkgmanRegister = (registrar) ->
 		gruntConfig.clean ?= {}
 		gruntConfig.concat ?= {}
 		gruntConfig.uglify ?= {}
-		gruntConfig.watch ?= {}
 		
 		(gruntConfig.uglify.options ?= {}).report = 'min'
 		
@@ -39,15 +38,6 @@ exports.pkgmanRegister = (registrar) ->
 				dest: 'app/lib/shrub/shrub.min.js'
 			]
 					
-		gruntConfig.watch.shrub =
-
-			files: [
-				'build/js/modules.js'
-				'build/js/app-bundled.js'
-			]
-			tasks: 'build:shrub'
-			options: livereload: true
-		
 		gruntConfig.shrub.tasks['executeFunction:shrub'] = ->
 		
 			done = @async()

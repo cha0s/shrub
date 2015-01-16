@@ -84,8 +84,9 @@ exports.pkgmanRegister = (registrar) ->
 				'packages/*/client/**/*.coffee'
 			]
 			tasks: [
-				'build:modules'
+				'build:modules', 'build:shrub'
 			]
+			options: livereload: true
 		
 		gruntConfig.wrap.modules =
 

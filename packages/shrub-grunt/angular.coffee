@@ -62,7 +62,10 @@ exports.pkgmanRegister = (registrar) ->
 				'client/app.coffee'
 				'client/app-dependencies.coffee'
 			]
-			tasks: 'build:angular'
+			tasks: [
+				'build:angular', 'build:shrub'
+			]
+			options: livereload: true
 		
 		gruntConfig.shrub.tasks['angularCoreDependencies:angular'] = ->
 			
