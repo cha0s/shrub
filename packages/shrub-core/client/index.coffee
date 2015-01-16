@@ -157,9 +157,12 @@ exports.pkgmanRegister = (registrar) ->
 			socket.on 'core.reload', -> $window.location.reload()
 			
 			# Set up application close behavior.
-			$window.addEventListener 'beforeunload', ->
+			$window.addEventListener 'beforeunload', (event) ->
 				appCloseEvent = $rootScope.$emit 'shrub.core.appClose'
-				true if appCloseEvent.defaultPrevented
+				if appCloseEvent.defaultPrevented
+					{confirmationMessage} = appCloseEvent
+					event ?= $window.event
+					event.returnValue = confirmationMessage
 			
 	]
 	
