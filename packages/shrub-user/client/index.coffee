@@ -24,12 +24,14 @@ exports.pkgmanRegister = (registrar) ->
 			
 			_instance = {}
 			
-			_instance = name: 'Loading...'
+			_instance = name: 'loading...'
 			
 			orm.collection('shrub-user').then (User) ->
-				_instance = User.instantiate(
+				__instance = User.instantiate(
 					config.get 'packageConfig:shrub-user'
 				)
+				
+				_instance[k] = v for k, v of __instance
 			
 			# Log a user out if we get a socket call.
 			logout = ->
