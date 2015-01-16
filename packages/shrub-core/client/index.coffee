@@ -3,6 +3,8 @@
 # 
 # Core functionality.
 
+Promise = require 'bluebird'
+
 config = require 'config'
 
 exports.pkgmanRegister = (registrar) ->
@@ -85,6 +87,9 @@ exports.pkgmanRegister = (registrar) ->
 	registrar.registerHook 'appRun', -> [
 		'$rootScope', '$location', '$window', 'shrub-socket'
 		($rootScope, $location, $window, socket) ->
+			
+			# Hook bluebird into Angular.
+			Promise.setScheduler (fn) -> $rootScope.$evalAsync fn
 			
 			# Split the path into the corresponding classes, e.g.
 			#
