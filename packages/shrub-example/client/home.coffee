@@ -34,8 +34,6 @@ exports.pkgmanRegister = (registrar) ->
 	
 	<p class="lead">Welcome to the example application for Shrub!</p>
 	
-	<hr>
-
 </div>
 	
 """

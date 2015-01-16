@@ -15,8 +15,6 @@ exports.pkgmanRegister = (registrar) ->
 				
 				$http.get('/shrub-example/about/README.md').success((data) ->
 					$scope.about = data
-				).error(->
-					$scope.about = 'Unable to load README...'
 				).finally -> $scope.$emit 'shrubFinishedRendering' 
 				
 		]
