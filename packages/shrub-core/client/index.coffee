@@ -11,8 +11,57 @@ exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `appConfig`
 	registrar.registerHook 'appConfig', -> [
-		'$injector', '$routeProvider', '$locationProvider', 'shrub-pkgmanProvider'
-		({invoke}, $routeProvider, $locationProvider, pkgmanProvider) ->
+		'$injector', '$provide', '$routeProvider', '$locationProvider', 'shrub-pkgmanProvider'
+		($injector, $provide, $routeProvider, $locationProvider, pkgmanProvider) ->
+		
+			# Completely override $q with Bluebird, because it's awesome.
+			$provide.decorator '$q', [
+				'$rootScope', '$exceptionHandler'
+				($rootScope, $exceptionHandler) ->
+				
+					Promise.onPossiblyUnhandledRejection $exceptionHandler
+					Promise.setScheduler (fn) -> $rootScope.$evalAsync fn
+				
+					Promise.defer = ->
+						resolve = null
+						reject = null
+						
+						promise = new Promise ->
+							resolve = arguments[0]
+							reject = arguments[1]
+							
+						promise: promise
+						resolve: resolve
+						reject: reject
+						
+					Promise.when = (value, handlers...) ->
+						Promise.cast(value).then handlers...
+					
+					originalAll = Promise.all
+					Promise.all = (promises) ->
+						
+						if angular.isObject promises
+							promiseArray = []
+							promiseKeysArray = []
+
+							angular.forEach promises, (promise, key) ->
+								promiseKeysArray.push key
+								promiseArray.push promise
+			
+							originalAll(promiseArray).then (results) ->
+								objectResult = {}
+								
+								angular.forEach results, (result, index) ->
+									objectResult[promiseKeysArray[index]] = result
+			
+								objectResult
+			
+						else
+							originalAll promises
+					
+					Promise
+					
+			]
 			
 			routes = {}
 			
@@ -39,7 +88,7 @@ exports.pkgmanRegister = (registrar) ->
 				
 			# Invoke hook `routeAlter`.
 			# Allow packages to alter defined routes.
-			invoke(
+			$injector.invoke(
 				injectable, null
 				routes: routes
 			) for injectable in pkgmanProvider.invokeFlat 'routeAlter'
@@ -87,9 +136,6 @@ exports.pkgmanRegister = (registrar) ->
 	registrar.registerHook 'appRun', -> [
 		'$rootScope', '$location', '$window', 'shrub-socket'
 		($rootScope, $location, $window, socket) ->
-			
-			# Hook bluebird into Angular.
-			Promise.setScheduler (fn) -> $rootScope.$evalAsync fn
 			
 			# Split the path into the corresponding classes, e.g.
 			#
