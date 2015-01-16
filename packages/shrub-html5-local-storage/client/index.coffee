@@ -3,7 +3,7 @@ exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `appConfig`
 	registrar.registerHook 'appConfig', -> [
-		'shrub-local-storageProvider'
+		'shrub-html5-local-storageProvider'
 		(localStorageProvider) ->
 			
 			localStorageProvider.setPrefix 'shrub'

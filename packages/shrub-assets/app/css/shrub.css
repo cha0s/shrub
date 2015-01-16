@@ -1,0 +1,10 @@
+.shrub-skin-cloak {
+  background-image: url("../img/throbber.svg");
+  background-position: center 25%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  min-height: 100%;
+}
+.shrub-skin-cloak > * {
+  visibility: hidden;
+}

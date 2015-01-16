@@ -3,7 +3,7 @@ exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `appConfig`
 	registrar.registerHook 'appConfig', -> [
-		'shrub-notificationProvider'
+		'shrub-html5-notificationProvider'
 		(notificationProvider) ->
 
 			# Shrub defaults.

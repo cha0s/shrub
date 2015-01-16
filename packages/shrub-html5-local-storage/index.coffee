@@ -6,32 +6,22 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `gruntConfig`
 	registrar.registerHook 'gruntConfig', (gruntConfig) ->
 		
-		gruntConfig.clean ?= {}
 		gruntConfig.copy ?= {}
-
-		gruntConfig.clean['shrub-local-storage'] = [
-			"app/lib/angular/angular-local-storage.js"
-			"app/lib/angular/angular-local-storage.min.js"
-		]
-
-		gruntConfig.copy['shrub-local-storage'] =
-			
+		
+		gruntConfig.copy['shrub-html5-local-storage'] =
 			files: [
-				cwd: "#{__dirname}/"
+				src: '**/*'
+				dest: 'app'
 				expand: true
-				src: [
-					"angular-local-storage.js"
-					"angular-local-storage.min.js"
-				]
-				dest: 'app/lib/angular/'
+				cwd: "#{__dirname}/app"
 			]
-			
-		gruntConfig.shrub.tasks['build:shrub-local-storage'] = [
-			'copy:shrub-local-storage'
+		
+		gruntConfig.shrub.tasks['build:shrub-html5-local-storage'] = [
+			'copy:shrub-html5-local-storage'
 		]
 		
-		gruntConfig.shrub.tasks['build'].push 'build:shrub-local-storage'
-				
+		gruntConfig.shrub.tasks['build'].push 'build:shrub-html5-local-storage'
+
 	# ## Implements hook `assetMiddleware`
 	registrar.registerHook 'assetMiddleware', ->
 		
@@ -53,4 +43,3 @@ exports.pkgmanRegister = (registrar) ->
 	registrar.registerHook 'angularCoreDependencies', -> [
 		'LocalStorageModule'
 	]
-		

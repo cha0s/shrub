@@ -6,32 +6,22 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `gruntConfig`
 	registrar.registerHook 'gruntConfig', (gruntConfig) ->
 		
-		gruntConfig.clean ?= {}
 		gruntConfig.copy ?= {}
-
-		gruntConfig.clean['shrub-notification'] = [
-			"app/lib/angular/angular-notification.js"
-			"app/lib/angular/angular-notification.min.js"
-		]
-
-		gruntConfig.copy['shrub-notification'] =
-			
+		
+		gruntConfig.copy['shrub-html5-notification'] =
 			files: [
-				cwd: "#{__dirname}/"
+				src: '**/*'
+				dest: 'app'
 				expand: true
-				src: [
-					"angular-notification.js"
-					"angular-notification.min.js"
-				]
-				dest: 'app/lib/angular/'
+				cwd: "#{__dirname}/app"
 			]
-			
-		gruntConfig.shrub.tasks['build:shrub-notification'] = [
-			'copy:shrub-notification'
+		
+		gruntConfig.shrub.tasks['build:shrub-html5-notification'] = [
+			'copy:shrub-html5-notification'
 		]
 		
-		gruntConfig.shrub.tasks['build'].push 'build:shrub-notification'
-				
+		gruntConfig.shrub.tasks['build'].push 'build:shrub-html5-notification'
+
 	# ## Implements hook `assetMiddleware`
 	registrar.registerHook 'assetMiddleware', ->
 		
@@ -53,4 +43,3 @@ exports.pkgmanRegister = (registrar) ->
 	registrar.registerHook 'angularCoreDependencies', -> [
 		'notification'
 	]
-		
