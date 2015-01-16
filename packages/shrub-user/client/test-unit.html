@@ -19,7 +19,7 @@
       <span class="s">&#39;$rootScope&#39;</span><span class="p">,</span> <span class="s">&#39;$timeout&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-socket&#39;</span>
       <span class="nf">($rootScope, $timeout, socket) -&gt;</span>
         
-        <span class="nx">socket</span><span class="p">.</span><span class="nx">catchEmit</span> <span class="s">&#39;rpc://user.login&#39;</span><span class="p">,</span> <span class="nf">(data, fn) -&gt;</span>
+        <span class="nx">socket</span><span class="p">.</span><span class="nx">catchEmit</span> <span class="s">&#39;rpc://shrub.user.login&#39;</span><span class="p">,</span> <span class="nf">(data, fn) -&gt;</span>
           <span class="nx">fn</span> <span class="nv">result: id: </span><span class="mi">1</span><span class="p">,</span> <span class="nv">name: </span><span class="s">&#39;cha0s&#39;</span>
         
         <span class="nx">user</span><span class="p">.</span><span class="nx">login</span> <span class="s">&#39;local&#39;</span><span class="p">,</span> <span class="s">&#39;cha0s&#39;</span><span class="p">,</span> <span class="s">&#39;password&#39;</span>

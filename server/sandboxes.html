@@ -11,7 +11,7 @@ arbitrary DOM contexts a pleasant breeze.</p></div></div><div class="code"><div 
 <span class="nv">errors = </span><span class="nx">require</span> <span class="s">&#39;errors&#39;</span>
 <span class="nv">logging = </span><span class="nx">require</span> <span class="s">&#39;logging&#39;</span>
 
-<span class="p">{</span><span class="nx">jsdom</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">&#39;jsdom&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>We'll keep our own logs.</p></div></div><div class="code"><div class="wrapper"><span class="nv">logger = </span><span class="nx">logging</span><span class="p">.</span><span class="nx">create</span> <span class="s">&#39;logs/sandbox.log&#39;</span>
+<span class="p">{</span><span class="nx">jsdom</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">&#39;jsdom&#39;</span>
 
 <span class="c1"># Hax: Fix document.domain since jsdom has a stub here.</span>
 <span class="nv">level2Html = </span><span class="nx">require</span> <span class="s">&#39;jsdom/lib/jsdom/level2/html&#39;</span>
@@ -74,8 +74,7 @@ some methods to inspect the state of the document.</p></div></div><div class="co
           <span class="k">else</span>
             <span class="nx">arg</span>
         
-        <span class="c1"># Let our logger log them.</span>
-        <span class="nx">logger</span><span class="p">[</span><span class="nx">level</span><span class="p">]</span> <span class="nx">args</span><span class="p">...</span> 
+        <span class="nx">console</span><span class="p">[</span><span class="nx">level</span><span class="p">]</span> <span class="nx">args</span><span class="p">...</span> 
         
     <span class="c1"># Hack in WebSocket.</span>
     <span class="nb">window</span><span class="p">.</span><span class="nv">WebSocket = </span><span class="nx">WebSocket</span>

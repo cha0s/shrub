@@ -2,34 +2,34 @@
 
 <span class="nv">crypto = </span><span class="nx">require</span> <span class="s">&#39;server/crypto&#39;</span>
 <span class="nv">config = </span><span class="nx">require</span> <span class="s">&#39;config&#39;</span>
+
 <span class="nv">nodemailer = </span><span class="nx">require</span> <span class="s">&#39;shrub-nodemailer&#39;</span>
+<span class="nv">orm = </span><span class="nx">require</span> <span class="s">&#39;shrub-orm&#39;</span>
 
 <span class="p">{</span><span class="nx">threshold</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">&#39;limits&#39;</span>
-<span class="nv">schema = </span><span class="nx">require</span> <span class="s">&#39;shrub-schema&#39;</span>
 
 <span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookendpoint">Implements hook <code>endpoint</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;endpoint&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
     
     <span class="nv">limiter: threshold: </span><span class="nx">threshold</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="nx">every</span><span class="p">(</span><span class="mi">30</span><span class="p">).</span><span class="nx">seconds</span><span class="p">()</span>
     
-    <span class="nv">route: </span><span class="s">&#39;user.forgot&#39;</span>
+    <span class="nv">route: </span><span class="s">&#39;shrub.user.forgot&#39;</span>
     
     <span class="nv">receiver: </span><span class="nf">(req, fn) -&gt;</span>
       
-      <span class="p">{</span><span class="nx">User</span><span class="p">}</span> <span class="o">=</span> <span class="nx">schema</span><span class="p">.</span><span class="nx">models</span>
+      <span class="nv">User = </span><span class="nx">orm</span><span class="p">.</span><span class="nx">collection</span> <span class="s">&#39;shrub-user&#39;</span>
       
       <span class="nx">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nf">-&gt;</span>
       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Search for username or encrypted email.</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="o">-</span><span class="mi">1</span> <span class="o">is</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">usernameOrEmail</span><span class="p">.</span><span class="nx">indexOf</span> <span class="s">&#39;@&#39;</span>
           
-          <span class="nv">where: iname: </span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">usernameOrEmail</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span>
+          <span class="nv">iname: </span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">usernameOrEmail</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span>
         
         <span class="k">else</span>
           
           <span class="nx">crypto</span><span class="p">.</span><span class="nx">encrypt</span><span class="p">(</span>
             <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">usernameOrEmail</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span>
           
-          <span class="p">).</span><span class="nx">then</span> <span class="nf">(encryptedEmail) -&gt;</span>
-            <span class="nv">where: email: </span><span class="nx">encryptedEmail</span>
+          <span class="p">).</span><span class="nx">then</span> <span class="nf">(encryptedEmail) -&gt;</span> <span class="nv">email: </span><span class="nx">encryptedEmail</span>
       
       <span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">(filter) -&gt;</span>
         </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Find the user.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">User</span><span class="p">.</span><span class="nx">findOne</span> <span class="nx">filter</span>

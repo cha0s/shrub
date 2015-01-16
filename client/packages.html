@@ -5,92 +5,125 @@
 
   <span class="p">.</span><span class="nx">config</span><span class="p">([</span>
     <span class="s">&#39;$compileProvider&#39;</span><span class="p">,</span> <span class="s">&#39;$controllerProvider&#39;</span><span class="p">,</span> <span class="s">&#39;$filterProvider&#39;</span><span class="p">,</span> <span class="s">&#39;$injector&#39;</span><span class="p">,</span> <span class="s">&#39;$provide&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-pkgmanProvider&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-requireProvider&#39;</span>
-    <span class="nf">($compileProvider, $controllerProvider, $filterProvider, $injector, $provide, {invoke}, {require}) -&gt;</span>
+    <span class="nf">($compileProvider, $controllerProvider, $filterProvider, $injector, $provide, pkgman, {require}) -&gt;</span>
       
       <span class="nv">_ = </span><span class="nx">require</span> <span class="s">&#39;underscore&#39;</span>
       
       <span class="nv">config = </span><span class="nx">require</span> <span class="s">&#39;config&#39;</span>
       <span class="nv">debug = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;debug&#39;</span><span class="p">)</span> <span class="s">&#39;shrub:angular&#39;</span>
-      <span class="nv">skin = </span><span class="nx">require</span> <span class="s">&#39;skin&#39;</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Use normalized names for directives and filters:
-'core/foo/bar' -> 'coreFooBar'</p></div></div><div class="code"><div class="wrapper">      <span class="nv">i8n = </span><span class="nx">require</span> <span class="s">&#39;inflection&#39;</span>
-      <span class="nv">normalize = </span><span class="nf">(path) -&gt;</span>
-        <span class="nv">parts = </span><span class="k">for</span> <span class="nx">part</span><span class="p">,</span> <span class="nx">i</span> <span class="k">in</span> <span class="nx">path</span><span class="p">.</span><span class="nx">split</span> <span class="s">&#39;/&#39;</span>
-          <span class="nx">i8n</span><span class="p">.</span><span class="nx">camelize</span><span class="p">(</span>
-            <span class="nx">part</span><span class="p">.</span><span class="nx">replace</span> <span class="sr">/[^\w]/g</span><span class="p">,</span> <span class="s">&#39;_&#39;</span>
-            <span class="mi">0</span> <span class="o">is</span> <span class="nx">i</span>
-          <span class="p">)</span>
-          
-        <span class="nx">i8n</span><span class="p">.</span><span class="nx">camelize</span> <span class="p">(</span><span class="nx">i8n</span><span class="p">.</span><span class="nx">underscore</span> <span class="nx">parts</span><span class="p">.</span><span class="nx">join</span> <span class="s">&#39;&#39;</span><span class="p">),</span> <span class="kc">true</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>controller</code>.
+      
+      <span class="nv">angular_ = </span><span class="nx">require</span> <span class="s">&#39;angular&#39;</span>
+      <span class="nx">angular_</span><span class="p">.</span><span class="nx">setInjector</span> <span class="nx">$injector</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>controller</code>.
 Allows packages to define Angular controllers. Implementations
 should return an <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">debug</span> <span class="s">&quot;Registering controllers...&quot;</span>
       
-      <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span> <span class="k">of</span> <span class="nx">invoke</span> <span class="s">&#39;controller&#39;</span>
-        <span class="nx">debug</span> <span class="nx">path</span>
+      <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span> <span class="k">of</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s">&#39;controller&#39;</span>
+        <span class="nv">controllerName = </span><span class="nx">pkgman</span><span class="p">.</span><span class="nx">normalizePath</span> <span class="nx">path</span>
         
-        <span class="nx">$controllerProvider</span><span class="p">.</span><span class="nx">register</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span>
+        <span class="nx">debug</span> <span class="nx">controllerName</span>
+        
+        <span class="nx">$controllerProvider</span><span class="p">.</span><span class="nx">register</span> <span class="nx">controllerName</span><span class="p">,</span> <span class="nx">injected</span>
 
       <span class="nx">debug</span> <span class="s">&quot;Controllers registered.&quot;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>directive</code>.
 Allows packages to define Angular directives. Implementations
 should return an <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">debug</span> <span class="s">&quot;Registering directives...&quot;</span>
       
-      <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span> <span class="k">of</span> <span class="nx">invoke</span> <span class="s">&#39;directive&#39;</span>
-        
+      <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span> <span class="k">of</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s">&#39;directive&#39;</span>
         <span class="nx">do</span> <span class="nf">(path, injected) -&gt;</span>
-        
-          <span class="nv">name = </span><span class="nx">normalize</span> <span class="nx">path</span>
+          <span class="nv">directiveName = </span><span class="nx">pkgman</span><span class="p">.</span><span class="nx">normalizePath</span> <span class="nx">path</span>
           
-          <span class="nx">debug</span> <span class="nx">name</span>
-          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>This gets run over immediately, but it's required due to
-the way Angular caches directives internally.</p></div></div><div class="code"><div class="wrapper">          <span class="nx">$compileProvider</span><span class="p">.</span><span class="nx">directive</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">injected</span>
-
-          <span class="nx">$provide</span><span class="p">.</span><span class="nx">factory</span> <span class="s">&quot;</span><span class="si">#{</span><span class="nx">name</span><span class="si">}</span><span class="s">Directive&quot;</span><span class="p">,</span> <span class="p">[</span>
-            <span class="s">&#39;$injector&#39;</span>
-            <span class="nf">($injector) -&gt;</span>
-            
-              <span class="nv">directive = </span><span class="nx">$injector</span><span class="p">.</span><span class="nx">invoke</span> <span class="nx">injected</span>
-              <span class="nv">compiler = </span><span class="nx">skin</span><span class="p">.</span><span class="nx">registerDirective</span><span class="p">(</span>
-                <span class="nx">$injector</span><span class="p">,</span> <span class="s">&quot;</span><span class="si">#{</span><span class="nx">path</span><span class="si">}</span><span class="s">.html&quot;</span>
-              <span class="p">)</span>
-              
-              <span class="nv">link = </span><span class="nx">directive</span><span class="p">.</span><span class="nx">link</span>
-              <span class="nv">directive.link = </span><span class="nf">(scope, element) -&gt;</span>
-                <span class="nx">compiler</span><span class="p">.</span><span class="nx">compile</span> <span class="nx">scope</span><span class="p">,</span> <span class="nx">element</span>
-                
-                <span class="nx">link</span><span class="p">.</span><span class="nx">apply</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">arguments</span> <span class="k">if</span> <span class="nx">link</span><span class="o">?</span>
-                  
-              <span class="k">if</span> <span class="nx">_</span><span class="p">.</span><span class="nx">isFunction</span> <span class="nx">directive</span>
-                
-                <span class="nv">directive = compile: </span><span class="nf">-&gt;</span> <span class="nx">directive</span>
-                
-              <span class="k">else</span> <span class="k">if</span> <span class="o">not</span> <span class="nx">directive</span><span class="p">.</span><span class="nx">compile</span> <span class="o">and</span> <span class="nx">directive</span><span class="p">.</span><span class="nx">link</span>
-                
+          <span class="nx">debug</span> <span class="nx">directiveName</span>
+          
+          <span class="nx">$compileProvider</span><span class="p">.</span><span class="nx">directive</span> <span class="nx">directiveName</span><span class="p">,</span> <span class="nx">injected</span>
+          <span class="nx">$provide</span><span class="p">.</span><span class="nx">factory</span> <span class="s">&quot;</span><span class="si">#{</span><span class="nx">directiveName</span><span class="si">}</span><span class="s">Directive&quot;</span><span class="p">,</span> <span class="p">[</span>
+            <span class="s">&#39;$controller&#39;</span><span class="p">,</span> <span class="s">&#39;$injector&#39;</span>
+            <span class="nf">($controller, $injector) -&gt;</span>
+            </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Normalize directive.    </p></div></div><div class="code"><div class="wrapper">              <span class="nv">directive = </span><span class="nx">$injector</span><span class="p">.</span><span class="nx">invoke</span> <span class="nx">injected</span>
+              </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Ensure compile exists.</p></div></div><div class="code"><div class="wrapper">              <span class="k">if</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">isFunction</span> <span class="nx">directive</span>
+                <span class="nv">directive = link: </span><span class="nx">directive</span>
                 <span class="nv">directive.compile = </span><span class="nf">-&gt;</span> <span class="nx">directive</span><span class="p">.</span><span class="nx">link</span>
+              <span class="k">else</span> <span class="k">if</span> <span class="o">not</span> <span class="nx">directive</span><span class="p">.</span><span class="nx">compile</span>
+                <span class="nv">directive.compile = </span><span class="nf">-&gt;</span> <span class="nx">directive</span><span class="p">.</span><span class="nx">link</span>
+              </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Automatic link function attachment to controller.</p></div></div><div class="code"><div class="wrapper">              <span class="nv">link = </span><span class="nx">directive</span><span class="p">.</span><span class="nx">link</span>
+              <span class="nv">directive.link = </span><span class="nf">(scope, element, attrs, controllers) -&gt;</span>
+                <span class="k">if</span> <span class="nx">controllers</span><span class="o">?</span>
+                  <span class="k">unless</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">isArray</span> <span class="nx">controllers</span>
+                    <span class="nv">controllers = </span><span class="p">[</span><span class="nx">controllers</span><span class="p">]</span>
+                    
+                  <span class="k">for</span> <span class="nx">controller</span> <span class="k">in</span> <span class="nx">controllers</span>
+                    <span class="nx">controller</span><span class="p">.</span><span class="nx">link</span><span class="o">?</span> <span class="nx">scope</span><span class="p">,</span> <span class="nx">element</span><span class="p">,</span> <span class="nx">attrs</span>
                 
-              <span class="nv">directive.priority = </span><span class="nx">directive</span><span class="p">.</span><span class="nx">priority</span> <span class="o">?</span> <span class="mi">0</span>
+                <span class="nx">link</span><span class="o">?</span> <span class="nx">arguments</span><span class="p">...</span>
+
+              <span class="nx">directive</span><span class="p">.</span><span class="nx">name</span> <span class="o">?=</span> <span class="nx">directiveName</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Automatic directive controller discovery.</p></div></div><div class="code"><div class="wrapper">              <span class="k">if</span> <span class="nx">directive</span><span class="p">.</span><span class="nx">bindToController</span>
+                <span class="nx">directive</span><span class="p">.</span><span class="nx">controller</span> <span class="o">?=</span> <span class="nx">directive</span><span class="p">.</span><span class="nx">name</span>
+                
+              <span class="nx">directive</span><span class="p">.</span><span class="nx">require</span> <span class="o">?=</span> <span class="nx">directive</span><span class="p">.</span><span class="nx">controller</span> <span class="o">and</span> <span class="nx">directive</span><span class="p">.</span><span class="nx">name</span>
+              <span class="nx">directive</span><span class="p">.</span><span class="nx">priority</span> <span class="o">?=</span> <span class="mi">0</span>
               <span class="nv">directive.index = </span><span class="mi">0</span>
-              <span class="nv">directive.name = </span><span class="nx">directive</span><span class="p">.</span><span class="nx">name</span> <span class="o">?</span> <span class="nx">name</span>
-              <span class="nv">directive.require = </span><span class="nx">directive</span><span class="p">.</span><span class="nx">require</span> <span class="o">?</span> <span class="nx">directive</span><span class="p">.</span><span class="nx">controller</span> <span class="o">and</span> <span class="nx">directive</span><span class="p">.</span><span class="nx">name</span>
-              <span class="nv">directive.restrict = </span><span class="nx">directive</span><span class="p">.</span><span class="nx">restrict</span> <span class="o">?</span> <span class="s">&#39;A&#39;</span>
+              <span class="nx">directive</span><span class="p">.</span><span class="nx">restrict</span> <span class="o">?=</span> <span class="s">&#39;EA&#39;</span>
+              
+              <span class="k">if</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">isObject</span> <span class="nx">directive</span><span class="p">.</span><span class="nx">scope</span>
+                
+                <span class="nv">directive.$$isolateBindings = </span><span class="nx">do</span> <span class="nf">-&gt;</span>
+                  <span class="nv">LOCAL_REGEXP = </span><span class="sr">/^\s*([@&amp;]|=(\*?))(\??)\s*(\w*)\s*$/</span><span class="p">;</span>
+                  
+                  <span class="nv">bindings = </span><span class="p">{}</span>
+                  
+                  <span class="k">for</span> <span class="nx">scopeName</span><span class="p">,</span> <span class="nx">definition</span> <span class="k">of</span> <span class="nx">directive</span><span class="p">.</span><span class="nx">scope</span>
+                    <span class="nv">match = </span><span class="nx">definition</span><span class="p">.</span><span class="nx">match</span> <span class="nx">LOCAL_REGEXP</span>
+              
+                    <span class="k">unless</span> <span class="nx">match</span>
+                      <span class="k">throw</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">$$minErr</span><span class="p">(</span><span class="s">&#39;$compile&#39;</span><span class="p">)(</span><span class="s">&#39;iscp&#39;</span><span class="p">,</span>
+                          <span class="s">&quot;Invalid isolate scope definition for directive &#39;{0}&#39;.&quot;</span> <span class="o">+</span>
+                          <span class="s">&quot; Definition: {... {1}: &#39;{2}&#39; ...}&quot;</span><span class="p">,</span>
+                          <span class="nx">directive</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="nx">scopeName</span><span class="p">,</span> <span class="nx">definition</span><span class="p">);</span>
+              
+                    <span class="nx">bindings</span><span class="p">[</span><span class="nx">scopeName</span><span class="p">]</span> <span class="o">=</span>
+                      <span class="nv">mode: </span><span class="nx">match</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                      <span class="nv">collection: </span><span class="nx">match</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">is</span> <span class="s">&#39;*&#39;</span>
+                      <span class="nv">optional: </span><span class="nx">match</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">is</span> <span class="s">&#39;?&#39;</span>
+                      <span class="nv">attrName: </span><span class="nx">match</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">or</span> <span class="nx">scopeName</span>
+                  
+                  <span class="nx">bindings</span>
+              </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>augmentDirective</code>.
+Allows packages to augment the directives
+defined by packages. One example is the automatic
+relinking functionality implemented by <a href="/packages/shrub-skin/client/index.html#implementshookaugmentdirective">shrub-skin</a>.</p></div></div><div class="code"><div class="wrapper">              <span class="k">for</span> <span class="nx">injectedDirective</span> <span class="k">in</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invokeFlat</span><span class="p">(</span>
+                <span class="s">&#39;augmentDirective&#39;</span><span class="p">,</span> <span class="nx">directive</span><span class="p">,</span> <span class="nx">path</span>
+              <span class="p">)</span>
+                <span class="nx">$injector</span><span class="p">.</span><span class="nx">invoke</span> <span class="nx">injectedDirective</span>
               
               <span class="p">[</span><span class="nx">directive</span><span class="p">]</span>
-              
+      
           <span class="p">]</span>
             
       <span class="nx">debug</span> <span class="s">&quot;Directives registered.&quot;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>filter</code>.
 Allows packages to define Angular filters. Implementations
 should return a function.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">debug</span> <span class="s">&quot;Registering filters...&quot;</span>
       
-      <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span> <span class="k">of</span> <span class="nx">invoke</span> <span class="s">&#39;filter&#39;</span>
-        <span class="nx">debug</span> <span class="nx">normalize</span> <span class="nx">path</span>
+      <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span> <span class="k">of</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s">&#39;filter&#39;</span>
+        <span class="nv">filterName = </span><span class="nx">pkgman</span><span class="p">.</span><span class="nx">normalizePath</span> <span class="nx">path</span>
+        
+        <span class="nx">debug</span> <span class="nx">filterName</span>
 
-        <span class="nx">$filterProvider</span><span class="p">.</span><span class="nx">register</span> <span class="p">(</span><span class="nx">normalize</span> <span class="nx">path</span><span class="p">),</span> <span class="nx">injected</span>
+        <span class="nx">$filterProvider</span><span class="p">.</span><span class="nx">register</span> <span class="nx">filterName</span><span class="p">,</span> <span class="nx">injected</span>
 
-      <span class="nx">debug</span> <span class="s">&quot;Filters registered.&quot;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>service</code>.
+      <span class="nx">debug</span> <span class="s">&quot;Filters registered.&quot;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>provider</code>.
+Allows packages to define Angular providers. Implementations
+should return an <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">debug</span> <span class="s">&quot;Registering providers...&quot;</span>
+      
+      <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">provider</span> <span class="k">of</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s">&#39;provider&#39;</span>
+        <span class="nx">debug</span> <span class="nx">path</span>
+
+        <span class="nx">$provide</span><span class="p">.</span><span class="nx">provider</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">provider</span>
+      
+      <span class="nx">debug</span> <span class="s">&quot;Providers registered.&quot;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>service</code>.
 Allows packages to define Angular services. Implementations
 should return an <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">debug</span> <span class="s">&quot;Registering services...&quot;</span>
       
-      <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span> <span class="k">of</span> <span class="nx">invoke</span> <span class="s">&#39;service&#39;</span>
+      <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span> <span class="k">of</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s">&#39;service&#39;</span>
         <span class="nx">debug</span> <span class="nx">path</span>
 
         <span class="nx">$provide</span><span class="p">.</span><span class="nx">service</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span>
@@ -102,7 +135,7 @@ Allows packages to decorate mock Angular services.
 Implementations should return an
 <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">debug</span> <span class="s">&quot;Registering mock services...&quot;</span>
         
-        <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span> <span class="k">of</span> <span class="nx">invoke</span> <span class="s">&#39;serviceMock&#39;</span>
+        <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span> <span class="k">of</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s">&#39;serviceMock&#39;</span>
           <span class="nx">debug</span> <span class="nx">path</span>
 
           <span class="nx">$provide</span><span class="p">.</span><span class="nx">decorator</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">injected</span>
@@ -131,7 +164,17 @@ Implementations should return an
       
       <span class="nv">service.invoke = </span><span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span>
       <span class="nv">service.invokeFlat = </span><span class="nx">pkgman</span><span class="p">.</span><span class="nx">invokeFlat</span>
-      
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Use normalized names for directives and filters:
+'core/foo/bar' -> 'coreFooBar'</p></div></div><div class="code"><div class="wrapper">      <span class="nv">i8n = </span><span class="nx">require</span> <span class="s">&#39;inflection&#39;</span>
+      <span class="nv">service.normalizePath = </span><span class="nf">(path) -&gt;</span>
+        <span class="nv">parts = </span><span class="k">for</span> <span class="nx">part</span><span class="p">,</span> <span class="nx">i</span> <span class="k">in</span> <span class="nx">path</span><span class="p">.</span><span class="nx">split</span> <span class="s">&#39;/&#39;</span>
+          <span class="nx">i8n</span><span class="p">.</span><span class="nx">camelize</span><span class="p">(</span>
+            <span class="nx">part</span><span class="p">.</span><span class="nx">replace</span> <span class="sr">/[^\w]/g</span><span class="p">,</span> <span class="s">&#39;_&#39;</span>
+            <span class="mi">0</span> <span class="o">is</span> <span class="nx">i</span>
+          <span class="p">)</span>
+          
+        <span class="nx">i8n</span><span class="p">.</span><span class="nx">camelize</span> <span class="p">(</span><span class="nx">i8n</span><span class="p">.</span><span class="nx">underscore</span> <span class="nx">parts</span><span class="p">.</span><span class="nx">join</span> <span class="s">&#39;&#39;</span><span class="p">),</span> <span class="kc">true</span>
+
       <span class="nv">service.$get = </span><span class="nf">-&gt;</span> <span class="nx">service</span>
       
       <span class="nx">service</span>

@@ -1,39 +1,86 @@
 <!DOCTYPE html><html lang="en"><head><title>packages/shrub-http/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="packages/shrub-http/index"><meta name="groc-project-path" content="packages/shrub-http/index.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-http/index.coffee">packages/shrub-http/index.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="http">HTTP</h1>
 
 <p>Manage HTTP connections.</p></div></div><div class="code"><div class="wrapper"><span class="nv">config = </span><span class="nx">require</span> <span class="s">&#39;config&#39;</span>
+<span class="nv">pkgman = </span><span class="nx">require</span> <span class="s">&#39;pkgman&#39;</span>
+
 <span class="nv">debug = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;debug&#39;</span><span class="p">)</span> <span class="s">&#39;shrub:http&#39;</span>
 
 <span class="nv">httpManager = </span><span class="kc">null</span>
 
-<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookinitialize">Implements hook <code>initialize</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;initialize&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookbootstrapmiddleware">Implements hook <code>bootstrapMiddleware</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;bootstrapMiddleware&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+  
+    <span class="nv">label: </span><span class="s">&#39;Bootstrap HTTP server&#39;</span>
+    <span class="nv">middleware: </span><span class="p">[</span>
     
-    <span class="p">{</span><span class="nx">manager</span><span class="p">,</span> <span class="nx">port</span><span class="p">}</span> <span class="o">=</span> <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;packageSettings:shrub-http&#39;</span>
-    
-    <span class="nv">Manager = </span><span class="nx">require</span> <span class="nx">manager</span><span class="p">.</span><span class="nx">module</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Spin up the HTTP server, and initialize it.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">httpManager = </span><span class="k">new</span> <span class="nx">Manager</span><span class="p">()</span>
-    <span class="nx">httpManager</span><span class="p">.</span><span class="nx">initialize</span><span class="p">().</span><span class="nx">then</span> <span class="nf">-&gt;</span>
-    
-      <span class="nx">debug</span> <span class="s">&quot;Shrub HTTP server up and running on port </span><span class="si">#{</span><span class="nx">port</span><span class="si">}</span><span class="s">!&quot;</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookpackagesettings">Implements hook <code>packageSettings</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;packageSettings&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+      <span class="nf">(next) -&gt;</span>
+      
+        <span class="p">{</span><span class="nx">manager</span><span class="p">,</span> <span class="nx">port</span><span class="p">}</span> <span class="o">=</span> <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;packageSettings:shrub-http&#39;</span>
+        
+        <span class="p">{</span><span class="nx">Manager</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="nx">manager</span><span class="p">.</span><span class="nx">module</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Spin up the HTTP server, and initialize it.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">httpManager = </span><span class="k">new</span> <span class="nx">Manager</span><span class="p">()</span>
+        <span class="nx">httpManager</span><span class="p">.</span><span class="nx">initialize</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nf">-&gt;</span>
+        
+          <span class="nx">debug</span> <span class="s">&quot;Shrub HTTP server up and running on port </span><span class="si">#{</span><span class="nx">port</span><span class="si">}</span><span class="s">!&quot;</span>
+          <span class="nx">next</span><span class="p">()</span>
+          
+        <span class="p">).</span><span class="nx">catch</span> <span class="nx">next</span>
+          
+    <span class="p">]</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookhttpinitializing">Implements hook <code>httpInitializing</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;httpInitializing&#39;</span><span class="p">,</span> <span class="nf">(http) -&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>httpRoutes</code>.
+Allows packages to specify HTTP routes. Implementations should
+return an array of route specifications. See
+[shrub-orm-rest's implementation]
+(/packages/shrub-orm-rest/index.coffee#implementshookhttproutes) as
+an example.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">debug</span> <span class="s">&quot;- Registering routes...&quot;</span>
+    <span class="k">for</span> <span class="nx">routeList</span> <span class="k">in</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invokeFlat</span> <span class="s">&#39;httpRoutes&#39;</span><span class="p">,</span> <span class="nx">http</span>
+      
+      <span class="k">for</span> <span class="nx">route</span> <span class="k">in</span> <span class="nx">routeList</span>
+        <span class="nx">route</span><span class="p">.</span><span class="nx">verb</span> <span class="o">?=</span> <span class="s">&#39;get&#39;</span>
+        
+        <span class="nx">debug</span> <span class="s">&quot;- - </span><span class="si">#{</span>
+          <span class="nx">route</span><span class="p">.</span><span class="nx">verb</span><span class="p">.</span><span class="nx">toUpperCase</span><span class="p">()</span>
+        <span class="si">}</span><span class="s"> </span><span class="si">#{</span>
+          <span class="nx">route</span><span class="p">.</span><span class="nx">path</span>
+        <span class="si">}</span><span class="s">&quot;</span>
+        
+        <span class="nx">http</span><span class="p">.</span><span class="nx">addRoute</span> <span class="nx">route</span>
+    <span class="nx">debug</span> <span class="s">&quot;- Routes registered.&quot;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookhttpmiddleware">Implements hook <code>httpMiddleware</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;httpMiddleware&#39;</span><span class="p">,</span> <span class="nf">(http) -&gt;</span>
+
+    <span class="nv">label: </span><span class="s">&#39;Finalize HTTP request&#39;</span>
+    <span class="nv">middleware: </span><span class="p">[</span>
+      
+      <span class="nf">(req, res, next) -&gt;</span>
+        
+        <span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">delivery</span><span class="o">?</span>
+          
+          <span class="nx">res</span><span class="p">.</span><span class="nx">send</span> <span class="nx">req</span><span class="p">.</span><span class="nx">delivery</span>
+        
+        <span class="k">else</span>
+        
+          <span class="nx">res</span><span class="p">.</span><span class="nx">status</span> <span class="mi">501</span>
+          <span class="nx">res</span><span class="p">.</span><span class="nx">end</span> <span class="s">&#39;&lt;h1&gt;501 Internal Server Error&lt;/h1&gt;&#39;</span>
+        
+    <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookpackagesettings">Implements hook <code>packageSettings</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;packageSettings&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
     
     <span class="nv">manager:</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Module implementing the socket manager.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">module: </span><span class="s">&#39;shrub-express&#39;</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Module implementing the socket manager.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">module: </span><span class="s">&#39;shrub-http-express&#39;</span>
   
     <span class="nv">middleware: </span><span class="p">[</span>
       <span class="s">&#39;shrub-core&#39;</span>
       <span class="s">&#39;shrub-socket/factory&#39;</span>
       <span class="s">&#39;shrub-form&#39;</span>
-      <span class="s">&#39;shrub-session/express&#39;</span>
-      <span class="s">&#39;shrub-session&#39;</span>
+      <span class="s">&#39;shrub-http-express/session&#39;</span>
       <span class="s">&#39;shrub-user&#39;</span>
-      <span class="s">&#39;shrub-express/logger&#39;</span>
-      <span class="s">&#39;shrub-express/routes&#39;</span>
-      <span class="s">&#39;shrub-express/static&#39;</span>
+      <span class="s">&#39;shrub-http-express/logger&#39;</span>
+      <span class="s">&#39;shrub-http-express/routes&#39;</span>
+      <span class="s">&#39;shrub-http-express/static&#39;</span>
       <span class="s">&#39;shrub-config&#39;</span>
-      <span class="s">&#39;shrub-skin&#39;</span>
+      <span class="s">&#39;shrub-skin/path&#39;</span>
       <span class="s">&#39;shrub-assets&#39;</span>
+      <span class="s">&#39;shrub-skin/render&#39;</span>
       <span class="s">&#39;shrub-angular&#39;</span>
-      <span class="s">&#39;shrub-express/errors&#39;</span>
+      <span class="s">&#39;shrub-http-express/errors&#39;</span>
     <span class="p">]</span>
   
     <span class="nv">path: </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;path&#39;</span><span class="si">}</span><span class="s">/app&quot;</span>

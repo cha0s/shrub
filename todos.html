@@ -4,12 +4,12 @@
 a dynamically generated listing of TODO items, each with a line of code
 context.</p>
 
-<p><a href="./client/modules/pkgman.html">client/modules/pkgman.coffee</a></p>
+<p><a href="./client/modules/middleware.html">client/modules/middleware.coffee</a></p>
 
 <ul>
-<li><h4 id="continueiferrortostringiserrorcannotfindmodulename"><code>continue if error.toString() is "Error: Cannot find module '#{name}'"</code></h4>
+<li><h4 id="configkeyifglobalthenpackagesettingselsepackageconfig"><code>configKey = if global? then 'packageSettings' else 'packageConfig'</code></h4>
 
-<p>Should we let this throw? </p></li>
+<p>this really should be unified, making this unnecessary. </p></li>
 </ul>
 
 <p><a href="./packages/shrub-angular/index.html">packages/shrub-angular/index.coffee</a></p>
@@ -28,17 +28,6 @@ context.</p>
 <p>Some method of allowing <code>templateUrl</code>. </p></li>
 </ul>
 
-<p><a href="./packages/shrub-form/client/index.html">packages/shrub-form/client/index.coffee</a></p>
-
-<ul>
-<li><h4 id="fornamefieldofformspec"><code>for name, field of formSpec</code></h4>
-
-<p>Form field types should be defined by hook. </p></li>
-<li><h4 id="iffieldrpc"><code>if field.rpc?</code></h4>
-
-<p>This should be middleware'd, <code>rpc</code> should be implementing it. </p></li>
-</ul>
-
 <p><a href="./packages/shrub-form/index.html">packages/shrub-form/index.coffee</a></p>
 
 <ul>
@@ -50,17 +39,15 @@ context.</p>
 <p><a href="./packages/shrub-http/manager.html">packages/shrub-http/manager.coffee</a></p>
 
 <ul>
+<li><h4 id="pkgmaninvokehttpinitializingthis"><code>pkgman.invoke 'httpInitializing', this</code></h4>
+
+<p>Remove this hook; implementations should be using <code>bootstrapMiddleware</code>. </p></li>
+<li><h4 id="pkgmaninvokeflathttplisteningthis"><code>pkgman.invokeFlat 'httpListening', this</code></h4>
+
+<p>Remove this hook; implementations should be using <code>bootstrapMiddleware</code>. </p></li>
 <li><h4 id="_middlewaremiddlewarefromhook"><code>@_middleware = middleware.fromHook(</code></h4>
 
 <p>Rename express to http, so we can use a short name. </p></li>
-</ul>
-
-<p><a href="./packages/shrub-limiter/index.html">packages/shrub-limiter/index.coffee</a></p>
-
-<ul>
-<li><h4 id="promiseifreqreportvilliany"><code>promise = if req.reportVilliany?</code></h4>
-
-<p>Should this be added by <a href="/server/packages/villiany/index.html">villiany</a>? </p></li>
 </ul>
 
 <p><a href="./packages/shrub-nodemailer/index.html">packages/shrub-nodemailer/index.coffee</a></p>
@@ -71,7 +58,7 @@ context.</p>
 <p>this kind of thing should be configurable and handled by the theme/skin when we get to that point. </p></li>
 </ul>
 
-<p><a href="./packages/shrub-socket.io/index.html">packages/shrub-socket.io/index.coffee</a></p>
+<p><a href="./packages/shrub-socket-socket.io/index.html">packages/shrub-socket-socket.io/index.coffee</a></p>
 
 <ul>
 <li><h4 id="socketsinchannelchannelname"><code>socketsInChannel: (channelName) -&gt;</code></h4>
@@ -79,15 +66,12 @@ context.</p>
 <p>This only works on a single node. socket.io needs to implement this. </p></li>
 </ul>
 
-<p><a href="./packages/shrub-ui/client/nav.html">packages/shrub-ui/client/nav.coffee</a></p>
+<p><a href="./packages/shrub-ui/client/list/index.html">packages/shrub-ui/client/list/index.coffee</a></p>
 
 <ul>
-<li><h4 id="scopelinkslinks"><code>scope.links = links</code></h4>
+<li><h4 id=""><code>)</code></h4>
 
-<p>This whole thing needs to be overhauled. </p></li>
-<li><h4 id="registrarregisterhookservice"><code>registrar.registerHook 'service', -&gt; [</code></h4>
-
-<p>Overhaul this. </p></li>
+<p>Fix this when menu handles existing classes more intelligently. element.addClass scope.list.name if scope.list?.name </p></li>
 </ul>
 
 <p><a href="./packages/shrub-user/client/index.html">packages/shrub-user/client/index.coffee</a></p>
@@ -99,9 +83,15 @@ context.</p>
 <li><h4 id="ddelegatefakeloginusernamepasswordpasswordid1"><code>$delegate.fakeLogin = (username, password = 'password', id = 1) -&gt;</code></h4>
 
 <p>This will change when login method generalization happens. </p></li>
-<li><h4 id="userhaspermissionpermfalse"><code>User::hasPermission = (perm) -&gt; false</code></h4>
+<li><h4 id="haspermissionpermfalse"><code>hasPermission: (perm) -&gt; false</code></h4>
 
 <p>Access control structure. </p></li>
+<li><h4 id="shrubuserusercollections"><code>{'shrub-user': User} = collections</code></h4>
+
+<p>This is broken since ORM change </p></li>
+<li><h4 id="returnresolveifuserinstanceofuser_model"><code>return resolve()# if user instanceof User._model</code></h4>
+
+<p>See if we can do this without using the internal _model property. </p></li>
 </ul>
 
 <p><a href="./packages/shrub-user/login.html">packages/shrub-user/login.coffee</a></p>
@@ -109,5 +99,40 @@ context.</p>
 <ul>
 <li><h4 id="localstrategyrequirepassportlocalstrategy"><code>LocalStrategy = require('passport-local').Strategy</code></h4>
 
-<p>Strategies should be dynamically defined, probably through a hook. </p></li>
+<p>Strategies should be dynamically defined through a hook. </p></li>
+</ul>
+
+<p><a href="./packages/shrub-user/logout.html">packages/shrub-user/logout.coffee</a></p>
+
+<ul>
+<li><h4 id="userbeforelogoutmiddlewaremiddlewarefromshortname"><code>userBeforeLogoutMiddleware = middleware.fromShortName(</code></h4>
+
+<p>Remove res param from implementations. </p></li>
+<li><h4 id="userafterlogoutmiddlewaremiddlewarefromshortname"><code>userAfterLogoutMiddleware = middleware.fromShortName(</code></h4>
+
+<p>Remove res param from implementations. </p></li>
+</ul>
+
+<p><a href="./packages/shrub-user/register.html">packages/shrub-user/register.coffee</a></p>
+
+<ul>
+<li><h4 id="exportsregisternameemailpassword"><code>exports.register = (name, email, password) -&gt;</code></h4>
+
+<p>Should be a class method on the shrub-user collection. </p></li>
+</ul>
+
+<p><a href="./server.html">server.coffee</a></p>
+
+<ul>
+<li><h4 id="returnpkgmaninvokereadyunlesserror"><code>return pkgman.invoke 'ready' unless error?</code></h4>
+
+<p>Remove this; implementations should use <code>bootstrapMiddleware</code>. </p></li>
+</ul>
+
+<p><a href="./server/limits.html">server/limits.coffee</a></p>
+
+<ul>
+<li><h4 id="exportslimiterclasslimiter"><code>exports.Limiter = class Limiter</code></h4>
+
+<p>Do this with ORM so it isn't tied to redis. </p></li>
 </ul></div></div></div></div></body></html>

@@ -7,30 +7,40 @@
     <span class="nv">title: </span><span class="s">&#39;Reset your password&#39;</span>
     
     <span class="nv">controller: </span><span class="p">[</span>
-      <span class="s">&#39;$location&#39;</span><span class="p">,</span> <span class="s">&#39;$routeParams&#39;</span><span class="p">,</span> <span class="s">&#39;$scope&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-ui/notifications&#39;</span>
-      <span class="nf">($location, {token}, $scope, {add}) -&gt;</span>
+      <span class="s">&#39;$location&#39;</span><span class="p">,</span> <span class="s">&#39;$routeParams&#39;</span><span class="p">,</span> <span class="s">&#39;$scope&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-ui/notifications&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-rpc&#39;</span>
+      <span class="nf">($location, $routeParams, $scope, notifications, rpc) -&gt;</span>
         
-        <span class="nv">$scope.userReset =</span>
+        <span class="nv">$scope.form =</span>
           
-          <span class="nv">password:</span>
-            <span class="nv">type: </span><span class="s">&#39;password&#39;</span>
-            <span class="nv">label: </span><span class="s">&quot;New password&quot;</span>
-            <span class="nv">required: </span><span class="kc">true</span>
+          <span class="nv">key: </span><span class="s">&#39;shrub-user-reset&#39;</span>
           
-          <span class="nv">token:</span>
-            <span class="nv">type: </span><span class="s">&#39;hidden&#39;</span>
-            <span class="nv">value: </span><span class="nx">token</span>
-          
-          <span class="nv">submit:</span>
-            <span class="nv">type: </span><span class="s">&#39;submit&#39;</span>
-            <span class="nv">label: </span><span class="s">&quot;Reset password&quot;</span>
-            <span class="nv">rpc: </span><span class="kc">true</span>
-            <span class="nv">handler: </span><span class="nf">(error, result) -&gt;</span>
+          <span class="nv">submits: </span><span class="p">[</span>
+            
+            <span class="nx">rpc</span><span class="p">.</span><span class="nx">formSubmitHandler</span> <span class="nf">(error, result) -&gt;</span>
               <span class="k">return</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
               
-              <span class="nx">add</span> <span class="nv">text: </span><span class="s">&quot;You may now log in with your new password.&quot;</span>
+              <span class="nx">notifications</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span>
+                <span class="nv">text: </span><span class="s">&quot;You may now log in with your new password.&quot;</span>
+              <span class="p">)</span>
               
               <span class="nx">$location</span><span class="p">.</span><span class="nx">path</span> <span class="s">&#39;/user/login&#39;</span>
+
+          <span class="p">]</span>
+          
+          <span class="nv">fields:</span>
+          
+            <span class="nv">password:</span>
+              <span class="nv">type: </span><span class="s">&#39;password&#39;</span>
+              <span class="nv">label: </span><span class="s">&quot;New password&quot;</span>
+              <span class="nv">required: </span><span class="kc">true</span>
+            
+            <span class="nv">token:</span>
+              <span class="nv">type: </span><span class="s">&#39;hidden&#39;</span>
+              <span class="nv">value: </span><span class="nx">$routeParams</span><span class="p">.</span><span class="nx">token</span>
+            
+            <span class="nv">submit:</span>
+              <span class="nv">type: </span><span class="s">&#39;submit&#39;</span>
+              <span class="nv">label: </span><span class="s">&quot;Reset password&quot;</span>
   
         <span class="nx">$scope</span><span class="p">.</span><span class="nx">$emit</span> <span class="s">&#39;shrubFinishedRendering&#39;</span>
         
@@ -38,6 +48,9 @@
     
     <span class="nv">template: </span><span class="s">&quot;&quot;&quot;</span>
 <span class="s">  </span>
-<span class="s">&lt;div data-shrub-form=&quot;userReset&quot;&gt;&lt;/div&gt;</span>
+<span class="s">&lt;div</span>
+<span class="s">  data-shrub-form</span>
+<span class="s">  data-form=&quot;form&quot;</span>
+<span class="s">&gt;&lt;/div&gt;</span>
 
 <span class="s">&quot;&quot;&quot;</span></div></div></div></div></body></html>

@@ -1,9 +1,30 @@
-<!DOCTYPE html><html lang="en"><head><title>packages/shrub-skin/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="packages/shrub-skin/index"><meta name="groc-project-path" content="packages/shrub-skin/index.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-skin/index.coffee">packages/shrub-skin/index.coffee</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nv">config = </span><span class="nx">require</span> <span class="s">&#39;config&#39;</span>
+<!DOCTYPE html><html lang="en"><head><title>packages/shrub-skin/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="packages/shrub-skin/index"><meta name="groc-project-path" content="packages/shrub-skin/index.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-skin/index.coffee">packages/shrub-skin/index.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="skin">Skin</h1>
+
+<p>Allows the visual aspects of the site to be controlled by skin packages.</p></div></div><div class="code"><div class="wrapper"><span class="nv">fs = </span><span class="nx">require</span> <span class="s">&#39;fs&#39;</span>
+<span class="nv">path = </span><span class="nx">require</span> <span class="s">&#39;path&#39;</span>
+
+<span class="nv">cheerio = </span><span class="nx">require</span> <span class="s">&#39;cheerio&#39;</span>
+<span class="nv">glob = </span><span class="nx">require</span> <span class="s">&#39;simple-glob&#39;</span>
+<span class="nv">Promise = </span><span class="nx">require</span> <span class="s">&#39;bluebird&#39;</span>
+
+<span class="nv">config = </span><span class="nx">require</span> <span class="s">&#39;config&#39;</span>
+<span class="nv">pkgman = </span><span class="nx">require</span> <span class="s">&#39;pkgman&#39;</span>
+
+<span class="nv">assets = </span><span class="nx">require</span> <span class="s">&#39;shrub-assets&#39;</span>
+
+<span class="p">{</span><span class="nx">handlebars</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">&#39;hbs&#39;</span>
+
+<span class="nv">readFile = </span><span class="nx">Promise</span><span class="p">.</span><span class="nx">promisify</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">,</span> <span class="nx">fs</span>
 
 <span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookconfig">Implements hook <code>config</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;config&#39;</span><span class="p">,</span> <span class="nf">(req) -&gt;</span>
     
+    <span class="nv">skinAssets = </span><span class="p">{}</span>
+    <span class="k">for</span> <span class="nx">packagePath</span> <span class="k">in</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">packagesImplementing</span> <span class="s">&#39;skinAssets&#39;</span>
+      <span class="nx">skinAssets</span><span class="p">[</span><span class="nx">packagePath</span><span class="p">]</span> <span class="o">=</span> <span class="nx">exports</span><span class="p">.</span><span class="nx">assets</span> <span class="nx">packagePath</span>
+    
     <span class="nv">default: </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;packageSettings:shrub-skin:default&#39;</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookhttpmiddleware">Implements hook <code>httpMiddleware</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;httpMiddleware&#39;</span><span class="p">,</span> <span class="nf">(http) -&gt;</span>
+    <span class="nv">assets: </span><span class="nx">skinAssets</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookhttpmiddleware">Implements hook <code>httpMiddleware</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;path&#39;</span><span class="p">,</span> <span class="s">&#39;httpMiddleware&#39;</span><span class="p">,</span> <span class="nf">(http) -&gt;</span>
 
     <span class="nv">label: </span><span class="s">&#39;Skin path handling&#39;</span>
     <span class="nv">middleware: </span><span class="p">[</span>
@@ -13,5 +34,154 @@
 otherwise, express/static would have picked it up already.</p></div></div><div class="code"><div class="wrapper">        <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nx">send</span> <span class="mi">404</span> <span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">path</span><span class="p">.</span><span class="nx">match</span> <span class="sr">/^\/skin\//</span>
           
         <span class="nx">next</span><span class="p">()</span>
-    <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookpackagesettings">Implements hook <code>packageSettings</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;packageSettings&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Default skin</p></div></div><div class="code"><div class="wrapper">    <span class="nv">default: </span><span class="s">&#39;strapped&#39;</span></div></div></div></div></body></html>
+    <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookhttpmiddleware">Implements hook <code>httpMiddleware</code></h2>
+
+<p>If configuration dictates, render the client-side Angular application in a
+sandbox.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;render&#39;</span><span class="p">,</span> <span class="s">&#39;httpMiddleware&#39;</span><span class="p">,</span> <span class="nf">(http) -&gt;</span>
+    
+    <span class="nv">label: </span><span class="s">&#39;Render skinned page HTML&#39;</span>
+    <span class="nv">middleware: </span><span class="p">[</span>
+    
+      <span class="nf">(req, res, next) -&gt;</span>
+        
+        <span class="nv">skinKey = </span><span class="nx">exports</span><span class="p">.</span><span class="nx">activeKey</span><span class="p">()</span>
+        
+        <span class="c1"># Render app.html</span>
+        <span class="k">return</span> <span class="nx">exports</span><span class="p">.</span><span class="nx">renderAppHtml</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nf">(html) -&gt;</span>
+          <span class="nv">req.delivery = </span><span class="nx">html</span>
+          <span class="nx">next</span><span class="p">()</span>
+        <span class="p">).</span><span class="nx">catch</span> <span class="nf">(error) -&gt;</span> <span class="nx">next</span> <span class="nx">error</span>
+        
+  <span class="p">]</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookpackagesettings">Implements hook <code>packageSettings</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;packageSettings&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Default skin</p></div></div><div class="code"><div class="wrapper">    <span class="nv">default: </span><span class="s">&#39;shrub-skin-strapped&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="activekey">::activeKey</h3>
+
+<p><em>Get the active skin's key</em></p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.activeKey = </span><span class="nf">-&gt;</span> <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;packageSettings:shrub-skin:default&#39;</span>
+
+<span class="nv">exports.gruntSkin = </span><span class="nf">(gruntConfig, key) -&gt;</span>
+  
+  <span class="p">{</span><span class="nx">grunt</span><span class="p">}</span> <span class="o">=</span> <span class="nx">gruntConfig</span>
+  
+  <span class="nv">skinPath = </span><span class="nx">path</span><span class="p">.</span><span class="nx">dirname</span> <span class="nx">require</span><span class="p">.</span><span class="nx">resolve</span> <span class="nx">key</span>
+  
+  <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">clean</span> <span class="o">?=</span> <span class="p">{}</span>
+  <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">copy</span> <span class="o">?=</span> <span class="p">{}</span>
+  <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">watch</span> <span class="o">?=</span> <span class="p">{}</span>
+
+  <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">clean</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">&quot;app/skin/</span><span class="si">#{</span><span class="nx">key</span><span class="si">}</span><span class="s">&quot;</span>
+  <span class="p">]</span>
+
+  <span class="nv">copyFiles = </span><span class="p">[]</span>
+  
+  <span class="nx">copyFiles</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span>
+    <span class="nv">expand: </span><span class="kc">true</span>
+    <span class="nv">cwd: </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">skinPath</span><span class="si">}</span><span class="s">/app&quot;</span>
+    <span class="nv">src: </span><span class="p">[</span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">verbatim</span><span class="si">}</span><span class="s">/**/*&quot;</span><span class="p">]</span>
+    <span class="nv">dest: </span><span class="s">&quot;app/skin/</span><span class="si">#{</span><span class="nx">key</span><span class="si">}</span><span class="s">&quot;</span>
+  <span class="p">)</span> <span class="k">for</span> <span class="nx">verbatim</span> <span class="k">in</span> <span class="p">[</span><span class="s">&#39;css&#39;</span><span class="p">,</span> <span class="s">&#39;fonts&#39;</span><span class="p">,</span> <span class="s">&#39;img&#39;</span><span class="p">,</span> <span class="s">&#39;js&#39;</span><span class="p">,</span> <span class="s">&#39;lib&#39;</span><span class="p">]</span>
+
+  <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">copy</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span>
+    
+    <span class="nv">files: </span><span class="nx">copyFiles</span>
+    
+  <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">watch</span><span class="p">[</span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">key</span><span class="si">}</span><span class="s">Copy&quot;</span><span class="p">]</span> <span class="o">=</span>
+  
+    <span class="nv">files: </span><span class="nx">copyFiles</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nf">(copyFile) -&gt;</span> <span class="nx">copyFile</span><span class="p">.</span><span class="nx">src</span><span class="p">).</span><span class="nx">reduce</span><span class="p">(</span>
+      <span class="p">(</span><span class="nf">(l, r) -&gt;</span> <span class="nx">l</span><span class="p">.</span><span class="nx">concat</span> <span class="nx">r</span><span class="p">),</span> <span class="p">[]</span>
+    <span class="p">)</span>
+    <span class="nv">tasks: </span><span class="p">[</span>
+      <span class="s">&quot;newer:copy:</span><span class="si">#{</span><span class="nx">key</span><span class="si">}</span><span class="s">&quot;</span>
+    <span class="p">]</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="renderapphtml">::renderAppHtml</h3>
+
+<p><em>Render the application HTML.</em></p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.renderAppHtml = </span><span class="nf">(locals) -&gt;</span>
+  
+  <span class="nv">skinKey = </span><span class="nx">exports</span><span class="p">.</span><span class="nx">activeKey</span><span class="p">()</span>
+  <span class="nv">skinDirectory = </span><span class="nx">exports</span><span class="p">.</span><span class="nx">skinDirectory</span> <span class="nx">skinKey</span>
+  
+  <span class="nv">environmentKey = </span><span class="k">if</span> <span class="s">&#39;production&#39;</span> <span class="o">is</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_ENV</span>
+    <span class="s">&#39;production&#39;</span>
+  <span class="k">else</span>
+    <span class="s">&#39;default&#39;</span>
+
+  <span class="nx">readFile</span><span class="p">(</span>
+    <span class="s">&quot;</span><span class="si">#{</span><span class="nx">skinDirectory</span><span class="si">}</span><span class="s">/app/template/app.html&quot;</span><span class="p">,</span> <span class="nv">encoding: </span><span class="s">&#39;utf8&#39;</span>
+  <span class="p">).</span><span class="nx">then</span> <span class="nf">(html) -&gt;</span>
+    
+    <span class="nv">$ = </span><span class="nx">cheerio</span><span class="p">.</span><span class="nx">load</span> <span class="nx">html</span>
+    
+    <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s">&#39;skinRenderAppHtml&#39;</span><span class="p">,</span> <span class="nx">$</span>
+    
+    <span class="nv">$head = </span><span class="nx">$</span><span class="p">(</span><span class="s">&#39;head&#39;</span><span class="p">)</span>
+    <span class="nv">$body = </span><span class="nx">$</span><span class="p">(</span><span class="s">&#39;body&#39;</span><span class="p">)</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Inject the application-level assets first.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">appAssets = </span><span class="nx">assets</span><span class="p">.</span><span class="nx">assets</span><span class="p">()</span>
+    
+    <span class="nx">$head</span><span class="p">.</span><span class="nx">append</span> <span class="nx">$</span><span class="p">(</span><span class="s">&#39;&lt;link /&gt;&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span>
+      <span class="nv">type: </span><span class="s">&#39;text/css&#39;</span>
+      <span class="nv">rel: </span><span class="s">&#39;styleSheet&#39;</span>
+      <span class="nv">href: </span><span class="nx">styleSheet</span>
+    <span class="p">)</span> <span class="k">for</span> <span class="nx">styleSheet</span> <span class="k">in</span> <span class="nx">appAssets</span><span class="p">.</span><span class="nx">styleSheets</span>
+
+    <span class="nx">$body</span><span class="p">.</span><span class="nx">append</span> <span class="nx">$</span><span class="p">(</span><span class="s">&#39;&lt;script /&gt;&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span>
+      <span class="nv">src: </span><span class="nx">script</span>
+    <span class="p">)</span> <span class="k">for</span> <span class="nx">script</span> <span class="k">in</span> <span class="nx">appAssets</span><span class="p">.</span><span class="nx">scripts</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Inject the skin-level assets.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">skinAssets = </span><span class="nx">exports</span><span class="p">.</span><span class="nx">assets</span> <span class="nx">skinKey</span>
+    
+    <span class="nx">$head</span><span class="p">.</span><span class="nx">append</span> <span class="nx">$</span><span class="p">(</span><span class="s">&#39;&lt;link /&gt;&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span>
+      <span class="k">class</span><span class="o">:</span> <span class="s">&#39;skin&#39;</span>
+      <span class="nv">type: </span><span class="s">&#39;text/css&#39;</span>
+      <span class="nv">rel: </span><span class="s">&#39;stylesheet&#39;</span>
+      <span class="nv">href: </span><span class="s">&quot;/skin/</span><span class="si">#{</span><span class="nx">skinKey</span><span class="si">}</span><span class="s">/</span><span class="si">#{</span><span class="nx">styleSheet</span><span class="si">}</span><span class="s">&quot;</span>
+    <span class="p">)</span> <span class="k">for</span> <span class="nx">styleSheet</span> <span class="k">in</span> <span class="nx">skinAssets</span><span class="p">.</span><span class="nx">styleSheets</span><span class="p">[</span><span class="nx">environmentKey</span><span class="p">]</span> <span class="o">?</span> <span class="p">[]</span>
+
+    <span class="nx">$body</span><span class="p">.</span><span class="nx">append</span> <span class="nx">$</span><span class="p">(</span><span class="s">&#39;&lt;script /&gt;&#39;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span>
+      <span class="k">class</span><span class="o">:</span> <span class="s">&#39;skin&#39;</span>
+      <span class="nv">src: </span><span class="s">&quot;/skin/</span><span class="si">#{</span><span class="nx">skinKey</span><span class="si">}</span><span class="s">/</span><span class="si">#{</span><span class="nx">script</span><span class="si">}</span><span class="s">&quot;</span>
+    <span class="p">)</span> <span class="k">for</span> <span class="nx">script</span> <span class="k">in</span> <span class="nx">skinAssets</span><span class="p">.</span><span class="nx">scripts</span><span class="p">[</span><span class="nx">environmentKey</span><span class="p">]</span> <span class="o">?</span> <span class="p">[]</span>
+    
+    <span class="nx">$</span><span class="p">.</span><span class="nx">html</span><span class="p">()</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="skindirectory">::skinDirectory</h3>
+
+<p><em>Get the directory a key'd skin lives within.</em></p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.skinDirectory = </span><span class="nf">(key) -&gt;</span> <span class="nx">path</span><span class="p">.</span><span class="nx">dirname</span> <span class="nx">require</span><span class="p">.</span><span class="nx">resolve</span> <span class="nx">key</span>
+
+<span class="nv">exports.assets = </span><span class="nf">(skinKey) -&gt;</span>
+  
+  <span class="nv">skinPath = </span><span class="nx">path</span><span class="p">.</span><span class="nx">dirname</span> <span class="nx">require</span><span class="p">.</span><span class="nx">resolve</span> <span class="nx">skinKey</span>
+  <span class="nv">skinModule = </span><span class="nx">require</span> <span class="nx">skinKey</span>
+  
+  <span class="nv">templates = </span><span class="p">{}</span>
+  <span class="k">for</span> <span class="nx">templatePath</span> <span class="k">in</span> <span class="nx">glob</span> <span class="nv">cwd: </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">skinPath</span><span class="si">}</span><span class="s">/app/template&quot;</span><span class="p">,</span> <span class="p">[</span>
+    <span class="s">&#39;**/*.html&#39;</span><span class="p">,</span> <span class="s">&#39;!app.html&#39;</span>
+  <span class="p">]</span>
+    
+    <span class="nx">templates</span><span class="p">[</span><span class="nx">templatePath</span><span class="p">]</span> <span class="o">=</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span>
+      <span class="s">&quot;</span><span class="si">#{</span><span class="nx">skinPath</span><span class="si">}</span><span class="s">/app/template/</span><span class="si">#{</span><span class="nx">templatePath</span><span class="si">}</span><span class="s">&quot;</span>
+    <span class="p">).</span><span class="nx">toString</span> <span class="s">&#39;utf8&#39;</span>
+  
+  <span class="nv">skinAssets =</span>
+    
+    <span class="nv">templates: </span><span class="nx">templates</span>
+    
+    <span class="nv">scripts:</span>
+        
+      <span class="nv">default: </span><span class="nx">glob</span> <span class="nv">cwd: </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">skinPath</span><span class="si">}</span><span class="s">/app&quot;</span><span class="p">,</span> <span class="p">[</span>
+        <span class="s">&#39;js/**/*.js&#39;</span><span class="p">,</span> <span class="s">&#39;!js/**/*.min.js&#39;</span>
+      <span class="p">]</span>
+          
+      <span class="nv">production: </span><span class="nx">glob</span> <span class="nv">cwd: </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">skinPath</span><span class="si">}</span><span class="s">/app&quot;</span><span class="p">,</span> <span class="p">[</span>
+        <span class="s">&#39;js/**/*.min.js&#39;</span>
+      <span class="p">]</span>
+      
+    <span class="nv">styleSheets:</span>
+          
+      <span class="nv">default: </span><span class="nx">glob</span> <span class="nv">cwd: </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">skinPath</span><span class="si">}</span><span class="s">/app&quot;</span><span class="p">,</span> <span class="p">[</span>
+        <span class="s">&#39;css/**/*.css&#39;</span><span class="p">,</span> <span class="s">&#39;!css/**/*.min.css&#39;</span>
+      <span class="p">]</span>
+          
+      <span class="nv">production: </span><span class="nx">glob</span> <span class="nv">cwd: </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">skinPath</span><span class="si">}</span><span class="s">/app&quot;</span><span class="p">,</span> <span class="p">[</span>
+        <span class="s">&#39;css/**/*.min.css&#39;</span>
+      <span class="p">]</span>
+      
+  <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invokePackage</span> <span class="nx">skinKey</span><span class="p">,</span> <span class="s">&#39;skinAssets&#39;</span><span class="p">,</span> <span class="nx">skinAssets</span>
+  
+  <span class="nx">skinAssets</span></div></div></div></div></body></html>

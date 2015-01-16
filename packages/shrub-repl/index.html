@@ -6,7 +6,9 @@
 <span class="nv">replServer = </span><span class="nx">require</span> <span class="s">&#39;repl&#39;</span>
 
 <span class="nv">config = </span><span class="nx">require</span> <span class="s">&#39;config&#39;</span>
-<span class="nv">pkgman = </span><span class="nx">require</span> <span class="s">&#39;pkgman&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The socket server.</p></div></div><div class="code"><div class="wrapper"><span class="nv">server = </span><span class="kc">null</span>
+<span class="nv">pkgman = </span><span class="nx">require</span> <span class="s">&#39;pkgman&#39;</span>
+
+<span class="nv">debug = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;debug&#39;</span><span class="p">)</span> <span class="s">&#39;shrub:repl&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The socket server.</p></div></div><div class="code"><div class="wrapper"><span class="nv">server = </span><span class="kc">null</span>
 
 <span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookpackagesettings">Implements hook <code>packageSettings</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;packageSettings&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The prompt display for REPL clients.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">prompt: </span><span class="s">&#39;shrub&gt; &#39;</span>
@@ -35,6 +37,9 @@ Allow packages to add values to the REPL's context.</p></div></div><div class="c
         <span class="c1"># Define our own eval function, using CoffeeScript.</span>
         <span class="nv">opts.eval = </span><span class="nf">(cmd, context, filename, callback) -&gt;</span>
           
+          <span class="c1"># Handle blank lines correctly.</span>
+          <span class="k">return</span> <span class="nx">callback</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">undefined</span> <span class="k">if</span> <span class="nx">cmd</span> <span class="o">is</span> <span class="s">&#39;(\n)&#39;</span>
+            
           <span class="k">try</span>
           
             <span class="nx">callback</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">CoffeeScript</span><span class="p">.</span><span class="nb">eval</span><span class="p">(</span>
@@ -52,4 +57,8 @@ for later cleanup.</p></div></div><div class="code"><div class="wrapper">      <
       <span class="nx">repl</span><span class="p">.</span><span class="nx">on</span> <span class="s">&#39;exit&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="nx">socket</span><span class="p">.</span><span class="nx">end</span><span class="p">()</span>
     
     <span class="c1"># Try to be tidy about things.  </span>
-    <span class="nx">fs</span><span class="p">.</span><span class="nx">unlink</span> <span class="nx">settings</span><span class="p">.</span><span class="nx">socket</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="nx">server</span><span class="p">.</span><span class="nx">listen</span> <span class="nx">settings</span><span class="p">.</span><span class="nx">socket</span></div></div></div></div></body></html>
+    <span class="nx">fs</span><span class="p">.</span><span class="nx">unlink</span><span class="p">(</span>
+      <span class="nx">settings</span><span class="p">.</span><span class="nx">socket</span>
+      <span class="nf">-&gt;</span> <span class="nx">server</span><span class="p">.</span><span class="nx">listen</span> <span class="nx">settings</span><span class="p">.</span><span class="nx">socket</span><span class="p">,</span> <span class="nf">-&gt;</span>
+        <span class="nx">debug</span> <span class="s">&quot;REPL server listening at </span><span class="si">#{</span><span class="nx">settings</span><span class="p">.</span><span class="nx">socket</span><span class="si">}</span><span class="s">&quot;</span>
+    <span class="p">)</span></div></div></div></div></body></html>

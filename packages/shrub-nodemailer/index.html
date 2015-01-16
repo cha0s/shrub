@@ -8,6 +8,8 @@
 <span class="nv">pkgman = </span><span class="nx">require</span> <span class="s">&#39;pkgman&#39;</span>
 <span class="p">{</span><span class="nx">Sandbox</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">&#39;sandboxes&#39;</span>
 
+<span class="nv">skin = </span><span class="nx">require</span> <span class="s">&#39;shrub-skin&#39;</span>
+
 <span class="p">{</span><span class="nx">handlebars</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">&#39;hbs&#39;</span>
 
 <span class="nv">readFile = </span><span class="nx">Promise</span><span class="p">.</span><span class="nx">promisify</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">,</span> <span class="nx">fs</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Sandbox used to render email as HTML.</p></div></div><div class="code"><div class="wrapper"><span class="nv">sandbox = </span><span class="kc">null</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Cache template rendering since it's a bit heavy.</p></div></div><div class="code"><div class="wrapper"><span class="nv">templateCache = </span><span class="p">{}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>nodemailer transport. Defaults to sendmail.</p></div></div><div class="code"><div class="wrapper"><span class="nv">transport = </span><span class="kc">null</span>
@@ -16,6 +18,8 @@
     
     <span class="nv">templateCache = </span><span class="p">{}</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookhttplistening">Implements hook <code>httpListening</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;httpListening&#39;</span><span class="p">,</span> <span class="nf">(http) -&gt;</span>
+    
+    <span class="k">return</span>
     
     <span class="nv">settings = </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;packageSettings:shrub-nodemailer&#39;</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Instantiate the email transport.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">transport = </span><span class="nx">nodemailer</span><span class="p">.</span><span class="nx">createTransport</span><span class="p">(</span>
@@ -27,7 +31,7 @@
         <span class="nv">js: </span><span class="p">[</span>
           <span class="s">&quot;/lib/jquery/jquery-1.11.0.js&quot;</span>
         <span class="p">]</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Render the app HTML and create a sandbox with it.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">http</span><span class="p">.</span><span class="nx">renderAppHtml</span><span class="p">(</span><span class="nx">locals</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">(html) -&gt;</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Render the app HTML and create a sandbox with it.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">skin</span><span class="p">.</span><span class="nx">renderAppHtml</span><span class="p">(</span><span class="nx">locals</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">(html) -&gt;</span>
       
       <span class="nv">sandbox = </span><span class="k">new</span> <span class="nx">Sandbox</span><span class="p">()</span>
       <span class="nx">sandbox</span><span class="p">.</span><span class="nx">createDocument</span> <span class="nx">html</span>

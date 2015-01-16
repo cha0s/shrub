@@ -30,7 +30,16 @@
       
     <span class="p">]</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookpackagesettings">Implements hook <code>packageSettings</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;packageSettings&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Global site crypto key.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">cryptoKey: </span><span class="s">&quot;***CHANGE THIS***&quot;</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Middleware for server bootstrap phase.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">bootstrapMiddleware: </span><span class="p">[</span>
+      <span class="s">&#39;shrub-orm&#39;</span>
+      <span class="s">&#39;shrub-http-express/session&#39;</span>
+      <span class="s">&#39;shrub-http&#39;</span>
+      <span class="s">&#39;shrub-rpc&#39;</span>
+      <span class="s">&#39;shrub-user/login&#39;</span>
+      <span class="s">&#39;shrub-user/logout&#39;</span>
+      <span class="s">&#39;shrub-angular&#39;</span>
+    <span class="p">]</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Global site crypto key.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">cryptoKey: </span><span class="s">&quot;***CHANGE THIS***&quot;</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The name of the site, used in various places.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">siteName: </span><span class="s">&quot;Shrub example application&quot;</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>A list of the IP addresses of trusted proxies between clients.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">trustedProxies: </span><span class="p">[]</span>
       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookreplcontext">Implements hook <code>replContext</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;replContext&#39;</span><span class="p">,</span> <span class="nf">(context) -&gt;</span>
@@ -45,14 +54,14 @@
         
         <span class="nv">req.normalizedIp = </span><span class="nx">resolvedAddress</span><span class="p">(</span>
           <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;packageSettings:shrub-core:trustedProxies&#39;</span>
-          <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="p">.</span><span class="nx">remoteAddress</span>
+          <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="p">.</span><span class="nx">client</span><span class="p">.</span><span class="nx">conn</span><span class="p">.</span><span class="nx">remoteAddress</span>
           <span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">[</span><span class="s">&#39;x-forwarded-for&#39;</span><span class="p">]</span>
         <span class="p">)</span>
           
         <span class="nx">next</span><span class="p">()</span>
         
     <span class="p">]</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Walk up the X-Forwarded-For header until we hit an untrusted address.</p></div></div><div class="code"><div class="wrapper"><span class="nv">resolvedAddress = </span><span class="nf">(trustedProxies, address, forwardedFor) -&gt;</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Walk up the X-Forwarded-For header until we hit an untrusted address.</p></div></div><div class="code"><div class="wrapper"><span class="nv">resolvedAddress = </span><span class="nf">(trustedProxies, address, forwardedFor) -&gt;</span>
   <span class="k">return</span> <span class="nx">address</span> <span class="k">unless</span> <span class="nx">forwardedFor</span><span class="o">?</span>
   <span class="k">return</span> <span class="nx">address</span> <span class="k">if</span> <span class="nx">trustedProxies</span><span class="p">.</span><span class="nx">length</span> <span class="o">is</span> <span class="mi">0</span>
   

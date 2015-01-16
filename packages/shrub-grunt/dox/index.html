@@ -1,0 +1,39 @@
+<!DOCTYPE html><html lang="en"><head><title>packages/shrub-grunt/dox/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="packages/shrub-grunt/dox/index"><meta name="groc-project-path" content="packages/shrub-grunt/dox/index.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-grunt/dox/index.coffee">packages/shrub-grunt/dox/index.coffee</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="p">{</span><span class="nx">fork</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">&#39;child_process&#39;</span>
+
+<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookgruntconfig">Implements hook <code>gruntConfig</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;gruntConfig&#39;</span><span class="p">,</span> <span class="nf">(gruntConfig) -&gt;</span>
+    
+    <span class="p">{</span><span class="nx">grunt</span><span class="p">}</span> <span class="o">=</span> <span class="nx">gruntConfig</span>
+    
+    <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">shrub</span><span class="p">.</span><span class="nx">tasks</span><span class="p">[</span><span class="s">&#39;dox:prepareDirectory&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nf">-&gt;</span>
+    
+      <span class="nx">grunt</span><span class="p">.</span><span class="nx">file</span><span class="p">.</span><span class="nx">mkdir</span> <span class="s">&#39;gh-pages&#39;</span>
+  
+    <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">shrub</span><span class="p">.</span><span class="nx">tasks</span><span class="p">[</span><span class="s">&#39;dox:dynamic&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nf">-&gt;</span>
+    
+      <span class="nv">done = </span><span class="nx">@async</span><span class="p">()</span>
+    
+      <span class="nv">child = </span><span class="nx">fork</span> <span class="s">&quot;</span><span class="si">#{</span><span class="nx">__dirname</span><span class="si">}</span><span class="s">/dynamic.coffee&quot;</span>
+      
+      <span class="nx">child</span><span class="p">.</span><span class="nx">on</span> <span class="s">&#39;close&#39;</span><span class="p">,</span> <span class="nf">(code) -&gt;</span>
+      
+        <span class="k">return</span> <span class="nx">done</span><span class="p">()</span> <span class="k">if</span> <span class="nx">code</span> <span class="o">is</span> <span class="mi">0</span>
+        
+        <span class="nx">grunt</span><span class="p">.</span><span class="nx">fail</span><span class="p">.</span><span class="nx">fatal</span> <span class="s">&quot;Dynamic documentation generation failed&quot;</span><span class="p">,</span> <span class="nx">code</span>
+
+    <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">shrub</span><span class="p">.</span><span class="nx">tasks</span><span class="p">[</span><span class="s">&#39;dox:groc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nf">-&gt;</span>
+      
+      <span class="nv">done = </span><span class="nx">@async</span><span class="p">()</span>
+      
+      <span class="nv">child = </span><span class="nx">fork</span> <span class="s">&quot;</span><span class="si">#{</span><span class="nx">__dirname</span><span class="si">}</span><span class="s">/../../../node_modules/groc/bin/groc&quot;</span>
+      
+      <span class="nx">child</span><span class="p">.</span><span class="nx">on</span> <span class="s">&#39;close&#39;</span><span class="p">,</span> <span class="nf">(code) -&gt;</span>
+      
+        <span class="k">return</span> <span class="nx">done</span><span class="p">()</span> <span class="k">if</span> <span class="nx">code</span> <span class="o">is</span> <span class="mi">0</span>
+        
+        <span class="nx">grunt</span><span class="p">.</span><span class="nx">fail</span><span class="p">.</span><span class="nx">fatal</span> <span class="s">&quot;Groc failed&quot;</span><span class="p">,</span> <span class="nx">code</span>
+
+    <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">shrub</span><span class="p">.</span><span class="nx">tasks</span><span class="p">[</span><span class="s">&#39;dox&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+       <span class="s">&#39;dox:prepareDirectory&#39;</span>
+       <span class="s">&#39;dox:dynamic&#39;</span>
+       <span class="s">&#39;dox:groc&#39;</span>
+    <span class="p">]</span></div></div></div></div></body></html>

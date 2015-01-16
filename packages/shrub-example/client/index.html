@@ -1,23 +1,7 @@
 <!DOCTYPE html><html lang="en"><head><title>packages/shrub-example/client/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="packages/shrub-example/client/index"><meta name="groc-project-path" content="packages/shrub-example/client/index.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-example/client/index.coffee">packages/shrub-example/client/index.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="example">Example!</h1>
 
-<p>Define some routes, set a nav, show some stuff off!</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookapprun">Implements hook <code>appRun</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;appRun&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
-    <span class="s">&#39;shrub-ui/nav&#39;</span>
-    <span class="nf">({setLinks}) -&gt;</span>
-      
-      <span class="nx">setLinks</span> <span class="p">[</span>
-        <span class="nv">pattern: </span><span class="s">&#39;/home&#39;</span><span class="p">,</span> <span class="nv">href: </span><span class="s">&#39;/home&#39;</span><span class="p">,</span> <span class="nv">name: </span><span class="s">&#39;Home&#39;</span>
-      <span class="p">,</span>
-        <span class="nv">pattern: </span><span class="s">&#39;/about&#39;</span><span class="p">,</span> <span class="nv">href: </span><span class="s">&#39;/about&#39;</span><span class="p">,</span> <span class="nv">name: </span><span class="s">&#39;About&#39;</span>
-      <span class="p">,</span>
-        <span class="nv">pattern: </span><span class="s">&#39;/user/register&#39;</span><span class="p">,</span> <span class="nv">href: </span><span class="s">&#39;/user/register&#39;</span><span class="p">,</span> <span class="nv">name: </span><span class="s">&#39;Sign up&#39;</span>
-      <span class="p">,</span>
-        <span class="nv">pattern: </span><span class="s">&#39;/user/login&#39;</span><span class="p">,</span> <span class="nv">href: </span><span class="s">&#39;/user/login&#39;</span><span class="p">,</span> <span class="nv">name: </span><span class="s">&#39;Sign in&#39;</span>
-      <span class="p">,</span>
-        <span class="nv">pattern: </span><span class="s">&#39;/user/logout&#39;</span><span class="p">,</span> <span class="nv">href: </span><span class="s">&#39;/user/logout&#39;</span><span class="p">,</span> <span class="nv">name: </span><span class="s">&#39;Sign out&#39;</span>
-      <span class="p">]</span>
-      
-  <span class="p">]</span>
-  
+<p>Define some routes, show some stuff off!</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span>
+
   <span class="nx">registrar</span><span class="p">.</span><span class="nx">recur</span> <span class="p">[</span>
     <span class="s">&#39;about&#39;</span><span class="p">,</span> <span class="s">&#39;home&#39;</span>
   <span class="p">]</span></div></div></div></div></body></html>

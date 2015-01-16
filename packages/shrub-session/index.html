@@ -1,7 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><title>packages/shrub-session/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="packages/shrub-session/index"><meta name="groc-project-path" content="packages/shrub-session/index.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-session/index.coffee">packages/shrub-session/index.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="session">Session</h1>
 
 <p>Various means for dealing with sessions.</p></div></div><div class="code"><div class="wrapper"><span class="nv">Promise = </span><span class="nx">require</span> <span class="s">&#39;bluebird&#39;</span>
-<span class="nv">signature = </span><span class="nx">require</span> <span class="s">&#39;cookie-signature&#39;</span>
 
 <span class="nv">config = </span><span class="nx">require</span> <span class="s">&#39;config&#39;</span>
 
@@ -12,51 +11,6 @@
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Touch and save the session after every RPC call finishes.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">deferred = </span><span class="nx">Promise</span><span class="p">.</span><span class="nx">defer</span><span class="p">()</span>
     <span class="nx">routeReq</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">touch</span><span class="p">().</span><span class="nx">save</span> <span class="nx">deferred</span><span class="p">.</span><span class="nx">callback</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Propagate changes back up to the original request.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">deferred</span><span class="p">.</span><span class="nx">promise</span><span class="p">.</span><span class="nx">then</span> <span class="nf">-&gt;</span> <span class="nv">req.session = </span><span class="nx">routeReq</span><span class="p">.</span><span class="nx">session</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookhttpmiddleware">Implements hook <code>httpMiddleware</code></h2>
-
-<p>Normalize the cookie.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;httpMiddleware&#39;</span><span class="p">,</span> <span class="nf">(http) -&gt;</span>
-    
-    <span class="nv">label: </span><span class="s">&#39;Normalize request cookie&#39;</span>
-    <span class="nv">middleware: </span><span class="p">[</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>If this is the first request made by a client, the cookie won't exist
-in req.headers.cookie. We normalize that inconsistency, so all
-consumers of the cookie will have a consistent interface on the first
-as well as subsequent requests.</p></div></div><div class="code"><div class="wrapper">      <span class="nf">(req, res, next) -&gt;</span>
-        
-        <span class="p">{</span><span class="nx">cookie</span><span class="p">,</span> <span class="nx">key</span><span class="p">}</span> <span class="o">=</span> <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;packageSettings:shrub-session&#39;</span>
-        
-        <span class="c1"># If the client is in sync, awesome!</span>
-        <span class="k">return</span> <span class="nx">next</span><span class="p">()</span> <span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">signedCookies</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">is</span> <span class="nx">req</span><span class="p">.</span><span class="nx">sessionID</span>
-        
-        <span class="c1"># Generate the cookie</span>
-        <span class="nv">val = </span><span class="s">&quot;s:&quot;</span> <span class="o">+</span> <span class="nx">signature</span><span class="p">.</span><span class="nx">sign</span> <span class="nx">req</span><span class="p">.</span><span class="nx">sessionID</span><span class="p">,</span> <span class="nx">cookie</span><span class="p">.</span><span class="nx">cryptoKey</span>
-        <span class="nv">cookie = </span><span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">cookie</span><span class="p">.</span><span class="nx">serialize</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">val</span>
-        
-        <span class="nv">cookieObject = </span><span class="p">{}</span>
-        <span class="k">for</span> <span class="nx">kv</span> <span class="k">in</span> <span class="nx">cookie</span><span class="p">.</span><span class="nx">split</span> <span class="s">&#39;;&#39;</span>
-          <span class="p">[</span><span class="nx">k</span><span class="p">,</span> <span class="nx">v</span><span class="p">]</span> <span class="o">=</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">split</span> <span class="s">&#39;=&#39;</span>
-          <span class="nx">cookieObject</span><span class="p">[</span><span class="nx">k</span><span class="p">.</span><span class="nx">trim</span><span class="p">()]</span> <span class="o">=</span> <span class="nx">v</span>
-        
-        <span class="c1"># Pull out junk that only makes sense en route to client.</span>
-        <span class="k">delete</span> <span class="nx">cookieObject</span><span class="p">[</span><span class="s">&#39;Path&#39;</span><span class="p">]</span>
-        <span class="k">delete</span> <span class="nx">cookieObject</span><span class="p">[</span><span class="s">&#39;HttpOnly&#39;</span><span class="p">]</span>
-        
-        <span class="c1"># Rebuild the cookie string.</span>
-        <span class="nv">cookie = </span><span class="s">&#39;&#39;</span>
-        <span class="k">for</span> <span class="nx">k</span><span class="p">,</span> <span class="nx">v</span> <span class="k">of</span> <span class="nx">cookieObject</span>
-          <span class="nx">cookie</span> <span class="o">+=</span> <span class="s">&#39;; &#39;</span> <span class="k">if</span> <span class="nx">cookie</span>
-          <span class="nx">cookie</span> <span class="o">+=</span> <span class="nx">k</span> <span class="o">+</span> <span class="s">&#39;=&#39;</span> <span class="o">+</span> <span class="nx">v</span>
-          
-        <span class="c1"># Commit the session before offering the cookie, otherwise it</span>
-        <span class="c1"># wouldn&#39;t actually be pointing at anything yet.</span>
-        <span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">save</span> <span class="nf">(error) -&gt;</span>
-          <span class="nx">next</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
-          
-          <span class="nx">req</span><span class="p">.</span><span class="nx">signedCookies</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">sessionID</span>
-          <span class="nv">req.headers.cookie = </span><span class="nx">cookie</span>
-          <span class="nx">next</span><span class="p">()</span>
-    
-    <span class="p">]</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookpackagesettings">Implements hook <code>packageSettings</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;packageSettings&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Session store instance.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">sessionStore: </span><span class="s">&#39;redis&#39;</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Key within the cookie where the session is stored.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">key: </span><span class="s">&#39;connect.sid&#39;</span>
@@ -74,8 +28,4 @@ as well as subsequent requests.</p></div></div><div class="code"><div class="wra
           
         <span class="nx">next</span><span class="p">()</span>
         
-    <span class="p">]</span>
-    
-  <span class="nx">registrar</span><span class="p">.</span><span class="nx">recur</span> <span class="p">[</span>
-    <span class="s">&#39;express&#39;</span>
-  <span class="p">]</span></div></div></div></div></body></html>
+    <span class="p">]</span></div></div></div></div></body></html>

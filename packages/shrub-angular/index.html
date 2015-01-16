@@ -17,7 +17,7 @@
 <p>Allow a JSful client to call us back and inform us that we don't need to
 hold their sandbox.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;endpoint&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
     
-    <span class="nv">route: </span><span class="s">&#39;hangup&#39;</span>
+    <span class="nv">route: </span><span class="s">&#39;shrub.hangup&#39;</span>
     <span class="nv">receiver: </span><span class="nf">(req, fn) -&gt;</span>
       
       <span class="nv">id = </span><span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="o">?</span><span class="p">.</span><span class="nx">id</span>
@@ -37,21 +37,15 @@ sandbox.</p></div></div><div class="code"><div class="wrapper">  <span class="nx
         
         <span class="nv">settings = </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;packageSettings:shrub-angular&#39;</span>
         
-        <span class="c1"># Render app.html</span>
-        <span class="nv">htmlPromise = </span><span class="nx">http</span><span class="p">.</span><span class="nx">renderAppHtml</span> <span class="nx">res</span><span class="p">.</span><span class="nx">locals</span>
-        
         <span class="c1"># Skip render in a sandbox?</span>
-        <span class="k">return</span> <span class="nx">htmlPromise</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span>
-          <span class="nf">(html) -&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">end</span> <span class="nx">html</span>
-          <span class="nf">(error) -&gt;</span> <span class="nx">next</span> <span class="nx">error</span>
-        <span class="p">)</span> <span class="k">unless</span> <span class="nx">settings</span><span class="p">.</span><span class="nx">render</span>
-          
+        <span class="k">return</span> <span class="nx">next</span><span class="p">()</span> <span class="k">unless</span> <span class="nx">settings</span><span class="p">.</span><span class="nx">render</span>
+        
         <span class="c1"># Thrown when a request is complete.</span>
         <span class="k">class</span> <span class="nx">ResponseComplete</span> <span class="k">extends</span> <span class="nb">Error</span>
           <span class="nv">constructor: </span><span class="nf">(@message) -&gt;</span>
         
         <span class="c1"># After the template is rendered, lookup or create the sandbox.</span>
-        <span class="nx">htmlPromise</span><span class="p">.</span><span class="nx">bind</span><span class="p">({}).</span><span class="nx">then</span><span class="p">(</span><span class="nf">(html) -&gt;</span>
+        <span class="nx">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">delivery</span><span class="p">).</span><span class="nx">bind</span><span class="p">({}).</span><span class="nx">then</span><span class="p">(</span><span class="nf">(html) -&gt;</span>
           
           <span class="nx">sandboxManager</span><span class="p">.</span><span class="nx">lookupOrCreate</span><span class="p">(</span>
             <span class="nx">html</span>
@@ -95,7 +89,8 @@ sandbox.</p></div></div><div class="code"><div class="wrapper">  <span class="nx
           <span class="c1"># Otherwise, just emit. </span>
           <span class="k">else</span>
             
-            <span class="nx">res</span><span class="p">.</span><span class="nx">end</span> <span class="nx">emission</span>
+            <span class="nv">req.delivery = </span><span class="nx">emission</span>
+            <span class="nx">next</span><span class="p">()</span>
           
         <span class="c1"># The request was completed early.</span>
         <span class="p">).</span><span class="nx">catch</span><span class="p">(</span><span class="nx">ResponseComplete</span><span class="p">,</span> <span class="nf">-&gt;</span>
@@ -103,14 +98,23 @@ sandbox.</p></div></div><div class="code"><div class="wrapper">  <span class="nx
         <span class="p">).</span><span class="nx">catch</span> <span class="nx">next</span>
         
   <span class="p">]</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookinitialize">Implements hook <code>initialize</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;initialize&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Always disable sandbox rendering in end-to-end testing mode.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">config</span><span class="p">.</span><span class="nx">set</span> <span class="s">&#39;packageSettings:shrub-angular:render&#39;</span><span class="p">,</span> <span class="kc">false</span> <span class="k">if</span> <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;E2E&#39;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookbootstrapmiddleware">Implements hook <code>bootstrapMiddleware</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;bootstrapMiddleware&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+  
+    <span class="nv">label: </span><span class="s">&#39;Bootstrap Angular&#39;</span>
+    <span class="nv">middleware: </span><span class="p">[</span>
     
-    <span class="c1"># Load the navigation middleware.</span>
-    <span class="nv">navigationMiddleware = </span><span class="nx">middleware</span><span class="p">.</span><span class="nx">fromShortName</span><span class="p">(</span>
-      <span class="s">&#39;angular navigation&#39;</span>
-      <span class="s">&#39;shrub-angular&#39;</span>
-    <span class="p">)</span>
+      <span class="nf">(next) -&gt;</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Always disable sandbox rendering in end-to-end testing mode.</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;E2E&#39;</span>
+          <span class="nx">config</span><span class="p">.</span><span class="nx">set</span> <span class="s">&#39;packageSettings:shrub-angular:render&#39;</span><span class="p">,</span> <span class="kc">false</span>
+        
+        <span class="c1"># Load the navigation middleware.</span>
+        <span class="nv">navigationMiddleware = </span><span class="nx">middleware</span><span class="p">.</span><span class="nx">fromShortName</span><span class="p">(</span>
+          <span class="s">&#39;angular navigation&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-angular&#39;</span>
+        <span class="p">)</span>
+        
+        <span class="nx">next</span><span class="p">()</span>
+
+    <span class="p">]</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookpackagesettings">Implements hook <code>packageSettings</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;packageSettings&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
   
     <span class="nv">navigationMiddleware: </span><span class="p">[</span>

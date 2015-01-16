@@ -6,42 +6,50 @@
 <span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookendpoint">Implements hook <code>endpoint</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;endpoint&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
     
-    <span class="nv">route: </span><span class="s">&#39;user.logout&#39;</span>
+    <span class="nv">route: </span><span class="s">&#39;shrub.user.logout&#39;</span>
     
     <span class="nv">receiver: </span><span class="nf">(req, fn) -&gt;</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Log out.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">req</span><span class="p">.</span><span class="nx">logOut</span><span class="p">().</span><span class="nx">nodeify</span> <span class="nx">fn</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookinitialize">Implements hook <code>initialize</code></h2>
-
-<p>Monkey patch http.IncomingMessage.prototype.logout to run our middleware,
-and return a promise.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;initialize&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookbootstrapmiddleware">Implements hook <code>bootstrapMiddleware</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;bootstrapMiddleware&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+  
+    <span class="nv">label: </span><span class="s">&#39;Bootstrap user logout&#39;</span>
+    <span class="nv">middleware: </span><span class="p">[</span>
     
-    <span class="p">{</span><span class="nx">IncomingMessage</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">&#39;http&#39;</span>
-    
-    <span class="nv">req = </span><span class="nx">IncomingMessage</span><span class="p">.</span><span class="nx">prototype</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>userBeforeLogoutMiddleware</code>.
-Invoked before a user logs out.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">userBeforeLogoutMiddleware = </span><span class="nx">middleware</span><span class="p">.</span><span class="nx">fromShortName</span><span class="p">(</span>
-      <span class="s">&#39;user before logout&#39;</span>
-      <span class="s">&#39;shrub-user&#39;</span>
-    <span class="p">)</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>userAfterLogoutMiddleware</code>.
-Invoked after a user logs out.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">userAfterLogoutMiddleware = </span><span class="nx">middleware</span><span class="p">.</span><span class="nx">fromShortName</span><span class="p">(</span>
-      <span class="s">&#39;user after logout&#39;</span>
-      <span class="s">&#39;shrub-user&#39;</span>
-    <span class="p">)</span>
-    
-    <span class="nv">logout = req.passportLogOut = </span><span class="nx">req</span><span class="p">.</span><span class="nx">logout</span>
-    <span class="nv">req.logout = req.logOut = </span><span class="nf">-&gt;</span>
+      <span class="nf">(next) -&gt;</span>
       
-      <span class="k">new</span> <span class="nx">Promise</span> <span class="nf">(resolve, reject) =&gt;</span>
-    
-        <span class="nv">logoutReq = req: </span><span class="k">this</span><span class="p">,</span> <span class="nv">user: </span><span class="nx">@user</span>
+        <span class="p">{</span><span class="nx">IncomingMessage</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">&#39;http&#39;</span>
         
-        <span class="nx">userBeforeLogoutMiddleware</span><span class="p">.</span><span class="nx">dispatch</span> <span class="nx">logoutReq</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nf">(error) =&gt;</span>
-          <span class="k">return</span> <span class="nx">reject</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
+        <span class="nv">req = </span><span class="nx">IncomingMessage</span><span class="p">.</span><span class="nx">prototype</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>userBeforeLogoutMiddleware</code>.
+Invoked before a user logs out.
+<code>TODO</code>: Remove res param from implementations.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">userBeforeLogoutMiddleware = </span><span class="nx">middleware</span><span class="p">.</span><span class="nx">fromShortName</span><span class="p">(</span>
+          <span class="s">&#39;user before logout&#39;</span>
+          <span class="s">&#39;shrub-user&#39;</span>
+        <span class="p">)</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>userAfterLogoutMiddleware</code>.
+Invoked after a user logs out.
+<code>TODO</code>: Remove res param from implementations.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">userAfterLogoutMiddleware = </span><span class="nx">middleware</span><span class="p">.</span><span class="nx">fromShortName</span><span class="p">(</span>
+          <span class="s">&#39;user after logout&#39;</span>
+          <span class="s">&#39;shrub-user&#39;</span>
+        <span class="p">)</span>
+        
+        <span class="nv">logout = req.passportLogOut = </span><span class="nx">req</span><span class="p">.</span><span class="nx">logout</span>
+        <span class="nv">req.logout = req.logOut = </span><span class="nf">-&gt;</span>
           
-          <span class="nx">logout</span><span class="p">.</span><span class="nx">call</span> <span class="k">this</span>
-          
-          <span class="nx">userAfterLogoutMiddleware</span><span class="p">.</span><span class="nx">dispatch</span> <span class="nx">logoutReq</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nf">(error) -&gt;</span>
-            <span class="k">return</span> <span class="nx">reject</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
+          <span class="k">new</span> <span class="nx">Promise</span> <span class="nf">(resolve, reject) =&gt;</span>
+        
+            <span class="nv">logoutReq = req: </span><span class="k">this</span><span class="p">,</span> <span class="nv">user: </span><span class="nx">@user</span>
             
-            <span class="nx">resolve</span><span class="p">()</span></div></div></div></div></body></html>
+            <span class="nx">userBeforeLogoutMiddleware</span><span class="p">.</span><span class="nx">dispatch</span> <span class="nx">logoutReq</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nf">(error) =&gt;</span>
+              <span class="k">return</span> <span class="nx">reject</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
+              
+              <span class="nx">logout</span><span class="p">.</span><span class="nx">call</span> <span class="k">this</span>
+              
+              <span class="nx">userAfterLogoutMiddleware</span><span class="p">.</span><span class="nx">dispatch</span> <span class="nx">logoutReq</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nf">(error) -&gt;</span>
+                <span class="k">return</span> <span class="nx">reject</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
+                
+                <span class="nx">resolve</span><span class="p">()</span>
+                
+        <span class="nx">next</span><span class="p">()</span>
+                
+    <span class="p">]</span></div></div></div></div></body></html>

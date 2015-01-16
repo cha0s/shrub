@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="en"><head><title>server/limits</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="server/limits"><meta name="groc-project-path" content="server/limits.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/server/limits.coffee">server/limits.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="limits">Limits</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nv">Promise = </span><span class="nx">require</span> <span class="s">&#39;bluebird&#39;</span>
-<span class="nv">redis = </span><span class="nx">require</span> <span class="s">&#39;connect-redis/node_modules/redis&#39;</span>
+<span class="nv">redis = </span><span class="nx">require</span> <span class="s">&#39;redis&#39;</span>
 <span class="nv">redback = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;redback&#39;</span><span class="p">).</span><span class="nx">use</span> <span class="nx">redis</span><span class="p">.</span><span class="nx">createClient</span><span class="p">()</span>
 
 <span class="nv">pkgman = </span><span class="nx">require</span> <span class="s">&#39;pkgman&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="limiter">Limiter</h2>
@@ -11,7 +11,9 @@ time.</p>
 <code>endpointAlter</code> to allow RPC endpoints to limit consumers to a specified
 number of requests per time period. For instance, by default the
 <a href="./packages/user/login.html">user login</a> endpoint limits the number of logins
-a user may attempt to 3 every 30 seconds.</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.Limiter = </span><span class="k">class</span> <span class="nx">Limiter</span>
+a user may attempt to 3 every 30 seconds.</p>
+
+<p><code>TODO</code>: Do this with ORM so it isn't tied to redis.</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.Limiter = </span><span class="k">class</span> <span class="nx">Limiter</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="constructor"><em>constructor</em></h3>
 
 <p><em>Create a limiter.</em></p>

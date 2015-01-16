@@ -1,0 +1,103 @@
+<!DOCTYPE html><html lang="en"><head><title>packages/shrub-orm/client/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="packages/shrub-orm/client/index"><meta name="groc-project-path" content="packages/shrub-orm/client/index.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-orm/client/index.coffee">packages/shrub-orm/client/index.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="objectrelationalmappinghttpenwikipediaorgwikiobjectrelational_mappingusingwaterline"><a href="http://en.wikipedia.org/wiki/Object-relational_mapping">Object-relational mapping</a> using Waterline.</h1>
+
+<p>browserify -r waterline-browser -x util -x assert -x events -x bluebird -x async -x lodash -x buffer -x anchor -x validator -x waterline-criteria -x waterline-schema > waterline-browser.js</p>
+
+<p>Provide the ORM as an Angular service.</p></div></div><div class="code"><div class="wrapper"><span class="nv">Promise = </span><span class="nx">require</span> <span class="s">&#39;bluebird&#39;</span>
+<span class="nv">Waterline = </span><span class="nx">require</span> <span class="s">&#39;waterline&#39;</span>
+
+<span class="nv">config = </span><span class="nx">require</span> <span class="s">&#39;config&#39;</span>
+<span class="nv">pkgman = </span><span class="nx">require</span> <span class="s">&#39;pkgman&#39;</span>
+
+<span class="nv">collections = </span><span class="kc">null</span>
+<span class="nv">connections = </span><span class="kc">null</span>
+
+<span class="nv">waterline = </span><span class="k">new</span> <span class="nx">Waterline</span><span class="p">()</span>
+
+<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookcollectionsalter">Implements hook <code>collectionsAlter</code></h2>
+
+<p>registrar.registerHook 'collectionsAlter', (collections_) -></p>
+
+<pre><code>collection.connection = 'socket' for collection in collections_
+</code></pre></div></div><div class="code"><div class="wrapper">  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookservice">Implements hook <code>service</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;service&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
+    <span class="s">&#39;$http&#39;</span>
+    <span class="nf">($http) -&gt;</span>
+    
+      <span class="nv">service = </span><span class="p">{}</span>
+      
+      <span class="nv">initializedPromise = </span><span class="nx">exports</span><span class="p">.</span><span class="nx">initialize</span>
+      
+        <span class="nv">adapters:</span>
+        
+          <span class="nv">socket: </span><span class="nx">require</span> <span class="s">&#39;./adapter&#39;</span>
+        
+        <span class="nv">connections:</span>
+        
+          <span class="nv">shrub:</span>
+    
+            <span class="nv">adapter: </span><span class="s">&#39;socket&#39;</span>
+      
+      <span class="nv">service.collection = </span><span class="nf">-&gt;</span>
+        <span class="nv">args = </span><span class="nx">arguments</span>
+        <span class="nx">initializedPromise</span><span class="p">.</span><span class="nx">then</span> <span class="nf">-&gt;</span>
+          <span class="nx">exports</span><span class="p">.</span><span class="nx">collection</span> <span class="nx">args</span><span class="p">...</span>
+      
+      <span class="nv">service.collections = </span><span class="nf">-&gt;</span>
+        <span class="nv">args = </span><span class="nx">arguments</span>
+        <span class="nx">initializedPromise</span><span class="p">.</span><span class="nx">then</span> <span class="nf">-&gt;</span>
+          <span class="nx">exports</span><span class="p">.</span><span class="nx">collections</span> <span class="nx">args</span><span class="p">...</span>
+      
+      <span class="nv">service.connections = </span><span class="nf">-&gt;</span>
+        <span class="nv">args = </span><span class="nx">arguments</span>
+        <span class="nx">initializedPromise</span><span class="p">.</span><span class="nx">then</span> <span class="nf">-&gt;</span>
+          <span class="nx">exports</span><span class="p">.</span><span class="nx">connections</span> <span class="nx">args</span><span class="p">...</span>
+      
+      <span class="nv">service.waterline = </span><span class="nx">exports</span><span class="p">.</span><span class="nx">waterline</span>
+      
+      <span class="nv">service.initialized = </span><span class="nf">-&gt;</span> <span class="nx">initializedPromise</span>
+      
+      <span class="nx">service</span>
+  
+  <span class="p">]</span>
+
+<span class="nv">exports.initialize = </span><span class="nf">(config) -&gt;</span> <span class="k">new</span> <span class="nx">Promise</span> <span class="nf">(resolve) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>collections</code>.
+Allows packages to create Waterline collections.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">collections_ = </span><span class="p">{}</span>
+  <span class="k">for</span> <span class="nx">collectionList</span> <span class="k">in</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invokeFlat</span> <span class="s">&#39;collections&#39;</span><span class="p">,</span> <span class="nx">waterline</span>
+    <span class="k">for</span> <span class="nx">identity</span><span class="p">,</span> <span class="nx">collection</span> <span class="k">of</span> <span class="nx">collectionList</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Collection defaults.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">collection</span><span class="p">.</span><span class="nx">connection</span> <span class="o">?=</span> <span class="s">&#39;shrub&#39;</span>
+      <span class="nx">collection</span><span class="p">.</span><span class="nx">identity</span> <span class="o">?=</span> <span class="nx">identity</span>
+      <span class="nx">collections_</span><span class="p">[</span><span class="nx">collection</span><span class="p">.</span><span class="nx">identity</span><span class="p">]</span> <span class="o">=</span> <span class="nx">collection</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>collectionsAlter</code>.
+Allows packages to alter any Waterline collections defined.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s">&#39;collectionsAlter&#39;</span><span class="p">,</span> <span class="nx">collections_</span><span class="p">,</span> <span class="nx">waterline</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Load the collections into Waterline.</p></div></div><div class="code"><div class="wrapper">  <span class="k">for</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">collection</span> <span class="k">of</span> <span class="nx">collections_</span>
+      
+    <span class="nv">collection.instantiate = </span><span class="nf">(values = {}) -&gt;</span>
+    
+      <span class="k">for</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span> <span class="k">of</span> <span class="nx">@attributes</span>
+        <span class="k">continue</span> <span class="k">unless</span> <span class="nx">value</span><span class="p">.</span><span class="nx">defaultsTo</span><span class="o">?</span>
+          
+        <span class="nx">values</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">?=</span> <span class="k">if</span> <span class="s">&#39;function&#39;</span> <span class="o">is</span> <span class="k">typeof</span> <span class="nx">value</span><span class="p">.</span><span class="nx">defaultsTo</span>
+          <span class="nx">value</span><span class="p">.</span><span class="nx">defaultsTo</span><span class="p">.</span><span class="nx">call</span> <span class="nx">values</span>
+        <span class="k">else</span>
+          <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span> <span class="nx">value</span><span class="p">.</span><span class="nx">defaultsTo</span>
+      
+      <span class="k">new</span> <span class="nx">@_model</span> <span class="nx">@_schema</span><span class="p">.</span><span class="nx">cleanValues</span> <span class="nx">@_transformer</span><span class="p">.</span><span class="nx">serialize</span> <span class="nx">values</span>
+        
+    <span class="nv">Collection = </span><span class="nx">Waterline</span><span class="p">.</span><span class="nx">Collection</span><span class="p">.</span><span class="nx">extend</span> <span class="nx">collection</span>
+    <span class="nx">waterline</span><span class="p">.</span><span class="nx">loadCollection</span> <span class="nx">Collection</span>
+  
+  <span class="nx">waterline</span><span class="p">.</span><span class="nx">initialize</span> <span class="nx">config</span><span class="p">,</span> <span class="nf">(error, data) -&gt;</span>
+    
+    <span class="k">return</span> <span class="nx">reject</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
+    
+    <span class="nv">collections = </span><span class="nx">data</span><span class="p">.</span><span class="nx">collections</span>
+    <span class="nv">connections = </span><span class="nx">data</span><span class="p">.</span><span class="nx">connections</span>
+    
+    <span class="nx">resolve</span><span class="p">()</span>
+
+<span class="nv">exports.collection = </span><span class="nf">(identity) -&gt;</span> <span class="nx">collections</span><span class="p">[</span><span class="nx">identity</span><span class="p">]</span>
+
+<span class="nv">exports.collections = </span><span class="nf">-&gt;</span> <span class="nx">collections</span>
+
+<span class="nv">exports.connections = </span><span class="nf">-&gt;</span> <span class="nx">connections</span>
+
+<span class="nv">exports.waterline = </span><span class="nf">-&gt;</span> <span class="nx">waterline</span></div></div></div></div></body></html>

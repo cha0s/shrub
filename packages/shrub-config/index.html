@@ -9,7 +9,18 @@
 
 <span class="p">{</span><span class="nx">Config</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">&#39;client/modules/config&#39;</span>
 
-<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookhttpmiddleware">Implements hook <code>httpMiddleware</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;httpMiddleware&#39;</span><span class="p">,</span> <span class="nf">(http) -&gt;</span>
+<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookassetmiddleware">Implements hook <code>assetMiddleware</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;assetMiddleware&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+    
+    <span class="nv">label: </span><span class="s">&#39;Config&#39;</span>
+    <span class="nv">middleware: </span><span class="p">[</span>
+  
+      <span class="nf">(assets, next) -&gt;</span>
+        
+        <span class="nx">assets</span><span class="p">.</span><span class="nx">scripts</span><span class="p">.</span><span class="nx">push</span> <span class="s">&#39;/js/config.js&#39;</span>
+        
+        <span class="nx">next</span><span class="p">()</span>
+        
+    <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookhttpmiddleware">Implements hook <code>httpMiddleware</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;httpMiddleware&#39;</span><span class="p">,</span> <span class="nf">(http) -&gt;</span>
     
     <span class="nv">label: </span><span class="s">&#39;Serve package configuration&#39;</span>
     <span class="nv">middleware: </span><span class="p">[</span>
@@ -34,18 +45,24 @@ that resolves to an object.</p></div></div><div class="code"><div class="wrapper
           
           <span class="nv">index = </span><span class="mi">0</span>
           <span class="k">for</span> <span class="nx">path</span> <span class="k">of</span> <span class="nx">subconfigs</span>
+            
             <span class="nv">subconfig = </span><span class="nx">fulfilledSubconfigs</span><span class="p">[</span><span class="nx">index</span><span class="o">++</span><span class="p">]</span>
             <span class="k">for</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span> <span class="k">of</span> <span class="nx">subconfig</span>
-              
               <span class="nx">config_</span><span class="p">.</span><span class="nx">set</span> <span class="s">&quot;packageConfig:</span><span class="si">#{</span>
-                <span class="nx">path</span><span class="p">.</span><span class="nx">replace</span> <span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="s">&#39;:&#39;</span>
+                <span class="nx">path</span><span class="p">.</span><span class="nx">replace</span> <span class="sr">/\//g</span><span class="p">,</span> <span class="s">&#39;:&#39;</span>
               <span class="si">}</span><span class="s">:</span><span class="si">#{</span>
-                <span class="nx">key</span>
+                <span class="nx">key</span><span class="p">.</span><span class="nx">replace</span> <span class="sr">/\//g</span><span class="p">,</span> <span class="s">&#39;:&#39;</span>
               <span class="si">}</span><span class="s">&quot;</span><span class="p">,</span> <span class="nx">value</span>
           
           <span class="c1"># Format the configuration to look nice.</span>
           <span class="nv">prettyPrintConfig = </span><span class="nf">-&gt;</span>
-            <span class="nv">stringified = </span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span> <span class="nx">config_</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="s">&#39;  &#39;</span>
+            
+            <span class="nv">jsonArgs = </span><span class="p">[</span><span class="nx">config_</span><span class="p">]</span>
+            
+            <span class="k">if</span> <span class="s">&#39;production&#39;</span> <span class="o">isnt</span> <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;NODE_ENV&#39;</span>
+              <span class="nv">jsonArgs = </span><span class="nx">jsonArgs</span><span class="p">.</span><span class="nx">concat</span> <span class="p">[</span><span class="kc">null</span><span class="p">,</span> <span class="s">&#39;  &#39;</span><span class="p">]</span>
+            
+            <span class="nv">stringified = </span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span> <span class="nx">jsonArgs</span><span class="p">...</span>
             <span class="p">[</span><span class="nx">first</span><span class="p">,</span> <span class="nx">rest</span><span class="p">...]</span> <span class="o">=</span> <span class="nx">stringified</span><span class="p">.</span><span class="nx">split</span> <span class="s">&#39;\n&#39;</span>
             <span class="p">([</span><span class="nx">first</span><span class="p">].</span><span class="nx">concat</span> <span class="nx">rest</span><span class="p">.</span><span class="nx">map</span> <span class="nf">(line) -&gt;</span> <span class="s">&#39;    &#39;</span> <span class="o">+</span> <span class="nx">line</span><span class="p">).</span><span class="nx">join</span> <span class="s">&#39;\n&#39;</span>
           </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Emit the configuration module.</p></div></div><div class="code"><div class="wrapper">          <span class="nx">res</span><span class="p">.</span><span class="nx">setHeader</span> <span class="s">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s">&#39;text/javascript&#39;</span>
@@ -60,7 +77,7 @@ that resolves to an object.</p></div></div><div class="code"><div class="wrapper
 <span class="s">    requireProvider.require(&#39;config&#39;).from(</span><span class="si">#{</span><span class="nx">prettyPrintConfig</span><span class="p">()</span><span class="si">}</span><span class="s">);</span>
 
 <span class="s">  }]);</span>
-<span class="s">  &quot;&quot;&quot;</span>
+<span class="s">&quot;&quot;&quot;</span>
           
         <span class="p">).</span><span class="nx">catch</span> <span class="nx">next</span>
         

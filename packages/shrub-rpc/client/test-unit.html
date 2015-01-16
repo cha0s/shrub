@@ -31,7 +31,7 @@
         <span class="nx">expect</span><span class="p">(</span><span class="nx">error</span><span class="p">).</span><span class="nx">toBe</span> <span class="s">&#39;invalid&#39;</span>
     <span class="p">]</span>
     
-  <span class="nx">it</span> <span class="s">&#39;should handle errors gracefully&#39;</span><span class="p">,</span> <span class="nf">(done) -&gt;</span>
+  <span class="nx">it</span> <span class="s">&#39;should handle errors gracefully&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
 
     <span class="nx">inject</span> <span class="p">[</span>
       <span class="s">&#39;$rootScope&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-socket&#39;</span>
@@ -47,9 +47,10 @@
         <span class="nx">promise</span><span class="p">.</span><span class="nx">then</span> <span class="nf">(_) -&gt;</span> <span class="nv">result = </span><span class="nx">_</span>
         <span class="nx">promise</span><span class="p">.</span><span class="nx">catch</span> <span class="nf">(_) -&gt;</span> <span class="nv">error = </span><span class="nx">_</span>
           
+        <span class="nx">$rootScope</span><span class="p">.</span><span class="nx">$apply</span><span class="p">()</span>
+        
         <span class="nx">expect</span><span class="p">(</span><span class="nx">result</span><span class="p">).</span><span class="nx">toBe</span> <span class="s">&#39;invalid&#39;</span>
         <span class="nx">expect</span><span class="p">(</span><span class="nx">error</span><span class="p">).</span><span class="nx">toBeDefined</span><span class="p">()</span>
         
-        <span class="nx">$rootScope</span><span class="p">.</span><span class="nx">$apply</span><span class="p">()</span>
     <span class="p">]</span>
     </div></div></div></div></body></html>

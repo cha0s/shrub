@@ -1,0 +1,54 @@
+<!DOCTYPE html><html lang="en"><head><title>packages/shrub-ui/client/list/item</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../../"><meta name="groc-document-path" content="packages/shrub-ui/client/list/item"><meta name="groc-project-path" content="packages/shrub-ui/client/list/item.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../../assets/style.css"><script type="text/javascript" src="../../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-ui/client/list/item.coffee">packages/shrub-ui/client/list/item.coffee</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookcontroller">Implements hook <code>controller</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;controller&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
+
+    <span class="k">class</span> <span class="nx">ListItemController</span>
+    
+      <span class="nv">link: </span><span class="nf">(scope, element, attr) -&gt;</span>
+      
+        <span class="nx">scope</span><span class="p">.</span><span class="nx">$watch</span><span class="p">(</span>
+          <span class="nf">-&gt;</span> <span class="nx">scope</span><span class="p">.</span><span class="nx">item</span><span class="o">?</span><span class="p">.</span><span class="nx">markup</span>
+          <span class="nf">-&gt;</span>
+            
+            <span class="k">for</span> <span class="nx">child</span> <span class="k">in</span> <span class="nx">element</span><span class="p">.</span><span class="nx">children</span><span class="p">()</span>
+              </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Child list?</p></div></div><div class="code"><div class="wrapper">              <span class="nv">$child = </span><span class="nx">angular</span><span class="p">.</span><span class="nx">element</span> <span class="nx">child</span>
+              <span class="k">continue</span> <span class="k">if</span> <span class="nx">$child</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s">&#39;data-shrub-ui-list&#39;</span><span class="p">)</span><span class="o">?</span>
+              
+              <span class="nx">$child</span><span class="p">.</span><span class="nx">remove</span><span class="p">()</span>
+              
+            <span class="nx">element</span><span class="p">.</span><span class="nx">prepend</span> <span class="nx">scope</span><span class="p">.</span><span class="nx">item</span><span class="p">.</span><span class="nx">markup</span> <span class="k">if</span> <span class="nx">scope</span><span class="p">.</span><span class="nx">item</span><span class="o">?</span><span class="p">.</span><span class="nx">markup</span>
+            
+        <span class="p">)</span>
+      
+  <span class="p">]</span>
+        
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookdirective">Implements hook <code>directive</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;directive&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
+    
+    <span class="nf">-&gt;</span>
+      
+      <span class="nv">directive = </span><span class="p">{}</span>
+      
+      <span class="nv">directive.bindToController = </span><span class="kc">true</span>
+      
+      <span class="nv">directive.candidateKeys = </span><span class="p">[</span>
+        <span class="s">&#39;ancestorPath&#39;</span>
+      <span class="p">]</span>
+      
+      <span class="nv">directive.scope =</span>
+        
+        <span class="nv">item: </span><span class="s">&#39;=&#39;</span>
+        <span class="nv">ancestorPath: </span><span class="s">&#39;=?&#39;</span>
+        
+      <span class="nv">directive.template = </span><span class="s">&quot;&quot;&quot;</span>
+
+<span class="s">&lt;ul</span>
+<span class="s">  data-ng-if=&quot;item.list&quot;</span>
+<span class="s">  data-shrub-ui-list</span>
+<span class="s">  data-shrub-ui-attributes=&quot;item.list.attributes&quot;</span>
+<span class="s">  data-list=&quot;item.list&quot;</span>
+<span class="s">  data-parent-ancestor-path=&quot;ancestorPath&quot;</span>
+<span class="s">&gt;&lt;/ul&gt;</span>
+
+<span class="s">&quot;&quot;&quot;</span>
+
+      <span class="nx">directive</span>
+      
+  <span class="p">]</span></div></div></div></div></body></html>

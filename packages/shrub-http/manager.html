@@ -1,13 +1,16 @@
 <!DOCTYPE html><html lang="en"><head><title>packages/shrub-http/manager</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="packages/shrub-http/manager"><meta name="groc-project-path" content="packages/shrub-http/manager.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-http/manager.coffee">packages/shrub-http/manager.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="abstracthttp">AbstractHttp</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nv">Promise = </span><span class="nx">require</span> <span class="s">&#39;bluebird&#39;</span>
 
 <span class="nv">config = </span><span class="nx">require</span> <span class="s">&#39;config&#39;</span>
-<span class="nv">debug = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;debug&#39;</span><span class="p">)</span> <span class="s">&#39;shrub:middleware:http&#39;</span>
 <span class="nv">pkgman = </span><span class="nx">require</span> <span class="s">&#39;pkgman&#39;</span>
+<span class="nv">Promise = </span><span class="nx">require</span> <span class="s">&#39;bluebird&#39;</span>
 
-<span class="nv">middleware = </span><span class="nx">require</span> <span class="s">&#39;middleware&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="httpmanager">HttpManager</h2>
+<span class="nv">middleware = </span><span class="nx">require</span> <span class="s">&#39;middleware&#39;</span>
+
+<span class="nv">httpDebug = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;debug&#39;</span><span class="p">)</span> <span class="s">&#39;shrub:http&#39;</span>
+<span class="nv">httpMiddlewareDebug = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;debug&#39;</span><span class="p">)</span> <span class="s">&#39;shrub:http:middleware&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="httpmanager">HttpManager</h2>
 
 <p>An abstract interface to be implemented by an HTTP server (e.g.
-<a href="./packages/http/Express.html">Express</a>).</p></div></div><div class="code"><div class="wrapper"><span class="nv">module.exports = </span><span class="k">class</span> <span class="nx">HttpManager</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="constructor"><em>constructor</em></h3>
+<a href="./packages/http/Express.html">Express</a>).</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.Manager = </span><span class="k">class</span> <span class="nx">HttpManager</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="constructor"><em>constructor</em></h3>
 
 <p><em>Create the server.</em></p></div></div><div class="code"><div class="wrapper">  <span class="nv">constructor: </span><span class="nf">-&gt;</span>
     
@@ -18,16 +21,37 @@
 
 <p><em>Initialize the server.</em></p></div></div><div class="code"><div class="wrapper">  <span class="nv">initialize: </span><span class="nf">-&gt;</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>httpInitializing</code>.
-Invoked before the server is bound on the listening port.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s">&#39;httpInitializing&#39;</span><span class="p">,</span> <span class="k">this</span>
+Invoked before the server is bound on the listening port.
+<code>TODO</code>: Remove this hook; implementations should be using
+<code>bootstrapMiddleware</code>.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s">&#39;httpInitializing&#39;</span><span class="p">,</span> <span class="k">this</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Start listening.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">@listen</span><span class="p">().</span><span class="nx">then</span> <span class="o">=&gt;</span> <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span>
         </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>httpListening</code>.
 Invoked once the server is listening, but before
 initialization finishes. Implementations should return a
 promise. When all promises are fulfilled, initialization
-finishes.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invokeFlat</span> <span class="s">&#39;httpListening&#39;</span><span class="p">,</span> <span class="k">this</span>
+finishes.
+<code>TODO</code>: Remove this hook; implementations should be using
+<code>bootstrapMiddleware</code>.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invokeFlat</span> <span class="s">&#39;httpListening&#39;</span><span class="p">,</span> <span class="k">this</span>
     
     <span class="p">)</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="path">::path</h3>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="listen">::listen</h3>
+
+<p><em>Listen for HTTP connections.</em></p></div></div><div class="code"><div class="wrapper">  <span class="nv">listen: </span><span class="nf">-&gt;</span>
+    
+    <span class="k">new</span> <span class="nx">Promise</span> <span class="nf">(resolve, reject) =&gt;</span>
+    
+      <span class="nx">do</span> <span class="nv">tryListener = </span><span class="o">=&gt;</span>
+    
+        <span class="nx">@listener</span><span class="p">().</span><span class="nx">done</span><span class="p">(</span>
+          <span class="nx">resolve</span>
+          
+          <span class="nf">(error) -&gt;</span>
+            <span class="k">return</span> <span class="nx">reject</span> <span class="nx">error</span> <span class="k">unless</span> <span class="s">&#39;EADDRINUSE&#39;</span> <span class="o">is</span> <span class="nx">error</span><span class="p">.</span><span class="nx">code</span>
+          
+            <span class="nx">httpDebug</span> <span class="s">&quot;HTTP port in use... retrying in 2 seconds&quot;</span>
+            <span class="nx">setTimeout</span> <span class="nx">tryListener</span><span class="p">,</span> <span class="mi">2000</span>
+            
+        <span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="path">::path</h3>
 
 <p><em>The path where static files are served from.</em></p></div></div><div class="code"><div class="wrapper">  <span class="nv">path: </span><span class="nf">-&gt;</span> <span class="nx">@_config</span><span class="p">.</span><span class="nx">path</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="port">.port</h3>
@@ -37,20 +61,21 @@ finishes.</p></div></div><div class="code"><div class="wrapper">      <span clas
 
 <p><em>Gather and initialize HTTP middleware.</em></p></div></div><div class="code"><div class="wrapper">  <span class="nv">registerMiddleware: </span><span class="nf">-&gt;</span>
     
-    <span class="nx">debug</span> <span class="s">&#39;- Loading HTTP middleware...&#39;</span>
+    <span class="nx">httpMiddlewareDebug</span> <span class="s">&#39;- Loading HTTP middleware...&#39;</span>
+    
+    <span class="nv">httpMiddleware = </span><span class="nx">@_config</span><span class="p">.</span><span class="nx">middleware</span><span class="p">.</span><span class="nx">slice</span> <span class="mi">0</span>
+    <span class="nx">httpMiddleware</span><span class="p">.</span><span class="nx">push</span> <span class="s">&#39;shrub-http&#39;</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>httpMiddleware</code>.
 Invoked every time an HTTP connection is established.
 <code>TODO</code>: Rename express to http, so we can use a short name.</p></div></div><div class="code"><div class="wrapper">    <span class="vi">@_middleware = </span><span class="nx">middleware</span><span class="p">.</span><span class="nx">fromHook</span><span class="p">(</span>
-      <span class="s">&#39;httpMiddleware&#39;</span>
-      <span class="nx">@_config</span><span class="p">.</span><span class="nx">middleware</span>
-      <span class="k">this</span>
+      <span class="s">&#39;httpMiddleware&#39;</span><span class="p">,</span> <span class="nx">httpMiddleware</span><span class="p">,</span> <span class="k">this</span>
     <span class="p">)</span>
     
-    <span class="nx">debug</span> <span class="s">&#39;- HTTP middleware loaded.&#39;</span>
-
+    <span class="nx">httpMiddlewareDebug</span> <span class="s">&#39;- HTTP middleware loaded.&#39;</span>
+    
   <span class="c1"># Ensure any subclass implements these methods.</span>
   <span class="nx">@</span><span class="o">::</span><span class="p">[</span><span class="nx">method</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="nf">-&gt;</span> <span class="k">throw</span> <span class="k">new</span> <span class="nx">ReferenceError</span><span class="p">(</span>
     <span class="s">&quot;HttpManager::</span><span class="si">#{</span><span class="nx">method</span><span class="si">}</span><span class="s"> is a pure virtual method!&quot;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>"Pure virtual" methods.</p></div></div><div class="code"><div class="wrapper">  <span class="p">))</span> <span class="k">for</span> <span class="nx">method</span> <span class="k">in</span> <span class="p">[</span>
     
-    <span class="s">&#39;listen&#39;</span><span class="p">,</span> <span class="s">&#39;renderAppHtml&#39;</span><span class="p">,</span> <span class="s">&#39;server&#39;</span>
+    <span class="s">&#39;addRoute&#39;</span><span class="p">,</span> <span class="s">&#39;listener&#39;</span><span class="p">,</span> <span class="s">&#39;server&#39;</span>
   <span class="p">]</span></div></div></div></div></body></html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html><html lang="en"><head><title>packages/shrub-orm/client/adapter</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="packages/shrub-orm/client/adapter"><meta name="groc-project-path" content="packages/shrub-orm/client/adapter.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-orm/client/adapter.coffee">packages/shrub-orm/client/adapter.coffee</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nv">methods = </span><span class="p">[</span>
+  <span class="s">&#39;create&#39;</span><span class="p">,</span> <span class="s">&#39;createOnce&#39;</span><span class="p">,</span> <span class="s">&#39;destroy&#39;</span><span class="p">,</span> <span class="s">&#39;find&#39;</span><span class="p">,</span> <span class="s">&#39;findOrCreate&#39;</span>
+  <span class="s">&#39;registerCollection&#39;</span><span class="p">,</span> <span class="s">&#39;registerConnection&#39;</span><span class="p">,</span> <span class="s">&#39;update&#39;</span>
+<span class="p">]</span>
+
+<span class="nv">module.exports = </span><span class="nx">do</span> <span class="nf">-&gt;</span>
+  
+  <span class="nv">adapter = </span><span class="p">{}</span>
+  
+  <span class="nv">adapter.syncable = </span><span class="kc">false</span>
+  
+  <span class="k">for</span> <span class="nx">method</span> <span class="k">in</span> <span class="nx">methods</span>
+  
+    <span class="nx">do</span> <span class="nf">(method) -&gt;</span> <span class="nx">adapter</span><span class="p">[</span><span class="nx">method</span><span class="p">]</span> <span class="o">=</span> <span class="nf">-&gt;</span> <span class="nx">arguments</span><span class="p">[</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]()</span>
+  
+  <span class="nx">adapter</span></div></div></div></div></body></html>

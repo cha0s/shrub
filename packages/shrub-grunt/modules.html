@@ -1,0 +1,166 @@
+<!DOCTYPE html><html lang="en"><head><title>packages/shrub-grunt/modules</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="packages/shrub-grunt/modules"><meta name="groc-project-path" content="packages/shrub-grunt/modules.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-grunt/modules.coffee">packages/shrub-grunt/modules.coffee</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nv">path = </span><span class="nx">require</span> <span class="s">&#39;path&#39;</span>
+
+<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookgruntconfig">Implements hook <code>gruntConfig</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;gruntConfig&#39;</span><span class="p">,</span> <span class="nf">(gruntConfig) -&gt;</span>
+  
+    <span class="p">{</span><span class="nx">grunt</span><span class="p">}</span> <span class="o">=</span> <span class="nx">gruntConfig</span>
+    
+    <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">clean</span> <span class="o">?=</span> <span class="p">{}</span>
+    <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">coffee</span> <span class="o">?=</span> <span class="p">{}</span>
+    <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">concat</span> <span class="o">?=</span> <span class="p">{}</span>
+    <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">copy</span> <span class="o">?=</span> <span class="p">{}</span>
+    <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">watch</span> <span class="o">?=</span> <span class="p">{}</span>
+    <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">wrap</span> <span class="o">?=</span> <span class="p">{}</span>
+
+    <span class="nv">gruntConfig.clean.modules = </span><span class="p">[</span>
+      <span class="s">&#39;build/js/packages.js&#39;</span>
+      <span class="s">&#39;build/js/require.js&#39;</span>
+      <span class="s">&#39;build/js/modules&#39;</span>
+      <span class="s">&#39;build/js/custom&#39;</span>
+      <span class="s">&#39;build/js/packages&#39;</span>
+      <span class="s">&#39;build/js/modules.js&#39;</span>
+    <span class="p">]</span>
+
+    <span class="nv">gruntConfig.coffee.modules =</span>
+    
+      <span class="nv">files: </span><span class="p">[</span>
+        <span class="nv">cwd: </span><span class="s">&#39;client&#39;</span>
+        <span class="nv">src: </span><span class="p">[</span>
+          <span class="s">&#39;packages.coffee&#39;</span>
+          <span class="s">&#39;require.coffee&#39;</span>
+          <span class="s">&#39;modules/**/*.coffee&#39;</span>
+        <span class="p">]</span>
+        <span class="nv">dest: </span><span class="s">&#39;build/js&#39;</span>
+        <span class="nv">expand: </span><span class="kc">true</span>
+        <span class="nv">ext: </span><span class="s">&#39;.js&#39;</span>
+      <span class="p">,</span>
+        <span class="nv">src: </span><span class="p">[</span>
+          <span class="s">&#39;custom/*/client/**/*.coffee&#39;</span>
+          <span class="s">&#39;packages/*/client/**/*.coffee&#39;</span>
+        <span class="p">]</span>
+        <span class="nv">dest: </span><span class="s">&#39;build/js&#39;</span>
+        <span class="nv">expand: </span><span class="kc">true</span>
+        <span class="nv">ext: </span><span class="s">&#39;.js&#39;</span>
+      <span class="p">]</span>
+  
+    <span class="nv">gruntConfig.concat.modules =</span>
+    
+      <span class="nv">files: </span><span class="p">[</span>
+        <span class="nv">src: </span><span class="p">[</span>
+          <span class="s">&#39;build/js/modules.js&#39;</span>
+          <span class="s">&#39;build/js/packages.js&#39;</span>
+          <span class="s">&#39;build/js/require.js&#39;</span>
+        <span class="p">]</span>
+        <span class="nv">dest: </span><span class="s">&#39;build/js/modules.js&#39;</span>
+      <span class="p">]</span>
+
+    <span class="nv">gruntConfig.copy.modules =</span>
+      
+      <span class="nv">files: </span><span class="p">[</span>
+        <span class="nv">expand: </span><span class="kc">true</span>
+        <span class="nv">cwd: </span><span class="s">&#39;client/modules&#39;</span>
+        <span class="nv">src: </span><span class="p">[</span><span class="s">&#39;**/*.js&#39;</span><span class="p">]</span>
+        <span class="nv">dest: </span><span class="s">&#39;build/js/modules&#39;</span>
+      <span class="p">,</span>
+        <span class="nv">expand: </span><span class="kc">true</span>
+        <span class="nv">src: </span><span class="p">[</span><span class="s">&#39;packages/*/client/**/*.js&#39;</span><span class="p">]</span>
+        <span class="nv">dest: </span><span class="s">&#39;build/js&#39;</span>
+      <span class="p">,</span>
+        <span class="nv">expand: </span><span class="kc">true</span>
+        <span class="nv">src: </span><span class="p">[</span><span class="s">&#39;custom/*/client/**/*.js&#39;</span><span class="p">]</span>
+        <span class="nv">dest: </span><span class="s">&#39;build/js&#39;</span>
+      <span class="p">]</span>
+
+    <span class="nv">gruntConfig.watch.modules =</span>
+    
+      <span class="nv">files: </span><span class="p">[</span>
+        <span class="s">&#39;client/packages.coffee&#39;</span>
+        <span class="s">&#39;client/require.coffee&#39;</span>
+        <span class="s">&#39;client/modules/**/*.coffee&#39;</span>
+        <span class="s">&#39;custom/*/client/**/*.coffee&#39;</span>
+        <span class="s">&#39;packages/*/client/**/*.coffee&#39;</span>
+      <span class="p">]</span>
+      <span class="nv">tasks: </span><span class="p">[</span>
+        <span class="s">&#39;build:modules&#39;</span><span class="p">,</span> <span class="s">&#39;build:shrub&#39;</span>
+      <span class="p">]</span>
+      <span class="nv">options: livereload: </span><span class="kc">true</span>
+    
+    <span class="nv">gruntConfig.wrap.modules =</span>
+
+      <span class="nv">files: </span><span class="p">[</span>
+        <span class="nv">src: </span><span class="p">[</span>
+          <span class="s">&#39;build/js/modules/**/*.js&#39;</span>
+          <span class="s">&#39;build/js/custom/*/client/**/*.js&#39;</span>
+          <span class="s">&#39;build/js/packages/*/client/**/*.js&#39;</span>
+        <span class="p">]</span>
+        <span class="nv">dest: </span><span class="s">&#39;build/js/modules.js&#39;</span>
+      <span class="p">]</span>
+      <span class="nv">options:</span>
+        <span class="nv">indent: </span><span class="s">&#39;  &#39;</span>
+        <span class="nv">wrapper: </span><span class="nf">(filepath) -&gt;</span>
+          
+          <span class="nv">matches = </span><span class="nx">filepath</span><span class="p">.</span><span class="nx">match</span> <span class="sr">/build\/js\/([^/]+)\/(.*)/</span>
+          
+          <span class="k">switch</span> <span class="nx">matches</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            
+            <span class="k">when</span> <span class="s">&#39;modules&#39;</span>
+              
+              <span class="nv">moduleName = </span><span class="nx">matches</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            
+            <span class="k">when</span> <span class="s">&#39;custom&#39;</span><span class="p">,</span> <span class="s">&#39;packages&#39;</span>
+  
+              <span class="nv">parts = </span><span class="nx">matches</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="nx">split</span> <span class="s">&#39;/&#39;</span>
+              <span class="nx">parts</span><span class="p">.</span><span class="nx">splice</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
+              <span class="nv">moduleName = </span><span class="nx">parts</span><span class="p">.</span><span class="nx">join</span> <span class="s">&#39;/&#39;</span>
+          
+          <span class="nv">dirname = </span><span class="nx">path</span><span class="p">.</span><span class="nx">dirname</span> <span class="nx">moduleName</span>
+          <span class="k">if</span> <span class="nx">dirname</span> <span class="o">is</span> <span class="s">&#39;.&#39;</span> <span class="k">then</span> <span class="nv">dirname = </span><span class="s">&#39;&#39;</span> <span class="k">else</span> <span class="nx">dirname</span> <span class="o">+=</span> <span class="s">&#39;/&#39;</span>
+          
+          <span class="nv">extname = </span><span class="nx">path</span><span class="p">.</span><span class="nx">extname</span> <span class="nx">moduleName</span>
+          
+          <span class="nv">moduleName = </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">dirname</span><span class="si">}#{</span><span class="nx">path</span><span class="p">.</span><span class="nx">basename</span> <span class="nx">moduleName</span><span class="p">,</span> <span class="nx">extname</span><span class="si">}</span><span class="s">&quot;</span>
+          
+          <span class="k">if</span> <span class="nx">moduleName</span><span class="o">?</span>
+            <span class="p">[</span>
+              <span class="s">&quot;&quot;&quot;</span>
+<span class="s">requires_[&#39;</span><span class="si">#{</span><span class="nx">moduleName</span><span class="si">}</span><span class="s">&#39;] = function(module, exports, require, __dirname, __filename) {</span>
+
+
+<span class="s">&quot;&quot;&quot;</span>
+              <span class="s">&quot;&quot;&quot;</span>
+
+<span class="s">};</span>
+
+<span class="s">&quot;&quot;&quot;</span>
+            <span class="p">]</span>
+          <span class="k">else</span>
+            <span class="p">[</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">]</span>
+    
+    <span class="nv">gruntConfig.wrap.modulesAll =</span>
+      
+      <span class="nv">files: </span><span class="p">[</span><span class="s">&#39;build/js/modules.js&#39;</span><span class="p">].</span><span class="nx">map</span> <span class="nf">(file) -&gt;</span> <span class="nv">src: </span><span class="nx">file</span><span class="p">,</span> <span class="nv">dest: </span><span class="nx">file</span>
+      <span class="nv">options:</span>
+        <span class="nv">indent: </span><span class="s">&#39;  &#39;</span>
+        <span class="nv">wrapper: </span><span class="p">[</span>
+          <span class="s">&quot;&quot;&quot;</span>
+<span class="s">(function() {</span>
+
+<span class="s">  var requires_ = {};</span>
+
+
+<span class="s">&quot;&quot;&quot;</span>
+          <span class="s">&quot;&quot;&quot;</span>
+
+<span class="s">})();</span>
+
+<span class="s">&quot;&quot;&quot;</span>
+        <span class="p">]</span>
+
+    <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">shrub</span><span class="p">.</span><span class="nx">tasks</span><span class="p">[</span><span class="s">&#39;build:modules&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="s">&#39;newer:coffee:modules&#39;</span>
+      <span class="s">&#39;newer:copy:modules&#39;</span>
+      <span class="s">&#39;wrap:modules&#39;</span>
+      <span class="s">&#39;concat:modules&#39;</span>
+      <span class="s">&#39;newer:wrap:modulesAll&#39;</span>
+    <span class="p">]</span>
+    
+    <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">shrub</span><span class="p">.</span><span class="nx">tasks</span><span class="p">[</span><span class="s">&#39;build&#39;</span><span class="p">].</span><span class="nx">push</span> <span class="s">&#39;build:modules&#39;</span></div></div></div></div></body></html>

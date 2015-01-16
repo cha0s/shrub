@@ -4,16 +4,16 @@
 
     <span class="nx">inject</span> <span class="p">[</span>
       <span class="s">&#39;$compile&#39;</span><span class="p">,</span> <span class="s">&#39;$rootScope&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-form&#39;</span>
-      <span class="nf">($compile, $rootScope, {forms}) -&gt;</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Sanity</p></div></div><div class="code"><div class="wrapper">        <span class="nx">expect</span><span class="p">(</span><span class="nx">forms</span><span class="p">.</span><span class="nx">test</span><span class="p">).</span><span class="o">not</span><span class="p">.</span><span class="nx">toBeDefined</span><span class="p">()</span>
+      <span class="nf">($compile, $rootScope, shrubForm) -&gt;</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Sanity</p></div></div><div class="code"><div class="wrapper">        <span class="nx">expect</span><span class="p">(</span><span class="nx">shrubForm</span><span class="p">.</span><span class="nx">forms</span><span class="p">.</span><span class="nx">test</span><span class="p">).</span><span class="o">not</span><span class="p">.</span><span class="nx">toBeDefined</span><span class="p">()</span>
         
-        <span class="nv">tpl = </span><span class="nx">$compile</span> <span class="s">&#39;&lt;div data-shrub-form=&quot;test&quot;&gt;&lt;/div&gt;&#39;</span>
+        <span class="nv">tpl = </span><span class="nx">$compile</span> <span class="s">&#39;&lt;div data-shrub-form data-form=&quot;test&quot;&gt;&lt;/div&gt;&#39;</span>
         
         <span class="nv">scope = </span><span class="nx">$rootScope</span><span class="p">.</span><span class="nx">$new</span><span class="p">()</span>
         <span class="nv">scope.test = </span><span class="p">{}</span>
         
         <span class="nx">tpl</span> <span class="nx">scope</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Registered.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">expect</span><span class="p">(</span><span class="nx">forms</span><span class="p">.</span><span class="nx">test</span><span class="p">).</span><span class="nx">toBeDefined</span><span class="p">()</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Registered.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">expect</span><span class="p">(</span><span class="nx">shrubForm</span><span class="p">.</span><span class="nx">forms</span><span class="p">.</span><span class="nx">test</span><span class="p">).</span><span class="nx">toBeDefined</span><span class="p">()</span>
         
     <span class="p">]</span>
 
@@ -23,24 +23,28 @@
       <span class="s">&#39;$compile&#39;</span><span class="p">,</span> <span class="s">&#39;$rootScope&#39;</span>
       <span class="nf">($compile, $rootScope) -&gt;</span>
         
-        <span class="nv">tpl = </span><span class="nx">$compile</span> <span class="s">&#39;&lt;div data-shrub-form=&quot;test&quot;&gt;&lt;/div&gt;&#39;</span>
+        <span class="nv">tpl = </span><span class="nx">$compile</span> <span class="s">&#39;&lt;div data-shrub-form data-form=&quot;test&quot;&gt;&lt;/div&gt;&#39;</span>
         
         <span class="nv">scope = </span><span class="nx">$rootScope</span><span class="p">.</span><span class="nx">$new</span><span class="p">()</span>
         
         <span class="nv">scope.test =</span>
-          <span class="nv">email:</span>
-            <span class="nv">type: </span><span class="s">&#39;email&#39;</span>
-            <span class="nv">label: </span><span class="s">&quot;email&quot;</span>
-          <span class="nv">password:</span>
-            <span class="nv">type: </span><span class="s">&#39;password&#39;</span>
-            <span class="nv">label: </span><span class="s">&quot;password&quot;</span>
-            <span class="nv">required: </span><span class="kc">true</span>
-          <span class="nv">text:</span>
-            <span class="nv">defaultValue: </span><span class="s">&#39;test&#39;</span>
-            <span class="nv">type: </span><span class="s">&#39;text&#39;</span>
-            <span class="nv">label: </span><span class="s">&quot;text&quot;</span>
+        
+          <span class="nv">fields:</span>
+          
+            <span class="nv">email:</span>
+              <span class="nv">type: </span><span class="s">&#39;email&#39;</span>
+              <span class="nv">label: </span><span class="s">&quot;email&quot;</span>
+            <span class="nv">password:</span>
+              <span class="nv">type: </span><span class="s">&#39;password&#39;</span>
+              <span class="nv">label: </span><span class="s">&quot;password&quot;</span>
+              <span class="nv">required: </span><span class="kc">true</span>
+            <span class="nv">text:</span>
+              <span class="nv">value: </span><span class="s">&#39;test&#39;</span>
+              <span class="nv">type: </span><span class="s">&#39;text&#39;</span>
+              <span class="nv">label: </span><span class="s">&quot;text&quot;</span>
           
         <span class="nv">elm = </span><span class="nx">tpl</span> <span class="nx">scope</span>
+        <span class="nx">scope</span><span class="p">.</span><span class="nx">$digest</span><span class="p">()</span>
         
         <span class="nv">$form = </span><span class="nx">elm</span><span class="p">.</span><span class="nx">find</span> <span class="s">&#39;form&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p><form> exists</p></div></div><div class="code"><div class="wrapper">        <span class="nx">expect</span><span class="p">(</span><span class="nx">$form</span><span class="p">.</span><span class="nx">length</span><span class="p">).</span><span class="nx">toBe</span> <span class="mi">1</span>
         
@@ -55,12 +59,12 @@
           <span class="k">if</span> <span class="o">-</span><span class="mi">1</span> <span class="o">isnt</span> <span class="p">[</span><span class="s">&#39;email&#39;</span><span class="p">,</span> <span class="s">&#39;password&#39;</span><span class="p">,</span> <span class="s">&#39;text&#39;</span><span class="p">].</span><span class="nx">indexOf</span> <span class="nx">name</span>
             <span class="nx">childrenCount</span> <span class="o">+=</span> <span class="mi">1</span>
             </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Assert actual input type.</p></div></div><div class="code"><div class="wrapper">            <span class="nx">expect</span><span class="p">(</span><span class="nx">input</span><span class="p">.</span><span class="nx">type</span><span class="p">).</span><span class="nx">toBe</span> <span class="nx">input</span><span class="p">.</span><span class="nx">name</span>
-          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Check required fields.</p></div></div><div class="code"><div class="wrapper">          <span class="k">if</span> <span class="nx">scope</span><span class="p">.</span><span class="nx">test</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span><span class="o">?</span><span class="p">.</span><span class="nx">required</span>
+          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Check required fields.</p></div></div><div class="code"><div class="wrapper">          <span class="k">if</span> <span class="nx">scope</span><span class="p">.</span><span class="nx">test</span><span class="p">.</span><span class="nx">fields</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span><span class="o">?</span><span class="p">.</span><span class="nx">required</span>
             <span class="nx">expect</span><span class="p">(</span><span class="nx">$input</span><span class="p">.</span><span class="nx">attr</span> <span class="s">&#39;required&#39;</span><span class="p">).</span><span class="nx">toBeDefined</span><span class="p">()</span>
           <span class="k">else</span>
             <span class="nx">expect</span><span class="p">(</span><span class="nx">$input</span><span class="p">.</span><span class="nx">attr</span> <span class="s">&#39;required&#39;</span><span class="p">).</span><span class="o">not</span><span class="p">.</span><span class="nx">toBeDefined</span><span class="p">()</span>
-          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Check default values.</p></div></div><div class="code"><div class="wrapper">          <span class="k">if</span> <span class="nx">scope</span><span class="p">.</span><span class="nx">test</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span><span class="o">?</span><span class="p">.</span><span class="nx">defaultValue</span><span class="o">?</span>
-            <span class="nx">expect</span><span class="p">(</span><span class="nx">scope</span><span class="p">.</span><span class="nx">test</span><span class="p">[</span><span class="nx">name</span><span class="p">].</span><span class="nx">defaultValue</span><span class="p">).</span><span class="nx">toBe</span> <span class="nx">input</span><span class="p">.</span><span class="nx">value</span>
+          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Check default values.</p></div></div><div class="code"><div class="wrapper">          <span class="k">if</span> <span class="nx">scope</span><span class="p">.</span><span class="nx">test</span><span class="p">.</span><span class="nx">fields</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span><span class="o">?</span><span class="p">.</span><span class="nx">value</span><span class="o">?</span>
+            <span class="nx">expect</span><span class="p">(</span><span class="nx">scope</span><span class="p">.</span><span class="nx">test</span><span class="p">.</span><span class="nx">fields</span><span class="p">[</span><span class="nx">name</span><span class="p">].</span><span class="nx">value</span><span class="p">).</span><span class="nx">toBe</span> <span class="nx">input</span><span class="p">.</span><span class="nx">value</span>
             
           <span class="nv">hasFormKey = </span><span class="kc">true</span> <span class="k">if</span> <span class="nx">name</span> <span class="o">is</span> <span class="s">&#39;formKey&#39;</span>
         </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>All children present.    </p></div></div><div class="code"><div class="wrapper">        <span class="nx">expect</span><span class="p">(</span><span class="nx">childrenCount</span><span class="p">).</span><span class="nx">toBe</span> <span class="mi">3</span>
@@ -74,33 +78,44 @@
       <span class="s">&#39;$compile&#39;</span><span class="p">,</span> <span class="s">&#39;$rootScope&#39;</span>
       <span class="nf">($compile, $rootScope) -&gt;</span>
         
-        <span class="nv">tpl = </span><span class="nx">$compile</span> <span class="s">&#39;&lt;div data-shrub-form=&quot;test&quot;&gt;&lt;/div&gt;&#39;</span>
+        <span class="nv">tpl = </span><span class="nx">$compile</span> <span class="s">&#39;&lt;div data-shrub-form data-form=&quot;test&quot;&gt;&lt;/div&gt;&#39;</span>
         
         <span class="nv">scope = </span><span class="nx">$rootScope</span><span class="p">.</span><span class="nx">$new</span><span class="p">()</span>
         
         <span class="nv">submissionCleared = </span><span class="kc">false</span>
         
         <span class="nv">scope.test =</span>
-          <span class="nv">text:</span>
-            <span class="nv">type: </span><span class="s">&#39;text&#39;</span>
-            <span class="nv">label: </span><span class="s">&quot;text&quot;</span>
-          <span class="nv">submit:</span>
-            <span class="nv">type: </span><span class="s">&#39;submit&#39;</span>
-            <span class="nv">label: </span><span class="s">&quot;Submit&quot;</span>
-            <span class="nv">handler: </span><span class="nf">-&gt;</span>
-              <span class="nv">submissionCleared = </span><span class="nx">scope</span><span class="p">.</span><span class="nx">text</span> <span class="o">is</span> <span class="s">&#39;test&#39;</span>
           
+          <span class="nv">fields:</span>
+          
+            <span class="nv">text:</span>
+              <span class="nv">type: </span><span class="s">&#39;text&#39;</span>
+              <span class="nv">label: </span><span class="s">&quot;text&quot;</span>
+
+            <span class="nv">submit:</span>
+              <span class="nv">type: </span><span class="s">&#39;submit&#39;</span>
+              <span class="nv">label: </span><span class="s">&quot;Submit&quot;</span>
+              <span class="nv">handler: </span><span class="nf">-&gt;</span>
+                <span class="nv">submissionCleared = </span><span class="nx">scope</span><span class="p">.</span><span class="nx">text</span> <span class="o">is</span> <span class="s">&#39;test&#39;</span>
+                
+          <span class="nv">submits: </span><span class="p">[</span>
+          
+            <span class="nf">(values) -&gt;</span>
+              
+              <span class="nv">submissionCleared = </span><span class="nx">values</span><span class="p">.</span><span class="nx">text</span> <span class="o">is</span> <span class="s">&#39;test&#39;</span>
+              
+          <span class="p">]</span>
+            
         <span class="nv">elm = </span><span class="nx">tpl</span> <span class="nx">scope</span>
         
-        <span class="nv">scope.text = </span><span class="s">&#39;test&#39;</span>
+        <span class="nx">scope</span><span class="p">.</span><span class="nx">test</span><span class="p">.</span><span class="nx">fields</span><span class="p">[</span><span class="s">&#39;text&#39;</span><span class="p">].</span><span class="nv">value = </span><span class="s">&#39;test&#39;</span>
         
-        <span class="nx">scope</span><span class="p">.</span><span class="nx">$digest</span><span class="p">()</span>
+        <span class="nx">scope</span><span class="p">.</span><span class="nx">$apply</span><span class="p">()</span>
         
         <span class="nv">$form = </span><span class="nx">elm</span><span class="p">.</span><span class="nx">find</span> <span class="s">&#39;form&#39;</span>
         
         <span class="k">for</span> <span class="nx">input</span> <span class="k">in</span> <span class="nx">$form</span><span class="p">.</span><span class="nx">find</span> <span class="s">&#39;input&#39;</span>
           <span class="nv">$input = </span><span class="nx">angular</span><span class="p">.</span><span class="nx">element</span> <span class="nx">input</span>
-          
           <span class="nx">input</span><span class="p">.</span><span class="nx">click</span><span class="p">()</span> <span class="k">if</span> <span class="s">&#39;submit&#39;</span> <span class="o">is</span> <span class="nx">input</span><span class="p">.</span><span class="nx">type</span>
         </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Form was submitted with correct values.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">expect</span><span class="p">(</span><span class="nx">submissionCleared</span><span class="p">).</span><span class="nx">toBe</span> <span class="kc">true</span>
         
@@ -109,10 +124,10 @@
   <span class="nx">it</span> <span class="s">&#39;should handle rpc submission&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
 
     <span class="nx">inject</span> <span class="p">[</span>
-      <span class="s">&#39;$compile&#39;</span><span class="p">,</span> <span class="s">&#39;$rootScope&#39;</span><span class="p">,</span> <span class="s">&#39;$timeout&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-socket&#39;</span>
-      <span class="nf">($compile, $rootScope, $timeout, socket) -&gt;</span>
+      <span class="s">&#39;$compile&#39;</span><span class="p">,</span> <span class="s">&#39;$rootScope&#39;</span><span class="p">,</span> <span class="s">&#39;$timeout&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-rpc&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-socket&#39;</span>
+      <span class="nf">($compile, $rootScope, $timeout, rpc, socket) -&gt;</span>
         
-        <span class="nv">tpl = </span><span class="nx">$compile</span> <span class="s">&#39;&lt;div data-shrub-form=&quot;test&quot;&gt;&lt;/div&gt;&#39;</span>
+        <span class="nv">tpl = </span><span class="nx">$compile</span> <span class="s">&#39;&lt;div data-shrub-form data-form=&quot;test&quot;&gt;&lt;/div&gt;&#39;</span>
         
         <span class="nv">scope = </span><span class="nx">$rootScope</span><span class="p">.</span><span class="nx">$new</span><span class="p">()</span>
         
@@ -125,21 +140,31 @@
           <span class="nx">fn</span> <span class="nv">result: </span><span class="mi">420</span>
         
         <span class="nv">scope.test =</span>
-          <span class="nv">text:</span>
-            <span class="nv">type: </span><span class="s">&#39;text&#39;</span>
-            <span class="nv">label: </span><span class="s">&quot;text&quot;</span>
-          <span class="nv">submit:</span>
-            <span class="nv">rpc: </span><span class="kc">true</span>
-            <span class="nv">type: </span><span class="s">&#39;submit&#39;</span>
-            <span class="nv">label: </span><span class="s">&quot;Submit&quot;</span>
-            <span class="nv">handler: </span><span class="nf">(error, result) -&gt;</span>
+          
+          <span class="nv">fields:</span>
+
+            <span class="nv">text:</span>
+              <span class="nv">type: </span><span class="s">&#39;text&#39;</span>
+              <span class="nv">label: </span><span class="s">&quot;text&quot;</span>
+              
+            <span class="nv">submit:</span>
+              <span class="nv">type: </span><span class="s">&#39;submit&#39;</span>
+              <span class="nv">label: </span><span class="s">&quot;Submit&quot;</span>
+                
+          <span class="nv">submits: </span><span class="p">[</span>
+          
+            <span class="nx">rpc</span><span class="p">.</span><span class="nx">formSubmitHandler</span> <span class="nf">(error, result) -&gt;</span>
+              <span class="k">return</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
+              
               <span class="nv">submissionCleared = </span><span class="nx">result</span> <span class="o">is</span> <span class="mi">420</span>
+              
+          <span class="p">]</span>
           
         <span class="nv">elm = </span><span class="nx">tpl</span> <span class="nx">scope</span>
         
-        <span class="nv">scope.text = </span><span class="s">&#39;test&#39;</span>
+        <span class="nx">scope</span><span class="p">.</span><span class="nx">test</span><span class="p">.</span><span class="nx">fields</span><span class="p">[</span><span class="s">&#39;text&#39;</span><span class="p">].</span><span class="nv">value = </span><span class="s">&#39;test&#39;</span>
         
-        <span class="nx">scope</span><span class="p">.</span><span class="nx">$digest</span><span class="p">()</span>
+        <span class="nx">scope</span><span class="p">.</span><span class="nx">$apply</span><span class="p">()</span>
         
         <span class="nv">$form = </span><span class="nx">elm</span><span class="p">.</span><span class="nx">find</span> <span class="s">&#39;form&#39;</span>
         

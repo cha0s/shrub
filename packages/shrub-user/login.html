@@ -5,7 +5,8 @@
 <span class="nv">crypto = </span><span class="nx">require</span> <span class="s">&#39;server/crypto&#39;</span>
 <span class="nv">errors = </span><span class="nx">require</span> <span class="s">&#39;errors&#39;</span>
 <span class="nv">middleware = </span><span class="nx">require</span> <span class="s">&#39;middleware&#39;</span>
-<span class="nv">schema = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;shrub-schema&#39;</span><span class="p">).</span><span class="nx">schema</span><span class="p">()</span>
+
+<span class="nv">orm = </span><span class="nx">require</span> <span class="s">&#39;shrub-orm&#39;</span>
 
 <span class="p">{</span><span class="nx">threshold</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">&#39;limits&#39;</span>
 
@@ -19,7 +20,7 @@
       <span class="nv">message: </span><span class="s">&quot;You are logging in too much.&quot;</span>
       <span class="nv">threshold: </span><span class="nx">threshold</span><span class="p">(</span><span class="mi">3</span><span class="p">).</span><span class="nx">every</span><span class="p">(</span><span class="mi">30</span><span class="p">).</span><span class="nx">seconds</span><span class="p">()</span>
     
-    <span class="nv">route: </span><span class="s">&#39;user.login&#39;</span>
+    <span class="nv">route: </span><span class="s">&#39;shrub.user.login&#39;</span>
     
     <span class="nv">receiver: </span><span class="nf">(req, fn) -&gt;</span>
       
@@ -30,7 +31,6 @@
         <span class="k">when</span> <span class="s">&#39;local&#39;</span>
           
           <span class="nv">res = </span><span class="p">{}</span>
-          
           <span class="nv">deferred = </span><span class="nx">Promise</span><span class="p">.</span><span class="nx">defer</span><span class="p">()</span>
           <span class="nx">passport</span><span class="p">.</span><span class="nx">authenticate</span><span class="p">(</span><span class="s">&#39;local&#39;</span><span class="p">,</span> <span class="nx">deferred</span><span class="p">.</span><span class="nx">callback</span><span class="p">)</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">fn</span>
           </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Log the user in (if it exists), and redact it for the
@@ -54,34 +54,47 @@ response.</p></div></div><div class="code"><div class="wrapper">          <span 
       <span class="c1"># Using nodeify here crashes the app. It may be a bluebird bug.</span>
       <span class="nx">loginPromise</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nf">(user) -&gt;</span> <span class="nx">fn</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">user</span>
       <span class="p">).</span><span class="nx">catch</span> <span class="nx">fn</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookinitialize">Implements hook <code>initialize</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;initialize&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookbootstrapmiddleware">Implements hook <code>bootstrapMiddleware</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;bootstrapMiddleware&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+  
+    <span class="nv">label: </span><span class="s">&#39;Bootstrap user login&#39;</span>
+    <span class="nv">middleware: </span><span class="p">[</span>
     
-    <span class="p">{</span><span class="nx">User</span><span class="p">}</span> <span class="o">=</span> <span class="nx">schema</span><span class="p">.</span><span class="nx">models</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Implement a local passport strategy.
-<code>TODO</code>: Strategies should be dynamically defined, probably through a
-hook.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">LocalStrategy = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;passport-local&#39;</span><span class="p">).</span><span class="nx">Strategy</span>
-    <span class="nx">passport</span><span class="p">.</span><span class="nx">use</span> <span class="k">new</span> <span class="nx">LocalStrategy</span> <span class="nf">(username, password, done) -&gt;</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Load a user and compare the hashed password.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">userPackage</span><span class="p">.</span><span class="nx">loadByName</span><span class="p">(</span><span class="nx">username</span><span class="p">).</span><span class="nx">bind</span><span class="p">({}).</span><span class="nx">then</span><span class="p">(</span><span class="nf">(@user)-&gt;</span>
-        <span class="k">return</span> <span class="k">unless</span> <span class="nx">@user</span><span class="o">?</span>
+      <span class="nf">(next) -&gt;</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Implement a local passport strategy.
+<code>TODO</code>: Strategies should be dynamically defined through a
+hook.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">LocalStrategy = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;passport-local&#39;</span><span class="p">).</span><span class="nx">Strategy</span>
+        <span class="nx">passport</span><span class="p">.</span><span class="nx">use</span> <span class="k">new</span> <span class="nx">LocalStrategy</span> <span class="nf">(username, password, done) -&gt;</span>
+          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Load a user and compare the hashed password.</p></div></div><div class="code"><div class="wrapper">          <span class="nx">Promise</span><span class="p">.</span><span class="nx">cast</span><span class="p">(</span>
+            <span class="nx">userPackage</span><span class="p">.</span><span class="nx">loadByName</span> <span class="nx">username</span>
+          <span class="p">).</span><span class="nx">bind</span><span class="p">({}).</span><span class="nx">then</span><span class="p">(</span><span class="nf">(@user)-&gt;</span>
+            <span class="k">return</span> <span class="k">unless</span> <span class="nx">@user</span><span class="o">?</span>
+            
+            <span class="nx">crypto</span><span class="p">.</span><span class="nx">hasher</span><span class="p">(</span>
+              <span class="nv">plaintext: </span><span class="nx">password</span>
+              <span class="nv">salt: </span><span class="k">new</span> <span class="nx">Buffer</span> <span class="nx">@user</span><span class="p">.</span><span class="nx">salt</span><span class="p">,</span> <span class="s">&#39;hex&#39;</span>
+            <span class="p">)</span>
+            
+          <span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">(hashed) -&gt;</span>
+            <span class="k">return</span> <span class="k">unless</span> <span class="nx">@user</span><span class="o">?</span>
+            <span class="k">return</span> <span class="k">unless</span> <span class="nx">@user</span><span class="p">.</span><span class="nx">passwordHash</span> <span class="o">is</span> <span class="nx">hashed</span><span class="p">.</span><span class="nx">key</span><span class="p">.</span><span class="nx">toString</span><span class="p">(</span>
+              <span class="s">&#39;hex&#39;</span>
+            <span class="p">)</span>
+            
+            <span class="nx">@user</span>
+            
+          <span class="p">).</span><span class="nx">nodeify</span> <span class="nx">done</span>
+          
+        <span class="nx">passport</span><span class="p">.</span><span class="nx">serializeUser</span> <span class="nf">(user, done) -&gt;</span> <span class="nx">done</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">user</span><span class="p">.</span><span class="nx">id</span>
         
-        <span class="nx">crypto</span><span class="p">.</span><span class="nx">hasher</span><span class="p">(</span>
-          <span class="nv">plaintext: </span><span class="nx">password</span>
-          <span class="nv">salt: </span><span class="k">new</span> <span class="nx">Buffer</span> <span class="nx">@user</span><span class="p">.</span><span class="nx">salt</span><span class="p">,</span> <span class="s">&#39;hex&#39;</span>
-        <span class="p">)</span>
+        <span class="nx">passport</span><span class="p">.</span><span class="nx">deserializeUser</span> <span class="nf">(id, done) -&gt;</span>
+          <span class="nv">User = </span><span class="nx">orm</span><span class="p">.</span><span class="nx">collection</span> <span class="s">&#39;shrub-user&#39;</span>
+          <span class="nx">User</span><span class="p">.</span><span class="nx">findOne</span> <span class="nv">id: </span><span class="nx">id</span><span class="p">,</span> <span class="nx">done</span>
         
-      <span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">(hashed) -&gt;</span>
-        <span class="k">return</span> <span class="k">unless</span> <span class="nx">@user</span><span class="o">?</span>
-        <span class="k">return</span> <span class="k">unless</span> <span class="nx">@user</span><span class="p">.</span><span class="nx">passwordHash</span> <span class="o">is</span> <span class="nx">hashed</span><span class="p">.</span><span class="nx">key</span><span class="p">.</span><span class="nx">toString</span> <span class="s">&#39;hex&#39;</span>
+        <span class="nx">monkeyPatchLogin</span><span class="p">()</span>
         
-        <span class="nx">@user</span>
+        <span class="nx">next</span><span class="p">()</span>
         
-      <span class="p">).</span><span class="nx">nodeify</span> <span class="nx">done</span>
-      
-    <span class="nx">passport</span><span class="p">.</span><span class="nx">serializeUser</span> <span class="nf">(user, done) -&gt;</span> <span class="nx">done</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">user</span><span class="p">.</span><span class="nx">id</span>
-    
-    <span class="nx">passport</span><span class="p">.</span><span class="nx">deserializeUser</span> <span class="nf">(id, done) -&gt;</span> <span class="nx">User</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">id</span><span class="p">).</span><span class="nx">nodeify</span> <span class="nx">done</span>
-    
-    <span class="nx">monkeyPatchLogin</span><span class="p">()</span>
+    <span class="p">]</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshooktransmittableerror">Implements hook <code>transmittableError</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;transmittableError&#39;</span><span class="p">,</span> <span class="nx">clientModule</span><span class="p">.</span><span class="nx">transmittableError</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Monkey patch http.IncomingMessage.prototype.login to run our middleware,
 and return a promise.</p></div></div><div class="code"><div class="wrapper"><span class="nv">monkeyPatchLogin = </span><span class="nf">-&gt;</span>

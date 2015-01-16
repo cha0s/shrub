@@ -6,35 +6,46 @@
     <span class="nv">title: </span><span class="s">&#39;Forgot password&#39;</span>
     
     <span class="nv">controller: </span><span class="p">[</span>
-      <span class="s">&#39;$location&#39;</span><span class="p">,</span> <span class="s">&#39;$scope&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-ui/notifications&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-user&#39;</span>
-      <span class="nf">($location, $scope, {add}, {isLoggedIn}) -&gt;</span>
-        <span class="k">return</span> <span class="nx">$location</span><span class="p">.</span><span class="nx">path</span> <span class="s">&#39;/&#39;</span> <span class="k">if</span> <span class="nx">isLoggedIn</span><span class="p">()</span>
+      <span class="s">&#39;$location&#39;</span><span class="p">,</span> <span class="s">&#39;$scope&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-ui/notifications&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-rpc&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-user&#39;</span>
+      <span class="nf">($location, $scope, notifications, rpc, user) -&gt;</span>
+        <span class="k">return</span> <span class="nx">$location</span><span class="p">.</span><span class="nx">path</span> <span class="s">&#39;/&#39;</span> <span class="k">if</span> <span class="nx">user</span><span class="p">.</span><span class="nx">isLoggedIn</span><span class="p">()</span>
+        
+        <span class="nv">$scope.form =</span>
           
-        <span class="nv">$scope.userForgot =</span>
+          <span class="nv">key: </span><span class="s">&#39;shrub-user-forgot&#39;</span>
           
-          <span class="nv">usernameOrEmail:</span>
-            <span class="nv">type: </span><span class="s">&#39;text&#39;</span>
-            <span class="nv">label: </span><span class="s">&quot;Username or Email&quot;</span>
-            <span class="nv">required: </span><span class="kc">true</span>
-          
-          <span class="nv">submit:</span>
-            <span class="nv">type: </span><span class="s">&#39;submit&#39;</span>
-            <span class="nv">label: </span><span class="s">&quot;Email reset link&quot;</span>
-            <span class="nv">rpc: </span><span class="kc">true</span>
-            <span class="nv">handler: </span><span class="nf">(error, result) -&gt;</span>
+          <span class="nv">submits: </span><span class="p">[</span>
+            
+            <span class="nx">rpc</span><span class="p">.</span><span class="nx">formSubmitHandler</span> <span class="nf">(error, result) -&gt;</span>
               <span class="k">return</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
               
-              <span class="nx">add</span><span class="p">(</span>
+              <span class="nx">notifications</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span>
                 <span class="nv">text: </span><span class="s">&quot;A reset link will be emailed.&quot;</span>
               <span class="p">)</span>
               
               <span class="nx">$location</span><span class="p">.</span><span class="nx">path</span> <span class="s">&#39;/&#39;</span>
+
+          <span class="p">]</span>
+          
+          <span class="nv">fields:</span>
+          
+            <span class="nv">usernameOrEmail:</span>
+              <span class="nv">type: </span><span class="s">&#39;text&#39;</span>
+              <span class="nv">label: </span><span class="s">&quot;Username or Email&quot;</span>
+              <span class="nv">required: </span><span class="kc">true</span>
+            
+            <span class="nv">submit:</span>
+              <span class="nv">type: </span><span class="s">&#39;submit&#39;</span>
+              <span class="nv">label: </span><span class="s">&quot;Email reset link&quot;</span>
               
         <span class="nx">$scope</span><span class="p">.</span><span class="nx">$emit</span> <span class="s">&#39;shrubFinishedRendering&#39;</span>
     <span class="p">]</span>
     
     <span class="nv">template: </span><span class="s">&quot;&quot;&quot;</span>
 
-<span class="s">&lt;div data-shrub-form=&quot;userForgot&quot;&gt;&lt;/div&gt;</span>
+<span class="s">&lt;div</span>
+<span class="s">  data-shrub-form</span>
+<span class="s">  data-form=&quot;form&quot;</span>
+<span class="s">&gt;&lt;/div&gt;</span>
 
 <span class="s">&quot;&quot;&quot;</span></div></div></div></div></body></html>

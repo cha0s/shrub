@@ -65,24 +65,30 @@
 
 <span class="nx">describe</span> <span class="s">&#39;title&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
   
-  <span class="nv">title = </span><span class="kc">null</span>
+  <span class="nv">windowTitle = </span><span class="kc">null</span>
   
   <span class="nx">beforeEach</span> <span class="nf">-&gt;</span>
     
     <span class="nx">inject</span> <span class="p">[</span>
-      <span class="s">&#39;shrub-ui/title&#39;</span>
-      <span class="nf">(_title_) -&gt;</span> <span class="nv">title = </span><span class="nx">_title_</span>
+      <span class="s">&#39;shrub-ui/window-title&#39;</span>
+      <span class="nf">(_windowTitle_) -&gt;</span> <span class="nv">windowTitle = </span><span class="nx">_windowTitle_</span>
     <span class="p">]</span>
     
   <span class="nx">it</span> <span class="s">&#39;should set window title to page title [separator] site title by default when the page title is set&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
     
-    <span class="nx">title</span><span class="p">.</span><span class="nx">setPage</span> <span class="s">&#39;Home&#39;</span>
+    <span class="nx">windowTitle</span><span class="p">.</span><span class="nx">setPage</span> <span class="s">&#39;Home&#39;</span>
     
-    <span class="nx">expect</span><span class="p">(</span><span class="nx">title</span><span class="p">.</span><span class="nb">window</span><span class="p">()).</span><span class="nx">toBe</span> <span class="s">&quot;</span><span class="si">#{</span><span class="nx">title</span><span class="p">.</span><span class="nx">page</span><span class="p">()</span><span class="si">}#{</span><span class="nx">title</span><span class="p">.</span><span class="nx">separator</span><span class="p">()</span><span class="si">}#{</span><span class="nx">title</span><span class="p">.</span><span class="nx">site</span><span class="p">()</span><span class="si">}</span><span class="s">&quot;</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">windowTitle</span><span class="p">.</span><span class="nx">get</span><span class="p">()).</span><span class="nx">toBe</span> <span class="s">&quot;</span><span class="si">#{</span>
+      <span class="nx">windowTitle</span><span class="p">.</span><span class="nx">page</span><span class="p">()</span>
+    <span class="si">}#{</span>
+      <span class="nx">windowTitle</span><span class="p">.</span><span class="nx">separator</span><span class="p">()</span>
+    <span class="si">}#{</span>
+      <span class="nx">windowTitle</span><span class="p">.</span><span class="nx">site</span><span class="p">()</span>
+    <span class="si">}</span><span class="s">&quot;</span>
 
   <span class="nx">it</span> <span class="s">&#39;should allow page title to be set without altering the window title&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
     
-    <span class="nx">title</span><span class="p">.</span><span class="nx">setPage</span> <span class="s">&#39;Home&#39;</span><span class="p">,</span> <span class="kc">false</span>
+    <span class="nx">windowTitle</span><span class="p">.</span><span class="nx">setPage</span> <span class="s">&#39;Home&#39;</span><span class="p">,</span> <span class="kc">false</span>
     
-    <span class="nx">expect</span><span class="p">(</span><span class="nx">title</span><span class="p">.</span><span class="nx">site</span><span class="p">()).</span><span class="o">not</span><span class="p">.</span><span class="nx">toContain</span> <span class="s">&#39;Home&#39;</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">windowTitle</span><span class="p">.</span><span class="nx">get</span><span class="p">()).</span><span class="o">not</span><span class="p">.</span><span class="nx">toContain</span> <span class="s">&#39;Home&#39;</span>
     </div></div></div></div></body></html>

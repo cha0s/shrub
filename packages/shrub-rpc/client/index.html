@@ -1,6 +1,8 @@
 <!DOCTYPE html><html lang="en"><head><title>packages/shrub-rpc/client/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="packages/shrub-rpc/client/index"><meta name="groc-project-path" content="packages/shrub-rpc/client/index.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-rpc/client/index.coffee">packages/shrub-rpc/client/index.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="rpc">RPC</h1>
 
-<p>Define an Angular service to issue <a href="http://en.wikipedia.org/wiki/Remote_procedure_call#Message_passing">remote procedure calls</a>.</p></div></div><div class="code"><div class="wrapper"><span class="nv">errors = </span><span class="nx">require</span> <span class="s">&#39;errors&#39;</span>
+<p>Define an Angular service to issue <a href="http://en.wikipedia.org/wiki/Remote_procedure_call#Message_passing">remote procedure calls</a>.</p></div></div><div class="code"><div class="wrapper"><span class="nv">i8n = </span><span class="nx">require</span> <span class="s">&#39;inflection&#39;</span>
+
+<span class="nv">errors = </span><span class="nx">require</span> <span class="s">&#39;errors&#39;</span>
 
 <span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookservice">Implements hook <code>service</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;service&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
@@ -38,7 +40,29 @@ from the server, or rejected with the error from the server.</p></div></div><div
         <span class="p">)</span> <span class="k">for</span> <span class="nx">injectable</span> <span class="k">in</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invokeFlat</span> <span class="s">&#39;rpcCall&#39;</span>
           
         <span class="nx">deferred</span><span class="p">.</span><span class="nx">promise</span>
-      
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Handle RPC calls.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">service.formSubmitHandler = </span><span class="nf">(route, handler) -&gt;</span>
+        
+        <span class="k">unless</span> <span class="nx">handler</span><span class="o">?</span>
+          <span class="nv">handler = </span><span class="nx">route</span>
+          <span class="nv">route = </span><span class="kc">null</span>
+        
+        <span class="nf">(values, form) -&gt;</span>
+          
+          <span class="nx">service</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span>
+            <span class="nx">exports</span><span class="p">.</span><span class="nx">normalizeRouteName</span> <span class="nx">route</span> <span class="o">?</span> <span class="nx">form</span><span class="p">.</span><span class="nx">key</span>
+            <span class="nx">values</span>
+          <span class="p">).</span><span class="nx">then</span><span class="p">(</span>
+            <span class="nf">(result) -&gt;</span> <span class="nx">handler</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">result</span>
+            <span class="nf">(error) -&gt;</span> <span class="nx">handler</span> <span class="nx">error</span>
+          <span class="p">)</span>
+
       <span class="nx">service</span>
       
-  <span class="p">]</span></div></div></div></div></body></html>
+  <span class="p">]</span>
+  
+<span class="nv">exports.normalizeRouteName = </span><span class="nf">(name) -&gt;</span>
+
+  <span class="nv">name = </span><span class="nx">i8n</span><span class="p">.</span><span class="nx">underscore</span> <span class="nx">name</span>
+  <span class="nv">name = </span><span class="nx">i8n</span><span class="p">.</span><span class="nx">dasherize</span> <span class="nx">name</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span>
+  <span class="nv">name = </span><span class="nx">i8n</span><span class="p">.</span><span class="nx">underscore</span> <span class="nx">name</span>
+  <span class="nx">name</span><span class="p">.</span><span class="nx">replace</span> <span class="sr">/[-\/]/g</span><span class="p">,</span> <span class="s">&#39;.&#39;</span></div></div></div></div></body></html>
