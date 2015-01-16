@@ -28,17 +28,11 @@ achieve the ultimate in clean, elegant structure. No more
 
 * Get in the new directory and then the usual `npm install`
 
-* If you'd like to run the tests, first spin up the server using
-  `$ E2E=true npm start`, to start the server in end-to-end testing mode. Then
-  run `$ ./scripts/good-to-go`. This script will return 0 if the project
-  builds, and the tests run successfully. In other words, you could
-  theoretically wire it up in a pre-commit hook.
-
 * Spin up the server in debug mode: `$ npm start` and navigate to
-  http://localhost:4201 (if you didn't run the tests above, you must first run
-  `$ grunt` before navigating to the site in your browser).
+  http://localhost:4201 (you must first run `$ grunt` before navigating to the
+  site in your browser).
 
-* If you'd like to build the project documentation, run `$ npm run-script doc`.
+* If you'd like to build the project documentation, run `$ grunt dox`.
 
 * Spin up the server in production mode: first, build for production:
   `$ grunt production`, then launch the server:
@@ -85,10 +79,6 @@ serve it to the client again. Amazing!
 
 There is always more to do! 
 
-* Better abstraction of assets, in other words, a theme/skin system
-
 * CSRF mitigation
-
-* Client-side config should be handled better
 
 * [TODOs in source](http://cha0s.github.io/shrub/todos.html)
