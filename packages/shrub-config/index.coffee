@@ -71,7 +71,13 @@ exports.pkgmanRegister = (registrar) ->
 					
 					# } Format the configuration to look nice.
 					prettyPrintConfig = ->
-						stringified = JSON.stringify config_, null, '  '
+						
+						jsonArgs = [config_]
+						
+						if 'production' isnt config.get 'NODE_ENV'
+							jsonArgs = jsonArgs.concat [null, '  ']
+						
+						stringified = JSON.stringify jsonArgs...
 						[first, rest...] = stringified.split '\n'
 						([first].concat rest.map (line) -> '    ' + line).join '\n'
 					

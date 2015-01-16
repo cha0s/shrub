@@ -3,12 +3,15 @@
 # 
 # Allows the visual aspects of the site to be controlled by skin packages.
 
-cheerio = require 'cheerio'
 fs = require 'fs'
 path = require 'path'
+
+cheerio = require 'cheerio'
+glob = require 'simple-glob'
 Promise = require 'bluebird'
 
 config = require 'config'
+pkgman = require 'pkgman'
 
 assets = require 'shrub-assets'
 
@@ -21,14 +24,12 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `config`
 	registrar.registerHook 'config', (req) ->
 		
-		defaultSkinKey = config.get 'packageSettings:shrub-skin:default'
+		skinAssets = {}
+		for packagePath in pkgman.packagesImplementing 'skinAssets'
+			skinAssets[packagePath] = exports.assets packagePath
 		
-		readFile(
-			"app/skin/#{defaultSkinKey}/assets.json", encoding: 'utf8'
-		).then (jsonText) ->
-		
-			default: defaultSkinKey
-			assets: JSON.parse jsonText
+		default: config.get 'packageSettings:shrub-skin:default'
+		assets: skinAssets
 	
 	# ## Implements hook `httpMiddleware`
 	registrar.registerHook 'path', 'httpMiddleware', (http) ->
@@ -91,15 +92,7 @@ exports.gruntSkin = (gruntConfig, key) ->
 		"app/skin/#{key}"
 	]
 
-	copyFiles = [
-		expand: true
-		cwd: "#{skinPath}/app/template"
-		src: [
-			'**/*.html'
-			'!app.html'
-		]
-		dest: "app/skin/#{key}"
-	]
+	copyFiles = []
 	
 	copyFiles.push(
 		expand: true
@@ -121,64 +114,6 @@ exports.gruntSkin = (gruntConfig, key) ->
 			"copy:#{key}"
 		]
 	
-	gruntConfig.shrub.tasks["assetsJson:#{key}"] = ->
-		
-		assets = {}
-		
-		{tasks} = require 'grunt/lib/grunt/cli'
-		isProduction = -1 isnt tasks.indexOf 'production'
-		
-		assets.templates = grunt.file.expand(
-			cwd: "#{skinPath}/app/template"
-			[
-				'**/*.html'
-				'!app.html'
-			]
-		)
-		
-		assets.scripts =
-		
-			default: grunt.file.expand(
-				cwd: "#{skinPath}/app"
-				[
-					'js/**/*.js'
-					'!js/**/*.min.js'
-				]
-			)
-			
-			production: grunt.file.expand(
-				cwd: "#{skinPath}/app"
-				[
-					'js/**/*.min.js'
-				]
-			)
-			
-		assets.styleSheets =
-		
-			default: grunt.file.expand(
-				cwd: "#{skinPath}/app"
-				[
-					'css/**/*.css'
-					'!css/**/*.min.css'
-				]
-			).concat [
-				'css/style.css'
-			]
-			
-			production: grunt.file.expand(
-				cwd: "#{skinPath}/app"
-				[
-					'css/**/*.min.css'
-				]
-			).concat [
-				'css/style.css'
-			]
-			
-		grunt.file.write(
-			"app/skin/#{key}/assets.json"
-			JSON.stringify assets, null, '\t'
-		) 
-
 # ### ::renderAppHtml
 # 
 # *Render the application HTML.*
@@ -214,27 +149,65 @@ exports.renderAppHtml = (locals) ->
 		) for script in appAssets.scripts
 		
 		# Inject the skin-level assets.
-		readFile(
-			"app/skin/#{skinKey}/assets.json", encoding: 'utf8'
-		).then (jsonText) ->
-			
-			skinAssets = JSON.parse jsonText
-			
-			$head.append $('<link />').attr(
-				class: 'skin'
-				type: 'text/css'
-				rel: 'stylesheet'
-				href: "/skin/#{skinKey}/#{styleSheet}"
-			) for styleSheet in skinAssets.styleSheets[environmentKey] ? []
+		skinAssets = exports.assets skinKey
+		
+		$head.append $('<link />').attr(
+			class: 'skin'
+			type: 'text/css'
+			rel: 'stylesheet'
+			href: "/skin/#{skinKey}/#{styleSheet}"
+		) for styleSheet in skinAssets.styleSheets[environmentKey] ? []
 
-			$body.append $('<script />').attr(
-				class: 'skin'
-				src: "/skin/#{skinKey}/#{script}"
-			) for script in skinAssets.scripts[environmentKey] ? []
-			
-			$.html()
+		$body.append $('<script />').attr(
+			class: 'skin'
+			src: "/skin/#{skinKey}/#{script}"
+		) for script in skinAssets.scripts[environmentKey] ? []
+		
+		$.html()
 
 # ### ::skinDirectory
 # 
 # *Get the directory a key'd skin lives within.*
 exports.skinDirectory = (key) -> path.dirname require.resolve key
+
+exports.assets = (skinKey) ->
+	
+	skinPath = path.dirname require.resolve skinKey
+	skinModule = require skinKey
+	
+	templates = {}
+	for templatePath in glob cwd: "#{skinPath}/app/template", [
+		'**/*.html', '!app.html'
+	]
+		
+		templates[templatePath] = fs.readFileSync(
+			"#{skinPath}/app/template/#{templatePath}"
+		).toString 'utf8'
+	
+	skinAssets =
+		
+		templates: templates
+		
+		scripts:
+				
+			default: glob cwd: "#{skinPath}/app", [
+				'js/**/*.js', '!js/**/*.min.js'
+			]
+					
+			production: glob cwd: "#{skinPath}/app", [
+				'js/**/*.min.js'
+			]
+			
+		styleSheets:
+					
+			default: glob cwd: "#{skinPath}/app", [
+				'css/**/*.css', '!css/**/*.min.css'
+			]
+					
+			production: glob cwd: "#{skinPath}/app", [
+				'css/**/*.min.css'
+			]
+			
+	pkgman.invokePackage skinKey, 'skinAssets', skinAssets
+	
+	skinAssets

@@ -1,11 +1,13 @@
 
 # # Package manager
 
-_ = require 'underscore'
+_ = require 'lodash'
 
 debug = require('debug') 'shrub:pkgman'
 
-packageCache = null
+packageIndex = null
+pathIndex = null
+
 _packages = []
 
 class PkgmanRegistrar
@@ -34,13 +36,15 @@ class PkgmanRegistrar
 			impl = hook
 			hook = submodule
 			
-		(packageCache[hook] ?= []).push path: path, impl: impl
+		(packageIndex[hook] ?= []).push path
+		(pathIndex[path] ?= {})[hook] = impl
 
 optionalModule = (name) ->
 
 # ## rebuildPackageCache
 exports.rebuildPackageCache = (type) ->
-	packageCache = {}
+	packageIndex = {}
+	pathIndex = {}
 	
 	modules = {}
 	for name in _packages
@@ -79,15 +83,21 @@ exports.registerPackageList = (packages, type) ->
 exports.invoke = (hook, args...) ->
 	
 	results = {}
-	return results unless packageCache?
+
+	for path in exports.packagesImplementing hook
+		results[path] = exports.invokePackage path, hook, args...
 	
-	results[path] = impl args... for {path, impl} in packageCache[hook] ? []
-	results
+	return results
 
 # ## invokeFlat
 # 
 # Invoke a hook with arguments. Return the result as an array.
 exports.invokeFlat = (hook, args...) ->
-	return [] unless packageCache?
+	
+	for path in exports.packagesImplementing hook
+		exports.invokePackage path, hook, args...
 
-	impl args... for {impl} in packageCache[hook] ? []
+exports.invokePackage = (path, hook, args...) ->
+	pathIndex?[path]?[hook]? args...
+
+exports.packagesImplementing = (hook) -> packageIndex[hook] ? []

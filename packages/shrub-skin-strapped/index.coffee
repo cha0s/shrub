@@ -9,13 +9,20 @@ shrubSkin = require 'shrub-skin'
 
 exports.pkgmanRegister = (registrar) ->
 
+	# ## Implements hook `skinAssets`
+	registrar.registerHook 'skinAssets', (assets) ->
+		
+		# Add our future-compiled LESS style sheets.
+		assets.styleSheets.default.push 'css/style.css'
+		assets.styleSheets.production.push 'css/style.css'
+	
 	# ## Implements hook `gruntConfig`
 	registrar.registerHook 'gruntConfig', (gruntConfig) ->
 		
 		gruntConfig.less ?= {}
 		
 		shrubSkin.gruntSkin gruntConfig, 'shrub-skin-strapped'
-
+		
 		gruntConfig.less['shrub-skin-strapped'] =
 			
 			files: [
@@ -38,7 +45,6 @@ exports.pkgmanRegister = (registrar) ->
 			'clean:shrub-skin-strapped'
 			'copy:shrub-skin-strapped'
 			'less:shrub-skin-strapped'
-			'assetsJson:shrub-skin-strapped'
 		]
 		
 		gruntConfig.shrub.tasks['build'].push 'build:shrub-skin-strapped'
