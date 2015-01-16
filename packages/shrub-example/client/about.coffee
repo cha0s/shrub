@@ -13,6 +13,8 @@ exports.pkgmanRegister = (registrar) ->
 			'$http', '$scope'
 			($http, $scope) ->
 				
+				$scope.about = ''
+				
 				$http.get('/shrub-example/about/README.md').success((data) ->
 					$scope.about = data
 				).finally -> $scope.$emit 'shrubFinishedRendering' 
