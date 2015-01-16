@@ -59,7 +59,7 @@ exports.pkgmanRegister = (registrar) ->
 				grunt.fail.fatal "Server process failed", code
 			
 		gruntConfig.shrub.tasks['build:shrub'] = [
-			'newer:concat:shrub'
+			'concat:shrub'
 		]
 		
 		gruntConfig.shrub.tasks['production:shrub'] = [

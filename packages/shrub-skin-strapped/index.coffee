@@ -44,7 +44,7 @@ exports.pkgmanRegister = (registrar) ->
 		gruntConfig.shrub.tasks['build:shrub-skin-strapped'] = [
 			'newer:clean:shrub-skin-strapped'
 			'newer:copy:shrub-skin-strapped'
-			'newer:less:shrub-skin-strapped'
+			'less:shrub-skin-strapped'
 		]
 		
 		gruntConfig.shrub.tasks['build'].push 'build:shrub-skin-strapped'

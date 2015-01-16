@@ -92,7 +92,7 @@ var dependencies = [];
 		gruntConfig.shrub.tasks['build:angular'] = [
 			'newer:coffee:angular'
 			'angularCoreDependencies:angular'
-			'newer:concat:angular'
+			'concat:angular'
 		]
 		
 		gruntConfig.shrub.tasks['build'].push 'build:angular'
