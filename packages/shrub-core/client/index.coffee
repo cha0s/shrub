@@ -44,17 +44,15 @@ exports.pkgmanRegister = (registrar) ->
 							promises
 						)
 						
-						promiseArray = []
 						promiseKeysArray = []
-
-						angular.forEach promises, (promise, key) ->
+						promiseArray = for key, promise of promises
 							promiseKeysArray.push key
-							promiseArray.push promise
+							promise
 		
 						originalAll(promiseArray).then (results) ->
 							objectResult = {}
 							
-							angular.forEach results, (result, index) ->
+							for result, index in results
 								objectResult[promiseKeysArray[index]] = result
 		
 							objectResult
@@ -80,8 +78,8 @@ exports.pkgmanRegister = (registrar) ->
 				routes[route.path ? path] = route
 				
 			# Invoke hook `routeMock`.
-			# Allow packages to define routes in the Angular application which are
-			# only defined during test mode.
+			# Allow packages to define routes in the Angular application which
+			# are only defined during test mode.
 			if config.get 'packageConfig:shrub-core:testMode'
 				for path, route of pkgmanProvider.invoke 'routeMock'
 					routes[route.path ? path] = route
@@ -104,8 +102,8 @@ exports.pkgmanRegister = (registrar) ->
 						($controller, $injector, $scope) ->
 							
 							# Invoke hook `routeControllerStart`.
-							# Allow packages to act before a new route controller
-							# is executed.
+							# Allow packages to act before a new route
+							# controller is executed.
 							injectables = pkgmanProvider.invokeFlat(
 								'routeControllerStart'
 							)
