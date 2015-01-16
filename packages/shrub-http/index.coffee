@@ -93,6 +93,7 @@ exports.pkgmanRegister = (registrar) ->
 			'shrub-http-express/session'
 			'shrub-user'
 			'shrub-http-express/logger'
+			'shrub-villiany'
 			'shrub-http-express/routes'
 			'shrub-http-express/static'
 			'shrub-config'
