@@ -40,24 +40,24 @@ exports.pkgmanRegister = (registrar) ->
 					originalAll = Promise.all
 					Promise.all = (promises) ->
 						
-						if angular.isObject promises
-							promiseArray = []
-							promiseKeysArray = []
+						return originalAll promises unless angular.isObject(
+							promises
+						)
+						
+						promiseArray = []
+						promiseKeysArray = []
 
-							angular.forEach promises, (promise, key) ->
-								promiseKeysArray.push key
-								promiseArray.push promise
-			
-							originalAll(promiseArray).then (results) ->
-								objectResult = {}
-								
-								angular.forEach results, (result, index) ->
-									objectResult[promiseKeysArray[index]] = result
-			
-								objectResult
-			
-						else
-							originalAll promises
+						angular.forEach promises, (promise, key) ->
+							promiseKeysArray.push key
+							promiseArray.push promise
+		
+						originalAll(promiseArray).then (results) ->
+							objectResult = {}
+							
+							angular.forEach results, (result, index) ->
+								objectResult[promiseKeysArray[index]] = result
+		
+							objectResult
 					
 					Promise
 					
