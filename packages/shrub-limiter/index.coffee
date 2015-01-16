@@ -19,6 +19,23 @@ exports.IGNORE = IGNORE = 1
 
 exports.pkgmanRegister = (registrar) ->
 
+	# ## Implements hook `collections`
+	registrar.registerHook 'collections', ->
+		
+		'shrub-limit':
+		
+			attributes:
+				
+				# The limiter key.
+				key:
+					type: 'string'
+					index: true
+					
+				# Scores accrued for this limit.
+				scores:
+					type: 'array'
+					defaultsTo: []
+				
 	# ## Implements hook `endpointAlter`
 	# 
 	# Allow RPC endpoint definitions to specify rate limiters.

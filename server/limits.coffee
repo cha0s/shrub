@@ -3,9 +3,10 @@
 
 Promise = require 'bluebird'
 redis = require 'redis'
-redback = require('redback').use redis.createClient()
 
 pkgman = require 'pkgman'
+
+orm = require 'shrub-orm'
 
 # ## Limiter
 # 
@@ -36,10 +37,8 @@ exports.Limiter = class Limiter
 			"Limiter(#{key}) must be constructed with a valid threshold!"
 		) unless @threshold instanceof ThresholdFinal
 		
-		# } Create the low-level redback limiter.
-		@limiter = redback.createBetterRateLimit(
-			key, @threshold.calculateSeconds()
-		)
+		# } Create the low-level limiter.
+		@limiter = new LimiterManager key, @threshold.calculateSeconds()
 	
 	# ### .add
 	# 
@@ -98,6 +97,82 @@ exports.Limiter = class Limiter
 		
 		).then (reduction) ->
 			reduction.reduce ((l, r) -> if l > r then l else r), -Infinity
+
+class LimiterManager
+
+	constructor: (@key, @thresholdWindow) ->
+	
+	_limitHasExpired: (limit) ->
+	
+		diff = (Date.now() - limit.createdAt.getTime()) / 1000
+		diff >= @thresholdWindow
+		
+	# ### .add
+	# 
+	# *Add score to a limiter.*
+	# 
+	# * (string) `id` - The ID of the limiter.
+	# 
+	# * (integer) `score` - The score to add. Defaults to 1.
+	accrue: (id, score = 1) ->
+	
+		# } Cast score to integer.
+		score = parseInt score, 10
+		
+		orm.collection('shrub-limit').findOrCreate().where(
+			key: @key + ':' + id
+		).then (limit) =>
+			limit.key = @key + ':' + id
+			
+			# } Empty out scores if it's expired.
+			if @_limitHasExpired limit
+				limit.createdAt = new Date()
+				limit.scores = []
+			
+			# } Accrue the score.
+			limit.scores.push score
+			limit.save()
+
+	# ### .score
+	# 
+	# *Check score for a limiter.*
+	# 
+	# * (string) `id` - The ID of the limiter.
+	score: (id) ->
+	
+		# } Get all scores for this limiter.
+		orm.collection('shrub-limit').findOne().where(
+			key: @key + ':' + id
+		).then (limit) =>
+			return 0 unless limit?
+			
+			# } Destroy if it's expired.
+			return limit.destroy().then(-> 0) if @_limitHasExpired limit
+			
+			# } Sum all the scores.
+			limit.key = @key + ':' + id
+			limit.save().then -> limit.scores.reduce ((l, r) -> l + r), 0
+	
+	# ### .ttl
+	# 
+	# *Time-to-live for a limiter.*
+	# 
+	# * (string) `id` - The ID of the limiter.
+	ttl: (id) ->
+		
+		orm.collection('shrub-limit').findOne().where(
+			key: @key + ':' + id
+		).then (limit) =>
+			return 0 unless limit?
+			
+			# } Destroy if it's expired.
+			return limit.destroy().then(-> 0) if @_limitHasExpired limit
+				
+			limit.key = @key + ':' + id
+			limit.save().then =>
+				
+				diff = (Date.now() - limit.createdAt.getTime()) / 1000
+				Math.ceil @thresholdWindow - diff
 
 # ## ThresholdBase
 # 
@@ -180,69 +255,3 @@ class ThresholdFinal
 # accumulate over the period of 20 minutes. If more score is accrued during
 # that window, then the threshold is said to be crossed.
 exports.threshold = (score) -> new ThresholdBase score
-				
-# Add a redback structure to handle rate limiting.
-redback.addStructure(
-	'BetterRateLimit'
-	
-	# Called by redback at initialization time: default to 10 minute window.
-	init: (@thresholdWindow) ->
-	
-	# ### .add
-	# 
-	# *Add score to a limiter.*
-	# 
-	# * (string) `id` - The ID of the limiter.
-	# 
-	# * (integer) `score` - The score to add. Defaults to 1.
-	accrue: (id, score = 1) ->
-	
-		# } Convenience.
-		exists = Promise.promisify @client.exists, @client
-		rpushx = Promise.promisify @client.rpushx, @client
-		
-		# } Cast score to integer.
-		score = parseInt score, 10
-		
-		# } Add the ID to the end of the limiter key and check if an entry
-		# } already exists.
-		id = @key + ':' + id
-		exists(id).bind(this).then (exists) ->
-			
-			# } Simply add it to the score if an entry already exists.
-			return rpushx id, score if exists
-			
-			# } Otherwise, create an entry, add the score, and set the entry
-			# } to expire.
-			multi = @client.multi()
-			multi.rpush id, score
-			multi.expire id, @thresholdWindow
-			Promise.promisify(multi.exec, multi)()
-				
-	# ### .score
-	# 
-	# *Check score for a limiter.*
-	# 
-	# * (string) `id` - The ID of the limiter.
-	score: (id) ->
-	
-		# } Convenience.
-		lrange = Promise.promisify @client.lrange, @client
-		
-		# } Get all scores for this limiter.
-		lrange(@key + ':' + id, 0, -1).then (scores) ->
-			
-			# } Sum all the scores.
-			scores.map(
-				(score) -> parseInt score, 10
-			
-			).reduce ((l, r) -> l + r), 0
-	
-	# ### .ttl
-	# 
-	# *Time-to-live for a limiter.*
-	# 
-	# * (string) `id` - The ID of the limiter.
-	ttl: (id) -> Promise.promisify(@client.ttl, @client) @key + ':' + id
-		
-)
