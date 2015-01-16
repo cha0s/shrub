@@ -76,7 +76,7 @@ exports.pkgmanRegister = (registrar) ->
 			
 			attributes:
 			
-				expires: 'number'
+				expires: 'date'
 				
 		# The structure of a ban is dictated by the fingerprint structure.
 		for key in fingerprintKeys
@@ -98,12 +98,14 @@ exports.pkgmanRegister = (registrar) ->
 					return false if @bans.length is 0
 					
 					# Destroy all expired bans.
-					expired = @bans.filter (ban) -> ban.expires <= Date.now()
+					expired = @bans.filter (ban) ->
+						ban.expires.getTime() <= Date.now()
 					Promise.all expired.map (ban) -> ban.destroy()
 					
 				).then (expired) ->
 					
-					active = @bans.filter (ban) -> ban.expires > Date.now()
+					active = @bans.filter (ban) ->
+						ban.expires.getTime() > Date.now()
 					
 					[
 						# More bans than those that expired?
@@ -113,10 +115,10 @@ exports.pkgmanRegister = (registrar) ->
 						Math.round (active.reduce(
 							(l, r) ->
 								
-								if l.expires > r.expires
-									l.expires
+								if l > r.expires.getTime()
+									l
 								else
-									r.expires
+									r.expires.getTime()
 								
 							-Infinity
 						
@@ -130,9 +132,9 @@ exports.pkgmanRegister = (registrar) ->
 			
 			unless expires?
 				settings = config.get 'packageSettings:shrub-villiany:ban'
-				expires = settings.defaultExpiration
-			
-			data = expires: Date.now() + expires
+				expires = parseInt settings.defaultExpiration
+				
+			data = expires: new Date Date.now() + expires
 			data[key] = fingerprint[key] for key in fingerprintKeys
 			orm.collection('shrub-ban').create data
 			
@@ -147,7 +149,7 @@ exports.pkgmanRegister = (registrar) ->
 			(req, res, next) ->
 				
 				req.villianyKick = (subject, ttl) ->
-			
+					
 					# Destroy any session.
 					req.session?.destroy()
 					
