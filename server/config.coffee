@@ -28,7 +28,7 @@ exports.load = ->
 
 	# } Ensure the configuration file exists.
 	unless fs.existsSync settingsFilename = "./config/settings.json"
-		throw new Error "Settings file not found! You should copy config/settings.default.json to config/settings.json"
+		throw new Error "Settings file not found! You should copy config/default.settings.json to config/settings.json"
 	
 	nconf.argv().env().file settingsFilename
 	
