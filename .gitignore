@@ -11,6 +11,7 @@
 /npm-debug.log
 
 /app
+/build
 /config/settings.json
 
 /gh-pages
