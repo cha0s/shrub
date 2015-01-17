@@ -44,16 +44,16 @@ exports.pkgmanRegister = (registrar) ->
 							promises
 						)
 						
-						promiseKeysArray = []
+						promiseKeys = []
 						promiseArray = for key, promise of promises
-							promiseKeysArray.push key
+							promiseKeys.push key
 							promise
 		
 						originalAll(promiseArray).then (results) ->
 							objectResult = {}
 							
 							for result, index in results
-								objectResult[promiseKeysArray[index]] = result
+								objectResult[promiseKeys[index]] = result
 		
 							objectResult
 					
