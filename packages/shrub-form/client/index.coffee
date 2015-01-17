@@ -17,71 +17,80 @@ exports.pkgmanRegister = (registrar) ->
 		($compile, $injector, $log, $q, formService, require) ->
 			
 			link: (scope, element, attrs) ->
-				return unless (form = scope[attrs.form])?
 				
-				form.key ?= attrs.form
+				formScope = null
 				
-				(scope['$shrubSubmit'] ?= {})[form.key] = ($event) ->
-				
-					values = {}
-					for name, field of form.fields
-						values[field.name] = field.value
+				scope.$watch attrs.form, (form) ->
+					return unless form?
 					
-					promises = for submit in form.submits
-						submit values, form, $event
+					form.key ?= attrs.form
 					
-					$q.all promises
-				
-				# Create the form element.
-				$form = angular.element '<form />'
-				$form.addClass form.key
-				
-				# Default method to POST.
-				$form.attr 'method', attrs.method ? 'POST'
-				$form.attr 'data-ng-submit', "$shrubSubmit['#{form.key}']($event)"
-				
-				# Build the form fields.
-				for name, field of form.fields
+					(scope['$shrubSubmit'] ?= {})[form.key] = ($event) ->
 					
-					field.name ?= name
-					
-					unless (widget = formService.widgets[field.type])?
+						values = {}
+						for name, field of form.fields
+							values[field.name] = field.value
 						
-						$log.warn "Form `#{
-							form.key
-						}` contains non-existent field type `#{
-							field.type
-						}`!"
-						continue
+						promises = for submit in form.submits
+							submit values, form, $event
+						
+						$q.all promises
 					
-					$form.append """
-
+					# Create the form element.
+					$form = angular.element '<form />'
+					$form.addClass form.key
+					
+					# Default method to POST.
+					$form.attr 'method', attrs.method ? 'POST'
+					$form.attr 'data-ng-submit', "$shrubSubmit['#{form.key}']($event)"
+					
+					# Build the form fields.
+					for name, field of form.fields
+						
+						field.name ?= name
+						
+						unless (widget = formService.widgets[field.type])?
+							
+							$log.warn "Form `#{
+								form.key
+							}` contains non-existent field type `#{
+								field.type
+							}`!"
+							continue
+						
+						$form.append """
+	
 <div
 	data-#{widget.directive}
 	data-field="#{attrs.form}.fields['#{name}']"
 ></div>
 
 """
-
-				# Add hidden form key to allow server-side
-				# interception/processing.
-				$formKeyElement = angular.element '<input type="hidden" />'
-				$formKeyElement.attr name: 'formKey', value: form.key
-				$form.append $formKeyElement
-				
-				# Invoke hook `formAlter`.
-				pkgman.invokeFlat 'formAlter', form, $form				
-
-				# Invoke hook `formFormIdAlter`.
-				hookName = "form#{i8n.camelize i8n.underscore form.key}Alter"
-				pkgman.invokeFlat hookName, form, $form
-				
-				# Insert and compile the form element.
-				element.append $form
-				$compile($form) scope
-				
-				# Register the form in the system.
-				formService.cache form.key, scope, $form
+	
+					# Add hidden form key to allow server-side
+					# interception/processing.
+					$formKeyElement = angular.element '<input type="hidden" />'
+					$formKeyElement.attr name: 'formKey', value: form.key
+					$form.append $formKeyElement
+					
+					# Invoke hook `formAlter`.
+					pkgman.invokeFlat 'formAlter', form, $form				
+	
+					# Invoke hook `formFormIdAlter`.
+					hookName = "form#{i8n.camelize i8n.underscore form.key}Alter"
+					pkgman.invokeFlat hookName, form, $form
+					
+					# Remove any old stuff.
+					if formScope
+						formScope.$destroy()
+						element.find('form').remove()
+						
+					# Insert and compile the form element.
+					element.append $form
+					$compile($form) formScope = scope.$new()
+					
+					# Register the form in the system.
+					formService.cache form.key, formScope, $form
 				
 	]
 	
