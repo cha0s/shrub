@@ -65,7 +65,7 @@ angular.module('shrub.packages', [
 										controllers = [controllers]
 										
 									for controller in controllers
-										controller.link? scope, element, attrs
+										controller.link? arguments...
 								
 								link? arguments...
 
