@@ -32,6 +32,8 @@ achieve the ultimate in clean, elegant structure. No more
   http://localhost:4201 (you must first run `$ grunt` before navigating to the
   site in your browser).
 
+* If you'd like to check the tests, run `$ grunt tests`.
+
 * If you'd like to build the project documentation, run `$ grunt dox`.
 
 * Spin up the server in production mode: first, build for production:
