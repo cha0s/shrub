@@ -27,7 +27,7 @@ exports.pkgmanRegister = (registrar) ->
 			# compilation step.
 			link = directive.link
 			directive.link = (scope, element, attrs, controller) ->
-			
+				
 				# Save top-level arguments for later calls to link functions.
 				topLevelArgs = arguments
 				
@@ -36,6 +36,11 @@ exports.pkgmanRegister = (registrar) ->
 				
 				recalculateCandidate = ->
 				
+					# Get the skin assets.
+					skinAssets = config.get(
+						"packageConfig:shrub-skin:assets:#{currentSkinKey}"
+					)
+					
 					# Track changes to the current template candidate.
 					oldCandidate = candidate
 					
@@ -67,16 +72,12 @@ exports.pkgmanRegister = (registrar) ->
 						"#{path}--#{candidate_}.html"
 					candidateTemplates.push "#{path}.html"
 					
-					skinAssets = config.get(
-						"packageConfig:shrub-skin:assets:#{currentSkinKey}"
-					)
-					
 					# Return the first existing template. The asset
 					# templates are already sorted by descending
 					# specificity.
 					candidate = do ->
 						for uri in candidateTemplates
-							return uri if skinAssets.templates[uri]?
+							return uri if skinAssets?.templates?[uri]
 						
 						return
 						
@@ -86,7 +87,7 @@ exports.pkgmanRegister = (registrar) ->
 						candidateHooksInvoked = {}
 						
 						# Insert and compile the template HTML if it exists.
-						if skinAssets.templates[candidate]
+						if skinAssets?.templates?[candidate]
 						
 							# Insert and compile HTML.
 							element.html skinAssets.templates[candidate]
