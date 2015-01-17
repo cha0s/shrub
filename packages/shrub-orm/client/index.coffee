@@ -101,7 +101,6 @@ exports.initialize = (config) -> new Promise (resolve) ->
 		waterline.loadCollection Collection
 	
 	waterline.initialize config, (error, data) ->
-		
 		return reject error if error?
 		
 		collections = data.collections
