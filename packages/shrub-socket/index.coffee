@@ -11,7 +11,7 @@ socketManager = null
 exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `config`
-	registrar.registerHook 'config', (http) ->
+	registrar.registerHook 'config', ->
 		
 		socketModule = if (config.get 'E2E')?
 			

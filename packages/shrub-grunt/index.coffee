@@ -3,6 +3,13 @@ config = require 'config'
 
 exports.pkgmanRegister = (registrar) ->
 
+	# ## Implements hook `configAlter`
+	registrar.registerHook 'configAlter', (req, config_) ->
+		return unless req.grunt?
+		
+		config_.set 'packageConfig:shrub-socket', manager: module: 'shrub-socket/dummy'
+		config_.set 'packageConfig:shrub-user', name: 'Anonymous'
+		
 	# ## Implements hook `gruntConfig`
 	registrar.registerHook 'gruntConfig', (gruntConfig) ->
 	

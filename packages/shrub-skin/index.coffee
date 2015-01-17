@@ -22,7 +22,7 @@ readFile = Promise.promisify fs.readFile, fs
 exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `config`
-	registrar.registerHook 'config', (req) ->
+	registrar.registerHook 'config', ->
 		
 		skinAssets = {}
 		for packagePath in pkgman.packagesImplementing 'skinAssets'

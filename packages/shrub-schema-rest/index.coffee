@@ -10,7 +10,7 @@ config = require 'config'
 exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `config`
-	registrar.registerHook 'config', (req) ->
+	registrar.registerHook 'config', ->
 		
 		apiRoot: config.get 'packageSettings:shrub-schema:apiRoot'
 	

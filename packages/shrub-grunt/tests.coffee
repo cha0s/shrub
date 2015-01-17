@@ -5,6 +5,8 @@ tcpPortUsed = require 'tcp-port-used'
 
 bootstrap = require 'bootstrap'
 
+shrubConfig = require 'shrub-config'
+
 exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `gruntConfig`
@@ -327,8 +329,21 @@ describe('#{gruntConfig.pkg.name}', function() {
 			'tests:e2eServerDown'
 		]
 
+		gruntConfig.shrub.tasks['tests:unitConfig'] = ->
+			
+			done = @async()
+			
+			req = grunt: true
+			
+			shrubConfig.renderPackageConfig(req).then (code) ->
+				
+				grunt.file.write 'test/unit/config.js', code
+				
+				done()
+
 		gruntConfig.shrub.tasks['tests:unit'] = [
 			'buildOnce'
+			'tests:unitConfig'
 			'karma:testsUnit'
 		]
 

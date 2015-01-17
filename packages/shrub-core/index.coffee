@@ -13,7 +13,7 @@ exports.pkgmanRegister = (registrar) ->
 	registrar.registerHook 'config', (req) ->
 		
 		# The URL that the site was accessed at.
-		hostname: "//#{req.headers.host}"
+		hostname: (req.headers?.host? and "//#{req.headers.host}") or undefined
 		
 		# Is the server running in test mode?
 		testMode: if (config.get 'E2E')? then 'e2e' else false
