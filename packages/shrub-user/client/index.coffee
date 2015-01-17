@@ -46,7 +46,7 @@ exports.pkgmanRegister = (registrar) ->
 			# ## user.isLoggedIn
 			# 
 			# *Whether the current application user is logged in.*
-			service.isLoggedIn = -> service.instance().id? 
+			service.isLoggedIn = -> _instance.id? 
 				
 			# ## user.login
 			# 
