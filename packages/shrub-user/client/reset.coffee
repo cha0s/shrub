@@ -47,8 +47,6 @@ exports.pkgmanRegister = (registrar) ->
 							type: 'submit'
 							label: "Reset password"
 	
-				$scope.$emit 'shrubFinishedRendering'
-				
 		]
 		
 		template: """

@@ -98,23 +98,39 @@ exports.pkgmanRegister = (registrar) ->
 					# behavior.
 					routeController = route.controller
 					route.controller = [
-						'$controller', '$injector', '$scope'
-						($controller, $injector, $scope) ->
+						'$controller', '$injector', '$q', '$scope'
+						($controller, $injector, $q, $scope) ->
 							
 							# Invoke hook `routeControllerStart`.
 							# Allow packages to act before a new route
 							# controller is executed.
-							injectables = pkgmanProvider.invokeFlat(
+							for injectable in pkgmanProvider.invokeFlat(
 								'routeControllerStart'
 							)
 							
-							injectables.push routeController
+								$injector.invoke(
+									injectable, null
+									$scope: $scope
+									route: route
+								)
+
+							if routeController?
 							
-							$injector.invoke(
-								injectable, null
-								$scope: $scope
-								route: route
-							) for injectable in injectables
+								$q.when($injector.invoke(
+									routeController, null
+									$scope: $scope
+									route: route
+								
+								)).then(->
+								
+									$scope.$emit 'shrub.core.routeRendered'
+								
+								).done()
+								
+							else
+							
+								$scope.$emit 'shrub.core.routeRendered'
+							
 					]
 					
 					# `TODO`: Some method of allowing `templateUrl`.

@@ -285,7 +285,7 @@ exports.augmentSandbox = (sandbox) ->
 			return resolve() if path is url.parse(@url()).path
 			
 			# } Navigate Angular to the request path.			
-			unlisten = $rootScope.$on 'shrubFinishedRendering', =>
+			unlisten = $rootScope.$on 'shrub.core.routeRendered', =>
 				unlisten()
 				resolve()
 				

@@ -49,8 +49,6 @@ exports.pkgmanRegister = (registrar) ->
 							type: 'submit'
 							label: "Register"
 						
-				$scope.$emit 'shrubFinishedRendering'
-				
 		]
 		
 		template: """

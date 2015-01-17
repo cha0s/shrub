@@ -18,14 +18,6 @@ exports.pkgmanRegister = (registrar) ->
 		path: 'home'
 		title: 'Home'
 		
-		controller: [
-			'$scope'
-			($scope) ->
-				
-				$scope.$emit 'shrubFinishedRendering'
-				
-		]
-		
 		template: """
 	
 <div class="jumbotron">

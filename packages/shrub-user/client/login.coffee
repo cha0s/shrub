@@ -72,8 +72,6 @@ exports.pkgmanRegister = (registrar) ->
 							type: 'submit'
 							value: "Sign in"
 						
-				$scope.$emit 'shrubFinishedRendering'
-				
 		]
 		
 		template: """

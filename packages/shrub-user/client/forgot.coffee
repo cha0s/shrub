@@ -44,7 +44,6 @@ exports.pkgmanRegister = (registrar) ->
 							type: 'submit'
 							label: "Email reset link"
 							
-				$scope.$emit 'shrubFinishedRendering'
 		]
 		
 		template: """
