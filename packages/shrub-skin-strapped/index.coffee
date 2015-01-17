@@ -27,7 +27,7 @@ exports.pkgmanRegister = (registrar) ->
 			
 			files: [
 				src: [
-					"#{__dirname}/app/less/**/*.less"
+					"#{__dirname}/app/less/style.less"
 				]
 				dest: 'app/skin/shrub-skin-strapped/css/style.css'
 			]
@@ -35,7 +35,7 @@ exports.pkgmanRegister = (registrar) ->
 		gruntConfig.watch['shrub-skin-strappedLess'] =
 		
 			files: [
-				"#{__dirname}/app/less/**/*.less"
+				"#{__dirname}/app/less/style.less"
 			]
 			tasks: [
 				'newer:less:shrub-skin-strapped'
