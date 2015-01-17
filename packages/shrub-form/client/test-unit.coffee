@@ -10,15 +10,18 @@ describe 'form', ->
 				# Sanity
 				expect(shrubForm.forms.test).not.toBeDefined()
 				
-				tpl = $compile '<div data-shrub-form data-form="test"></div>'
+				element = angular.element(
+					'<div data-shrub-form data-form="testAuto"></div>'
+				)
 				
 				scope = $rootScope.$new()
-				scope.test = {}
+				scope['testAuto'] = {}
 				
-				tpl scope
+				$compile(element)(scope)
+				scope.$digest()
 				
 				# Registered.
-				expect(shrubForm.forms.test).toBeDefined()
+				expect(shrubForm.forms.testAuto).toBeDefined()
 				
 		]
 
@@ -28,11 +31,13 @@ describe 'form', ->
 			'$compile', '$rootScope'
 			($compile, $rootScope) ->
 				
-				tpl = $compile '<div data-shrub-form data-form="test"></div>'
+				element = angular.element(
+					'<div data-shrub-form data-form="testElements"></div>'
+				)
 				
 				scope = $rootScope.$new()
 				
-				scope.test =
+				scope['testElements'] =
 				
 					fields:
 					
@@ -47,11 +52,11 @@ describe 'form', ->
 							value: 'test'
 							type: 'text'
 							label: "text"
-					
-				elm = tpl scope
+							
+				$compile(element)(scope)
 				scope.$digest()
 				
-				$form = elm.find 'form'
+				$form = element.find 'form'
 
 				# <form> exists
 				expect($form.length).toBe 1
@@ -71,14 +76,14 @@ describe 'form', ->
 						expect(input.type).toBe input.name
 					
 					# Check required fields.
-					if scope.test.fields[name]?.required
+					if scope['testElements'].fields[name]?.required
 						expect($input.attr 'required').toBeDefined()
 					else
 						expect($input.attr 'required').not.toBeDefined()
 					
 					# Check default values.
-					if scope.test.fields[name]?.value?
-						expect(scope.test.fields[name].value).toBe input.value
+					if scope['testElements'].fields[name]?.value?
+						expect(scope['testElements'].fields[name].value).toBe input.value
 						
 					hasFormKey = true if name is 'formKey'
 				
@@ -96,13 +101,13 @@ describe 'form', ->
 			'$compile', '$rootScope'
 			($compile, $rootScope) ->
 				
-				tpl = $compile '<div data-shrub-form data-form="test"></div>'
+				tpl = $compile '<div data-shrub-form data-form="testSubmit"></div>'
 				
 				scope = $rootScope.$new()
 				
 				submissionCleared = false
 				
-				scope.test =
+				scope['testSubmit'] =
 					
 					fields:
 					
@@ -126,7 +131,7 @@ describe 'form', ->
 						
 				elm = tpl scope
 				
-				scope.test.fields['text'].value = 'test'
+				scope['testSubmit'].fields['text'].value = 'test'
 				
 				scope.$apply()
 				
@@ -147,25 +152,27 @@ describe 'form', ->
 			'$compile', '$rootScope', '$timeout', 'shrub-rpc', 'shrub-socket'
 			($compile, $rootScope, $timeout, rpc, socket) ->
 				
-				tpl = $compile '<div data-shrub-form data-form="test"></div>'
-				
-				scope = $rootScope.$new()
-				
 				rpcSubmission = ''
 				submissionCleared = false
 				
-				socket.catchEmit 'rpc://test', (data, fn) ->
+				socket.catchEmit 'rpc://test.rpc', (data, fn) ->
 					rpcSubmission = data.text
 					
 					fn result: 420
 				
-				scope.test =
+				element = angular.element(
+					'<div data-shrub-form data-form="testRpc"></div>'
+				)
+				
+				scope = $rootScope.$new()
+				scope['testRpc'] =
 					
 					fields:
 
 						text:
 							type: 'text'
 							label: "text"
+							value: 'test'
 							
 						submit:
 							type: 'submit'
@@ -180,13 +187,10 @@ describe 'form', ->
 							
 					]
 					
-				elm = tpl scope
+				$compile(element)(scope)
+				scope.$digest()
 				
-				scope.test.fields['text'].value = 'test'
-				
-				scope.$apply()
-				
-				$form = elm.find 'form'
+				$form = element.find 'form'
 				
 				for input in $form.find 'input'
 					$input = angular.element input
@@ -194,7 +198,6 @@ describe 'form', ->
 					input.click() if 'submit' is input.type
 				
 				$timeout.flush()
-				$rootScope.$apply()
 				
 				# RPC received correct data.
 				expect(rpcSubmission).toBe 'test'
