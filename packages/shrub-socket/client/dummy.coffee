@@ -9,11 +9,9 @@ Socket = require 'shrub-socket/socket'
 
 exports.Manager = class DummySocket extends Socket
 
-	constructor: ($q, $rootScope, $timeout) ->
+	constructor: ($timeout) ->
 		super
 		
-		@_$q = $q
-		@_$rootScope = $rootScope
 		@_$timeout = $timeout
 		
 		@_emitMap = {}
