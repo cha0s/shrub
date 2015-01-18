@@ -31,7 +31,7 @@ exports.pkgmanRegister = (registrar) ->
 					placement: 'bottom'
 					template: """
 
-<div class="popover popover-#{scope.queueName}" role="tooltip">
+<div class="popover popover-#{attr.queueName}" role="tooltip">
 	<div class="arrow"></div>
 	<h3 class="popover-title"></h3>
 	<div class="popover-content"></div>
@@ -137,7 +137,7 @@ exports.pkgmanRegister = (registrar) ->
 			socket.on 'shrub.ui.notifications', (data) ->
 				addNotifications data.queue, data.notifications
 				
-			# Push notifications into a queue.
+			# Add notifications into a queue.
 			addNotifications = (queue, notifications) ->
 				_notifications[queue] ?= []
 				
