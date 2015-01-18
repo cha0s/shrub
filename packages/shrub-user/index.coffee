@@ -93,7 +93,7 @@ exports.pkgmanRegister = (registrar) ->
 			
 				collection.redactors ?= []
 				collection.attributes.redactFor = (user) ->
-					redacted = user.toJSON()
+					redacted = @toJSON()
 					
 					Promise.all(
 						for redactor in collection.redactors
