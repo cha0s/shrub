@@ -1,0 +1,46 @@
+
+<div
+	data-ng-show="!!queue.length"
+>
+
+	<button
+		type="button"
+		class="btn btn-default"
+	>
+		!
+	</button>
+
+	<div
+		class="notifications-container"
+		data-ng-hide="true"
+	>
+
+		<div
+			class="notifications"
+			data-ng-class="classes"
+		>
+
+			<div
+				class="title"
+				data-shrub-ui-notifications-title
+			></div>
+
+			<ul
+				class="nav nav-tabs nav-stacked"
+			>
+	
+				<li
+					data-ng-repeat="notification in queue"
+				>
+					<a
+						data-shrub-ui-notifications-item
+						data-notification="notification"
+						data-ng-href="{{notification.path}}"
+						data-ng-click="notificationClicked(notification)"
+					>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>

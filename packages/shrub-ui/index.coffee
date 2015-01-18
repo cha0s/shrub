@@ -1,8 +1,8 @@
 
-# # Navigation
+# User Interface
 
 exports.pkgmanRegister = (registrar) ->
 
 	registrar.recur [
-		'main-nav', 'notifications'
+		'notifications'
 	]

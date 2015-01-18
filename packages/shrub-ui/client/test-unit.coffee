@@ -19,36 +19,36 @@ describe 'md', ->
 		
 		expect(markdown('Oh, <div>hello</div>', false)).toEqual('<p>Oh, <div>hello</div></p>\n');
 
-describe 'notifications', ->
+describe 'messages', ->
 	
-	notifications = null
+	messages = null
 	
 	beforeEach ->
 		
 		inject [
-			'shrub-ui/notifications'
-			(_notifications_) -> notifications = _notifications_
+			'shrub-ui/messages'
+			(_messages_) -> messages = _messages_
 		]
 		
-	it 'should allow adding and removing notifications', ->
+	it 'should allow adding and removing messages', ->
 		
-		notifications.add text: 'Testing'
-		expect(notifications.top().text).toBe 'Testing'
-		expect(notifications.count()).toBe 1
+		messages.add text: 'Testing'
+		expect(messages.top().text).toBe 'Testing'
+		expect(messages.count()).toBe 1
 		
-		notifications.removeTop()
-		expect(notifications.top()).toBe undefined
-		expect(notifications.count()).toBe 0
+		messages.removeTop()
+		expect(messages.top()).toBe undefined
+		expect(messages.count()).toBe 0
 		
-	it 'should accept notification batches from the socket', ->
+	it 'should accept message batches from the socket', ->
 		
 		inject [
 			'$timeout', 'shrub-socket'
 			($timeout, socket) ->
 			
 				socket.stimulateOn(
-					'notifications'
-					notifications: [
+					'shrub.ui.messages'
+					messages: [
 						text: 'Testing'
 					,
 						text: 'Testing'
@@ -61,7 +61,7 @@ describe 'notifications', ->
 				
 				$timeout.flush()
 				
-				expect(notifications.count()).toBe 4
+				expect(messages.count()).toBe 4
 		]
 
 describe 'title', ->

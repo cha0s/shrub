@@ -1,5 +1,5 @@
 
-# # Notifications
+# # Messages
 
 errors = require 'errors'
 
@@ -7,7 +7,7 @@ exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `directive`
 	registrar.registerHook 'directive', -> [
-		'$timeout', 'shrub-ui/notifications'
+		'$timeout', 'shrub-ui/messages'
 		($timeout, {count, removeTop, top}) ->
 		
 			link: (scope, elm, attr) ->
@@ -68,11 +68,11 @@ exports.pkgmanRegister = (registrar) ->
 	
 	# ## Implements hook `rpcCall`
 	registrar.registerHook 'rpcCall', -> [
-		'shrub-ui/notifications', 'result'
-		(notifications, result) ->
+		'shrub-ui/messages', 'result'
+		(messages, result) ->
 	
 			# Add a notification with the error text.
-			result.catch (error) -> notifications.add(
+			result.catch (error) -> messages.add(
 				class: 'alert-danger', text: errors.message error
 			)
 	
@@ -85,36 +85,36 @@ exports.pkgmanRegister = (registrar) ->
 		
 			service = {}
 			
-			_notifications = []
+			_messages = []
 			
-			# ## notifications.add
+			# ## messages.add
 			# 
 			# Add a notification to be displayed.
 			service.add = (notification) ->
 				
 				notification.class ?= 'alert-info'
 				
-				_notifications.push notification
+				_messages.push notification
 			
-			# ## notifications.top
+			# ## messages.top
 			# 
 			# Get the top notification.
-			service.top = -> _notifications[0]
+			service.top = -> _messages[0]
 			
-			# ## notifications.removeTop
+			# ## messages.removeTop
 			# 
 			# Remove the top notification.
-			service.removeTop = -> _notifications.shift()
+			service.removeTop = -> _messages.shift()
 			
-			# ## notifications.count
+			# ## messages.count
 			# 
-			# The number of notifications to show.
-			service.count = -> _notifications.length
+			# The number of messages to show.
+			service.count = -> _messages.length
 	
-			# Accept notifications from the server.
-			socket.on 'notifications', (data) ->
+			# Accept messages from the server.
+			socket.on 'shrub.ui.messages', (data) ->
 				
-				service.add notification for notification in data.notifications
+				service.add message for message in data.messages
 				
 			service
 			

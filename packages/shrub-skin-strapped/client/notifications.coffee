@@ -1,0 +1,4 @@
+
+# # Notifications
+
+exports.pkgmanRegister = (registrar) ->

@@ -11,8 +11,8 @@ Waterline = require 'waterline'
 config = require 'config'
 pkgman = require 'pkgman'
 
-collections = null
-connections = null
+collections = {}
+connections = {}
 
 waterline = new Waterline()
 

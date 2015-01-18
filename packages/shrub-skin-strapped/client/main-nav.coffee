@@ -57,6 +57,13 @@ exports.pkgmanRegister = (registrar) ->
 		
 		<div class="navbar-collapse collapse shrub-skin-strapped-ui-nav">
 
+			<p
+				class="navbar-text navbar-right navbar-notification"
+				data-shrub-ui-notifications
+				data-queue-name="shrubExampleGeneral"
+			>
+			</p>
+			
 			<p class="navbar-text navbar-right identity-wrapper">
 				<span class="identity">
 					You are <span class="username" data-ng-bind="user.name"></span>
