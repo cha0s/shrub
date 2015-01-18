@@ -18,21 +18,21 @@ exports.pkgmanRegister = (registrar) ->
 			directive.candidateKeys ?= []
 			directive.candidateKeys.unshift 'id'
 			
-			candidateHooksInvoked = {}
-			
 			currentSkinKey = null
 			defaultSkinKey = config.get 'packageConfig:shrub-skin:default'
 			
 			# Proxy link function to add our own directive retrieval and
 			# compilation step.
 			link = directive.link
-			directive.link = (scope, element, attrs, controller) ->
+			directive.link = (scope, element, attr, controller) ->
 				
+				candidateHooksInvoked = {}
+			
 				# Save top-level arguments for later calls to link functions.
 				topLevelArgs = arguments
 				
 				# Current template candidate.
-				candidate = null
+				candidate = undefined
 				
 				recalculateCandidate = ->
 				
@@ -48,7 +48,7 @@ exports.pkgmanRegister = (registrar) ->
 					# interpolate candidate keys, and falling back to
 					# attribute values, if any. Candidate arrays are
 					# joined by single dashes.
-					candidateList = do (scope, attrs) ->
+					candidateList = do ->
 						list = []
 						
 						for keys in directive.candidateKeys
@@ -56,8 +56,9 @@ exports.pkgmanRegister = (registrar) ->
 							
 							item = []
 							for key in keys
-								specific = $interpolate("{{#{key}}}")(scope)
-								specific ?= attrs[key]
+								
+								specific = scope[key]
+								specific = attr[key] unless specific
 								
 								item.push specific if specific
 							
@@ -79,10 +80,10 @@ exports.pkgmanRegister = (registrar) ->
 						for uri in candidateTemplates
 							return uri if skinAssets?.templates?[uri]
 						
-						return
+						return null
 						
 					# If the candidate changed, clear the hook invocation
-					# cache and relink 
+					# cache and relink.
 					if candidate isnt oldCandidate
 						candidateHooksInvoked = {}
 						
@@ -116,14 +117,13 @@ exports.pkgmanRegister = (registrar) ->
 					
 				applySkin = (skinKey) ->
 					currentSkinKey = skinKey
-					
-					candidateHooksInvoked = {}
 					recalculateCandidate()
 				
 				applySkin defaultSkinKey
 					
 				# Relink again every time the skin changes.
 				$rootScope.$on 'shrub-skin.changed', (event, skinKey) ->
+					candidateHooksInvoked = {}
 					applySkin skinKey
 					
 				# Set watches for all candidate-related values.
@@ -136,8 +136,8 @@ exports.pkgmanRegister = (registrar) ->
 						continue if keysSeen[key]
 						keysSeen[key] = true
 						
-						watchers.push -> scope[attrs[key]]
-						watchers.push -> $interpolate("{{#{key}}}")(scope)
+						attr.$observe key, recalculateCandidate
+						watchers.push -> scope[attr[key]]
 						
 				scope.$watchGroup watchers, recalculateCandidate
 						
