@@ -2,6 +2,7 @@
 # # Package manager
 
 _ = require 'lodash'
+i8n = require 'inflection'
 
 debug = require('debug') 'shrub:pkgman'
 
@@ -101,3 +102,14 @@ exports.invokePackage = (path, hook, args...) ->
 	pathIndex?[path]?[hook]? args...
 
 exports.packagesImplementing = (hook) -> packageIndex?[hook] ? []
+
+# Normalize paths, e.g.
+# 'core/foo/bar' -> 'coreFooBar'
+exports.normalizePath = (path) ->
+	parts = for part, i in path.split '/'
+		i8n.camelize(
+			part.replace /[^\w]/g, '_'
+			0 is i
+		)
+		
+	i8n.camelize (i8n.underscore parts.join ''), true

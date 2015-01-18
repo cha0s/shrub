@@ -201,19 +201,8 @@ angular.module('shrub.pkgman', [
 			
 			service.invoke = pkgman.invoke
 			service.invokeFlat = pkgman.invokeFlat
+			service.normalizePath = pkgman.normalizePath
 			
-			# Use normalized names for directives and filters:
-			# 'core/foo/bar' -> 'coreFooBar'
-			i8n = require 'inflection'
-			service.normalizePath = (path) ->
-				parts = for part, i in path.split '/'
-					i8n.camelize(
-						part.replace /[^\w]/g, '_'
-						0 is i
-					)
-					
-				i8n.camelize (i8n.underscore parts.join ''), true
-
 			service.$get = -> service
 			
 			service
