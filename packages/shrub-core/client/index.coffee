@@ -9,8 +9,8 @@ config = require 'config'
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `aHrefSanitizationWhilelist`
-	registrar.registerHook 'aHrefSanitizationWhilelist', -> [
+	# ## Implements hook `aHrefSanitizationWhitelist`
+	registrar.registerHook 'aHrefSanitizationWhitelist', -> [
 		'(?:https?|ftp|mailto|tel|file):'
 		'javascript:void(?:%20)*\\((?:%20)*0(?:%20)*\\)'
 	]
@@ -25,7 +25,7 @@ exports.pkgmanRegister = (registrar) ->
 			# attributes.
 			regexes = []
 			for regexes_ in pkgmanProvider.invokeFlat(
-				'aHrefSanitizationWhilelist'
+				'aHrefSanitizationWhitelist'
 			)
 				regexes.push regex for regex in regexes_
 				
