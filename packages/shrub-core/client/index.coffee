@@ -9,11 +9,30 @@ config = require 'config'
 
 exports.pkgmanRegister = (registrar) ->
 
+	# ## Implements hook `aHrefSanitizationWhilelist`
+	registrar.registerHook 'aHrefSanitizationWhilelist', -> [
+		'(?:https?|ftp|mailto|tel|file):'
+		'javascript:void(?:%20)*\\((?:%20)*0(?:%20)*\\)'
+	]
+	
 	# ## Implements hook `appConfig`
 	registrar.registerHook 'appConfig', -> [
-		'$injector', '$provide', '$routeProvider', '$locationProvider', 'shrub-pkgmanProvider'
-		($injector, $provide, $routeProvider, $locationProvider, pkgmanProvider) ->
+		'$compileProvider', '$injector', '$provide', '$routeProvider', '$locationProvider', 'shrub-pkgmanProvider'
+		($compileProvider, $injector, $provide, $routeProvider, $locationProvider, pkgmanProvider) ->
 		
+			# Invoke hook `aHrefSanitizationWhilelist`.
+			# Allow packages to define whitelisted patterns for ngHref
+			# attributes.
+			regexes = []
+			for regexes_ in pkgmanProvider.invokeFlat(
+				'aHrefSanitizationWhilelist'
+			)
+				regexes.push regex for regex in regexes_
+				
+			$compileProvider.aHrefSanitizationWhitelist new RegExp(
+				"^\s*(?:#{regexes.join '|'})"
+			)
+			
 			# Completely override $q with Bluebird, because it's awesome.
 			$provide.decorator '$q', [
 				'$rootScope', '$exceptionHandler'
