@@ -57,12 +57,12 @@ exports.pkgmanRegister = (registrar) ->
 		
 		<div class="navbar-collapse collapse shrub-skin-strapped-ui-nav">
 
-			<p
+			<div
 				class="navbar-text navbar-right navbar-notification"
 				data-shrub-ui-notifications
 				data-queue-name="shrubExampleGeneral"
 			>
-			</p>
+			</div>
 			
 			<p class="navbar-text navbar-right identity-wrapper">
 				<span class="identity">
