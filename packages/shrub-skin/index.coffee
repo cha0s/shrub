@@ -57,8 +57,6 @@ exports.pkgmanRegister = (registrar) ->
 		
 			(req, res, next) ->
 				
-				skinKey = exports.activeKey()
-				
 				# } Render app.html
 				return exports.renderAppHtml().then((html) ->
 					req.delivery = html
@@ -117,7 +115,7 @@ exports.gruntSkin = (gruntConfig, key) ->
 # ### ::renderAppHtml
 # 
 # *Render the application HTML.*
-exports.renderAppHtml = (locals) ->
+exports.renderAppHtml = ->
 	
 	skinKey = exports.activeKey()
 	skinDirectory = exports.skinDirectory skinKey
