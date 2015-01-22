@@ -9,10 +9,6 @@ exports.pkgmanRegister = (registrar) ->
 			
 			scope: field: '=?'
 			
-			link: (scope, element) ->
-				
-				{field} = scope
-				
 			template: """
 
 <div class="form-group">

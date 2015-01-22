@@ -11,15 +11,17 @@ exports.pkgmanRegister = (registrar) ->
 			
 			link: (scope, element) ->
 				
-				{field} = scope
-				
 				scope.$watchCollection(
-					-> field.checkboxes
+					-> scope.field.checkboxes
 					->
 						
-						for checkbox in field.checkboxes
+						for checkbox in scope.field.checkboxes
 							checkbox.childName ?= checkbox.name
-							checkbox.name = "#{field.name}[#{checkbox.childName}]"
+							checkbox.name = "#{
+								scope.field.name
+							}[#{
+								checkbox.childName
+							}]"
 							checkbox.type = 'checkbox'
 							
 						return
@@ -27,13 +29,13 @@ exports.pkgmanRegister = (registrar) ->
 				)
 				
 				scope.$watchCollection(
-					-> field.checkboxes.map (checkbox) -> checkbox.value
+					-> scope.field.checkboxes.map (checkbox) -> checkbox.value
 					->
 						
-						field.value = {}
+						scope.field.value = {}
 						
-						for checkbox in field.checkboxes
-							field.value[checkbox.childName] = checkbox.value
+						for checkbox in scope.field.checkboxes
+							scope.field.value[checkbox.childName] = checkbox.value
 							
 						return
 						

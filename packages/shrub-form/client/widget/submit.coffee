@@ -7,11 +7,13 @@ exports.pkgmanRegister = (registrar) ->
 			
 			scope: field: '=?'
 			
-			link: (scope, element) ->
+			link: (scope) ->
 				
-				{field} = scope
-				
-				field.value ?= 'Submit'
+				scope.$watch 'field', (field) ->
+					
+					scope.$watch 'field', (field) ->
+					
+						field.value ?= 'Submit'
 				
 			template: """
 

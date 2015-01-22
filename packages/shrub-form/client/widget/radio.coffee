@@ -11,9 +11,9 @@ exports.pkgmanRegister = (registrar) ->
 			
 			link: (scope, element) ->
 				
-				{field} = scope
+				scope.$watch 'field', (field) ->
 				
-				element.find('input').attr 'data-ng-model', field.value
+					element.find('input').attr 'data-ng-model', field.value
 			
 			template: """
 

@@ -11,13 +11,11 @@ exports.pkgmanRegister = (registrar) ->
 			
 			link: (scope, element) ->
 				
-				{field} = scope
-				
 				scope.$watchCollection(
-					-> field.radios
+					-> scope.field.radios
 					->
 						
-						for radio in field.radios
+						for radio in scope.field.radios
 							radio.name = field.name
 							radio.type = 'radio'
 						

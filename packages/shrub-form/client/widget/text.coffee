@@ -7,14 +7,14 @@ exports.pkgmanRegister = (registrar) ->
 			
 			scope: field: '=?'
 			
-			link: (scope, element) ->
+			link: (scope) ->
 				
-				{field} = scope
+				scope.$watch 'field', (field) ->
 				
-				field.minLength ?= 0
-				field.maxLength ?= Infinity
-				field.pattern ?= /.*/
-				field.value ?= ''
+					field.minLength ?= 0
+					field.maxLength ?= Infinity
+					field.pattern ?= /.*/
+					field.value ?= ''
 				
 			template: """
 
