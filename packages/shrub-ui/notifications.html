@@ -1,0 +1,87 @@
+<!DOCTYPE html><html lang="en"><head><title>packages/shrub-ui/notifications</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="packages/shrub-ui/notifications"><meta name="groc-project-path" content="packages/shrub-ui/notifications.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-ui/notifications.coffee">packages/shrub-ui/notifications.coffee</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nv">Promise = </span><span class="nx">require</span> <span class="s">&#39;bluebird&#39;</span>
+
+<span class="nv">pkgman = </span><span class="nx">require</span> <span class="s">&#39;pkgman&#39;</span>
+
+<span class="nv">orm = </span><span class="nx">require</span> <span class="s">&#39;shrub-orm&#39;</span>
+
+<span class="nv">notificationQueues = </span><span class="p">{}</span>
+
+<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookbootstrapmiddleware">Implements hook <code>bootstrapMiddleware</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;bootstrapMiddleware&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+  
+    <span class="nv">label: </span><span class="s">&#39;Register notification queues&#39;</span>
+    <span class="nv">middleware: </span><span class="p">[</span>
+    
+      <span class="nf">(next) -&gt;</span>
+        
+        <span class="k">for</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">queue</span> <span class="k">of</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s">&#39;notificationQueue&#39;</span>
+          <span class="nx">notificationQueues</span><span class="p">[</span><span class="nx">pkgman</span><span class="p">.</span><span class="nx">normalizePath</span> <span class="nx">path</span><span class="p">]</span> <span class="o">=</span> <span class="nx">queue</span>
+      
+        <span class="nx">next</span><span class="p">()</span>
+        
+    <span class="p">]</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookcollections">Implements hook <code>collections</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;collections&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+    
+    <span class="nv">Notification =</span>
+    
+      <span class="nv">attributes:</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Has the notification been read?</p></div></div><div class="code"><div class="wrapper">        <span class="nv">markedAsRead:</span>
+          <span class="nv">type: </span><span class="s">&#39;boolean&#39;</span>
+          <span class="nv">defaultsTo: </span><span class="kc">false</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Who owns this notification? Built by the queue.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">owner: </span><span class="s">&#39;string&#39;</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>To where does this notification link?</p></div></div><div class="code"><div class="wrapper">        <span class="nv">path: </span><span class="s">&#39;string&#39;</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>To which queue does this notification belong?</p></div></div><div class="code"><div class="wrapper">        <span class="nv">queue:</span>
+          <span class="nv">type: </span><span class="s">&#39;string&#39;</span>
+          <span class="nv">notEmpty: </span><span class="kc">true</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Variables, can be any type.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">variables: </span><span class="s">&#39;json&#39;</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Get a queue's notifications from a request.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">queueFromRequest: </span><span class="nf">(req) -&gt;</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Empty queue if none was defined.</p></div></div><div class="code"><div class="wrapper">        <span class="k">unless</span> <span class="p">(</span><span class="nv">queue = </span><span class="nx">notificationQueues</span><span class="p">[</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">queue</span><span class="p">])</span>
+          <span class="k">return</span> <span class="nx">Promise</span><span class="p">.</span><span class="nx">resolve</span> <span class="p">[]</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Return the 20 newest notifications from the queue for the
+request's owner, skipping as many records as requested.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">query = </span><span class="nx">@find</span><span class="p">()</span>
+        <span class="nv">query = </span><span class="nx">query</span><span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="nv">owner: </span><span class="nx">queue</span><span class="p">.</span><span class="nx">ownerFromRequest</span> <span class="nx">req</span><span class="p">)</span>
+        <span class="nv">query = </span><span class="nx">query</span><span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="nv">queue: </span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">queue</span><span class="p">)</span>
+        <span class="nv">query = </span><span class="nx">query</span><span class="p">.</span><span class="nx">skip</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">skip</span> <span class="o">?</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="nv">query = </span><span class="nx">query</span><span class="p">.</span><span class="nx">limit</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+        <span class="nx">query</span><span class="p">.</span><span class="nx">sort</span><span class="p">(</span><span class="s">&#39;createdAt DESC&#39;</span><span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Redact the notifications before sending them over the wire.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">query</span><span class="p">.</span><span class="nx">then</span> <span class="nf">(notifications) -&gt;</span>
+          <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span>
+            <span class="nx">notifications</span><span class="p">.</span><span class="nx">map</span> <span class="nf">(notification) -&gt;</span> 
+              <span class="nx">notification</span><span class="p">.</span><span class="nx">redactFor</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span>
+          <span class="p">).</span><span class="nx">then</span> <span class="nf">-&gt;</span> <span class="nx">notifications</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Remove unnecessary details.    </p></div></div><div class="code"><div class="wrapper">      <span class="nv">redactors: </span><span class="p">[</span><span class="nf">(redacted) -&gt;</span>
+        
+        <span class="k">delete</span> <span class="nx">redacted</span><span class="p">.</span><span class="nx">owner</span>
+        <span class="k">delete</span> <span class="nx">redacted</span><span class="p">.</span><span class="nx">queue</span>
+        <span class="k">delete</span> <span class="nx">redacted</span><span class="p">.</span><span class="nx">updatedAt</span>
+        
+      <span class="p">]</span>
+        
+    <span class="s">&#39;shrub-ui-notification&#39;</span><span class="o">:</span> <span class="nx">Notification</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookconfig">Implements hook <code>config</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;config&#39;</span><span class="p">,</span> <span class="nf">(req) -&gt;</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Make sure ORM is up (it won't be when grunt is running).</p></div></div><div class="code"><div class="wrapper">    <span class="k">return</span> <span class="k">unless</span> <span class="nv">Notification = </span><span class="nx">orm</span><span class="p">.</span><span class="nx">collection</span> <span class="s">&#39;shrub-ui-notification&#39;</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Get all the notification queues.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">promiseKeys = </span><span class="p">[]</span>
+    <span class="nv">promises = </span><span class="k">for</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">queue</span> <span class="k">of</span> <span class="nx">notificationQueues</span>
+      <span class="nx">promiseKeys</span><span class="p">.</span><span class="nx">push</span> <span class="nx">key</span>
+      
+      <span class="nv">req.body.queue = </span><span class="nx">key</span>
+      <span class="nx">Notification</span><span class="p">.</span><span class="nx">queueFromRequest</span> <span class="nx">req</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Load any queues into the config.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">promises</span><span class="p">).</span><span class="nx">then</span> <span class="nf">(notificationsList) -&gt;</span>
+      <span class="nv">queuesConfig = </span><span class="kc">null</span>
+      
+      <span class="k">for</span> <span class="nx">notifications</span><span class="p">,</span> <span class="nx">index</span> <span class="k">in</span> <span class="nx">notificationsList</span>
+        <span class="k">continue</span> <span class="k">if</span> <span class="nx">notifications</span><span class="p">.</span><span class="nx">length</span> <span class="o">is</span> <span class="mi">0</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Reverse the notifications because the client will prepend new
+notifications, not append.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">queuesConfig</span> <span class="o">?=</span> <span class="p">{}</span>
+        <span class="nx">queuesConfig</span><span class="p">[</span><span class="nx">promiseKeys</span><span class="p">[</span><span class="nx">index</span><span class="p">]]</span> <span class="o">=</span> <span class="nx">notifications</span><span class="p">.</span><span class="nx">reverse</span><span class="p">()</span>
+        
+      <span class="nx">queuesConfig</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookendpoint">Implements hook <code>endpoint</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;endpoint&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+    
+    <span class="nv">route: </span><span class="s">&#39;shrub.ui.notifications&#39;</span>
+    
+    <span class="nv">receiver: </span><span class="nf">(req, fn) -&gt;</span>
+      
+      <span class="nv">Notification = </span><span class="nx">orm</span><span class="p">.</span><span class="nx">collection</span> <span class="s">&#39;shrub-ui-notification&#39;</span>
+      <span class="nx">Notification</span><span class="p">.</span><span class="nx">queueFromRequest</span><span class="p">(</span><span class="nx">req</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">(notifications) -&gt;</span>
+        
+        <span class="nx">fn</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">notifications</span>
+      
+      <span class="p">).</span><span class="nx">catch</span> <span class="nx">fn</span></div></div></div></div></body></html>

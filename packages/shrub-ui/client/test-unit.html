@@ -18,36 +18,36 @@
     
     <span class="nx">expect</span><span class="p">(</span><span class="nx">markdown</span><span class="p">(</span><span class="s">&#39;Oh, &lt;div&gt;hello&lt;/div&gt;&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">)).</span><span class="nx">toEqual</span><span class="p">(</span><span class="s">&#39;&lt;p&gt;Oh, &lt;div&gt;hello&lt;/div&gt;&lt;/p&gt;\n&#39;</span><span class="p">);</span>
 
-<span class="nx">describe</span> <span class="s">&#39;notifications&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+<span class="nx">describe</span> <span class="s">&#39;messages&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
   
-  <span class="nv">notifications = </span><span class="kc">null</span>
+  <span class="nv">messages = </span><span class="kc">null</span>
   
   <span class="nx">beforeEach</span> <span class="nf">-&gt;</span>
     
     <span class="nx">inject</span> <span class="p">[</span>
-      <span class="s">&#39;shrub-ui/notifications&#39;</span>
-      <span class="nf">(_notifications_) -&gt;</span> <span class="nv">notifications = </span><span class="nx">_notifications_</span>
+      <span class="s">&#39;shrub-ui/messages&#39;</span>
+      <span class="nf">(_messages_) -&gt;</span> <span class="nv">messages = </span><span class="nx">_messages_</span>
     <span class="p">]</span>
     
-  <span class="nx">it</span> <span class="s">&#39;should allow adding and removing notifications&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+  <span class="nx">it</span> <span class="s">&#39;should allow adding and removing messages&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
     
-    <span class="nx">notifications</span><span class="p">.</span><span class="nx">add</span> <span class="nv">text: </span><span class="s">&#39;Testing&#39;</span>
-    <span class="nx">expect</span><span class="p">(</span><span class="nx">notifications</span><span class="p">.</span><span class="nx">top</span><span class="p">().</span><span class="nx">text</span><span class="p">).</span><span class="nx">toBe</span> <span class="s">&#39;Testing&#39;</span>
-    <span class="nx">expect</span><span class="p">(</span><span class="nx">notifications</span><span class="p">.</span><span class="nx">count</span><span class="p">()).</span><span class="nx">toBe</span> <span class="mi">1</span>
+    <span class="nx">messages</span><span class="p">.</span><span class="nx">add</span> <span class="nv">text: </span><span class="s">&#39;Testing&#39;</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">messages</span><span class="p">.</span><span class="nx">top</span><span class="p">().</span><span class="nx">text</span><span class="p">).</span><span class="nx">toBe</span> <span class="s">&#39;Testing&#39;</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">messages</span><span class="p">.</span><span class="nx">count</span><span class="p">()).</span><span class="nx">toBe</span> <span class="mi">1</span>
     
-    <span class="nx">notifications</span><span class="p">.</span><span class="nx">removeTop</span><span class="p">()</span>
-    <span class="nx">expect</span><span class="p">(</span><span class="nx">notifications</span><span class="p">.</span><span class="nx">top</span><span class="p">()).</span><span class="nx">toBe</span> <span class="kc">undefined</span>
-    <span class="nx">expect</span><span class="p">(</span><span class="nx">notifications</span><span class="p">.</span><span class="nx">count</span><span class="p">()).</span><span class="nx">toBe</span> <span class="mi">0</span>
+    <span class="nx">messages</span><span class="p">.</span><span class="nx">removeTop</span><span class="p">()</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">messages</span><span class="p">.</span><span class="nx">top</span><span class="p">()).</span><span class="nx">toBe</span> <span class="kc">undefined</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">messages</span><span class="p">.</span><span class="nx">count</span><span class="p">()).</span><span class="nx">toBe</span> <span class="mi">0</span>
     
-  <span class="nx">it</span> <span class="s">&#39;should accept notification batches from the socket&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+  <span class="nx">it</span> <span class="s">&#39;should accept message batches from the socket&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
     
     <span class="nx">inject</span> <span class="p">[</span>
       <span class="s">&#39;$timeout&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-socket&#39;</span>
       <span class="nf">($timeout, socket) -&gt;</span>
       
         <span class="nx">socket</span><span class="p">.</span><span class="nx">stimulateOn</span><span class="p">(</span>
-          <span class="s">&#39;notifications&#39;</span>
-          <span class="nv">notifications: </span><span class="p">[</span>
+          <span class="s">&#39;shrub.ui.messages&#39;</span>
+          <span class="nv">messages: </span><span class="p">[</span>
             <span class="nv">text: </span><span class="s">&#39;Testing&#39;</span>
           <span class="p">,</span>
             <span class="nv">text: </span><span class="s">&#39;Testing&#39;</span>
@@ -60,7 +60,7 @@
         
         <span class="nx">$timeout</span><span class="p">.</span><span class="nx">flush</span><span class="p">()</span>
         
-        <span class="nx">expect</span><span class="p">(</span><span class="nx">notifications</span><span class="p">.</span><span class="nx">count</span><span class="p">()).</span><span class="nx">toBe</span> <span class="mi">4</span>
+        <span class="nx">expect</span><span class="p">(</span><span class="nx">messages</span><span class="p">.</span><span class="nx">count</span><span class="p">()).</span><span class="nx">toBe</span> <span class="mi">4</span>
     <span class="p">]</span>
 
 <span class="nx">describe</span> <span class="s">&#39;title&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>

@@ -7,8 +7,8 @@
     <span class="nv">title: </span><span class="s">&#39;Reset your password&#39;</span>
     
     <span class="nv">controller: </span><span class="p">[</span>
-      <span class="s">&#39;$location&#39;</span><span class="p">,</span> <span class="s">&#39;$routeParams&#39;</span><span class="p">,</span> <span class="s">&#39;$scope&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-ui/notifications&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-rpc&#39;</span>
-      <span class="nf">($location, $routeParams, $scope, notifications, rpc) -&gt;</span>
+      <span class="s">&#39;$location&#39;</span><span class="p">,</span> <span class="s">&#39;$routeParams&#39;</span><span class="p">,</span> <span class="s">&#39;$scope&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-ui/messages&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-rpc&#39;</span>
+      <span class="nf">($location, $routeParams, $scope, messages, rpc) -&gt;</span>
         
         <span class="nv">$scope.form =</span>
           
@@ -19,7 +19,7 @@
             <span class="nx">rpc</span><span class="p">.</span><span class="nx">formSubmitHandler</span> <span class="nf">(error, result) -&gt;</span>
               <span class="k">return</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
               
-              <span class="nx">notifications</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span>
+              <span class="nx">messages</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span>
                 <span class="nv">text: </span><span class="s">&quot;You may now log in with your new password.&quot;</span>
               <span class="p">)</span>
               
@@ -40,10 +40,8 @@
             
             <span class="nv">submit:</span>
               <span class="nv">type: </span><span class="s">&#39;submit&#39;</span>
-              <span class="nv">label: </span><span class="s">&quot;Reset password&quot;</span>
+              <span class="nv">value: </span><span class="s">&quot;Reset password&quot;</span>
   
-        <span class="nx">$scope</span><span class="p">.</span><span class="nx">$emit</span> <span class="s">&#39;shrubFinishedRendering&#39;</span>
-        
     <span class="p">]</span>
     
     <span class="nv">template: </span><span class="s">&quot;&quot;&quot;</span>

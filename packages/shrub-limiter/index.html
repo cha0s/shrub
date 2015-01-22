@@ -14,7 +14,18 @@ endpoints.</p></div></div><div class="code"><div class="wrapper"><span class="nv
 <span class="nv">exports.SKIP = SKIP = </span><span class="mi">0</span>
 <span class="nv">exports.IGNORE = IGNORE = </span><span class="mi">1</span>
 
-<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookendpointalter">Implements hook <code>endpointAlter</code></h2>
+<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookcollections">Implements hook <code>collections</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;collections&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+    
+    <span class="s">&#39;shrub-limit&#39;</span><span class="o">:</span>
+    
+      <span class="nv">attributes:</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The limiter key.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">key:</span>
+          <span class="nv">type: </span><span class="s">&#39;string&#39;</span>
+          <span class="nv">index: </span><span class="kc">true</span>
+          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Scores accrued for this limit.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">scores:</span>
+          <span class="nv">type: </span><span class="s">&#39;array&#39;</span>
+          <span class="nv">defaultsTo: </span><span class="p">[]</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookendpointalter">Implements hook <code>endpointAlter</code></h2>
 
 <p>Allow RPC endpoint definitions to specify rate limiters.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;endpointAlter&#39;</span><span class="p">,</span> <span class="nf">(endpoints) -&gt;</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>limiterApplicationMiddleware</code>.

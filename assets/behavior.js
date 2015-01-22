@@ -1159,6 +1159,37 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
           "depth": 2,
           "children": [
             {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-example/about.coffee",
+                "projectPath": "packages/shrub-example/about.coffee",
+                "targetPath": "packages/shrub-example/about",
+                "pageTitle": "packages/shrub-example/about",
+                "title": "about"
+              },
+              "depth": 3,
+              "outline": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 1,
+                    "title": "Example - About page",
+                    "slug": "example-about-page"
+                  },
+                  "depth": 1
+                }
+              ]
+            }, {
               "type": "folder",
               "data": {
                 "path": "packages/shrub-example/client",
@@ -2353,7 +2384,18 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "title": "sendMail",
                         "slug": "sendmail"
                       },
-                      "depth": 2
+                      "depth": 2,
+                      "children": [
+                        {
+                          "type": "heading",
+                          "data": {
+                            "level": 3,
+                            "title": "sandbox.inject",
+                            "slug": "sandboxinject"
+                          },
+                          "depth": 3
+                        }
+                      ]
                     }
                   ]
                 }
@@ -2754,6 +2796,37 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "level": 1,
                         "title": "Navigation",
                         "slug": "navigation"
+                      },
+                      "depth": 1
+                    }
+                  ]
+                }, {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-skin-strapped/client/notifications.coffee",
+                    "projectPath": "packages/shrub-skin-strapped/client/notifications.coffee",
+                    "targetPath": "packages/shrub-skin-strapped/client/notifications",
+                    "pageTitle": "packages/shrub-skin-strapped/client/notifications",
+                    "title": "notifications"
+                  },
+                  "depth": 4,
+                  "outline": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 1,
+                        "title": "Notifications",
+                        "slug": "notifications"
                       },
                       "depth": 1
                     }
@@ -3391,11 +3464,11 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "foldPrefix": "^",
                       "name": "CoffeeScript"
                     },
-                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-ui/client/notifications.coffee",
-                    "projectPath": "packages/shrub-ui/client/notifications.coffee",
-                    "targetPath": "packages/shrub-ui/client/notifications",
-                    "pageTitle": "packages/shrub-ui/client/notifications",
-                    "title": "notifications"
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-ui/client/messages.coffee",
+                    "projectPath": "packages/shrub-ui/client/messages.coffee",
+                    "targetPath": "packages/shrub-ui/client/messages",
+                    "pageTitle": "packages/shrub-ui/client/messages",
+                    "title": "messages"
                   },
                   "depth": 4,
                   "outline": [
@@ -3403,8 +3476,8 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "type": "heading",
                       "data": {
                         "level": 1,
-                        "title": "Notifications",
-                        "slug": "notifications"
+                        "title": "Messages",
+                        "slug": "messages"
                       },
                       "depth": 1,
                       "children": [
@@ -3412,36 +3485,158 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "type": "heading",
                           "data": {
                             "level": 2,
-                            "title": "notifications.add",
-                            "slug": "notificationsadd"
+                            "title": "messages.add",
+                            "slug": "messagesadd"
                           },
                           "depth": 2
                         }, {
                           "type": "heading",
                           "data": {
                             "level": 2,
-                            "title": "notifications.top",
-                            "slug": "notificationstop"
+                            "title": "messages.top",
+                            "slug": "messagestop"
                           },
                           "depth": 2
                         }, {
                           "type": "heading",
                           "data": {
                             "level": 2,
-                            "title": "notifications.removeTop",
-                            "slug": "notificationsremovetop"
+                            "title": "messages.removeTop",
+                            "slug": "messagesremovetop"
                           },
                           "depth": 2
                         }, {
                           "type": "heading",
                           "data": {
                             "level": 2,
-                            "title": "notifications.count",
-                            "slug": "notificationscount"
+                            "title": "messages.count",
+                            "slug": "messagescount"
                           },
                           "depth": 2
                         }
                       ]
+                    }
+                  ]
+                }, {
+                  "type": "folder",
+                  "data": {
+                    "path": "packages/shrub-ui/client/notifications",
+                    "title": "notifications"
+                  },
+                  "depth": 4,
+                  "children": [
+                    {
+                      "type": "file",
+                      "data": {
+                        "language": {
+                          "nameMatchers": [".coffee", "Cakefile"],
+                          "pygmentsLexer": "coffee-script",
+                          "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                          "strictMultiLineEnd": false,
+                          "singleLineComment": ["#"],
+                          "ignorePrefix": "}",
+                          "foldPrefix": "^",
+                          "name": "CoffeeScript"
+                        },
+                        "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-ui/client/notifications/index.coffee",
+                        "projectPath": "packages/shrub-ui/client/notifications/index.coffee",
+                        "targetPath": "packages/shrub-ui/client/notifications/index",
+                        "pageTitle": "packages/shrub-ui/client/notifications/index",
+                        "title": "index"
+                      },
+                      "depth": 5,
+                      "outline": [
+                        {
+                          "type": "heading",
+                          "data": {
+                            "level": 1,
+                            "title": "Notifications",
+                            "slug": "notifications"
+                          },
+                          "depth": 1,
+                          "children": [
+                            {
+                              "type": "heading",
+                              "data": {
+                                "level": 2,
+                                "title": "notifications.list",
+                                "slug": "notificationslist"
+                              },
+                              "depth": 2
+                            }, {
+                              "type": "heading",
+                              "data": {
+                                "level": 2,
+                                "title": "notifications.loadMore",
+                                "slug": "notificationsloadmore"
+                              },
+                              "depth": 2
+                            }
+                          ]
+                        }
+                      ]
+                    }, {
+                      "type": "file",
+                      "data": {
+                        "language": {
+                          "nameMatchers": [".coffee", "Cakefile"],
+                          "pygmentsLexer": "coffee-script",
+                          "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                          "strictMultiLineEnd": false,
+                          "singleLineComment": ["#"],
+                          "ignorePrefix": "}",
+                          "foldPrefix": "^",
+                          "name": "CoffeeScript"
+                        },
+                        "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-ui/client/notifications/item.coffee",
+                        "projectPath": "packages/shrub-ui/client/notifications/item.coffee",
+                        "targetPath": "packages/shrub-ui/client/notifications/item",
+                        "pageTitle": "packages/shrub-ui/client/notifications/item",
+                        "title": "item"
+                      },
+                      "depth": 5,
+                      "outline": [
+                        {
+                          "type": "heading",
+                          "data": {
+                            "level": 1,
+                            "title": "Notification item",
+                            "slug": "notification-item"
+                          },
+                          "depth": 1
+                        }
+                      ]
+                    }, {
+                      "type": "file",
+                      "data": {
+                        "language": {
+                          "nameMatchers": [".coffee", "Cakefile"],
+                          "pygmentsLexer": "coffee-script",
+                          "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                          "strictMultiLineEnd": false,
+                          "singleLineComment": ["#"],
+                          "ignorePrefix": "}",
+                          "foldPrefix": "^",
+                          "name": "CoffeeScript"
+                        },
+                        "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-ui/client/notifications/title.coffee",
+                        "projectPath": "packages/shrub-ui/client/notifications/title.coffee",
+                        "targetPath": "packages/shrub-ui/client/notifications/title",
+                        "pageTitle": "packages/shrub-ui/client/notifications/title",
+                        "firstHeader": {
+                          "type": "heading",
+                          "data": {
+                            "level": 1,
+                            "title": "Notifications title",
+                            "slug": "notifications-title",
+                            "isFileHeader": true
+                          },
+                          "depth": 1
+                        },
+                        "title": "Notifications title"
+                      },
+                      "depth": 5,
+                      "outline": []
                     }
                   ]
                 }, {
@@ -3498,6 +3693,48 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                   ]
                 }
               ]
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-ui/index.coffee",
+                "projectPath": "packages/shrub-ui/index.coffee",
+                "targetPath": "packages/shrub-ui/index",
+                "pageTitle": "packages/shrub-ui/index",
+                "title": "index"
+              },
+              "depth": 3,
+              "outline": []
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-ui/notifications.coffee",
+                "projectPath": "packages/shrub-ui/notifications.coffee",
+                "targetPath": "packages/shrub-ui/notifications",
+                "pageTitle": "packages/shrub-ui/notifications",
+                "title": "notifications"
+              },
+              "depth": 3,
+              "outline": []
             }
           ]
         }, {
@@ -3517,6 +3754,89 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "depth": 3,
               "children": [
                 {
+                  "type": "folder",
+                  "data": {
+                    "path": "packages/shrub-user/client/email",
+                    "title": "email"
+                  },
+                  "depth": 4,
+                  "children": [
+                    {
+                      "type": "file",
+                      "data": {
+                        "language": {
+                          "nameMatchers": [".coffee", "Cakefile"],
+                          "pygmentsLexer": "coffee-script",
+                          "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                          "strictMultiLineEnd": false,
+                          "singleLineComment": ["#"],
+                          "ignorePrefix": "}",
+                          "foldPrefix": "^",
+                          "name": "CoffeeScript"
+                        },
+                        "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-user/client/email/forgot.coffee",
+                        "projectPath": "packages/shrub-user/client/email/forgot.coffee",
+                        "targetPath": "packages/shrub-user/client/email/forgot",
+                        "pageTitle": "packages/shrub-user/client/email/forgot",
+                        "title": "forgot"
+                      },
+                      "depth": 5,
+                      "outline": []
+                    }, {
+                      "type": "file",
+                      "data": {
+                        "language": {
+                          "nameMatchers": [".coffee", "Cakefile"],
+                          "pygmentsLexer": "coffee-script",
+                          "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                          "strictMultiLineEnd": false,
+                          "singleLineComment": ["#"],
+                          "ignorePrefix": "}",
+                          "foldPrefix": "^",
+                          "name": "CoffeeScript"
+                        },
+                        "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-user/client/email/index.coffee",
+                        "projectPath": "packages/shrub-user/client/email/index.coffee",
+                        "targetPath": "packages/shrub-user/client/email/index",
+                        "pageTitle": "packages/shrub-user/client/email/index",
+                        "title": "index"
+                      },
+                      "depth": 5,
+                      "outline": [
+                        {
+                          "type": "heading",
+                          "data": {
+                            "level": 1,
+                            "title": "User emails",
+                            "slug": "user-emails"
+                          },
+                          "depth": 1
+                        }
+                      ]
+                    }, {
+                      "type": "file",
+                      "data": {
+                        "language": {
+                          "nameMatchers": [".coffee", "Cakefile"],
+                          "pygmentsLexer": "coffee-script",
+                          "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                          "strictMultiLineEnd": false,
+                          "singleLineComment": ["#"],
+                          "ignorePrefix": "}",
+                          "foldPrefix": "^",
+                          "name": "CoffeeScript"
+                        },
+                        "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-user/client/email/register.coffee",
+                        "projectPath": "packages/shrub-user/client/email/register.coffee",
+                        "targetPath": "packages/shrub-user/client/email/register",
+                        "pageTitle": "packages/shrub-user/client/email/register",
+                        "title": "register"
+                      },
+                      "depth": 5,
+                      "outline": []
+                    }
+                  ]
+                }, {
                   "type": "file",
                   "data": {
                     "language": {
@@ -4365,6 +4685,30 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "depth": 4
                         }
                       ]
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".add",
+                        "slug": "add"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".score",
+                        "slug": "score"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": ".ttl",
+                        "slug": "ttl"
+                      },
+                      "depth": 3
                     }
                   ]
                 }, {
@@ -4409,34 +4753,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "title": "threshold",
                     "slug": "threshold"
                   },
-                  "depth": 2,
-                  "children": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".add",
-                        "slug": "add"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".score",
-                        "slug": "score"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".ttl",
-                        "slug": "ttl"
-                      },
-                      "depth": 3
-                    }
-                  ]
+                  "depth": 2
                 }
               ]
             }

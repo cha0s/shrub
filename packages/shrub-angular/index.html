@@ -259,7 +259,7 @@ location path. If it is, redirect Angular.</em></p>
       <span class="k">return</span> <span class="nx">resolve</span><span class="p">()</span> <span class="k">if</span> <span class="nx">path</span> <span class="o">is</span> <span class="nx">url</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">@url</span><span class="p">()).</span><span class="nx">path</span>
       
       <span class="c1"># Navigate Angular to the request path.     </span>
-      <span class="nv">unlisten = </span><span class="nx">$rootScope</span><span class="p">.</span><span class="nx">$on</span> <span class="s">&#39;shrubFinishedRendering&#39;</span><span class="p">,</span> <span class="o">=&gt;</span>
+      <span class="nv">unlisten = </span><span class="nx">$rootScope</span><span class="p">.</span><span class="nx">$on</span> <span class="s">&#39;shrub.core.routeRendered&#39;</span><span class="p">,</span> <span class="o">=&gt;</span>
         <span class="nx">unlisten</span><span class="p">()</span>
         <span class="nx">resolve</span><span class="p">()</span>
         
@@ -329,7 +329,7 @@ location path. If it is, redirect Angular.</em></p>
 <p><em>Inject an <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a> with dependencies.</em></p>
 
 <ul>
-<li>(mixed) <code>injectable</code> - An annontated function to inject with
+<li>(mixed) <code>injectable</code> - An annotated function to inject with
 dependencies. </li>
 </ul></div></div><div class="code"><div class="wrapper">  <span class="nv">sandbox.inject = </span><span class="nf">(injectable) -&gt;</span>
     

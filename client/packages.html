@@ -52,7 +52,7 @@ should return an <a href="http://docs.angularjs.org/guide/di#dependency-annotati
                     <span class="nv">controllers = </span><span class="p">[</span><span class="nx">controllers</span><span class="p">]</span>
                     
                   <span class="k">for</span> <span class="nx">controller</span> <span class="k">in</span> <span class="nx">controllers</span>
-                    <span class="nx">controller</span><span class="p">.</span><span class="nx">link</span><span class="o">?</span> <span class="nx">scope</span><span class="p">,</span> <span class="nx">element</span><span class="p">,</span> <span class="nx">attrs</span>
+                    <span class="nx">controller</span><span class="p">.</span><span class="nx">link</span><span class="o">?</span> <span class="nx">arguments</span><span class="p">...</span>
                 
                 <span class="nx">link</span><span class="o">?</span> <span class="nx">arguments</span><span class="p">...</span>
 
@@ -164,17 +164,8 @@ Implementations should return an
       
       <span class="nv">service.invoke = </span><span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span>
       <span class="nv">service.invokeFlat = </span><span class="nx">pkgman</span><span class="p">.</span><span class="nx">invokeFlat</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Use normalized names for directives and filters:
-'core/foo/bar' -> 'coreFooBar'</p></div></div><div class="code"><div class="wrapper">      <span class="nv">i8n = </span><span class="nx">require</span> <span class="s">&#39;inflection&#39;</span>
-      <span class="nv">service.normalizePath = </span><span class="nf">(path) -&gt;</span>
-        <span class="nv">parts = </span><span class="k">for</span> <span class="nx">part</span><span class="p">,</span> <span class="nx">i</span> <span class="k">in</span> <span class="nx">path</span><span class="p">.</span><span class="nx">split</span> <span class="s">&#39;/&#39;</span>
-          <span class="nx">i8n</span><span class="p">.</span><span class="nx">camelize</span><span class="p">(</span>
-            <span class="nx">part</span><span class="p">.</span><span class="nx">replace</span> <span class="sr">/[^\w]/g</span><span class="p">,</span> <span class="s">&#39;_&#39;</span>
-            <span class="mi">0</span> <span class="o">is</span> <span class="nx">i</span>
-          <span class="p">)</span>
-          
-        <span class="nx">i8n</span><span class="p">.</span><span class="nx">camelize</span> <span class="p">(</span><span class="nx">i8n</span><span class="p">.</span><span class="nx">underscore</span> <span class="nx">parts</span><span class="p">.</span><span class="nx">join</span> <span class="s">&#39;&#39;</span><span class="p">),</span> <span class="kc">true</span>
-
+      <span class="nv">service.normalizePath = </span><span class="nx">pkgman</span><span class="p">.</span><span class="nx">normalizePath</span>
+      
       <span class="nv">service.$get = </span><span class="nf">-&gt;</span> <span class="nx">service</span>
       
       <span class="nx">service</span>

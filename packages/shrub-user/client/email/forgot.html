@@ -1,0 +1,68 @@
+<!DOCTYPE html><html lang="en"><head><title>packages/shrub-user/client/email/forgot</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../../"><meta name="groc-document-path" content="packages/shrub-user/client/email/forgot"><meta name="groc-project-path" content="packages/shrub-user/client/email/forgot.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../../assets/style.css"><script type="text/javascript" src="../../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-user/client/email/forgot.coffee">packages/shrub-user/client/email/forgot.coffee</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nv">config = </span><span class="nx">require</span> <span class="s">&#39;config&#39;</span>
+
+<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookdirective">Implements hook <code>directive</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;directive&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
+    <span class="s">&#39;shrub-ui/window-title&#39;</span>
+    <span class="nf">(windowTitle) -&gt;</span>
+      
+      <span class="nv">directive = </span><span class="p">{}</span>
+      
+      <span class="nv">directive.link = </span><span class="nf">(scope) -&gt;</span>
+        
+        <span class="nx">windowTitle</span><span class="p">.</span><span class="nx">setPage</span> <span class="s">&#39;Forgot password&#39;</span>
+        
+        <span class="nv">scope.siteName = </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;packageConfig:shrub-core:siteName&#39;</span>
+      
+      <span class="nv">directive.scope = </span><span class="kc">true</span>
+      
+      <span class="nv">directive.template = </span><span class="s">&quot;&quot;&quot;</span>
+
+<span class="s">&lt;p&gt;</span>
+<span class="s">  Hello, &lt;span</span>
+<span class="s">    data-ng-bind=&quot;user.name&quot;</span>
+<span class="s">  &gt;&lt;/span&gt;!</span>
+<span class="s">&lt;/p&gt;</span>
+
+<span class="s">&lt;p&gt;</span>
+<span class="s">  You (or someone posing as you) issued a password recovery request just now.</span>
+<span class="s">&lt;/p&gt;</span>
+
+<span class="s">&lt;p&gt;</span>
+<span class="s">  You may &lt;a</span>
+<span class="s">    data-ng-href=&quot;{{loginUrl}}&quot;</span>
+<span class="s">  &gt;visit the one-time login link for your account&lt;/a&gt; at &lt;a</span>
+<span class="s">    data-ng-bind=&quot;loginUrl&quot;</span>
+<span class="s">    data-ng-href=&quot;{{loginUrl}}&quot;</span>
+<span class="s">  &gt;&lt;/a&gt; to reset your password!</span>
+<span class="s">&lt;/p&gt;</span>
+
+<span class="s">&lt;p&gt;</span>
+<span class="s">  Regards,</span>
+<span class="s">&lt;/p&gt;</span>
+
+<span class="s">&lt;p&gt;</span>
+<span class="s">  &lt;a</span>
+<span class="s">    data-ng-bind=&quot;siteName&quot;</span>
+<span class="s">    data-ng-href=&quot;{{siteUrl}}&quot;</span>
+<span class="s">  &gt;&lt;/a&gt;</span>
+<span class="s">&lt;/p&gt;</span>
+
+<span class="s">&lt;p&gt;—&lt;/p&gt;</span>
+
+<span class="s">&lt;p class=&quot;muted&quot;&gt;</span>
+<span class="s">  &lt;small&gt;</span>
+<span class="s">    If you received this email by mistake, feel free to ignore it. Have a lovely day!</span>
+<span class="s">  &lt;/small&gt;</span>
+<span class="s">&lt;/p&gt;</span>
+
+<span class="s">&lt;p class=&quot;muted&quot;&gt;</span>
+<span class="s">  &lt;small&gt;</span>
+<span class="s">    This is an automatically generated email; &lt;strong</span>
+<span class="s">    &gt;if you reply it may not be read by anyone.&lt;/strong&gt;</span>
+<span class="s">  &lt;/small&gt;</span>
+<span class="s">&lt;/p&gt;</span>
+
+<span class="s">&quot;&quot;&quot;</span>
+      
+      <span class="nx">directive</span>
+      
+  <span class="p">]</span></div></div></div></div></body></html>

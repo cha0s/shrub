@@ -32,7 +32,7 @@
       <span class="nx">socket</span><span class="p">.</span><span class="nx">on</span> <span class="s">&#39;shrub.user.logout&#39;</span><span class="p">,</span> <span class="nx">logout</span>
       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="userisloggedin">user.isLoggedIn</h2>
 
-<p><em>Whether the current application user is logged in.</em></p></div></div><div class="code"><div class="wrapper">      <span class="nv">service.isLoggedIn = </span><span class="nf">-&gt;</span> <span class="nx">service</span><span class="p">.</span><span class="nx">instance</span><span class="p">().</span><span class="nx">id</span><span class="o">?</span> 
+<p><em>Whether the current application user is logged in.</em></p></div></div><div class="code"><div class="wrapper">      <span class="nv">service.isLoggedIn = </span><span class="nf">-&gt;</span> <span class="nx">_instance</span><span class="p">.</span><span class="nx">id</span><span class="o">?</span> 
         </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="userlogin">user.login</h2>
 
 <p><em>Log in with method and args.</em></p>
@@ -82,7 +82,7 @@ strategy. Change that.</p></div></div><div class="code"><div class="wrapper">   
   <span class="p">]</span>
   
   <span class="nx">registrar</span><span class="p">.</span><span class="nx">recur</span> <span class="p">[</span>
-    <span class="s">&#39;forgot&#39;</span><span class="p">,</span> <span class="s">&#39;login&#39;</span><span class="p">,</span> <span class="s">&#39;logout&#39;</span><span class="p">,</span> <span class="s">&#39;register&#39;</span><span class="p">,</span> <span class="s">&#39;reset&#39;</span>
+    <span class="s">&#39;email&#39;</span><span class="p">,</span> <span class="s">&#39;forgot&#39;</span><span class="p">,</span> <span class="s">&#39;login&#39;</span><span class="p">,</span> <span class="s">&#39;logout&#39;</span><span class="p">,</span> <span class="s">&#39;register&#39;</span><span class="p">,</span> <span class="s">&#39;reset&#39;</span>
   <span class="p">]</span>
   
 <span class="nv">exports.collections = </span><span class="nf">-&gt;</span>
@@ -116,9 +116,7 @@ strategy. Change that.</p></div></div><div class="code"><div class="wrapper">   
         <span class="nv">size: </span><span class="mi">128</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Update a user's last accessed time. Return the user for chaining.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">touch: </span><span class="nf">-&gt;</span>
         <span class="vi">@lastAccessed = </span><span class="p">(</span><span class="k">new</span> <span class="nb">Date</span><span class="p">()).</span><span class="nx">toISOString</span><span class="p">()</span>
         <span class="k">this</span>
-          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Temporary... secure by default.
-<code>TODO</code>: Access control structure.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">hasPermission: </span><span class="nf">(perm) -&gt;</span> <span class="kc">false</span>
-      <span class="nv">isAccessibleBy: </span><span class="nf">(user) -&gt;</span> <span class="kc">false</span>
+          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p><code>TODO</code>: Access control structure.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">hasPermission: </span><span class="nf">(perm) -&gt;</span> <span class="kc">false</span>
     
 <span class="nv">exports.collectionsAlter = </span><span class="nf">(collections) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p><code>TODO</code>: This is broken since ORM change</p></div></div><div class="code"><div class="wrapper">  <span class="p">{</span><span class="s">&#39;shrub-user&#39;</span><span class="o">:</span> <span class="nx">User</span><span class="p">}</span> <span class="o">=</span> <span class="nx">collections</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Implement all the built-in collection methods as authenticated versions,
@@ -142,7 +140,8 @@ _model property.</p></div></div><div class="code"><div class="wrapper">         
         <span class="nv">error = </span><span class="k">new</span> <span class="nb">Error</span> <span class="s">&quot;Forbidden.&quot;</span>
         <span class="nv">error.code = </span><span class="mi">403</span>
         <span class="k">throw</span> <span class="nx">error</span>
-          
+          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Secure by default.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">collection</span><span class="p">.</span><span class="nx">attributes</span><span class="p">.</span><span class="nx">isAccessibleBy</span> <span class="o">?=</span> <span class="nf">(user) -&gt;</span> <span class="kc">false</span>
+
       <span class="nv">collection.authenticatedAll = </span><span class="nf">(user, params) -&gt;</span>
         
         <span class="nx">validateUser</span><span class="p">(</span><span class="nx">user</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">-&gt;</span>

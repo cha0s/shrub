@@ -4,7 +4,16 @@
 
 <span class="nv">shrubSkin = </span><span class="nx">require</span> <span class="s">&#39;shrub-skin&#39;</span>
 
-<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookskinassets">Implements hook <code>skinAssets</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;skinAssets&#39;</span><span class="p">,</span> <span class="nf">(assets) -&gt;</span>
+<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookmailhtml">Implements hook <code>mailHtml</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;mailHtml&#39;</span><span class="p">,</span> <span class="nf">($body, html, $) -&gt;</span>
+  
+    <span class="nx">$</span><span class="p">(</span><span class="s">&#39;.container &gt; .main&#39;</span><span class="p">,</span> <span class="nx">$body</span><span class="p">).</span><span class="nx">html</span> <span class="nx">html</span>
+    
+    <span class="nx">$body</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s">&#39;.navbar-toggle, .navbar-collapse&#39;</span><span class="p">).</span><span class="nx">remove</span><span class="p">()</span>
+    <span class="nx">$body</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s">&#39;[data-shrub-ui-messages]&#39;</span><span class="p">).</span><span class="nx">remove</span><span class="p">()</span>
+    
+    <span class="nx">$body</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s">&#39;script&#39;</span><span class="p">).</span><span class="nx">remove</span><span class="p">()</span>
+    
+    <span class="nx">$</span><span class="p">(</span><span class="s">&#39;noscript&#39;</span><span class="p">,</span> <span class="nx">$body</span><span class="p">).</span><span class="nx">remove</span><span class="p">()</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookskinassets">Implements hook <code>skinAssets</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;skinAssets&#39;</span><span class="p">,</span> <span class="nf">(assets) -&gt;</span>
     </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Add our future-compiled LESS style sheets.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">assets</span><span class="p">.</span><span class="nx">styleSheets</span><span class="p">.</span><span class="nx">default</span><span class="p">.</span><span class="nx">push</span> <span class="s">&#39;css/style.css&#39;</span>
     <span class="nx">assets</span><span class="p">.</span><span class="nx">styleSheets</span><span class="p">.</span><span class="nx">production</span><span class="p">.</span><span class="nx">push</span> <span class="s">&#39;css/style.css&#39;</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookgruntconfig">Implements hook <code>gruntConfig</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;gruntConfig&#39;</span><span class="p">,</span> <span class="nf">(gruntConfig) -&gt;</span>
@@ -17,7 +26,7 @@
       
       <span class="nv">files: </span><span class="p">[</span>
         <span class="nv">src: </span><span class="p">[</span>
-          <span class="s">&quot;</span><span class="si">#{</span><span class="nx">__dirname</span><span class="si">}</span><span class="s">/app/less/**/*.less&quot;</span>
+          <span class="s">&quot;</span><span class="si">#{</span><span class="nx">__dirname</span><span class="si">}</span><span class="s">/app/less/style.less&quot;</span>
         <span class="p">]</span>
         <span class="nv">dest: </span><span class="s">&#39;app/skin/shrub-skin-strapped/css/style.css&#39;</span>
       <span class="p">]</span>
@@ -25,7 +34,7 @@
     <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">watch</span><span class="p">[</span><span class="s">&#39;shrub-skin-strappedLess&#39;</span><span class="p">]</span> <span class="o">=</span>
     
       <span class="nv">files: </span><span class="p">[</span>
-        <span class="s">&quot;</span><span class="si">#{</span><span class="nx">__dirname</span><span class="si">}</span><span class="s">/app/less/**/*.less&quot;</span>
+        <span class="s">&quot;</span><span class="si">#{</span><span class="nx">__dirname</span><span class="si">}</span><span class="s">/app/less/style.less&quot;</span>
       <span class="p">]</span>
       <span class="nv">tasks: </span><span class="p">[</span>
         <span class="s">&#39;newer:less:shrub-skin-strapped&#39;</span>

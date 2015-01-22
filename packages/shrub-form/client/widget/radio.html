@@ -8,9 +8,9 @@
       
       <span class="nv">link: </span><span class="nf">(scope, element) -&gt;</span>
         
-        <span class="p">{</span><span class="nx">field</span><span class="p">}</span> <span class="o">=</span> <span class="nx">scope</span>
+        <span class="nx">scope</span><span class="p">.</span><span class="nx">$watch</span> <span class="s">&#39;field&#39;</span><span class="p">,</span> <span class="nf">(field) -&gt;</span>
         
-        <span class="nx">element</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s">&#39;input&#39;</span><span class="p">).</span><span class="nx">attr</span> <span class="s">&#39;data-ng-model&#39;</span><span class="p">,</span> <span class="nx">field</span><span class="p">.</span><span class="nx">value</span>
+          <span class="nx">element</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s">&#39;input&#39;</span><span class="p">).</span><span class="nx">attr</span> <span class="s">&#39;data-ng-model&#39;</span><span class="p">,</span> <span class="nx">field</span><span class="p">.</span><span class="nx">value</span>
       
       <span class="nv">template: </span><span class="s">&quot;&quot;&quot;</span>
 

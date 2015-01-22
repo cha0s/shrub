@@ -16,7 +16,7 @@
 
 <span class="nv">readFile = </span><span class="nx">Promise</span><span class="p">.</span><span class="nx">promisify</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">,</span> <span class="nx">fs</span>
 
-<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookconfig">Implements hook <code>config</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;config&#39;</span><span class="p">,</span> <span class="nf">(req) -&gt;</span>
+<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookconfig">Implements hook <code>config</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;config&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
     
     <span class="nv">skinAssets = </span><span class="p">{}</span>
     <span class="k">for</span> <span class="nx">packagePath</span> <span class="k">in</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">packagesImplementing</span> <span class="s">&#39;skinAssets&#39;</span>
@@ -43,8 +43,6 @@ sandbox.</p></div></div><div class="code"><div class="wrapper">  <span class="nx
     <span class="nv">middleware: </span><span class="p">[</span>
     
       <span class="nf">(req, res, next) -&gt;</span>
-        
-        <span class="nv">skinKey = </span><span class="nx">exports</span><span class="p">.</span><span class="nx">activeKey</span><span class="p">()</span>
         
         <span class="c1"># Render app.html</span>
         <span class="k">return</span> <span class="nx">exports</span><span class="p">.</span><span class="nx">renderAppHtml</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nf">(html) -&gt;</span>
@@ -95,7 +93,7 @@ sandbox.</p></div></div><div class="code"><div class="wrapper">  <span class="nx
     <span class="p">]</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="renderapphtml">::renderAppHtml</h3>
 
-<p><em>Render the application HTML.</em></p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.renderAppHtml = </span><span class="nf">(locals) -&gt;</span>
+<p><em>Render the application HTML.</em></p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.renderAppHtml = </span><span class="nf">-&gt;</span>
   
   <span class="nv">skinKey = </span><span class="nx">exports</span><span class="p">.</span><span class="nx">activeKey</span><span class="p">()</span>
   <span class="nv">skinDirectory = </span><span class="nx">exports</span><span class="p">.</span><span class="nx">skinDirectory</span> <span class="nx">skinKey</span>

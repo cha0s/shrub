@@ -59,7 +59,7 @@ hopefully will stop doing that.</p></div></div><div class="code"><div class="wra
       
       <span class="nv">attributes:</span>
       
-        <span class="nv">expires: </span><span class="s">&#39;number&#39;</span>
+        <span class="nv">expires: </span><span class="s">&#39;date&#39;</span>
         </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The structure of a ban is dictated by the fingerprint structure.</p></div></div><div class="code"><div class="wrapper">    <span class="k">for</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">fingerprintKeys</span>
       <span class="nx">Ban</span><span class="p">.</span><span class="nx">attributes</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span>
         <span class="nv">index: </span><span class="kc">true</span>
@@ -73,21 +73,23 @@ hopefully will stop doing that.</p></div></div><div class="code"><div class="wra
           <span class="nx">orm</span><span class="p">.</span><span class="nx">collection</span><span class="p">(</span><span class="s">&#39;shrub-ban&#39;</span><span class="p">).</span><span class="nx">find</span> <span class="nx">criteria</span>
         <span class="p">).</span><span class="nx">bind</span><span class="p">({}).</span><span class="nx">then</span><span class="p">(</span><span class="nf">(@bans) -&gt;</span>
           <span class="k">return</span> <span class="kc">false</span> <span class="k">if</span> <span class="nx">@bans</span><span class="p">.</span><span class="nx">length</span> <span class="o">is</span> <span class="mi">0</span>
-          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Destroy all expired bans.</p></div></div><div class="code"><div class="wrapper">          <span class="nv">expired = </span><span class="nx">@bans</span><span class="p">.</span><span class="nx">filter</span> <span class="nf">(ban) -&gt;</span> <span class="nx">ban</span><span class="p">.</span><span class="nx">expires</span> <span class="o">&lt;=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span>
+          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Destroy all expired bans.</p></div></div><div class="code"><div class="wrapper">          <span class="nv">expired = </span><span class="nx">@bans</span><span class="p">.</span><span class="nx">filter</span> <span class="nf">(ban) -&gt;</span>
+            <span class="nx">ban</span><span class="p">.</span><span class="nx">expires</span><span class="p">.</span><span class="nx">getTime</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span>
           <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span> <span class="nx">expired</span><span class="p">.</span><span class="nx">map</span> <span class="nf">(ban) -&gt;</span> <span class="nx">ban</span><span class="p">.</span><span class="nx">destroy</span><span class="p">()</span>
           
         <span class="p">).</span><span class="nx">then</span> <span class="nf">(expired) -&gt;</span>
           
-          <span class="nv">active = </span><span class="nx">@bans</span><span class="p">.</span><span class="nx">filter</span> <span class="nf">(ban) -&gt;</span> <span class="nx">ban</span><span class="p">.</span><span class="nx">expires</span> <span class="o">&gt;</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span>
+          <span class="nv">active = </span><span class="nx">@bans</span><span class="p">.</span><span class="nx">filter</span> <span class="nf">(ban) -&gt;</span>
+            <span class="nx">ban</span><span class="p">.</span><span class="nx">expires</span><span class="p">.</span><span class="nx">getTime</span><span class="p">()</span> <span class="o">&gt;</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span>
           
           <span class="p">[</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>More bans than those that expired?</p></div></div><div class="code"><div class="wrapper">            <span class="nx">@bans</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="nx">expired</span><span class="p">.</span><span class="nx">length</span>
             </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Ban ttl.</p></div></div><div class="code"><div class="wrapper">            <span class="nb">Math</span><span class="p">.</span><span class="nx">round</span> <span class="p">(</span><span class="nx">active</span><span class="p">.</span><span class="nx">reduce</span><span class="p">(</span>
               <span class="nf">(l, r) -&gt;</span>
                 
-                <span class="k">if</span> <span class="nx">l</span><span class="p">.</span><span class="nx">expires</span> <span class="o">&gt;</span> <span class="nx">r</span><span class="p">.</span><span class="nx">expires</span>
-                  <span class="nx">l</span><span class="p">.</span><span class="nx">expires</span>
+                <span class="k">if</span> <span class="nx">l</span> <span class="o">&gt;</span> <span class="nx">r</span><span class="p">.</span><span class="nx">expires</span><span class="p">.</span><span class="nx">getTime</span><span class="p">()</span>
+                  <span class="nx">l</span>
                 <span class="k">else</span>
-                  <span class="nx">r</span><span class="p">.</span><span class="nx">expires</span>
+                  <span class="nx">r</span><span class="p">.</span><span class="nx">expires</span><span class="p">.</span><span class="nx">getTime</span><span class="p">()</span>
                 
               <span class="o">-</span><span class="kc">Infinity</span>
             </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>It's a timestamp, and it's in ms.</p></div></div><div class="code"><div class="wrapper">            <span class="p">)</span> <span class="o">-</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">())</span> <span class="o">/</span> <span class="mi">1000</span>
@@ -97,9 +99,9 @@ hopefully will stop doing that.</p></div></div><div class="code"><div class="wra
       
       <span class="k">unless</span> <span class="nx">expires</span><span class="o">?</span>
         <span class="nv">settings = </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;packageSettings:shrub-villiany:ban&#39;</span>
-        <span class="nv">expires = </span><span class="nx">settings</span><span class="p">.</span><span class="nx">defaultExpiration</span>
-      
-      <span class="nv">data = expires: </span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span> <span class="o">+</span> <span class="nx">expires</span>
+        <span class="nv">expires = </span><span class="nb">parseInt</span> <span class="nx">settings</span><span class="p">.</span><span class="nx">defaultExpiration</span>
+        
+      <span class="nv">data = expires: </span><span class="k">new</span> <span class="nb">Date</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span> <span class="o">+</span> <span class="nx">expires</span>
       <span class="nx">data</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">fingerprint</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="k">for</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">fingerprintKeys</span>
       <span class="nx">orm</span><span class="p">.</span><span class="nx">collection</span><span class="p">(</span><span class="s">&#39;shrub-ban&#39;</span><span class="p">).</span><span class="nx">create</span> <span class="nx">data</span>
       
@@ -112,7 +114,7 @@ hopefully will stop doing that.</p></div></div><div class="code"><div class="wra
       <span class="nf">(req, res, next) -&gt;</span>
         
         <span class="nv">req.villianyKick = </span><span class="nf">(subject, ttl) -&gt;</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Destroy any session.</p></div></div><div class="code"><div class="wrapper">          <span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="o">?</span><span class="p">.</span><span class="nx">destroy</span><span class="p">()</span>
+          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Destroy any session.</p></div></div><div class="code"><div class="wrapper">          <span class="nx">req</span><span class="p">.</span><span class="nx">session</span><span class="o">?</span><span class="p">.</span><span class="nx">destroy</span><span class="p">()</span>
           </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Log the user out.</p></div></div><div class="code"><div class="wrapper">          <span class="nx">req</span><span class="p">.</span><span class="nx">logOut</span><span class="p">().</span><span class="nx">then</span> <span class="nf">-&gt;</span>
             
             <span class="nx">res</span><span class="p">.</span><span class="nx">status</span> <span class="mi">401</span>

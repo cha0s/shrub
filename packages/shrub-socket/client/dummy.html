@@ -6,11 +6,9 @@
 
 <span class="nv">exports.Manager = </span><span class="k">class</span> <span class="nx">DummySocket</span> <span class="k">extends</span> <span class="nx">Socket</span>
 
-  <span class="nv">constructor: </span><span class="nf">($q, $rootScope, $timeout) -&gt;</span>
+  <span class="nv">constructor: </span><span class="nf">($timeout) -&gt;</span>
     <span class="k">super</span>
     
-    <span class="vi">@_$q = </span><span class="nx">$q</span>
-    <span class="vi">@_$rootScope = </span><span class="nx">$rootScope</span>
     <span class="vi">@_$timeout = </span><span class="nx">$timeout</span>
     
     <span class="vi">@_emitMap = </span><span class="p">{}</span>

@@ -77,8 +77,13 @@ description and a list of implementing packages for each hook.</p>
 <li><p>shrub-ui/list (<a href="./packages/shrub-ui/client/list/index.html#implementshookdirective">client</a>)</p></li>
 <li><p>shrub-ui/list/item (<a href="./packages/shrub-ui/client/list/item.html#implementshookdirective">client</a>)</p></li>
 <li><p>shrub-ui/menu (<a href="./packages/shrub-ui/client/menu.html#implementshookdirective">client</a>)</p></li>
-<li><p>shrub-ui/notifications (<a href="./packages/shrub-ui/client/notifications.html#implementshookdirective">client</a>)</p></li>
-<li><p>shrub-ui/window-title (<a href="./packages/shrub-ui/client/window-title.html#implementshookdirective">client</a>)</p></li></ul></li>
+<li><p>shrub-ui/messages (<a href="./packages/shrub-ui/client/messages.html#implementshookdirective">client</a>)</p></li>
+<li><p>shrub-ui/notifications (<a href="./packages/shrub-ui/client/notifications/index.html#implementshookdirective">client</a>)</p></li>
+<li><p>shrub-ui/notifications/item (<a href="./packages/shrub-ui/client/notifications/item.html#implementshookdirective">client</a>)</p></li>
+<li><p>shrub-ui/notifications/title (<a href="./packages/shrub-ui/client/notifications/title.html#implementshookdirective">client</a>)</p></li>
+<li><p>shrub-ui/window-title (<a href="./packages/shrub-ui/client/window-title.html#implementshookdirective">client</a>)</p></li>
+<li><p>shrub-user/email/forgot (<a href="./packages/shrub-user/client/email/forgot.html#implementshookdirective">client</a>)</p></li>
+<li><p>shrub-user/email/register (<a href="./packages/shrub-user/client/email/register.html#implementshookdirective">client</a>)</p></li></ul></li>
 <li><h2 id="augmentdirective"><code>augmentDirective</code></h2>
 
 <p><h5>Allows packages to augment the directives defined by packages. One example is the automatic relinking functionality implemented by <a href="/packages/shrub-skin/client/index.html#implementshookaugmentdirective">shrub-skin</a>. </h5></p>
@@ -104,7 +109,8 @@ description and a list of implementing packages for each hook.</p>
 <li><p>shrub-orm (<a href="./packages/shrub-orm/client/index.html#implementshookservice">client</a>)</p></li>
 <li><p>shrub-rpc (<a href="./packages/shrub-rpc/client/index.html#implementshookservice">client</a>)</p></li>
 <li><p>shrub-socket (<a href="./packages/shrub-socket/client/index.html#implementshookservice">client</a>)</p></li>
-<li><p>shrub-ui/notifications (<a href="./packages/shrub-ui/client/notifications.html#implementshookservice">client</a>)</p></li>
+<li><p>shrub-ui/messages (<a href="./packages/shrub-ui/client/messages.html#implementshookservice">client</a>)</p></li>
+<li><p>shrub-ui/notifications (<a href="./packages/shrub-ui/client/notifications/index.html#implementshookservice">client</a>)</p></li>
 <li><p>shrub-ui/window-title (<a href="./packages/shrub-ui/client/window-title.html#implementshookservice">client</a>)</p></li>
 <li><p>shrub-user (<a href="./packages/shrub-user/client/index.html#implementshookservice">client</a>)</p></li></ul></li>
 <li><h2 id="servicemock"><code>serviceMock</code></h2>
@@ -142,12 +148,16 @@ description and a list of implementing packages for each hook.</p>
 <li><p>shrub-schema-rest (<a href="./packages/shrub-schema-rest/index.html#implementshookconfig">server</a>)</p></li>
 <li><p>shrub-skin (<a href="./packages/shrub-skin/index.html#implementshookconfig">server</a>)</p></li>
 <li><p>shrub-socket (<a href="./packages/shrub-socket/index.html#implementshookconfig">server</a>)</p></li>
+<li><p>shrub-ui/notifications (<a href="./packages/shrub-ui/notifications.html#implementshookconfig">server</a>)</p></li>
 <li><p>shrub-user (<a href="./packages/shrub-user/index.html#implementshookconfig">server</a>)</p></li></ul></li>
 </ul>
 
 <p>Invoked in <a href="./packages/shrub-core/client/index.html">packages/shrub-core/client/index.coffee</a>:</p>
 
 <ul>
+<li><h2 id="ahrefsanitizationwhilelist"><code>aHrefSanitizationWhilelist</code></h2>
+
+<p><h5>Allow packages to define whitelisted patterns for ngHref attributes. </h5></p></li>
 <li><h2 id="route"><code>route</code></h2>
 
 <p><h5>Allow packages to define routes in the Angular application. </h5></p>
@@ -213,7 +223,8 @@ description and a list of implementing packages for each hook.</p>
 
 <p><h5>Allows packages to specify HTTP routes. Implementations should return an array of route specifications. See [shrub-orm-rest's implementation] (/packages/shrub-orm-rest/index.coffee#implementshookhttproutes) as an example. </h5></p>
 
-<ul><li>shrub-schema-rest (<a href="./packages/shrub-schema-rest/index.html#implementshookhttproutes">server</a>)</li></ul></li>
+<ul><li><p>shrub-example/about (<a href="./packages/shrub-example/about.html#implementshookhttproutes">server</a>)</p></li>
+<li><p>shrub-schema-rest (<a href="./packages/shrub-schema-rest/index.html#implementshookhttproutes">server</a>)</p></li></ul></li>
 </ul>
 
 <p>Invoked in <a href="./packages/shrub-http/manager.html">packages/shrub-http/manager.coffee</a>:</p>
@@ -227,9 +238,7 @@ description and a list of implementing packages for each hook.</p>
 <li><p>shrub-socket (<a href="./packages/shrub-socket/index.html#implementshookhttpinitializing">server</a>)</p></li></ul></li>
 <li><h2 id="httplistening"><code>httpListening</code></h2>
 
-<p><h5>Invoked once the server is listening, but before initialization finishes. Implementations should return a promise. When all promises are fulfilled, initialization finishes. <code>TODO</code>: Remove this hook; implementations should be using <code>bootstrapMiddleware</code>. </h5></p>
-
-<ul><li>shrub-nodemailer (<a href="./packages/shrub-nodemailer/index.html#implementshookhttplistening">server</a>)</li></ul></li>
+<p><h5>Invoked once the server is listening, but before initialization finishes. Implementations should return a promise. When all promises are fulfilled, initialization finishes. <code>TODO</code>: Remove this hook; implementations should be using <code>bootstrapMiddleware</code>. </h5></p></li>
 <li><h2 id="httpmiddleware"><code>httpMiddleware</code></h2>
 
 <p><h5>Invoked every time an HTTP connection is established. <code>TODO</code>: Rename express to http, so we can use a short name. </h5></p>
@@ -259,14 +268,6 @@ description and a list of implementing packages for each hook.</p>
 <ul><li>shrub-villiany (<a href="./packages/shrub-villiany/index.html#implementshooklimiterapplicationmiddleware">server</a>)</li></ul></li>
 </ul>
 
-<p>Invoked in <a href="./packages/shrub-nodemailer/index.html">packages/shrub-nodemailer/index.coffee</a>:</p>
-
-<ul>
-<li><h2 id="mail"><code>mail</code></h2>
-
-<p><h5>Allow other packages to make changes to outgoing mail. </h5></p></li>
-</ul>
-
 <p>Invoked in <a href="./packages/shrub-orm/client/index.html">packages/shrub-orm/client/index.coffee</a>:</p>
 
 <ul>
@@ -274,7 +275,9 @@ description and a list of implementing packages for each hook.</p>
 
 <p><h5>Allows packages to create Waterline collections. </h5></p>
 
-<ul><li><p>shrub-user (<a href="./packages/shrub-user/client/index.html#implementshookcollections">client</a>, <a href="./packages/shrub-user/index.html#implementshookcollections">server</a>)</p></li>
+<ul><li><p>shrub-limiter (<a href="./packages/shrub-limiter/index.html#implementshookcollections">server</a>)</p></li>
+<li><p>shrub-ui/notifications (<a href="./packages/shrub-ui/notifications.html#implementshookcollections">server</a>)</p></li>
+<li><p>shrub-user (<a href="./packages/shrub-user/client/index.html#implementshookcollections">client</a>, <a href="./packages/shrub-user/index.html#implementshookcollections">server</a>)</p></li>
 <li><p>shrub-villiany (<a href="./packages/shrub-villiany/index.html#implementshookcollections">server</a>)</p></li></ul></li>
 <li><h2 id="collectionsalter"><code>collectionsAlter</code></h2>
 
@@ -305,6 +308,7 @@ description and a list of implementing packages for each hook.</p>
 <p><h5>Gather all endpoints. </h5></p>
 
 <ul><li><p>shrub-angular (<a href="./packages/shrub-angular/index.html#implementshookendpoint">server</a>)</p></li>
+<li><p>shrub-ui/notifications (<a href="./packages/shrub-ui/notifications.html#implementshookendpoint">server</a>)</p></li>
 <li><p>shrub-user/forgot (<a href="./packages/shrub-user/forgot.html#implementshookendpoint">server</a>)</p></li>
 <li><p>shrub-user/login (<a href="./packages/shrub-user/login.html#implementshookendpoint">server</a>)</p></li>
 <li><p>shrub-user/logout (<a href="./packages/shrub-user/logout.html#implementshookendpoint">server</a>)</p></li>

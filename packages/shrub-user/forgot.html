@@ -18,8 +18,9 @@
     <span class="nv">receiver: </span><span class="nf">(req, fn) -&gt;</span>
       
       <span class="nv">User = </span><span class="nx">orm</span><span class="p">.</span><span class="nx">collection</span> <span class="s">&#39;shrub-user&#39;</span>
-      
-      <span class="nx">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nf">-&gt;</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Cancel promise flow if the user doesn't exist.</p></div></div><div class="code"><div class="wrapper">      <span class="k">class</span> <span class="nx">NoSuchUser</span> <span class="k">extends</span> <span class="nb">Error</span>
+        <span class="nv">constructor: </span><span class="nf">(@message) -&gt;</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Look up the user.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nf">-&gt;</span>
       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Search for username or encrypted email.</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="o">-</span><span class="mi">1</span> <span class="o">is</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">usernameOrEmail</span><span class="p">.</span><span class="nx">indexOf</span> <span class="s">&#39;@&#39;</span>
           
           <span class="nv">iname: </span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">usernameOrEmail</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span>
@@ -35,52 +36,45 @@
         </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Find the user.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">User</span><span class="p">.</span><span class="nx">findOne</span> <span class="nx">filter</span>
         
       <span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">(@user) -&gt;</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nx">NoSuchUser</span> <span class="k">unless</span> <span class="nx">@user</span><span class="o">?</span>
         </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Generate a one-time login token.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">crypto</span><span class="p">.</span><span class="nx">randomBytes</span> <span class="mi">24</span>
         
       <span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">(token) -&gt;</span>
-        <span class="k">return</span> <span class="k">unless</span> <span class="nx">@user</span><span class="o">?</span>
         
         <span class="vi">@user.resetPasswordToken = </span><span class="nx">token</span><span class="p">.</span><span class="nx">toString</span> <span class="s">&#39;hex&#39;</span>
         </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Decrypt the user's email address.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">crypto</span><span class="p">.</span><span class="nx">decrypt</span> <span class="nx">@user</span><span class="p">.</span><span class="nx">email</span>
         
       <span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">(email) -&gt;</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Send an email to the user with a one-time login link.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">hostname = </span><span class="s">&quot;http://</span><span class="si">#{</span>
-          <span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">host</span>
-        <span class="si">}</span><span class="s">&quot;</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Send an email to the user's email with a one-time login
+link.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">siteHostname = </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;packageSettings:shrub-core:siteHostname&#39;</span>
+        <span class="nv">siteUrl = </span><span class="s">&quot;http://</span><span class="si">#{</span><span class="nx">siteHostname</span><span class="si">}</span><span class="s">&quot;</span>
         
-        <span class="nv">siteName = </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;packageSettings:shrub-core:siteName&#39;</span>
-        
-        <span class="nv">tokens =</span>
-          
-          <span class="nv">hostname: </span><span class="nx">hostname</span>
+        <span class="nv">scope =</span>
           
           <span class="nv">email: </span><span class="nx">email</span>
-          
-          <span class="nv">loginUrl: </span><span class="s">&quot;</span><span class="si">#{</span>
-            <span class="nx">hostname</span>
+          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p><code>TODO</code>: HTTPS</p></div></div><div class="code"><div class="wrapper">          <span class="nv">loginUrl: </span><span class="s">&quot;</span><span class="si">#{</span>
+            <span class="nx">siteUrl</span>
           <span class="si">}</span><span class="s">/user/reset/</span><span class="si">#{</span>
-            <span class="nx">@user</span><span class="p">.</span><span class="nx">resetPasswordToken</span>
+            <span class="nx">user</span><span class="p">.</span><span class="nx">resetPasswordToken</span>
           <span class="si">}</span><span class="s">&quot;</span>
           
-          <span class="nv">siteName: </span><span class="nx">siteName</span>
+          <span class="nv">siteUrl: </span><span class="nx">siteUrl</span>
           
-          <span class="nv">title: </span><span class="s">&quot;Password recovery request&quot;</span>
-          
-          <span class="nv">username: </span><span class="nx">@user</span><span class="p">.</span><span class="nx">name</span>
+          <span class="nv">user: </span><span class="nx">@user</span>
         
         <span class="nx">nodemailer</span><span class="p">.</span><span class="nx">sendMail</span><span class="p">(</span>
-          <span class="s">&#39;user/forgot&#39;</span>
+          <span class="s">&#39;shrub-user-email-forgot&#39;</span>
+        <span class="p">,</span>
           <span class="nv">to: </span><span class="nx">email</span>
-          <span class="nv">subject: </span><span class="s">&quot;Password recovery request for your account at </span><span class="si">#{</span>
-            <span class="nx">siteName</span>
-          <span class="si">}</span><span class="s">&quot;</span>
-          <span class="nv">tokens: </span><span class="nx">tokens</span>
+          <span class="nv">subject: </span><span class="s">&quot;Password recovery request&quot;</span>
+        <span class="p">,</span>
+          <span class="nx">scope</span>
         <span class="p">)</span>
       
         <span class="nx">@user</span><span class="p">.</span><span class="nx">save</span><span class="p">()</span>
     
-      <span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">-&gt;</span>
+      <span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">-&gt;</span> <span class="nx">fn</span><span class="p">()</span>
         
-        <span class="nx">fn</span><span class="p">()</span>
-        
+      <span class="p">).</span><span class="nx">catch</span><span class="p">(</span><span class="nx">NoSuchUser</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="nx">fn</span><span class="p">()</span>
+      
       <span class="p">).</span><span class="nx">catch</span> <span class="nx">fn</span></div></div></div></div></body></html>

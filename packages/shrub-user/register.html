@@ -22,43 +22,36 @@
       <span class="p">{</span><span class="nx">email</span><span class="p">,</span> <span class="nx">password</span><span class="p">,</span> <span class="nx">username</span><span class="p">}</span> <span class="o">=</span> <span class="nx">body</span>
       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Register a new user.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">exports</span><span class="p">.</span><span class="nx">register</span><span class="p">(</span><span class="nx">username</span><span class="p">,</span> <span class="nx">email</span><span class="p">,</span> <span class="nx">password</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">(user) -&gt;</span>
         </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Send an email to the new user's email with a one-time login
-link.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">hostname = </span><span class="s">&quot;http://</span><span class="si">#{</span>
-          <span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">host</span>
-        <span class="si">}</span><span class="s">&quot;</span>
+link.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">siteHostname = </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;packageSettings:shrub-core:siteHostname&#39;</span>
+        <span class="nv">siteUrl = </span><span class="s">&quot;http://</span><span class="si">#{</span><span class="nx">siteHostname</span><span class="si">}</span><span class="s">&quot;</span>
         
-        <span class="nv">siteName = </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;packageSettings:shrub-core:siteName&#39;</span>
-        
-        <span class="nv">tokens =</span>
-          
-          <span class="nv">hostname: </span><span class="nx">hostname</span>
+        <span class="nv">scope =</span>
           
           <span class="nv">email: </span><span class="nx">email</span>
-          
-          <span class="nv">loginUrl: </span><span class="s">&quot;</span><span class="si">#{</span>
-            <span class="nx">hostname</span>
+          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p><code>TODO</code>: HTTPS</p></div></div><div class="code"><div class="wrapper">          <span class="nv">loginUrl: </span><span class="s">&quot;</span><span class="si">#{</span>
+            <span class="nx">siteUrl</span>
           <span class="si">}</span><span class="s">/user/reset/</span><span class="si">#{</span>
             <span class="nx">user</span><span class="p">.</span><span class="nx">resetPasswordToken</span>
           <span class="si">}</span><span class="s">&quot;</span>
           
-          <span class="nv">password: </span><span class="nx">user</span><span class="p">.</span><span class="nx">plaintext</span>
+          <span class="nv">siteUrl: </span><span class="nx">siteUrl</span>
           
-          <span class="nv">siteName: </span><span class="nx">siteName</span>
-          
-          <span class="nv">title: </span><span class="s">&quot;Account registration details&quot;</span>
-          
-          <span class="nv">username: </span><span class="nx">username</span>
+          <span class="nv">user: </span><span class="nx">user</span>
         
         <span class="nx">nodemailer</span><span class="p">.</span><span class="nx">sendMail</span><span class="p">(</span>
-          <span class="s">&#39;user/register&#39;</span>
+          <span class="s">&#39;shrub-user-email-register&#39;</span>
+        <span class="p">,</span>
           <span class="nv">to: </span><span class="nx">email</span>
-          <span class="nv">subject: </span><span class="s">&quot;Account registration details for </span><span class="si">#{</span><span class="nx">siteName</span><span class="si">}</span><span class="s">&quot;</span>
-          <span class="nv">tokens: </span><span class="nx">tokens</span>
+          <span class="nv">subject: </span><span class="s">&quot;Registration details&quot;</span>
+        <span class="p">,</span>
+          <span class="nx">scope</span>
         <span class="p">)</span>
+        
+        <span class="k">return</span>
       
-      <span class="p">).</span><span class="nx">then</span><span class="p">(</span>
-        <span class="nf">-&gt;</span> <span class="nx">fn</span><span class="p">()</span>
-        <span class="nf">(error) -&gt;</span> <span class="nx">fn</span> <span class="nx">error</span>
-      <span class="p">)</span>
+      <span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">-&gt;</span> <span class="nx">fn</span><span class="p">()</span>
+        
+      <span class="p">).</span><span class="nx">catch</span> <span class="nx">fn</span>
       </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookreplcontext">Implements hook <code>replContext</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;replContext&#39;</span><span class="p">,</span> <span class="nf">(context) -&gt;</span>
     
     <span class="nv">context.registerUser = </span><span class="nx">exports</span><span class="p">.</span><span class="nx">register</span>

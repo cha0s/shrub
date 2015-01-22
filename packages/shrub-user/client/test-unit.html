@@ -2,11 +2,19 @@
   
   <span class="nv">user = </span><span class="kc">null</span>
   
-  <span class="nx">beforeEach</span> <span class="nf">-&gt;</span>
+  <span class="nx">beforeEach</span> <span class="nf">(done) -&gt;</span>
     
     <span class="nx">inject</span> <span class="p">[</span>
-      <span class="s">&#39;shrub-user&#39;</span>
-      <span class="nf">(_user_) -&gt;</span> <span class="nv">user = </span><span class="nx">_user_</span>
+      <span class="s">&#39;$rootScope&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-orm&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-user&#39;</span>
+      <span class="nf">($rootScope, orm, _user_) -&gt;</span>
+        <span class="nv">user = </span><span class="nx">_user_</span>
+        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Unfortunately, since ORM comes up async we have to do some
+pretty nasty hacks to get everything sync'd for the tests.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">handle = </span><span class="nx">setInterval</span> <span class="p">(</span><span class="nf">-&gt;</span> <span class="nx">$rootScope</span><span class="p">.</span><span class="nx">$apply</span><span class="p">()),</span> <span class="mi">10</span>
+        
+        <span class="nx">orm</span><span class="p">.</span><span class="nx">initialized</span><span class="p">().</span><span class="nx">then</span> <span class="nf">-&gt;</span>
+          <span class="nx">clearInterval</span> <span class="nx">handle</span>
+          <span class="nx">setTimeout</span> <span class="nx">done</span><span class="p">,</span> <span class="mi">0</span>
+          
     <span class="p">]</span>
     
   <span class="nx">it</span> <span class="s">&#39;should provide an anonymous user by default&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
@@ -20,15 +28,15 @@
       <span class="nf">($rootScope, $timeout, socket) -&gt;</span>
         
         <span class="nx">socket</span><span class="p">.</span><span class="nx">catchEmit</span> <span class="s">&#39;rpc://shrub.user.login&#39;</span><span class="p">,</span> <span class="nf">(data, fn) -&gt;</span>
+          
           <span class="nx">fn</span> <span class="nv">result: id: </span><span class="mi">1</span><span class="p">,</span> <span class="nv">name: </span><span class="s">&#39;cha0s&#39;</span>
         
         <span class="nx">user</span><span class="p">.</span><span class="nx">login</span> <span class="s">&#39;local&#39;</span><span class="p">,</span> <span class="s">&#39;cha0s&#39;</span><span class="p">,</span> <span class="s">&#39;password&#39;</span>
         
         <span class="nx">$timeout</span><span class="p">.</span><span class="nx">flush</span><span class="p">()</span>
-        <span class="nx">$rootScope</span><span class="p">.</span><span class="nx">$apply</span><span class="p">()</span>
-        
-        <span class="nx">expect</span><span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">isLoggedIn</span><span class="p">()).</span><span class="nx">toBe</span> <span class="kc">true</span>
       
+        <span class="nx">expect</span><span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">isLoggedIn</span><span class="p">()).</span><span class="nx">toBe</span> <span class="kc">true</span>
+          
     <span class="p">]</span>
 
   <span class="nx">it</span> <span class="s">&#39;should log out a user through RPC&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
@@ -46,7 +54,6 @@
         <span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">login</span> <span class="s">&#39;local&#39;</span><span class="p">,</span> <span class="s">&#39;cha0s&#39;</span><span class="p">,</span> <span class="s">&#39;password&#39;</span><span class="p">).</span><span class="nx">then</span> <span class="nf">-&gt;</span> <span class="nx">user</span><span class="p">.</span><span class="nx">logout</span><span class="p">()</span>
         
         <span class="nx">$timeout</span><span class="p">.</span><span class="nx">flush</span><span class="p">()</span>
-        <span class="nx">$rootScope</span><span class="p">.</span><span class="nx">$apply</span><span class="p">()</span>
         
         <span class="nx">expect</span><span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">isLoggedIn</span><span class="p">()).</span><span class="nx">toBe</span> <span class="kc">false</span>
       

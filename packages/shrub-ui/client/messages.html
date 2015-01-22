@@ -1,7 +1,7 @@
-<!DOCTYPE html><html lang="en"><head><title>packages/shrub-ui/client/notifications</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="packages/shrub-ui/client/notifications"><meta name="groc-project-path" content="packages/shrub-ui/client/notifications.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-ui/client/notifications.coffee">packages/shrub-ui/client/notifications.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="notifications">Notifications</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nv">errors = </span><span class="nx">require</span> <span class="s">&#39;errors&#39;</span>
+<!DOCTYPE html><html lang="en"><head><title>packages/shrub-ui/client/messages</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="packages/shrub-ui/client/messages"><meta name="groc-project-path" content="packages/shrub-ui/client/messages.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-ui/client/messages.coffee">packages/shrub-ui/client/messages.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="messages">Messages</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nv">errors = </span><span class="nx">require</span> <span class="s">&#39;errors&#39;</span>
 
 <span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookdirective">Implements hook <code>directive</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;directive&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
-    <span class="s">&#39;$timeout&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-ui/notifications&#39;</span>
+    <span class="s">&#39;$timeout&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-ui/messages&#39;</span>
     <span class="nf">($timeout, {count, removeTop, top}) -&gt;</span>
     
       <span class="nv">link: </span><span class="nf">(scope, elm, attr) -&gt;</span>
@@ -54,9 +54,9 @@ notification.</p></div></div><div class="code"><div class="wrapper">            
       
   <span class="p">]</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookrpccall">Implements hook <code>rpcCall</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;rpcCall&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
-    <span class="s">&#39;shrub-ui/notifications&#39;</span><span class="p">,</span> <span class="s">&#39;result&#39;</span>
-    <span class="nf">(notifications, result) -&gt;</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Add a notification with the error text.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">result</span><span class="p">.</span><span class="nx">catch</span> <span class="nf">(error) -&gt;</span> <span class="nx">notifications</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span>
+    <span class="s">&#39;shrub-ui/messages&#39;</span><span class="p">,</span> <span class="s">&#39;result&#39;</span>
+    <span class="nf">(messages, result) -&gt;</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Add a notification with the error text.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">result</span><span class="p">.</span><span class="nx">catch</span> <span class="nf">(error) -&gt;</span> <span class="nx">messages</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span>
         <span class="k">class</span><span class="o">:</span> <span class="s">&#39;alert-danger&#39;</span><span class="p">,</span> <span class="nv">text: </span><span class="nx">errors</span><span class="p">.</span><span class="nx">message</span> <span class="nx">error</span>
       <span class="p">)</span>
   
@@ -67,26 +67,26 @@ notification.</p></div></div><div class="code"><div class="wrapper">            
     
       <span class="nv">service = </span><span class="p">{}</span>
       
-      <span class="nv">_notifications = </span><span class="p">[]</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="notificationsadd">notifications.add</h2>
+      <span class="nv">_messages = </span><span class="p">[]</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="messagesadd">messages.add</h2>
 
 <p>Add a notification to be displayed.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">service.add = </span><span class="nf">(notification) -&gt;</span>
         
         <span class="nx">notification</span><span class="p">.</span><span class="nx">class</span> <span class="o">?=</span> <span class="s">&#39;alert-info&#39;</span>
         
-        <span class="nx">_notifications</span><span class="p">.</span><span class="nx">push</span> <span class="nx">notification</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="notificationstop">notifications.top</h2>
+        <span class="nx">_messages</span><span class="p">.</span><span class="nx">push</span> <span class="nx">notification</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="messagestop">messages.top</h2>
 
-<p>Get the top notification.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">service.top = </span><span class="nf">-&gt;</span> <span class="nx">_notifications</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="notificationsremovetop">notifications.removeTop</h2>
+<p>Get the top notification.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">service.top = </span><span class="nf">-&gt;</span> <span class="nx">_messages</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="messagesremovetop">messages.removeTop</h2>
 
-<p>Remove the top notification.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">service.removeTop = </span><span class="nf">-&gt;</span> <span class="nx">_notifications</span><span class="p">.</span><span class="nx">shift</span><span class="p">()</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="notificationscount">notifications.count</h2>
+<p>Remove the top notification.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">service.removeTop = </span><span class="nf">-&gt;</span> <span class="nx">_messages</span><span class="p">.</span><span class="nx">shift</span><span class="p">()</span>
+      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="messagescount">messages.count</h2>
 
-<p>The number of notifications to show.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">service.count = </span><span class="nf">-&gt;</span> <span class="nx">_notifications</span><span class="p">.</span><span class="nx">length</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Accept notifications from the server.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">socket</span><span class="p">.</span><span class="nx">on</span> <span class="s">&#39;notifications&#39;</span><span class="p">,</span> <span class="nf">(data) -&gt;</span>
+<p>The number of messages to show.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">service.count = </span><span class="nf">-&gt;</span> <span class="nx">_messages</span><span class="p">.</span><span class="nx">length</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Accept messages from the server.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">socket</span><span class="p">.</span><span class="nx">on</span> <span class="s">&#39;shrub.ui.messages&#39;</span><span class="p">,</span> <span class="nf">(data) -&gt;</span>
         
-        <span class="nx">service</span><span class="p">.</span><span class="nx">add</span> <span class="nx">notification</span> <span class="k">for</span> <span class="nx">notification</span> <span class="k">in</span> <span class="nx">data</span><span class="p">.</span><span class="nx">notifications</span>
+        <span class="nx">service</span><span class="p">.</span><span class="nx">add</span> <span class="nx">message</span> <span class="k">for</span> <span class="nx">message</span> <span class="k">in</span> <span class="nx">data</span><span class="p">.</span><span class="nx">messages</span>
         
       <span class="nx">service</span>
       

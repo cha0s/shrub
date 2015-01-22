@@ -1,8 +1,9 @@
 <!DOCTYPE html><html lang="en"><head><title>server/limits</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../"><meta name="groc-document-path" content="server/limits"><meta name="groc-project-path" content="server/limits.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../assets/style.css"><script type="text/javascript" src="../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/server/limits.coffee">server/limits.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="limits">Limits</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nv">Promise = </span><span class="nx">require</span> <span class="s">&#39;bluebird&#39;</span>
 <span class="nv">redis = </span><span class="nx">require</span> <span class="s">&#39;redis&#39;</span>
-<span class="nv">redback = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;redback&#39;</span><span class="p">).</span><span class="nx">use</span> <span class="nx">redis</span><span class="p">.</span><span class="nx">createClient</span><span class="p">()</span>
 
-<span class="nv">pkgman = </span><span class="nx">require</span> <span class="s">&#39;pkgman&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="limiter">Limiter</h2>
+<span class="nv">pkgman = </span><span class="nx">require</span> <span class="s">&#39;pkgman&#39;</span>
+
+<span class="nv">orm = </span><span class="nx">require</span> <span class="s">&#39;shrub-orm&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="limiter">Limiter</h2>
 
 <p>Provides methods to tally scores, and compare them against a threshold of
 time.</p>
@@ -29,10 +30,8 @@ e.g. "rpc://user.login:limiter"</p></li>
       <span class="s">&quot;Limiter(</span><span class="si">#{</span><span class="nx">key</span><span class="si">}</span><span class="s">) must be constructed with a valid threshold!&quot;</span>
     <span class="p">)</span> <span class="k">unless</span> <span class="nx">@threshold</span> <span class="k">instanceof</span> <span class="nx">ThresholdFinal</span>
     
-    <span class="c1"># Create the low-level redback limiter.</span>
-    <span class="vi">@limiter = </span><span class="nx">redback</span><span class="p">.</span><span class="nx">createBetterRateLimit</span><span class="p">(</span>
-      <span class="nx">key</span><span class="p">,</span> <span class="nx">@threshold</span><span class="p">.</span><span class="nx">calculateSeconds</span><span class="p">()</span>
-    <span class="p">)</span>
+    <span class="c1"># Create the low-level limiter.</span>
+    <span class="vi">@limiter = </span><span class="k">new</span> <span class="nx">LimiterManager</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">@threshold</span><span class="p">.</span><span class="nx">calculateSeconds</span><span class="p">()</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="add">.add</h3>
 
 <p><em>Accrue score for a limiter.</em></p>
@@ -85,7 +84,81 @@ from <a href="./audit.html"><code>audit.fingerprint()</code></a></li>
       <span class="nx">@limiter</span><span class="p">[</span><span class="nx">index</span><span class="p">]</span> <span class="nx">key</span> <span class="k">for</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">keys</span>
     
     <span class="p">).</span><span class="nx">then</span> <span class="nf">(reduction) -&gt;</span>
-      <span class="nx">reduction</span><span class="p">.</span><span class="nx">reduce</span> <span class="p">(</span><span class="nf">(l, r) -&gt;</span> <span class="k">if</span> <span class="nx">l</span> <span class="o">&gt;</span> <span class="nx">r</span> <span class="k">then</span> <span class="nx">l</span> <span class="k">else</span> <span class="nx">r</span><span class="p">),</span> <span class="o">-</span><span class="kc">Infinity</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="thresholdbase">ThresholdBase</h2>
+      <span class="nx">reduction</span><span class="p">.</span><span class="nx">reduce</span> <span class="p">(</span><span class="nf">(l, r) -&gt;</span> <span class="k">if</span> <span class="nx">l</span> <span class="o">&gt;</span> <span class="nx">r</span> <span class="k">then</span> <span class="nx">l</span> <span class="k">else</span> <span class="nx">r</span><span class="p">),</span> <span class="o">-</span><span class="kc">Infinity</span>
+
+<span class="k">class</span> <span class="nx">LimiterManager</span>
+
+  <span class="nv">constructor: </span><span class="nf">(@key, @thresholdWindow) -&gt;</span>
+  
+  <span class="nv">_limitHasExpired: </span><span class="nf">(limit) -&gt;</span>
+  
+    <span class="nv">diff = </span><span class="p">(</span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span> <span class="o">-</span> <span class="nx">limit</span><span class="p">.</span><span class="nx">createdAt</span><span class="p">.</span><span class="nx">getTime</span><span class="p">())</span> <span class="o">/</span> <span class="mi">1000</span>
+    <span class="nx">diff</span> <span class="o">&gt;=</span> <span class="nx">@thresholdWindow</span>
+    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="add">.add</h3>
+
+<p><em>Add score to a limiter.</em></p>
+
+<ul>
+<li><p>(string) <code>id</code> - The ID of the limiter.</p></li>
+<li><p>(integer) <code>score</code> - The score to add. Defaults to 1.</p></li>
+</ul></div></div><div class="code"><div class="wrapper">  <span class="nv">accrue: </span><span class="nf">(id, score = 1) -&gt;</span>
+  
+    <span class="c1"># Cast score to integer.</span>
+    <span class="nv">score = </span><span class="nb">parseInt</span> <span class="nx">score</span><span class="p">,</span> <span class="mi">10</span>
+    
+    <span class="nx">orm</span><span class="p">.</span><span class="nx">collection</span><span class="p">(</span><span class="s">&#39;shrub-limit&#39;</span><span class="p">).</span><span class="nx">findOrCreate</span><span class="p">().</span><span class="nx">where</span><span class="p">(</span>
+      <span class="nv">key: </span><span class="nx">@key</span> <span class="o">+</span> <span class="s">&#39;:&#39;</span> <span class="o">+</span> <span class="nx">id</span>
+    <span class="p">).</span><span class="nx">then</span> <span class="nf">(limit) =&gt;</span>
+      <span class="nv">limit.key = </span><span class="nx">@key</span> <span class="o">+</span> <span class="s">&#39;:&#39;</span> <span class="o">+</span> <span class="nx">id</span>
+      
+      <span class="c1"># Empty out scores if it&#39;s expired.</span>
+      <span class="k">if</span> <span class="nx">@_limitHasExpired</span> <span class="nx">limit</span>
+        <span class="nv">limit.createdAt = </span><span class="k">new</span> <span class="nb">Date</span><span class="p">()</span>
+        <span class="nv">limit.scores = </span><span class="p">[]</span>
+      
+      <span class="c1"># Accrue the score.</span>
+      <span class="nx">limit</span><span class="p">.</span><span class="nx">scores</span><span class="p">.</span><span class="nx">push</span> <span class="nx">score</span>
+      <span class="nx">limit</span><span class="p">.</span><span class="nx">save</span><span class="p">()</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="score">.score</h3>
+
+<p><em>Check score for a limiter.</em></p>
+
+<ul>
+<li>(string) <code>id</code> - The ID of the limiter.</li>
+</ul></div></div><div class="code"><div class="wrapper">  <span class="nv">score: </span><span class="nf">(id) -&gt;</span>
+  
+    <span class="c1"># Get all scores for this limiter.</span>
+    <span class="nx">orm</span><span class="p">.</span><span class="nx">collection</span><span class="p">(</span><span class="s">&#39;shrub-limit&#39;</span><span class="p">).</span><span class="nx">findOne</span><span class="p">().</span><span class="nx">where</span><span class="p">(</span>
+      <span class="nv">key: </span><span class="nx">@key</span> <span class="o">+</span> <span class="s">&#39;:&#39;</span> <span class="o">+</span> <span class="nx">id</span>
+    <span class="p">).</span><span class="nx">then</span> <span class="nf">(limit) =&gt;</span>
+      <span class="k">return</span> <span class="mi">0</span> <span class="k">unless</span> <span class="nx">limit</span><span class="o">?</span>
+      
+      <span class="c1"># Destroy if it&#39;s expired.</span>
+      <span class="k">return</span> <span class="nx">limit</span><span class="p">.</span><span class="nx">destroy</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nf">-&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="k">if</span> <span class="nx">@_limitHasExpired</span> <span class="nx">limit</span>
+      
+      <span class="c1"># Sum all the scores.</span>
+      <span class="nv">limit.key = </span><span class="nx">@key</span> <span class="o">+</span> <span class="s">&#39;:&#39;</span> <span class="o">+</span> <span class="nx">id</span>
+      <span class="nx">limit</span><span class="p">.</span><span class="nx">save</span><span class="p">().</span><span class="nx">then</span> <span class="nf">-&gt;</span> <span class="nx">limit</span><span class="p">.</span><span class="nx">scores</span><span class="p">.</span><span class="nx">reduce</span> <span class="p">(</span><span class="nf">(l, r) -&gt;</span> <span class="nx">l</span> <span class="o">+</span> <span class="nx">r</span><span class="p">),</span> <span class="mi">0</span>
+  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="ttl">.ttl</h3>
+
+<p><em>Time-to-live for a limiter.</em></p>
+
+<ul>
+<li>(string) <code>id</code> - The ID of the limiter.</li>
+</ul></div></div><div class="code"><div class="wrapper">  <span class="nv">ttl: </span><span class="nf">(id) -&gt;</span>
+    
+    <span class="nx">orm</span><span class="p">.</span><span class="nx">collection</span><span class="p">(</span><span class="s">&#39;shrub-limit&#39;</span><span class="p">).</span><span class="nx">findOne</span><span class="p">().</span><span class="nx">where</span><span class="p">(</span>
+      <span class="nv">key: </span><span class="nx">@key</span> <span class="o">+</span> <span class="s">&#39;:&#39;</span> <span class="o">+</span> <span class="nx">id</span>
+    <span class="p">).</span><span class="nx">then</span> <span class="nf">(limit) =&gt;</span>
+      <span class="k">return</span> <span class="mi">0</span> <span class="k">unless</span> <span class="nx">limit</span><span class="o">?</span>
+      
+      <span class="c1"># Destroy if it&#39;s expired.</span>
+      <span class="k">return</span> <span class="nx">limit</span><span class="p">.</span><span class="nx">destroy</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nf">-&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="k">if</span> <span class="nx">@_limitHasExpired</span> <span class="nx">limit</span>
+        
+      <span class="nv">limit.key = </span><span class="nx">@key</span> <span class="o">+</span> <span class="s">&#39;:&#39;</span> <span class="o">+</span> <span class="nx">id</span>
+      <span class="nx">limit</span><span class="p">.</span><span class="nx">save</span><span class="p">().</span><span class="nx">then</span> <span class="o">=&gt;</span>
+        
+        <span class="nv">diff = </span><span class="p">(</span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span> <span class="o">-</span> <span class="nx">limit</span><span class="p">.</span><span class="nx">createdAt</span><span class="p">.</span><span class="nx">getTime</span><span class="p">())</span> <span class="o">/</span> <span class="mi">1000</span>
+        <span class="nb">Math</span><span class="p">.</span><span class="nx">ceil</span> <span class="nx">@thresholdWindow</span> <span class="o">-</span> <span class="nx">diff</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="thresholdbase">ThresholdBase</h2>
 
 <p>The base class used to define a threshold.</p></div></div><div class="code"><div class="wrapper"><span class="k">class</span> <span class="nx">ThresholdBase</span>
   </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="constructor"><em>constructor</em></h3>
@@ -153,65 +226,4 @@ threshold(4).every(20).minutes()
 
 <p>Which means that the threshold represents the allowance of a score of 4 to
 accumulate over the period of 20 minutes. If more score is accrued during
-that window, then the threshold is said to be crossed.</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.threshold = </span><span class="nf">(score) -&gt;</span> <span class="k">new</span> <span class="nx">ThresholdBase</span> <span class="nx">score</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Add a redback structure to handle rate limiting.</p></div></div><div class="code"><div class="wrapper"><span class="nx">redback</span><span class="p">.</span><span class="nx">addStructure</span><span class="p">(</span>
-  <span class="s">&#39;BetterRateLimit&#39;</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Called by redback at initialization time: default to 10 minute window.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">init: </span><span class="nf">(@thresholdWindow) -&gt;</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="add">.add</h3>
-
-<p><em>Add score to a limiter.</em></p>
-
-<ul>
-<li><p>(string) <code>id</code> - The ID of the limiter.</p></li>
-<li><p>(integer) <code>score</code> - The score to add. Defaults to 1.</p></li>
-</ul></div></div><div class="code"><div class="wrapper">  <span class="nv">accrue: </span><span class="nf">(id, score = 1) -&gt;</span>
-  
-    <span class="c1"># Convenience.</span>
-    <span class="nv">exists = </span><span class="nx">Promise</span><span class="p">.</span><span class="nx">promisify</span> <span class="nx">@client</span><span class="p">.</span><span class="nx">exists</span><span class="p">,</span> <span class="nx">@client</span>
-    <span class="nv">rpushx = </span><span class="nx">Promise</span><span class="p">.</span><span class="nx">promisify</span> <span class="nx">@client</span><span class="p">.</span><span class="nx">rpushx</span><span class="p">,</span> <span class="nx">@client</span>
-    
-    <span class="c1"># Cast score to integer.</span>
-    <span class="nv">score = </span><span class="nb">parseInt</span> <span class="nx">score</span><span class="p">,</span> <span class="mi">10</span>
-    
-    <span class="c1"># Add the ID to the end of the limiter key and check if an entry</span>
-    <span class="c1"># already exists.</span>
-    <span class="nv">id = </span><span class="nx">@key</span> <span class="o">+</span> <span class="s">&#39;:&#39;</span> <span class="o">+</span> <span class="nx">id</span>
-    <span class="nx">exists</span><span class="p">(</span><span class="nx">id</span><span class="p">).</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">then</span> <span class="nf">(exists) -&gt;</span>
-      
-      <span class="c1"># Simply add it to the score if an entry already exists.</span>
-      <span class="k">return</span> <span class="nx">rpushx</span> <span class="nx">id</span><span class="p">,</span> <span class="nx">score</span> <span class="k">if</span> <span class="nx">exists</span>
-      
-      <span class="c1"># Otherwise, create an entry, add the score, and set the entry</span>
-      <span class="c1"># to expire.</span>
-      <span class="nv">multi = </span><span class="nx">@client</span><span class="p">.</span><span class="nx">multi</span><span class="p">()</span>
-      <span class="nx">multi</span><span class="p">.</span><span class="nx">rpush</span> <span class="nx">id</span><span class="p">,</span> <span class="nx">score</span>
-      <span class="nx">multi</span><span class="p">.</span><span class="nx">expire</span> <span class="nx">id</span><span class="p">,</span> <span class="nx">@thresholdWindow</span>
-      <span class="nx">Promise</span><span class="p">.</span><span class="nx">promisify</span><span class="p">(</span><span class="nx">multi</span><span class="p">.</span><span class="nx">exec</span><span class="p">,</span> <span class="nx">multi</span><span class="p">)()</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="score">.score</h3>
-
-<p><em>Check score for a limiter.</em></p>
-
-<ul>
-<li>(string) <code>id</code> - The ID of the limiter.</li>
-</ul></div></div><div class="code"><div class="wrapper">  <span class="nv">score: </span><span class="nf">(id) -&gt;</span>
-  
-    <span class="c1"># Convenience.</span>
-    <span class="nv">lrange = </span><span class="nx">Promise</span><span class="p">.</span><span class="nx">promisify</span> <span class="nx">@client</span><span class="p">.</span><span class="nx">lrange</span><span class="p">,</span> <span class="nx">@client</span>
-    
-    <span class="c1"># Get all scores for this limiter.</span>
-    <span class="nx">lrange</span><span class="p">(</span><span class="nx">@key</span> <span class="o">+</span> <span class="s">&#39;:&#39;</span> <span class="o">+</span> <span class="nx">id</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">).</span><span class="nx">then</span> <span class="nf">(scores) -&gt;</span>
-      
-      <span class="c1"># Sum all the scores.</span>
-      <span class="nx">scores</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span>
-        <span class="nf">(score) -&gt;</span> <span class="nb">parseInt</span> <span class="nx">score</span><span class="p">,</span> <span class="mi">10</span>
-      
-      <span class="p">).</span><span class="nx">reduce</span> <span class="p">(</span><span class="nf">(l, r) -&gt;</span> <span class="nx">l</span> <span class="o">+</span> <span class="nx">r</span><span class="p">),</span> <span class="mi">0</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="ttl">.ttl</h3>
-
-<p><em>Time-to-live for a limiter.</em></p>
-
-<ul>
-<li>(string) <code>id</code> - The ID of the limiter.</li>
-</ul></div></div><div class="code"><div class="wrapper">  <span class="nv">ttl: </span><span class="nf">(id) -&gt;</span> <span class="nx">Promise</span><span class="p">.</span><span class="nx">promisify</span><span class="p">(</span><span class="nx">@client</span><span class="p">.</span><span class="nx">ttl</span><span class="p">,</span> <span class="nx">@client</span><span class="p">)</span> <span class="nx">@key</span> <span class="o">+</span> <span class="s">&#39;:&#39;</span> <span class="o">+</span> <span class="nx">id</span>
-    
-<span class="p">)</span></div></div></div></div></body></html>
+that window, then the threshold is said to be crossed.</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.threshold = </span><span class="nf">(score) -&gt;</span> <span class="k">new</span> <span class="nx">ThresholdBase</span> <span class="nx">score</span></div></div></div></div></body></html>

@@ -1,4 +1,5 @@
 <!DOCTYPE html><html lang="en"><head><title>client/modules/pkgman</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="client/modules/pkgman"><meta name="groc-project-path" content="client/modules/pkgman.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/client/modules/pkgman.coffee">client/modules/pkgman.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="package-manager">Package manager</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nv">_ = </span><span class="nx">require</span> <span class="s">&#39;lodash&#39;</span>
+<span class="nv">i8n = </span><span class="nx">require</span> <span class="s">&#39;inflection&#39;</span>
 
 <span class="nv">debug = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;debug&#39;</span><span class="p">)</span> <span class="s">&#39;shrub:pkgman&#39;</span>
 
@@ -82,4 +83,12 @@ package path.</p></div></div><div class="code"><div class="wrapper"><span class=
 <span class="nv">exports.invokePackage = </span><span class="nf">(path, hook, args...) -&gt;</span>
   <span class="nx">pathIndex</span><span class="o">?</span><span class="p">[</span><span class="nx">path</span><span class="p">]</span><span class="o">?</span><span class="p">[</span><span class="nx">hook</span><span class="p">]</span><span class="o">?</span> <span class="nx">args</span><span class="p">...</span>
 
-<span class="nv">exports.packagesImplementing = </span><span class="nf">(hook) -&gt;</span> <span class="nx">packageIndex</span><span class="p">[</span><span class="nx">hook</span><span class="p">]</span> <span class="o">?</span> <span class="p">[]</span></div></div></div></div></body></html>
+<span class="nv">exports.packagesImplementing = </span><span class="nf">(hook) -&gt;</span> <span class="nx">packageIndex</span><span class="o">?</span><span class="p">[</span><span class="nx">hook</span><span class="p">]</span> <span class="o">?</span> <span class="p">[]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Normalize paths, e.g.
+'core/foo/bar' -> 'coreFooBar'</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.normalizePath = </span><span class="nf">(path) -&gt;</span>
+  <span class="nv">parts = </span><span class="k">for</span> <span class="nx">part</span><span class="p">,</span> <span class="nx">i</span> <span class="k">in</span> <span class="nx">path</span><span class="p">.</span><span class="nx">split</span> <span class="s">&#39;/&#39;</span>
+    <span class="nx">i8n</span><span class="p">.</span><span class="nx">camelize</span><span class="p">(</span>
+      <span class="nx">part</span><span class="p">.</span><span class="nx">replace</span> <span class="sr">/[^\w]/g</span><span class="p">,</span> <span class="s">&#39;_&#39;</span>
+      <span class="mi">0</span> <span class="o">is</span> <span class="nx">i</span>
+    <span class="p">)</span>
+    
+  <span class="nx">i8n</span><span class="p">.</span><span class="nx">camelize</span> <span class="p">(</span><span class="nx">i8n</span><span class="p">.</span><span class="nx">underscore</span> <span class="nx">parts</span><span class="p">.</span><span class="nx">join</span> <span class="s">&#39;&#39;</span><span class="p">),</span> <span class="kc">true</span></div></div></div></div></body></html>
