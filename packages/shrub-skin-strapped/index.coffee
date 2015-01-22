@@ -9,6 +9,18 @@ shrubSkin = require 'shrub-skin'
 
 exports.pkgmanRegister = (registrar) ->
 
+	# ## Implements hook `mailHtml`
+	registrar.registerHook 'mailHtml', ($body, html, $) ->
+	
+		$('.container > .main', $body).html html
+		
+		$body.find('.navbar-toggle, .navbar-collapse').remove()
+		$body.find('[data-shrub-ui-messages]').remove()
+		
+		$body.find('script').remove()
+		
+		$('noscript', $body).remove()
+
 	# ## Implements hook `skinAssets`
 	registrar.registerHook 'skinAssets', (assets) ->
 		

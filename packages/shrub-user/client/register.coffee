@@ -12,8 +12,8 @@ exports.pkgmanRegister = (registrar) ->
 		title: 'Sign up'
 		
 		controller: [
-			'$location', '$scope', 'shrub-ui/notifications', 'shrub-rpc', 'shrub-user'
-			($location, $scope, notifications, rpc, user) ->
+			'$location', '$scope', 'shrub-ui/messages', 'shrub-rpc', 'shrub-user'
+			($location, $scope, messages, rpc, user) ->
 				return $location.path '/' if user.isLoggedIn()
 					
 				$scope.form =
@@ -25,7 +25,7 @@ exports.pkgmanRegister = (registrar) ->
 						rpc.formSubmitHandler (error, result) ->
 							return if error?
 							
-							notifications.add(
+							messages.add(
 								text: "An email has been sent with account registration details. Please check your email."
 							)
 							
@@ -47,7 +47,7 @@ exports.pkgmanRegister = (registrar) ->
 						
 						submit:
 							type: 'submit'
-							label: "Register"
+							value: "Sign up"
 						
 		]
 		

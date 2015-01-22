@@ -106,7 +106,7 @@ exports.pkgmanRegister = (registrar) ->
 	]
 	
 	registrar.recur [
-		'forgot', 'login', 'logout', 'register', 'reset'
+		'email', 'forgot', 'login', 'logout', 'register', 'reset'
 	]
 	
 exports.collections = ->

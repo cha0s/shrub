@@ -29,8 +29,8 @@ exports.pkgmanRegister = (registrar) ->
 		title: 'Sign in'
 		
 		controller: [
-			'$location', '$scope', 'shrub-ui/notifications', 'shrub-user'
-			($location, $scope, notifications, user) ->
+			'$location', '$scope', 'shrub-ui/messages', 'shrub-user'
+			($location, $scope, messages, user) ->
 				return $location.path '/' if user.isLoggedIn()
 				
 				$scope.form =
@@ -47,7 +47,7 @@ exports.pkgmanRegister = (registrar) ->
 								values.password
 							).then ->
 								
-								notifications.add(
+								messages.add(
 									class: 'alert-success'
 									text: 'Logged in successfully.'
 								)

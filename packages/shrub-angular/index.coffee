@@ -357,7 +357,7 @@ exports.augmentSandbox = (sandbox) ->
 	# 
 	# *Inject an [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation) with dependencies.*
 	# 
-	# * (mixed) `injectable` - An annontated function to inject with
+	# * (mixed) `injectable` - An annotated function to inject with
 	#   dependencies. 
 	sandbox.inject = (injectable) ->
 		

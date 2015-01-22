@@ -3,6 +3,8 @@
 
 crypto = require 'server/crypto'
 
+Promise = require 'bluebird'
+
 {threshold} = require 'limits'
 
 orm = require 'shrub-orm'
@@ -19,11 +21,15 @@ exports.pkgmanRegister = (registrar) ->
 			
 			User = orm.collection 'shrub-user'
 			
+			# Cancel promise flow if the user doesn't exist.
+			class NoSuchUser extends Error
+				constructor: (@message) ->
+			
 			# Look up the user.
 			Promise.cast(
 				User.findOne resetPasswordToken: req.body.token
 			).bind({}).then((@user) ->
-				return unless @user?
+				throw new NoSuchUser unless @user?
 				
 				# Recalculate the password hashing details.
 				crypto.hasher plaintext: req.body.password
@@ -35,9 +41,8 @@ exports.pkgmanRegister = (registrar) ->
 				@user.resetPasswordToken = null
 				@user.save()
 				
-			).then(->
+			).then(-> fn()
 				
-				# Make it impossible to tell whether an invalid token was used.
-				return
-		
-			).nodeify fn
+			).catch(NoSuchUser, -> fn()
+			
+			).catch fn

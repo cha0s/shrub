@@ -13,7 +13,10 @@ exports.pkgmanRegister = (registrar) ->
 	registrar.registerHook 'config', (req) ->
 		
 		# The URL that the site was accessed at.
-		hostname: (req.headers?.host? and "//#{req.headers.host}") or undefined
+		hostname: if req.headers?.host?
+			"//#{req.headers.host}"
+		else
+			"//#{config.get 'packageSettings:shrub-core:siteHostname'}"
 		
 		# Is the server running in test mode?
 		testMode: if (config.get 'E2E')? then 'e2e' else false
@@ -21,6 +24,7 @@ exports.pkgmanRegister = (registrar) ->
 		# Execution environment, `production`, or...
 		environment: config.get 'NODE_ENV'
 		
+		# The user-visible site name.
 		siteName: config.get 'packageSettings:shrub-core:siteName'
 	
 	# ## Implements hook `fingerprint`
@@ -61,10 +65,14 @@ exports.pkgmanRegister = (registrar) ->
 			'shrub-user/logout'
 			'shrub-angular'
 			'shrub-ui/notifications'
+			'shrub-nodemailer'
 		]
 	
 		# Global site crypto key.
 		cryptoKey: "***CHANGE THIS***"
+		
+		# The default hostname of this application. Includes port if any.
+		siteHostname: 'localhost:4201'
 		
 		# The name of the site, used in various places.
 		siteName: "Shrub example application"

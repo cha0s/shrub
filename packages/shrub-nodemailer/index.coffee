@@ -3,7 +3,6 @@
 # 
 # Renders and sends email.
 
-fs = require 'fs'
 nodemailer = require 'nodemailer'
 Promise = require 'bluebird'
 
@@ -13,59 +12,51 @@ pkgman = require 'pkgman'
 
 skin = require 'shrub-skin'
 
-{handlebars} = require 'hbs'
-
-readFile = Promise.promisify fs.readFile, fs
-
 # Sandbox used to render email as HTML.
 sandbox = null
-
-# Cache template rendering since it's a bit heavy.
-templateCache = {}
 
 # nodemailer transport. Defaults to sendmail.
 transport = null
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `clearCaches`
-	registrar.registerHook 'clearCaches', ->
-		
-		templateCache = {}
-		
-	# ## Implements hook `httpListening`
-	registrar.registerHook 'httpListening', (http) ->
-		
-		return
-		
-		settings = config.get 'packageSettings:shrub-nodemailer'
-		
-		# Instantiate the email transport.
-		transport = nodemailer.createTransport(
-			settings.transport.type
-			settings.transport.options
-		)
-		
-		# Inject scripts we'll need into the sandbox, e.g. jQuery.
-		locals =
-			assets:
-				js: [
-					"/lib/jquery/jquery-1.11.0.js"
-				]
-		
-		# Render the app HTML and create a sandbox with it.
-		skin.renderAppHtml(locals).then((html) ->
-			
-			sandbox = new Sandbox()
-			sandbox.createDocument html
-			
-		).then((_sandbox_) ->
-			
-			# Augment it with functionality we'll find useful and convenient.
-			augmentSandbox sandbox = _sandbox_
-			
-		)
+	# ## Implements hook `bootstrapMiddleware`
+	registrar.registerHook 'bootstrapMiddleware', ->
 	
+		label: 'Bootstrap nodemailer'
+		middleware: [
+		
+			(next) ->
+			
+				settings = config.get 'packageSettings:shrub-nodemailer'
+				
+				# Instantiate the email transport.
+				transport = nodemailer.createTransport(
+					require(settings.transport.module)(
+						settings.transport.options
+					)
+				)
+				
+				# Render the app HTML and create a sandbox with it.
+				skin.renderAppHtml().then((html) ->
+					
+					sandbox = new Sandbox()
+					sandbox.createDocument html, url: "http://localhost:#{
+						config.get 'packageSettings:shrub-http:port'
+					}/home"
+					
+				).then(->
+					
+					# Augment it with functionality we'll find useful and
+					# convenient.
+					augmentSandbox sandbox
+					
+				).then(-> next()
+				
+				).catch next
+			
+		]
+
 	# ## Implements hook `packageSettings`
 	registrar.registerHook 'packageSettings', ->
 		
@@ -76,74 +67,42 @@ exports.pkgmanRegister = (registrar) ->
 		
 		# Passed through directly to nodemailer.
 		transport:
-			type: 'sendmail'
+			module: 'nodemailer-sendmail-transport'
 			options: {}
 		
 # ## sendMail
 # 
 # *Send an email.*
 # 
-# * (string) `type` - The type of email to send. This is user-defined and
-#   useful for anyone interested in implementing hook `mail`.
+# * (string) `directive` - The path of the email directive to send.
 # 
 # * (object) `mail` - See [the nodemailer example](https://github.com/andris9/Nodemailer/blob/master/examples/example_sendmail.js#L9)
-#   for an example of the structure of this object. There is also a `tokens`
-#   key, which is used to replace tokens in the mail.
-exports.sendMail = (type, mail) ->
+#   for an example of the structure of this object.
+# 
+# * (object) `scope` - Object whose values will be injected into the directive
+#   scope when compiling the directive for the email output.
+exports.sendMail = (directive, mail, scope) ->
 	
 	path = config.get 'path'
 	siteEmail = config.get 'packageSettings:shrub-nodemailer:siteEmail'
 	
-	sandboxId = null
-	
-	# Invoke hook `mail`.
-	# Allow other packages to make changes to outgoing mail.
-	Promise.all(
-		pkgman.invokeFlat 'mail', type, mail
-	
-	).then(->
-		return mail.html if mail.html
+	Promise.resolve().then(->
 		
-		# Search for a template filename.
-		return unless mail.template
-		
-		filename = "#{path}/#{template}.email.html"
-		
-		new Promise (resolve) ->
-			fs.exists filename, (exists) ->
-				return resolve() unless exists
-				resolve readFile filename
+		sandbox.inject [
+			'$rootScope', '$compile'
+			($rootScope, $compile) ->
 				
-	).then((html) ->
-		return html if html?
-		
-		# Search for a default template based on `type`. For instance, the user
-		# package defines a mail type `user/register`, which means that there
-		# is a template at `path`/server/packages/user/register.email.html
-		filename = "#{path}/server/packages/#{type}.email.html"
-		
-		new Promise (resolve) ->
-			fs.exists filename, (exists) ->
-				return resolve() unless exists
-				resolve readFile filename
-
-	).then((html) ->
-		
-		return unless html?
-		
-		html = if templateCache[type]?
-		
-			templateCache[type]
-			
-		else
-		
-			# Prepare the HTML to be sent as email.
-			templateCache[type] = sandbox.prepareHtmlForEmail html.toString()
+				$scope = $rootScope.$new()
+				$scope[key] = value for key, value of scope
+				$element = $compile("<div data-#{directive}></div>")($scope)
+				
+				# Just to be sure :)
+				$rootScope.$digest() for i in [0...10]
+				
+				sandbox.prepareHtmlForEmail $element.html()
+				
+		]
 	
-		# Compile it with Handlebars, using the tokens passed in as the locals.
-		mail.tokens ?= {}
-		html = handlebars.compile(html) mail.tokens
-			
 	).then((html) ->
 		
 		mail.html = html if html?
@@ -166,9 +125,11 @@ exports.sendMail = (type, mail) ->
 		mail.text ?= sandbox.text mail.html if mail.html?
 		
 		# Send the mail.
-		deferred = Promise.defer()
-		transport.sendMail mail, deferred.callback
-		deferred.promise
+		new Promise (resolve, reject) ->
+			transport.sendMail mail, (error) ->
+				
+				return reject error if error?
+				resolve() 
 			
 	)
 	
@@ -185,70 +146,79 @@ augmentSandbox = (sandbox) ->
 	bodyCssText = ''
 	
 	# Gather all CSS selectors and rules ahead of time.
-	for stylesheet in sandbox._window.document.styleSheets
-		for rule in stylesheet.cssRules
-			continue unless rule.selectorText?
+	gatherSelectors = ->
+		for stylesheet in sandbox._window.document.styleSheets
+			for rule in stylesheet.cssRules
+				continue unless rule.selectorText?
+				
+				# Split into individual selectors.
+				parts = rule.selectorText.split(
+					
+					','
+				
+				).map((selector) ->
+					
+					# Trim whitespace.
+					selector.trim()
+					
+				).filter (selector) ->
+					
+					# Filter pseudo selectors.
+					return false if selector.match /[:@]/
+					
+					# Collect html and body rules manually.
+					if selector is 'html'
+						htmlCssText += rule.style.cssText
+						return false
+					
+					if selector is 'body'
+						bodyCssText += rule.style.cssText
+						return false
+					
+					true
+					
+				# Rejoin the selectors.
+				selector = parts.join ','
+				
+				# Normalize the rule(s).
+				selectors[selector] ?= ''
+				selectors[selector] += rule.style.cssText.split(
+				
+					';'
+				
+				).filter((rule) ->
+					
+					rule isnt ''
+				
+				).map((rule) ->
+					
+					rule.trim()
+					
+				).sort().join '; '
+				selectors[selector] += ';'
 			
-			# Split into individual selectors.
-			parts = rule.selectorText.split(
-				
-				','
+		# Merge as many rules as we can, so we'll have less work to do for
+		# each application.
+		cssTextCache = {}
+		for selector, cssText of selectors
+			(cssTextCache[cssText] ?= []).push selector
 			
-			).map((selector) ->
-				
-				# Trim whitespace.
-				selector.trim()
-				
-			).filter (selector) ->
-				
-				# Filter pseudo selectors.
-				return false if selector.match /[:@]/
-				
-				# Collect html and body rules manually.
-				if selector is 'html'
-					htmlCssText += rule.style.cssText
-					return false
-				
-				if selector is 'body'
-					bodyCssText += rule.style.cssText
-					return false
-				
-				true
-				
-			# Rejoin the selectors.
-			selector = parts.join ','
-			
-			# Normalize the rule(s).
-			selectors[selector] ?= ''
-			selectors[selector] += rule.style.cssText.split(
-			
-				';'
-			
-			).filter((rule) ->
-				
-				rule isnt ''
-			
-			).map((rule) ->
-				
-				rule.trim()
-				
-			).sort().join '; '
-			selectors[selector] += ';'
+		for cssText, selectors_ of cssTextCache
+			selectors[selectors_.join ','] = cssText
 		
-	# Merge as many rules as we can, so we'll have less work to do for
-	# each application.
-	cssTextCache = {}
-	for selector, cssText of selectors
-		(cssTextCache[cssText] ?= []).push selector
+	# ### sandbox.inject
+	# 
+	# *Inject an [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation) with dependencies.*
+	# 
+	# * (mixed) `injectable` - An annotated function to inject with
+	#   dependencies. 
+	sandbox.inject = (injectable) ->
+		injector = @_window.angular.element(@_window.document).injector()
+		injector.invoke injectable
 		
-	selectors = {}
-	for cssText, selectors_ of cssTextCache
-		selectors[selectors_.join ','] = cssText
-			
 	# CREDIT: http://devintorr.es/blog/2010/05/26/turn-css-rules-into-inline-style-attributes-using-jquery/
 	# With some improvements, of course.
 	sandbox.inlineCss = (html) ->
-		
 		for selector, cssText of selectors
 			for element in $(selector, $(html))
 				element.style.cssText += cssText
@@ -260,25 +230,10 @@ augmentSandbox = (sandbox) ->
 		# Clone the body and insert the HTML into the main application
 		# area.
 		$body = $('body').clone()
-		$(html).appendTo $('.main', $body)
-
-		# Inject a minimally-built nav.
-		# `TODO`: this kind of thing should be configurable and handled
-		# by the theme/skin when we get to that point.
-		$('[data-ui-nav]', $body).html """
-<nav role="navigation" class="navbar navbar-default">
-	<div class="container-fluid">
 		
-		<div class="navbar-header">
-			<a href="#" class="navbar-brand"><span data-ng-bind="pageTitle" class="ng-binding">{{title}}</span></a>
-		</div>
+		# Let the skin manage the mail HTML.
+		pkgman.invokePackage skin.activeKey(), 'mailHtml', $body, html, $
 		
-		<div data-ng-class="navClass" class="navbar-collapse collapse ui-nav">
-		</div>
-	</div>
-</nav>
-"""
-				
 		# Inject all the styles inline.
 		sandbox.inlineCss $body
 		
@@ -316,6 +271,22 @@ augmentSandbox = (sandbox) ->
 					l + r
 				
 			''
-		)
+		).trim()
 	
-	sandbox
+	new Promise (resolve) ->
+	
+		sandbox.inject [
+			'$sniffer', 'shrub-socket'
+			($sniffer, socket) ->
+				
+				# } Don't even try HTML 5 history on the server side.
+				$sniffer.history = false
+				
+				# } Let the socket finish initialization.						
+				socket.on 'initialized', ->
+					
+					gatherSelectors()
+					
+					resolve sandbox
+		
+		]

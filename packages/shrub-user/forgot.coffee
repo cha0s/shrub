@@ -24,6 +24,11 @@ exports.pkgmanRegister = (registrar) ->
 			
 			User = orm.collection 'shrub-user'
 			
+			# Cancel promise flow if the user doesn't exist.
+			class NoSuchUser extends Error
+				constructor: (@message) ->
+			
+			# Look up the user.
 			Promise.resolve().then(->
 			
 				# Search for username or encrypted email.
@@ -44,12 +49,12 @@ exports.pkgmanRegister = (registrar) ->
 				User.findOne filter
 				
 			).then((@user) ->
+				throw new NoSuchUser unless @user?
 				
 				# Generate a one-time login token.
 				crypto.randomBytes 24
 				
 			).then((token) ->
-				return unless @user?
 				
 				@user.resetPasswordToken = token.toString 'hex'
 				
@@ -58,44 +63,39 @@ exports.pkgmanRegister = (registrar) ->
 				
 			).then((email) ->
 				
-				# Send an email to the user with a one-time login link.
-				hostname = "http://#{
-					req.headers.host
-				}"
+				# Send an email to the user's email with a one-time login
+				# link.
+				siteHostname = config.get 'packageSettings:shrub-core:siteHostname'
+				siteUrl = "http://#{siteHostname}"
 				
-				siteName = config.get 'packageSettings:shrub-core:siteName'
-				
-				tokens =
-					
-					hostname: hostname
+				scope =
 					
 					email: email
 					
+					# `TODO`: HTTPS
 					loginUrl: "#{
-						hostname
+						siteUrl
 					}/user/reset/#{
-						@user.resetPasswordToken
+						user.resetPasswordToken
 					}"
 					
-					siteName: siteName
+					siteUrl: siteUrl
 					
-					title: "Password recovery request"
-					
-					username: @user.name
+					user: @user
 				
 				nodemailer.sendMail(
-					'user/forgot'
+					'shrub-user-email-forgot'
+				,
 					to: email
-					subject: "Password recovery request for your account at #{
-						siteName
-					}"
-					tokens: tokens
+					subject: "Password recovery request"
+				,
+					scope
 				)
 			
 				@user.save()
 		
-			).then(->
+			).then(-> fn()
 				
-				fn()
-				
+			).catch(NoSuchUser, -> fn()
+			
 			).catch fn

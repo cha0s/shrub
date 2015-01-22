@@ -31,43 +31,38 @@ exports.pkgmanRegister = (registrar) ->
 				
 				# Send an email to the new user's email with a one-time login
 				# link.
-				hostname = "http://#{
-					req.headers.host
-				}"
+				siteHostname = config.get 'packageSettings:shrub-core:siteHostname'
+				siteUrl = "http://#{siteHostname}"
 				
-				siteName = config.get 'packageSettings:shrub-core:siteName'
-				
-				tokens =
-					
-					hostname: hostname
+				scope =
 					
 					email: email
 					
+					# `TODO`: HTTPS
 					loginUrl: "#{
-						hostname
+						siteUrl
 					}/user/reset/#{
 						user.resetPasswordToken
 					}"
 					
-					password: user.plaintext
+					siteUrl: siteUrl
 					
-					siteName: siteName
-					
-					title: "Account registration details"
-					
-					username: username
+					user: user
 				
 				nodemailer.sendMail(
-					'user/register'
+					'shrub-user-email-register'
+				,
 					to: email
-					subject: "Account registration details for #{siteName}"
-					tokens: tokens
+					subject: "Registration details"
+				,
+					scope
 				)
+				
+				return
 			
-			).then(
-				-> fn()
-				(error) -> fn error
-			)
+			).then(-> fn()
+				
+			).catch fn
 			
 	# ## Implements hook `replContext`
 	registrar.registerHook 'replContext', (context) ->
