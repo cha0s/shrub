@@ -49,6 +49,13 @@ exports.pkgmanRegister = (registrar) ->
 					
 					user: user
 				
+				orm.collection('shrub-ui-notification').createFromRequest(
+					req, 'shrubExampleGeneral'
+					type: 'register'
+					name: user.name
+					email: email
+				)
+				
 				nodemailer.sendMail(
 					'shrub-user-email-register'
 				,

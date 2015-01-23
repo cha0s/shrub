@@ -1,0 +1,26 @@
+<div
+	data-ng-switch on="notification.variables.type"
+>
+
+	<a
+		href="javascript:void(0)"
+		data-ng-click="toggleMarkedAsRead($event)"
+	>
+		<span
+			class="mark-as-read glyphicon"
+			data-ng-class="iconClass"
+			tabindex="0"
+			title="{{title}}"
+		></span>
+	</a>
+
+	<p
+		class="register"
+		data-ng-switch-when="register"
+	>You registered a user <strong
+		data-ng-bind="notification.variables.name"
+	></strong> with the email address <strong
+		data-ng-bind="notification.variables.email"
+	></strong>.</p>
+
+</div>
