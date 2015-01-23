@@ -38,7 +38,14 @@ exports.pkgmanRegister = (registrar) ->
 				'$rootScope', '$exceptionHandler'
 				($rootScope, $exceptionHandler) ->
 				
-					Promise.onPossiblyUnhandledRejection $exceptionHandler
+					Promise.onPossiblyUnhandledRejection (error) ->
+						
+						# $timeout and $interval will throw this for
+						# cancellation. It's non-notable.
+						return if 'canceled' is error.message
+						
+						$exceptionHandler error
+						
 					Promise.setScheduler (fn) -> $rootScope.$evalAsync fn
 				
 					Promise.defer = ->
