@@ -50,11 +50,42 @@ exports.pkgmanRegister = (registrar) ->
 				# Variables, can be any type.
 				variables: 'json'
 				
+			createFromRequest: (req, queueName, variables, path) ->
+				
+				# Check that the queue is valid.
+				unless queue = notificationQueues[queueName]
+					return Promise.reject new Error(
+						"Notification queue `#{queue}' doesn't exist."
+					)
+				
+				# Defaults.
+				path ?= 'javascript:void(0)'
+				variables ?= {}
+				
+				# Get the owner from the request.
+				owner = queue.ownerFromRequest req
+				
+				# Create the notification.
+				@create(
+					owner: owner
+					path: path
+					queue: queueName
+					variables: variables
+				
+				).then (notification) ->
+					return unless req.socket?
+					
+					req.socket.emit(
+						'shrub.ui.notifications'
+						queue: queueName
+						notifications: [notification]
+					) 
+				
 			# Get a queue's notifications from a request.
 			queueFromRequest: (req) ->
 				
 				# Empty queue if none was defined.
-				unless (queue = notificationQueues[req.body.queue])
+				unless queue = notificationQueues[req.body.queue]
 					return Promise.resolve []
 				
 				# Return the 20 newest notifications from the queue for the
