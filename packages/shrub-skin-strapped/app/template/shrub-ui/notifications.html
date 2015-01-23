@@ -1,5 +1,6 @@
 
 <div
+	class="notifications-container"
 	data-ng-show="!!queue.length"
 >
 
@@ -8,6 +9,10 @@
 		class="btn btn-default"
 	>
 		!
+		<span
+			class="unread"
+			data-ng-bind="unread"
+		></span>
 	</button>
 
 	<div
@@ -36,7 +41,7 @@
 						data-shrub-ui-notifications-item
 						data-notification="notification"
 						data-ng-href="{{notification.path}}"
-						data-ng-click="notificationClicked(notification)"
+						data-ng-click="notificationClicked($event, notification)"
 					>
 					</a>
 				</li>

@@ -7,8 +7,8 @@ exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `directive`
 	registrar.registerHook 'directive', -> [
-		'$timeout', 'shrub-ui/notifications'
-		($timeout, notifications) ->
+		'$timeout', 'shrub-rpc', 'shrub-ui/notifications'
+		($timeout, rpc, notifications) ->
 		
 			directive = {}
 			
@@ -50,24 +50,71 @@ exports.pkgmanRegister = (registrar) ->
 						)
 						'bottom'
 					)
-								
+				
+				# Mark the notification as read.				
+				scope.markAsRead = (notification, markedAsRead) ->
+					return if markedAsRead is notification.markedAsRead
+					
+					rpc.call(
+						'shrub.ui.notifications.markAsRead'
+						id: notification.id
+						markedAsRead: markedAsRead
+					
+					).then -> notification.markedAsRead = markedAsRead
+					
 				# Hide the popover when any notification is clicked. Feel free
-				# to override this in your skinLink implementation.
-				scope.notificationClicked = (notification) ->
-					$button.popover 'hide'
+				# to catch the `shrub.ui.notification.clicked` event in your
+				# skinLink implementation.
+				scope.notificationClicked = ($event, notification) ->
+					
+					scope.$emit(
+						'shrub.ui.notification.clicked'
+						$event, notification
+					)
 					
 					# Angular doesn't like when you return DOM elements.
 					return
+					
+				# Set up default behavior on a click event, and provide the
+				# deregistration function to any skinLink consumers.
+				scope.$deregisterDefaultClickHandler = scope.$on(
+					'shrub.ui.notification.clicked'
+					($event, $clickEvent, notification) ->
+					
+						# Close the popover.
+						$button.popover 'hide'
+						
+						# Mark the notification as read.
+						scope.markAsRead notification, true
+				)
+				
+				# Keep track of unread items.
+				scope.$watch 'queue', (queue) ->
+					unread = queue.filter (notification) ->
+						not notification.markedAsRead
+						
+					scope.unread = if unread.length > 0
+						unread.length
+					else
+						undefined
+				, true
 			
 			directive.scope = {}
 			
 			directive.template = """
 
 <div
+	class="notifications-container"
 	data-ng-show="!!queue.length"
 >
 
-	<button>!</button>
+	<button>
+		!
+		<span
+			class="unread"
+			data-ng-bind="unread"
+		></span>
+	</button>
 	
 	<div
 		class="notifications-container"
@@ -86,13 +133,14 @@ exports.pkgmanRegister = (registrar) ->
 			
 			<ul>
 				<li
+					
 					data-ng-repeat="notification in queue"
 				>
 					<a
 						data-shrub-ui-notifications-item
 						data-notification="notification"
 						data-ng-href="{{notification.path}}"
-						data-ng-click="notificationClicked(notification)"
+						data-ng-click="notificationClicked($event, notification)"
 					>
 					</a>
 				</li>

@@ -144,6 +144,21 @@ exports.pkgmanRegister = (registrar) ->
 			queuesConfig
 		
 	# ## Implements hook `endpoint`
+	registrar.registerHook 'markAsRead', 'endpoint', ->
+		
+		route: 'shrub.ui.notifications.markAsRead'
+		
+		receiver: (req, fn) ->
+			
+			Notification = orm.collection 'shrub-ui-notification'
+			Notification.findOne(id: req.body.id).then((notification) ->
+				
+				notification.markedAsRead = req.body.markedAsRead
+				notification.save -> fn()
+			
+			).catch fn
+		
+	# ## Implements hook `endpoint`
 	registrar.registerHook 'endpoint', ->
 		
 		route: 'shrub.ui.notifications'
