@@ -11,8 +11,8 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `augmentDirective`
 	registrar.registerHook 'augmentDirective', (directive, path) -> [
 	
-		'$cacheFactory', '$compile', '$http', '$interpolate', '$q', '$rootScope'
-		($cacheFactory, $compile, $http, $interpolate, $q, $rootScope) ->
+		'$cacheFactory', '$compile', '$http', '$injector', '$interpolate', '$q', '$rootScope'
+		($cacheFactory, $compile, $http, $injector, $interpolate, $q, $rootScope) ->
 			
 			# Ensure ID is a candidate.
 			directive.candidateKeys ?= []
@@ -24,7 +24,7 @@ exports.pkgmanRegister = (registrar) ->
 			# Proxy link function to add our own directive retrieval and
 			# compilation step.
 			link = directive.link
-			directive.link = (scope, element, attr, controller) ->
+			directive.link = (scope, element, attr, controller, transclude) ->
 				
 				candidateHooksInvoked = {}
 			
@@ -113,7 +113,15 @@ exports.pkgmanRegister = (registrar) ->
 						continue if candidateHooksInvoked[hook]
 						candidateHooksInvoked[hook] = true
 						for f in pkgman.invokeFlat hook
-							f topLevelArgs... 
+							
+							$injector.invoke(
+								f, null
+								$scope: scope
+								$element: element
+								$attr: attr
+								$controller: controller
+								$transclude: transclude
+							)
 					
 				applySkin = (skinKey) ->
 					currentSkinKey = skinKey
