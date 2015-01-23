@@ -17,18 +17,20 @@
 }
 
 .notifications-container {
+  position: relative;
   
-  button {
-    position: relative;
-  
-    .unread {
-      bottom: -6px;
-      color: red;
-      font-size: 9px;
-      position: absolute;
-      right: 0;
-      text-shadow: 0 0 9px white, 0 0 9px white, 0 0 9px white, 0 0 9px white, 0 0 9px white, 0 0 9px white, 0 0 9px white, 0 0 9px white, 0 0 9px white, 0 0 9px white, 0 0 9px white;
-    }
+  .unacknowledged {
+    background: none repeat scroll 0 0 red;
+    border-radius: 10px;
+    bottom: 6px;
+    color: white;
+    font-size: 8px;
+    font-weight: bold;
+    min-width: 14px;
+    padding: 1px 3px;
+    position: absolute;
+    right: -17px;
+    text-align: center;  
   }
 }
 

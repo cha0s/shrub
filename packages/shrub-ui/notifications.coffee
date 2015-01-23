@@ -31,6 +31,11 @@ exports.pkgmanRegister = (registrar) ->
 		
 			attributes:
 			
+				# Has the notification been acknowledged?
+				acknowledged:
+					type: 'boolean'
+					defaultsTo: false
+				
 				# Has the notification been read?
 				markedAsRead:
 					type: 'boolean'
@@ -75,6 +80,7 @@ exports.pkgmanRegister = (registrar) ->
 				).then (notification) ->
 					return unless req.socket?
 					
+					# `TODO`: All other sockets.
 					req.socket.emit(
 						'shrub.ui.notifications'
 						queue: queueName
@@ -153,9 +159,42 @@ exports.pkgmanRegister = (registrar) ->
 			Notification = orm.collection 'shrub-ui-notification'
 			Notification.findOne(id: req.body.id).then((notification) ->
 				
+				# `TODO`: All other sockets.
 				notification.markedAsRead = req.body.markedAsRead
-				notification.save -> fn()
+				notification.save()
 			
+			).then(-> fn()
+			).catch fn
+		
+	# ## Implements hook `endpoint`
+	registrar.registerHook 'acknowledged', 'endpoint', ->
+		
+		route: 'shrub.ui.notifications.acknowledged'
+		
+		receiver: (req, fn) ->
+			
+			unless queue = notificationQueues[req.body.queue]
+				return fn new Error "Notification queue `#{
+					req.body.queue
+				}' doesn't exist."
+			
+			Notification = orm.collection 'shrub-ui-notification'
+			
+			# Mark all notifications in a queue owned by the request as
+			# acknowledged.
+			query = Notification.find()
+			query = query.where(owner: queue.ownerFromRequest req)
+			query = query.where(queue: req.body.queue)
+			query.then((notifications) ->
+				
+				# `TODO`: All other sockets.
+				Promise.all(
+					for notification in notifications
+						notification.acknowledged = true
+						notification.save()
+				)
+			
+			).then(-> fn()
 			).catch fn
 		
 	# ## Implements hook `endpoint`

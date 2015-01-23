@@ -39,6 +39,21 @@ exports.pkgmanRegister = (registrar) ->
 
 """
 
+				# Notifications button clicked.
+				scope.notificationsButtonClicked = ->
+
+					# Tell the server the notifications have been acknowledged.
+					rpc.call(
+						'shrub.ui.notifications.acknowledged'
+						queue: attr.queueName
+					)
+					
+					# Mark client notifications as acknowledged.
+					for notification in scope.queue
+						notification.acknowledged = true
+						
+					return
+
 				# Wait for the new queue to be compiled into the DOM, and then
 				# reposition the popover, since the new content may shift it.
 				scope.$watch 'queue', (queue) -> scope.$$postDigest ->
@@ -90,11 +105,11 @@ exports.pkgmanRegister = (registrar) ->
 				
 				# Keep track of unread items.
 				scope.$watch 'queue', (queue) ->
-					unread = queue.filter (notification) ->
-						not notification.markedAsRead
+					unacknowledged = queue.filter (notification) ->
+						not notification.acknowledged
 						
-					scope.unread = if unread.length > 0
-						unread.length
+					scope.unacknowledged = if unacknowledged.length > 0
+						unacknowledged.length
 					else
 						undefined
 				, true
@@ -105,19 +120,20 @@ exports.pkgmanRegister = (registrar) ->
 
 <div
 	class="notifications-container"
-	data-ng-show="!!queue.length"
 >
 
-	<button>
+	<button
+		data-ng-click="notificationsButtonClicked()"
+	>
 		!
 		<span
-			class="unread"
-			data-ng-bind="unread"
+			class="unacknowledged"
+			data-ng-bind="unacknowledged"
+			data-ng-if="unacknowledged > 0"
 		></span>
 	</button>
 	
 	<div
-		class="notifications-container"
 		data-ng-hide="true"
 	>
 		
@@ -132,8 +148,9 @@ exports.pkgmanRegister = (registrar) ->
 			></div>
 			
 			<ul>
+			
 				<li
-					
+					data-ng-if="!!queue.length"
 					data-ng-repeat="notification in queue"
 				>
 					<a
@@ -142,6 +159,16 @@ exports.pkgmanRegister = (registrar) ->
 						data-ng-href="{{notification.path}}"
 						data-ng-click="notificationClicked($event, notification)"
 					>
+					</a>
+				</li>
+				
+				<li
+					data-ng-if="!queue.length"
+				>
+					<a
+						href="javascript:void(0)"
+					>
+						There's nothing here yet...
 					</a>
 				</li>
 			</ul>

@@ -1,22 +1,26 @@
 
 <div
 	class="notifications-container"
-	data-ng-show="!!queue.length"
 >
 
 	<button
 		type="button"
 		class="btn btn-default"
+		data-ng-click="notificationsButtonClicked()"
 	>
-		!
+
 		<span
-			class="unread"
-			data-ng-bind="unread"
+			class="unacknowledged"
+			data-ng-bind="unacknowledged"
+			data-ng-if="unacknowledged > 0"
+		></span>
+		
+		<span
+			class="glyphicon glyphicon-globe"
 		></span>
 	</button>
 
 	<div
-		class="notifications-container"
 		data-ng-hide="true"
 	>
 
@@ -33,8 +37,9 @@
 			<ul
 				class="nav nav-tabs nav-stacked"
 			>
-	
+				
 				<li
+					data-ng-if="!!queue.length"
 					data-ng-repeat="notification in queue"
 				>
 					<a
@@ -43,6 +48,17 @@
 						data-ng-href="{{notification.path}}"
 						data-ng-click="notificationClicked($event, notification)"
 					>
+					</a>
+				</li>
+
+				<li
+					data-ng-if="!queue.length"
+				>
+
+					<a
+						href="javascript:void(0)"
+					>
+						There's nothing here yet...
 					</a>
 				</li>
 			</ul>
