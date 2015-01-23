@@ -35,6 +35,21 @@ nav.navbar {
       margin: 9px -15px 9px 20px;
       width: 32px;    
     }
+    
+    &.mobile {
+      float: right;
+      margin-right: 30px;
+      
+      @media (min-width: 768px) {
+        display: none;
+      }
+    }
+    
+    &.desktop {
+      @media (max-width: 768px) {
+        display: none;
+      }
+    }
   }
 }
 

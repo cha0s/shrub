@@ -52,13 +52,22 @@ exports.pkgmanRegister = (registrar) ->
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
+
 			<a class="navbar-brand" href="#"><span data-ng-bind="pageTitle"></span></a>
+
+			<div
+				class="mobile navbar-text navbar-right navbar-notification"
+				data-shrub-ui-notifications
+				data-queue-name="shrubExampleGeneral"
+			>
+			</div>
+			
 		</div>
 		
 		<div class="navbar-collapse collapse shrub-skin-strapped-ui-nav">
 
 			<div
-				class="navbar-text navbar-right navbar-notification"
+				class="desktop navbar-text navbar-right navbar-notification"
 				data-shrub-ui-notifications
 				data-queue-name="shrubExampleGeneral"
 			>
