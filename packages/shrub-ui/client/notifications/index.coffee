@@ -39,10 +39,11 @@ exports.pkgmanRegister = (registrar) ->
 
 """
 
-				# Notifications button clicked.
-				scope.notificationsButtonClicked = ->
+				# When the notifications are opened, acknowledge them.
+				$button.on 'show.bs.popover', ->
+					return unless scope.unacknowledged
 
-					# Tell the server the notifications have been acknowledged.
+					# Tell the server.
 					rpc.call(
 						'shrub.ui.notifications.acknowledged'
 						queue: attr.queueName
@@ -56,15 +57,20 @@ exports.pkgmanRegister = (registrar) ->
 
 				# Wait for the new queue to be compiled into the DOM, and then
 				# reposition the popover, since the new content may shift it.
-				scope.$watch 'queue', (queue) -> scope.$$postDigest ->
-					return unless (pop = $button.data 'bs.popover').$tip?
-					pop.applyPlacement(
-						pop.getCalculatedOffset(
-							'bottom', pop.getPosition()
-							pop.$tip[0].offsetWidth, pop.$tip[0].offsetHeight
+				scope.$watch(
+					'queue'
+					(queue) -> scope.$$postDigest ->
+						return unless (pop = $button.data 'bs.popover').$tip?
+						pop.applyPlacement(
+							pop.getCalculatedOffset(
+								'bottom', pop.getPosition()
+								pop.$tip[0].offsetWidth
+								pop.$tip[0].offsetHeight
+							)
+							'bottom'
 						)
-						'bottom'
-					)
+					true
+				)
 				
 				# Mark the notification as read.				
 				scope.markAsRead = (notification, markedAsRead) ->
@@ -122,9 +128,7 @@ exports.pkgmanRegister = (registrar) ->
 	class="notifications-container"
 >
 
-	<button
-		data-ng-click="notificationsButtonClicked()"
-	>
+	<button>
 		!
 		<span
 			class="unacknowledged"

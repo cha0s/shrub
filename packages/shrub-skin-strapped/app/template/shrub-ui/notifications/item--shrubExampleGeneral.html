@@ -3,7 +3,17 @@
 >
 
 	<a
-		href="javascript:void(0)"
+		data-ng-click="remove($event)"
+		data-ng-if="notification.mayRemove"
+	>
+		<span
+			class="remove glyphicon glyphicon-remove"
+			tabindex="0"
+			title="Remove"
+		></span>
+	</a>
+
+	<a
 		data-ng-click="toggleMarkedAsRead($event)"
 	>
 		<span

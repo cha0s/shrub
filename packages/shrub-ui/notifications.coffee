@@ -41,6 +41,11 @@ exports.pkgmanRegister = (registrar) ->
 					type: 'boolean'
 					defaultsTo: false
 				
+				# May this notification be removed?
+				mayRemove:
+					type: 'boolean'
+					defaultsTo: true
+				
 				# Who owns this notification? Built by the queue.
 				owner: 'string'
 				
@@ -55,7 +60,7 @@ exports.pkgmanRegister = (registrar) ->
 				# Variables, can be any type.
 				variables: 'json'
 				
-			createFromRequest: (req, queueName, variables, path) ->
+			createFromRequest: (req, queueName, variables, path, mayRemove) ->
 				
 				# Check that the queue is valid.
 				unless queue = notificationQueues[queueName]
@@ -64,6 +69,7 @@ exports.pkgmanRegister = (registrar) ->
 					)
 				
 				# Defaults.
+				mayRemove ?= true
 				path ?= 'javascript:void(0)'
 				variables ?= {}
 				
@@ -72,6 +78,7 @@ exports.pkgmanRegister = (registrar) ->
 				
 				# Create the notification.
 				@create(
+					mayRemove: mayRemove
 					owner: owner
 					path: path
 					queue: queueName
@@ -150,40 +157,30 @@ exports.pkgmanRegister = (registrar) ->
 			queuesConfig
 		
 	# ## Implements hook `endpoint`
-	registrar.registerHook 'markAsRead', 'endpoint', ->
-		
-		route: 'shrub.ui.notifications.markAsRead'
-		
-		receiver: (req, fn) ->
-			
-			Notification = orm.collection 'shrub-ui-notification'
-			Notification.findOne(id: req.body.id).then((notification) ->
-				
-				# `TODO`: All other sockets.
-				notification.markedAsRead = req.body.markedAsRead
-				notification.save()
-			
-			).then(-> fn()
-			).catch fn
-		
-	# ## Implements hook `endpoint`
 	registrar.registerHook 'acknowledged', 'endpoint', ->
 		
 		route: 'shrub.ui.notifications.acknowledged'
 		
+		validators: [
+
+			# Ensure the queue exists.
+			(req, res, next) ->
+				return next new Error(
+					"Notification queue `#{req.body.queue}' doesn't exist."
+				) unless queue = notificationQueues[req.body.queue]
+					
+				req.queue = queue
+				next()
+				
+		]
+		
 		receiver: (req, fn) ->
-			
-			unless queue = notificationQueues[req.body.queue]
-				return fn new Error "Notification queue `#{
-					req.body.queue
-				}' doesn't exist."
-			
-			Notification = orm.collection 'shrub-ui-notification'
 			
 			# Mark all notifications in a queue owned by the request as
 			# acknowledged.
+			Notification = orm.collection 'shrub-ui-notification'
 			query = Notification.find()
-			query = query.where(owner: queue.ownerFromRequest req)
+			query = query.where(owner: req.queue.ownerFromRequest req)
 			query = query.where(queue: req.body.queue)
 			query.then((notifications) ->
 				
@@ -197,6 +194,61 @@ exports.pkgmanRegister = (registrar) ->
 			).then(-> fn()
 			).catch fn
 		
+	# Ensure that the requested notification is owned by the request.
+	ensureNotificationOwnedByRequest = (req, res, next) ->
+
+		Notification = orm.collection 'shrub-ui-notification'
+		Notification.findOne(id: req.body.id).then((notification) ->
+			return next new Error(
+				"Notification queue `#{notification.queue}' doesn't exist."
+			) unless queue = notificationQueues[notification.queue]
+
+			return next new Error(
+				"You don't own that notification."
+			) unless notification.owner is queue.ownerFromRequest req
+				
+			req.notification = notification
+			next()
+			
+		).catch next
+		
+	# ## Implements hook `endpoint`
+	registrar.registerHook 'markAsRead', 'endpoint', ->
+		
+		route: 'shrub.ui.notifications.markAsRead'
+		
+		validators: [
+			ensureNotificationOwnedByRequest
+		]
+		
+		receiver: (req, fn) ->
+			
+			# `TODO`: All other sockets.
+			req.notification.markedAsRead = req.body.markedAsRead
+			req.notification.save().then(-> fn()).catch fn
+		
+	# ## Implements hook `endpoint`
+	registrar.registerHook 'remove', 'endpoint', ->
+		
+		route: 'shrub.ui.notifications.remove'
+		
+		validators: [
+			ensureNotificationOwnedByRequest
+			
+			# Ensure that the requested notification may be removed.
+			(req, res, next) ->
+				return next new Error(
+					"That notification may not be removed."
+				) unless req.notification.mayRemove
+					
+				next()
+			
+		]
+		
+		receiver: (req, fn) ->
+			
+			req.notification.destroy().then(-> fn()).catch fn
+			
 	# ## Implements hook `endpoint`
 	registrar.registerHook 'endpoint', ->
 		

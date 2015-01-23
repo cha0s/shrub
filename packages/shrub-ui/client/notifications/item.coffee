@@ -5,8 +5,8 @@ exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `directive`
 	registrar.registerHook 'directive', -> [
-		'shrub-ui/notifications'
-		(notifications) ->
+		'shrub-ui/notifications', 'shrub-rpc'
+		(notifications, rpc) ->
 		
 			directive = {}
 			
@@ -18,6 +18,19 @@ exports.pkgmanRegister = (registrar) ->
 			
 			directive.link = (scope, element) ->
 			
+				# Toggle the notification's marked-as-read state.
+				scope.remove = ($event) ->
+					$event.stopPropagation()
+					
+					rpc.call(
+						'shrub.ui.notifications.remove'
+						id: scope.notification.id
+					)
+					
+					index = scope.queue.indexOf scope.notification
+					scope.queue.splice index, 1
+					
+				# Toggle the notification's marked-as-read state.
 				scope.toggleMarkedAsRead = ($event) ->
 					$event.stopPropagation()
 					
@@ -25,14 +38,15 @@ exports.pkgmanRegister = (registrar) ->
 						scope.notification, not scope.notification.markedAsRead
 					)
 				
+				# Watch the marked-as-read state and make some changes.
 				scope.$watch 'notification.markedAsRead', (markedAsRead) ->
 					
 					if markedAsRead
-						element.addClass 'was-read'
+						element.addClass 'marked-as-read'
 						scope.iconClass = 'glyphicon-check'
 						scope.title = 'Mark as unread' 
 					else
-						element.removeClass 'was-read'
+						element.removeClass 'marked-as-read'
 						scope.iconClass = 'glyphicon-eye-open'
 						scope.title = 'Mark as read'
 						
@@ -41,7 +55,17 @@ exports.pkgmanRegister = (registrar) ->
 			directive.template = """
 
 <a
-	href="javascript:void(0)"
+	data-ng-click="remove($event)"
+	data-ng-if="notification.mayRemove"
+>
+	<span
+		class="remove glyphicon glyphicon-remove"
+		tabindex="0"
+		title="Remove"
+	></span>
+</a>
+
+<a
 	data-ng-click="toggleMarkedAsRead($event)"
 >
 	<span
