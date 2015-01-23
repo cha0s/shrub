@@ -77,26 +77,31 @@ exports.initialize = (config) -> new Promise (resolve) ->
 			collection.connection ?= 'shrub'
 			collection.identity ?= identity
 			collections_[collection.identity] = collection
-
+			
+			# Instantiate a model with defaults supplied.
+			collection.instantiate = (values = {}) ->
+			
+				for key, value of @attributes
+					continue unless value.defaultsTo?
+						
+					values[key] ?= if 'function' is typeof value.defaultsTo
+						value.defaultsTo.call values
+					else
+						JSON.parse JSON.stringify value.defaultsTo
+				
+				new @_model @_schema.cleanValues @_transformer.serialize values
+				
+			# Destroy all instances of a model.
+			collection.destroyAll = ->
+				@find().then (models) ->
+					Promise.all model.destroy() for model in models
+					
 	# Invoke hook `collectionsAlter`.
 	# Allows packages to alter any Waterline collections defined.
 	pkgman.invoke 'collectionsAlter', collections_, waterline
 	
 	# Load the collections into Waterline.
 	for i, collection of collections_
-			
-		collection.instantiate = (values = {}) ->
-		
-			for key, value of @attributes
-				continue unless value.defaultsTo?
-					
-				values[key] ?= if 'function' is typeof value.defaultsTo
-					value.defaultsTo.call values
-				else
-					JSON.parse JSON.stringify value.defaultsTo
-			
-			new @_model @_schema.cleanValues @_transformer.serialize values
-				
 		Collection = Waterline.Collection.extend collection
 		waterline.loadCollection Collection
 	
