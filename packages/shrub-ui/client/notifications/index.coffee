@@ -7,8 +7,8 @@ exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `directive`
 	registrar.registerHook 'directive', -> [
-		'$timeout', 'shrub-rpc', 'shrub-ui/notifications'
-		($timeout, rpc, notifications) ->
+		'$compile', '$timeout', 'shrub-rpc', 'shrub-ui/notifications'
+		($compile, $timeout, rpc, notifications) ->
 		
 			directive = {}
 			
@@ -33,11 +33,26 @@ exports.pkgmanRegister = (registrar) ->
 
 <div class="popover popover-#{attr.queueName}" role="tooltip">
 	<div class="arrow"></div>
-	<h3 class="popover-title"></h3>
+	<div class="popover-title"></div>
 	<div class="popover-content"></div>
 </div>
 
 """
+					title: ->
+						
+						tpl = """
+
+<div
+	class="title"
+	data-shrub-ui-notifications-title
+></div>
+
+"""
+
+						$compile(tpl)(scope)
+						
+				# When the notifications are opened, acknowledge them.
+				$button.on 'click', ->
 
 				# When the notifications are opened, acknowledge them.
 				$button.on 'show.bs.popover', ->
@@ -61,6 +76,7 @@ exports.pkgmanRegister = (registrar) ->
 					'queue'
 					(queue) -> scope.$$postDigest ->
 						return unless (pop = $button.data 'bs.popover').$tip?
+						return unless $tip.hasClass 'in'
 						pop.applyPlacement(
 							pop.getCalculatedOffset(
 								'bottom', pop.getPosition()
@@ -146,11 +162,6 @@ exports.pkgmanRegister = (registrar) ->
 			data-ng-class="classes"
 		>
 	
-			<div
-				class="title"
-				data-shrub-ui-notifications-title
-			></div>
-			
 			<ul>
 			
 				<li
