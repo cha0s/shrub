@@ -195,19 +195,21 @@ exports.pkgmanRegister = (registrar) ->
 			).catch fn
 		
 	# Ensure that the requested notification is owned by the request.
-	ensureNotificationOwnedByRequest = (req, res, next) ->
+	ensureNotificationsOwnedByRequest = (req, res, next) ->
 
 		Notification = orm.collection 'shrub-ui-notification'
-		Notification.findOne(id: req.body.id).then((notification) ->
-			return next new Error(
-				"Notification queue `#{notification.queue}' doesn't exist."
-			) unless queue = notificationQueues[notification.queue]
-
-			return next new Error(
-				"You don't own that notification."
-			) unless notification.owner is queue.ownerFromRequest req
+		Notification.findById(req.body.ids).then((notifications) ->
+			
+			for notification in notifications
+				return next new Error(
+					"Notification queue `#{notification.queue}' doesn't exist."
+				) unless queue = notificationQueues[notification.queue]
+	
+				return next new Error(
+					"You don't own those notifications."
+				) unless notification.owner is queue.ownerFromRequest req
 				
-			req.notification = notification
+			req.notifications = notifications
 			next()
 			
 		).catch next
@@ -218,14 +220,18 @@ exports.pkgmanRegister = (registrar) ->
 		route: 'shrub.ui.notifications.markAsRead'
 		
 		validators: [
-			ensureNotificationOwnedByRequest
+			ensureNotificationsOwnedByRequest
 		]
 		
 		receiver: (req, fn) ->
 			
 			# `TODO`: All other sockets.
-			req.notification.markedAsRead = req.body.markedAsRead
-			req.notification.save().then(-> fn()).catch fn
+			Promise.all(
+				for notification in req.notifications
+					notification.markedAsRead = req.body.markedAsRead
+					notification.save()
+			
+			).then(-> fn()).catch fn
 		
 	# ## Implements hook `endpoint`
 	registrar.registerHook 'remove', 'endpoint', ->
@@ -233,13 +239,15 @@ exports.pkgmanRegister = (registrar) ->
 		route: 'shrub.ui.notifications.remove'
 		
 		validators: [
-			ensureNotificationOwnedByRequest
+			ensureNotificationsOwnedByRequest
 			
-			# Ensure that the requested notification may be removed.
+			# Ensure that the requested notifications may be removed.
 			(req, res, next) ->
-				return next new Error(
-					"That notification may not be removed."
-				) unless req.notification.mayRemove
+				
+				for notification in req.notifications
+					return next new Error(
+						"Those notifications may not be removed."
+					) unless notification.mayRemove
 					
 				next()
 			
@@ -247,7 +255,12 @@ exports.pkgmanRegister = (registrar) ->
 		
 		receiver: (req, fn) ->
 			
-			req.notification.destroy().then(-> fn()).catch fn
+			# `TODO`: All other sockets.
+			Promise.all(
+				for notification in req.notifications
+					notification.destroy()
+			
+			).then(-> fn()).catch fn
 			
 	# ## Implements hook `endpoint`
 	registrar.registerHook 'endpoint', ->

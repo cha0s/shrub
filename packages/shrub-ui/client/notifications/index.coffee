@@ -31,7 +31,7 @@ exports.pkgmanRegister = (registrar) ->
 					placement: 'bottom'
 					template: """
 
-<div class="popover popover-#{attr.queueName}" role="tooltip">
+<div class="popover popover-notifications popover-#{attr.queueName}" role="tooltip">
 	<div class="arrow"></div>
 	<div class="popover-title"></div>
 	<div class="popover-content"></div>
@@ -76,7 +76,7 @@ exports.pkgmanRegister = (registrar) ->
 					'queue'
 					(queue) -> scope.$$postDigest ->
 						return unless (pop = $button.data 'bs.popover').$tip?
-						return unless $tip.hasClass 'in'
+						return unless pop.$tip.hasClass 'in'
 						pop.applyPlacement(
 							pop.getCalculatedOffset(
 								'bottom', pop.getPosition()
@@ -92,12 +92,14 @@ exports.pkgmanRegister = (registrar) ->
 				scope.markAsRead = (notification, markedAsRead) ->
 					return if markedAsRead is notification.markedAsRead
 					
+					notification.markedAsRead = markedAsRead
+					
 					rpc.call(
 						'shrub.ui.notifications.markAsRead'
-						id: notification.id
+						ids: [notification.id]
 						markedAsRead: markedAsRead
 					
-					).then -> notification.markedAsRead = markedAsRead
+					)
 					
 				# Hide the popover when any notification is clicked. Feel free
 				# to catch the `shrub.ui.notification.clicked` event in your
@@ -112,15 +114,18 @@ exports.pkgmanRegister = (registrar) ->
 					# Angular doesn't like when you return DOM elements.
 					return
 					
+				# Close the popover.
+				scope.close = -> $button.popover 'hide'
+						
 				# Set up default behavior on a click event, and provide the
 				# deregistration function to any skinLink consumers.
 				scope.$deregisterDefaultClickHandler = scope.$on(
 					'shrub.ui.notification.clicked'
 					($event, $clickEvent, notification) ->
-					
-						# Close the popover.
-						$button.popover 'hide'
 						
+						# Close the popover.
+						scope.close()
+					
 						# Mark the notification as read.
 						scope.markAsRead notification, true
 				)

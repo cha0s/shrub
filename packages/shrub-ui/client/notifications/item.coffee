@@ -18,13 +18,13 @@ exports.pkgmanRegister = (registrar) ->
 			
 			directive.link = (scope, element) ->
 			
-				# Toggle the notification's marked-as-read state.
+				# Remove the notification from the queue.
 				scope.remove = ($event) ->
 					$event.stopPropagation()
 					
 					rpc.call(
 						'shrub.ui.notifications.remove'
-						id: scope.notification.id
+						ids: [scope.notification.id]
 					)
 					
 					index = scope.queue.indexOf scope.notification
