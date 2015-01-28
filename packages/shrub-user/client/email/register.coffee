@@ -7,17 +7,17 @@ exports.pkgmanRegister = (registrar) ->
 	registrar.registerHook 'directive', -> [
 		'shrub-ui/window-title'
 		(windowTitle) ->
-			
+
 			directive = {}
-			
+
 			directive.link = (scope) ->
-				
+
 				windowTitle.setPage 'Registration details'
-				
+
 				scope.siteName = config.get 'packageConfig:shrub-core:siteName'
-			
+
 			directive.scope = true
-			
+
 			directive.template = """
 
 <p>
@@ -67,7 +67,7 @@ exports.pkgmanRegister = (registrar) ->
 </p>
 
 """
-			
+
 			directive
-			
+
 	]

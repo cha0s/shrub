@@ -16,6 +16,6 @@ exports.config = {
 	jasmineNodeOpts: {
 		defaultTimeoutInterval: 30000
 	},
-	
+
 	onPrepare: '../test/e2e/extensions.js'
 };

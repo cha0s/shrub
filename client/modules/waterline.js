@@ -956,9 +956,9 @@ module.exports = function(cb) {
  * @type {Object}
  */
 module.exports = {
-	
+
 	migrate: 'alter'
-	
+
 };
 },{}],13:[function(require,module,exports){
 /**
@@ -1275,7 +1275,7 @@ Dictionary.prototype._smash = function _smash(ordered) {
 
   // Ensure Ordered is defined
   ordered = ordered || [];
-  
+
   // Smash the methods together into a single layer object using the lodash merge
   // functionality.
   var adapter = {};
@@ -8707,7 +8707,7 @@ module.exports = function acyclicTraversal(schema, initialModel, initialRelation
 			alias: nameOfRelation,
 			model: modelIdentity
 		});
-				
+
 		if (isRedundant) return;
 
 		// Push this relation onto the `alreadyTraversed` stack.
@@ -8981,7 +8981,7 @@ module.exports = function(protoProps, staticProps) {
  * getRelations
  *
  * Find any `junctionTables` that reference the parent collection.
- * 
+ *
  * @param  {[type]} options [description]
  *    @option parentCollection
  *    @option schema
@@ -10963,14 +10963,14 @@ var util = require('util');
 
 /**
  * `errorFactory()`
- * 
+ *
  * @param  {?} value
  * @param  {String} ruleName
  * @param  {String} keyName
  * @param  {String|Function} customMessage    (optional)
- * 
+ *
  * @return {Object}
- * 
+ *
  * @api private
  */
 
@@ -11107,7 +11107,7 @@ var MAX_DEPTH = 50;
  * @param {String} keyName
  * @param {String} customMessage
  *                   (optional)
- * 
+ *
  * @returns a list of errors (or an empty list if no errors were found)
  */
 
@@ -11159,7 +11159,7 @@ function deepMatchType(data, ruleset, depth, keyName, customMessage) {
   else {
 
     // Note:
-    // 
+    //
     // We take advantage of a couple of preconditions at this point:
     // (a) ruleset must be an Object
     // (b) ruleset must NOT be an Array
@@ -11202,10 +11202,10 @@ function deepMatchType(data, ruleset, depth, keyName, customMessage) {
 
       return deepMatchType.call(self, data, subValidation.type, depth+1, keyName, customMessage);
     }
-    
 
 
-    
+
+
 
     // Don't treat empty object as a ruleset
     // Instead, treat it as 'object'
@@ -11232,7 +11232,7 @@ function deepMatchType(data, ruleset, depth, keyName, customMessage) {
 
 /**
  * `matchType()`
- * 
+ *
  * Return whether a piece of data matches a rule
  *
  * @param {?} datum
@@ -12573,7 +12573,7 @@ var _ = require('lodash')
 
 /**
  * Apply a `skip` modifier to `data` using `numToSkip`.
- * 
+ *
  * @param  { Object[] }  data
  * @param  { Integer }   numToSkip
  * @return { Object[] }
@@ -12581,7 +12581,7 @@ var _ = require('lodash')
 module.exports = function (data, numToSkip) {
 
   if(!numToSkip || !data) return data;
-  
+
   // Ignore the first `numToSkip` tuples
   return _.rest(data, numToSkip);
 };
@@ -12994,7 +12994,7 @@ var _ = require('lodash')
 /**
  * Partition the tuples in `filteredData` into buckets via `groupByAttribute`.
  * Works with aggregations to allow for powerful reporting queries.
- * 
+ *
  * @param  { Object[] }  filteredData
  * @param  { String }    groupByAttribute
  * @return { Object[] }
@@ -13014,7 +13014,7 @@ var util = require('util');
 
 /**
  * Project `tuples` on `fields`.
- * 
+ *
  * @param  { Object[] }  tuples    [i.e. filteredData]
  * @param  { String[]/Object{} }  fields    [i.e. schema]
  * @return { Object[] }
@@ -13065,11 +13065,11 @@ function select (tuples, fields) {
     // Take recursive step if necessary to support nested
     // SELECT clauses (NOT nested modifiers- more like nested
     // WHEREs)
-    // 
+    //
     // e.g.:
     // like this:
     //   -> { select: { pet: { collarSize: true } } }
-    //   
+    //
     // not this:
     //   -> { select: { pet: { select: { collarSize: true } } } }
     //
@@ -13110,15 +13110,15 @@ var _sort = require('./sort');
 /**
  * Filter/aggregate/partition/map the tuples known as `classifier`
  * in `data` using `criteria` (a Waterline criteria object)
- * 
+ *
  * @param  { Object[] }           data
  * @param  { Object }             criteria         [the Waterline criteria object- complete w/ `where`, `limit`, `sort, `skip`, and `joins`]
- * 
+ *
  * @return { Integer | Object | Object[] }
  */
 
 module.exports = function query ( /* classifier|tuples, data|criteria [, criteria] */ ) {
-  
+
   // Embed an `INDEX_IN_ORIG_DATA` for each tuple to remember its original index
   // within `data`.  At the end, we'll lookup the `INDEX_IN_ORIG_DATA` for each tuple
   // and expose it as part of our results.
@@ -13159,7 +13159,7 @@ module.exports = function query ( /* classifier|tuples, data|criteria [, criteri
   tuples = _skip(tuples, criteria.skip);
   tuples = _limit(tuples, criteria.limit);
   tuples = _select(tuples, criteria.select);
-  
+
   // TODO:
   // tuples = _groupBy(tuples, criteria.groupBy);
 
@@ -13221,7 +13221,7 @@ module.exports = function(data, comparator, when) {
 ///
 /// private methods   ||
 ///                   \/
-///                   
+///
 //////////////////////////
 
 
@@ -13246,7 +13246,7 @@ function sortData(data, sortVector, when) {
   var GREATER_THAN = 1;
   var LESS_THAN = -1;
   var EQUAL = 0;
-  
+
   return data.sort(function comparator(a, b) {
     return _(sortVector).reduce(function (flagSoFar, sortDirection, attrName){
 
@@ -13295,7 +13295,7 @@ function sortData(data, sortVector, when) {
 
 /**
  * Coerce a value to its probable intended type for sorting.
- * 
+ *
  * @param  {???} x
  * @return {???}
  */

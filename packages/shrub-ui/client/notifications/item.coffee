@@ -7,51 +7,51 @@ exports.pkgmanRegister = (registrar) ->
 	registrar.registerHook 'directive', -> [
 		'shrub-ui/notifications', 'shrub-rpc'
 		(notifications, rpc) ->
-		
+
 			directive = {}
-			
+
 			directive.candidateKeys = [
 				['queueName', 'notification.type']
 				'notification.type'
 				'queueName'
 			]
-			
+
 			directive.link = (scope, element) ->
-			
+
 				# Remove the notification from the queue.
 				scope.remove = ($event) ->
 					$event.stopPropagation()
-					
+
 					rpc.call(
 						'shrub.ui.notifications.remove'
 						ids: [scope.notification.id]
 					)
-					
+
 					index = scope.queue.indexOf scope.notification
 					scope.queue.splice index, 1
-					
+
 				# Toggle the notification's marked-as-read state.
 				scope.toggleMarkedAsRead = ($event) ->
 					$event.stopPropagation()
-					
+
 					scope.markAsRead(
 						scope.notification, not scope.notification.markedAsRead
 					)
-				
+
 				# Watch the marked-as-read state and make some changes.
 				scope.$watch 'notification.markedAsRead', (markedAsRead) ->
-					
+
 					if markedAsRead
 						element.addClass 'marked-as-read'
 						scope.iconClass = 'glyphicon-check'
-						scope.title = 'Mark as unread' 
+						scope.title = 'Mark as unread'
 					else
 						element.removeClass 'marked-as-read'
 						scope.iconClass = 'glyphicon-eye-open'
 						scope.title = 'Mark as read'
-						
+
 			directive.scope = true
-				
+
 			directive.template = """
 
 <a
@@ -81,8 +81,8 @@ exports.pkgmanRegister = (registrar) ->
 ></div>
 
 """
-			
+
 			directive
-			
+
 	]
-		
+

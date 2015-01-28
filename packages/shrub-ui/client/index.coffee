@@ -1,6 +1,6 @@
 
 # # User Interface
-# 
+#
 # Define user interface components.
 
 exports.pkgmanRegister = (registrar) ->

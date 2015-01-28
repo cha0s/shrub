@@ -21,19 +21,19 @@ angular.module('shrub.core', coreDependencies)
 	.config([
 		'$injector', 'shrub-pkgmanProvider'
 		({invoke}, {invokeFlat}) ->
-			
+
 			# Invoke hook `appConfig`.
 			# Invoked when the Angular application is in the configuration
 			# phase.
 			invoke injectable for injectable in invokeFlat 'appConfig'
-			
+
 	])
-	
+
 	.run([
-	
+
 		'$injector', 'shrub-pkgman'
 		({invoke}, {invokeFlat}) ->
-			
+
 			# Invoke hook `appRun`.
 			# Invoked when the Angular application is run.
 			invoke injectable for injectable in invokeFlat 'appRun'

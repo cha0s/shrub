@@ -5,9 +5,9 @@ exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `gruntConfig`
 	registrar.registerHook 'gruntConfig', (gruntConfig) ->
-	
+
 		{grunt} = gruntConfig
-		
+
 		gruntConfig.clean ?= {}
 		gruntConfig.coffee ?= {}
 		gruntConfig.concat ?= {}
@@ -25,7 +25,7 @@ exports.pkgmanRegister = (registrar) ->
 		]
 
 		gruntConfig.coffee.modules =
-		
+
 			files: [
 				cwd: 'client'
 				src: [
@@ -45,9 +45,9 @@ exports.pkgmanRegister = (registrar) ->
 				expand: true
 				ext: '.js'
 			]
-	
+
 		gruntConfig.concat.modules =
-		
+
 			files: [
 				src: [
 					'build/js/modules.js'
@@ -58,7 +58,7 @@ exports.pkgmanRegister = (registrar) ->
 			]
 
 		gruntConfig.copy.modules =
-			
+
 			files: [
 				expand: true
 				cwd: 'client/modules'
@@ -75,7 +75,7 @@ exports.pkgmanRegister = (registrar) ->
 			]
 
 		gruntConfig.watch.modules =
-		
+
 			files: [
 				'client/packages.coffee'
 				'client/require.coffee'
@@ -87,7 +87,7 @@ exports.pkgmanRegister = (registrar) ->
 				'build:modules', 'build:shrub'
 			]
 			options: livereload: true
-		
+
 		gruntConfig.wrap.modules =
 
 			files: [
@@ -101,28 +101,28 @@ exports.pkgmanRegister = (registrar) ->
 			options:
 				indent: '  '
 				wrapper: (filepath) ->
-					
+
 					matches = filepath.match /build\/js\/([^/]+)\/(.*)/
-					
+
 					switch matches[1]
-						
+
 						when 'modules'
-							
+
 							moduleName = matches[2]
-						
+
 						when 'custom', 'packages'
-	
+
 							parts = matches[2].split '/'
 							parts.splice 1, 1
 							moduleName = parts.join '/'
-					
+
 					dirname = path.dirname moduleName
 					if dirname is '.' then dirname = '' else dirname += '/'
-					
+
 					extname = path.extname moduleName
-					
+
 					moduleName = "#{dirname}#{path.basename moduleName, extname}"
-					
+
 					if moduleName?
 						[
 							"""
@@ -138,9 +138,9 @@ requires_['#{moduleName}'] = function(module, exports, require, __dirname, __fil
 						]
 					else
 						['', '']
-		
+
 		gruntConfig.wrap.modulesAll =
-			
+
 			files: ['build/js/modules.js'].map (file) -> src: file, dest: file
 			options:
 				indent: '  '
@@ -166,5 +166,5 @@ requires_['#{moduleName}'] = function(module, exports, require, __dirname, __fil
 			'concat:modules'
 			'newer:wrap:modulesAll'
 		]
-		
+
 		gruntConfig.shrub.tasks['build'].push 'build:modules'

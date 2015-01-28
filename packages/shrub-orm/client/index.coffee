@@ -2,7 +2,7 @@
 # # [Object-relational mapping](http://en.wikipedia.org/wiki/Object-relational_mapping) using Waterline.
 #
 # browserify -r waterline-browser -x util -x assert -x events -x bluebird -x async -x lodash -x buffer -x anchor -x validator -x waterline-criteria -x waterline-schema > waterline-browser.js
-# 
+#
 # Provide the ORM as an Angular service.
 
 Promise = require 'bluebird'
@@ -17,52 +17,52 @@ connections = {}
 waterline = new Waterline()
 
 exports.pkgmanRegister = (registrar) ->
-	
+
 	# ## Implements hook `collectionsAlter`
 #	registrar.registerHook 'collectionsAlter', (collections_) ->
-#	
+#
 #		collection.connection = 'socket' for collection in collections_
-	
+
 	# ## Implements hook `service`
 	registrar.registerHook 'service', -> [
 		'$http'
 		($http) ->
-		
+
 			service = {}
-			
+
 			initializedPromise = exports.initialize
-			
+
 				adapters:
-				
+
 					socket: require './adapter'
-				
+
 				connections:
-				
+
 					shrub:
-		
+
 						adapter: 'socket'
-			
+
 			service.collection = ->
 				args = arguments
 				initializedPromise.then ->
 					exports.collection args...
-			
+
 			service.collections = ->
 				args = arguments
 				initializedPromise.then ->
 					exports.collections args...
-			
+
 			service.connections = ->
 				args = arguments
 				initializedPromise.then ->
 					exports.connections args...
-			
+
 			service.waterline = exports.waterline
-			
+
 			service.initialized = -> initializedPromise
-			
+
 			service
-	
+
 	]
 
 exports.initialize = (config) -> new Promise (resolve) ->
@@ -72,45 +72,45 @@ exports.initialize = (config) -> new Promise (resolve) ->
 	collections_ = {}
 	for collectionList in pkgman.invokeFlat 'collections', waterline
 		for identity, collection of collectionList
-			
+
 			# Collection defaults.
 			collection.connection ?= 'shrub'
 			collection.identity ?= identity
 			collections_[collection.identity] = collection
-			
+
 			# Instantiate a model with defaults supplied.
 			collection.instantiate = (values = {}) ->
-			
+
 				for key, value of @attributes
 					continue unless value.defaultsTo?
-						
+
 					values[key] ?= if 'function' is typeof value.defaultsTo
 						value.defaultsTo.call values
 					else
 						JSON.parse JSON.stringify value.defaultsTo
-				
+
 				new @_model @_schema.cleanValues @_transformer.serialize values
-				
+
 			# Destroy all instances of a model.
 			collection.destroyAll = ->
 				@find().then (models) ->
 					Promise.all model.destroy() for model in models
-					
+
 	# Invoke hook `collectionsAlter`.
 	# Allows packages to alter any Waterline collections defined.
 	pkgman.invoke 'collectionsAlter', collections_, waterline
-	
+
 	# Load the collections into Waterline.
 	for i, collection of collections_
 		Collection = Waterline.Collection.extend collection
 		waterline.loadCollection Collection
-	
+
 	waterline.initialize config, (error, data) ->
 		return reject error if error?
-		
+
 		collections = data.collections
 		connections = data.connections
-		
+
 		resolve()
 
 exports.collection = (identity) -> collections[identity]

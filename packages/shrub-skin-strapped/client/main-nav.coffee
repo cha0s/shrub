@@ -7,10 +7,10 @@ exports.pkgmanRegister = (registrar) ->
 	registrar.registerHook 'directive', -> [
 		'shrub-ui/window-title', 'shrub-user'
 		(windowTitle, user) ->
-		
+
 			link: (scope, elm, attr) ->
-				
-				scope.menu = 
+
+				scope.menu =
 
 					name: 'main-nav'
 					attributes:
@@ -32,19 +32,19 @@ exports.pkgmanRegister = (registrar) ->
 						path: 'user/logout'
 						label: 'Sign out'
 					]
-				
+
 				scope.user = user.instance()
-				
+
 				scope.$watch(
 					-> windowTitle.page()
 					-> scope.pageTitle = windowTitle.page()
 				)
-				
+
 			template: """
-	
+
 <nav class="navbar navbar-default" role="navigation">
 	<div class="container-fluid">
-	
+
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".shrub-skin-strapped-ui-nav">
 				<span class="sr-only">Toggle navigation</span>
@@ -61,9 +61,9 @@ exports.pkgmanRegister = (registrar) ->
 				data-queue-name="shrubExampleGeneral"
 			>
 			</div>
-			
+
 		</div>
-		
+
 		<div class="navbar-collapse collapse shrub-skin-strapped-ui-nav">
 
 			<div
@@ -72,13 +72,13 @@ exports.pkgmanRegister = (registrar) ->
 				data-queue-name="shrubExampleGeneral"
 			>
 			</div>
-			
+
 			<p class="navbar-text navbar-right identity-wrapper">
 				<span class="identity">
 					You are <span class="username" data-ng-bind="user.name"></span>
 				</span>
 			</p>
-			
+
 			<div
 				data-shrub-ui-menu
 				data-menu="menu"
@@ -88,5 +88,5 @@ exports.pkgmanRegister = (registrar) ->
 </nav>
 
 """
-			
+
 	]

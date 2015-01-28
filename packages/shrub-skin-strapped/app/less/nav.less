@@ -1,50 +1,50 @@
 
 nav.navbar {
   margin-top: 20px;
-  
+
   ul {
-    
+
     li {
-      
+
       &.active > a {
         box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05) inset;
       }
-      
+
       a {
       }
     }
-  }    
-  
+  }
+
   .navbar-brand {
     small, .small {
       font-size: 60%;
     }
   }
-  
+
   @media (min-width: 768px) {
     .identity-wrapper {
       margin: 15px 0 15px 40px;
     }
   }
-  
+
   .navbar-notification {
     margin: 0;
-    
+
     button {
       height: 32px;
       margin: 9px -15px 9px 20px;
-      width: 32px;    
+      width: 32px;
     }
-    
+
     &.mobile {
       float: right;
       margin-right: 30px;
-      
+
       @media (min-width: 768px) {
         display: none;
       }
     }
-    
+
     &.desktop {
       @media (max-width: 768px) {
         display: none;

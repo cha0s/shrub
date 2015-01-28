@@ -11,34 +11,33 @@ exports.pkgmanRegister = (registrar) ->
 				icon: '/img/shrub.png'
 				lang: 'en'
 			)
-			
+
 	]
 
 	# ## Implements hook `provider`
 	registrar.registerHook 'provider', -> [
 		'NotificationProvider'
 		(NotificationProvider) ->
-		
+
 			provider = {}
-			
+
 			# Forward.
 			provider.setOptions = (options) ->
 				NotificationProvider.setOptions options
-				
+
 			# I am not really a fan of using new as an API here.
 			provider.$get = [
 				'Notification'
 				(Notification) ->
-					
+
 					service = {}
-					
+
 					service.create = (title, options) ->
 						new Notification title, options
-					
+
 					service
 			]
-		
+
 			provider
-			
+
 	]
-	
