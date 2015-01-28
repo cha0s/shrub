@@ -246,7 +246,7 @@ exports.pkgmanRegister = (registrar) ->
 				
 				for notification in req.notifications
 					return next new Error(
-						"Those notifications may not be removed."
+						'Those notifications may not be removed.'
 					) unless notification.mayRemove
 					
 				next()

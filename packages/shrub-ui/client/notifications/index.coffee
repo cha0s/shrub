@@ -201,7 +201,7 @@ exports.pkgmanRegister = (registrar) ->
 			directive
 			
 	]
-		
+	
 	# ## Implements hook `service`
 	registrar.registerHook 'service', -> [
 		'$q', 'shrub-rpc', 'shrub-socket'
@@ -214,39 +214,54 @@ exports.pkgmanRegister = (registrar) ->
 			# ## notifications.list
 			# 
 			# Get a queue of notifications.
-			service.queue = (queue) -> _notifications[queue] ?= []
+			service.queue = (queue) ->
+				
+				_notifications[queue] ?= new NotificationQueue()
+				_notifications[queue].notifications()
 				
 			# ## notifications.loadMore
 			# 
 			# Load more notifications
 			service.loadMore = (queue, skip) ->
+				
 				rpc.call(
 					'shrub.ui.notifications'
 					queue: queue
 					skip: skip
 				
 				).then (notifications) ->
-					addNotifications queue, notifications
-				
-			# Accept notifications from the server.
-			socket.on 'shrub.ui.notifications', (data) ->
-				addNotifications data.queue, data.notifications
-				
-			# Add notifications into a queue.
-			addNotifications = (queue, notifications) ->
-				_notifications[queue] ?= []
-				
-				for notification in notifications
-					_notifications[queue].unshift notification
 					
-				return
-			
+					_notifications[queue] ?= new NotificationQueue()
+					_notifications[queue].add notifications
+				
 			# Add in initial notifications from config.
 			for queue, notifications of config.get(
 				'packageConfig:shrub-ui:notifications'
 			)
-				addNotifications queue, notifications
+				_notifications[queue] ?= new NotificationQueue()
+				_notifications[queue].add notifications
 			
+			# Accept notifications from the server.
+			socket.on 'shrub.ui.notifications', (data) ->
+				{queue, notifications} = data
+				
+				_notifications[queue] ?= new NotificationQueue()
+				_notifications[queue].add notifications
+				
+			# Remove notifications.
+			socket.on 'shrub.ui.notifications.remove', (data) ->
+				{queue, ids} = data
+				
+				_notifications[queue] ?= new NotificationQueue()
+				_notifications[queue].remove ids
+				
+			# Mark notifications as read.
+			socket.on 'shrub.ui.notifications.markAsRead', (data) ->
+				{queue, ids, markedAsRead} = data
+				
+				_notifications[queue] ?= new NotificationQueue()
+				_notifications[queue].markAsRead ids, markedAsRead
+				
 			service
 			
 	]
@@ -254,3 +269,41 @@ exports.pkgmanRegister = (registrar) ->
 	registrar.recur [
 		'item', 'title'
 	]
+
+class NotificationQueue
+
+	constructor: ->
+		
+		@_notifications = []
+		@_notificationsIndex = {}
+	
+	add: (notifications) ->
+	
+		for notification in notifications
+			
+			@_notifications.unshift notification
+			@_notificationsIndex[notification.id] = notification
+			
+		return
+		
+	remove: (ids) ->
+	
+		for id in ids
+			continue unless notification = @_notificationsIndex[id]
+			
+			index = @_notifications.indexOf notification
+			@_notifications.splice index, 1
+			delete @_notificationsIndex[id]
+		
+		return
+	
+	notifications: -> @_notifications
+	
+	markAsRead: (ids, markedAsRead) ->
+
+		for id in ids
+			continue unless notification = @_notificationsIndex[id]
+			notification.markAsRead = markedAsRead
+		
+		return
+	
