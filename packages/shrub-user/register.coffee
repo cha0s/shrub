@@ -16,7 +16,7 @@ exports.pkgmanRegister = (registrar) ->
 	registrar.registerHook 'endpoint', ->
 
 		limiter:
-			message: "You are trying to register too much."
+			message: 'You are trying to register too much.'
 			threshold: threshold(5).every(2).minutes()
 
 		route: 'shrub.user.register'
@@ -54,22 +54,20 @@ exports.pkgmanRegister = (registrar) ->
 					type: 'register'
 					name: user.name
 					email: email
-				)
+				).done()
 
 				nodemailer.sendMail(
 					'shrub-user-email-register'
 				,
 					to: email
-					subject: "Registration details"
+					subject: 'Registration details'
 				,
 					scope
-				)
+				).done()
 
 				return
 
-			).then(-> fn()
-
-			).catch fn
+			).then(-> fn()).catch fn
 
 	# ## Implements hook `replContext`
 	registrar.registerHook 'replContext', (context) ->

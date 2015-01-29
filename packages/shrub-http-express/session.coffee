@@ -69,7 +69,7 @@ exports.pkgmanRegister = (registrar) ->
 				return next() if req.signedCookies[key] is req.sessionID
 
 				# } Generate the cookie
-				val = "s:" + signature.sign req.sessionID, cookie.cryptoKey
+				val = 's:' + signature.sign req.sessionID, cookie.cryptoKey
 				cookieText = req.session.cookie.serialize key, val
 
 				cookieObject = {}
@@ -111,7 +111,7 @@ exports.pkgmanRegister = (registrar) ->
 				# } Make sure there's a possibility we will find a session.
 				return next() unless req and req.headers and req.headers.cookie
 
-				cookieParser req, null, (error) =>
+				cookieParser req, null, (error) ->
 					return next error if error?
 
 					# } Tricky: Assign req.sessionStore, because Express session
@@ -123,6 +123,7 @@ exports.pkgmanRegister = (registrar) ->
 
 						session.req = req
 						req.session = session
+						req.sessionID = session.id
 
 						next()
 
