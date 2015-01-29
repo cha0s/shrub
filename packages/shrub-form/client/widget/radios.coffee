@@ -1,5 +1,5 @@
 
-_ = require 'underscore'
+_ = require 'lodash'
 
 exports.pkgmanRegister = (registrar) ->
 

@@ -3,7 +3,7 @@
 #
 # Client-side configuration.
 
-_ = require 'underscore'
+_ = require 'lodash'
 Promise = require 'bluebird'
 url = require 'url'
 

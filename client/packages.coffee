@@ -9,7 +9,7 @@ angular.module('shrub.packages', [
 		'$compileProvider', '$controllerProvider', '$filterProvider', '$injector', '$provide', 'shrub-pkgmanProvider', 'shrub-requireProvider'
 		($compileProvider, $controllerProvider, $filterProvider, $injector, $provide, pkgman, {require}) ->
 
-			_ = require 'underscore'
+			_ = require 'lodash'
 
 			config = require 'config'
 			debug = require('debug') 'shrub:angular'
@@ -185,7 +185,7 @@ angular.module('shrub.pkgman', [
 		'$provide', 'shrub-requireProvider'
 		($provide, {require}) ->
 
-			_ = require 'underscore'
+			_ = require 'lodash'
 			config = require 'config'
 			debug = require('debug') 'shrub:pkgman'
 			pkgman = require 'pkgman'

@@ -3,7 +3,7 @@
 #
 # A sandboxed version of Angular, for clients lacking JS.
 
-_ = require 'underscore'
+_ = require 'lodash'
 Promise = require 'bluebird'
 url = require 'url'
 

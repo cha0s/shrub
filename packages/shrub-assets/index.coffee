@@ -3,7 +3,7 @@
 #
 # Serve different JS based on whether the server is running in production mode.
 
-_ = require 'underscore'
+_ = require 'lodash'
 config = require 'config'
 middleware = require 'middleware'
 pkgman = require 'pkgman'

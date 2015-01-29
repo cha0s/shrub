@@ -1,7 +1,7 @@
 
 # # Error handling
 
-_ = require 'underscore'
+_ = require 'lodash'
 pkgman = require 'pkgman'
 
 # ## TransmittableError

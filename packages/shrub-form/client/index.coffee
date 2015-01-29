@@ -4,7 +4,7 @@
 # Define a directive for Angular forms, and a service to cache and look them
 # up later.
 
-_ = require 'underscore'
+_ = require 'lodash'
 i8n = require 'inflection'
 
 pkgman = require 'pkgman'

@@ -4,7 +4,7 @@
 # Framework for communication between client and server through
 # [RPC](http://en.wikipedia.org/wiki/Remote_procedure_call#Message_passing)
 
-_ = require 'underscore'
+_ = require 'lodash'
 debug = require('debug') 'shrub:rpc'
 Promise = require 'bluebird'
 
