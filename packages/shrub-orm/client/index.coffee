@@ -6,15 +6,10 @@
 # Provide the ORM as an Angular service.
 
 Promise = require 'bluebird'
-Waterline = require 'waterline'
 
-config = require 'config'
 pkgman = require 'pkgman'
 
 collections = {}
-connections = {}
-
-waterline = new Waterline()
 
 exports.pkgmanRegister = (registrar) ->
 
@@ -30,56 +25,31 @@ exports.pkgmanRegister = (registrar) ->
 
 			service = {}
 
-			initializedPromise = exports.initialize
+			exports.initialize()
 
-				adapters:
+			service.collection = (identity) -> collections[identity]
 
-					socket: require './adapter'
-
-				connections:
-
-					shrub:
-
-						adapter: 'socket'
-
-			service.collection = ->
-				args = arguments
-				initializedPromise.then ->
-					exports.collection args...
-
-			service.collections = ->
-				args = arguments
-				initializedPromise.then ->
-					exports.collections args...
-
-			service.connections = ->
-				args = arguments
-				initializedPromise.then ->
-					exports.connections args...
-
-			service.waterline = exports.waterline
-
-			service.initialized = -> initializedPromise
+			service.collections = -> collections
 
 			service
 
 	]
 
-exports.initialize = (config) -> new Promise (resolve) ->
+exports.initialize = ->
 
 	# Invoke hook `collections`.
 	# Allows packages to create Waterline collections.
 	collections_ = {}
-	for collectionList in pkgman.invokeFlat 'collections', waterline
+	for collectionList in pkgman.invokeFlat 'collections'
 		for identity, collection of collectionList
 
 			# Collection defaults.
-			collection.connection ?= 'shrub'
 			collection.identity ?= identity
 			collections_[collection.identity] = collection
 
 			# Instantiate a model with defaults supplied.
 			collection.instantiate = (values = {}) ->
+				model = JSON.parse JSON.stringify values
 
 				for key, value of @attributes
 					continue unless value.defaultsTo?
@@ -89,34 +59,13 @@ exports.initialize = (config) -> new Promise (resolve) ->
 					else
 						JSON.parse JSON.stringify value.defaultsTo
 
-				new @_model @_schema.cleanValues @_transformer.serialize values
+				model
 
 			# Destroy all instances of a model.
 			collection.destroyAll = ->
-				@find().then (models) ->
-					Promise.all model.destroy() for model in models
 
 	# Invoke hook `collectionsAlter`.
 	# Allows packages to alter any Waterline collections defined.
-	pkgman.invoke 'collectionsAlter', collections_, waterline
+	pkgman.invoke 'collectionsAlter', collections_
 
-	# Load the collections into Waterline.
-	for i, collection of collections_
-		Collection = Waterline.Collection.extend collection
-		waterline.loadCollection Collection
-
-	waterline.initialize config, (error, data) ->
-		return reject error if error?
-
-		collections = data.collections
-		connections = data.connections
-
-		resolve()
-
-exports.collection = (identity) -> collections[identity]
-
-exports.collections = -> collections
-
-exports.connections = -> connections
-
-exports.waterline = -> waterline
+	collections = collections_

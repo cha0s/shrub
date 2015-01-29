@@ -3,9 +3,18 @@
 #
 # Tools for working with [Waterline](https://github.com/balderdashy/waterline).
 
+Promise = require 'bluebird'
+Waterline = require 'waterline'
+
 config = require 'config'
 
-clientModule = require './client'
+config = require 'config'
+pkgman = require 'pkgman'
+
+collections = {}
+connections = {}
+
+waterline = new Waterline()
 
 exports.pkgmanRegister = (registrar) ->
 
@@ -24,9 +33,7 @@ exports.pkgmanRegister = (registrar) ->
 				for adapter in adapters
 					waterlineConfig.adapters[adapter] = require adapter
 
-				clientModule.initialize(waterlineConfig).then(->
-					next()
-				).catch next
+				exports.initialize waterlineConfig, next
 
 		]
 
@@ -80,10 +87,58 @@ exports.pkgmanRegister = (registrar) ->
 
 		context.orm = clientModule
 
-exports.collection = clientModule.collection
+exports.initialize = (config, fn) ->
 
-exports.collections = clientModule.collections
+	# Invoke hook `collections`.
+	# Allows packages to create Waterline collections.
+	collections_ = {}
+	for collectionList in pkgman.invokeFlat 'collections', waterline
+		for identity, collection of collectionList
 
-exports.connections = clientModule.connections
+			# Collection defaults.
+			collection.connection ?= 'shrub'
+			collection.identity ?= identity
+			collections_[collection.identity] = collection
 
-exports.waterline = clientModule.waterline
+			# Instantiate a model with defaults supplied.
+			collection.instantiate = (values = {}) ->
+
+				for key, value of @attributes
+					continue unless value.defaultsTo?
+
+					values[key] ?= if 'function' is typeof value.defaultsTo
+						value.defaultsTo.call values
+					else
+						JSON.parse JSON.stringify value.defaultsTo
+
+				new @_model @_schema.cleanValues @_transformer.serialize values
+
+			# Destroy all instances of a model.
+			collection.destroyAll = ->
+				@find().then (models) ->
+					Promise.all model.destroy() for model in models
+
+	# Invoke hook `collectionsAlter`.
+	# Allows packages to alter any Waterline collections defined.
+	pkgman.invoke 'collectionsAlter', collections_, waterline
+
+	# Load the collections into Waterline.
+	for i, collection of collections_
+		Collection = Waterline.Collection.extend collection
+		waterline.loadCollection Collection
+
+	waterline.initialize config, (error, data) ->
+		return fn error if error?
+
+		collections = data.collections
+		connections = data.connections
+
+		fn()
+
+exports.collection = (identity) -> collections[identity]
+
+exports.collections = -> collections
+
+exports.connections = -> connections
+
+exports.waterline = -> waterline

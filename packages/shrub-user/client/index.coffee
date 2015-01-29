@@ -20,24 +20,22 @@ exports.pkgmanRegister = (registrar) ->
 		'shrub-orm', 'shrub-rpc', 'shrub-socket'
 		(orm, rpc, socket) ->
 
-			service = {}
+			User = orm.collection 'shrub-user'
 
-			_instance = {}
+			service = {}
 
 			_instance = name: 'loading...'
 
-			orm.collection('shrub-user').then (User) ->
-				_instance[k] = v for k, v of User.instantiate(
-					config.get 'packageConfig:shrub-user'
-				)
+			_instance[k] = v for k, v of User.instantiate(
+				config.get 'packageConfig:shrub-user'
+			)
 
 			# Log a user out if we get a socket call.
 			logout = ->
 
-				orm.collection('shrub-user').then (User) ->
-					blank = User.instantiate()
-					delete _instance[k] for k of _instance
-					delete _instance[k] = v for k, v of blank
+				blank = User.instantiate()
+				delete _instance[k] for k of _instance
+				delete _instance[k] = v for k, v of blank
 
 				return
 
@@ -171,117 +169,117 @@ exports.collectionsAlter = (collections) ->
 	for identity, collection of collections
 		do (identity, collection) ->
 
-			validateUser = (user) ->
+			# validateUser = (user) ->
 
-				new Promise (resolve, reject) ->
+			# 	new Promise (resolve, reject) ->
 
-					# `TODO`: See if we can do this without using the internal
-					# _model property.
-					return resolve()# if user instanceof User._model
+			# 		# `TODO`: See if we can do this without using the internal
+			# 		# _model property.
+			# 		return resolve()# if user instanceof User._model
 
-					error = new Error "Invalid user."
-					error.code = 500
-					reject error
+			# 		error = new Error "Invalid user."
+			# 		error.code = 500
+			# 		reject error
 
-			checkPermission = (user, perm) ->
+			# checkPermission = (user, perm) ->
 
-				return if user.hasPermission perm
+			# 	return if user.hasPermission perm
 
-				error = new Error "Forbidden."
-				error.code = 403
-				throw error
+			# 	error = new Error "Forbidden."
+			# 	error.code = 403
+			# 	throw error
 
-			# Secure by default.
-			collection.attributes.isAccessibleBy ?= (user) -> false
+			# # Secure by default.
+			# collection.attributes.isAccessibleBy ?= (user) -> false
 
-			collection.authenticatedAll = (user, params) ->
+			# collection.authenticatedAll = (user, params) ->
 
-				validateUser(user).then(->
-					checkPermission user, "shrub-orm:#{name}:all"
+			# 	validateUser(user).then(->
+			# 		checkPermission user, "shrub-orm:#{name}:all"
 
-				).then(->
-					orm.collection(identity).all params
+			# 	).then(->
+			# 		orm.collection(identity).all params
 
-				).then (models) ->
-					return models if models.length > 0
+			# 	).then (models) ->
+			# 		return models if models.length > 0
 
-					error = new Error "Collection not found."
-					error.code = 404
-					Promise.reject error
+			# 		error = new Error "Collection not found."
+			# 		error.code = 404
+			# 		Promise.reject error
 
-			collection.authenticatedCount = (user) ->
+			# collection.authenticatedCount = (user) ->
 
-				validateUser(user).then(->
-					checkPermission user, "shrub-orm:#{name}:count"
+			# 	validateUser(user).then(->
+			# 		checkPermission user, "shrub-orm:#{name}:count"
 
-				).then -> orm.collection(identity).count()
+			# 	).then -> orm.collection(identity).count()
 
-			collection.authenticatedCreate = (user, attributes) ->
+			# collection.authenticatedCreate = (user, attributes) ->
 
-				validateUser(user).then(->
-					checkPermission user, "shrub-orm:#{name}:create"
+			# 	validateUser(user).then(->
+			# 		checkPermission user, "shrub-orm:#{name}:create"
 
-				).then -> orm.collection(identity).create attributes
+			# 	).then -> orm.collection(identity).create attributes
 
-			collection.authenticatedDestroy = (user, id) ->
+			# collection.authenticatedDestroy = (user, id) ->
 
-				validateUser(user).then(->
-					checkPermission user, "shrub-orm:#{name}:create"
+			# 	validateUser(user).then(->
+			# 		checkPermission user, "shrub-orm:#{name}:create"
 
-				).then(->
-					collection.authenticatedFind user, id
+			# 	).then(->
+			# 		collection.authenticatedFind user, id
 
-				).then (model) ->
-					return model.destroy() if model.isDeletableBy user
+			# 	).then (model) ->
+			# 		return model.destroy() if model.isDeletableBy user
 
-					if model.isAccessibleBy user
-						error = new Error "Access denied."
-						error.code = 403
-					else
-						error = new Error "Resource not found."
-						error.code = 404
+			# 		if model.isAccessibleBy user
+			# 			error = new Error "Access denied."
+			# 			error.code = 403
+			# 		else
+			# 			error = new Error "Resource not found."
+			# 			error.code = 404
 
-					Promise.reject error
+			# 		Promise.reject error
 
-			collection.authenticatedDestroyAll = (user) ->
+			# collection.authenticatedDestroyAll = (user) ->
 
-				validateUser(user).then(->
-					checkPermission "shrub-orm:#{name}:destroyAll"
+			# 	validateUser(user).then(->
+			# 		checkPermission "shrub-orm:#{name}:destroyAll"
 
-				).then -> orm.collection(identity).destroyAll()
+			# 	).then -> orm.collection(identity).destroyAll()
 
-			collection.authenticatedFind = (user, id) ->
+			# collection.authenticatedFind = (user, id) ->
 
-				validateUser(user).then(->
-					orm.collection(identity).find id
+			# 	validateUser(user).then(->
+			# 		orm.collection(identity).find id
 
-				).then (model) ->
-					return model if model? and model.isAccessibleBy user
+			# 	).then (model) ->
+			# 		return model if model? and model.isAccessibleBy user
 
-					error = new Error "Resource not found."
-					error.code = 404
-					Promise.reject error
+			# 		error = new Error "Resource not found."
+			# 		error.code = 404
+			# 		Promise.reject error
 
-			collection.authenticatedUpdate = (user, id, attributes) ->
+			# collection.authenticatedUpdate = (user, id, attributes) ->
 
-				validateUser(user).then(->
-					collection.authenticatedFind user, id
+			# 	validateUser(user).then(->
+			# 		collection.authenticatedFind user, id
 
-				).then (model) ->
-					if model.isEditableBy user
-						for k, v of attributes
-							model[k] = v
-						model.id = id
-						return model.save()
+			# 	).then (model) ->
+			# 		if model.isEditableBy user
+			# 			for k, v of attributes
+			# 				model[k] = v
+			# 			model.id = id
+			# 			return model.save()
 
-					if model.isAccessibleBy user
-						error = new Error "Access denied."
-						error.code = 403
-					else
-						error = new Error "Resource not found."
-						error.code = 404
+			# 		if model.isAccessibleBy user
+			# 			error = new Error "Access denied."
+			# 			error.code = 403
+			# 		else
+			# 			error = new Error "Resource not found."
+			# 			error.code = 404
 
-					Promise.reject error
+			# 		Promise.reject error
 
 			collection.attributes.isAccessibleBy ?= (user) -> false
 			collection.attributes.isEditableBy ?= (user) -> false
