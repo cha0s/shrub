@@ -89,7 +89,7 @@ exports.Manager = class HttpManager
 
 		httpMiddlewareDebug '- Loading HTTP middleware...'
 
-		httpMiddleware = @_config.middleware.slice 0
+		httpMiddleware = @_config.middleware.concat()
 		httpMiddleware.push 'shrub-http'
 
 		# Invoke hook `httpMiddleware`.

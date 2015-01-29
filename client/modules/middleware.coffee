@@ -29,9 +29,7 @@ exports.Middleware = class Middleware
 	# ## *constructor*
 	#
 	# *Create a middleware stack.*
-	constructor: ->
-
-		@_middleware = []
+	constructor: -> @_middleware = []
 
 	# ## ::use
 	#
@@ -75,7 +73,7 @@ exports.Middleware = class Middleware
 					# Try to invoke the middleware, if it throws, just catch
 					# the error and pass it along.
 					try
-						localArgs = args.slice 0
+						localArgs = args.concat()
 						localArgs.unshift error
 						localArgs.push (error) -> invoke error
 						current localArgs...
@@ -101,7 +99,7 @@ exports.Middleware = class Middleware
 					# Try to invoke the middleware, if it throws, just catch
 					# the error and pass it along.
 					try
-						localArgs = args.slice 0
+						localArgs = args.concat()
 						localArgs.push (error) -> invoke error
 						current localArgs...
 					catch error
