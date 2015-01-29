@@ -85,7 +85,7 @@ exports.pkgmanRegister = (registrar) ->
 	# Provide ORM to the REPL context.
 	registrar.registerHook 'replContext', (context) ->
 
-		context.orm = clientModule
+		context.orm = exports
 
 exports.initialize = (config, fn) ->
 
@@ -117,6 +117,16 @@ exports.initialize = (config, fn) ->
 			collection.destroyAll = ->
 				@find().then (models) ->
 					Promise.all model.destroy() for model in models
+
+			collection.attributes.toJSON ?= ->
+				O = @toObject()
+
+				# Remove toJSON return until the following PR makes it in
+				# https://github.com/balderdashy/waterline/pull/818
+				# This will ignore 'protected' attributes, unfortunately.
+				O.toJSON = null
+
+				O
 
 	# Invoke hook `collectionsAlter`.
 	# Allows packages to alter any Waterline collections defined.
