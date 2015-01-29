@@ -19,24 +19,23 @@ exports.pkgmanRegister = (registrar) ->
 
 				# Mark all notifications as read.
 				scope.markAllRead = ->
-					notAlreadyRead = _.filter scope.queue, (notification) ->
-						not notification.markedAsRead
+					notAlreadyRead = _.filter(
+						scope.queue.notifications()
+						(notification) -> not notification.markedAsRead
+					)
 
 					return if notAlreadyRead.length is 0
 
+					scope.queue.markAsRead ids = _.map(
+						notAlreadyRead, (notification) -> notification.id
+					)
+
 					rpc.call(
 						'shrub.ui.notifications.markAsRead'
-						ids: _.map(
-							notAlreadyRead, (notification) -> notification.id
-						)
+						ids: ids
 						markedAsRead: true
 
-					).then ->
-
-						for notification in scope.queue
-							notification.markedAsRead = true
-
-						return
+					)
 
 			directive.scope = true
 

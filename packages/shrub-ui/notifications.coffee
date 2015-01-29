@@ -5,6 +5,8 @@ pkgman = require 'pkgman'
 
 orm = require 'shrub-orm'
 
+{manager: socketManager} = require 'shrub-socket'
+
 notificationQueues = {}
 
 exports.pkgmanRegister = (registrar) ->
@@ -23,6 +25,24 @@ exports.pkgmanRegister = (registrar) ->
 				next()
 
 		]
+
+	# Broadcast a notification event.
+	broadcastNotificationsEvent = (notifications, event, req, data = {}) ->
+
+		# Broadcast for each queue.
+		queueMap = {}
+		for notification in notifications
+			queueMap[notification.queue] ?= []
+			queueMap[notification.queue].push notification.id
+
+		for queueName, ids of queueMap
+			queue = notificationQueues[queueName]
+			channel = queue.channelFromRequest req
+
+			data.ids = ids
+			data.queue = queueName
+
+			socketManager().broadcast channel, event, data
 
 	# ## Implements hook `collections`
 	registrar.registerHook 'collections', ->
@@ -46,8 +66,8 @@ exports.pkgmanRegister = (registrar) ->
 					type: 'boolean'
 					defaultsTo: true
 
-				# Who owns this notification? Built by the queue.
-				owner: 'string'
+				# Which channel owns this notification? Built by the queue.
+				channel: 'string'
 
 				# To where does this notification link?
 				path: 'string'
@@ -73,13 +93,13 @@ exports.pkgmanRegister = (registrar) ->
 				path ?= 'javascript:void(0)'
 				variables ?= {}
 
-				# Get the owner from the request.
-				owner = queue.ownerFromRequest req
+				# Get the channel from the request.
+				channel = queue.channelFromRequest req
 
 				# Create the notification.
 				@create(
 					mayRemove: mayRemove
-					owner: owner
+					channel: channel
 					path: path
 					queue: queueName
 					variables: variables
@@ -87,12 +107,12 @@ exports.pkgmanRegister = (registrar) ->
 				).then (notification) ->
 					return unless req.socket?
 
-					# `TODO`: All other sockets.
-					req.socket.emit(
-						'shrub.ui.notifications'
-						queue: queueName
-						notifications: [notification]
-					)
+					# Broadcast to others.
+					notification.redactFor(req.user).then (notification) ->
+						broadcastNotificationsEvent(
+							[notification], 'shrub.ui.notifications', req
+							notifications: [notification]
+						)
 
 			# Get a queue's notifications from a request.
 			queueFromRequest: (req) ->
@@ -102,9 +122,9 @@ exports.pkgmanRegister = (registrar) ->
 					return Promise.resolve []
 
 				# Return the 20 newest notifications from the queue for the
-				# request's owner, skipping as many records as requested.
+				# request's channel, skipping as many records as requested.
 				query = @find()
-				query = query.where(owner: queue.ownerFromRequest req)
+				query = query.where(channel: queue.channelFromRequest req)
 				query = query.where(queue: req.body.queue)
 				query = query.skip(req.body.skip ? 0)
 				query = query.limit(20)
@@ -120,8 +140,7 @@ exports.pkgmanRegister = (registrar) ->
 			# Remove unnecessary details.
 			redactors: [(redacted) ->
 
-				delete redacted.owner
-				delete redacted.queue
+				delete redacted.channel
 				delete redacted.updatedAt
 
 			]
@@ -156,22 +175,21 @@ exports.pkgmanRegister = (registrar) ->
 
 			queuesConfig
 
+	ensureQueueExists = (req, res, next) ->
+		return next new Error(
+			"Notification queue `#{req.body.queue}' doesn't exist."
+		) unless queue = notificationQueues[req.body.queue]
+
+		req.queue = queue
+		next()
+
 	# ## Implements hook `endpoint`
 	registrar.registerHook 'acknowledged', 'endpoint', ->
 
 		route: 'shrub.ui.notifications.acknowledged'
 
 		validators: [
-
-			# Ensure the queue exists.
-			(req, res, next) ->
-				return next new Error(
-					"Notification queue `#{req.body.queue}' doesn't exist."
-				) unless queue = notificationQueues[req.body.queue]
-
-				req.queue = queue
-				next()
-
+			ensureQueueExists
 		]
 
 		receiver: (req, fn) ->
@@ -180,19 +198,22 @@ exports.pkgmanRegister = (registrar) ->
 			# acknowledged.
 			Notification = orm.collection 'shrub-ui-notification'
 			query = Notification.find()
-			query = query.where(owner: req.queue.ownerFromRequest req)
+			query = query.where(channel: req.queue.channelFromRequest req)
 			query = query.where(queue: req.body.queue)
 			query.then((notifications) ->
 
-				# `TODO`: All other sockets.
+				# Broadcast to others.
+				broadcastNotificationsEvent(
+					notifications, 'shrub.ui.notifications.acknowledged', req
+				)
+
 				Promise.all(
 					for notification in notifications
 						notification.acknowledged = true
 						notification.save()
 				)
 
-			).then(-> fn()
-			).catch fn
+			).then(-> fn()).catch fn
 
 	# Ensure that the requested notification is owned by the request.
 	ensureNotificationsOwnedByRequest = (req, res, next) ->
@@ -207,7 +228,7 @@ exports.pkgmanRegister = (registrar) ->
 
 				return next new Error(
 					"You don't own those notifications."
-				) unless notification.owner is queue.ownerFromRequest req
+				) unless notification.channel is queue.channelFromRequest req
 
 			req.notifications = notifications
 			next()
@@ -225,7 +246,12 @@ exports.pkgmanRegister = (registrar) ->
 
 		receiver: (req, fn) ->
 
-			# `TODO`: All other sockets.
+			# Broadcast to others.
+			broadcastNotificationsEvent(
+				req.notifications, 'shrub.ui.notifications.markAsRead', req
+				markedAsRead: req.body.markedAsRead
+			)
+
 			Promise.all(
 				for notification in req.notifications
 					notification.markedAsRead = req.body.markedAsRead
@@ -255,7 +281,11 @@ exports.pkgmanRegister = (registrar) ->
 
 		receiver: (req, fn) ->
 
-			# `TODO`: All other sockets.
+			# Broadcast to others.
+			broadcastNotificationsEvent(
+				req.notifications, 'shrub.ui.notifications.remove', req
+			)
+
 			Promise.all(
 				for notification in req.notifications
 					notification.destroy()

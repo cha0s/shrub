@@ -22,13 +22,12 @@ exports.pkgmanRegister = (registrar) ->
 				scope.remove = ($event) ->
 					$event.stopPropagation()
 
+					ids = [scope.notification.id]
 					rpc.call(
 						'shrub.ui.notifications.remove'
-						ids: [scope.notification.id]
+						ids: ids
 					)
-
-					index = scope.queue.indexOf scope.notification
-					scope.queue.splice index, 1
+					index = scope.queue.remove ids
 
 				# Toggle the notification's marked-as-read state.
 				scope.toggleMarkedAsRead = ($event) ->

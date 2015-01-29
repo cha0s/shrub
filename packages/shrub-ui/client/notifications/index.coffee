@@ -65,7 +65,7 @@ exports.pkgmanRegister = (registrar) ->
 					)
 
 					# Mark client notifications as acknowledged.
-					for notification in scope.queue
+					for notification in scope.queue.notifications()
 						notification.acknowledged = true
 
 					return
@@ -73,8 +73,7 @@ exports.pkgmanRegister = (registrar) ->
 				# Wait for the new queue to be compiled into the DOM, and then
 				# reposition the popover, since the new content may shift it.
 				scope.$watch(
-					'queue'
-					(queue) -> scope.$$postDigest ->
+					'queue.notifications()', -> scope.$$postDigest ->
 						return unless (pop = $button.data 'bs.popover').$tip?
 						return unless pop.$tip.hasClass 'in'
 						pop.applyPlacement(
@@ -131,8 +130,8 @@ exports.pkgmanRegister = (registrar) ->
 				)
 
 				# Keep track of unread items.
-				scope.$watch 'queue', (queue) ->
-					unacknowledged = queue.filter (notification) ->
+				scope.$watch 'queue.notifications()', (notifications) ->
+					unacknowledged = notifications.filter (notification) ->
 						not notification.acknowledged
 
 					scope.unacknowledged = if unacknowledged.length > 0
@@ -170,8 +169,8 @@ exports.pkgmanRegister = (registrar) ->
 			<ul>
 
 				<li
-					data-ng-if="!!queue.length"
-					data-ng-repeat="notification in queue"
+					data-ng-if="!!queue.notifications().length"
+					data-ng-repeat="notification in queue.notifications()"
 				>
 					<a
 						data-shrub-ui-notifications-item
@@ -183,7 +182,7 @@ exports.pkgmanRegister = (registrar) ->
 				</li>
 
 				<li
-					data-ng-if="!queue.length"
+					data-ng-if="!queue.notifications().length"
 				>
 					<a
 						href="javascript:void(0)"
@@ -209,15 +208,13 @@ exports.pkgmanRegister = (registrar) ->
 
 			service = {}
 
-			_notifications = {}
+			_queues = {}
 
 			# ## notifications.list
 			#
 			# Get a queue of notifications.
 			service.queue = (queue) ->
-
-				_notifications[queue] ?= new NotificationQueue()
-				_notifications[queue].notifications()
+				_queues[queue] ?= new NotificationQueue()
 
 			# ## notifications.loadMore
 			#
@@ -231,36 +228,43 @@ exports.pkgmanRegister = (registrar) ->
 
 				).then (notifications) ->
 
-					_notifications[queue] ?= new NotificationQueue()
-					_notifications[queue].add notifications
+					_queues[queue] ?= new NotificationQueue()
+					_queues[queue].add notifications
 
 			# Add in initial notifications from config.
 			for queue, notifications of config.get(
 				'packageConfig:shrub-ui:notifications'
 			)
-				_notifications[queue] ?= new NotificationQueue()
-				_notifications[queue].add notifications
+				_queues[queue] ?= new NotificationQueue()
+				_queues[queue].add notifications
 
 			# Accept notifications from the server.
 			socket.on 'shrub.ui.notifications', (data) ->
 				{queue, notifications} = data
 
-				_notifications[queue] ?= new NotificationQueue()
-				_notifications[queue].add notifications
+				_queues[queue] ?= new NotificationQueue()
+				_queues[queue].add notifications
 
 			# Remove notifications.
 			socket.on 'shrub.ui.notifications.remove', (data) ->
 				{queue, ids} = data
 
-				_notifications[queue] ?= new NotificationQueue()
-				_notifications[queue].remove ids
+				_queues[queue] ?= new NotificationQueue()
+				_queues[queue].remove ids
 
 			# Mark notifications as read.
 			socket.on 'shrub.ui.notifications.markAsRead', (data) ->
 				{queue, ids, markedAsRead} = data
 
-				_notifications[queue] ?= new NotificationQueue()
-				_notifications[queue].markAsRead ids, markedAsRead
+				_queues[queue] ?= new NotificationQueue()
+				_queues[queue].markAsRead ids, markedAsRead
+
+			# Mark notifications as acknowledged.
+			socket.on 'shrub.ui.notifications.acknowledged', (data) ->
+				{queue, ids} = data
+
+				_queues[queue] ?= new NotificationQueue()
+				_queues[queue].markAsAcknowledged ids
 
 			service
 
@@ -299,11 +303,21 @@ class NotificationQueue
 
 	notifications: -> @_notifications
 
+	markAsAcknowledged: (ids) ->
+
+		for id in ids
+			continue unless notification = @_notificationsIndex[id]
+
+			notification.acknowledged = true
+
+		return
+
 	markAsRead: (ids, markedAsRead) ->
 
 		for id in ids
 			continue unless notification = @_notificationsIndex[id]
-			notification.markAsRead = markedAsRead
+
+			notification.markedAsRead = markedAsRead
 
 		return
 
