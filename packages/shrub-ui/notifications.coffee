@@ -27,7 +27,9 @@ exports.pkgmanRegister = (registrar) ->
 		]
 
 	# Broadcast a notification event.
-	broadcastNotificationsEvent = (notifications, event, req, data = {}) ->
+	broadcastNotificationsEvent = (req, args) ->
+		{data, event, includeSelf, notifications} = args
+		data ?= {}
 
 		# Broadcast for each queue.
 		queueMap = {}
@@ -42,7 +44,10 @@ exports.pkgmanRegister = (registrar) ->
 			data.ids = ids
 			data.queue = queueName
 
-			socketManager().broadcast channel, event, data
+			if includeSelf
+				socketManager().broadcast channel, event, data
+			else
+				req.socket.broadcast.to(channel).emit event, data
 
 	# ## Implements hook `collections`
 	registrar.registerHook 'collections', ->
@@ -110,7 +115,10 @@ exports.pkgmanRegister = (registrar) ->
 					# Broadcast to others.
 					notification.redactFor(req.user).then (notification) ->
 						broadcastNotificationsEvent(
-							[notification], 'shrub.ui.notifications', req
+							req
+							data: notifications: [notification]
+							event: 'shrub.ui.notifications'
+							includeSelf: true
 							notifications: [notification]
 						)
 
@@ -204,7 +212,9 @@ exports.pkgmanRegister = (registrar) ->
 
 				# Broadcast to others.
 				broadcastNotificationsEvent(
-					notifications, 'shrub.ui.notifications.acknowledged', req
+					req
+					event: 'shrub.ui.notifications.acknowledged'
+					notifications: notifications
 				)
 
 				Promise.all(
@@ -248,8 +258,10 @@ exports.pkgmanRegister = (registrar) ->
 
 			# Broadcast to others.
 			broadcastNotificationsEvent(
-				req.notifications, 'shrub.ui.notifications.markAsRead', req
-				markedAsRead: req.body.markedAsRead
+				req
+				data: markedAsRead: req.body.markedAsRead
+				event: 'shrub.ui.notifications.markAsRead'
+				notifications: req.notifications
 			)
 
 			Promise.all(
@@ -283,7 +295,9 @@ exports.pkgmanRegister = (registrar) ->
 
 			# Broadcast to others.
 			broadcastNotificationsEvent(
-				req.notifications, 'shrub.ui.notifications.remove', req
+				req
+				event: 'shrub.ui.notifications.remove'
+				notifications: req.notifications
 			)
 
 			Promise.all(
