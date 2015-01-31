@@ -6,9 +6,8 @@ nodemailer = require 'shrub-nodemailer'
 
 crypto = require 'server/crypto'
 
+{Limiter} = require 'shrub-limiter'
 orm = require 'shrub-orm'
-
-{threshold} = require 'limits'
 
 exports.pkgmanRegister = (registrar) ->
 
@@ -17,7 +16,7 @@ exports.pkgmanRegister = (registrar) ->
 
 		limiter:
 			message: 'You are trying to register too much.'
-			threshold: threshold(5).every(2).minutes()
+			threshold: Limiter.threshold(5).every(2).minutes()
 
 		route: 'shrub.user.register'
 

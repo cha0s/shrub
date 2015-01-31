@@ -9,14 +9,14 @@ config = require 'config'
 nodemailer = require 'shrub-nodemailer'
 orm = require 'shrub-orm'
 
-{threshold} = require 'limits'
+{Limiter} = require 'shrub-limiter'
 
 exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `endpoint`
 	registrar.registerHook 'endpoint', ->
 
-		limiter: threshold: threshold(1).every(30).seconds()
+		limiter: threshold: Limiter.threshold(1).every(30).seconds()
 
 		route: 'shrub.user.forgot'
 
@@ -87,7 +87,7 @@ exports.pkgmanRegister = (registrar) ->
 					'shrub-user-email-forgot'
 				,
 					to: email
-					subject: "Password recovery request"
+					subject: 'Password recovery request'
 				,
 					scope
 				)

@@ -69,13 +69,13 @@ exports.pkgmanRegister = (registrar) ->
 		]
 
 		# Global site crypto key.
-		cryptoKey: "***CHANGE THIS***"
+		cryptoKey: '***CHANGE THIS***'
 
 		# The default hostname of this application. Includes port if any.
 		siteHostname: 'localhost:4201'
 
 		# The name of the site, used in various places.
-		siteName: "Shrub example application"
+		siteName: 'Shrub example application'
 
 		# A list of the IP addresses of trusted proxies between clients.
 		trustedProxies: []

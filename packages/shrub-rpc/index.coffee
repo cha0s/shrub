@@ -10,14 +10,12 @@ Promise = require 'bluebird'
 
 config = require 'config'
 
-audit = require 'audit'
 errors = require 'errors'
 logging = require 'logging'
 pkgman = require 'pkgman'
 
 logger = logging.create 'logs/rpc.log'
 
-{Limiter} = require 'limits'
 {Middleware} = require 'middleware'
 {TransmittableError} = errors
 
@@ -51,7 +49,7 @@ exports.pkgmanRegister = (registrar) ->
 
 						if req.badStuffHappened
 
-							next new Error "YIKES!"
+							next new Error 'YIKES!'
 
 						else
 
@@ -62,14 +60,14 @@ exports.pkgmanRegister = (registrar) ->
 
 					if req.badStuffHappened
 
-						fn new Error "YIKES!"
+						fn new Error 'YIKES!'
 
 					else
 
 						# Anything you pass to the second parameter of fn will
 						# be passed back to the client. Keep this in mind when
-						# handlind sensitive data.
-						fn null, message: "Woohoo!"
+						# handling sensitive data.
+						fn null, message: 'Woohoo!'
 
 				# Invoke hook `endpoint`.
 				# Gather all endpoints.
@@ -118,9 +116,10 @@ exports.pkgmanRegister = (registrar) ->
 
 						# Don't pass req directly, since it can be mutated by
 						# routes, and violate other routes' expectations.
-						routeReq = {}
-						routeReq[key] = value for key, value of req
+						routeReq = Object.create req
 						routeReq.body = data
+						routeReq.endpoint = endpoint
+						routeReq.route = route
 
 						# } Send an error to the client.
 						emitError = (error) -> fn error: errors.serialize error
@@ -132,7 +131,7 @@ exports.pkgmanRegister = (registrar) ->
 						# the real underlying issue.
 						concealErrorFromClient = (error) ->
 
-							emitError new Error "Please try again later."
+							emitError new Error 'Please try again later.'
 							logError error
 
 						# Transmit the error as it is directly to the client.

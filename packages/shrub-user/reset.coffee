@@ -5,8 +5,7 @@ crypto = require 'server/crypto'
 
 Promise = require 'bluebird'
 
-{threshold} = require 'limits'
-
+{Limiter} = require 'shrub-limiter'
 orm = require 'shrub-orm'
 
 exports.pkgmanRegister = (registrar) ->
@@ -14,7 +13,7 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `endpoint`
 	registrar.registerHook 'endpoint', ->
 
-		limiter: threshold: threshold(1).every(5).minutes()
+		limiter: threshold: Limiter.threshold(1).every(5).minutes()
 		route: 'shrub.user.reset'
 
 		receiver: (req, fn) ->

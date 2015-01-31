@@ -44,10 +44,10 @@ optionalModule = (name) ->
 
 # ## rebuildPackageCache
 exports.rebuildPackageCache = (type) ->
+	modules = {}
 	packageIndex = {}
 	pathIndex = {}
 
-	modules = {}
 	for name in _packages
 
 		try
@@ -100,6 +100,8 @@ exports.invokeFlat = (hook, args...) ->
 
 exports.invokePackage = (path, hook, args...) ->
 	pathIndex?[path]?[hook]? args...
+
+exports.packageExists = (name) -> -1 isnt _packages.indexOf name
 
 exports.packagesImplementing = (hook) -> packageIndex?[hook] ? []
 

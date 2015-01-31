@@ -2,7 +2,6 @@
 # # Limits
 
 Promise = require 'bluebird'
-redis = require 'redis'
 
 pkgman = require 'pkgman'
 
@@ -18,9 +17,21 @@ orm = require 'shrub-orm'
 # number of requests per time period. For instance, by default the
 # [user login](./packages/user/login.html) endpoint limits the number of logins
 # a user may attempt to 3 every 30 seconds.
-#
-# `TODO`: Do this with ORM so it isn't tied to redis.
-exports.Limiter = class Limiter
+# `TODO`: Rewrite this comment
+module.exports = class Limiter
+
+	# ## threshold
+	#
+	# Expose a factory method for constructing Threshold instances. A
+	# Threshold is defined like:
+	#
+	# 	{Limiter} = require 'shrub-limiter'
+	# 	Limiter.threshold(4).every(20).minutes()
+	#
+	# Which means that the threshold represents the allowance of a score of 4
+	# to accumulate over the period of 20 minutes. If more score is accrued
+	# during that window, then the threshold is said to be crossed.
+	@threshold: (score) -> new ThresholdBase score
 
 	# ### *constructor*
 	#
@@ -30,7 +41,7 @@ exports.Limiter = class Limiter
 	#   e.g. "rpc://user.login:limiter"
 	#
 	# * (Threshold) `threshold` - A threshold, see below for details.
-	constructor: (key, @threshold) ->
+	constructor: (key, @threshold, @excluded = []) ->
 
 		# } Make sure it's a threshold.
 		throw new TypeError(
@@ -217,8 +228,8 @@ class ThresholdMultiplier
 		minutes: 60
 
 	for key, multiplier of multipliers
-		do (key, multiplier) =>
-			@::[key] = ->
+		do (key, multiplier) ->
+			ThresholdMultiplier::[key] = ->
 				@_multiplier = multiplier
 
 				# } Return a finalized threshold.
@@ -242,16 +253,3 @@ class ThresholdFinal
 
 		@calculateSeconds = -> amount * multiplier
 		@score = -> score
-
-# ## threshold
-#
-# Expose a factory method for constructing Threshold instances. A Threshold is
-# defined like:
-#
-# 	{threshold} = require 'limits'
-# 	threshold(4).every(20).minutes()
-#
-# Which means that the threshold represents the allowance of a score of 4 to
-# accumulate over the period of 20 minutes. If more score is accrued during
-# that window, then the threshold is said to be crossed.
-exports.threshold = (score) -> new ThresholdBase score

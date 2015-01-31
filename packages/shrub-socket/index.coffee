@@ -41,6 +41,7 @@ exports.pkgmanRegister = (registrar) ->
 			'shrub-core'
 			'shrub-http-express/session'
 			'shrub-user'
+			'shrub-audit'
 			'shrub-villiany'
 		]
 

@@ -7,15 +7,11 @@
 moment = require 'moment'
 Promise = require 'bluebird'
 
-audit = require 'audit'
 errors = require 'errors'
 middleware = require 'middleware'
 pkgman = require 'pkgman'
 
-{Limiter, threshold} = require 'limits'
-
-exports.SKIP = SKIP = 0
-exports.IGNORE = IGNORE = 1
+exports.SKIP = SKIP = {}
 
 exports.pkgmanRegister = (registrar) ->
 
@@ -41,13 +37,6 @@ exports.pkgmanRegister = (registrar) ->
 	# Allow RPC endpoint definitions to specify rate limiters.
 	registrar.registerHook 'endpointAlter', (endpoints) ->
 
-		# Invoke hook `limiterApplicationMiddleware`.
-		# Invoked when a limit is applied.
-		limiterApplicationMiddleware = middleware.fromShortName(
-			'limiter application'
-			'shrub-limiter'
-		)
-
 		# A limiter on a route is defined like:
 		#
 		# * `message`: The message returned to the client when the threshold is
@@ -70,44 +59,59 @@ exports.pkgmanRegister = (registrar) ->
 
 			# Create a limiter based on the threshold defined.
 			endpoint.limiter.instance = new Limiter(
-				"rpc://#{route}"
-				endpoint.limiter.threshold
+				"rpc://#{route}", endpoint.limiter.threshold
 			)
 
 			# Set defaults.
-			endpoint.limiter.ignoreKeys ?= []
-			endpoint.limiter.message ?= "You are doing that too much."
+			endpoint.limiter.excludedKeys ?= []
+			endpoint.limiter.message ?= 'You are doing that too much.'
+			endpoint.limiter.villianyScore ?= 20
 
 			# Add a validator, where we'll check the threshold.
 			endpoint.validators.push (req, res, next) ->
 
-				{ignoreKeys, instance} = endpoint.limiter
+				{
+					excludedKeys
+					instance
+					message
+					villianyScore
+				} = endpoint.limiter
 
-				# Ignore keys.
-				fingerprint = audit.fingerprint req
-				delete fingerprint[excludedKey] for excludedKey in ignoreKeys
-
-				keys = ("#{key}:#{value}" for key, value of fingerprint)
-
-				for rule in pkgman.invokeFlat 'limiterCheck', req, endpoint, keys
+				# Allow packages to check and optionally skip the limiter.
+				for rule in pkgman.invokeFlat 'limiterCheck', req
 					continue unless rule?
 					return next() if SKIP is rule
 
+				inlineKeys = req.fingerprint.inlineKeys excludedKeys
+
+				# Build a nice error message for the client, so they
+				# hopefully will stop doing that.
+				sendLimiterError = ->
+					instance.ttl(inlineKeys).then (ttl) ->
+						next errors.instantiate(
+							'limiterThreshold'
+							message
+							moment().add('seconds', ttl).fromNow()
+						)
+
 				# Accrue a hit and check the threshold.
-				instance.accrueAndCheckThreshold(keys).then((isLimited) ->
+				instance.accrueAndCheckThreshold(inlineKeys).then((isLimited) ->
 					return next() unless isLimited
 
-					# Don't pass req directly, since it can be mutated by
-					# routes, and violate other routes' expectations.
-					limiterReq = {}
-					limiterReq[key] = value for key, value of req
-					limiterReq.endpoint = endpoint
-					limiterReq.keys = keys
-					limiterReq.route = route
+					# Zero score skips the villiany check.
+					return sendLimiterError() if villianyScore is 0
+					unless pkgman.packageExists 'shrub-villiany'
+						return sendLimiterError()
 
-					limiterApplicationMiddleware.dispatch limiterReq, null, (error) ->
-						return next error if error?
-						next()
+					req.reportVilliany(
+						villianyScore
+						"rpc://#{req.route}:limiter"
+						excludedKeys
+
+					).then (isVillian) ->
+						return next() if isVillian
+
+						sendLimiterError()
 
 				).catch next
 
@@ -116,9 +120,4 @@ exports.pkgmanRegister = (registrar) ->
 	# Just defer to client, where the error is defined.
 	registrar.registerHook 'transmittableError', require('./client').transmittableError
 
-	# ## Implements hook `packageSettings`
-	registrar.registerHook 'packageSettings', ->
-
-		applicationMiddleware: [
-			'shrub-villiany'
-		]
+exports.Limiter = Limiter = require './limiter'

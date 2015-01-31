@@ -3,19 +3,20 @@
 #
 # Watch for and punish bad behavior.
 
+_ = require 'lodash'
 moment = require 'moment'
 i8n = require 'inflection'
 Promise = require 'bluebird'
 
-audit = require 'audit'
 config = require 'config'
 errors = require 'errors'
 logging = require 'logging'
 
+audit = require 'shrub-audit'
 orm = require 'shrub-orm'
 
 {AuthorizationFailure} = require 'shrub-socket/manager'
-{Limiter, threshold} = require 'limits'
+{Limiter} = require 'shrub-limiter'
 
 logger = logging.create 'logs/villiany.log'
 
@@ -23,78 +24,26 @@ exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `endpointAlter`
 	registrar.registerHook 'endpointAlter', (endpoints) ->
-
 		for route, endpoint of endpoints
-
 			endpoint.villianyScore ?= 20
-
-	# ## Implements hook `limiterApplicationMiddleware`
-	registrar.registerHook 'limiterApplicationMiddleware', ->
-
-		label: 'Report villiany upon crossing limiter threshold'
-		middleware: [
-
-			(req, res, next) ->
-
-				{endpoint} = req
-				{instance, message, villianyScore} = endpoint.limiter
-
-				# Report villiany for crossing the limiter threshold.
-				promise = if req.reportVilliany?
-
-					req.reportVilliany(
-						villianyScore ? 20
-						"rpc://#{req.route}:limiter"
-					)
-
-				else
-
-					Promise.resolve false
-
-				promise.then (isVillian) ->
-					return if isVillian
-
-					# Build a nice error message for the client, so they
-					# hopefully will stop doing that.
-					instance.ttl(req.keys).then (ttl) ->
-
-						next errors.instantiate(
-							'limiterThreshold'
-							message
-							moment().add('seconds', ttl).fromNow()
-						)
-
-		]
 
 	# ## Implements hook `collections`
 	registrar.registerHook 'collections', ->
 
-		fingerprintKeys = audit.fingerprintKeys()
-
 		# Bans.
-		Ban =
-
-			attributes:
-
-				expires: 'date'
+		Ban = attributes: expires: 'date'
 
 		# The structure of a ban is dictated by the fingerprint structure.
-		for key in fingerprintKeys
+		audit.Fingerprint.keys().forEach (key) ->
 			Ban.attributes[key] =
 				index: true
 				type: 'string'
 
-		# Generate a test for whether each fingerprint key has been banned.
-		fingerprintKeys.forEach (key) ->
-
+			# Generate a test for whether each fingerprint key has been banned.
 			# `session` -> `isSessionBanned`
 			Ban[i8n.camelize "is_#{key}_banned", true] = (value) ->
-				criteria = {}
-				criteria[key] = value
-
-				Promise.cast(
-					orm.collection('shrub-ban').find criteria
-				).bind({}).then((@bans) ->
+				method = i8n.camelize "find_by_#{key}", true
+				Promise.cast(this[method] value).bind({}).then((@bans) ->
 					return false if @bans.length is 0
 
 					# Destroy all expired bans.
@@ -104,39 +53,32 @@ exports.pkgmanRegister = (registrar) ->
 
 				).then (expired) ->
 
-					active = @bans.filter (ban) ->
-						ban.expires.getTime() > Date.now()
+					# More bans than those that expired?
+					isBanned: @bans.length > expired.length
 
-					[
-						# More bans than those that expired?
-						@bans.length > expired.length
+					# Ban ttl.
+					ttl: Math.round (_.difference(@bans, expired).reduce(
+						(l, r) ->
 
-						# Ban ttl.
-						Math.round (active.reduce(
-							(l, r) ->
+							if l > r.expires.getTime()
+								l
+							else
+								r.expires.getTime()
 
-								if l > r.expires.getTime()
-									l
-								else
-									r.expires.getTime()
+						-Infinity
 
-							-Infinity
-
-						# It's a timestamp, and it's in ms.
-						) - Date.now()) / 1000
-					]
+					# It's a timestamp, and it's in ms.
+					) - Date.now()) / 1000
 
 		# Create a ban from a fingerprint.
 		Ban.createFromFingerprint = (fingerprint, expires) ->
-			return unless Object.keys(fingerprint).length > 0
-
 			unless expires?
 				settings = config.get 'packageSettings:shrub-villiany:ban'
 				expires = parseInt settings.defaultExpiration
 
 			data = expires: new Date Date.now() + expires
-			data[key] = fingerprint[key] for key in fingerprintKeys
-			orm.collection('shrub-ban').create data
+			data[key] = value for key, value of fingerprint
+			@create data
 
 		'shrub-ban': Ban
 
@@ -191,14 +133,10 @@ exports.pkgmanRegister = (registrar) ->
 					# Log the user out.
 					req.logOut().then ->
 
-						# Already authorized?
-						if req.socket?
+						# Not already authorized?
+						throw new AuthorizationFailure unless req.socket?
 
-							req.socket.emit 'core.reload'
-
-						else
-
-							throw new AuthorizationFailure
+						req.socket.emit 'core.reload'
 
 
 				next()
@@ -210,8 +148,7 @@ exports.pkgmanRegister = (registrar) ->
 		]
 
 villianyLimiter = new Limiter(
-	"villiany"
-	threshold(1000).every(10).minutes()
+	'villiany', Limiter.threshold(1000).every(10).minutes()
 )
 
 # Define `req.reportVilliany()`.
@@ -219,21 +156,21 @@ reporterMiddleware = (req, res, next) ->
 
 	Ban = orm.collection 'shrub-ban'
 
-	req.reportVilliany = (score, type) ->
-
-		fingerprint = audit.fingerprint req
+	req.reportVilliany = (score, type, excluded = []) ->
 
 		# Terminate the chain if not a villian.
 		class NotAVillian extends Error
 			constructor: (@message) ->
 
-		keys = ("#{key}:#{value}" for key, value of fingerprint)
+		inlineKeys = req.fingerprint.inlineKeys excluded
+
 		villianyLimiter.accrueAndCheckThreshold(
-			keys, score
+			inlineKeys, score
 
 		).then((isVillian) ->
 
 			# Log this transgression.
+			fingerprint = req.fingerprint.get excluded
 			message = "Logged villiany score #{
 				score
 			} for #{
@@ -241,7 +178,7 @@ reporterMiddleware = (req, res, next) ->
 			}, audit keys: #{
 				JSON.stringify fingerprint
 			}"
-			message += ", which resulted in a ban." if isVillian
+			message += ', which resulted in a ban.' if isVillian
 			logger[if isVillian then 'error' else 'warn'] message
 
 			throw new NotAVillian unless isVillian
@@ -252,10 +189,9 @@ reporterMiddleware = (req, res, next) ->
 		).then(->
 
 			# Kick.
-			req.villianyKick villianyLimiter.ttl keys
+			req.villianyKick villianyLimiter.ttl inlineKeys
 
-		).then(-> true
-		).catch NotAVillian, -> false
+		).then(-> true).catch NotAVillian, -> false
 
 	next()
 
@@ -268,25 +204,17 @@ enforcementMiddleware = (req, res, next) ->
 	class RequestBanned extends Error
 		constructor: (@message) ->
 
-	fingerprint = audit.fingerprint req
+	banPromises = for key, value of req.fingerprint.get()
+		do (key, value) ->
+			method = i8n.camelize "is_#{key}_banned", true
+			Ban[method](value).then ({isBanned, ttl}) ->
+				return unless isBanned
+				req.villianyKick(key, ttl).then -> throw new RequestBanned()
 
-	banPromises = for enforced in Object.keys fingerprint
+	Promise.all(banPromises).then(-> next()).catch(
 
-		method = i8n.camelize "is_#{enforced}_banned", true
-
-		Ban[method](fingerprint[enforced]).spread (isBanned, ttl) ->
-			return unless isBanned
-
-			req.villianyKick(enforced, ttl).then ->
-
-				throw new RequestBanned()
-
-	Promise.all(banPromises).then(->
-
-		next()
-
-	).catch(RequestBanned, ->
-
+		# Ignore the error when it's only signifying a ban.
+		RequestBanned, ->
 	).catch (error) -> next error
 
 # Build a nice message for the villian.
@@ -295,12 +223,10 @@ buildBanMessage = (subject, ttl) ->
 	message = if subject?
 		"Your #{subject} is banned."
 	else
-		"You are banned."
+		'You are banned.'
 
-	if ttl?
-
-		message += " The ban will be lifted #{
-			moment().add('seconds', ttl).fromNow()
-		}."
+	message += " The ban will be lifted #{
+		moment().add('seconds', ttl).fromNow()
+	}." if ttl?
 
 	message

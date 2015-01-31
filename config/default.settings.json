@@ -1,6 +1,7 @@
 {
 	"packageList": [
 		"shrub-assets",
+		"shrub-audit",
 		"shrub-config",
 		"shrub-core",
 		"shrub-example",

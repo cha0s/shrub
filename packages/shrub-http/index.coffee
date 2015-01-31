@@ -44,7 +44,7 @@ exports.pkgmanRegister = (registrar) ->
 		# [shrub-orm-rest's implementation]
 		# (/packages/shrub-orm-rest/index.coffee#implementshookhttproutes) as
 		# an example.
-		debug "- Registering routes..."
+		debug '- Registering routes...'
 		for routeList in pkgman.invokeFlat 'httpRoutes', http
 
 			for route in routeList
@@ -57,7 +57,7 @@ exports.pkgmanRegister = (registrar) ->
 				}"
 
 				http.addRoute route
-		debug "- Routes registered."
+		debug '- Routes registered.'
 
 	# ## Implements hook `httpMiddleware`
 	registrar.registerHook 'httpMiddleware', (http) ->
@@ -89,11 +89,12 @@ exports.pkgmanRegister = (registrar) ->
 		middleware: [
 			'shrub-core'
 			'shrub-socket/factory'
-			'shrub-form'
 			'shrub-http-express/session'
 			'shrub-user'
+			'shrub-audit'
 			'shrub-http-express/logger'
 			'shrub-villiany'
+			'shrub-form'
 			'shrub-http-express/routes'
 			'shrub-http-express/static'
 			'shrub-config'

@@ -7,9 +7,8 @@ crypto = require 'server/crypto'
 errors = require 'errors'
 middleware = require 'middleware'
 
+{Limiter} = require 'shrub-limiter'
 orm = require 'shrub-orm'
-
-{threshold} = require 'limits'
 
 clientModule = require './client/login'
 userPackage = require 'shrub-user'
@@ -20,8 +19,8 @@ exports.pkgmanRegister = (registrar) ->
 	registrar.registerHook 'endpoint', ->
 
 		limiter:
-			message: "You are logging in too much."
-			threshold: threshold(3).every(30).seconds()
+			message: 'You are logging in too much.'
+			threshold: Limiter.threshold(3).every(30).seconds()
 
 		route: 'shrub.user.login'
 
@@ -79,7 +78,7 @@ exports.pkgmanRegister = (registrar) ->
 					# Load a user and compare the hashed password.
 					Promise.cast(
 						userPackage.loadByName username
-					).bind({}).then((@user)->
+					).bind({}).then((@user) ->
 						return unless @user?
 
 						crypto.hasher(
