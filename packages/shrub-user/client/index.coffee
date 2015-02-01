@@ -24,8 +24,7 @@ exports.pkgmanRegister = (registrar) ->
 
 			service = {}
 
-			_instance = name: 'loading...'
-
+			_instance = {}
 			_instance[k] = v for k, v of User.instantiate(
 				config.get 'packageConfig:shrub-user'
 			)
@@ -60,7 +59,7 @@ exports.pkgmanRegister = (registrar) ->
 					username: username
 					password: password
 
-				).then (O) -> orm.collection('shrub-user').then (User) ->
+				).then (O) ->
 					_instance[k] = v for k, v of O
 					return
 
@@ -79,27 +78,24 @@ exports.pkgmanRegister = (registrar) ->
 			# *Retrieve the user instance.*
 			service.instance = -> _instance
 
+			if config.get 'packageConfig:shrub-core:testMode'
+
+				# ## user.fakeLogin
+				#
+				# *Mock a login process.*
+				#
+				# `TODO`: This will change when login method generalization
+				# happens.
+				service.fakeLogin = (username, password, id) ->
+					password ?= 'password'
+					id ?= 1
+
+					socket.catchEmit 'rpc://shrub.user.login', (data, fn) ->
+						fn result: id: id, name: username
+
+					service.login 'local', username, password
+
 			service
-
-	]
-
-	# ## Implements hook `serviceMock`
-	registrar.registerHook 'serviceMock', -> [
-		'$delegate', 'shrub-socket'
-		($delegate, socket) ->
-
-			# ## user.fakeLogin
-			#
-			# *Mock a login process.*
-			#
-			# `TODO`: This will change when login method generalization happens.
-			$delegate.fakeLogin = (username, password = 'password', id = 1) ->
-				socket.catchEmit 'rpc://shrub.user.login', (data, fn) ->
-					fn result: id: id, name: username
-
-				$delegate.login 'local', username, password
-
-			$delegate
 
 	]
 
@@ -123,38 +119,12 @@ exports.collections = ->
 				type: 'string'
 				index: true
 
-			# Case-insensitivized name.
-			iname:
-				type: 'string'
-				size: 24
-				index: true
-
 			# Name.
 			name:
 				type: 'string'
 				defaultsTo: 'Anonymous'
 				size: 24
 				maxLength: 24
-
-			# Hash of the plaintext password.
-			passwordHash:
-				type: 'string'
-
-			# A token which can be used to reset the user's password (once).
-			resetPasswordToken:
-				type: 'string'
-				size: 48
-				index: true
-
-			# A 512-bit salt used to cryptographically hash the user's password.
-			salt:
-				type: 'string'
-				size: 128
-
-			# Update a user's last accessed time. Return the user for chaining.
-			touch: ->
-				@lastAccessed = (new Date()).toISOString()
-				this
 
 			# `TODO`: Access control structure.
 			hasPermission: (perm) -> false

@@ -12,9 +12,9 @@ exports.pkgmanRegister = (registrar) ->
 
 		controller: [
 			'$location', '$routeParams', 'shrub-rpc', 'shrub-socket', 'shrub-user'
-			($location, {destination}, rpc, socket, {fakeLogin}) ->
+			($location, {destination}, rpc, socket, user) ->
 
-				fakeLogin('cha0s').then ->
+				user.fakeLogin('cha0s').then ->
 					$location.path "/user/#{destination}"
 
 		]

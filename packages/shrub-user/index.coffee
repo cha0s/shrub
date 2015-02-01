@@ -64,6 +64,32 @@ exports.pkgmanRegister = (registrar) ->
 
 		{'shrub-user': User} = collections
 
+		# Case-insensitivized name.
+		User.attributes.iname =
+			type: 'string'
+			size: 24
+			index: true
+
+		# Hash of the plaintext password.
+		User.attributes.passwordHash =
+			type: 'string'
+
+		# A token which can be used to reset the user's password (once).
+		User.attributes.resetPasswordToken =
+			type: 'string'
+			size: 48
+			index: true
+
+		# A 512-bit salt used to cryptographically hash the user's password.
+		User.attributes.salt =
+			type: 'string'
+			size: 128
+
+		# Update a user's last accessed time. Return the user for chaining.
+		User.attributes.touch = ->
+			@lastAccessed = (new Date()).toISOString()
+			this
+
 		(User.redactors = []).push (redacted) ->
 
 			delete redacted.iname

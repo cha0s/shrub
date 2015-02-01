@@ -3,21 +3,11 @@ describe 'user', ->
 
 	user = null
 
-	beforeEach (done) ->
+	beforeEach ->
 
 		inject [
-			'$rootScope', 'shrub-orm', 'shrub-user'
-			($rootScope, orm, _user_) ->
-				user = _user_
-
-				# Unfortunately, since ORM comes up async we have to do some
-				# pretty nasty hacks to get everything sync'd for the tests.
-				handle = setInterval (-> $rootScope.$apply()), 10
-
-				orm.initialized().then ->
-					clearInterval handle
-					setTimeout done, 0
-
+			'shrub-user'
+			(_user_) -> user = _user_
 		]
 
 	it 'should provide an anonymous user by default', ->
