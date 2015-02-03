@@ -7,8 +7,8 @@ exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `directive`
 	registrar.registerHook 'directive', -> [
-		'$compile', '$timeout', 'shrub-rpc', 'shrub-ui/notifications'
-		($compile, $timeout, rpc, notifications) ->
+		'shrub-rpc', 'shrub-ui/notifications'
+		(rpc, notifications) ->
 
 			directive = {}
 
@@ -22,40 +22,8 @@ exports.pkgmanRegister = (registrar) ->
 				scope.queueName = attr.queueName
 				scope.queue = notifications.queue scope.queueName
 
-				# Initialize the popover.
-				($button = element.find 'button').popover
-
-					container: 'body'
-					content: -> element.find '.notifications'
-					html: true
-					placement: 'bottom'
-					template: """
-
-<div class="popover popover-notifications popover-#{attr.queueName}" role="tooltip">
-	<div class="arrow"></div>
-	<div class="popover-title"></div>
-	<div class="popover-content"></div>
-</div>
-
-"""
-					title: ->
-
-						tpl = """
-
-<div
-	class="title"
-	data-shrub-ui-notifications-title
-></div>
-
-"""
-
-						$compile(tpl)(scope)
-
-				# When the notifications are opened, acknowledge them.
-				$button.on 'click', ->
-
-				# When the notifications are opened, acknowledge them.
-				$button.on 'show.bs.popover', ->
+				# When notifications are akcnowledged.
+				scope.$on 'shrub.ui.notifications.acknowledged', ->
 					return unless scope.unacknowledged
 
 					# Tell the server.
@@ -68,25 +36,6 @@ exports.pkgmanRegister = (registrar) ->
 					for notification in scope.queue.notifications()
 						notification.acknowledged = true
 
-					return
-
-				# Wait for the new queue to be compiled into the DOM, and then
-				# reposition the popover, since the new content may shift it.
-				scope.$watch(
-					'queue.notifications()', -> scope.$$postDigest ->
-						return unless (pop = $button.data 'bs.popover').$tip?
-						return unless pop.$tip.hasClass 'in'
-						pop.applyPlacement(
-							pop.getCalculatedOffset(
-								'bottom', pop.getPosition()
-								pop.$tip[0].offsetWidth
-								pop.$tip[0].offsetHeight
-							)
-							'bottom'
-						)
-					true
-				)
-
 				# Mark the notification as read.
 				scope.markAsRead = (notification, markedAsRead) ->
 					return if markedAsRead is notification.markedAsRead
@@ -97,7 +46,6 @@ exports.pkgmanRegister = (registrar) ->
 						'shrub.ui.notifications.markAsRead'
 						ids: [notification.id]
 						markedAsRead: markedAsRead
-
 					)
 
 				# Hide the popover when any notification is clicked. Feel free
@@ -110,20 +58,11 @@ exports.pkgmanRegister = (registrar) ->
 						$event, notification
 					)
 
-					# Angular doesn't like when you return DOM elements.
-					return
-
-				# Close the popover.
-				scope.close = -> $button.popover 'hide'
-
 				# Set up default behavior on a click event, and provide the
 				# deregistration function to any skinLink consumers.
 				scope.$deregisterDefaultClickHandler = scope.$on(
 					'shrub.ui.notification.clicked'
 					($event, $clickEvent, notification) ->
-
-						# Close the popover.
-						scope.close()
 
 						# Mark the notification as read.
 						scope.markAsRead notification, true
