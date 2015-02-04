@@ -111,7 +111,7 @@ module.exports = class Limiter
 
 class LimiterManager
 
-	constructor: (@key, @thresholdWindow) ->
+	constructor: (@key, @threshold) ->
 
 	# ### .add
 	#
@@ -121,25 +121,21 @@ class LimiterManager
 	#
 	# * (integer) `score` - The score to add. Defaults to 1.
 	accrue: (id, score = 1) ->
-
-		Limit = orm.collection 'shrub-limit'
+		key = "#{@key}:#{id}"
 
 		# } Cast score to integer.
 		score = parseInt score, 10
 
-		limitKey = "#{@key}:#{id}"
-		Limit.findOrCreate(key: limitKey).populateAll().then (limit) =>
-			limit.key = limitKey
+		Limit = orm.collection 'shrub-limit'
+		Limit.findOrCreate(key: key).populateAll().then((limit) =>
+			limit.key = key
 
-			# } Accrue the score.
-			addScore = ->
-				limit.scores.add score: score
-				limit.save()
+			# } Reset if it's expired.
+			limit.reset() if 0 >= limit.ttl @threshold
 
-			return addScore() unless @_limitHasExpired limit
+			return limit
 
-			# } Empty out scores if it's expired.
-			@_resetLimit(limit).then addScore
+		).then (limit) -> limit.accrue(score).save()
 
 	# ### .score
 	#
@@ -147,19 +143,16 @@ class LimiterManager
 	#
 	# * (string) `id` - The ID of the limiter.
 	score: (id) ->
-
-		Limit = orm.collection 'shrub-limit'
+		key = "#{@key}:#{id}"
 
 		# } Get all scores for this limiter.
-		limitKey = "#{@key}:#{id}"
-		Limit.findOne(key: limitKey).populateAll().then (limit) =>
+		Limit = orm.collection 'shrub-limit'
+		Limit.findOne(key: key).populateAll().then (limit) =>
 			return 0 unless limit?
+			return limit.score() if 0 < limit.ttl @threshold
 
 			# } Reset if it's expired.
-			return @_resetLimit(limit).then(-> 0) if @_limitHasExpired limit
-
-			# } Sum all the scores.
-			limit.scores.map((model) -> model.score).reduce ((l, r) -> l + r), 0
+			limit.reset().save().then -> 0
 
 	# ### .ttl
 	#
@@ -167,33 +160,15 @@ class LimiterManager
 	#
 	# * (string) `id` - The ID of the limiter.
 	ttl: (id) ->
+		key = "#{@key}:#{id}"
 
-		limitKey = "#{@key}:#{id}"
-		orm.collection('shrub-limit').findOne(key: limitKey).then (limit) =>
+		Limit = orm.collection 'shrub-limit'
+		Limit.findOne(key: key).then (limit) =>
 			return 0 unless limit?
+			return ttl if 0 < ttl = limit.ttl @threshold
 
 			# } Reset if it's expired.
-			return @_resetLimit(limit).then(-> 0) if @_limitHasExpired limit
-
-			limit.key = limitKey
-			limit.save().then =>
-
-				diff = (Date.now() - limit.createdAt.getTime()) / 1000
-				Math.ceil @thresholdWindow - diff
-
-	_limitHasExpired: (limit) ->
-
-		diff = (Date.now() - limit.createdAt.getTime()) / 1000
-		diff >= @thresholdWindow
-
-	_resetLimit: (limit) ->
-
-		# } Remove all scores.
-		for id in limit.scores.map((model) -> model.id)
-			limit.scores.remove id
-
-		limit.createdAt = new Date()
-		limit.save()
+			limit.reset().save().then -> 0
 
 # ## ThresholdBase
 #

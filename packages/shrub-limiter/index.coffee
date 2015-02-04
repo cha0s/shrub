@@ -4,6 +4,7 @@
 # Limits the rate at which clients can do certain operations, like call RPC
 # endpoints.
 
+_ = require 'lodash'
 moment = require 'moment'
 Promise = require 'bluebird'
 
@@ -31,6 +32,32 @@ exports.pkgmanRegister = (registrar) ->
 				scores:
 					collection: 'shrub-limit-score'
 					via: 'limit'
+
+				accrue: (score) ->
+					@scores.add score: score
+
+					return this
+
+				passed: (threshold) -> 0 >= @ttl threshold
+
+				reset: ->
+
+					# } Remove all scores.
+					@scores.remove id for id in _.pluck @scores, 'id'
+					@createdAt = new Date()
+
+					return this
+
+				score: ->
+
+					# } Sum all the scores.
+					_.pluck(@scores, 'score').reduce ((l, r) -> l + r), 0
+
+				ttl: (threshold) ->
+
+					# } Calculate in seconds.
+					diff = (Date.now() - @createdAt.getTime()) / 1000
+					Math.ceil threshold - diff
 
 		LimitScore =
 
