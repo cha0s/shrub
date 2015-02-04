@@ -113,11 +113,6 @@ exports.initialize = (config, fn) ->
 
 				new @_model @_schema.cleanValues @_transformer.serialize values
 
-			# Destroy all instances of a model.
-			collection.destroyAll = ->
-				@find().then (models) ->
-					Promise.all model.destroy() for model in models
-
 			collection.attributes.toJSON ?= ->
 				O = @toObject()
 
