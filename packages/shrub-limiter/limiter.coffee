@@ -3,8 +3,6 @@
 
 Promise = require 'bluebird'
 
-pkgman = require 'pkgman'
-
 orm = require 'shrub-orm'
 
 # ## Limiter
@@ -123,9 +121,6 @@ class LimiterManager
 	accrue: (id, score = 1) ->
 		key = "#{@key}:#{id}"
 
-		# } Cast score to integer.
-		score = parseInt score, 10
-
 		Limit = orm.collection 'shrub-limit'
 		Limit.findOrCreate(key: key).populateAll().then((limit) =>
 			limit.key = key
@@ -135,7 +130,7 @@ class LimiterManager
 
 			return limit
 
-		).then (limit) -> limit.accrue(score).save()
+		).then (limit) -> limit.accrue(parseInt score).save()
 
 	# ### .score
 	#
@@ -143,11 +138,10 @@ class LimiterManager
 	#
 	# * (string) `id` - The ID of the limiter.
 	score: (id) ->
-		key = "#{@key}:#{id}"
 
 		# } Get all scores for this limiter.
 		Limit = orm.collection 'shrub-limit'
-		Limit.findOne(key: key).populateAll().then (limit) =>
+		Limit.findOne(key: "#{@key}:#{id}").populateAll().then (limit) =>
 			return 0 unless limit?
 			return limit.score() if 0 < limit.ttl @threshold
 
@@ -160,10 +154,9 @@ class LimiterManager
 	#
 	# * (string) `id` - The ID of the limiter.
 	ttl: (id) ->
-		key = "#{@key}:#{id}"
 
 		Limit = orm.collection 'shrub-limit'
-		Limit.findOne(key: key).then (limit) =>
+		Limit.findOne(key: "#{@key}:#{id}").then (limit) =>
 			return 0 unless limit?
 			return ttl if 0 < ttl = limit.ttl @threshold
 
