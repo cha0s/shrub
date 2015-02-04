@@ -99,9 +99,6 @@ exports.pkgmanRegister = (registrar) ->
 			delete self.passwordHash
 			delete self.resetPasswordToken
 
-			self.permissions.push.apply self.permissions, self._permissions
-			delete self._permissions
-
 			Promise.resolve().then ->
 				return unless self.email?
 
