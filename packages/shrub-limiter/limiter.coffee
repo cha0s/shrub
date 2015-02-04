@@ -123,7 +123,6 @@ class LimiterManager
 	accrue: (id, score = 1) ->
 
 		Limit = orm.collection 'shrub-limit'
-		LimitScore = orm.collection 'shrub-limit-score'
 
 		# } Cast score to integer.
 		score = parseInt score, 10
@@ -150,7 +149,6 @@ class LimiterManager
 	score: (id) ->
 
 		Limit = orm.collection 'shrub-limit'
-		LimitScore = orm.collection 'shrub-limit-score'
 
 		# } Get all scores for this limiter.
 		limitKey = "#{@key}:#{id}"
