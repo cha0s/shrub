@@ -87,7 +87,7 @@ exports.pkgmanRegister = (registrar) ->
 exports.register = (name, email, password) ->
 
 	User = orm.collection 'shrub-user'
-	User.create(name: name, iname: name.toLowerCase()).then((user) ->
+	User.create(name: name).then((user) ->
 
 		# Encrypt the email.
 		crypto.encrypt(email.toLowerCase()).then((encryptedEmail) ->

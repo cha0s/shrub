@@ -105,7 +105,14 @@ exports.pkgmanRegister = (registrar) ->
 
 exports.collections = ->
 
-	return 'shrub-user':
+	autoIname = (values, cb) ->
+		values.iname = values.name.toLowerCase()
+		cb()
+
+	User =
+
+		beforeCreate: autoIname
+		beforeUpdate: autoIname
 
 		attributes:
 
@@ -128,6 +135,8 @@ exports.collections = ->
 
 			# `TODO`: Access control structure.
 			hasPermission: (perm) -> false
+
+	'shrub-user': User
 
 exports.collectionsAlter = (collections) ->
 
