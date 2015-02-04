@@ -143,13 +143,14 @@ exports.pkgmanRegister = (registrar) ->
 					Promise.all(
 						notifications.map (notification) ->
 							notification.redactFor req.user
-					).then -> notifications
+					)
 
 			# Remove unnecessary details.
-			redactors: [(redacted) ->
+			redactors: [(redactFor) ->
+				self = this
 
-				delete redacted.channel
-				delete redacted.updatedAt
+				delete self.channel
+				delete self.updatedAt
 
 			]
 

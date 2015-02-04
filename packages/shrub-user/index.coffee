@@ -90,23 +90,31 @@ exports.pkgmanRegister = (registrar) ->
 			@lastAccessed = (new Date()).toISOString()
 			this
 
-		(User.redactors = []).push (redacted) ->
+		User.redactors = [(redactFor) ->
+			self = this
 
-			delete redacted.iname
-			delete redacted.plaintext if redacted.plaintext?
-			delete redacted.salt
-			delete redacted.passwordHash
-			delete redacted.resetPasswordToken
-			return unless redacted.email?
+			delete self.iname
+			delete self.plaintext if self.plaintext?
+			delete self.salt
+			delete self.passwordHash
+			delete self.resetPasswordToken
 
-			# Different redacted means full email redaction.
-			if @id isnt redacted.id
-				delete redacted.email
-				return
+			self.permissions.push.apply self.permissions, self._permissions
+			delete self._permissions
 
-			# Decrypt the e-mail if redacting for the same user.
-			crypto.decrypt(redacted.email).then (email) ->
-				redacted.email = email
+			Promise.resolve().then ->
+				return unless self.email?
+
+				# Different redacted means full email redaction.
+				if redactFor.id isnt self.id
+					delete self.email
+					return
+
+				# Decrypt the e-mail if redacting for the same user.
+				crypto.decrypt(self.email).then (email) ->
+					self.email = email
+
+		]
 
 		collections
 
@@ -123,7 +131,7 @@ exports.pkgmanRegister = (registrar) ->
 
 					Promise.all(
 						for redactor in collection.redactors
-							redactor.call user, redacted
+							redactor.call redacted, user
 					).then -> redacted
 
 	# ## Implements hook `packageSettings`
