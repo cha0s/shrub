@@ -60,7 +60,7 @@ module.exports = class Limiter
 	#
 	# * (integer) `score` - The score to add. Defaults to 1.
 	accrue: (keys, score = 1) ->
-		Promise.all(@limiter.accrue key, score for key in keys)
+		Promise.all (@limiter.accrue key, score for key in keys)
 
 	# ### .accrueAndCheckThreshold
 	#
@@ -113,11 +113,6 @@ class LimiterManager
 
 	constructor: (@key, @thresholdWindow) ->
 
-	_limitHasExpired: (limit) ->
-
-		diff = (Date.now() - limit.createdAt.getTime()) / 1000
-		diff >= @thresholdWindow
-
 	# ### .add
 	#
 	# *Add score to a limiter.*
@@ -127,22 +122,25 @@ class LimiterManager
 	# * (integer) `score` - The score to add. Defaults to 1.
 	accrue: (id, score = 1) ->
 
+		Limit = orm.collection 'shrub-limit'
+		LimitScore = orm.collection 'shrub-limit-score'
+
 		# } Cast score to integer.
 		score = parseInt score, 10
 
-		orm.collection('shrub-limit').findOrCreate().where(
-			key: @key + ':' + id
-		).then (limit) =>
-			limit.key = @key + ':' + id
-
-			# } Empty out scores if it's expired.
-			if @_limitHasExpired limit
-				limit.createdAt = new Date()
-				limit.scores = []
+		limitKey = "#{@key}:#{id}"
+		Limit.findOrCreate(key: limitKey).populateAll().then (limit) =>
+			limit.key = limitKey
 
 			# } Accrue the score.
-			limit.scores.push score
-			limit.save()
+			addScore = ->
+				limit.scores.add score: score
+				limit.save()
+
+			return addScore() unless @_limitHasExpired limit
+
+			# } Empty out scores if it's expired.
+			@_resetLimit(limit).then addScore
 
 	# ### .score
 	#
@@ -151,18 +149,19 @@ class LimiterManager
 	# * (string) `id` - The ID of the limiter.
 	score: (id) ->
 
+		Limit = orm.collection 'shrub-limit'
+		LimitScore = orm.collection 'shrub-limit-score'
+
 		# } Get all scores for this limiter.
-		orm.collection('shrub-limit').findOne().where(
-			key: @key + ':' + id
-		).then (limit) =>
+		limitKey = "#{@key}:#{id}"
+		Limit.findOne(key: limitKey).populateAll().then (limit) =>
 			return 0 unless limit?
 
-			# } Destroy if it's expired.
-			return limit.destroy().then(-> 0) if @_limitHasExpired limit
+			# } Reset if it's expired.
+			return @_resetLimit(limit).then(-> 0) if @_limitHasExpired limit
 
 			# } Sum all the scores.
-			limit.key = @key + ':' + id
-			limit.save().then -> limit.scores.reduce ((l, r) -> l + r), 0
+			limit.scores.map((model) -> model.score).reduce ((l, r) -> l + r), 0
 
 	# ### .ttl
 	#
@@ -171,19 +170,32 @@ class LimiterManager
 	# * (string) `id` - The ID of the limiter.
 	ttl: (id) ->
 
-		orm.collection('shrub-limit').findOne().where(
-			key: @key + ':' + id
-		).then (limit) =>
+		limitKey = "#{@key}:#{id}"
+		orm.collection('shrub-limit').findOne(key: limitKey).then (limit) =>
 			return 0 unless limit?
 
-			# } Destroy if it's expired.
-			return limit.destroy().then(-> 0) if @_limitHasExpired limit
+			# } Reset if it's expired.
+			return @_resetLimit(limit).then(-> 0) if @_limitHasExpired limit
 
-			limit.key = @key + ':' + id
+			limit.key = limitKey
 			limit.save().then =>
 
 				diff = (Date.now() - limit.createdAt.getTime()) / 1000
 				Math.ceil @thresholdWindow - diff
+
+	_limitHasExpired: (limit) ->
+
+		diff = (Date.now() - limit.createdAt.getTime()) / 1000
+		diff >= @thresholdWindow
+
+	_resetLimit: (limit) ->
+
+		# } Remove all scores.
+		for id in limit.scores.map((model) -> model.id)
+			limit.scores.remove id
+
+		limit.createdAt = new Date()
+		limit.save()
 
 # ## ThresholdBase
 #

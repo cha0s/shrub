@@ -18,7 +18,7 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `collections`
 	registrar.registerHook 'collections', ->
 
-		'shrub-limit':
+		Limit =
 
 			attributes:
 
@@ -29,8 +29,19 @@ exports.pkgmanRegister = (registrar) ->
 
 				# Scores accrued for this limit.
 				scores:
-					type: 'array'
-					defaultsTo: []
+					collection: 'shrub-limit-score'
+					via: 'limit'
+
+		LimitScore =
+
+			attributes:
+
+				score: 'integer'
+
+				limit: model: 'shrub-limit'
+
+		'shrub-limit': Limit
+		'shrub-limit-score': LimitScore
 
 	# ## Implements hook `endpointAlter`
 	#
