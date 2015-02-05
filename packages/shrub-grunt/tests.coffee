@@ -14,7 +14,6 @@ exports.pkgmanRegister = (registrar) ->
 
 		{grunt} = gruntConfig
 
-		gruntConfig.clean ?= {}
 		gruntConfig.coffee ?= {}
 		gruntConfig.concat ?= {}
 		gruntConfig.copy ?= {}
@@ -24,35 +23,14 @@ exports.pkgmanRegister = (registrar) ->
 		gruntConfig.watch ?= {}
 		gruntConfig.wrap ?= {}
 
-		gruntConfig.clean.testsE2e = [
-			'build/js/client/modules/**/test-e2e.js'
-			'build/js/custom/*/client/**/test-e2e.js'
-			'build/js/packages/*/client/**/test-e2e.js'
-			'build/js/test/scenarios-raw.js'
-			'test/e2e/scenarios.js'
-			'test/unit/tests.js'
-		]
-
-		gruntConfig.clean.testsE2eExtensions = [
-			'build/js/test/e2e/extensions/**/*.js'
-		]
-
-		gruntConfig.clean.testsE2eUnit = [
-			'build/js/client/modules/**/test-unit.coffee'
-			'build/js/custom/*/client/**/test-unit.coffee'
-			'build/js/packages/*/client/**/test-unit.coffee'
-			'build/js/test/tests-raw.js'
-		]
-
 		gruntConfig.coffee.testsE2e =
 
 			files: [
 				src: [
 					'client/modules/**/test-e2e.coffee'
-					'custom/*/client/**/test-e2e.coffee'
-					'packages/*/client/**/test-e2e.coffee'
+					'{custom,packages}/*/client/**/test-e2e.coffee'
 				]
-				dest: 'build/js'
+				dest: 'build/js/tests'
 				expand: true
 				ext: '.js'
 			]
@@ -63,7 +41,7 @@ exports.pkgmanRegister = (registrar) ->
 				src: [
 					'test/e2e/extensions/**/*.coffee'
 				]
-				dest: 'build/js'
+				dest: 'build/js/tests'
 				expand: true
 				ext: '.js'
 			]
@@ -73,10 +51,9 @@ exports.pkgmanRegister = (registrar) ->
 			files: [
 				src: [
 					'client/modules/**/test-unit.coffee'
-					'custom/*/client/**/test-unit.coffee'
-					'packages/*/client/**/test-unit.coffee'
+					'{custom,packages}/*/client/**/test-unit.coffee'
 				]
-				dest: 'build/js'
+				dest: 'build/js/tests'
 				expand: true
 				ext: '.js'
 			]
@@ -85,16 +62,16 @@ exports.pkgmanRegister = (registrar) ->
 
 			files: [
 				src: [
-					'build/js/**/test-e2e.js'
+					'build/js/tests/**/test-e2e.js'
 				]
-				dest: 'build/js/test/scenarios-raw.js'
+				dest: 'build/js/tests/test/scenarios-raw.js'
 			]
 
 		gruntConfig.concat.testsE2eExtensions =
 
 			files: [
 				src: [
-					'build/js/test/e2e/extensions/**/*.js'
+					'build/js/tests/test/e2e/extensions/**/*.js'
 				]
 				dest: 'test/e2e/extensions.js'
 			]
@@ -103,9 +80,9 @@ exports.pkgmanRegister = (registrar) ->
 
 			files: [
 				src: [
-					'build/js/**/test-unit.js'
+					'build/js/tests/**/test-unit.js'
 				]
-				dest: 'build/js/test/tests-raw.js'
+				dest: 'build/js/tests/test/tests-raw.js'
 			]
 
 		gruntConfig.copy.testsE2e =
@@ -113,10 +90,9 @@ exports.pkgmanRegister = (registrar) ->
 			files: [
 				src: [
 					'client/modules/**/test-e2e.js'
-					'custom/*/client/**/test-e2e.js'
-					'packages/*/client/**/test-e2e.js'
+					'{custom,packages}/*/client/**/test-e2e.js'
 				]
-				dest: 'build/js'
+				dest: 'build/js/tests'
 			]
 
 		gruntConfig.copy.testsUnit =
@@ -124,10 +100,9 @@ exports.pkgmanRegister = (registrar) ->
 			files: [
 				src: [
 					'client/modules/**/test-unit.js'
-					'custom/*/client/**/test-unit.js'
-					'packages/*/client/**/test-unit.js'
+					'{custom,packages}/*/client/**/test-unit.js'
 				]
-				dest: 'build/js'
+				dest: 'build/js/tests'
 			]
 
 		gruntConfig.karma.testsUnit =
@@ -185,8 +160,7 @@ exports.pkgmanRegister = (registrar) ->
 
 			files: [
 				'client/modules/**/test-e2e.coffee'
-				'custom/*/client/**/test-e2e.coffee'
-				'packages/*/client/**/test-e2e.coffee'
+				'{custom,packages}/*/client/**/test-e2e.coffee'
 			]
 			tasks: ['build:testsE2e']
 
@@ -201,15 +175,14 @@ exports.pkgmanRegister = (registrar) ->
 
 			files: [
 				'client/modules/**/test-unit.coffee'
-				'custom/*/client/**/test-unit.coffee'
-				'packages/*/client/**/test-unit.coffee'
+				'{custom,packages}/*/client/**/test-unit.coffee'
 			]
 			tasks: ['build:testsUnit']
 
 		gruntConfig.wrap.testsE2e =
 			files: [
 				src: [
-					'build/js/test/scenarios-raw.js'
+					'build/js/tests/test/scenarios-raw.js'
 				]
 				dest: 'test/e2e/scenarios.js'
 			]
@@ -232,7 +205,7 @@ describe('#{gruntConfig.pkg.name}', function() {
 		gruntConfig.wrap.testsUnit =
 			files: [
 				src: [
-					'build/js/test/tests-raw.js'
+					'build/js/tests/test/tests-raw.js'
 				]
 				dest: 'test/unit/tests.js'
 			]
@@ -384,15 +357,13 @@ describe('#{gruntConfig.pkg.name}', function() {
 
 		ignoreFiles = (array, directory) ->
 			array.push "!#{directory}/**/#{spec}" for spec in [
-				'test-e2e.coffee'
-				'test-unit.coffee'
+				'test-{e2e,unit}.coffee'
 				'*.spec.coffee'
 			]
 
 		for directory in [
 			'client/modules'
-			'custom/*/client'
-			'packages/*/client'
+			'{custom,packages}/*/client'
 		]
 			ignoreFiles gruntConfig.watch.modules.files, directory
 

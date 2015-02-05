@@ -8,16 +8,9 @@ exports.pkgmanRegister = (registrar) ->
 
 		{grunt} = gruntConfig
 
-		gruntConfig.clean ?= {}
 		gruntConfig.coffee ?= {}
 		gruntConfig.concat ?= {}
 		gruntConfig.watch ?= {}
-
-		gruntConfig.clean.angular = [
-			'build/js/app.js'
-			'build/js/app-dependencies.js'
-			'build/js/app-bundled.js'
-		]
 
 		gruntConfig.coffee.angular =
 
@@ -25,7 +18,7 @@ exports.pkgmanRegister = (registrar) ->
 				src: [
 					'client/app.coffee'
 				]
-				dest: 'build/js/app.js'
+				dest: 'build/js/app/app.js'
 			]
 			expand: true
 			ext: '.js'
@@ -37,10 +30,10 @@ exports.pkgmanRegister = (registrar) ->
 
 			files: [
 				src: [
-					'build/js/app-dependencies.js'
-					'build/js/app.js'
+					'build/js/app/app-dependencies.js'
+					'build/js/app/app.js'
 				]
-				dest: 'build/js/app-bundled.js'
+				dest: 'build/js/app/app-bundled.js'
 			]
 
 			options:
@@ -87,7 +80,7 @@ var dependencies = [];
 				dependencies.join "');\ndependencies.push('"
 			}');\n" if dependencies.length > 0
 
-			grunt.file.write 'build/js/app-dependencies.js', js
+			grunt.file.write 'build/js/app/app-dependencies.js', js
 
 		gruntConfig.shrub.tasks['build:angular'] = [
 			'newer:coffee:angular'

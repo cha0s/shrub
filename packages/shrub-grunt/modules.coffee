@@ -8,21 +8,11 @@ exports.pkgmanRegister = (registrar) ->
 
 		{grunt} = gruntConfig
 
-		gruntConfig.clean ?= {}
 		gruntConfig.coffee ?= {}
 		gruntConfig.concat ?= {}
 		gruntConfig.copy ?= {}
 		gruntConfig.watch ?= {}
 		gruntConfig.wrap ?= {}
-
-		gruntConfig.clean.modules = [
-			'build/js/packages.js'
-			'build/js/require.js'
-			'build/js/modules'
-			'build/js/custom'
-			'build/js/packages'
-			'build/js/modules.js'
-		]
 
 		gruntConfig.coffee.modules =
 
@@ -33,15 +23,14 @@ exports.pkgmanRegister = (registrar) ->
 					'require.coffee'
 					'modules/**/*.coffee'
 				]
-				dest: 'build/js'
+				dest: 'build/js/app'
 				expand: true
 				ext: '.js'
 			,
 				src: [
-					'custom/*/client/**/*.coffee'
-					'packages/*/client/**/*.coffee'
+					'{custom,packages}/*/client/**/*.coffee'
 				]
-				dest: 'build/js'
+				dest: 'build/js/app'
 				expand: true
 				ext: '.js'
 			]
@@ -50,11 +39,9 @@ exports.pkgmanRegister = (registrar) ->
 
 			files: [
 				src: [
-					'build/js/modules.js'
-					'build/js/packages.js'
-					'build/js/require.js'
+					'build/js/app/{modules,packages,require}.js'
 				]
-				dest: 'build/js/modules.js'
+				dest: 'build/js/app/modules.js'
 			]
 
 		gruntConfig.copy.modules =
@@ -63,25 +50,19 @@ exports.pkgmanRegister = (registrar) ->
 				expand: true
 				cwd: 'client/modules'
 				src: ['**/*.js']
-				dest: 'build/js/modules'
+				dest: 'build/js/app/modules'
 			,
 				expand: true
-				src: ['packages/*/client/**/*.js']
-				dest: 'build/js'
-			,
-				expand: true
-				src: ['custom/*/client/**/*.js']
-				dest: 'build/js'
+				src: ['{custom,packages}/*/client/**/*.js']
+				dest: 'build/js/app'
 			]
 
 		gruntConfig.watch.modules =
 
 			files: [
-				'client/packages.coffee'
-				'client/require.coffee'
+				'client/{packages,require}.coffee'
 				'client/modules/**/*.coffee'
-				'custom/*/client/**/*.coffee'
-				'packages/*/client/**/*.coffee'
+				'{custom,packages}/*/client/**/*.coffee'
 			]
 			tasks: [
 				'build:modules', 'build:shrub'
@@ -92,17 +73,16 @@ exports.pkgmanRegister = (registrar) ->
 
 			files: [
 				src: [
-					'build/js/modules/**/*.js'
-					'build/js/custom/*/client/**/*.js'
-					'build/js/packages/*/client/**/*.js'
+					'build/js/app/modules/**/*.js'
+					'build/js/app/{custom,packages}/*/client/**/*.js'
 				]
-				dest: 'build/js/modules.js'
+				dest: 'build/js/app/modules.js'
 			]
 			options:
 				indent: '  '
 				wrapper: (filepath) ->
 
-					matches = filepath.match /build\/js\/([^/]+)\/(.*)/
+					matches = filepath.match /build\/js\/app\/([^/]+)\/(.*)/
 
 					switch matches[1]
 
@@ -141,7 +121,7 @@ requires_['#{moduleName}'] = function(module, exports, require, __dirname, __fil
 
 		gruntConfig.wrap.modulesAll =
 
-			files: ['build/js/modules.js'].map (file) -> src: file, dest: file
+			files: ['build/js/app/modules.js'].map (file) -> src: file, dest: file
 			options:
 				indent: '  '
 				wrapper: [
