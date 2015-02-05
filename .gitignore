@@ -3,6 +3,7 @@
 /manifest.mf
 /build.xml
 
+.sublime-grunt.cache
 /.project
 /.settings
 /.idea/*
