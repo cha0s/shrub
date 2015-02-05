@@ -64,7 +64,7 @@ exports.pkgmanRegister = (registrar) ->
 
 			dependencies = []
 
-			# Invoke hook `angularAppDependencies`.
+			# Invoke hook `angularCoreDependencies`.
 			for dependenciesList in pkgman.invokeFlat 'angularCoreDependencies'
 
 				dependencies.push.apply dependencies, dependenciesList
