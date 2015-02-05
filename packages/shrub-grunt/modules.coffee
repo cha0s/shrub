@@ -105,11 +105,11 @@ exports.pkgmanRegister = (registrar) ->
 
 					if moduleName?
 						[
-							'''
+							"""
 requires_['#{moduleName}'] = function(module, exports, require, __dirname, __filename) {
 
 
-'''
+"""
 							'''
 
 };
