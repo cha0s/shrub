@@ -36,11 +36,27 @@ exports.pkgmanRegister = (registrar) ->
 		# User (ID).
 		user: if req?.user?.id? then req.user.id
 
+	instantiateAnonymous = ->
+
+		@user = orm.collection('shrub-user').instantiate()
+
+		# Add to anonymous group.
+		@user.groups = [
+			orm.collection('shrub-user-group').instantiate group: 3
+		]
+
+		@user.populateAll()
+
 	# ## Implements hook `httpMiddleware`
-	registrar.registerHook 'httpMiddleware', (http) ->
+	registrar.registerHook 'httpMiddleware', ->
 
 		label: 'Load user using passport'
 		middleware: [
+
+			(req, res, next) ->
+
+				req.instantiateAnonymous = instantiateAnonymous
+				next()
 
 			# Passport middleware.
 			passport.initialize()
@@ -48,11 +64,12 @@ exports.pkgmanRegister = (registrar) ->
 
 			# Set the user into the request.
 			(req, res, next) ->
+				promise = if req.user?
+					Promise.resolve()
+				else
+					req.instantiateAnonymous()
 
-				User = orm.collection 'shrub-user'
-				req.user = User.instantiate() unless req.user?
-
-				next()
+				promise.then(-> next()).catch next
 
 		]
 
@@ -62,7 +79,17 @@ exports.pkgmanRegister = (registrar) ->
 		# Invoke the client hook implementation.
 		collections = clientModule.collections()
 
-		{'shrub-user': User} = collections
+		{
+			'shrub-group': Group
+			'shrub-user': User
+			'shrub-user-group': UserGroup
+		} = collections
+
+		# Case-insensitivized name.
+		Group.attributes.iname =
+			type: 'string'
+			size: 24
+			index: true
 
 		# Case-insensitivized name.
 		User.attributes.iname =
@@ -90,6 +117,33 @@ exports.pkgmanRegister = (registrar) ->
 			@lastAccessed = (new Date()).toISOString()
 			this
 
+		User.attributes.populateAll = ->
+			self = this
+
+			Group_ = orm.collection 'shrub-group'
+
+			@_groups = (group.toJSON() for group in @groups)
+
+			promises = for {group}, index in @groups
+
+				do (group, index) ->
+
+					Group_.findOne(id: group).populateAll().then (group_) ->
+
+						self.groups[index] = group_
+
+			Promise.all(promises).then -> self
+
+		User.attributes.depopulateAll = ->
+
+			@groups = @_groups
+			delete @_groups
+
+		User.attributes.toJSON = ->
+			O = @toObject()
+			O.groups = (group for group in @groups)
+			O
+
 		User.redactors = [(redactFor) ->
 			self = this
 
@@ -98,6 +152,19 @@ exports.pkgmanRegister = (registrar) ->
 			delete self.salt
 			delete self.passwordHash
 			delete self.resetPasswordToken
+
+			delete self._groups if self._groups?
+
+			for group in self.groups
+
+				for permission in group.permissions
+
+					delete permission.group
+					delete permission.id
+					delete permission.toJSON
+
+				delete group.iname
+				delete group.id
 
 			Promise.resolve().then ->
 				return unless self.email?
@@ -112,6 +179,20 @@ exports.pkgmanRegister = (registrar) ->
 					self.email = email
 
 		]
+
+		UserGroup.attributes.populateAll = ->
+			self = this
+
+			Group_ = orm.collection 'shrub-group'
+			Group_.findOne(id: self.group).populateAll().then (group_) ->
+				self.group = group_
+
+				return self
+
+		UserGroup.attributes.depopulateAll = ->
+			@group = @group.id
+
+			return this
 
 		collections
 
@@ -152,17 +233,23 @@ exports.pkgmanRegister = (registrar) ->
 		label: 'Load user using passport'
 		middleware: [
 
+			(req, res, next) ->
+
+				req.instantiateAnonymous = instantiateAnonymous
+				next()
+
 			# Passport middleware.
 			passport.initialize()
 			passport.session()
 
 			# Set the user into the request.
 			(req, res, next) ->
+				promise = if req.user?
+					Promise.resolve()
+				else
+					req.instantiateAnonymous()
 
-				User = orm.collection 'shrub-user'
-				req.user = User.instantiate() unless req.user?
-
-				next()
+				promise.then(-> next()).catch next
 
 		]
 
@@ -228,4 +315,4 @@ exports.pkgmanRegister = (registrar) ->
 exports.loadByName = (name) ->
 
 	User = orm.collection 'shrub-user'
-	User.findOne iname: name.toLowerCase()
+	User.findOne(iname: name.toLowerCase()).populateAll()

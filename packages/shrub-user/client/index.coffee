@@ -109,6 +109,36 @@ exports.collections = ->
 		values.iname = values.name.toLowerCase()
 		cb()
 
+	Group =
+
+		autoCreatedAt: false
+		autoUpdatedAt: false
+
+		beforeCreate: autoIname
+		beforeUpdate: autoIname
+
+		attributes:
+
+			name:
+				type: 'string'
+				size: 24
+				maxLength: 24
+
+			permissions:
+				collection: 'shrub-group-permission'
+				via: 'group'
+
+	GroupPermission =
+
+		autoCreatedAt: false
+		autoUpdatedAt: false
+
+		attributes:
+
+			permission: 'string'
+
+			group: model: 'shrub-group'
+
 	User =
 
 		beforeCreate: autoIname
@@ -133,10 +163,29 @@ exports.collections = ->
 				size: 24
 				maxLength: 24
 
+			# Groups this user belongs to.
+			groups:
+				collection: 'shrub-user-group'
+				via: 'user'
+
 			# `TODO`: Access control structure.
 			hasPermission: (perm) -> false
 
+	UserGroup =
+
+		autoCreatedAt: false
+		autoUpdatedAt: false
+
+		attributes:
+
+			group: model: 'shrub-group'
+
+			user: model: 'shrub-user'
+
+	'shrub-group': Group
+	'shrub-group-permission': GroupPermission
 	'shrub-user': User
+	'shrub-user-group': UserGroup
 
 exports.collectionsAlter = (collections) ->
 
