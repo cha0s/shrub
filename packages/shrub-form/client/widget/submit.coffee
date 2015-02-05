@@ -15,7 +15,7 @@ exports.pkgmanRegister = (registrar) ->
 
 						field.value ?= 'Submit'
 
-			template: """
+			template: '''
 
 <div class="form-group">
 
@@ -29,7 +29,7 @@ exports.pkgmanRegister = (registrar) ->
 
 </div>
 
-"""
+'''
 
 	]
 

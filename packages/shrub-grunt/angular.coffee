@@ -38,17 +38,18 @@ exports.pkgmanRegister = (registrar) ->
 
 			options:
 
-				banner: """
+				banner: '''
 
 (function() {
 
-"""
+'''
 
-				footer: """
+				footer: '''
 
 })();
 
-"""
+'''
+
 		gruntConfig.watch.angular =
 
 			files: [
@@ -69,12 +70,12 @@ exports.pkgmanRegister = (registrar) ->
 
 				dependencies.push.apply dependencies, dependenciesList
 
-			js = """
+			js = '''
 
 var dependencies = [];
 
 
-"""
+'''
 
 			js += "dependencies.push('#{
 				dependencies.join "');\ndependencies.push('"

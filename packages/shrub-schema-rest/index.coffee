@@ -110,7 +110,7 @@ exports.pkgmanRegister = (registrar) ->
 						Model.authenticatedDestroyAll(
 							req.user
 						).then(->
-							serveJson res, 200, message: "Collection deleted."
+							serveJson res, 200, message: 'Collection deleted.'
 						).catch interceptError res
 
 				# Get a resource.
@@ -138,7 +138,7 @@ exports.pkgmanRegister = (registrar) ->
 							req.params.id
 							req.body
 						).then(->
-							serveJson res, 200, message: "Resource updated."
+							serveJson res, 200, message: 'Resource updated.'
 						).catch interceptError res
 
 				# Delete a resource.
@@ -152,7 +152,7 @@ exports.pkgmanRegister = (registrar) ->
 							req.user
 							req.params.id
 						).then(->
-							serveJson res, 200, message: "Resource deleted."
+							serveJson res, 200, message: 'Resource deleted.'
 						).catch interceptError res
 
 		routes

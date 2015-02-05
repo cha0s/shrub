@@ -18,7 +18,7 @@ exports.pkgmanRegister = (registrar) ->
 		path: 'home'
 		title: 'Home'
 
-		template: """
+		template: '''
 
 <div class="jumbotron">
 
@@ -28,4 +28,4 @@ exports.pkgmanRegister = (registrar) ->
 
 </div>
 
-"""
+'''

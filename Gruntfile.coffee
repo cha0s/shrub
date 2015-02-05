@@ -13,12 +13,12 @@ module.exports = (grunt) ->
 
 				return done() if code is 0
 
-				grunt.fail.fatal "Child process failed", code
+				grunt.fail.fatal 'Child process failed', code
 
 		# Forward all tasks.
 		{tasks} = require 'grunt/lib/grunt/cli'
 		grunt.registerTask tasks[0] ? 'default', ['bootstrap']
-		grunt.registerTask(task, ->) for task in tasks.slice 1
+		grunt.registerTask(task, (->)) for task in tasks.slice 1
 
 		return
 

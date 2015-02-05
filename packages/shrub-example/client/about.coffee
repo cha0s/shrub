@@ -21,12 +21,12 @@ exports.pkgmanRegister = (registrar) ->
 
 		]
 
-		template: """
+		template: '''
 
 <span
 	class="about"
 	data-ng-bind-html="about | shrubUiMarkdown:false"
 ></span>
 
-"""
+'''
 

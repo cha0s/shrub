@@ -43,15 +43,15 @@ describe 'form', ->
 
 						email:
 							type: 'email'
-							label: "email"
+							label: 'email'
 						password:
 							type: 'password'
-							label: "password"
+							label: 'password'
 							required: true
 						text:
 							value: 'test'
 							type: 'text'
-							label: "text"
+							label: 'text'
 
 				$compile(element)(scope)
 				scope.$digest()
@@ -113,11 +113,11 @@ describe 'form', ->
 
 						text:
 							type: 'text'
-							label: "text"
+							label: 'text'
 
 						submit:
 							type: 'submit'
-							label: "Submit"
+							label: 'Submit'
 							handler: ->
 								submissionCleared = scope.text is 'test'
 
@@ -171,12 +171,12 @@ describe 'form', ->
 
 						text:
 							type: 'text'
-							label: "text"
+							label: 'text'
 							value: 'test'
 
 						submit:
 							type: 'submit'
-							label: "Submit"
+							label: 'Submit'
 
 					submits: [
 

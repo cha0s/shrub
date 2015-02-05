@@ -27,8 +27,8 @@ exports.has = (key) -> nconf.has key
 exports.load = ->
 
 	# } Ensure the configuration file exists.
-	unless fs.existsSync settingsFilename = "./config/settings.json"
-		throw new Error "Settings file not found! You should copy config/default.settings.json to config/settings.json"
+	unless fs.existsSync settingsFilename = './config/settings.json'
+		throw new Error 'Settings file not found! You should copy config/default.settings.json to config/settings.json'
 
 	nconf.argv().env().file settingsFilename
 
@@ -42,11 +42,11 @@ exports.load = ->
 exports.loadPackageSettings = ->
 
 	# } Register packages.
-	debug "Registering packages..."
+	debug 'Registering packages...'
 
 	pkgman.registerPackageList nconf.get 'packageList'
 
-	debug "Packages registered."
+	debug 'Packages registered.'
 
 	packageSettings = new Config()
 	for key, value of pkgman.invoke 'packageSettings'

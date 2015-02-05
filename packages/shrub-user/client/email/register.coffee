@@ -18,7 +18,7 @@ exports.pkgmanRegister = (registrar) ->
 
 			directive.scope = true
 
-			directive.template = """
+			directive.template = '''
 
 <p>
 	Hello, <span
@@ -66,7 +66,7 @@ exports.pkgmanRegister = (registrar) ->
 	</small>
 </p>
 
-"""
+'''
 
 			directive
 

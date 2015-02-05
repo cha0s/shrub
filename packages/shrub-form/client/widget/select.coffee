@@ -9,7 +9,7 @@ exports.pkgmanRegister = (registrar) ->
 
 			scope: field: '=?'
 
-			template: """
+			template: '''
 
 <div class="form-group">
 
@@ -28,7 +28,7 @@ exports.pkgmanRegister = (registrar) ->
 
 </div>
 
-"""
+'''
 
 	]
 

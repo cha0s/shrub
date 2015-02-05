@@ -29,7 +29,7 @@ exports.pkgmanRegister = (registrar) ->
 
 				)
 
-			template: """
+			template: '''
 
 <div class="radios">
 
@@ -50,7 +50,7 @@ exports.pkgmanRegister = (registrar) ->
 
 </div>
 
-"""
+'''
 
 	]
 

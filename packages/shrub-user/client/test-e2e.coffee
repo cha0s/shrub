@@ -14,10 +14,10 @@ describe 'user', ->
 	it 'should show a password reset page, but only if a token is provided', ->
 
 		browser.get '/user/reset'
-		expect(shrub.count ".shrub-user-reset").toBe 0
+		expect(shrub.count '.shrub-user-reset').toBe 0
 
 		browser.get '/user/reset/token'
-		expect(shrub.count ".shrub-user-reset").toBe 1
+		expect(shrub.count '.shrub-user-reset').toBe 1
 
 	it 'should redirect from certain pages when the user is logged in', ->
 

@@ -205,12 +205,12 @@ Invoked in [#{filename}](./#{filename.replace /(coffee|js)/, 'html'}):
 
 """
 
-	fs.writeFileSync "documentation/hooks.md", markdown
+	fs.writeFileSync 'documentation/hooks.md', markdown
 
 # Generate TODO documentation.
 generateTodoDocumentation = do ->
 
-	markdown = """
+	markdown = '''
 
 # TODO list
 
@@ -219,7 +219,7 @@ a dynamically generated listing of TODO items, each with a line of code
 context.
 
 
-"""
+'''
 
 	todoInformation = {}
 	for filename, {lines} of sources
@@ -275,12 +275,12 @@ context.
 
 """
 
-	fs.writeFileSync "documentation/todos.md", markdown
+	fs.writeFileSync 'documentation/todos.md', markdown
 
 # Generate package documentation.
 generatePackageDocumentation = do ->
 
-	markdown = """
+	markdown = '''
 
 # Package overview
 
@@ -291,7 +291,7 @@ This page provides a listing of packages in this project, along with a short
 description of the functionality they provide.
 
 
-"""
+'''
 
 	for type, package_ of packageInformation
 		for name, {filename} of package_
@@ -350,4 +350,4 @@ description of the functionality they provide.
 
 """
 
-	fs.writeFileSync "documentation/packages.md", markdown
+	fs.writeFileSync 'documentation/packages.md', markdown

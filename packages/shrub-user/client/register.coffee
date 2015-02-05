@@ -26,7 +26,7 @@ exports.pkgmanRegister = (registrar) ->
 							return if error?
 
 							messages.add(
-								text: "An email has been sent with account registration details. Please check your email."
+								text: 'An email has been sent with account registration details. Please check your email.'
 							)
 
 							$location.path '/'
@@ -37,25 +37,25 @@ exports.pkgmanRegister = (registrar) ->
 
 						username:
 							type: 'text'
-							label: "Username"
+							label: 'Username'
 							required: true
 
 						email:
 							type: 'email'
-							label: "Email"
+							label: 'Email'
 							required: true
 
 						submit:
 							type: 'submit'
-							value: "Sign up"
+							value: 'Sign up'
 
 		]
 
-		template: """
+		template: '''
 
 <div
 	data-shrub-form
 	data-form="form"
 ></div>
 
-"""
+'''

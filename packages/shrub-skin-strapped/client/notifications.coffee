@@ -25,14 +25,14 @@ exports.pkgmanRegister = (registrar) ->
 """
 				title: ->
 
-					tpl = """
+					tpl = '''
 
 <div
 	class="title"
 	data-shrub-ui-notifications-title
 ></div>
 
-"""
+'''
 
 					$compile(tpl)(scope)
 

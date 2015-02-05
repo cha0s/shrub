@@ -16,7 +16,7 @@ exports.TransmittableError = class TransmittableError extends Error
 	key: 'unknown'
 
 	# The template used to format the error output.
-	template: "Unknown error: :message"
+	template: 'Unknown error: :message'
 
 	# Implement this if you need to transmit more than just the key and the
 	# message.
@@ -58,11 +58,11 @@ exports.message = (error) ->
 
 	# Abstract; Error.
 	else if error instanceof Error
-		TransmittableError::template.replace ":message", error.message
+		TransmittableError::template.replace ':message', error.message
 
 	# Unknown.
 	else
-		TransmittableError::template.replace ":message", error.toString()
+		TransmittableError::template.replace ':message', error.toString()
 
 	# Replace placeholders in the template.
 	output = output.replace ":#{key}", value for key, value of error

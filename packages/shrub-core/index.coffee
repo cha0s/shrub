@@ -114,6 +114,6 @@ resolvedAddress = (trustedProxies, address, forwardedFor) ->
 
 	split = forwardedFor.split /\s*, */
 	index = split.length - 1
-	address = split[index--] while -1 isnt trustedProxies.indexOf address
+	address = split[index--] while ~trustedProxies.indexOf address
 
 	address

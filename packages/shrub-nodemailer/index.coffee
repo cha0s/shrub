@@ -112,7 +112,7 @@ exports.sendMail = (directive, mail, scope) ->
 		# If the from field wasn't specified, look it up in the configuration.
 		unless mail.from
 			unless siteEmail.address
-				throw new Error "Email sent without `from` field, and no site email address is defined!"
+				throw new Error 'Email sent without `from` field, and no site email address is defined!'
 
 			# Use the address by default.
 			mail.from = siteEmail.address

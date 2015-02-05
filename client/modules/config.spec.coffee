@@ -14,19 +14,19 @@ describe 'config', ->
 					null
 		)
 
-	it "gets variables", ->
+	it 'gets variables', ->
 
 		expect(config.get 'test').toBe 69
 		expect(config.get 'another:foo').toBe 420
 
-	it "checks variables", ->
+	it 'checks variables', ->
 
 		expect(config.has 'test').toBe true
 		expect(config.has 'sd').toBe false
 		expect(config.has 'another:foo').toBe true
 		expect(config.has 'another:bar').toBe true
 
-	it "sets variables", ->
+	it 'sets variables', ->
 
 		config.set 'test', 'blah'
 		expect(config.get 'test').toBe 'blah'

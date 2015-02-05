@@ -9,7 +9,7 @@ exports.pkgmanRegister = (registrar) ->
 
 			scope: field: '=?'
 
-			template: """
+			template: '''
 
 <div class="checkbox">
 
@@ -28,7 +28,7 @@ exports.pkgmanRegister = (registrar) ->
 
 </div>
 
-"""
+'''
 
 	]
 

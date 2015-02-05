@@ -15,7 +15,7 @@ exports.pkgmanRegister = (registrar) ->
 
 					element.find('input').attr 'data-ng-model', field.value
 
-			template: """
+			template: '''
 
 <div class="radio">
 
@@ -34,7 +34,7 @@ exports.pkgmanRegister = (registrar) ->
 
 </div>
 
-"""
+'''
 
 	]
 

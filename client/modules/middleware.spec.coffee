@@ -3,7 +3,7 @@ middleware = require 'middleware'
 
 describe 'middleware', ->
 
-	it "can use and dispatch", ->
+	it 'can use and dispatch', ->
 
 		middleware_ = new middleware.Middleware()
 
@@ -34,7 +34,7 @@ describe 'middleware', ->
 		expect(second).toBe true
 		expect(third).toBe true
 
-	it "can properly handle errors", ->
+	it 'can properly handle errors', ->
 
 		middleware_ = new middleware.Middleware()
 

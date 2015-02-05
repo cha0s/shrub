@@ -43,7 +43,7 @@ exports.pkgmanRegister = (registrar) ->
 
 				)
 
-			template: """
+			template: '''
 
 <div class="notification-wrapper">
 
@@ -62,7 +62,7 @@ exports.pkgmanRegister = (registrar) ->
 
 </div>
 
-"""
+'''
 
 	]
 

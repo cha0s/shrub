@@ -171,7 +171,7 @@ sandboxManager = new class SandboxManager
 		#
 		# *Reset the time-to-live for a sandbox.*
 		ttl = config.get 'packageSettings:shrub-angular:ttl'
-		toucher = _.debounce (=> sandbox.close()), ttl
+		toucher = _.debounce (-> sandbox.close()), ttl
 		do sandbox.touch = ->
 			debug "Touched sandbox ID: #{id}"
 
@@ -285,7 +285,7 @@ exports.augmentSandbox = (sandbox) ->
 			return resolve() if path is url.parse(@url()).path
 
 			# } Navigate Angular to the request path.
-			unlisten = $rootScope.$on 'shrub.core.routeRendered', =>
+			unlisten = $rootScope.$on 'shrub.core.routeRendered', ->
 				unlisten()
 				resolve()
 

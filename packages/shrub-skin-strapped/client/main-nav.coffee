@@ -40,7 +40,7 @@ exports.pkgmanRegister = (registrar) ->
 					-> scope.pageTitle = windowTitle.page()
 				)
 
-			template: """
+			template: '''
 
 <nav class="navbar navbar-default" role="navigation">
 	<div class="container-fluid">
@@ -87,6 +87,6 @@ exports.pkgmanRegister = (registrar) ->
 	</div>
 </nav>
 
-"""
+'''
 
 	]

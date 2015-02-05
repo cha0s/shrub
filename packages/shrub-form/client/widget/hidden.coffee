@@ -7,7 +7,7 @@ exports.pkgmanRegister = (registrar) ->
 
 			scope: field: '=?'
 
-			template: """
+			template: '''
 
 <input
 	name="{{field.name}}"
@@ -15,7 +15,7 @@ exports.pkgmanRegister = (registrar) ->
 	value="{{field.value}}"
 >
 
-"""
+'''
 
 	]
 

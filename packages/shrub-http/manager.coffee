@@ -67,7 +67,7 @@ exports.Manager = class HttpManager
 					(error) ->
 						return reject error unless 'EADDRINUSE' is error.code
 
-						httpDebug "HTTP port in use... retrying in 2 seconds"
+						httpDebug 'HTTP port in use... retrying in 2 seconds'
 						setTimeout tryListener, 2000
 
 				)
@@ -102,7 +102,7 @@ exports.Manager = class HttpManager
 		httpMiddlewareDebug '- HTTP middleware loaded.'
 
 	# } Ensure any subclass implements these methods.
-	@::[method] = (-> throw new ReferenceError(
+	this::[method] = (-> throw new ReferenceError(
 		"HttpManager::#{method} is a pure virtual method!"
 
 	# "Pure virtual" methods.

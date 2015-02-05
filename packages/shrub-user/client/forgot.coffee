@@ -26,7 +26,7 @@ exports.pkgmanRegister = (registrar) ->
 							return if error?
 
 							messages.add(
-								text: "A reset link will be emailed."
+								text: 'A reset link will be emailed.'
 							)
 
 							$location.path '/'
@@ -37,20 +37,20 @@ exports.pkgmanRegister = (registrar) ->
 
 						usernameOrEmail:
 							type: 'text'
-							label: "Username or Email"
+							label: 'Username or Email'
 							required: true
 
 						submit:
 							type: 'submit'
-							value: "Email reset link"
+							value: 'Email reset link'
 
 		]
 
-		template: """
+		template: '''
 
 <div
 	data-shrub-form
 	data-form="form"
 ></div>
 
-"""
+'''

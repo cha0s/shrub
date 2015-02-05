@@ -25,7 +25,7 @@ exports.pkgmanRegister = (registrar) ->
 							return if error?
 
 							messages.add(
-								text: "You may now log in with your new password."
+								text: 'You may now log in with your new password.'
 							)
 
 							$location.path '/user/login'
@@ -36,7 +36,7 @@ exports.pkgmanRegister = (registrar) ->
 
 						password:
 							type: 'password'
-							label: "New password"
+							label: 'New password'
 							required: true
 
 						token:
@@ -45,15 +45,15 @@ exports.pkgmanRegister = (registrar) ->
 
 						submit:
 							type: 'submit'
-							value: "Reset password"
+							value: 'Reset password'
 
 		]
 
-		template: """
+		template: '''
 
 <div
 	data-shrub-form
 	data-form="form"
 ></div>
 
-"""
+'''

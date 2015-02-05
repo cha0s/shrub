@@ -63,7 +63,8 @@ module.exports = new class Config
 	get: (key) ->
 
 		current = @config
-		current = current?[part] for part in key.split ':'
+		for part in key.split ':'
+			current = current?[part]
 		current
 
 	# ### .has

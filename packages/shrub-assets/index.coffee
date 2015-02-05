@@ -90,12 +90,12 @@ exports.assets = ->
 
 	# Invoke hook `assetMiddleware`.
 	# Invoked to gather script assets for requests.
-	debug "- Loading asset middleware..."
+	debug '- Loading asset middleware...'
 	assetMiddleware = middleware.fromHook(
 		'assetMiddleware'
-		config.get "packageSettings:shrub-assets:assetMiddleware"
+		config.get 'packageSettings:shrub-assets:assetMiddleware'
 	)
-	debug "- Asset middleware loaded."
+	debug '- Asset middleware loaded.'
 
 	assetMiddleware.dispatch assets, (error) -> throw error if error?
 

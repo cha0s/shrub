@@ -46,7 +46,7 @@ exports.pkgmanRegister = (registrar) ->
 				item: '='
 				ancestorPath: '=?'
 
-			directive.template = """
+			directive.template = '''
 
 <ul
 	data-ng-if="item.list"
@@ -56,7 +56,7 @@ exports.pkgmanRegister = (registrar) ->
 	data-parent-ancestor-path="ancestorPath"
 ></ul>
 
-"""
+'''
 
 			directive
 

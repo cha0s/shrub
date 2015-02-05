@@ -65,7 +65,7 @@ exports.pkgmanRegister = (registrar) ->
 				list: '='
 				parentAncestorPath: '=?'
 
-			directive.template = """
+			directive.template = '''
 
 <li
 	data-ng-repeat="item in list.items"
@@ -76,7 +76,7 @@ exports.pkgmanRegister = (registrar) ->
 	data-parent-ancestor-path="parentAncestorPath"
 ></li>
 
-"""
+'''
 
 			directive
 

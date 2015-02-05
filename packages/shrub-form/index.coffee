@@ -54,7 +54,7 @@ exports.pkgmanRegister = (registrar) ->
 				# Submit the form into Angular.
 				scope.$digest()
 				scope.$apply ->
-					scope.$shrubSubmit[body.formKey]().finally => next()
+					scope.$shrubSubmit[body.formKey]().finally -> next()
 
 		]
 

@@ -51,7 +51,7 @@ exports.pkgmanRegister = (registrar) ->
 
 			directive.scope = true
 
-			directive.template = """
+			directive.template = '''
 
 <a
 	data-ng-click="remove($event)"
@@ -79,7 +79,7 @@ exports.pkgmanRegister = (registrar) ->
 	data-ng-bind="notification.variables | json"
 ></div>
 
-"""
+'''
 
 			directive
 

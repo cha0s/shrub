@@ -62,7 +62,7 @@ exports.pkgmanRegister = (registrar) ->
 
 				return done() if code is 0
 
-				grunt.fail.fatal "Server process failed", code
+				grunt.fail.fatal 'Server process failed', code
 
 		gruntConfig.shrub.tasks['build:shrub'] = [
 			'concat:shrub'
@@ -102,5 +102,5 @@ exports.pkgmanRegister = (registrar) ->
 			)
 
 	registrar.recur [
-		'angular', 'dox', 'modules', 'tests'
+		'angular', 'dox', 'lint', 'modules', 'tests'
 	]

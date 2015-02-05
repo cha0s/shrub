@@ -111,7 +111,7 @@ exports.pkgmanRegister = (registrar) ->
 
 				menu: '='
 
-			directive.template = """
+			directive.template = '''
 
 <ul
 	data-shrub-ui-list
@@ -119,7 +119,7 @@ exports.pkgmanRegister = (registrar) ->
 	data-list="list"
 ></ul>
 
-"""
+'''
 
 			directive
 

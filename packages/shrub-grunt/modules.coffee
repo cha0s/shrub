@@ -105,16 +105,16 @@ exports.pkgmanRegister = (registrar) ->
 
 					if moduleName?
 						[
-							"""
+							'''
 requires_['#{moduleName}'] = function(module, exports, require, __dirname, __filename) {
 
 
-"""
-							"""
+'''
+							'''
 
 };
 
-"""
+'''
 						]
 					else
 						['', '']
@@ -125,18 +125,18 @@ requires_['#{moduleName}'] = function(module, exports, require, __dirname, __fil
 			options:
 				indent: '  '
 				wrapper: [
-					"""
+					'''
 (function() {
 
   var requires_ = {};
 
 
-"""
-					"""
+'''
+					'''
 
 })();
 
-"""
+'''
 				]
 
 		gruntConfig.shrub.tasks['build:modules'] = [

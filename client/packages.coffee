@@ -20,7 +20,7 @@ angular.module('shrub.packages', [
 			# Invoke hook `controller`.
 			# Allows packages to define Angular controllers. Implementations
 			# should return an [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
-			debug "Registering controllers..."
+			debug 'Registering controllers...'
 
 			for path, injected of pkgman.invoke 'controller'
 				controllerName = pkgman.normalizePath path
@@ -29,12 +29,12 @@ angular.module('shrub.packages', [
 
 				$controllerProvider.register controllerName, injected
 
-			debug "Controllers registered."
+			debug 'Controllers registered.'
 
 			# Invoke hook `directive`.
 			# Allows packages to define Angular directives. Implementations
 			# should return an [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
-			debug "Registering directives..."
+			debug 'Registering directives...'
 
 			for path, injected of pkgman.invoke 'directive'
 				do (path, injected) ->
@@ -83,7 +83,7 @@ angular.module('shrub.packages', [
 							if angular.isObject directive.scope
 
 								directive.$$isolateBindings = do ->
-									LOCAL_REGEXP = /^\s*([@&]|=(\*?))(\??)\s*(\w*)\s*$/;
+									LOCAL_REGEXP = /^\s*([@&]|=(\*?))(\??)\s*(\w*)\s*$/
 
 									bindings = {}
 
@@ -117,12 +117,12 @@ angular.module('shrub.packages', [
 
 					]
 
-			debug "Directives registered."
+			debug 'Directives registered.'
 
 			# Invoke hook `filter`.
 			# Allows packages to define Angular filters. Implementations
 			# should return a function.
-			debug "Registering filters..."
+			debug 'Registering filters...'
 
 			for path, injected of pkgman.invoke 'filter'
 				filterName = pkgman.normalizePath path
@@ -131,31 +131,31 @@ angular.module('shrub.packages', [
 
 				$filterProvider.register filterName, injected
 
-			debug "Filters registered."
+			debug 'Filters registered.'
 
 			# Invoke hook `provider`.
 			# Allows packages to define Angular providers. Implementations
 			# should return an [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
-			debug "Registering providers..."
+			debug 'Registering providers...'
 
 			for path, provider of pkgman.invoke 'provider'
 				debug path
 
 				$provide.provider path, provider
 
-			debug "Providers registered."
+			debug 'Providers registered.'
 
 			# Invoke hook `service`.
 			# Allows packages to define Angular services. Implementations
 			# should return an [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
-			debug "Registering services..."
+			debug 'Registering services...'
 
 			for path, injected of pkgman.invoke 'service'
 				debug path
 
 				$provide.service path, injected
 
-			debug "Services registered."
+			debug 'Services registered.'
 
 			# If we are testing, decorate the services with their mock
 			# versions.
@@ -165,14 +165,14 @@ angular.module('shrub.packages', [
 				# Allows packages to decorate mock Angular services.
 				# Implementations should return an
 				# [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
-				debug "Registering mock services..."
+				debug 'Registering mock services...'
 
 				for path, injected of pkgman.invoke 'serviceMock'
 					debug path
 
 					$provide.decorator path, injected
 
-				debug "Mock services registered."
+				debug 'Mock services registered.'
 
 	])
 
@@ -191,11 +191,11 @@ angular.module('shrub.pkgman', [
 			pkgman = require 'pkgman'
 
 			# Load the package list from configuration.
-			debug "Loading packages..."
+			debug 'Loading packages...'
 
 			pkgman.registerPackageList config.get 'packageList'
 
-			debug "Packages loaded."
+			debug 'Packages loaded.'
 
 			service = {}
 

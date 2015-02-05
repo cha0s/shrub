@@ -189,17 +189,17 @@ exports.pkgmanRegister = (registrar) ->
 			options:
 				indent: '  '
 				wrapper: [
-					"""
+					'''
 'use strict';
 
 describe('#{gruntConfig.pkg.name}', function() {
 
 
-"""
-					"""
+'''
+					'''
 
 });
-"""
+'''
 				]
 
 		gruntConfig.wrap.testsUnit =
@@ -212,7 +212,7 @@ describe('#{gruntConfig.pkg.name}', function() {
 			options:
 				indent: '  '
 				wrapper: [
-					"""
+					'''
 'use strict';
 
 describe('#{gruntConfig.pkg.name}', function() {
@@ -222,11 +222,11 @@ describe('#{gruntConfig.pkg.name}', function() {
   });
 
 
-"""
-					"""
+'''
+					'''
 
 });
-"""
+'''
 				]
 
 		gruntConfig.shrub.tasks['build:testsE2e'] = [
@@ -282,14 +282,14 @@ describe('#{gruntConfig.pkg.name}', function() {
 				gruntConfig.protractor.testsE2e.options.args = baseUrl: baseUrl
 
 				# Wait for the server to come up.
-				grunt.log.write "Waiting for E2E server to come up..."
+				grunt.log.write 'Waiting for E2E server to come up...'
 				tcpPortUsed.waitUntilUsed(port, 400, 30000).then(
 
 					->
 						grunt.task.run 'protractor:testsE2e'
 						done()
 
-					(error) -> grunt.fail.fatal "E2E server never came up after 30 seconds!"
+					(error) -> grunt.fail.fatal 'E2E server never came up after 30 seconds!'
 				)
 
 		gruntConfig.shrub.tasks['tests:e2eServerDown'] = ->
@@ -334,7 +334,7 @@ describe('#{gruntConfig.pkg.name}', function() {
 				stdio: 'inherit'
 			).on 'close', (code) ->
 				return done() if code is 0
-				grunt.fail.fatal "Jasmine tests not passing!"
+				grunt.fail.fatal 'Jasmine tests not passing!'
 
 		gruntConfig.shrub.tasks['tests:jasmine'] = [
 			'buildOnce'

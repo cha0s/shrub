@@ -2,11 +2,11 @@
 crypto = require 'server/crypto'
 Promise = require 'bluebird'
 
-cryptoKey = "This should be a sufficiently long encryption key. For testing."
+cryptoKey = 'This should be a sufficiently long encryption key. For testing.'
 
 describe 'crypto', ->
 
-	it "can encrypt and decrypt information", ->
+	it 'can encrypt and decrypt information', ->
 
 		texts = []
 

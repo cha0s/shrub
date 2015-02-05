@@ -22,7 +22,7 @@ exports.pkgmanRegister = (registrar) ->
 
 				return done() if code is 0
 
-				grunt.fail.fatal "Dynamic documentation generation failed", code
+				grunt.fail.fatal 'Dynamic documentation generation failed', code
 
 		gruntConfig.shrub.tasks['dox:groc'] = ->
 
@@ -34,7 +34,7 @@ exports.pkgmanRegister = (registrar) ->
 
 				return done() if code is 0
 
-				grunt.fail.fatal "Groc failed", code
+				grunt.fail.fatal 'Groc failed', code
 
 		gruntConfig.shrub.tasks['dox'] = [
 			 'dox:prepareDirectory'

@@ -16,7 +16,7 @@ exports.pkgmanRegister = (registrar) ->
 					field.pattern ?= /.*/
 					field.value ?= ''
 
-			template: """
+			template: '''
 
 <div class="form-group">
 
@@ -39,7 +39,7 @@ exports.pkgmanRegister = (registrar) ->
 
 </div>
 
-"""
+'''
 
 	]
 

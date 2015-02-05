@@ -39,7 +39,7 @@ exports.pkgmanRegister = (registrar) ->
 
 			directive.scope = true
 
-			directive.template = """
+			directive.template = '''
 
 <a
 	class="mark-all-read"
@@ -50,7 +50,7 @@ exports.pkgmanRegister = (registrar) ->
 	class="title"
 >Notifications</p>
 
-"""
+'''
 
 			directive
 

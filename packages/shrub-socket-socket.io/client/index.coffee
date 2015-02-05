@@ -24,7 +24,7 @@ exports.Manager = class SocketIoSocket extends Socket
 			@emit 'shrub.debug.log', errors.serialize error
 
 		@_socket.on 'initialized', =>
-			@emit.apply @, args for args in @_initializedQueue
+			@emit.apply this, args for args in @_initializedQueue
 
 		@_socket.on 'connect', => @_isConnected = true
 

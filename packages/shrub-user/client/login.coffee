@@ -60,21 +60,21 @@ exports.pkgmanRegister = (registrar) ->
 
 						username:
 							type: 'text'
-							label: "Username"
+							label: 'Username'
 							required: true
 
 						password:
 							type: 'password'
-							label: "Password"
+							label: 'Password'
 							required: true
 
 						submit:
 							type: 'submit'
-							value: "Sign in"
+							value: 'Sign in'
 
 		]
 
-		template: """
+		template: '''
 
 <div
 	data-shrub-form
@@ -83,12 +83,12 @@ exports.pkgmanRegister = (registrar) ->
 
 <a class="forgot" href="/user/forgot">Forgot your password?</a>
 
-"""
+'''
 
 # Transmittable login error.
 LoginError = class LoginError extends errors.TransmittableError
 
 	key: 'login'
-	template: "No such username/password."
+	template: 'No such username/password.'
 
 exports.transmittableError = -> LoginError

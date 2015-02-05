@@ -1,6 +1,6 @@
 
 # # Server
-# 
+#
 # The server application entry point. We load the configuration, invoke the
 # initialization hooks, and listen for signals and process exit.
 
@@ -11,44 +11,44 @@
 unless fork()
 
 	Promise = require 'bluebird'
-	
+
 	debug = require('debug') 'shrub'
 	errors = require 'errors'
-	
+
 	middleware = require 'middleware'
 	pkgman = require 'pkgman'
-	
+
 	# } Load configuration.
-	debug "Loading config..."
-	
+	debug 'Loading config...'
+
 	config = require 'config'
 	config.load()
 	config.loadPackageSettings()
-	
-	debug "Config loaded."
-	
-	debug "Loading bootstrap middleware..."
+
+	debug 'Config loaded.'
+
+	debug 'Loading bootstrap middleware...'
 	bootstrapMiddleware = middleware.fromHook(
 		'bootstrapMiddleware'
 		config.get 'packageSettings:shrub-core:bootstrapMiddleware'
 	)
-	debug "Bootstrap middleware loaded."
-	
+	debug 'Bootstrap middleware loaded.'
+
 	bootstrapMiddleware.dispatch (error) ->
-		
+
 		# Invoke hook `ready`.
 		# Invoked after the server is initialized and ready.
 		# `TODO`: Remove this; implementations should use
 		# `bootstrapMiddleware`.
 		return pkgman.invoke 'ready' unless error?
-	
+
 		console.error errors.stack error
 		throw error
-	
+
 	# Do our best to guarantee that hook `processExit` will always be invoked.
-	
+
 	# } Signal listeners and process cleanup.
 	process.on 'SIGINT', -> process.exit()
 	process.on 'SIGTERM', -> process.exit()
-	
+
 	process.on 'exit', -> pkgman.invoke 'processExit'

@@ -41,7 +41,7 @@ exports.pkgmanRegister = (registrar) ->
 
 				)
 
-			template: """
+			template: '''
 
 <div class="checkboxes">
 
@@ -62,7 +62,7 @@ exports.pkgmanRegister = (registrar) ->
 
 </div>
 
-"""
+'''
 
 	]
 
