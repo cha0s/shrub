@@ -115,12 +115,7 @@ exports.initialize = (config, fn) ->
 
 			collection.attributes.toJSON ?= ->
 				O = @toObject()
-
-				# Remove toJSON return until the following PR makes it in
-				# https://github.com/balderdashy/waterline/pull/818
-				# This will ignore 'protected' attributes, unfortunately.
-				O.toJSON = null
-
+				O.toJSON = undefined
 				O
 
 	# Invoke hook `collectionsAlter`.
