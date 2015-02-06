@@ -1,16 +1,16 @@
 
 # # Express logger
 
-express = require 'express'
-
-logging = require 'logging'
-
 exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `httpMiddleware`
 	#
 	# Log requests, differentiating between client and sandbox requests.
 	registrar.registerHook 'httpMiddleware', (http) ->
+
+		express = require 'express'
+
+		logging = require 'logging'
 
 		clientRequestLogger = logging.create 'logs/express.client.log'
 		sandboxRequestLogger = logging.create 'logs/express.sandbox.log'

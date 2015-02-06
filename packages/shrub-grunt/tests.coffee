@@ -1,16 +1,12 @@
-path = require 'path'
-child_process = require 'child_process'
-
-tcpPortUsed = require 'tcp-port-used'
-
-bootstrap = require 'bootstrap'
-
-shrubConfig = require 'shrub-config'
 
 exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `gruntConfig`
 	registrar.registerHook 'gruntConfig', (gruntConfig) ->
+
+		child_process = require 'child_process'
+
+		tcpPortUsed = require 'tcp-port-used'
 
 		{grunt} = gruntConfig
 
@@ -260,6 +256,7 @@ describe('#{gruntConfig.pkg.name}', function() {
 
 			done = @async()
 
+			bootstrap = require 'bootstrap'
 			bootstrap.openServerPort().then (port) ->
 
 				# Pass arguments to the child process.
@@ -308,6 +305,7 @@ describe('#{gruntConfig.pkg.name}', function() {
 
 			req = grunt: true
 
+			shrubConfig = require 'shrub-config'
 			shrubConfig.renderPackageConfig(req).then (code) ->
 
 				grunt.file.write 'test/unit/config.js', code

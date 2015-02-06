@@ -1,18 +1,19 @@
 
 # # Express routes
 
-express = require 'express'
-redis = require 'redis'
-signature = require 'cookie-signature'
-
 config = require 'config'
 
-sessionPackage = require './index'
+express = null
 
 cookieParser = null
 sessionStore = null
 
 exports.pkgmanRegister = (registrar) ->
+
+	# ## Implements hook `preBootstrap`
+	registrar.registerHook 'preBootstrap', ->
+
+		express = require 'express'
 
 	# ## Implements hook `bootstrapMiddleware`
 	registrar.registerHook 'bootstrapMiddleware', ->
@@ -30,8 +31,9 @@ exports.pkgmanRegister = (registrar) ->
 
 				sessionStore = switch sessionStoreConfig
 
+					# `TODO`: Can we do this with ORM?
 					when 'redis'
-
+						redis = require 'redis'
 						RedisStore = require('connect-redis') express
 						new RedisStore client: redis.createClient()
 
@@ -45,6 +47,8 @@ exports.pkgmanRegister = (registrar) ->
 	registrar.registerHook 'httpMiddleware', (http) ->
 
 		{cookie, key} = config.get 'packageSettings:shrub-session'
+
+		signature = require 'cookie-signature'
 
 		label: 'Load session from cookie'
 		middleware: [

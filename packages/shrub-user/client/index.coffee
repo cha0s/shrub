@@ -3,10 +3,6 @@
 #
 # User operations, model, etc.
 
-Promise = require 'bluebird'
-
-config = require 'config'
-
 exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `collections`
@@ -19,6 +15,8 @@ exports.pkgmanRegister = (registrar) ->
 	registrar.registerHook 'service', -> [
 		'shrub-orm', 'shrub-rpc', 'shrub-socket'
 		(orm, rpc, socket) ->
+
+			config = require 'config'
 
 			User = orm.collection 'shrub-user'
 
@@ -193,6 +191,8 @@ exports.collections = ->
 	'shrub-user-permission': UserPermission
 
 exports.collectionsAlter = (collections) ->
+
+	Promise = require 'bluebird'
 
 	# `TODO`: This is broken since ORM change
 	{'shrub-user': User} = collections

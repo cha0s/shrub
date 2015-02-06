@@ -1,11 +1,6 @@
 
 # # User logout
 
-i8n = require 'inflection'
-Promise = require 'bluebird'
-
-middleware = require 'middleware'
-
 exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `endpoint`
@@ -20,6 +15,10 @@ exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `bootstrapMiddleware`
 	registrar.registerHook 'bootstrapMiddleware', ->
+
+		Promise = require 'bluebird'
+
+		middleware = require 'middleware'
 
 		label: 'Bootstrap user logout'
 		middleware: [

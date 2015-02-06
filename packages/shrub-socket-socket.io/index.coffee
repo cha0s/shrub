@@ -3,19 +3,12 @@
 #
 # SocketManager implementation using [Socket.IO](http://socket.io/).
 
-Promise = require 'bluebird'
-
-config = require 'config'
-errors = require 'errors'
-logging = require 'logging'
-pkgman = require 'pkgman'
-
-logger = new logging.create 'logs/socket.io.log'
-
 exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `assetMiddleware`
 	registrar.registerHook 'assetMiddleware', ->
+
+		config = require 'config'
 
 		label: 'Socket.IO'
 		middleware: [

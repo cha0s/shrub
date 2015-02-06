@@ -1,6 +1,4 @@
 
-config = require 'config'
-
 exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `gruntConfig`
@@ -32,6 +30,8 @@ exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `assetMiddleware`
 	registrar.registerHook 'assetMiddleware', ->
+
+		config = require 'config'
 
 		label: 'Angular HTML5 local storage'
 		middleware: [

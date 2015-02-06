@@ -1,10 +1,10 @@
 
-{fork} = require 'child_process'
-
 exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `gruntConfig`
 	registrar.registerHook 'gruntConfig', (gruntConfig) ->
+
+		{fork} = require 'child_process'
 
 		{grunt} = gruntConfig
 

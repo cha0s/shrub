@@ -3,12 +3,7 @@
 #
 # Serve different JS based on whether the server is running in production mode.
 
-_ = require 'lodash'
 config = require 'config'
-middleware = require 'middleware'
-pkgman = require 'pkgman'
-
-debug = require('debug') 'shrub:assets:middleware'
 
 assets = null
 
@@ -85,6 +80,10 @@ exports.pkgmanRegister = (registrar) ->
 
 exports.assets = ->
 	return assets if assets?
+
+	debug = require('debug') 'shrub:assets:middleware'
+
+	middleware = require 'middleware'
 
 	assets = scripts: [], styleSheets: []
 

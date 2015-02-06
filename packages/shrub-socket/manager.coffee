@@ -3,9 +3,6 @@
 
 {EventEmitter} = require 'events'
 
-middleware = require 'middleware'
-pkgman = require 'pkgman'
-
 # This class implements an abstract interface to be implemented by a socket
 # server (e.g. [Socket.io](./packages/socket/SocketIo.html)).
 module.exports = class SocketManager extends EventEmitter
@@ -31,6 +28,8 @@ module.exports = class SocketManager extends EventEmitter
 	#
 	# *Gather and initialize socket middleware.*
 	loadMiddleware: ->
+
+		middleware = require 'middleware'
 
 		# Invoke hook `socketAuthorizationMiddleware`.
 		# Invoked when a socket connection begins. Packages may throw an

@@ -27,6 +27,10 @@ unless fork()
 
 	debug 'Config loaded.'
 
+	debug 'Pre bootstrap phase...'
+	pkgman.invoke 'preBootstrap'
+	debug 'Pre bootstrap phase completed.'
+
 	debug 'Loading bootstrap middleware...'
 	bootstrapMiddleware = middleware.fromHook(
 		'bootstrapMiddleware'

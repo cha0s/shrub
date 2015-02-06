@@ -1,9 +1,6 @@
 
 # # Error handling
 
-_ = require 'lodash'
-pkgman = require 'pkgman'
-
 # ## TransmittableError
 #
 # Extend this class if you'd like to implement an error
@@ -107,6 +104,8 @@ exports.stack = (error) ->
 #
 # *Collect the error types implemented by packages.*
 exports.transmittableErrors = ->
+
+	pkgman = require 'pkgman'
 
 	# Invoke hook `transmittableError`.
 	# Allows packages to specify transmittable errors. Implementations should

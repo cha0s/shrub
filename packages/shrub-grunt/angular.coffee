@@ -1,6 +1,4 @@
 
-pkgman = require 'pkgman'
-
 exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `gruntConfig`
@@ -62,6 +60,8 @@ exports.pkgmanRegister = (registrar) ->
 			options: livereload: true
 
 		gruntConfig.shrub.tasks['angularCoreDependencies:angular'] = ->
+
+			pkgman = require 'pkgman'
 
 			dependencies = []
 

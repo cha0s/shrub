@@ -1,16 +1,16 @@
 
 # # Express error handler
 
-express = require 'express'
-config = require 'config'
-
-errors = require 'errors'
-logging = require 'logging'
-
 exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `httpMiddleware`
 	registrar.registerHook 'httpMiddleware', (http) ->
+
+		express = require 'express'
+		config = require 'config'
+
+		errors = require 'errors'
+		logging = require 'logging'
 
 		logger = logging.create 'logs/error.log'
 

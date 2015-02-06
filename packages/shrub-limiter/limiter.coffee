@@ -1,9 +1,9 @@
 
 # # Limits
 
-Promise = require 'bluebird'
+Promise = null
 
-orm = require 'shrub-orm'
+orm = null
 
 # ## Limiter
 #
@@ -45,6 +45,10 @@ module.exports = class Limiter
 		throw new TypeError(
 			"Limiter(#{key}) must be constructed with a valid threshold!"
 		) unless @threshold instanceof ThresholdFinal
+
+		Promise ?= require 'bluebird'
+
+		orm ?= require 'shrub-orm'
 
 		# } Create the low-level limiter.
 		@limiter = new LimiterManager key, @threshold.calculateSeconds()
@@ -100,7 +104,6 @@ module.exports = class Limiter
 	#
 	# (internal) *Find the largest result from a group of results.*
 	_largest: (keys, index) ->
-
 		Promise.all(
 			@limiter[index] key for key in keys
 

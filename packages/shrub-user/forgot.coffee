@@ -1,20 +1,21 @@
 
 # # User - forgot password
 
-Promise = require 'bluebird'
-
-crypto = require 'server/crypto'
-config = require 'config'
-
-nodemailer = require 'shrub-nodemailer'
-orm = require 'shrub-orm'
-
-{Limiter} = require 'shrub-limiter'
-
 exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `endpoint`
 	registrar.registerHook 'endpoint', ->
+
+		Promise = require 'bluebird'
+
+		config = require 'config'
+
+		nodemailer = require 'shrub-nodemailer'
+		orm = require 'shrub-orm'
+
+		crypto = require 'server/crypto'
+
+		{Limiter} = require 'shrub-limiter'
 
 		limiter: threshold: Limiter.threshold(1).every(30).seconds()
 

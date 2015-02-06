@@ -1,8 +1,6 @@
 
 # # User register
 
-errors = require 'errors'
-
 exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `route`

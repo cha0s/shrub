@@ -4,30 +4,27 @@
 # Framework for communication between client and server through
 # [RPC](http://en.wikipedia.org/wiki/Remote_procedure_call#Message_passing)
 
-_ = require 'lodash'
-debug = require('debug') 'shrub:rpc'
-Promise = require 'bluebird'
-
-config = require 'config'
-
-errors = require 'errors'
-logging = require 'logging'
-pkgman = require 'pkgman'
-
-logger = logging.create 'logs/rpc.log'
-
-{Middleware} = require 'middleware'
-{TransmittableError} = errors
-
-clientModule = require './client'
+pkgman = null
 
 # RPC endpoint information.
 endpoints = {}
 
 exports.pkgmanRegister = (registrar) ->
 
+	# ## Implements hook `preBootstrap`
+	registrar.registerHook 'preBootstrap', ->
+
+		pkgman = require 'pkgman'
+
 	# ## Implements hook `bootstrapMiddleware`
 	registrar.registerHook 'bootstrapMiddleware', ->
+
+		_ = require 'lodash'
+		debug = require('debug') 'shrub:rpc'
+
+		{Middleware} = require 'middleware'
+
+		clientModule = require './client'
 
 		label: 'Bootstrap RPC'
 		middleware: [
@@ -103,6 +100,15 @@ exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `socketConnectionMiddleware`
 	registrar.registerHook 'socketConnectionMiddleware', ->
+
+		Promise = require 'bluebird'
+
+		config = require 'config'
+		errors = require 'errors'
+		logging = require 'logging'
+
+		logger = logging.create 'logs/rpc.log'
+		{TransmittableError} = errors
 
 		label: 'Receive and dispatch RPC calls'
 		middleware: [

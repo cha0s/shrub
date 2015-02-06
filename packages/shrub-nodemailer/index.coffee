@@ -3,14 +3,12 @@
 #
 # Renders and sends email.
 
-nodemailer = require 'nodemailer'
-Promise = require 'bluebird'
 
-config = require 'config'
-pkgman = require 'pkgman'
-{Sandbox} = require 'sandboxes'
+Promise = null
 
-skin = require 'shrub-skin'
+config = null
+
+skin = null
 
 # Sandbox used to render email as HTML.
 sandbox = null
@@ -20,8 +18,21 @@ transport = null
 
 exports.pkgmanRegister = (registrar) ->
 
+	# ## Implements hook `preBootstrap`
+	registrar.registerHook 'preBootstrap', ->
+
+		Promise = require 'bluebird'
+
+		config = require 'config'
+
+		skin = require 'shrub-skin'
+
 	# ## Implements hook `bootstrapMiddleware`
 	registrar.registerHook 'bootstrapMiddleware', ->
+
+		nodemailer = require 'nodemailer'
+
+		{Sandbox} = require 'sandboxes'
 
 		label: 'Bootstrap nodemailer'
 		middleware: [
@@ -232,6 +243,7 @@ augmentSandbox = (sandbox) ->
 		$body = $('body').clone()
 
 		# Let the skin manage the mail HTML.
+		pkgman = require 'pkgman'
 		pkgman.invokePackage skin.activeKey(), 'mailHtml', $body, html, $
 
 		# Inject all the styles inline.

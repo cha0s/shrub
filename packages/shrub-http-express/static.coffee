@@ -1,16 +1,16 @@
 
 # # Express static files
 
-express = require 'express'
-
-config = require 'config'
-
 exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `httpMiddleware`
 	#
 	# Serve static files.
 	registrar.registerHook 'httpMiddleware', (http) ->
+
+		express = require 'express'
+
+		config = require 'config'
 
 		label: 'Serve static files'
 		middleware: [

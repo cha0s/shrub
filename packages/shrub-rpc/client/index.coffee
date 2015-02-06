@@ -3,16 +3,14 @@
 #
 # Define an Angular service to issue [remote procedure calls](http://en.wikipedia.org/wiki/Remote_procedure_call#Message_passing).
 
-i8n = require 'inflection'
-
-errors = require 'errors'
-
 exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `service`
 	registrar.registerHook 'service', -> [
 		'$injector', '$q', 'shrub-pkgman', 'shrub-socket'
 		({invoke}, {defer}, pkgman, socket) ->
+
+			errors = require 'errors'
 
 			service = {}
 
@@ -69,6 +67,8 @@ exports.pkgmanRegister = (registrar) ->
 	]
 
 exports.normalizeRouteName = (name) ->
+
+	i8n = require 'inflection'
 
 	name = i8n.underscore name
 	name = i8n.dasherize name.toLowerCase()

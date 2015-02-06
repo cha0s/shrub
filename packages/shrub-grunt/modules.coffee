@@ -1,6 +1,4 @@
 
-path = require 'path'
-
 exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `gruntConfig`
@@ -81,6 +79,8 @@ exports.pkgmanRegister = (registrar) ->
 			options:
 				indent: '  '
 				wrapper: (filepath) ->
+
+					path = require 'path'
 
 					matches = filepath.match /build\/js\/app\/([^/]+)\/(.*)/
 

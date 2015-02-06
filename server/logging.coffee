@@ -3,14 +3,14 @@
 #
 # Provide a unified interface for logging information.
 
-winston = require 'winston'
-
 # ## .create
 #
 # *Create a new logger instance.*
 #
 # * (string) `filename` - The filename where the log will be written.
 exports.create = (filename) ->
+
+	winston = require 'winston'
 
 	new winston.Logger transports: [
 		new winston.transports.Console level: 'warn', colorize: true

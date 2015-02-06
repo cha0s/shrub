@@ -1,6 +1,4 @@
 
-config = require 'config'
-
 exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `configAlter`
@@ -94,6 +92,8 @@ exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `skinRenderAppHtml`
 	registrar.registerHook 'skinRenderAppHtml', ($) ->
+
+		config = require 'config'
 
 		if 'production' isnt config.get 'NODE_ENV'
 

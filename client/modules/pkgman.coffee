@@ -1,9 +1,6 @@
 
 # # Package manager
 
-_ = require 'lodash'
-i8n = require 'inflection'
-
 debug = require('debug') 'shrub:pkgman'
 
 packageIndex = null
@@ -22,8 +19,16 @@ class PkgmanRegistrar
 		for path in paths
 
 			subpath = "#{@_path}/#{path}"
+
+			debug "Requiring #{subpath}"
 			submodule = require subpath
+			debug "Required #{subpath}"
+
+			debug "Registering hooks for #{subpath}"
 			submodule.pkgmanRegister? new PkgmanRegistrar subpath
+			debug "Registered hooks for #{subpath}"
+
+		return
 
 	registerHook: (submodule, hook, impl) ->
 
@@ -37,8 +42,12 @@ class PkgmanRegistrar
 			impl = hook
 			hook = submodule
 
+		debug "Registering hook #{hook}"
+
 		(packageIndex[hook] ?= []).push path
 		(pathIndex[path] ?= {})[hook] = impl
+
+		debug "Registered hook #{hook}"
 
 optionalModule = (name) ->
 
@@ -52,6 +61,8 @@ exports.rebuildPackageCache = (type) ->
 
 		try
 
+			debug "Requiring #{name}"
+
 			module_ = require name
 
 		catch error
@@ -63,12 +74,16 @@ exports.rebuildPackageCache = (type) ->
 
 			throw error
 
+		debug "Required #{name}"
+
 		modules[name] = module_
-		debug "Found package #{name}."
 
 	# Collect hooks.
 	for path, module_ of modules
+
+		debug "Registering hooks for #{path}"
 		module_.pkgmanRegister? new PkgmanRegistrar path
+		debug "Registered hooks for #{path}"
 
 	return
 
@@ -108,6 +123,9 @@ exports.packagesImplementing = (hook) -> packageIndex?[hook] ? []
 # Normalize paths, e.g.
 # 'core/foo/bar' -> 'coreFooBar'
 exports.normalizePath = (path) ->
+
+	i8n = require 'inflection'
+
 	parts = for part, i in path.split '/'
 		i8n.camelize(
 			part.replace /[^\w]/g, '_'

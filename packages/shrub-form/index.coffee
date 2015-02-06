@@ -4,8 +4,6 @@
 # Handle form and method parsing, and submission of POST'ed data into the
 # Angular sandbox.
 
-express = require 'express'
-
 exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `angularNavigationMiddleware`
@@ -62,6 +60,8 @@ exports.pkgmanRegister = (registrar) ->
 	#
 	# Parse POST submissions, and allow arbitrary method form attribute.
 	registrar.registerHook 'httpMiddleware', (http) ->
+
+		express = require 'express'
 
 		label: 'Parse form submissions'
 		middleware: [

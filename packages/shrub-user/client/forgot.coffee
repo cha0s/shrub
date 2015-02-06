@@ -1,8 +1,6 @@
 
 # # User forgot password
 
-errors = require 'errors'
-
 exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `route`

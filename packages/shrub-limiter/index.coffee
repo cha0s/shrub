@@ -4,20 +4,14 @@
 # Limits the rate at which clients can do certain operations, like call RPC
 # endpoints.
 
-_ = require 'lodash'
-moment = require 'moment'
-Promise = require 'bluebird'
-
-errors = require 'errors'
-middleware = require 'middleware'
-pkgman = require 'pkgman'
-
 exports.SKIP = SKIP = {}
 
 exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `collections`
 	registrar.registerHook 'collections', ->
+
+		_ = require 'lodash'
 
 		Limit =
 
@@ -74,6 +68,11 @@ exports.pkgmanRegister = (registrar) ->
 	#
 	# Allow RPC endpoint definitions to specify rate limiters.
 	registrar.registerHook 'endpointAlter', (endpoints) ->
+
+		moment = require 'moment'
+
+		errors = require 'errors'
+		pkgman = require 'pkgman'
 
 		# A limiter on a route is defined like:
 		#

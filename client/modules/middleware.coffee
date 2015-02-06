@@ -119,7 +119,7 @@ exports.fromHook = (hook, paths, args...) ->
 	# order.
 	args.unshift hook
 	hookResults = pkgman.invoke args...
-	for path in paths
+	for path in paths ? []
 		continue unless (spec = hookResults[path])?
 
 		debug "- - #{spec.label}"

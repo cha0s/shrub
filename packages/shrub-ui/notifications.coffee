@@ -1,18 +1,23 @@
 
-Promise = require 'bluebird'
+Promise = null
 
-pkgman = require 'pkgman'
-
-orm = require 'shrub-orm'
-
-{manager: socketManager} = require 'shrub-socket'
+orm = null
 
 notificationQueues = {}
 
 exports.pkgmanRegister = (registrar) ->
 
+	# ## Implements hook `preBootstrap`
+	registrar.registerHook 'preBootstrap', ->
+
+		Promise = require 'bluebird'
+
+		orm = require 'shrub-orm'
+
 	# ## Implements hook `bootstrapMiddleware`
 	registrar.registerHook 'bootstrapMiddleware', ->
+
+		pkgman = require 'pkgman'
 
 		label: 'Register notification queues'
 		middleware: [
@@ -28,6 +33,9 @@ exports.pkgmanRegister = (registrar) ->
 
 	# Broadcast a notification event.
 	broadcastNotificationsEvent = (req, args) ->
+
+		{manager: socketManager} = require 'shrub-socket'
+
 		{data, event, includeSelf, notifications} = args
 		data ?= {}
 

@@ -1,11 +1,3 @@
-path = require 'path'
-child_process = require 'child_process'
-
-tcpPortUsed = require 'tcp-port-used'
-
-bootstrap = require 'bootstrap'
-
-shrubConfig = require 'shrub-config'
 
 exports.pkgmanRegister = (registrar) ->
 

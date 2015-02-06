@@ -4,16 +4,22 @@
 # An [Express](http://expressjs.com/) HTTP server implementation, with
 # middleware for sessions, routing, logging, etc.
 
-express = require 'express'
-fs = require 'fs'
-http = require 'http'
-Promise = require 'bluebird'
+http = null
 
-{handlebars} = require 'hbs'
+express = null
 
-readFile = Promise.promisify fs.readFile, fs
+Promise = null
 
 exports.pkgmanRegister = (registrar) ->
+
+	# ## Implements hook `preBootstrap`
+	registrar.registerHook 'preBootstrap', ->
+
+		http = require 'http'
+
+		express = require 'express'
+
+		Promise = require 'bluebird'
 
 	registrar.recur [
 		'errors', 'logger', 'routes', 'session', 'static'

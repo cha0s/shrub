@@ -3,24 +3,34 @@
 #
 # Watch for and punish bad behavior.
 
-_ = require 'lodash'
-moment = require 'moment'
-i8n = require 'inflection'
-Promise = require 'bluebird'
+i8n = null
+Promise = null
 
-config = require 'config'
-errors = require 'errors'
-logging = require 'logging'
+logger = null
 
-audit = require 'shrub-audit'
-orm = require 'shrub-orm'
+orm = null
 
-{AuthorizationFailure} = require 'shrub-socket/manager'
-{Limiter} = require 'shrub-limiter'
-
-logger = logging.create 'logs/villiany.log'
+villianyLimiter = null
 
 exports.pkgmanRegister = (registrar) ->
+
+	# ## Implements hook `preBootstrap`
+	registrar.registerHook 'preBootstrap', ->
+
+		i8n = require 'inflection'
+		Promise = require 'bluebird'
+
+		logging = require 'logging'
+
+		orm = require 'shrub-orm'
+
+		logger = logging.create 'logs/villiany.log'
+
+		{Limiter} = require 'shrub-limiter'
+
+		villianyLimiter = new Limiter(
+			'villiany', Limiter.threshold(1000).every(10).minutes()
+		)
 
 	# ## Implements hook `endpointAlter`
 	registrar.registerHook 'endpointAlter', (endpoints) ->
@@ -29,6 +39,8 @@ exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `collections`
 	registrar.registerHook 'collections', ->
+
+		audit = require 'shrub-audit'
 
 		# Bans.
 		Ban = attributes: expires: 'date'
@@ -53,6 +65,8 @@ exports.pkgmanRegister = (registrar) ->
 
 				).then (expired) ->
 
+					_ = require 'lodash'
+
 					# More bans than those that expired?
 					isBanned: @bans.length > expired.length
 
@@ -72,6 +86,9 @@ exports.pkgmanRegister = (registrar) ->
 
 		# Create a ban from a fingerprint.
 		Ban.createFromFingerprint = (fingerprint, expires) ->
+
+			config = require 'config'
+
 			unless expires?
 				settings = config.get 'packageSettings:shrub-villiany:ban'
 				expires = parseInt settings.defaultExpiration
@@ -120,6 +137,8 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `socketAuthorizationMiddleware`
 	registrar.registerHook 'socketAuthorizationMiddleware', ->
 
+		{AuthorizationFailure} = require 'shrub-socket/manager'
+
 		label: 'Provide villiany management'
 		middleware: [
 
@@ -146,10 +165,6 @@ exports.pkgmanRegister = (registrar) ->
 			enforcementMiddleware
 
 		]
-
-villianyLimiter = new Limiter(
-	'villiany', Limiter.threshold(1000).every(10).minutes()
-)
 
 # Define `req.reportVilliany()`.
 reporterMiddleware = (req, res, next) ->
@@ -219,6 +234,8 @@ enforcementMiddleware = (req, res, next) ->
 
 # Build a nice message for the villian.
 buildBanMessage = (subject, ttl) ->
+
+	moment = require 'moment'
 
 	message = if subject?
 		"Your #{subject} is banned."

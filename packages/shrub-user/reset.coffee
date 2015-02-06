@@ -1,17 +1,17 @@
 
 # # User password reset
 
-crypto = require 'server/crypto'
-
-Promise = require 'bluebird'
-
-{Limiter} = require 'shrub-limiter'
-orm = require 'shrub-orm'
-
 exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `endpoint`
 	registrar.registerHook 'endpoint', ->
+
+		crypto = require 'server/crypto'
+
+		Promise = require 'bluebird'
+
+		{Limiter} = require 'shrub-limiter'
+		orm = require 'shrub-orm'
 
 		limiter: threshold: Limiter.threshold(1).every(5).minutes()
 		route: 'shrub.user.reset'

@@ -1,8 +1,6 @@
 
 # # User login
 
-errors = require 'errors'
-
 exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `routeMock`
@@ -86,9 +84,12 @@ exports.pkgmanRegister = (registrar) ->
 '''
 
 # Transmittable login error.
-LoginError = class LoginError extends errors.TransmittableError
+LoginError = null
 
-	key: 'login'
-	template: 'No such username/password.'
+exports.transmittableError = ->
+	return LoginError if LoginError?
 
-exports.transmittableError = -> LoginError
+	LoginError = class LoginError extends errors.TransmittableError
+
+		key: 'login'
+		template: 'No such username/password.'

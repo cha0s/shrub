@@ -1,22 +1,22 @@
 
-i8n = require 'inflection'
-passport = require 'passport'
-Promise = require 'bluebird'
-
-crypto = require 'server/crypto'
-errors = require 'errors'
-middleware = require 'middleware'
-
-{Limiter} = require 'shrub-limiter'
-orm = require 'shrub-orm'
+passport = null
+Promise = null
 
 clientModule = require './client/login'
-userPackage = require 'shrub-user'
+userPackage = require './index'
 
 exports.pkgmanRegister = (registrar) ->
 
+	# ## Implements hook `preBootstrap`
+	registrar.registerHook 'preBootstrap', ->
+
+		passport = require 'passport'
+		Promise = require 'bluebird'
+
 	# ## Implements hook `endpoint`
 	registrar.registerHook 'endpoint', ->
+
+		{Limiter} = require 'shrub-limiter'
 
 		limiter:
 			message: 'You are logging in too much.'
@@ -25,6 +25,8 @@ exports.pkgmanRegister = (registrar) ->
 		route: 'shrub.user.login'
 
 		receiver: (req, fn) ->
+
+			errors = require 'errors'
 
 			passport = req._passport.instance
 
@@ -61,6 +63,10 @@ exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `bootstrapMiddleware`
 	registrar.registerHook 'bootstrapMiddleware', ->
+
+		orm = require 'shrub-orm'
+
+		crypto = require 'server/crypto'
 
 		label: 'Bootstrap user login'
 		middleware: [
@@ -116,6 +122,8 @@ exports.pkgmanRegister = (registrar) ->
 monkeyPatchLogin = ->
 
 	{IncomingMessage} = require 'http'
+
+	middleware = require 'middleware'
 
 	req = IncomingMessage.prototype
 

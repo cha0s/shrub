@@ -6,20 +6,16 @@
 fs = require 'fs'
 path = require 'path'
 
-cheerio = require 'cheerio'
-glob = require 'simple-glob'
-Promise = require 'bluebird'
-
-config = require 'config'
-pkgman = require 'pkgman'
-
-assets = require 'shrub-assets'
-
-{handlebars} = require 'hbs'
-
-readFile = Promise.promisify fs.readFile, fs
+config = null
+pkgman = null
 
 exports.pkgmanRegister = (registrar) ->
+
+	# ## Implements hook `preBootstrap`
+	registrar.registerHook 'preBootstrap', ->
+
+		config = require 'config'
+		pkgman = require 'pkgman'
 
 	# ## Implements hook `config`
 	registrar.registerHook 'config', ->
@@ -117,6 +113,12 @@ exports.gruntSkin = (gruntConfig, key) ->
 # *Render the application HTML.*
 exports.renderAppHtml = ->
 
+	Promise = require 'bluebird'
+
+	cheerio = require 'cheerio'
+
+	assets = require 'shrub-assets'
+
 	skinKey = exports.activeKey()
 	skinDirectory = exports.skinDirectory skinKey
 
@@ -125,6 +127,7 @@ exports.renderAppHtml = ->
 	else
 		'default'
 
+	readFile = Promise.promisify fs.readFile, fs
 	readFile(
 		"#{skinDirectory}/app/template/app.html", encoding: 'utf8'
 	).then (html) ->
@@ -172,6 +175,9 @@ exports.renderAppHtml = ->
 exports.skinDirectory = (key) -> path.dirname require.resolve key
 
 exports.assets = (skinKey) ->
+
+	glob = require 'simple-glob'
+	pkgman = require 'pkgman'
 
 	skinPath = path.dirname require.resolve skinKey
 	skinModule = require skinKey

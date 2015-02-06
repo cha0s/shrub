@@ -1,18 +1,23 @@
 
 # # User registration
 
-config = require 'config'
-nodemailer = require 'shrub-nodemailer'
-
-crypto = require 'server/crypto'
-
-{Limiter} = require 'shrub-limiter'
-orm = require 'shrub-orm'
+orm = null
 
 exports.pkgmanRegister = (registrar) ->
 
+	# ## Implements hook `preBootstrap`
+	registrar.registerHook 'preBootstrap', ->
+
+		orm = require 'shrub-orm'
+
 	# ## Implements hook `endpoint`
 	registrar.registerHook 'endpoint', ->
+
+		config = require 'config'
+
+		nodemailer = require 'shrub-nodemailer'
+
+		{Limiter} = require 'shrub-limiter'
 
 		limiter:
 			message: 'You are trying to register too much.'
@@ -85,6 +90,8 @@ exports.pkgmanRegister = (registrar) ->
 #
 # `TODO`: Should be a class method on the shrub-user collection.
 exports.register = (name, email, password) ->
+
+	crypto = require 'server/crypto'
 
 	User = orm.collection 'shrub-user'
 	User.create(name: name).then((user) ->

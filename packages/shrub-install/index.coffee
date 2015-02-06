@@ -1,12 +1,12 @@
 
-Promise = require 'bluebird'
-
-orm = require 'shrub-orm'
-
 exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `replContext`
 	registrar.registerHook 'replContext', (context) ->
+
+		Promise = require 'bluebird'
+
+		orm = require 'shrub-orm'
 
 		context.install = (name, email) ->
 

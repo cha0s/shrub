@@ -2,16 +2,18 @@
 # Implements `SocketManager`.
 #
 # A socket factory implemented with [Socket.IO](http://socket.io/).
-config = require 'config'
+
+config = null
 
 SocketManager = require '../shrub-socket/manager'
-{AuthorizationFailure} = SocketManager
 
 module.exports = class SocketIoManager extends SocketManager
 
 	# ## *constructor*
 	constructor: ->
 		super
+
+		config ?= require 'config'
 
 		options = config.get 'packageSettings:shrub-socket:manager:options'
 

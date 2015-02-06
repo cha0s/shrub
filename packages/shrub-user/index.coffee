@@ -3,15 +3,22 @@
 #
 # User operations.
 
-passport = require 'passport'
-Promise = require 'bluebird'
+passport = null
+Promise = null
 
-crypto = require 'server/crypto'
-orm = require 'shrub-orm'
+orm = null
 
 clientModule = require './client'
 
 exports.pkgmanRegister = (registrar) ->
+
+	# ## Implements hook `preBootstrap`
+	registrar.registerHook 'preBootstrap', ->
+
+		passport = require 'passport'
+		Promise = require 'bluebird'
+
+		orm = require 'shrub-orm'
 
 	# ## Implements hook `config`
 	registrar.registerHook 'config', (req) ->
@@ -74,6 +81,8 @@ exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `collections`
 	registrar.registerHook 'collections', ->
+
+		crypto = require 'server/crypto'
 
 		autoIname = (values, cb) ->
 			values.iname = values.name.toLowerCase()

@@ -3,23 +3,26 @@
 #
 # Tools for working with [Waterline](https://github.com/balderdashy/waterline).
 
-Promise = require 'bluebird'
-Waterline = require 'waterline'
-
-config = require 'config'
-
-config = require 'config'
-pkgman = require 'pkgman'
+Waterline = null
 
 collections = {}
 connections = {}
 
-waterline = new Waterline()
+waterline = null
 
 exports.pkgmanRegister = (registrar) ->
 
+	# ## Implements hook `preBootstrap`
+	registrar.registerHook 'preBootstrap', ->
+
+		Waterline = require 'waterline'
+
 	# ## Implements hook `bootstrapMiddleware`
 	registrar.registerHook 'bootstrapMiddleware', ->
+
+		config = require 'config'
+
+		waterline = new Waterline()
 
 		label: 'Bootstrap ORM'
 		middleware: [
@@ -88,6 +91,8 @@ exports.pkgmanRegister = (registrar) ->
 		context.orm = exports
 
 exports.initialize = (config, fn) ->
+
+	pkgman = require 'pkgman'
 
 	# Invoke hook `collections`.
 	# Allows packages to create Waterline collections.
