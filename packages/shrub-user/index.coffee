@@ -24,11 +24,10 @@ exports.pkgmanRegister = (registrar) ->
 		return unless routeReq.user.id?
 
 		# Touch and save the session after every RPC call finishes.
-		deferred = Promise.defer()
-		routeReq.user.touch().save deferred.callback
+		routeReq.user.touch().save().then (user) ->
 
-		# Propagate changes back up to the original request.
-		deferred.promise.then -> req.user = routeReq.user
+			# Propagate changes back up to the original request.
+			req.user = routeReq.user
 
 	# ## Implements hook `fingerprint`
 	registrar.registerHook 'fingerprint', (req) ->
@@ -42,7 +41,7 @@ exports.pkgmanRegister = (registrar) ->
 
 		# Add to anonymous group.
 		@user.groups = [
-			orm.collection('shrub-user-group').instantiate group: 3
+			orm.collection('shrub-user-group').instantiate group: 2
 		]
 
 		@user.populateAll()
@@ -76,13 +75,19 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `collections`
 	registrar.registerHook 'collections', ->
 
+		autoIname = (values, cb) ->
+			values.iname = values.name.toLowerCase()
+			cb()
+
 		# Invoke the client hook implementation.
 		collections = clientModule.collections()
 
 		{
 			'shrub-group': Group
+			'shrub-group-permission': GroupPermission
 			'shrub-user': User
 			'shrub-user-group': UserGroup
+			'shrub-user-permission': UserPermission
 		} = collections
 
 		# Case-insensitivized name.
@@ -90,6 +95,18 @@ exports.pkgmanRegister = (registrar) ->
 			type: 'string'
 			size: 24
 			index: true
+
+		Group.autoCreatedAt = false
+		Group.autoUpdatedAt = false
+
+		Group.beforeCreate = autoIname
+		Group.beforeUpdate = autoIname
+
+		GroupPermission.autoCreatedAt = false
+		GroupPermission.autoUpdatedAt = false
+
+		User.beforeCreate = autoIname
+		User.beforeUpdate = autoIname
 
 		# Case-insensitivized name.
 		User.attributes.iname =
@@ -122,26 +139,19 @@ exports.pkgmanRegister = (registrar) ->
 
 			Group_ = orm.collection 'shrub-group'
 
-			@_groups = (group.toJSON() for group in @groups)
+			@permissions = @permissions.map ({permission}) -> permission
 
 			promises = for {group}, index in @groups
-
 				do (group, index) ->
-
 					Group_.findOne(id: group).populateAll().then (group_) ->
-
 						self.groups[index] = group_
 
 			Promise.all(promises).then -> self
 
-		User.attributes.depopulateAll = ->
-
-			@groups = @_groups
-			delete @_groups
-
 		User.attributes.toJSON = ->
 			O = @toObject()
-			O.groups = (group for group in @groups)
+			O.groups = @groups
+			O.permissions = @permission
 			O
 
 		User.redactors = [(redactFor) ->
@@ -153,15 +163,12 @@ exports.pkgmanRegister = (registrar) ->
 			delete self.passwordHash
 			delete self.resetPasswordToken
 
-			delete self._groups if self._groups?
-
 			for group in self.groups
 
-				for permission in group.permissions
+				for permission in group.permissions ? []
 
 					delete permission.group
 					delete permission.id
-					delete permission.toJSON
 
 				delete group.iname
 				delete group.id
@@ -180,6 +187,9 @@ exports.pkgmanRegister = (registrar) ->
 
 		]
 
+		UserGroup.autoCreatedAt = false
+		UserGroup.autoUpdatedAt = false
+
 		UserGroup.attributes.populateAll = ->
 			self = this
 
@@ -194,6 +204,9 @@ exports.pkgmanRegister = (registrar) ->
 
 			return this
 
+		UserPermission.autoCreatedAt = false
+		UserPermission.autoUpdatedAt = false
+
 		collections
 
 	# ## Implements hook `collectionsAlter`
@@ -206,6 +219,7 @@ exports.pkgmanRegister = (registrar) ->
 				collection.redactors ?= []
 				collection.attributes.redactFor = (user) ->
 					redacted = @toJSON()
+					redacted.toJSON = undefined
 
 					Promise.all(
 						for redactor in collection.redactors
@@ -296,10 +310,7 @@ exports.pkgmanRegister = (registrar) ->
 
 			({req, user}, res, next) ->
 
-				User = orm.collection 'shrub-user'
-				req.user = User.instantiate()
-
-				next()
+				req.instantiateAnonymous().then(-> next()).catch next
 
 		]
 

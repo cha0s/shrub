@@ -54,15 +54,12 @@ exports.initialize = ->
 				for key, value of @attributes
 					continue unless value.defaultsTo?
 
-					values[key] ?= if 'function' is typeof value.defaultsTo
-						value.defaultsTo.call values
+					model[key] ?= if 'function' is typeof value.defaultsTo
+						value.defaultsTo.call model
 					else
 						JSON.parse JSON.stringify value.defaultsTo
 
 				model
-
-			# Destroy all instances of a model.
-			collection.destroyAll = ->
 
 	# Invoke hook `collectionsAlter`.
 	# Allows packages to alter any Waterline collections defined.

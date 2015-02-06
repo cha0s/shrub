@@ -113,11 +113,6 @@ exports.initialize = (config, fn) ->
 
 				new @_model @_schema.cleanValues @_transformer.serialize values
 
-			collection.attributes.toJSON ?= ->
-				O = @toObject()
-				O.toJSON = undefined
-				O
-
 	# Invoke hook `collectionsAlter`.
 	# Allows packages to alter any Waterline collections defined.
 	pkgman.invoke 'collectionsAlter', collections_, waterline

@@ -12,6 +12,7 @@
 		"shrub-html5-local-storage",
 		"shrub-html5-notification",
 		"shrub-http",
+		"shrub-install",
 		"shrub-limiter",
 		"shrub-logger",
 		"shrub-nodemailer",

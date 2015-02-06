@@ -94,8 +94,4 @@ exports.pkgmanRegister = (registrar) ->
 
 				@user.save()
 
-			).then(-> fn()
-
-			).catch(NoSuchUser, -> fn()
-
-			).catch fn
+			).then(-> fn()).catch(NoSuchUser, -> fn()).catch fn

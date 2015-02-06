@@ -38,10 +38,7 @@ exports.pkgmanRegister = (registrar) ->
 				@user.passwordHash = hashed.key.toString 'hex'
 				@user.salt = hashed.salt.toString 'hex'
 				@user.resetPasswordToken = null
+
 				@user.save()
 
-			).then(-> fn()
-
-			).catch(NoSuchUser, -> fn()
-
-			).catch fn
+			).then(-> fn()).catch(NoSuchUser, -> fn()).catch fn

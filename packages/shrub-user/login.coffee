@@ -57,9 +57,7 @@ exports.pkgmanRegister = (registrar) ->
 
 						@user.redactFor @user
 
-			# } Using nodeify here crashes the app. It may be a bluebird bug.
-			loginPromise.then((user) -> fn null, user
-			).catch fn
+			loginPromise.then((user) -> fn null, user).catch fn
 
 	# ## Implements hook `bootstrapMiddleware`
 	registrar.registerHook 'bootstrapMiddleware', ->
@@ -100,7 +98,9 @@ exports.pkgmanRegister = (registrar) ->
 
 				passport.deserializeUser (id, done) ->
 					User = orm.collection 'shrub-user'
-					User.findOne id: id, done
+					User.findOne(id: id).populateAll().then((user) ->
+						user.populateAll()
+					).then((user) -> done null, user).catch done
 
 				monkeyPatchLogin()
 

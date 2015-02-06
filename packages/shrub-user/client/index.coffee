@@ -34,7 +34,7 @@ exports.pkgmanRegister = (registrar) ->
 
 				blank = User.instantiate()
 				delete _instance[k] for k of _instance
-				delete _instance[k] = v for k, v of blank
+				_instance[k] = v for k, v of blank
 
 				return
 
@@ -105,17 +105,7 @@ exports.pkgmanRegister = (registrar) ->
 
 exports.collections = ->
 
-	autoIname = (values, cb) ->
-		values.iname = values.name.toLowerCase()
-		cb()
-
 	Group =
-
-		autoCreatedAt: false
-		autoUpdatedAt: false
-
-		beforeCreate: autoIname
-		beforeUpdate: autoIname
 
 		attributes:
 
@@ -130,9 +120,6 @@ exports.collections = ->
 
 	GroupPermission =
 
-		autoCreatedAt: false
-		autoUpdatedAt: false
-
 		attributes:
 
 			permission: 'string'
@@ -140,9 +127,6 @@ exports.collections = ->
 			group: model: 'shrub-group'
 
 	User =
-
-		beforeCreate: autoIname
-		beforeUpdate: autoIname
 
 		attributes:
 
@@ -168,13 +152,25 @@ exports.collections = ->
 				collection: 'shrub-user-group'
 				via: 'user'
 
-			# `TODO`: Access control structure.
-			hasPermission: (perm) -> false
+			# Groups this user belongs to.
+			permissions:
+				collection: 'shrub-user-permission'
+				via: 'user'
+
+			# Check whether a user has a permission.
+			hasPermission: (permission) ->
+
+				# Superuser?
+				return true if @id is 1
+
+				# Check group permissions.
+				for {permissions} in @groups
+					return true if ~permissions.indexOf permission
+
+				# Check inline permissions.
+				return ~@permissions.indexOf permission
 
 	UserGroup =
-
-		autoCreatedAt: false
-		autoUpdatedAt: false
 
 		attributes:
 
@@ -182,10 +178,19 @@ exports.collections = ->
 
 			user: model: 'shrub-user'
 
+	UserPermission =
+
+		attributes:
+
+			permission: 'string'
+
+			user: model: 'shrub-user'
+
 	'shrub-group': Group
 	'shrub-group-permission': GroupPermission
 	'shrub-user': User
 	'shrub-user-group': UserGroup
+	'shrub-user-permission': UserPermission
 
 exports.collectionsAlter = (collections) ->
 
