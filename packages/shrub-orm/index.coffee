@@ -3,6 +3,9 @@
 #
 # Tools for working with [Waterline](https://github.com/balderdashy/waterline).
 
+config = require 'config'
+pkgman = require 'pkgman'
+
 Waterline = null
 
 collections = {}
@@ -20,23 +23,12 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `bootstrapMiddleware`
 	registrar.registerHook 'bootstrapMiddleware', ->
 
-		config = require 'config'
-
 		waterline = new Waterline()
 
 		label: 'Bootstrap ORM'
 		middleware: [
 
-			(next) ->
-
-				waterlineConfig = config.get 'packageSettings:shrub-orm'
-
-				adapters = waterlineConfig.adapters
-				waterlineConfig.adapters = {}
-				for adapter in adapters
-					waterlineConfig.adapters[adapter] = require adapter
-
-				exports.initialize waterlineConfig, next
+			(next) -> exports.initialize next
 
 		]
 
@@ -90,9 +82,16 @@ exports.pkgmanRegister = (registrar) ->
 
 		context.orm = exports
 
-exports.initialize = (config, fn) ->
+exports.initialize = (fn) ->
 
-	pkgman = require 'pkgman'
+	config_ = config.get 'packageSettings:shrub-orm'
+
+	waterlineConfig = adapters: {}, connections: {}
+
+	for adapter in config_.adapters
+		waterlineConfig.adapters[adapter] = require adapter
+
+	waterlineConfig.connections = config_.connections
 
 	# Invoke hook `collections`.
 	# Allows packages to create Waterline collections.
@@ -123,11 +122,10 @@ exports.initialize = (config, fn) ->
 	pkgman.invoke 'collectionsAlter', collections_, waterline
 
 	# Load the collections into Waterline.
-	for i, collection of collections_
-		Collection = Waterline.Collection.extend collection
-		waterline.loadCollection Collection
+	waterlineConfig.collections = for i, collection of collections_
+		Waterline.Collection.extend collection
 
-	waterline.initialize config, (error, data) ->
+	waterline.initialize waterlineConfig, (error, data) ->
 		return fn error if error?
 
 		collections = data.collections
@@ -140,5 +138,7 @@ exports.collection = (identity) -> collections[identity]
 exports.collections = -> collections
 
 exports.connections = -> connections
+
+exports.teardown = (fn) -> waterline.teardown fn
 
 exports.waterline = -> waterline

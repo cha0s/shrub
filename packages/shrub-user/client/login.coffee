@@ -89,6 +89,8 @@ LoginError = null
 exports.transmittableError = ->
 	return LoginError if LoginError?
 
+	errors = require 'errors'
+
 	LoginError = class LoginError extends errors.TransmittableError
 
 		key: 'login'

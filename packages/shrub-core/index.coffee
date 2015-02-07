@@ -58,6 +58,7 @@ exports.pkgmanRegister = (registrar) ->
 		# Middleware for server bootstrap phase.
 		bootstrapMiddleware: [
 			'shrub-orm'
+			'shrub-install'
 			'shrub-http-express/session'
 			'shrub-http'
 			'shrub-rpc'
