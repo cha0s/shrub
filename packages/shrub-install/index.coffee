@@ -16,7 +16,7 @@ exports.pkgmanRegister = (registrar) ->
 				User.findOne(id: 1).then((user) ->
 					return if user?
 
-					reinstall 'cha0s', 'cha0s@example.com'
+					reinstall()
 
 				).then(-> next()).catch next
 
@@ -27,7 +27,7 @@ exports.pkgmanRegister = (registrar) ->
 
 		context.install = reinstall
 
-reinstall = (name, email) ->
+reinstall = (name = 'admin', email = 'admin@example.com', password = 'admin') ->
 
 	Promise = require 'bluebird'
 
@@ -64,7 +64,7 @@ reinstall = (name, email) ->
 			Group.create name: 'Administrator'
 
 			# Create superuser.
-			require('shrub-user/register').register name, email
+			require('shrub-user/register').register name, email, password
 		]
 
 	).then(([groups..., user]) ->

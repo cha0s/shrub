@@ -3,11 +3,24 @@
 #
 # Various means for dealing with sessions.
 
-Promise = require 'bluebird'
-
 config = require 'config'
 
 exports.pkgmanRegister = (registrar) ->
+
+	# ## Implements hook `collections`
+	registrar.registerHook 'collections', ->
+
+		Session =
+
+			attributes:
+
+				blob: 'string'
+
+				expires: 'datetime'
+
+				sid: 'string'
+
+		'shrub-session': Session
 
 	# ## Implements hook `fingerprint`
 	registrar.registerHook 'fingerprint', (req) ->
@@ -18,6 +31,8 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `endpointFinished`
 	registrar.registerHook 'endpointFinished', (routeReq, result, req) ->
 		return unless routeReq.session?
+
+		Promise = require 'bluebird'
 
 		# Touch and save the session after every RPC call finishes.
 		deferred = Promise.defer()
@@ -30,7 +45,7 @@ exports.pkgmanRegister = (registrar) ->
 	registrar.registerHook 'packageSettings', ->
 
 		# Session store instance.
-		sessionStore: 'redis'
+		sessionStore: 'orm'
 
 		# Key within the cookie where the session is stored.
 		key: 'connect.sid'

@@ -31,7 +31,10 @@ exports.pkgmanRegister = (registrar) ->
 
 				sessionStore = switch sessionStoreConfig
 
-					# `TODO`: Can we do this with ORM?
+					when 'orm'
+						OrmStore = require('shrub-session/store') express
+						new OrmStore()
+
 					when 'redis'
 						redis = require 'redis'
 						RedisStore = require('connect-redis') express
