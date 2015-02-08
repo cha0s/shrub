@@ -108,6 +108,7 @@ config = require 'config'
 pkgman = require 'pkgman'
 
 debug = require('debug') 'shrub:middleware'
+debugSilly = require('debug') 'shrub-silly:middleware'
 
 # ## fromHook
 #
@@ -123,9 +124,14 @@ exports.fromHook = (hook, paths, args...) ->
 	for path in paths ? []
 		continue unless (spec = hookResults[path])?
 
-		debug "- - #{spec.label}"
+		debugSilly "- - #{spec.label}"
 
-		middleware.use fn, spec.label for fn in spec.middleware ? []
+		for fn in spec.middleware ? []
+			fn.label = spec.label
+			middleware.use fn, spec.label
+
+	middleware.on 'invoking', (fn) -> debugSilly "Invoking #{fn.label}"
+	middleware.on 'invoked', (fn) -> debugSilly "Invoked #{fn.label}"
 
 	middleware
 
@@ -148,7 +154,7 @@ exports.fromHook = (hook, paths, args...) ->
 #
 exports.fromShortName = (shortName, packageName) ->
 
-	debug "- Loading #{shortName} middleware..."
+	debugSilly "- Loading #{shortName} middleware..."
 
 	[firstPart, keyParts...] = shortName.split ' '
 	packageName ?= firstPart
@@ -165,6 +171,6 @@ exports.fromShortName = (shortName, packageName) ->
 		}Middleware"
 	)
 
-	debug "- #{i8n.capitalize shortName} middleware loaded."
+	debugSilly "- #{i8n.capitalize shortName} middleware loaded."
 
 	middleware

@@ -20,7 +20,7 @@ exports.pkgmanRegister = (registrar) ->
 	registrar.registerHook 'bootstrapMiddleware', ->
 
 		_ = require 'lodash'
-		debug = require('debug') 'shrub:rpc'
+		debug = require('debug') 'shrub-silly:rpc'
 
 		{Middleware} = require 'middleware'
 

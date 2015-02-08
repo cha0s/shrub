@@ -13,8 +13,9 @@ unless fork()
 	Promise = require 'bluebird'
 
 	debug = require('debug') 'shrub:server'
-	errors = require 'errors'
+	debugSilly = require('debug') 'shrub-silly:server'
 
+	errors = require 'errors'
 	middleware = require 'middleware'
 	pkgman = require 'pkgman'
 
@@ -27,16 +28,16 @@ unless fork()
 
 	debug 'Config loaded.'
 
-	debug 'Pre bootstrap phase...'
+	debugSilly 'Pre bootstrap phase...'
 	pkgman.invoke 'preBootstrap'
-	debug 'Pre bootstrap phase completed.'
+	debugSilly 'Pre bootstrap phase completed.'
 
-	debug 'Loading bootstrap middleware...'
+	debugSilly 'Loading bootstrap middleware...'
 	bootstrapMiddleware = middleware.fromHook(
 		'bootstrapMiddleware'
 		config.get 'packageSettings:shrub-core:bootstrapMiddleware'
 	)
-	debug 'Bootstrap middleware loaded.'
+	debugSilly 'Bootstrap middleware loaded.'
 
 	bootstrapMiddleware.dispatch (error) ->
 

@@ -2,6 +2,7 @@
 # # Package manager
 
 debug = require('debug') 'shrub:pkgman'
+debugSilly = require('debug') 'shrub-silly:pkgman'
 
 packageIndex = null
 pathIndex = null
@@ -20,13 +21,13 @@ class PkgmanRegistrar
 
 			subpath = "#{@_path}/#{path}"
 
-			debug "Requiring #{subpath}"
+			debugSilly "Requiring #{subpath}"
 			submodule = require subpath
-			debug "Required #{subpath}"
+			debugSilly "Required #{subpath}"
 
-			debug "Registering hooks for #{subpath}"
+			debugSilly "Registering hooks for #{subpath}"
 			submodule.pkgmanRegister? new PkgmanRegistrar subpath
-			debug "Registered hooks for #{subpath}"
+			debugSilly "Registered hooks for #{subpath}"
 
 		return
 
@@ -42,12 +43,12 @@ class PkgmanRegistrar
 			impl = hook
 			hook = submodule
 
-		debug "Registering hook #{hook}"
+		debugSilly "Registering hook #{hook}"
 
 		(packageIndex[hook] ?= []).push path
 		(pathIndex[path] ?= {})[hook] = impl
 
-		debug "Registered hook #{hook}"
+		debugSilly "Registered hook #{hook}"
 
 optionalModule = (name) ->
 
@@ -61,7 +62,7 @@ exports.rebuildPackageCache = (type) ->
 
 		try
 
-			debug "Requiring #{name}"
+			debugSilly "Requiring package #{name}"
 
 			module_ = require name
 
@@ -74,16 +75,16 @@ exports.rebuildPackageCache = (type) ->
 
 			throw error
 
-		debug "Required #{name}"
+		debugSilly "Required package #{name}"
 
 		modules[name] = module_
 
 	# Collect hooks.
 	for path, module_ of modules
 
-		debug "Registering hooks for #{path}"
+		debugSilly "Registering hooks for #{path}"
 		module_.pkgmanRegister? new PkgmanRegistrar path
-		debug "Registered hooks for #{path}"
+		debugSilly "Registered hooks for #{path}"
 
 	return
 

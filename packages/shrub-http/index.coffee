@@ -7,6 +7,7 @@ config = require 'config'
 pkgman = require 'pkgman'
 
 debug = require('debug') 'shrub:http'
+debugSilly = require('debug') 'shrub-silly:http'
 
 httpManager = null
 
@@ -48,20 +49,20 @@ exports.pkgmanRegister = (registrar) ->
 		# [shrub-orm-rest's implementation]
 		# (/packages/shrub-orm-rest/index.coffee#implementshookhttproutes) as
 		# an example.
-		debug '- Registering routes...'
+		debugSilly '- Registering routes...'
 		for routeList in pkgman.invokeFlat 'httpRoutes', http
 
 			for route in routeList
 				route.verb ?= 'get'
 
-				debug "- - #{
+				debugSilly "- - #{
 					route.verb.toUpperCase()
 				} #{
 					route.path
 				}"
 
 				http.addRoute route
-		debug '- Routes registered.'
+		debugSilly '- Routes registered.'
 
 	# ## Implements hook `httpMiddleware`
 	registrar.registerHook 'httpMiddleware', (http) ->

@@ -81,7 +81,7 @@ exports.pkgmanRegister = (registrar) ->
 exports.assets = ->
 	return assets if assets?
 
-	debug = require('debug') 'shrub:assets:middleware'
+	debug = require('debug') 'shrub-silly:assets:middleware'
 
 	middleware = require 'middleware'
 
