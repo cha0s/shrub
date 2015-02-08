@@ -12,7 +12,7 @@ unless fork()
 
 	Promise = require 'bluebird'
 
-	debug = require('debug') 'shrub'
+	debug = require('debug') 'shrub:server'
 	errors = require 'errors'
 
 	middleware = require 'middleware'
