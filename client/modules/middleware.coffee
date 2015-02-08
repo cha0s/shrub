@@ -1,12 +1,7 @@
 
 # # Middleware
 
-i8n = require 'inflection'
-
-config = require 'config'
-pkgman = require 'pkgman'
-
-debug = require('debug') 'shrub:middleware'
+{EventEmitter} = require 'events'
 
 # ## Middleware
 #
@@ -24,7 +19,7 @@ debug = require('debug') 'shrub:middleware'
 # Error-handling middleware are only called if a previous middleware threw or
 # passed an error. Conversely, non-error-handling middleware are skipped if a
 # previous error occurred.
-exports.Middleware = class Middleware
+exports.Middleware = class Middleware extends EventEmitter
 
 	# ## *constructor*
 	#
@@ -36,7 +31,7 @@ exports.Middleware = class Middleware
 	# *Add a middleware function to the stack.*
 	#
 	# * (function) `fn` - A middleware function.
-	use: (fn, label) -> @_middleware.push fn: fn, label: label
+	use: (fn) -> @_middleware.push fn
 
 	# ## ::dispatch
 	#
@@ -48,21 +43,18 @@ exports.Middleware = class Middleware
 	#   finished. If an error occurred, it will be passed as the first
 	#   argument.
 	dispatch: (args..., fn) ->
+		self = this
 
 		index = 0
 
-		invoke = (error) =>
+		invoke = (error) ->
 
-			if index > 0
-				if (label = @_middleware[index - 1].label)?
-					debug "Invoked `#{label}`."
+			self.emit 'invoked', self._middleware[index - 1] if index > 0
 
 			# Call `fn` with any error if we're done.
-			return fn error if index is @_middleware.length
+			return fn error if index is self._middleware.length
 
-			{fn: current, label} = @_middleware[index++]
-
-			debug "Invoking `#{label}`..." if label?
+			current = self._middleware[index++]
 
 			# Error-handling middleware.
 			if current.length is args.length + 2
@@ -75,7 +67,8 @@ exports.Middleware = class Middleware
 					try
 						localArgs = args.concat()
 						localArgs.unshift error
-						localArgs.push (error) -> invoke error
+						localArgs.push invoke
+						self.emit 'invoking', current
 						current localArgs...
 					catch error
 						invoke error
@@ -100,7 +93,8 @@ exports.Middleware = class Middleware
 					# the error and pass it along.
 					try
 						localArgs = args.concat()
-						localArgs.push (error) -> invoke error
+						localArgs.push invoke
+						self.emit 'invoking', current
 						current localArgs...
 					catch error
 						invoke error
@@ -108,12 +102,19 @@ exports.Middleware = class Middleware
 		# Kick things off.
 		invoke()
 
+i8n = require 'inflection'
+
+config = require 'config'
+pkgman = require 'pkgman'
+
+debug = require('debug') 'shrub:middleware'
+
 # ## fromHook
 #
 # Create a middleware stack from the results of a hook and path configuration.
 exports.fromHook = (hook, paths, args...) ->
 
-	middleware = new Middleware
+	middleware = new Middleware()
 
 	# Invoke the hook and `use` the middleware in the paths configuration
 	# order.
@@ -124,7 +125,7 @@ exports.fromHook = (hook, paths, args...) ->
 
 		debug "- - #{spec.label}"
 
-		middleware.use _, spec.label for _ in spec.middleware ? []
+		middleware.use fn, spec.label for fn in spec.middleware ? []
 
 	middleware
 
