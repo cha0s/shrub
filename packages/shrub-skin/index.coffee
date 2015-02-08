@@ -189,7 +189,7 @@ exports.assets = (skinKey) ->
 
 		templates[templatePath] = fs.readFileSync(
 			"#{skinPath}/app/template/#{templatePath}"
-		).toString 'utf8'
+		).toString('utf8').replace /\s+/g, ' '
 
 	skinAssets =
 
