@@ -12,13 +12,17 @@ exports.pkgmanRegister = (registrar) ->
 
 		Session =
 
+			autoPK: false
+
 			attributes:
 
 				blob: 'string'
 
 				expires: 'datetime'
 
-				sid: 'string'
+				sid:
+					type: 'string'
+					primaryKey: true
 
 		'shrub-session': Session
 

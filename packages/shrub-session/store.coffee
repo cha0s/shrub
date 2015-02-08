@@ -40,10 +40,11 @@ module.exports = (connect) ->
 
 			Session.findOrCreate(
 				sid: sid
+			,
+				sid: sid
+				expires: new Date Date.now() + ttl * 1000
 			).then((session) ->
 				session.blob = JSON.stringify sess
-				session.expires = new Date Date.now() + ttl * 1000
-				session.sid = sid
 				session.save()
 			).then((session) -> fn null, session).catch fn
 
