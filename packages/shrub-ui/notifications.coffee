@@ -107,7 +107,7 @@ exports.pkgmanRegister = (registrar) ->
 				variables ?= {}
 
 				# Get the channel from the request.
-				channel = queue.channelFromRequest req
+				return unless (channel = queue.channelFromRequest req)?
 
 				# Create the notification.
 				@create(
@@ -134,13 +134,16 @@ exports.pkgmanRegister = (registrar) ->
 			queueFromRequest: (req) ->
 
 				# Empty queue if none was defined.
-				unless queue = notificationQueues[req.body.queue]
+				unless (queue = notificationQueues[req.body.queue])?
+					return Promise.resolve []
+
+				unless (channel = queue.channelFromRequest req)?
 					return Promise.resolve []
 
 				# Return the 20 newest notifications from the queue for the
 				# request's channel, skipping as many records as requested.
 				query = @find()
-				query = query.where(channel: queue.channelFromRequest req)
+				query = query.where(channel: channel)
 				query = query.where(queue: req.body.queue)
 				query = query.skip(req.body.skip ? 0)
 				query = query.limit(20)
@@ -175,7 +178,7 @@ exports.pkgmanRegister = (registrar) ->
 		promises = for key, queue of notificationQueues
 			promiseKeys.push key
 
-			req.body.queue = key
+			(req.body ?= {}).queue = key
 			Notification.queueFromRequest req
 
 		# Load any queues into the config.

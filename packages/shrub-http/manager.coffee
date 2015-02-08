@@ -10,7 +10,7 @@ Promise = require 'bluebird'
 middleware = require 'middleware'
 
 httpDebug = require('debug') 'shrub:http'
-httpMiddlewareDebug = require('debug') 'shrub:http:middleware'
+httpMiddlewareDebug = require('debug') 'shrub-silly:http:middleware'
 
 # ## HttpManager
 #
