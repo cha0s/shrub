@@ -4,11 +4,8 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `gruntConfig`
 	registrar.registerHook 'gruntConfig', (gruntConfig) ->
 
-		{grunt} = gruntConfig
-
-		gruntConfig.coffeelint ?= {}
-
-		gruntConfig.coffeelint.shrub =
+		gruntConfig.configureTask(
+			'coffeelint', 'shrub'
 
 			files: [
 				src: [
@@ -16,7 +13,6 @@ exports.pkgmanRegister = (registrar) ->
 					'!node_modules/**/*.coffee'
 				]
 			]
-
 			options:
 
 				arrow_spacing: level: 'error'
@@ -110,8 +106,10 @@ exports.pkgmanRegister = (registrar) ->
 
 				transform_messes_up_line_numbers: level: 'warn'
 
-		gruntConfig.shrub.tasks['lint'] = [
+		)
+
+		gruntConfig.registerTask 'lint', [
 			'coffeelint:shrub'
 		]
 
-		grunt.loadNpmTasks 'grunt-coffeelint'
+		gruntConfig.loadNpmTasks ['grunt-coffeelint']

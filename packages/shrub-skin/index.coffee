@@ -6,16 +6,10 @@
 fs = require 'fs'
 path = require 'path'
 
-config = null
-pkgman = null
+config = require 'config'
+pkgman = require 'pkgman'
 
 exports.pkgmanRegister = (registrar) ->
-
-	# ## Implements hook `preBootstrap`
-	registrar.registerHook 'preBootstrap', ->
-
-		config = require 'config'
-		pkgman = require 'pkgman'
 
 	# ## Implements hook `config`
 	registrar.registerHook 'config', ->
@@ -74,15 +68,13 @@ exports.activeKey = -> config.get 'packageSettings:shrub-skin:default'
 
 exports.gruntSkin = (gruntConfig, key) ->
 
-	{grunt} = gruntConfig
-
 	skinPath = path.dirname require.resolve key
 
 	gruntConfig.clean ?= {}
 	gruntConfig.copy ?= {}
 	gruntConfig.watch ?= {}
 
-	gruntConfig.clean[key] = [
+	gruntConfig.configureTask 'clean', key, [
 		"app/skin/#{key}"
 	]
 
@@ -95,11 +87,10 @@ exports.gruntSkin = (gruntConfig, key) ->
 		dest: "app/skin/#{key}"
 	) for verbatim in ['css', 'fonts', 'img', 'js', 'lib']
 
-	gruntConfig.copy[key] =
+	gruntConfig.configureTask 'copy', key, files: copyFiles
 
-		files: copyFiles
-
-	gruntConfig.watch["#{key}Copy"] =
+	gruntConfig.configureTask(
+		'watch', "#{key}Copy"
 
 		files: copyFiles.map((copyFile) -> copyFile.src).reduce(
 			((l, r) -> l.concat r), []
@@ -107,6 +98,7 @@ exports.gruntSkin = (gruntConfig, key) ->
 		tasks: [
 			"newer:copy:#{key}"
 		]
+	)
 
 # ### ::renderAppHtml
 #

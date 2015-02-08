@@ -35,16 +35,15 @@ exports.pkgmanRegister = (registrar) ->
 
 		shrubSkin.gruntSkin gruntConfig, 'shrub-skin-strapped'
 
-		gruntConfig.less['shrub-skin-strapped'] =
-
-			files: [
-				src: [
-					"#{__dirname}/app/less/style.less"
-				]
-				dest: 'app/skin/shrub-skin-strapped/css/style.css'
+		gruntConfig.configureTask 'less', 'shrub-skin-strapped', files: [
+			src: [
+				"#{__dirname}/app/less/style.less"
 			]
+			dest: 'app/skin/shrub-skin-strapped/css/style.css'
+		]
 
-		gruntConfig.watch['shrub-skin-strappedLess'] =
+		gruntConfig.configureTask(
+			'watch', 'shrub-skin-strappedLess'
 
 			files: [
 				"#{__dirname}/app/less/style.less"
@@ -52,13 +51,14 @@ exports.pkgmanRegister = (registrar) ->
 			tasks: [
 				'newer:less:shrub-skin-strapped'
 			]
+		)
 
-		gruntConfig.shrub.tasks['build:shrub-skin-strapped'] = [
+		gruntConfig.registerTask 'build:shrub-skin-strapped', [
 			'clean:shrub-skin-strapped'
 			'newer:copy:shrub-skin-strapped'
 			'less:shrub-skin-strapped'
 		]
 
-		gruntConfig.shrub.tasks['build'].push 'build:shrub-skin-strapped'
+		gruntConfig.registerTask 'build', ['build:shrub-skin-strapped']
 
-		gruntConfig.shrub.npmTasks.push 'grunt-contrib-less'
+		gruntConfig.loadNpmTasks ['grunt-contrib-less']

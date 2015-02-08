@@ -2,15 +2,10 @@
 exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `gruntConfig`
-	registrar.registerHook 'gruntConfig', (gruntConfig) ->
+	registrar.registerHook 'gruntConfig', (gruntConfig, grunt) ->
 
-		{grunt} = gruntConfig
-
-		gruntConfig.coffee ?= {}
-		gruntConfig.concat ?= {}
-		gruntConfig.watch ?= {}
-
-		gruntConfig.coffee.angular =
+		gruntConfig.configureTask(
+			'coffee', 'angular'
 
 			files: [
 				src: [
@@ -20,11 +15,11 @@ exports.pkgmanRegister = (registrar) ->
 			]
 			expand: true
 			ext: '.js'
+			options: bare: true
+		)
 
-			options:
-				bare: true
-
-		gruntConfig.concat.angular =
+		gruntConfig.configureTask(
+			'concat', 'angular'
 
 			files: [
 				src: [
@@ -33,22 +28,13 @@ exports.pkgmanRegister = (registrar) ->
 				]
 				dest: 'build/js/app/app-bundled.js'
 			]
-
 			options:
+				banner: '\n(function() {\n\n'
+				footer: '\n})();\n\n'
+		)
 
-				banner: '''
-
-(function() {
-
-'''
-
-				footer: '''
-
-})();
-
-'''
-
-		gruntConfig.watch.angular =
+		gruntConfig.configureTask(
+			'watch', 'angular'
 
 			files: [
 				'client/app.coffee'
@@ -58,8 +44,9 @@ exports.pkgmanRegister = (registrar) ->
 				'build:angular', 'build:shrub'
 			]
 			options: livereload: true
+		)
 
-		gruntConfig.shrub.tasks['angularCoreDependencies:angular'] = ->
+		gruntConfig.registerTask 'angularCoreDependencies:angular', ->
 
 			pkgman = require 'pkgman'
 
@@ -67,26 +54,19 @@ exports.pkgmanRegister = (registrar) ->
 
 			# Invoke hook `angularCoreDependencies`.
 			for dependenciesList in pkgman.invokeFlat 'angularCoreDependencies'
-
 				dependencies.push.apply dependencies, dependenciesList
 
-			js = '''
-
-var dependencies = [];
-
-
-'''
-
+			js = '\nvar dependencies = [];\n\n\n'
 			js += "dependencies.push('#{
 				dependencies.join "');\ndependencies.push('"
 			}');\n" if dependencies.length > 0
 
 			grunt.file.write 'build/js/app/app-dependencies.js', js
 
-		gruntConfig.shrub.tasks['build:angular'] = [
+		gruntConfig.registerTask 'build:angular', [
 			'newer:coffee:angular'
 			'angularCoreDependencies:angular'
 			'concat:angular'
 		]
 
-		gruntConfig.shrub.tasks['build'].push 'build:angular'
+		gruntConfig.registerTask 'build', ['build:angular']

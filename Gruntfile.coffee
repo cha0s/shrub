@@ -22,53 +22,77 @@ module.exports = (grunt) ->
 
 		return
 
-	# } Load configuration.
 	config = require 'config'
 	pkgman = require 'pkgman'
 
+	# } Load configuration.
 	config.load()
 	config.loadPackageSettings()
 
-	# Load grunt configuration.
-	gruntConfig =
+	class GruntConfiguration
 
-		grunt: grunt
+		constructor: ->
 
-		pkg: grunt.file.readJSON 'package.json'
+			@_npmTasks = []
+			@_taskConfig = {}
+			@_tasks = {}
 
-		shrub:
+			@pkg = grunt.file.readJSON 'package.json'
 
-			npmTasks: []
+		configureTask: (task, key, config_) ->
 
-			tasks:
-				build: []
-				production: [
-					'build'
-				]
-				default: [
-					'buildOnce'
-				]
+			(@_taskConfig[task] ?= {})[key] = config_
+
+			return
+
+		finish: ->
+
+			# Initialize configuration.
+			grunt.initConfig @_taskConfig
+
+			# Load NPM tasks.
+			npmTasksLoaded = {}
+			for task in @_npmTasks
+				continue if npmTasksLoaded[task]?
+				npmTasksLoaded[task] = true
+				grunt.loadNpmTasks task
+
+			# Register custom tasks.
+			grunt.registerTask task, actions for task, actions of @_tasks
+
+			return
+
+		taskConfiguration: (task, key) -> @_taskConfig[task]?[key]
+
+		loadNpmTasks: (tasks) ->
+
+			@_npmTasks.push task for task in tasks
+
+			return
+
+		registerTask: (task, subtasksOrFunction) ->
+
+			if 'function' is typeof subtasksOrFunction
+				@_tasks[task] = subtasksOrFunction
+			else
+				(@_tasks[task] ?= []).push subtasksOrFunction...
+
+			return
+
+	gruntConfig = new GruntConfiguration grunt
+
+	gruntConfig.registerTask 'production', ['build']
+	gruntConfig.registerTask 'default', ['buildOnce']
 
 	built = false
 
-	gruntConfig.shrub.tasks['buildOnce'] = ->
+	gruntConfig.registerTask 'buildOnce', ->
 		return if built
 		built = true
 
 		grunt.task.run 'build'
 
-	pkgman.invoke 'gruntConfig', gruntConfig
-	pkgman.invoke 'gruntConfigAlter', gruntConfig
+	pkgman.invoke 'gruntConfig', gruntConfig, grunt
+	pkgman.invoke 'gruntConfigAlter', gruntConfig, grunt
 
-	grunt.initConfig gruntConfig
-
-	# Load NPM tasks.
-	npmTasksLoaded = {}
-	for task in gruntConfig.shrub.npmTasks
-		continue if npmTasksLoaded[task]?
-		npmTasksLoaded[task] = true
-		grunt.loadNpmTasks task
-
-	# Register custom tasks.
-	for task, actions of gruntConfig.shrub.tasks
-		grunt.registerTask task, actions
+	gruntConfig.finish()

@@ -4,58 +4,51 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `gruntConfig`
 	registrar.registerHook 'gruntConfig', (gruntConfig) ->
 
-		{grunt} = gruntConfig
-
 		gruntConfig.coffee ?= {}
 		gruntConfig.concat ?= {}
 		gruntConfig.copy ?= {}
 		gruntConfig.watch ?= {}
 		gruntConfig.wrap ?= {}
 
-		gruntConfig.coffee.modules =
-
-			files: [
-				cwd: 'client'
-				src: [
-					'packages.coffee'
-					'require.coffee'
-					'modules/**/*.coffee'
-				]
-				dest: 'build/js/app'
-				expand: true
-				ext: '.js'
-			,
-				src: [
-					'{custom,packages}/*/client/**/*.coffee'
-				]
-				dest: 'build/js/app'
-				expand: true
-				ext: '.js'
+		gruntConfig.configureTask 'coffee', 'modules', files: [
+			cwd: 'client'
+			src: [
+				'packages.coffee'
+				'require.coffee'
+				'modules/**/*.coffee'
 			]
-
-		gruntConfig.concat.modules =
-
-			files: [
-				src: [
-					'build/js/app/{modules,packages,require}.js'
-				]
-				dest: 'build/js/app/modules.js'
+			dest: 'build/js/app'
+			expand: true
+			ext: '.js'
+		,
+			src: [
+				'{custom,packages}/*/client/**/*.coffee'
 			]
+			dest: 'build/js/app'
+			expand: true
+			ext: '.js'
+		]
 
-		gruntConfig.copy.modules =
-
-			files: [
-				expand: true
-				cwd: 'client/modules'
-				src: ['**/*.js']
-				dest: 'build/js/app/modules'
-			,
-				expand: true
-				src: ['{custom,packages}/*/client/**/*.js']
-				dest: 'build/js/app'
+		gruntConfig.configureTask 'concat', 'modules', files: [
+			src: [
+				'build/js/app/{modules,packages,require}.js'
 			]
+			dest: 'build/js/app/modules.js'
+		]
 
-		gruntConfig.watch.modules =
+		gruntConfig.configureTask 'copy', 'modules', files: [
+			expand: true
+			cwd: 'client/modules'
+			src: ['**/*.js']
+			dest: 'build/js/app/modules'
+		,
+			expand: true
+			src: ['{custom,packages}/*/client/**/*.js']
+			dest: 'build/js/app'
+		]
+
+		gruntConfig.configureTask(
+			'watch', 'modules'
 
 			files: [
 				'client/{packages,require}.coffee'
@@ -66,8 +59,10 @@ exports.pkgmanRegister = (registrar) ->
 				'build:modules', 'build:shrub'
 			]
 			options: livereload: true
+		)
 
-		gruntConfig.wrap.modules =
+		gruntConfig.configureTask(
+			'wrap', 'modules'
 
 			files: [
 				src: [
@@ -105,41 +100,28 @@ exports.pkgmanRegister = (registrar) ->
 
 					if moduleName?
 						[
-							"""
-requires_['#{moduleName}'] = function(module, exports, require, __dirname, __filename) {
-
-
-"""
-							'''
-
-};
-
-'''
+							"requires_['#{moduleName}'] = function(module, exports, require, __dirname, __filename) {\n\n"
+							'\n};\n'
 						]
 					else
 						['', '']
 
-		gruntConfig.wrap.modulesAll =
+		)
+
+		gruntConfig.configureTask(
+			'wrap', 'modulesAll'
 
 			files: ['build/js/app/modules.js'].map (file) -> src: file, dest: file
 			options:
 				indent: '  '
 				wrapper: [
-					'''
-(function() {
-
-  var requires_ = {};
-
-
-'''
-					'''
-
-})();
-
-'''
+					'(function() {\n\n  var requires_ = {};\n\n'
+					'\n\n})();\n\n'
 				]
 
-		gruntConfig.shrub.tasks['build:modules'] = [
+		)
+
+		gruntConfig.registerTask 'build:modules', [
 			'newer:coffee:modules'
 			'newer:copy:modules'
 			'wrap:modules'
@@ -147,4 +129,4 @@ requires_['#{moduleName}'] = function(module, exports, require, __dirname, __fil
 			'newer:wrap:modulesAll'
 		]
 
-		gruntConfig.shrub.tasks['build'].push 'build:modules'
+		gruntConfig.registerTask 'build', ['build:modules']

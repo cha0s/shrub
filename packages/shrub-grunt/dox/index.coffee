@@ -2,18 +2,15 @@
 exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `gruntConfig`
-	registrar.registerHook 'gruntConfig', (gruntConfig) ->
+	registrar.registerHook 'gruntConfig', (gruntConfig, grunt) ->
 
 		{fork} = require 'child_process'
 
-		{grunt} = gruntConfig
-
-		gruntConfig.shrub.tasks['dox:prepareDirectory'] = ->
+		gruntConfig.registerTask 'dox:prepareDirectory', ->
 
 			grunt.file.mkdir 'gh-pages'
 
-		gruntConfig.shrub.tasks['dox:dynamic'] = ->
-
+		gruntConfig.registerTask 'dox:dynamic', ->
 			done = @async()
 
 			child = fork "#{__dirname}/dynamic.coffee"
@@ -24,8 +21,7 @@ exports.pkgmanRegister = (registrar) ->
 
 				grunt.fail.fatal 'Dynamic documentation generation failed', code
 
-		gruntConfig.shrub.tasks['dox:groc'] = ->
-
+		gruntConfig.registerTask 'dox:groc', ->
 			done = @async()
 
 			child = fork "#{__dirname}/../../../node_modules/groc/bin/groc"
@@ -36,7 +32,7 @@ exports.pkgmanRegister = (registrar) ->
 
 				grunt.fail.fatal 'Groc failed', code
 
-		gruntConfig.shrub.tasks['dox'] = [
+		gruntConfig.registerTask 'dox', [
 			 'dox:prepareDirectory'
 			 'dox:dynamic'
 			 'dox:groc'

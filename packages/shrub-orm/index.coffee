@@ -35,28 +35,27 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `gruntConfig`
 	registrar.registerHook 'gruntConfig', (gruntConfig) ->
 
-		gruntConfig.copy ?= {}
+		gruntConfig.configureTask 'copy', 'shrub-orm', files: [
+			src: '**/*'
+			dest: 'app'
+			expand: true
+			cwd: "#{__dirname}/app"
+		]
 
-		gruntConfig.copy['shrub-orm'] =
-			files: [
-				src: '**/*'
-				dest: 'app'
-				expand: true
-				cwd: "#{__dirname}/app"
-			]
-
-		gruntConfig.watch['shrub-orm'] =
+		gruntConfig.configureTask(
+			'watch', 'shrub-orm'
 
 			files: [
 				"#{__dirname}/app/**/*"
 			]
 			tasks: 'build:shrub-orm'
+		)
 
-		gruntConfig.shrub.tasks['build:shrub-orm'] = [
+		gruntConfig.registerTask 'build:shrub-orm', [
 			'newer:copy:shrub-orm'
 		]
 
-		gruntConfig.shrub.tasks['build'].push 'build:shrub-orm'
+		gruntConfig.registerTask 'build', ['build:shrub-orm']
 
 	# ## Implements hook `packageSettings`
 	registrar.registerHook 'packageSettings', ->

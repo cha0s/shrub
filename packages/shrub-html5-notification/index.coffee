@@ -6,28 +6,27 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `gruntConfig`
 	registrar.registerHook 'gruntConfig', (gruntConfig) ->
 
-		gruntConfig.copy ?= {}
+		gruntConfig.configureTask 'copy', 'shrub-html5-notification', files: [
+			src: '**/*'
+			dest: 'app'
+			expand: true
+			cwd: "#{__dirname}/app"
+		]
 
-		gruntConfig.copy['shrub-html5-notification'] =
-			files: [
-				src: '**/*'
-				dest: 'app'
-				expand: true
-				cwd: "#{__dirname}/app"
-			]
-
-		gruntConfig.watch['shrub-html5-notification'] =
+		gruntConfig.configureTask(
+			'watch', 'shrub-html5-notification'
 
 			files: [
 				"#{__dirname}/app/**/*"
 			]
 			tasks: 'build:shrub-html5-notification'
+		)
 
-		gruntConfig.shrub.tasks['build:shrub-html5-notification'] = [
+		gruntConfig.registerTask 'build:shrub-html5-notification', [
 			'newer:copy:shrub-html5-notification'
 		]
 
-		gruntConfig.shrub.tasks['build'].push 'build:shrub-html5-notification'
+		gruntConfig.registerTask 'build', ['build:shrub-html5-notification']
 
 	# ## Implements hook `assetMiddleware`
 	registrar.registerHook 'assetMiddleware', ->

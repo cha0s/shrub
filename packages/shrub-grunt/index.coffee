@@ -9,41 +9,28 @@ exports.pkgmanRegister = (registrar) ->
 		config_.set 'packageConfig:shrub-user', name: 'Anonymous'
 
 	# ## Implements hook `gruntConfig`
-	registrar.registerHook 'gruntConfig', (gruntConfig) ->
+	registrar.registerHook 'gruntConfig', (gruntConfig, grunt) ->
 
-		{grunt} = gruntConfig
-
-		gruntConfig.clean ?= {}
-		gruntConfig.concat ?= {}
-		gruntConfig.uglify ?= {}
-
-		(gruntConfig.uglify.options ?= {}).report = 'min'
-
-		gruntConfig.clean.shrub = [
+		gruntConfig.configureTask 'clean', 'shrub', [
 			'app'
 			'build'
 		]
 
-		gruntConfig.concat.shrub =
-
-			files: [
-				src: [
-					'build/js/app/{app-bundled,modules}.js'
-				]
-				dest: 'app/lib/shrub/shrub.js'
+		gruntConfig.configureTask 'concat', 'shrub', files: [
+			src: [
+				'build/js/app/{app-bundled,modules}.js'
 			]
+			dest: 'app/lib/shrub/shrub.js'
+		]
 
-		gruntConfig.uglify.shrub =
-
-			files: [
-				src: [
-					'app/lib/shrub/shrub.js'
-				]
-				dest: 'app/lib/shrub/shrub.min.js'
+		gruntConfig.configureTask 'uglify', 'shrub', files: [
+			src: [
+				'app/lib/shrub/shrub.js'
 			]
+			dest: 'app/lib/shrub/shrub.min.js'
+		]
 
-		gruntConfig.shrub.tasks['executeFunction:shrub'] = ->
-
+		gruntConfig.registerTask 'executeFunction:shrub', ->
 			done = @async()
 
 			# Pass arguments to the child process.
@@ -62,33 +49,40 @@ exports.pkgmanRegister = (registrar) ->
 
 				grunt.fail.fatal 'Server process failed', code
 
-		gruntConfig.shrub.tasks['build:shrub'] = [
+		gruntConfig.registerTask 'build:shrub', [
 			'concat:shrub'
 		]
 
-		gruntConfig.shrub.tasks['production:shrub'] = [
+		gruntConfig.registerTask 'production:shrub', [
 			'newer:uglify:shrub'
 		]
 
-		gruntConfig.shrub.tasks['execute'] = [
+		gruntConfig.registerTask 'execute', [
 			'buildOnce'
 			'executeFunction:shrub'
 		]
 
-		gruntConfig.shrub.npmTasks.push 'grunt-contrib-clean'
-		gruntConfig.shrub.npmTasks.push 'grunt-contrib-coffee'
-		gruntConfig.shrub.npmTasks.push 'grunt-contrib-concat'
-		gruntConfig.shrub.npmTasks.push 'grunt-contrib-copy'
-		gruntConfig.shrub.npmTasks.push 'grunt-contrib-uglify'
-		gruntConfig.shrub.npmTasks.push 'grunt-contrib-watch'
-		gruntConfig.shrub.npmTasks.push 'grunt-newer'
-		gruntConfig.shrub.npmTasks.push 'grunt-wrap'
+		gruntConfig.loadNpmTasks [
+			'grunt-contrib-clean'
+			'grunt-contrib-coffee'
+			'grunt-contrib-concat'
+			'grunt-contrib-copy'
+			'grunt-contrib-uglify'
+			'grunt-contrib-watch'
+			'grunt-newer'
+			'grunt-wrap'
+		]
 
 	# ## Implements hook `gruntConfigAlter`
 	registrar.registerHook 'gruntConfigAlter', (gruntConfig) ->
 
-		gruntConfig.shrub.tasks['build'].push 'build:shrub'
-		gruntConfig.shrub.tasks['production'].push 'production:shrub'
+		gruntConfig.registerTask 'build', [
+			'build:shrub'
+		]
+
+		gruntConfig.registerTask 'production', [
+			'production:shrub'
+		]
 
 	# ## Implements hook `skinRenderAppHtml`
 	registrar.registerHook 'skinRenderAppHtml', ($) ->
