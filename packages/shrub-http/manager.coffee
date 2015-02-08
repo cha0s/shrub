@@ -108,5 +108,5 @@ exports.Manager = class HttpManager
 	# "Pure virtual" methods.
 	)) for method in [
 
-		'addRoute', 'listener', 'server'
+		'addRoute', 'cluster', 'listener', 'server'
 	]

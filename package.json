@@ -37,6 +37,7 @@
     "simple-glob": "^0.1.0",
     "socket.io": "cha0s/socket.io#shrub",
     "socket.io-redis": "cha0s/socket.io-redis#shrub",
+    "sticky-session": "cha0s/sticky-session",
     "waterline": "^0.10.18",
     "winston": "~0.7.2"
   },

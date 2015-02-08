@@ -4,9 +4,12 @@
 # An [Express](http://expressjs.com/) HTTP server implementation, with
 # middleware for sessions, routing, logging, etc.
 
+config = require 'config'
+
 http = null
 
 express = null
+sticky = null
 
 Promise = null
 
@@ -18,6 +21,7 @@ exports.pkgmanRegister = (registrar) ->
 		http = require 'http'
 
 		express = require 'express'
+		sticky = require 'sticky-session'
 
 		Promise = require 'bluebird'
 
@@ -52,6 +56,20 @@ exports.Manager = class Express extends HttpManager
 	#
 	# *Add HTTP routes.*
 	addRoute: ({verb, path, receiver}) -> @_app[verb] path, receiver
+
+	# ### ::cluster
+	#
+	# *Spawn workers and tie them together into a cluster.*
+	cluster: ->
+
+		coreConfig = config.get 'packageSettings:shrub-core'
+		@_server = sticky(
+			num: coreConfig.workers
+			trustedAddresses: coreConfig.trustedProxies
+			@_server
+		)
+
+		return
 
 	# ### ::listener
 	#

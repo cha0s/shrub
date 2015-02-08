@@ -21,6 +21,9 @@ exports.pkgmanRegister = (registrar) ->
 		# Is the server running in test mode?
 		testMode: if (config.get 'E2E')? then 'e2e' else false
 
+		# The process ID of this worker.
+		pid: process.pid if 'production' isnt config.get 'NODE_ENV'
+
 		# Execution environment, `production`, or...
 		environment: config.get 'NODE_ENV'
 
@@ -80,6 +83,10 @@ exports.pkgmanRegister = (registrar) ->
 
 		# A list of the IP addresses of trusted proxies between clients.
 		trustedProxies: []
+
+		# The amount of workers to create. Defaults to 0 meaning no workers,
+		# only the master.
+		workers: 0
 
 	# ## Implements hook `replContext`
 	registrar.registerHook 'replContext', (context) ->
