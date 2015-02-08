@@ -125,8 +125,11 @@ class LimiterManager
 		key = "#{@key}:#{id}"
 
 		Limit = orm.collection 'shrub-limit'
-		Limit.findOrCreate(key: key).populateAll().then((limit) =>
-			limit.key = key
+		Limit.findOrCreate(
+			key: key
+		,
+			key: key
+		).populateAll().then((limit) =>
 
 			# } Reset if it's expired.
 			limit.reset() if 0 >= limit.ttl @threshold
