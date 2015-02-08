@@ -171,7 +171,7 @@ exports.pkgmanRegister = (registrar) ->
 	registrar.registerHook 'config', (req) ->
 
 		# Make sure ORM is up (it won't be when grunt is running).
-		return unless Notification = orm.collection 'shrub-ui-notification'
+		return unless Notification = orm?.collection 'shrub-ui-notification'
 
 		# Get all the notification queues.
 		promiseKeys = []
