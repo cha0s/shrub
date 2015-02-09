@@ -43,16 +43,16 @@ Allows packages to define Angular controllers. Implementations should return an
 Normalize, augment, and register a directive.
 
           prepareDirective = (name, path, injected) -> ($injector) ->
+
+Normalize the directive to object form.
+
             directive = $injector.invoke injected
+            directive = link: directive if angular.isFunction directive
 
-Ensure a compilation function exists for the directive, and ensure that by
-default it returns the `link` function.
+Ensure a compilation function exists for the directive which by default
+returns the `link` function.
 
-            if angular.isFunction directive
-              directive = link: directive
-              directive.compile = -> directive.link
-            else if not directive.compile
-              directive.compile = -> directive.link
+            directive.compile ?= -> directive.link
 
 Proxy any defined link function, firing any attached any controllers' `link`
 method, as well as passing execution on to the original `link` function.
