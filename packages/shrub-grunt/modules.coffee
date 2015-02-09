@@ -4,16 +4,10 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `gruntConfig`
 	registrar.registerHook 'gruntConfig', (gruntConfig) ->
 
-		gruntConfig.coffee ?= {}
-		gruntConfig.concat ?= {}
-		gruntConfig.copy ?= {}
-		gruntConfig.watch ?= {}
-		gruntConfig.wrap ?= {}
-
 		gruntConfig.configureTask 'coffee', 'modules', files: [
 			cwd: 'client'
 			src: [
-				'packages.coffee'
+				'packages.litcoffee'
 				'require.coffee'
 				'modules/**/*.coffee'
 			]
