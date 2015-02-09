@@ -92,7 +92,8 @@ Handle a bunch of internal Angular normalization.
 
 Invoke hook `augmentDirective`.
 Allows packages to augment the directives defined by packages. One example is
-the automatic relinking functionality implemented by [shrub-skin](../packages/shrub-skin/client/index.html#implementshookaugmentdirective).
+the automatic relinking functionality implemented by
+[shrub-skin](../packages/shrub-skin/client/index.coffee#L12).
 
 					for injectedDirective in pkgman.invokeFlat(
 						'augmentDirective', directive, path
