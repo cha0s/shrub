@@ -9,10 +9,13 @@ are gathered and registered into Angular.
 	])
 
 		.config([
-			'$compileProvider', '$controllerProvider', '$filterProvider', '$injector', '$provide', 'shrub-pkgmanProvider', 'shrub-requireProvider'
-			($compileProvider, $controllerProvider, $filterProvider, $injector, $provide, pkgman, {require}) ->
-
-				_ = require 'lodash'
+			'$compileProvider', '$controllerProvider', '$filterProvider'
+			'$injector', '$provide', 'shrub-pkgmanProvider'
+			'shrub-requireProvider'
+			(
+				$compileProvider, $controllerProvider, $filterProvider
+				$injector, $provide, pkgman, {require}
+			) ->
 
 				config = require 'config'
 				debug = require('debug') 'shrub:angular'
@@ -30,18 +33,108 @@ Allows packages to define Angular controllers. Implementations should return an
 
 				for path, injected of pkgman.invoke 'controller'
 					controllerName = pkgman.normalizePath path
-
 					debug controllerName
-
 					$controllerProvider.register controllerName, injected
 
 				debug 'Controllers registered.'
 
+				debug 'Registering directives...'
+
+Normalize, augment, and register a directive.
+
+				registerDirective = (name, path, injected) -> ($injector) ->
+					directive = $injector.invoke injected
+
+Ensure a compilation function exists for the directive, and ensure that by
+default it returns the `link` function.
+
+					if angular.isFunction directive
+						directive = link: directive
+						directive.compile = -> directive.link
+					else if not directive.compile
+						directive.compile = -> directive.link
+
+Proxy any defined link function, firing any attached any controllers' `link`
+method, as well as passing execution on to the original `link` function.
+
+					link = directive.link
+					directive.link = (scope, element, attrs, controllers) ->
+						if controllers?
+							unless angular.isArray controllers
+								controllers = [controllers]
+
+							for controller in controllers
+								controller.link? arguments...
+
+						link? arguments...
+
+Ensure the directive has a name. Defaults to the normalized path of the
+implementing package.
+
+					directive.name ?= name
+
+If controller binding is specified, the controller defaults to the directive
+name. In other words, if you define a directive and a controller in the same
+package, and specify `directive.bindToController = true`, your directive will
+include the controller automatically.
+
+					if directive.bindToController
+						directive.controller ?= directive.name
+
+Handle a bunch of internal Angular normalization.
+
+					directive.require ?= directive.controller and directive.name
+					directive.priority ?= 0
+					directive.restrict ?= 'EA'
+
+					if angular.isObject directive.scope
+						directiveIsolateBindings directive
+
+Invoke hook `augmentDirective`.
+Allows packages to augment the directives defined by packages. One example is
+the automatic relinking functionality implemented by [shrub-skin](../packages/shrub-skin/client/index.html#implementshookaugmentdirective).
+
+					for injectedDirective in pkgman.invokeFlat(
+						'augmentDirective', directive, path
+					)
+						$injector.invoke injectedDirective
+
+Haven't gone deep enough into Angular to understand why this has to be, but it
+does.
+
+					directive.index = 0
+					return [directive]
+
+Internal Angular state that we have to reset.
+
+				directiveIsolateBindings = (directive) ->
+
+					LOCAL_REGEXP = /^\s*([@&]|=(\*?))(\??)\s*(\w*)\s*$/
+
+					bindings = {}
+
+					for scopeName, definition of directive.scope
+						match = definition.match LOCAL_REGEXP
+
+						unless match
+							throw angular.$$minErr('$compile')(
+								'iscp'
+								"Invalid isolate scope definition for directive
+								'{0}'. Definition: {... {1}: '{2}' ...}"
+								directive.name, scopeName, definition
+							)
+
+						bindings[scopeName] =
+							mode: match[1][0]
+							collection: match[2] is '*'
+							optional: match[3] is '?'
+							attrName: match[4] or scopeName
+
+					directive.$$isolateBindings = bindings
+
 Invoke hook `directive`.
 Allows packages to define Angular directives. Implementations should return an
 [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
-
-				debug 'Registering directives...'
 
 				for path, injected of pkgman.invoke 'directive'
 					do (path, injected) ->
@@ -49,87 +142,26 @@ Allows packages to define Angular directives. Implementations should return an
 
 						debug directiveName
 
+First, register it through Angular's normal registration mechanism. This sets
+a bunch of internal state we don't have access to.
+
 						$compileProvider.directive directiveName, injected
+
+Follow that by normalizing, augmenting, and registering the directive again.
+It will run over the previous definition, ensuring everything works nicely.
+
 						$provide.factory "#{directiveName}Directive", [
-							'$controller', '$injector'
-							($controller, $injector) ->
-
-								# Normalize directive.
-								directive = $injector.invoke injected
-
-								# Ensure compile exists.
-								if angular.isFunction directive
-									directive = link: directive
-									directive.compile = -> directive.link
-								else if not directive.compile
-									directive.compile = -> directive.link
-
-								# Automatic link function attachment to controller.
-								link = directive.link
-								directive.link = (scope, element, attrs, controllers) ->
-									if controllers?
-										unless angular.isArray controllers
-											controllers = [controllers]
-
-										for controller in controllers
-											controller.link? arguments...
-
-									link? arguments...
-
-								directive.name ?= directiveName
-
-								# Automatic directive controller discovery.
-								if directive.bindToController
-									directive.controller ?= directive.name
-
-								directive.require ?= directive.controller and directive.name
-								directive.priority ?= 0
-								directive.index = 0
-								directive.restrict ?= 'EA'
-
-								if angular.isObject directive.scope
-
-									directive.$$isolateBindings = do ->
-										LOCAL_REGEXP = /^\s*([@&]|=(\*?))(\??)\s*(\w*)\s*$/
-
-										bindings = {}
-
-										for scopeName, definition of directive.scope
-											match = definition.match LOCAL_REGEXP
-
-											unless match
-												throw angular.$$minErr('$compile')('iscp',
-														"Invalid isolate scope definition for directive '{0}'." +
-														" Definition: {... {1}: '{2}' ...}",
-														directive.name, scopeName, definition);
-
-											bindings[scopeName] =
-												mode: match[1][0]
-												collection: match[2] is '*'
-												optional: match[3] is '?'
-												attrName: match[4] or scopeName
-
-										bindings
-
-								# Invoke hook `augmentDirective`.
-								# Allows packages to augment the directives
-								# defined by packages. One example is the automatic
-								# relinking functionality implemented by [shrub-skin](/packages/shrub-skin/client/index.html#implementshookaugmentdirective).
-								for injectedDirective in pkgman.invokeFlat(
-									'augmentDirective', directive, path
-								)
-									$injector.invoke injectedDirective
-
-								[directive]
-
+							'$injector'
+							registerDirective directiveName, path, injected
 						]
 
 				debug 'Directives registered.'
 
-				# Invoke hook `filter`.
-				# Allows packages to define Angular filters. Implementations
-				# should return a function.
 				debug 'Registering filters...'
+
+Invoke hook `filter`.
+Allows packages to define Angular filters. Implementations should return a
+function.
 
 				for path, injected of pkgman.invoke 'filter'
 					filterName = pkgman.normalizePath path
@@ -140,9 +172,10 @@ Allows packages to define Angular directives. Implementations should return an
 
 				debug 'Filters registered.'
 
-				# Invoke hook `provider`.
-				# Allows packages to define Angular providers. Implementations
-				# should return an [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
+Invoke hook `provider`.
+Allows packages to define Angular providers. Implementations should return an
+[annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
+
 				debug 'Registering providers...'
 
 				for path, provider of pkgman.invoke 'provider'
@@ -152,9 +185,10 @@ Allows packages to define Angular directives. Implementations should return an
 
 				debug 'Providers registered.'
 
-				# Invoke hook `service`.
-				# Allows packages to define Angular services. Implementations
-				# should return an [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
+Invoke hook `service`.
+Allows packages to define Angular services. Implementations should return an
+[annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
+
 				debug 'Registering services...'
 
 				for path, injected of pkgman.invoke 'service'
@@ -164,26 +198,10 @@ Allows packages to define Angular directives. Implementations should return an
 
 				debug 'Services registered.'
 
-				# If we are testing, decorate the services with their mock
-				# versions.
-				if config.get 'packageConfig:shrub-core:testMode'
-
-					# Invoke hook `serviceMock`.
-					# Allows packages to decorate mock Angular services.
-					# Implementations should return an
-					# [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
-					debug 'Registering mock services...'
-
-					for path, injected of pkgman.invoke 'serviceMock'
-						debug path
-
-						$provide.decorator path, injected
-
-					debug 'Mock services registered.'
-
 		])
 
-	# A module that implements a package manager provider/service.
+The module that provides Angular with access to Shrub's package manager.
+
 	angular.module('shrub.pkgman', [
 		'shrub.require'
 	])
@@ -192,25 +210,21 @@ Allows packages to define Angular directives. Implementations should return an
 			'$provide', 'shrub-requireProvider'
 			($provide, {require}) ->
 
-				_ = require 'lodash'
 				config = require 'config'
 				debug = require('debug') 'shrub:pkgman'
 				pkgman = require 'pkgman'
 
-				# Load the package list from configuration.
 				debug 'Loading packages...'
+
+Load the package list from configuration.
 
 				pkgman.registerPackageList config.get 'packageList'
 
 				debug 'Packages loaded.'
 
-				service = {}
+Simply pass along pkgman as the 'service'.
 
-				service.invoke = pkgman.invoke
-				service.invokeFlat = pkgman.invokeFlat
-				service.normalizePath = pkgman.normalizePath
+				pkgman.$get = -> pkgman
 
-				service.$get = -> service
-
-				service
+				return pkgman
 		]
