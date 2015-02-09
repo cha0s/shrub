@@ -8,7 +8,7 @@ exports.pkgmanRegister = (registrar) ->
       cwd: 'client'
       src: [
         'packages.litcoffee'
-        'require.coffee'
+        'require.litcoffee'
         'modules/**/*.coffee'
       ]
       dest: 'build/js/app'
@@ -45,7 +45,7 @@ exports.pkgmanRegister = (registrar) ->
       'watch', 'modules'
 
       files: [
-        'client/{packages,require}.coffee'
+        'client/{packages,require}.litcoffee'
         'client/modules/**/*.coffee'
         '{custom,packages}/*/client/**/*.coffee'
       ]

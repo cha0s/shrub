@@ -1,7 +1,9 @@
 
-This is where shrub's package system meets Angular's module system. Packages'
+# Package management for Angular
+
+*This is where shrub's package system meets Angular's module system. Packages'
 implementations of controllers, services, filters, providers, and directives
-are gathered and registered into Angular.
+are gathered and registered into Angular.*
 
     angular.module('shrub.packages', [
       'shrub.require'
