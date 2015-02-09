@@ -5,11 +5,11 @@ may be invoked with <a href="/client/modules/pkgman.html">pkgman.invoke()</a>, a
 implemented in packages by exporting <code>pkgmanRegister</code>.</p>
 
 <p>For instance, if we are implementing a package and want to implement the
-<code>httpListening</code> hook, our code would look like:</p>
+<code>preBootstrap</code> hook, our code would look like:</p>
 
 <pre><code>exports.pkgmanRegister = (registrar) -&gt;
 
-    registrar.registerHook 'httpListening', -&gt;
+    registrar.registerHook 'preBootstrap', -&gt;
 
         # Your code goes here...
 </code></pre>
@@ -245,16 +245,13 @@ description and a list of implementing packages for each hook.</p>
 <ul>
 <li><h2 id="httpinitializing"><code>httpInitializing</code></h2>
 
-<p><h5>Invoked before the server is bound on the listening port. <code>TODO</code>: Remove this hook; implementations should be using <code>bootstrapMiddleware</code>. </h5></p>
+<p><h5>Invoked before the server is bound on the listening port. </h5></p>
 
 <ul><li><p>shrub-http (<a href="./packages/shrub-http/index.html#implementshookhttpinitializing">server</a>)</p></li>
 <li><p>shrub-socket (<a href="./packages/shrub-socket/index.html#implementshookhttpinitializing">server</a>)</p></li></ul></li>
-<li><h2 id="httplistening"><code>httpListening</code></h2>
-
-<p><h5>Invoked once the server is listening, but before initialization finishes. Implementations should return a promise. When all promises are fulfilled, initialization finishes. <code>TODO</code>: Remove this hook; implementations should be using <code>bootstrapMiddleware</code>. </h5></p></li>
 <li><h2 id="httpmiddleware"><code>httpMiddleware</code></h2>
 
-<p><h5>Invoked every time an HTTP connection is established. <code>TODO</code>: Rename express to http, so we can use a short name. </h5></p>
+<p><h5>Invoked every time an HTTP connection is established. </h5></p>
 
 <ul><li><p>shrub-angular (<a href="./packages/shrub-angular/index.html#implementshookhttpmiddleware">server</a>)</p></li>
 <li><p>shrub-audit (<a href="./packages/shrub-audit/index.html#implementshookhttpmiddleware">server</a>)</p></li>
@@ -394,24 +391,14 @@ description and a list of implementing packages for each hook.</p>
 <ul>
 <li><h2 id="userbeforelogoutmiddleware"><code>userBeforeLogoutMiddleware</code></h2>
 
-<p><h5>Invoked before a user logs out. <code>TODO</code>: Remove res param from implementations. </h5></p>
+<p><h5>Invoked before a user logs out. </h5></p>
 
 <ul><li>shrub-user (<a href="./packages/shrub-user/index.html#implementshookuserbeforelogoutmiddleware">server</a>)</li></ul></li>
 <li><h2 id="userafterlogoutmiddleware"><code>userAfterLogoutMiddleware</code></h2>
 
-<p><h5>Invoked after a user logs out. <code>TODO</code>: Remove res param from implementations. </h5></p>
+<p><h5>Invoked after a user logs out. </h5></p>
 
 <ul><li>shrub-user (<a href="./packages/shrub-user/index.html#implementshookuserafterlogoutmiddleware">server</a>)</li></ul></li>
-</ul>
-
-<p>Invoked in <a href="./server.html">server.coffee</a>:</p>
-
-<ul>
-<li><h2 id="ready"><code>ready</code></h2>
-
-<p><h5>Invoked after the server is initialized and ready. <code>TODO</code>: Remove this; implementations should use <code>bootstrapMiddleware</code>. </h5></p>
-
-<ul><li>shrub-repl (<a href="./packages/shrub-repl/index.html#implementshookready">server</a>)</li></ul></li>
 </ul>
 
 <p>Invoked in <a href="./server/config.html">server/config.coffee</a>:</p>

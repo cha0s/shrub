@@ -135,7 +135,9 @@ happens.</p></div></div><div class="code"><div class="wrapper">        <span cla
 
 <span class="nv">exports.collectionsAlter = </span><span class="nf">(collections) -&gt;</span>
 
-  <span class="nv">Promise = </span><span class="nx">require</span> <span class="s">&#39;bluebird&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p><code>TODO</code>: This is broken since ORM change</p></div></div><div class="code"><div class="wrapper">  <span class="p">{</span><span class="s">&#39;shrub-user&#39;</span><span class="o">:</span> <span class="nx">User</span><span class="p">}</span> <span class="o">=</span> <span class="nx">collections</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Implement all the built-in collection methods as authenticated versions,
+  <span class="nv">Promise = </span><span class="nx">require</span> <span class="s">&#39;bluebird&#39;</span>
+
+  <span class="p">{</span><span class="s">&#39;shrub-user&#39;</span><span class="o">:</span> <span class="nx">User</span><span class="p">}</span> <span class="o">=</span> <span class="nx">collections</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Implement all the built-in collection methods as authenticated versions,
 which take a user.</p></div></div><div class="code"><div class="wrapper">  <span class="k">for</span> <span class="nx">identity</span><span class="p">,</span> <span class="nx">collection</span> <span class="k">of</span> <span class="nx">collections</span>
     <span class="nx">do</span> <span class="nf">(identity, collection) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>validateUser = (user) -></p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>new Promise (resolve, reject) -&gt;
 </code></pre></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><pre><code>    # `TODO`: See if we can do this without using the internal

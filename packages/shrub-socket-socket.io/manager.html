@@ -2,12 +2,16 @@
 
 <p>Implements <code>SocketManager</code>.</p>
 
-<p>A socket factory implemented with <a href="http://socket.io/">Socket.IO</a>.</p></div></div><div class="code"><div class="wrapper"><span class="nv">config = </span><span class="kc">null</span>
+<p>A socket factory implemented with <a href="http://socket.io/">Socket.IO</a>.</p></div></div><div class="code"><div class="wrapper"><span class="nv">Promise = </span><span class="kc">null</span>
+
+<span class="nv">config = </span><span class="kc">null</span>
 
 <span class="nv">SocketManager = </span><span class="nx">require</span> <span class="s">&#39;../shrub-socket/manager&#39;</span>
 
 <span class="nv">module.exports = </span><span class="k">class</span> <span class="nx">SocketIoManager</span> <span class="k">extends</span> <span class="nx">SocketManager</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="constructor"><em>constructor</em></h2></div></div><div class="code"><div class="wrapper">  <span class="nv">constructor: </span><span class="nf">-&gt;</span>
     <span class="k">super</span>
+
+    <span class="nv">Promise = </span><span class="nx">require</span> <span class="s">&#39;bluebird&#39;</span>
 
     <span class="nx">config</span> <span class="o">?=</span> <span class="nx">require</span> <span class="s">&#39;config&#39;</span>
 
@@ -20,22 +24,44 @@
         <span class="nx">require</span><span class="p">(</span><span class="s">&#39;socket.io-redis&#39;</span><span class="p">)(</span>
           <span class="nv">pubClient: </span><span class="nx">redis</span><span class="p">.</span><span class="nx">createClient</span><span class="p">()</span>
           <span class="nv">subClient: </span><span class="nx">redis</span><span class="p">.</span><span class="nx">createClient</span><span class="p">()</span>
-        <span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="channels">::channels</h2>
+        <span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="broadcast">::broadcast</h2>
 
-<p><em>Get a list of channels a socket is in.</em></p>
+<p><em>Broadcast data to clients in a room.</em></p>
 
 <ul>
-<li>(string) <code>room</code> - The channel to broadcast to.</li>
+<li>(string) <code>channel</code> - The channel to broadcast to.</li>
+<li>(string) <code>event</code> - The event to broadcast.</li>
 <li>(mixed) <code>data</code> - The data to broadcast.</li>
-</ul></div></div><div class="code"><div class="wrapper">  <span class="nv">broadcast: </span><span class="nf">(room, event, data) -&gt;</span>
-    <span class="nx">@io</span><span class="p">.</span><span class="nx">in</span><span class="p">(</span><span class="nx">room</span><span class="p">).</span><span class="nx">emit</span> <span class="nx">event</span><span class="p">,</span> <span class="nx">data</span>
+</ul></div></div><div class="code"><div class="wrapper">  <span class="nv">broadcast: </span><span class="nf">(channel, event, data) -&gt;</span>
+    <span class="nx">@io</span><span class="p">.</span><span class="nx">in</span><span class="p">(</span><span class="nx">channel</span><span class="p">).</span><span class="nx">emit</span> <span class="nx">event</span><span class="p">,</span> <span class="nx">data</span>
     <span class="k">this</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="channels">::channels</h2>
 
 <p><em>Get a list of channels a socket is in.</em></p>
 
 <ul>
 <li>(socket) <code>socket</code> - A socket.</li>
-</ul></div></div><div class="code"><div class="wrapper">  <span class="nv">channels: </span><span class="nf">(socket) -&gt;</span> <span class="nx">socket</span><span class="p">.</span><span class="nx">rooms</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="listen">::listen</h2>
+</ul></div></div><div class="code"><div class="wrapper">  <span class="nv">channels: </span><span class="nf">(socket) -&gt;</span> <span class="nx">socket</span><span class="p">.</span><span class="nx">rooms</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="clients">::clients</h2>
+
+<p><em>Get a list of clients in a channel.</em></p>
+
+<ul>
+<li>(string) <code>channel</code> - The channel to check.</li>
+</ul></div></div><div class="code"><div class="wrapper">  <span class="nv">clients: </span><span class="nf">(channel) -&gt;</span>
+    <span class="nv">self = </span><span class="k">this</span>
+    <span class="k">new</span> <span class="nx">Promise</span> <span class="nf">(resolve, reject) -&gt;</span>
+      <span class="nx">self</span><span class="p">.</span><span class="nx">io</span><span class="p">.</span><span class="nx">in</span><span class="p">(</span><span class="nx">channel</span><span class="p">).</span><span class="nx">clients</span> <span class="nf">(error, clients) -&gt;</span>
+        <span class="k">return</span> <span class="nx">reject</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
+        <span class="nx">resolve</span> <span class="nx">clients</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="intercom">::intercom</h2>
+
+<p><em>Broadcast data to server sockets in a room.</em></p>
+
+<ul>
+<li>(string) <code>channel</code> - The channel to broadcast to.</li>
+<li>(string) <code>event</code> - The event to broadcast.</li>
+<li>(mixed) <code>data</code> - The data to broadcast.</li>
+</ul></div></div><div class="code"><div class="wrapper">  <span class="nv">intercom: </span><span class="nf">(channel, event, data) -&gt;</span>
+    <span class="nx">@io</span><span class="p">.</span><span class="nx">in</span><span class="p">(</span><span class="nx">channel</span><span class="p">).</span><span class="nx">intercom</span> <span class="nx">event</span><span class="p">,</span> <span class="nx">data</span>
+    <span class="k">this</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="listen">::listen</h2>
 
 <p>Implements <code>SocketManager::listen</code>.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">listen: </span><span class="nf">(http) -&gt;</span>
 
@@ -53,18 +79,4 @@
         <span class="k">return</span> <span class="nx">logger</span><span class="p">.</span><span class="nx">error</span> <span class="nx">errors</span><span class="p">.</span><span class="nx">stack</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Dispatch the connection middleware.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">@_connectionMiddleware</span><span class="p">.</span><span class="nx">dispatch</span> <span class="nx">socket</span><span class="p">.</span><span class="nx">request</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nf">(error) -&gt;</span>
           <span class="k">return</span> <span class="nx">logger</span><span class="p">.</span><span class="nx">error</span> <span class="nx">errors</span><span class="p">.</span><span class="nx">stack</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
 
-          <span class="nx">socket</span><span class="p">.</span><span class="nx">emit</span> <span class="s">&#39;initialized&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="socketsinchannel">::socketsInChannel</h2>
-
-<p><em>Get a list of sockets in a channel.</em></p>
-
-<p><code>TODO</code>: This only works on a single node. socket.io needs to implement
-this.</p>
-
-<ul>
-<li>(string) <code>channelName</code> - The channel or 'room' name.</li>
-</ul></div></div><div class="code"><div class="wrapper">  <span class="nv">socketsInChannel: </span><span class="nf">(channelName) -&gt;</span>
-
-    <span class="k">for</span> <span class="nx">socketId</span><span class="p">,</span> <span class="nx">isConnected</span> <span class="k">of</span> <span class="nx">@io</span><span class="p">.</span><span class="nx">sockets</span><span class="p">.</span><span class="nx">adapter</span><span class="p">.</span><span class="nx">rooms</span><span class="p">[</span><span class="nx">channelName</span><span class="p">]</span>
-      <span class="k">continue</span> <span class="k">unless</span> <span class="nx">isConnected</span>
-
-      <span class="nx">@io</span><span class="p">.</span><span class="nx">sockets</span><span class="p">.</span><span class="nx">adapter</span><span class="p">.</span><span class="nx">nsp</span><span class="p">.</span><span class="nx">connected</span><span class="p">[</span><span class="nx">socketId</span><span class="p">]</span></div></div></div></div></body></html>
+          <span class="nx">socket</span><span class="p">.</span><span class="nx">emit</span> <span class="s">&#39;initialized&#39;</span></div></div></div></div></body></html>

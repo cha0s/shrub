@@ -80,11 +80,11 @@ parses the source files and generates the respective documentation files.</p></d
 <span class="s">implemented in packages by exporting `pkgmanRegister`.</span>
 
 <span class="s">For instance, if we are implementing a package and want to implement the</span>
-<span class="s">`httpListening` hook, our code would look like:</span>
+<span class="s">`preBootstrap` hook, our code would look like:</span>
 
 <span class="s">  exports.pkgmanRegister = (registrar) -&gt;</span>
 
-<span class="s">    registrar.registerHook &#39;httpListening&#39;, -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Your code goes here...</p></div></div><div class="code"><div class="wrapper"><span class="s">The list below was dynamically generated from the source code. There is a</span>
+<span class="s">    registrar.registerHook &#39;preBootstrap&#39;, -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Your code goes here...</p></div></div><div class="code"><div class="wrapper"><span class="s">The list below was dynamically generated from the source code. There is a</span>
 <span class="s">description and a list of implementing packages for each hook.</span>
 
 <span class="s">&quot;&quot;&quot;</span>

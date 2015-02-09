@@ -98,7 +98,32 @@
       <span class="nv">O = </span><span class="nx">@toObject</span><span class="p">()</span>
       <span class="nv">O.groups = </span><span class="nx">@groups</span>
       <span class="nv">O.permissions = </span><span class="nx">@permission</span>
-      <span class="nx">O</span>
+      <span class="nx">O</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="register">register</h2>
+
+<p><em>Register a user in the system.</em></p>
+
+<ul>
+<li><p>(string) <code>name</code> - Name of the new user.</p></li>
+<li><p>(string) <code>email</code> - Email address of the new user.</p></li>
+<li><p>(string) <code>password</code> - The new user's password.</p></li>
+</ul></div></div><div class="code"><div class="wrapper">    <span class="nv">User.register = </span><span class="nf">(name, email, password) -&gt;</span>
+
+      <span class="nx">@create</span><span class="p">(</span><span class="nv">name: </span><span class="nx">name</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">(user) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Encrypt the email.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">crypto</span><span class="p">.</span><span class="nx">encrypt</span><span class="p">(</span><span class="nx">email</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()).</span><span class="nx">then</span><span class="p">(</span><span class="nf">(encryptedEmail) -&gt;</span>
+
+          <span class="nv">user.email = </span><span class="nx">encryptedEmail</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Set the password encryption details.</p></div></div><div class="code"><div class="wrapper">          <span class="nx">crypto</span><span class="p">.</span><span class="nx">hasher</span> <span class="nv">plaintext: </span><span class="nx">password</span>
+
+        <span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">(hashed) -&gt;</span>
+
+          <span class="nv">user.plaintext = </span><span class="nx">hashed</span><span class="p">.</span><span class="nx">plaintext</span>
+          <span class="nv">user.salt = </span><span class="nx">hashed</span><span class="p">.</span><span class="nx">salt</span><span class="p">.</span><span class="nx">toString</span> <span class="s">&#39;hex&#39;</span>
+          <span class="nv">user.passwordHash = </span><span class="nx">hashed</span><span class="p">.</span><span class="nx">key</span><span class="p">.</span><span class="nx">toString</span> <span class="s">&#39;hex&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Generate a one-time login token.</p></div></div><div class="code"><div class="wrapper">          <span class="nx">crypto</span><span class="p">.</span><span class="nx">randomBytes</span> <span class="mi">24</span>
+
+        <span class="p">).</span><span class="nx">then</span> <span class="nf">(token) -&gt;</span>
+
+          <span class="nv">user.resetPasswordToken = </span><span class="nx">token</span><span class="p">.</span><span class="nx">toString</span> <span class="s">&#39;hex&#39;</span>
+
+          <span class="nx">user</span><span class="p">.</span><span class="nx">save</span><span class="p">()</span>
+      <span class="p">)</span>
 
     <span class="nv">User.redactors = </span><span class="p">[</span><span class="nf">(redactFor) -&gt;</span>
       <span class="nv">self = </span><span class="k">this</span>
@@ -204,19 +229,19 @@
     <span class="nv">label: </span><span class="s">&#39;Tell client to log out, and leave the user channel&#39;</span>
     <span class="nv">middleware: </span><span class="p">[</span>
 
-      <span class="nf">({req, user}, res, next) -&gt;</span>
+      <span class="nf">(req, next) -&gt;</span>
 
-        <span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="o">?</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Tell client to log out.</p></div></div><div class="code"><div class="wrapper">          <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="p">.</span><span class="nx">emit</span> <span class="s">&#39;shrub.user.logout&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Leave the user channel.</p></div></div><div class="code"><div class="wrapper">          <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="p">.</span><span class="nx">leave</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">name</span> <span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span><span class="o">?</span>
-
-        <span class="nx">next</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nx">next</span><span class="p">()</span> <span class="k">unless</span> <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="o">?</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Tell client to log out.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="p">.</span><span class="nx">emit</span> <span class="s">&#39;shrub.user.logout&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Leave the user channel.</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span><span class="o">?</span>
+          <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="p">.</span><span class="nx">leave</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="nx">next</span>
+        <span class="k">else</span>
+          <span class="nx">next</span><span class="p">()</span>
 
     <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookuserafterlogoutmiddleware">Implements hook <code>userAfterLogoutMiddleware</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;userAfterLogoutMiddleware&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
 
     <span class="nv">label: </span><span class="s">&#39;Instantiate anonymous user&#39;</span>
     <span class="nv">middleware: </span><span class="p">[</span>
 
-      <span class="nf">({req, user}, res, next) -&gt;</span>
-
+      <span class="nf">(req, next) -&gt;</span>
         <span class="nx">req</span><span class="p">.</span><span class="nx">instantiateAnonymous</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nf">-&gt;</span> <span class="nx">next</span><span class="p">()).</span><span class="nx">catch</span> <span class="nx">next</span>
 
     <span class="p">]</span>

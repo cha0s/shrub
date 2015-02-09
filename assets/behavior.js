@@ -3436,8 +3436,8 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                   "type": "heading",
                   "data": {
                     "level": 2,
-                    "title": "::channels",
-                    "slug": "channels"
+                    "title": "::broadcast",
+                    "slug": "broadcast"
                   },
                   "depth": 2
                 }, {
@@ -3446,6 +3446,22 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "level": 2,
                     "title": "::channels",
                     "slug": "channels"
+                  },
+                  "depth": 2
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "::clients",
+                    "slug": "clients"
+                  },
+                  "depth": 2
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "::intercom",
+                    "slug": "intercom"
                   },
                   "depth": 2
                 }, {
@@ -3454,14 +3470,6 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "level": 2,
                     "title": "::listen",
                     "slug": "listen"
-                  },
-                  "depth": 2
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 2,
-                    "title": "::socketsInChannel",
-                    "slug": "socketsinchannel"
                   },
                   "depth": 2
                 }
@@ -4558,6 +4566,14 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "type": "heading",
                       "data": {
                         "level": 2,
+                        "title": "register",
+                        "slug": "register"
+                      },
+                      "depth": 2
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
                         "title": "loadByName",
                         "slug": "loadbyname"
                       },
@@ -4646,18 +4662,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "title": "User registration",
                     "slug": "user-registration"
                   },
-                  "depth": 1,
-                  "children": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "register",
-                        "slug": "register"
-                      },
-                      "depth": 2
-                    }
-                  ]
+                  "depth": 1
                 }
               ]
             }, {

@@ -36,34 +36,12 @@ context.</p>
 <p>CRSF check needed here. </p></li>
 </ul>
 
-<p><a href="./packages/shrub-http/manager.html">packages/shrub-http/manager.coffee</a></p>
-
-<ul>
-<li><h4 id="pkgmaninvokehttpinitializingthis"><code>pkgman.invoke 'httpInitializing', this</code></h4>
-
-<p>Remove this hook; implementations should be using <code>bootstrapMiddleware</code>. </p></li>
-<li><h4 id="pkgmaninvokeflathttplisteningthis"><code>pkgman.invokeFlat 'httpListening', this</code></h4>
-
-<p>Remove this hook; implementations should be using <code>bootstrapMiddleware</code>. </p></li>
-<li><h4 id="_middlewaremiddlewarefromhook"><code>@_middleware = middleware.fromHook(</code></h4>
-
-<p>Rename express to http, so we can use a short name. </p></li>
-</ul>
-
 <p><a href="./packages/shrub-limiter/limiter.html">packages/shrub-limiter/limiter.coffee</a></p>
 
 <ul>
 <li><h4 id="moduleexportsclasslimiter"><code>module.exports = class Limiter</code></h4>
 
 <p>Rewrite this comment </p></li>
-</ul>
-
-<p><a href="./packages/shrub-socket-socket.io/manager.html">packages/shrub-socket-socket.io/manager.coffee</a></p>
-
-<ul>
-<li><h4 id="socketsinchannelchannelname"><code>socketsInChannel: (channelName) -&gt;</code></h4>
-
-<p>This only works on a single node. socket.io needs to implement this. </p></li>
 </ul>
 
 <p><a href="./packages/shrub-ui/client/list/index.html">packages/shrub-ui/client/list/index.coffee</a></p>
@@ -83,9 +61,6 @@ context.</p>
 <li><h4 id="servicefakeloginusernamepasswordid"><code>service.fakeLogin = (username, password, id) -&gt;</code></h4>
 
 <p>This will change when login method generalization happens. </p></li>
-<li><h4 id="shrubuserusercollections"><code>{'shrub-user': User} = collections</code></h4>
-
-<p>This is broken since ORM change </p></li>
 </ul>
 
 <p><a href="./packages/shrub-user/forgot.html">packages/shrub-user/forgot.coffee</a></p>
@@ -104,32 +79,10 @@ context.</p>
 <p>Strategies should be dynamically defined through a hook. </p></li>
 </ul>
 
-<p><a href="./packages/shrub-user/logout.html">packages/shrub-user/logout.coffee</a></p>
-
-<ul>
-<li><h4 id="userbeforelogoutmiddlewaremiddlewarefromshortname"><code>userBeforeLogoutMiddleware = middleware.fromShortName(</code></h4>
-
-<p>Remove res param from implementations. </p></li>
-<li><h4 id="userafterlogoutmiddlewaremiddlewarefromshortname"><code>userAfterLogoutMiddleware = middleware.fromShortName(</code></h4>
-
-<p>Remove res param from implementations. </p></li>
-</ul>
-
 <p><a href="./packages/shrub-user/register.html">packages/shrub-user/register.coffee</a></p>
 
 <ul>
 <li><h4 id="loginurl"><code>loginUrl: "#{</code></h4>
 
 <p>HTTPS </p></li>
-<li><h4 id="exportsregisternameemailpassword"><code>exports.register = (name, email, password) -&gt;</code></h4>
-
-<p>Should be a class method on the shrub-user collection. </p></li>
-</ul>
-
-<p><a href="./server.html">server.coffee</a></p>
-
-<ul>
-<li><h4 id="returnpkgmaninvokereadyunlesserror"><code>return pkgman.invoke 'ready' unless error?</code></h4>
-
-<p>Remove this; implementations should use <code>bootstrapMiddleware</code>. </p></li>
 </ul></div></div></div></div></body></html>
