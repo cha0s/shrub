@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="en"><head><title>packages/shrub-install/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="packages/shrub-install/index"><meta name="groc-project-path" content="packages/shrub-install/index.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-install/index.coffee">packages/shrub-install/index.coffee</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookbootstrapmiddleware">Implements hook <code>bootstrapMiddleware</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;bootstrapMiddleware&#39;</span><span class="p">,</span> <span class="nf">(context) -&gt;</span>
+
+    <span class="nv">orm = </span><span class="nx">require</span> <span class="s">&#39;shrub-orm&#39;</span>
+
+    <span class="nv">label: </span><span class="s">&#39;Installation&#39;</span>
+    <span class="nv">middleware: </span><span class="p">[</span>
+
+      <span class="nf">(next) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>No superuser? Install...</p></div></div><div class="code"><div class="wrapper">        <span class="nv">User = </span><span class="nx">orm</span><span class="p">.</span><span class="nx">collection</span> <span class="s">&#39;shrub-user&#39;</span>
+        <span class="nx">User</span><span class="p">.</span><span class="nx">findOne</span><span class="p">(</span><span class="nv">id: </span><span class="mi">1</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">(user) -&gt;</span>
+          <span class="k">return</span> <span class="k">if</span> <span class="nx">user</span><span class="o">?</span>
+
+          <span class="nx">reinstall</span><span class="p">()</span>
+
+        <span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">-&gt;</span> <span class="nx">next</span><span class="p">()).</span><span class="nx">catch</span> <span class="nx">next</span>
+
+    <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookreplcontext">Implements hook <code>replContext</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;replContext&#39;</span><span class="p">,</span> <span class="nf">(context) -&gt;</span>
+
+    <span class="nv">context.install = </span><span class="nx">reinstall</span>
+
+<span class="nv">reinstall = </span><span class="nf">(name = &#39;admin&#39;, email = &#39;admin@example.com&#39;, password = &#39;admin&#39;) -&gt;</span>
+
+  <span class="nv">Promise = </span><span class="nx">require</span> <span class="s">&#39;bluebird&#39;</span>
+
+  <span class="nv">orm = </span><span class="nx">require</span> <span class="s">&#39;shrub-orm&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Refresh all collections.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span>
+
+    <span class="k">for</span> <span class="nx">identity</span><span class="p">,</span> <span class="nx">collection</span> <span class="k">of</span> <span class="nx">orm</span><span class="p">.</span><span class="nx">collections</span><span class="p">()</span>
+      <span class="k">new</span> <span class="nx">Promise</span> <span class="nf">(resolve, reject) -&gt;</span>
+        <span class="nx">collection</span><span class="p">.</span><span class="nx">drop</span> <span class="nf">(error) -&gt;</span>
+          <span class="k">return</span> <span class="nx">reject</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
+          <span class="nx">resolve</span><span class="p">()</span>
+
+  <span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">-&gt;</span>
+
+    <span class="k">new</span> <span class="nx">Promise</span> <span class="nf">(resolve, reject) -&gt;</span>
+      <span class="nx">orm</span><span class="p">.</span><span class="nx">teardown</span> <span class="nf">(error) -&gt;</span>
+        <span class="k">return</span> <span class="nx">reject</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
+        <span class="nx">orm</span><span class="p">.</span><span class="nx">initialize</span> <span class="nf">(error) -&gt;</span>
+          <span class="k">return</span> <span class="nx">reject</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
+          <span class="nx">resolve</span><span class="p">()</span>
+
+  <span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">-&gt;</span>
+
+    <span class="nv">Group = </span><span class="nx">orm</span><span class="p">.</span><span class="nx">collection</span> <span class="s">&#39;shrub-group&#39;</span>
+    <span class="nv">User = </span><span class="nx">orm</span><span class="p">.</span><span class="nx">collection</span> <span class="s">&#39;shrub-user&#39;</span>
+
+    <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span> <span class="p">[</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Create groups.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">Group</span><span class="p">.</span><span class="nx">create</span> <span class="nv">name: </span><span class="s">&#39;Anonymous&#39;</span>
+      <span class="nx">Group</span><span class="p">.</span><span class="nx">create</span> <span class="nv">name: </span><span class="s">&#39;Authenticated&#39;</span>
+      <span class="nx">Group</span><span class="p">.</span><span class="nx">create</span> <span class="nv">name: </span><span class="s">&#39;Administrator&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Create superuser.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">require</span><span class="p">(</span><span class="s">&#39;shrub-user/register&#39;</span><span class="p">).</span><span class="nx">register</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">email</span><span class="p">,</span> <span class="nx">password</span>
+    <span class="p">]</span>
+
+  <span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">([groups..., user]) -&gt;</span>
+
+    <span class="nx">user</span><span class="p">.</span><span class="nx">groups</span><span class="p">.</span><span class="nx">add</span> <span class="nv">group: </span><span class="nx">groups</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="nx">id</span>
+    <span class="nx">user</span><span class="p">.</span><span class="nx">save</span><span class="p">().</span><span class="nx">then</span><span class="p">()</span>
+
+  <span class="p">).</span><span class="nx">catch</span> <span class="nx">console</span><span class="p">.</span><span class="nx">error</span></div></div></div></div></body></html>

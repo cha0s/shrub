@@ -4,13 +4,13 @@
 <span class="p">]</span>
 
 <span class="nv">module.exports = </span><span class="nx">do</span> <span class="nf">-&gt;</span>
-  
+
   <span class="nv">adapter = </span><span class="p">{}</span>
-  
+
   <span class="nv">adapter.syncable = </span><span class="kc">false</span>
-  
+
   <span class="k">for</span> <span class="nx">method</span> <span class="k">in</span> <span class="nx">methods</span>
-  
+
     <span class="nx">do</span> <span class="nf">(method) -&gt;</span> <span class="nx">adapter</span><span class="p">[</span><span class="nx">method</span><span class="p">]</span> <span class="o">=</span> <span class="nf">-&gt;</span> <span class="nx">arguments</span><span class="p">[</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]()</span>
-  
+
   <span class="nx">adapter</span></div></div></div></div></body></html>

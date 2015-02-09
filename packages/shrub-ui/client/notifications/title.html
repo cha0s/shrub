@@ -1,22 +1,49 @@
-<!DOCTYPE html><html lang="en"><head><title>packages/shrub-ui/client/notifications/title</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../../"><meta name="groc-document-path" content="packages/shrub-ui/client/notifications/title"><meta name="groc-project-path" content="packages/shrub-ui/client/notifications/title.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../../assets/style.css"><script type="text/javascript" src="../../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-ui/client/notifications/title.coffee">packages/shrub-ui/client/notifications/title.coffee</a></div></div><div id="document"><div class="segment"><div class="comments"><div class="wrapper"><h1 id="notifications-title">Notifications title</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookdirective">Implements hook <code>directive</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;directive&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
-    <span class="s">&#39;shrub-ui/notifications&#39;</span>
-    <span class="nf">(notifications) -&gt;</span>
-    
+<!DOCTYPE html><html lang="en"><head><title>packages/shrub-ui/client/notifications/title</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../../"><meta name="groc-document-path" content="packages/shrub-ui/client/notifications/title"><meta name="groc-project-path" content="packages/shrub-ui/client/notifications/title.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../../assets/style.css"><script type="text/javascript" src="../../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-ui/client/notifications/title.coffee">packages/shrub-ui/client/notifications/title.coffee</a></div></div><div id="document"><div class="segment"><div class="comments"><div class="wrapper"><h1 id="notifications-title">Notifications title</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nv">_ = </span><span class="nx">require</span> <span class="s">&#39;lodash&#39;</span>
+
+<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookdirective">Implements hook <code>directive</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;directive&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
+    <span class="s">&#39;shrub-ui/notifications&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-rpc&#39;</span>
+    <span class="nf">(notifications, rpc) -&gt;</span>
+
       <span class="nv">directive = </span><span class="p">{}</span>
-      
+
       <span class="nv">directive.candidateKeys = </span><span class="p">[</span>
         <span class="s">&#39;queueName&#39;</span>
       <span class="p">]</span>
-      
+
+      <span class="nv">directive.link = </span><span class="nf">(scope) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Mark all notifications as read.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">scope.markAllRead = </span><span class="nf">-&gt;</span>
+          <span class="nv">notAlreadyRead = </span><span class="nx">_</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span>
+            <span class="nx">scope</span><span class="p">.</span><span class="nx">queue</span><span class="p">.</span><span class="nx">notifications</span><span class="p">()</span>
+            <span class="nf">(notification) -&gt;</span> <span class="o">not</span> <span class="nx">notification</span><span class="p">.</span><span class="nx">markedAsRead</span>
+          <span class="p">)</span>
+
+          <span class="k">return</span> <span class="k">if</span> <span class="nx">notAlreadyRead</span><span class="p">.</span><span class="nx">length</span> <span class="o">is</span> <span class="mi">0</span>
+
+          <span class="nx">scope</span><span class="p">.</span><span class="nx">queue</span><span class="p">.</span><span class="nx">markAsRead</span> <span class="nv">ids = </span><span class="nx">_</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span>
+            <span class="nx">notAlreadyRead</span><span class="p">,</span> <span class="nf">(notification) -&gt;</span> <span class="nx">notification</span><span class="p">.</span><span class="nx">id</span>
+          <span class="p">)</span>
+
+          <span class="nx">rpc</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span>
+            <span class="s">&#39;shrub.ui.notifications.markAsRead&#39;</span>
+            <span class="nv">ids: </span><span class="nx">ids</span>
+            <span class="nv">markedAsRead: </span><span class="kc">true</span>
+
+          <span class="p">)</span>
+
       <span class="nv">directive.scope = </span><span class="kc">true</span>
-        
-      <span class="nv">directive.template = </span><span class="s">&quot;&quot;&quot;</span>
 
-<span class="s">&lt;div&gt;Notifications&lt;/div&gt;</span>
+      <span class="nv">directive.template = </span><span class="s">&#39;&#39;&#39;</span>
 
-<span class="s">&quot;&quot;&quot;</span>
-      
+<span class="s">&lt;a</span>
+<span class="s">  class=&quot;mark-all-read&quot;</span>
+<span class="s">  data-ng-click=&quot;markAllRead()&quot;</span>
+<span class="s">&gt;Mark all read&lt;/a&gt;</span>
+
+<span class="s">&lt;p</span>
+<span class="s">  class=&quot;title&quot;</span>
+<span class="s">&gt;Notifications&lt;/p&gt;</span>
+
+<span class="s">&#39;&#39;&#39;</span>
+
       <span class="nx">directive</span>
-      
-  <span class="p">]</span>
-    </div></div></div></div></body></html>
+
+  <span class="p">]</span></div></div></div></div></body></html>

@@ -1,31 +1,30 @@
-<!DOCTYPE html><html lang="en"><head><title>packages/shrub-form/client/widget/text</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../../"><meta name="groc-document-path" content="packages/shrub-form/client/widget/text"><meta name="groc-project-path" content="packages/shrub-form/client/widget/text.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../../assets/style.css"><script type="text/javascript" src="../../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-form/client/widget/text.coffee">packages/shrub-form/client/widget/text.coffee</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookdirective">Implements hook <code>directive</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;directive&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
+<!DOCTYPE html><html lang="en"><head><title>packages/shrub-form/client/widget/text</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../../"><meta name="groc-document-path" content="packages/shrub-form/client/widget/text"><meta name="groc-project-path" content="packages/shrub-form/client/widget/text.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../../assets/style.css"><script type="text/javascript" src="../../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-form/client/widget/text.coffee">packages/shrub-form/client/widget/text.coffee</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookdirective">Implements hook <code>directive</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;directive&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
     <span class="nf">-&gt;</span>
-      
+
       <span class="nv">scope: field: </span><span class="s">&#39;=?&#39;</span>
-      
+
       <span class="nv">link: </span><span class="nf">(scope) -&gt;</span>
-        
+
         <span class="nx">scope</span><span class="p">.</span><span class="nx">$watch</span> <span class="s">&#39;field&#39;</span><span class="p">,</span> <span class="nf">(field) -&gt;</span>
-        
+
           <span class="nx">field</span><span class="p">.</span><span class="nx">minLength</span> <span class="o">?=</span> <span class="mi">0</span>
           <span class="nx">field</span><span class="p">.</span><span class="nx">maxLength</span> <span class="o">?=</span> <span class="kc">Infinity</span>
           <span class="nx">field</span><span class="p">.</span><span class="nx">pattern</span> <span class="o">?=</span> <span class="sr">/.*/</span>
           <span class="nx">field</span><span class="p">.</span><span class="nx">value</span> <span class="o">?=</span> <span class="s">&#39;&#39;</span>
-        
-      <span class="nv">template: </span><span class="s">&quot;&quot;&quot;</span>
+
+      <span class="nv">template: </span><span class="s">&#39;&#39;&#39;</span>
 
 <span class="s">&lt;div class=&quot;form-group&quot;&gt;</span>
 
 <span class="s">  &lt;label</span>
 <span class="s">    data-ng-bind=&quot;field.label&quot;</span>
 <span class="s">  &gt;&lt;/label&gt;</span>
-<span class="s">  </span>
+
 <span class="s">  &lt;input</span>
 <span class="s">    class=&quot;form-control&quot;</span>
 <span class="s">    name=&quot;{{field.name}}&quot;</span>
 <span class="s">    type=&quot;{{field.type}}&quot;</span>
-<span class="s">    </span>
+
 <span class="s">    data-ng-model=&quot;field.value&quot;</span>
 <span class="s">    data-ng-required=&quot;field.required&quot;</span>
 <span class="s">    data-ng-minlength=&quot;{{field.minlength}}&quot;</span>
@@ -36,30 +35,30 @@
 
 <span class="s">&lt;/div&gt;</span>
 
-<span class="s">&quot;&quot;&quot;</span>
-        
+<span class="s">&#39;&#39;&#39;</span>
+
   <span class="p">]</span>
-  
+
   <span class="nv">assignToElement = </span><span class="nf">(element, value) -&gt;</span> <span class="nx">element</span><span class="p">.</span><span class="nx">val</span> <span class="nx">value</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookformwidgets">Implements hook <code>formWidgets</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;formWidgets&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
-    
+
     <span class="nv">widgets = </span><span class="p">[]</span>
-    
+
     <span class="nx">widgets</span><span class="p">.</span><span class="nx">push</span>
-      
+
       <span class="nv">type: </span><span class="s">&#39;email&#39;</span>
       <span class="nv">assignToElement: </span><span class="nx">assignToElement</span>
       <span class="nv">directive: </span><span class="s">&#39;shrub-form-widget-text&#39;</span>
-      
+
     <span class="nx">widgets</span><span class="p">.</span><span class="nx">push</span>
-      
+
       <span class="nv">type: </span><span class="s">&#39;password&#39;</span>
       <span class="nv">assignToElement: </span><span class="nx">assignToElement</span>
       <span class="nv">directive: </span><span class="s">&#39;shrub-form-widget-text&#39;</span>
-      
+
     <span class="nx">widgets</span><span class="p">.</span><span class="nx">push</span>
-      
+
       <span class="nv">type: </span><span class="s">&#39;text&#39;</span>
       <span class="nv">assignToElement: </span><span class="nx">assignToElement</span>
       <span class="nv">directive: </span><span class="s">&#39;shrub-form-widget-text&#39;</span>
-      
+
     <span class="nx">widgets</span></div></div></div></div></body></html>

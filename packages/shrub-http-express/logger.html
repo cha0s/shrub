@@ -1,25 +1,25 @@
-<!DOCTYPE html><html lang="en"><head><title>packages/shrub-http-express/logger</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="packages/shrub-http-express/logger"><meta name="groc-project-path" content="packages/shrub-http-express/logger.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-http-express/logger.coffee">packages/shrub-http-express/logger.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="express-logger">Express logger</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nv">express = </span><span class="nx">require</span> <span class="s">&#39;express&#39;</span>
-
-<span class="nv">logging = </span><span class="nx">require</span> <span class="s">&#39;logging&#39;</span>
-
-<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookhttpmiddleware">Implements hook <code>httpMiddleware</code></h2>
+<!DOCTYPE html><html lang="en"><head><title>packages/shrub-http-express/logger</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="packages/shrub-http-express/logger"><meta name="groc-project-path" content="packages/shrub-http-express/logger.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-http-express/logger.coffee">packages/shrub-http-express/logger.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="express-logger">Express logger</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookhttpmiddleware">Implements hook <code>httpMiddleware</code></h2>
 
 <p>Log requests, differentiating between client and sandbox requests.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;httpMiddleware&#39;</span><span class="p">,</span> <span class="nf">(http) -&gt;</span>
-    
+
+    <span class="nv">express = </span><span class="nx">require</span> <span class="s">&#39;express&#39;</span>
+
+    <span class="nv">logging = </span><span class="nx">require</span> <span class="s">&#39;logging&#39;</span>
+
     <span class="nv">clientRequestLogger = </span><span class="nx">logging</span><span class="p">.</span><span class="nx">create</span> <span class="s">&#39;logs/express.client.log&#39;</span>
     <span class="nv">sandboxRequestLogger = </span><span class="nx">logging</span><span class="p">.</span><span class="nx">create</span> <span class="s">&#39;logs/express.sandbox.log&#39;</span>
-    
+
     <span class="nv">label: </span><span class="s">&#39;Log requests&#39;</span>
     <span class="nv">middleware: </span><span class="p">[</span>
-  
+
       <span class="nx">express</span><span class="p">.</span><span class="nx">logger</span> <span class="nv">stream:</span>
         <span class="nv">write: </span><span class="nf">(message, encoding) -&gt;</span>
-          
+
           <span class="nv">logger = </span><span class="k">if</span> <span class="nx">message</span><span class="p">.</span><span class="nx">match</span> <span class="sr">/(http:\/\/localhost:|node-XMLHttpRequest)/</span>
             <span class="nx">sandboxRequestLogger</span>
           <span class="k">else</span>
             <span class="nx">clientRequestLogger</span>
-          
+
           <span class="nx">logger</span><span class="p">.</span><span class="nx">info</span> <span class="nx">message</span>
-          
+
     <span class="p">]</span></div></div></div></div></body></html>

@@ -2,8 +2,7 @@
 
 <p>Provide an Angular service wrapping a real-time socket.</p></div></div><div class="code"><div class="wrapper"><span class="nv">config = </span><span class="nx">require</span> <span class="s">&#39;config&#39;</span>
 
-<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookservice">Implements hook <code>service</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;service&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
-  
+<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookservice">Implements hook <code>service</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;service&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+
     <span class="p">{</span><span class="nx">Manager</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;packageConfig:shrub-socket:manager:module&#39;</span>
     <span class="nx">Manager</span></div></div></div></div></body></html>

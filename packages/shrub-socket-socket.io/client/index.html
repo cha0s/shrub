@@ -11,44 +11,38 @@
 
   <span class="nv">constructor: </span><span class="nf">($rootScope) -&gt;</span>
     <span class="k">super</span>
-    
+
     <span class="vi">@_initializedQueue = </span><span class="p">[]</span>
     <span class="vi">@_isConnected = </span><span class="kc">false</span>
     <span class="vi">@_$rootScope = </span><span class="nx">$rootScope</span>
     <span class="vi">@_socket = </span><span class="nx">io</span><span class="p">.</span><span class="nx">connect</span><span class="p">()</span>
-    
+
     <span class="nx">@_$rootScope</span><span class="p">.</span><span class="nx">$on</span> <span class="s">&#39;shrub.debug.log&#39;</span><span class="p">,</span> <span class="nf">(error) =&gt;</span>
       <span class="nx">@emit</span> <span class="s">&#39;shrub.debug.log&#39;</span><span class="p">,</span> <span class="nx">errors</span><span class="p">.</span><span class="nx">serialize</span> <span class="nx">error</span>
-  
+
     <span class="nx">@_socket</span><span class="p">.</span><span class="nx">on</span> <span class="s">&#39;initialized&#39;</span><span class="p">,</span> <span class="o">=&gt;</span>
-      <span class="nx">@emit</span><span class="p">.</span><span class="nx">apply</span> <span class="nx">@</span><span class="p">,</span> <span class="nx">args</span> <span class="k">for</span> <span class="nx">args</span> <span class="k">in</span> <span class="nx">@_initializedQueue</span>
-        
+      <span class="nx">@emit</span><span class="p">.</span><span class="nx">apply</span> <span class="k">this</span><span class="p">,</span> <span class="nx">args</span> <span class="k">for</span> <span class="nx">args</span> <span class="k">in</span> <span class="nx">@_initializedQueue</span>
+
     <span class="nx">@_socket</span><span class="p">.</span><span class="nx">on</span> <span class="s">&#39;connect&#39;</span><span class="p">,</span> <span class="o">=&gt;</span> <span class="vi">@_isConnected = </span><span class="kc">true</span>
-    
-    <span class="k">return</span>  
-  
+
+    <span class="k">return</span>
+
   <span class="nv">disconnect: </span><span class="nf">-&gt;</span> <span class="nx">@_socket</span><span class="p">.</span><span class="nx">disconnect</span><span class="p">()</span>
-  
+
   <span class="nv">emit: </span><span class="nf">(eventName, data, fn) -&gt;</span>
-    <span class="k">return</span> <span class="nx">@_initializedQueue</span><span class="p">.</span><span class="nx">push</span> <span class="nx">arguments</span> <span class="k">unless</span> <span class="nx">@_isConnected</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Log.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">message = </span><span class="s">&quot;sent: </span><span class="si">#{</span><span class="nx">eventName</span><span class="si">}</span><span class="s">&quot;</span>
+    <span class="k">return</span> <span class="nx">@_initializedQueue</span><span class="p">.</span><span class="nx">push</span> <span class="nx">arguments</span> <span class="k">unless</span> <span class="nx">@_isConnected</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Log.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">message = </span><span class="s">&quot;sent: </span><span class="si">#{</span><span class="nx">eventName</span><span class="si">}</span><span class="s">&quot;</span>
     <span class="nx">message</span> <span class="o">+=</span> <span class="s">&quot;, </span><span class="si">#{</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span> <span class="nx">data</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="s">&#39;  &#39;</span><span class="si">}</span><span class="s">&quot;</span> <span class="k">if</span> <span class="nx">data</span><span class="o">?</span>
     <span class="nx">debug</span> <span class="nx">message</span>
-    
-    <span class="nx">@_socket</span><span class="p">.</span><span class="nx">emit</span> <span class="nx">eventName</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="nf">(response) =&gt;</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Early out if the client doesn't care about the response.</p></div></div><div class="code"><div class="wrapper">      <span class="k">return</span> <span class="k">unless</span> <span class="nx">fn</span><span class="o">?</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Log.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">message = </span><span class="s">&quot;response: </span><span class="si">#{</span><span class="nx">eventName</span><span class="si">}</span><span class="s">&quot;</span>
+
+    <span class="nx">@_socket</span><span class="p">.</span><span class="nx">emit</span> <span class="nx">eventName</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="nf">(response) =&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Early out if the client doesn't care about the response.</p></div></div><div class="code"><div class="wrapper">      <span class="k">return</span> <span class="k">unless</span> <span class="nx">fn</span><span class="o">?</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Log.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">message = </span><span class="s">&quot;response: </span><span class="si">#{</span><span class="nx">eventName</span><span class="si">}</span><span class="s">&quot;</span>
       <span class="nx">message</span> <span class="o">+=</span> <span class="s">&quot;, </span><span class="si">#{</span>
         <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span> <span class="nx">response</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="s">&#39;  &#39;</span>
       <span class="si">}</span><span class="s">&quot;</span> <span class="k">if</span> <span class="nx">response</span><span class="p">.</span><span class="nx">result</span><span class="o">?</span> <span class="o">or</span> <span class="nx">response</span><span class="p">.</span><span class="nx">error</span><span class="o">?</span>
-      <span class="nx">debug</span> <span class="nx">message</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>We need to digest the scope after the response.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">@_$rootScope</span><span class="p">.</span><span class="nx">$apply</span> <span class="nf">-&gt;</span> <span class="nx">fn</span> <span class="nx">response</span>
+      <span class="nx">debug</span> <span class="nx">message</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>We need to digest the scope after the response.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">@_$rootScope</span><span class="p">.</span><span class="nx">$apply</span> <span class="nf">-&gt;</span> <span class="nx">fn</span> <span class="nx">response</span>
 
-  <span class="kc">on</span><span class="o">:</span> <span class="nf">(eventName, fn) -&gt;</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>We need to digest the scope after the response.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">@_socket</span><span class="p">.</span><span class="nx">on</span> <span class="nx">eventName</span><span class="p">,</span> <span class="nf">(data) =&gt;</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Log.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">message = </span><span class="s">&quot;received: </span><span class="si">#{</span><span class="nx">eventName</span><span class="si">}</span><span class="s">&quot;</span>
+  <span class="kc">on</span><span class="o">:</span> <span class="nf">(eventName, fn) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>We need to digest the scope after the response.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">@_socket</span><span class="p">.</span><span class="nx">on</span> <span class="nx">eventName</span><span class="p">,</span> <span class="nf">(data) =&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Log.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">message = </span><span class="s">&quot;received: </span><span class="si">#{</span><span class="nx">eventName</span><span class="si">}</span><span class="s">&quot;</span>
       <span class="nx">message</span> <span class="o">+=</span> <span class="s">&quot;, </span><span class="si">#{</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span> <span class="nx">data</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="s">&#39;  &#39;</span><span class="si">}</span><span class="s">&quot;</span> <span class="k">if</span> <span class="nx">data</span><span class="o">?</span>
       <span class="nx">debug</span> <span class="nx">message</span>
-      
+
       <span class="nv">onArguments = </span><span class="nx">arguments</span>
       <span class="nx">@_$rootScope</span><span class="p">.</span><span class="nx">$apply</span> <span class="o">=&gt;</span> <span class="nx">fn</span><span class="p">.</span><span class="nx">apply</span> <span class="nx">@_socket</span><span class="p">,</span> <span class="nx">onArguments</span></div></div></div></div></body></html>

@@ -1,82 +1,99 @@
 <!DOCTYPE html><html lang="en"><head><title>packages/shrub-ui/client/notifications/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../../"><meta name="groc-document-path" content="packages/shrub-ui/client/notifications/index"><meta name="groc-project-path" content="packages/shrub-ui/client/notifications/index.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../../assets/style.css"><script type="text/javascript" src="../../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-ui/client/notifications/index.coffee">packages/shrub-ui/client/notifications/index.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="notifications">Notifications</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nv">config = </span><span class="nx">require</span> <span class="s">&#39;config&#39;</span>
 
 <span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookdirective">Implements hook <code>directive</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;directive&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
-    <span class="s">&#39;$timeout&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-ui/notifications&#39;</span>
-    <span class="nf">($timeout, notifications) -&gt;</span>
-    
+    <span class="s">&#39;shrub-rpc&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-ui/notifications&#39;</span>
+    <span class="nf">(rpc, notifications) -&gt;</span>
+
       <span class="nv">directive = </span><span class="p">{}</span>
-      
+
       <span class="nv">directive.candidateKeys = </span><span class="p">[</span>
         <span class="s">&#39;queueName&#39;</span>
       <span class="p">]</span>
-      
-      <span class="nv">directive.link = </span><span class="nf">(scope, element, attr) -&gt;</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Put the queue name into the scope.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">scope.queueName = </span><span class="nx">attr</span><span class="p">.</span><span class="nx">queueName</span>
-        <span class="nv">scope.queue = </span><span class="nx">notifications</span><span class="p">.</span><span class="nx">queue</span> <span class="nx">scope</span><span class="p">.</span><span class="nx">queueName</span>
-          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Initialize the popover.</p></div></div><div class="code"><div class="wrapper">        <span class="p">(</span><span class="nv">$button = </span><span class="nx">element</span><span class="p">.</span><span class="nx">find</span> <span class="s">&#39;button&#39;</span><span class="p">).</span><span class="nx">popover</span>
-          
-          <span class="nv">container: </span><span class="s">&#39;body&#39;</span>
-          <span class="nv">content: </span><span class="nf">-&gt;</span> <span class="nx">element</span><span class="p">.</span><span class="nx">find</span> <span class="s">&#39;.notifications&#39;</span>
-          <span class="nv">html: </span><span class="kc">true</span>  
-          <span class="nv">placement: </span><span class="s">&#39;bottom&#39;</span>
-          <span class="nv">template: </span><span class="s">&quot;&quot;&quot;</span>
 
-<span class="s">&lt;div class=&quot;popover popover-</span><span class="si">#{</span><span class="nx">attr</span><span class="p">.</span><span class="nx">queueName</span><span class="si">}</span><span class="s">&quot; role=&quot;tooltip&quot;&gt;</span>
-<span class="s">  &lt;div class=&quot;arrow&quot;&gt;&lt;/div&gt;</span>
-<span class="s">  &lt;h3 class=&quot;popover-title&quot;&gt;&lt;/h3&gt;</span>
-<span class="s">  &lt;div class=&quot;popover-content&quot;&gt;&lt;/div&gt;</span>
-<span class="s">&lt;/div&gt;</span>
+      <span class="nv">directive.link = </span><span class="nf">(scope, element, attr) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Put the queue name into the scope.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">scope.queueName = </span><span class="nx">attr</span><span class="p">.</span><span class="nx">queueName</span>
+        <span class="nv">scope.queue = </span><span class="nx">notifications</span><span class="p">.</span><span class="nx">queue</span> <span class="nx">scope</span><span class="p">.</span><span class="nx">queueName</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>When notifications are akcnowledged.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">scope</span><span class="p">.</span><span class="nx">$on</span> <span class="s">&#39;shrub.ui.notifications.acknowledged&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+          <span class="k">return</span> <span class="k">unless</span> <span class="nx">scope</span><span class="p">.</span><span class="nx">unacknowledged</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Tell the server.</p></div></div><div class="code"><div class="wrapper">          <span class="nx">rpc</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span>
+            <span class="s">&#39;shrub.ui.notifications.acknowledged&#39;</span>
+            <span class="nv">queue: </span><span class="nx">attr</span><span class="p">.</span><span class="nx">queueName</span>
+          <span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Mark client notifications as acknowledged.</p></div></div><div class="code"><div class="wrapper">          <span class="k">for</span> <span class="nx">notification</span> <span class="k">in</span> <span class="nx">scope</span><span class="p">.</span><span class="nx">queue</span><span class="p">.</span><span class="nx">notifications</span><span class="p">()</span>
+            <span class="nv">notification.acknowledged = </span><span class="kc">true</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Mark the notification as read.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">scope.markAsRead = </span><span class="nf">(notification, markedAsRead) -&gt;</span>
+          <span class="k">return</span> <span class="k">if</span> <span class="nx">markedAsRead</span> <span class="o">is</span> <span class="nx">notification</span><span class="p">.</span><span class="nx">markedAsRead</span>
 
-<span class="s">&quot;&quot;&quot;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Wait for the new queue to be compiled into the DOM, and then
-reposition the popover, since the new content may shift it.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">scope</span><span class="p">.</span><span class="nx">$watch</span> <span class="s">&#39;queue&#39;</span><span class="p">,</span> <span class="nf">(queue) -&gt;</span> <span class="nx">scope</span><span class="p">.</span><span class="nx">$$postDigest</span> <span class="nf">-&gt;</span>
-          <span class="k">return</span> <span class="k">unless</span> <span class="p">(</span><span class="nv">pop = </span><span class="nx">$button</span><span class="p">.</span><span class="nx">data</span> <span class="s">&#39;bs.popover&#39;</span><span class="p">).</span><span class="nx">$tip</span><span class="o">?</span>
-          <span class="nx">pop</span><span class="p">.</span><span class="nx">applyPlacement</span><span class="p">(</span>
-            <span class="nx">pop</span><span class="p">.</span><span class="nx">getCalculatedOffset</span><span class="p">(</span>
-              <span class="s">&#39;bottom&#39;</span><span class="p">,</span> <span class="nx">pop</span><span class="p">.</span><span class="nx">getPosition</span><span class="p">()</span>
-              <span class="nx">pop</span><span class="p">.</span><span class="nx">$tip</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">offsetWidth</span><span class="p">,</span> <span class="nx">pop</span><span class="p">.</span><span class="nx">$tip</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">offsetHeight</span>
-            <span class="p">)</span>
-            <span class="s">&#39;bottom&#39;</span>
-          <span class="p">)</span>
-                </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Hide the popover when any notification is clicked. Feel free
-to override this in your skinLink implementation.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">scope.notificationClicked = </span><span class="nf">(notification) -&gt;</span>
-          <span class="nx">$button</span><span class="p">.</span><span class="nx">popover</span> <span class="s">&#39;hide&#39;</span>
-          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Angular doesn't like when you return DOM elements.</p></div></div><div class="code"><div class="wrapper">          <span class="k">return</span>
-      
+          <span class="nv">notification.markedAsRead = </span><span class="nx">markedAsRead</span>
+
+          <span class="nx">rpc</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span>
+            <span class="s">&#39;shrub.ui.notifications.markAsRead&#39;</span>
+            <span class="nv">ids: </span><span class="p">[</span><span class="nx">notification</span><span class="p">.</span><span class="nx">id</span><span class="p">]</span>
+            <span class="nv">markedAsRead: </span><span class="nx">markedAsRead</span>
+          <span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Hide the popover when any notification is clicked. Feel free
+to catch the <code>shrub.ui.notification.clicked</code> event in your
+skinLink implementation.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">scope.notificationClicked = </span><span class="nf">($event, notification) -&gt;</span>
+
+          <span class="nx">scope</span><span class="p">.</span><span class="nx">$emit</span><span class="p">(</span>
+            <span class="s">&#39;shrub.ui.notification.clicked&#39;</span>
+            <span class="nx">$event</span><span class="p">,</span> <span class="nx">notification</span>
+          <span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Set up default behavior on a click event, and provide the
+deregistration function to any skinLink consumers.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">scope.$deregisterDefaultClickHandler = </span><span class="nx">scope</span><span class="p">.</span><span class="nx">$on</span><span class="p">(</span>
+          <span class="s">&#39;shrub.ui.notification.clicked&#39;</span>
+          <span class="nf">($event, $clickEvent, notification) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Mark the notification as read.</p></div></div><div class="code"><div class="wrapper">            <span class="nx">scope</span><span class="p">.</span><span class="nx">markAsRead</span> <span class="nx">notification</span><span class="p">,</span> <span class="kc">true</span>
+        <span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Keep track of unread items.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">scope</span><span class="p">.</span><span class="nx">$watch</span> <span class="s">&#39;queue.notifications()&#39;</span><span class="p">,</span> <span class="nf">(notifications) -&gt;</span>
+          <span class="nv">unacknowledged = </span><span class="nx">notifications</span><span class="p">.</span><span class="nx">filter</span> <span class="nf">(notification) -&gt;</span>
+            <span class="o">not</span> <span class="nx">notification</span><span class="p">.</span><span class="nx">acknowledged</span>
+
+          <span class="nv">scope.unacknowledged = </span><span class="k">if</span> <span class="nx">unacknowledged</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span>
+            <span class="nx">unacknowledged</span><span class="p">.</span><span class="nx">length</span>
+          <span class="k">else</span>
+            <span class="kc">undefined</span>
+        <span class="p">,</span> <span class="kc">true</span>
+
       <span class="nv">directive.scope = </span><span class="p">{}</span>
-      
+
       <span class="nv">directive.template = </span><span class="s">&quot;&quot;&quot;</span>
 
 <span class="s">&lt;div</span>
-<span class="s">  data-ng-show=&quot;!!queue.length&quot;</span>
+<span class="s">  class=&quot;notifications-container&quot;</span>
 <span class="s">&gt;</span>
 
-<span class="s">  &lt;button&gt;!&lt;/button&gt;</span>
-<span class="s">  </span>
+<span class="s">  &lt;button&gt;</span>
+<span class="s">    !</span>
+<span class="s">    &lt;span</span>
+<span class="s">      class=&quot;unacknowledged&quot;</span>
+<span class="s">      data-ng-bind=&quot;unacknowledged&quot;</span>
+<span class="s">      data-ng-if=&quot;unacknowledged &gt; 0&quot;</span>
+<span class="s">    &gt;&lt;/span&gt;</span>
+<span class="s">  &lt;/button&gt;</span>
+
 <span class="s">  &lt;div</span>
-<span class="s">    class=&quot;notifications-container&quot;</span>
 <span class="s">    data-ng-hide=&quot;true&quot;</span>
 <span class="s">  &gt;</span>
-<span class="s">    </span>
+
 <span class="s">    &lt;div</span>
 <span class="s">      class=&quot;notifications&quot;</span>
 <span class="s">      data-ng-class=&quot;classes&quot;</span>
 <span class="s">    &gt;</span>
-<span class="s">  </span>
-<span class="s">      &lt;div</span>
-<span class="s">        class=&quot;title&quot;</span>
-<span class="s">        data-shrub-ui-notifications-title</span>
-<span class="s">      &gt;&lt;/div&gt;</span>
-<span class="s">      </span>
+
 <span class="s">      &lt;ul&gt;</span>
+
 <span class="s">        &lt;li</span>
-<span class="s">          data-ng-repeat=&quot;notification in queue&quot;</span>
+<span class="s">          data-ng-if=&quot;!!queue.notifications().length&quot;</span>
+<span class="s">          data-ng-repeat=&quot;notification in queue.notifications()&quot;</span>
 <span class="s">        &gt;</span>
 <span class="s">          &lt;a</span>
 <span class="s">            data-shrub-ui-notifications-item</span>
 <span class="s">            data-notification=&quot;notification&quot;</span>
 <span class="s">            data-ng-href=&quot;{{notification.path}}&quot;</span>
-<span class="s">            data-ng-click=&quot;notificationClicked(notification)&quot;</span>
+<span class="s">            data-ng-click=&quot;notificationClicked($event, notification)&quot;</span>
 <span class="s">          &gt;</span>
+<span class="s">          &lt;/a&gt;</span>
+<span class="s">        &lt;/li&gt;</span>
+
+<span class="s">        &lt;li</span>
+<span class="s">          data-ng-if=&quot;!queue.notifications().length&quot;</span>
+<span class="s">        &gt;</span>
+<span class="s">          &lt;a</span>
+<span class="s">            href=&quot;javascript:void(0)&quot;</span>
+<span class="s">          &gt;</span>
+<span class="s">            There&#39;s nothing here yet...</span>
 <span class="s">          &lt;/a&gt;</span>
 <span class="s">        &lt;/li&gt;</span>
 <span class="s">      &lt;/ul&gt;</span>
@@ -85,48 +102,103 @@ to override this in your skinLink implementation.</p></div></div><div class="cod
 <span class="s">&lt;/div&gt;</span>
 
 <span class="s">&quot;&quot;&quot;</span>
-      
+
       <span class="nx">directive</span>
-      
-  <span class="p">]</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookservice">Implements hook <code>service</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;service&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
+
+  <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookservice">Implements hook <code>service</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;service&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
     <span class="s">&#39;$q&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-rpc&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-socket&#39;</span>
     <span class="nf">($q, rpc, socket) -&gt;</span>
-    
-      <span class="nv">service = </span><span class="p">{}</span>
-      
-      <span class="nv">_notifications = </span><span class="p">{}</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="notificationslist">notifications.list</h2>
 
-<p>Get a queue of notifications.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">service.queue = </span><span class="nf">(queue) -&gt;</span> <span class="nx">_notifications</span><span class="p">[</span><span class="nx">queue</span><span class="p">]</span> <span class="o">?=</span> <span class="p">[]</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="notificationsloadmore">notifications.loadMore</h2>
+      <span class="nv">service = </span><span class="p">{}</span>
+
+      <span class="nv">_queues = </span><span class="p">{}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="notificationslist">notifications.list</h2>
+
+<p>Get a queue of notifications.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">service.queue = </span><span class="nf">(queue) -&gt;</span>
+        <span class="nx">_queues</span><span class="p">[</span><span class="nx">queue</span><span class="p">]</span> <span class="o">?=</span> <span class="k">new</span> <span class="nx">NotificationQueue</span><span class="p">()</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="notificationsloadmore">notifications.loadMore</h2>
 
 <p>Load more notifications</p></div></div><div class="code"><div class="wrapper">      <span class="nv">service.loadMore = </span><span class="nf">(queue, skip) -&gt;</span>
+
         <span class="nx">rpc</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span>
           <span class="s">&#39;shrub.ui.notifications&#39;</span>
           <span class="nv">queue: </span><span class="nx">queue</span>
           <span class="nv">skip: </span><span class="nx">skip</span>
-        
+
         <span class="p">).</span><span class="nx">then</span> <span class="nf">(notifications) -&gt;</span>
-          <span class="nx">addNotifications</span> <span class="nx">queue</span><span class="p">,</span> <span class="nx">notifications</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Accept notifications from the server.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">socket</span><span class="p">.</span><span class="nx">on</span> <span class="s">&#39;shrub.ui.notifications&#39;</span><span class="p">,</span> <span class="nf">(data) -&gt;</span>
-        <span class="nx">addNotifications</span> <span class="nx">data</span><span class="p">.</span><span class="nx">queue</span><span class="p">,</span> <span class="nx">data</span><span class="p">.</span><span class="nx">notifications</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Add notifications into a queue.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">addNotifications = </span><span class="nf">(queue, notifications) -&gt;</span>
-        <span class="nx">_notifications</span><span class="p">[</span><span class="nx">queue</span><span class="p">]</span> <span class="o">?=</span> <span class="p">[]</span>
-        
-        <span class="k">for</span> <span class="nx">notification</span> <span class="k">in</span> <span class="nx">notifications</span>
-          <span class="nx">_notifications</span><span class="p">[</span><span class="nx">queue</span><span class="p">].</span><span class="nx">unshift</span> <span class="nx">notification</span>
-          
-        <span class="k">return</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Add in initial notifications from config.</p></div></div><div class="code"><div class="wrapper">      <span class="k">for</span> <span class="nx">queue</span><span class="p">,</span> <span class="nx">notifications</span> <span class="k">of</span> <span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span>
+
+          <span class="nx">_queues</span><span class="p">[</span><span class="nx">queue</span><span class="p">]</span> <span class="o">?=</span> <span class="k">new</span> <span class="nx">NotificationQueue</span><span class="p">()</span>
+          <span class="nx">_queues</span><span class="p">[</span><span class="nx">queue</span><span class="p">].</span><span class="nx">add</span> <span class="nx">notifications</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Add in initial notifications from config.</p></div></div><div class="code"><div class="wrapper">      <span class="k">for</span> <span class="nx">queue</span><span class="p">,</span> <span class="nx">notifications</span> <span class="k">of</span> <span class="nx">config</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span>
         <span class="s">&#39;packageConfig:shrub-ui:notifications&#39;</span>
       <span class="p">)</span>
-        <span class="nx">addNotifications</span> <span class="nx">queue</span><span class="p">,</span> <span class="nx">notifications</span>
-      
+        <span class="nx">_queues</span><span class="p">[</span><span class="nx">queue</span><span class="p">]</span> <span class="o">?=</span> <span class="k">new</span> <span class="nx">NotificationQueue</span><span class="p">()</span>
+        <span class="nx">_queues</span><span class="p">[</span><span class="nx">queue</span><span class="p">].</span><span class="nx">add</span> <span class="nx">notifications</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Accept notifications from the server.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">socket</span><span class="p">.</span><span class="nx">on</span> <span class="s">&#39;shrub.ui.notifications&#39;</span><span class="p">,</span> <span class="nf">(data) -&gt;</span>
+        <span class="p">{</span><span class="nx">queue</span><span class="p">,</span> <span class="nx">notifications</span><span class="p">}</span> <span class="o">=</span> <span class="nx">data</span>
+
+        <span class="nx">_queues</span><span class="p">[</span><span class="nx">queue</span><span class="p">]</span> <span class="o">?=</span> <span class="k">new</span> <span class="nx">NotificationQueue</span><span class="p">()</span>
+        <span class="nx">_queues</span><span class="p">[</span><span class="nx">queue</span><span class="p">].</span><span class="nx">add</span> <span class="nx">notifications</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Remove notifications.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">socket</span><span class="p">.</span><span class="nx">on</span> <span class="s">&#39;shrub.ui.notifications.remove&#39;</span><span class="p">,</span> <span class="nf">(data) -&gt;</span>
+        <span class="p">{</span><span class="nx">queue</span><span class="p">,</span> <span class="nx">ids</span><span class="p">}</span> <span class="o">=</span> <span class="nx">data</span>
+
+        <span class="nx">_queues</span><span class="p">[</span><span class="nx">queue</span><span class="p">]</span> <span class="o">?=</span> <span class="k">new</span> <span class="nx">NotificationQueue</span><span class="p">()</span>
+        <span class="nx">_queues</span><span class="p">[</span><span class="nx">queue</span><span class="p">].</span><span class="nx">remove</span> <span class="nx">ids</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Mark notifications as read.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">socket</span><span class="p">.</span><span class="nx">on</span> <span class="s">&#39;shrub.ui.notifications.markAsRead&#39;</span><span class="p">,</span> <span class="nf">(data) -&gt;</span>
+        <span class="p">{</span><span class="nx">queue</span><span class="p">,</span> <span class="nx">ids</span><span class="p">,</span> <span class="nx">markedAsRead</span><span class="p">}</span> <span class="o">=</span> <span class="nx">data</span>
+
+        <span class="nx">_queues</span><span class="p">[</span><span class="nx">queue</span><span class="p">]</span> <span class="o">?=</span> <span class="k">new</span> <span class="nx">NotificationQueue</span><span class="p">()</span>
+        <span class="nx">_queues</span><span class="p">[</span><span class="nx">queue</span><span class="p">].</span><span class="nx">markAsRead</span> <span class="nx">ids</span><span class="p">,</span> <span class="nx">markedAsRead</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Mark notifications as acknowledged.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">socket</span><span class="p">.</span><span class="nx">on</span> <span class="s">&#39;shrub.ui.notifications.acknowledged&#39;</span><span class="p">,</span> <span class="nf">(data) -&gt;</span>
+        <span class="p">{</span><span class="nx">queue</span><span class="p">,</span> <span class="nx">ids</span><span class="p">}</span> <span class="o">=</span> <span class="nx">data</span>
+
+        <span class="nx">_queues</span><span class="p">[</span><span class="nx">queue</span><span class="p">]</span> <span class="o">?=</span> <span class="k">new</span> <span class="nx">NotificationQueue</span><span class="p">()</span>
+        <span class="nx">_queues</span><span class="p">[</span><span class="nx">queue</span><span class="p">].</span><span class="nx">markAsAcknowledged</span> <span class="nx">ids</span>
+
       <span class="nx">service</span>
-      
+
   <span class="p">]</span>
 
   <span class="nx">registrar</span><span class="p">.</span><span class="nx">recur</span> <span class="p">[</span>
     <span class="s">&#39;item&#39;</span><span class="p">,</span> <span class="s">&#39;title&#39;</span>
-  <span class="p">]</span></div></div></div></div></body></html>
+  <span class="p">]</span>
+
+<span class="k">class</span> <span class="nx">NotificationQueue</span>
+
+  <span class="nv">constructor: </span><span class="nf">-&gt;</span>
+
+    <span class="vi">@_notifications = </span><span class="p">[]</span>
+    <span class="vi">@_notificationsIndex = </span><span class="p">{}</span>
+
+  <span class="nv">add: </span><span class="nf">(notifications) -&gt;</span>
+
+    <span class="k">for</span> <span class="nx">notification</span> <span class="k">in</span> <span class="nx">notifications</span>
+
+      <span class="nx">@_notifications</span><span class="p">.</span><span class="nx">unshift</span> <span class="nx">notification</span>
+      <span class="nx">@_notificationsIndex</span><span class="p">[</span><span class="nx">notification</span><span class="p">.</span><span class="nx">id</span><span class="p">]</span> <span class="o">=</span> <span class="nx">notification</span>
+
+    <span class="k">return</span>
+
+  <span class="nv">remove: </span><span class="nf">(ids) -&gt;</span>
+
+    <span class="k">for</span> <span class="nx">id</span> <span class="k">in</span> <span class="nx">ids</span>
+      <span class="k">continue</span> <span class="k">unless</span> <span class="nv">notification = </span><span class="nx">@_notificationsIndex</span><span class="p">[</span><span class="nx">id</span><span class="p">]</span>
+
+      <span class="nv">index = </span><span class="nx">@_notifications</span><span class="p">.</span><span class="nx">indexOf</span> <span class="nx">notification</span>
+      <span class="nx">@_notifications</span><span class="p">.</span><span class="nx">splice</span> <span class="nx">index</span><span class="p">,</span> <span class="mi">1</span>
+      <span class="k">delete</span> <span class="nx">@_notificationsIndex</span><span class="p">[</span><span class="nx">id</span><span class="p">]</span>
+
+    <span class="k">return</span>
+
+  <span class="nv">notifications: </span><span class="nf">-&gt;</span> <span class="nx">@_notifications</span>
+
+  <span class="nv">markAsAcknowledged: </span><span class="nf">(ids) -&gt;</span>
+
+    <span class="k">for</span> <span class="nx">id</span> <span class="k">in</span> <span class="nx">ids</span>
+      <span class="k">continue</span> <span class="k">unless</span> <span class="nv">notification = </span><span class="nx">@_notificationsIndex</span><span class="p">[</span><span class="nx">id</span><span class="p">]</span>
+
+      <span class="nv">notification.acknowledged = </span><span class="kc">true</span>
+
+    <span class="k">return</span>
+
+  <span class="nv">markAsRead: </span><span class="nf">(ids, markedAsRead) -&gt;</span>
+
+    <span class="k">for</span> <span class="nx">id</span> <span class="k">in</span> <span class="nx">ids</span>
+      <span class="k">continue</span> <span class="k">unless</span> <span class="nv">notification = </span><span class="nx">@_notificationsIndex</span><span class="p">[</span><span class="nx">id</span><span class="p">]</span>
+
+      <span class="nv">notification.markedAsRead = </span><span class="nx">markedAsRead</span>
+
+    <span class="k">return</span></div></div></div></div></body></html>

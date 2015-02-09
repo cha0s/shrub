@@ -1009,6 +1009,58 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
         }, {
           "type": "folder",
           "data": {
+            "path": "packages/shrub-audit",
+            "title": "shrub-audit"
+          },
+          "depth": 2,
+          "children": [
+            {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-audit/fingerprint.coffee",
+                "projectPath": "packages/shrub-audit/fingerprint.coffee",
+                "targetPath": "packages/shrub-audit/fingerprint",
+                "pageTitle": "packages/shrub-audit/fingerprint",
+                "title": "fingerprint"
+              },
+              "depth": 3,
+              "outline": []
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-audit/index.coffee",
+                "projectPath": "packages/shrub-audit/index.coffee",
+                "targetPath": "packages/shrub-audit/index",
+                "pageTitle": "packages/shrub-audit/index",
+                "title": "index"
+              },
+              "depth": 3,
+              "outline": []
+            }
+          ]
+        }, {
+          "type": "folder",
+          "data": {
             "path": "packages/shrub-config",
             "title": "shrub-config"
           },
@@ -1753,11 +1805,11 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                   "foldPrefix": "^",
                   "name": "CoffeeScript"
                 },
-                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-grunt/modules.coffee",
-                "projectPath": "packages/shrub-grunt/modules.coffee",
-                "targetPath": "packages/shrub-grunt/modules",
-                "pageTitle": "packages/shrub-grunt/modules",
-                "title": "modules"
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-grunt/lint.coffee",
+                "projectPath": "packages/shrub-grunt/lint.coffee",
+                "targetPath": "packages/shrub-grunt/lint",
+                "pageTitle": "packages/shrub-grunt/lint",
+                "title": "lint"
               },
               "depth": 3,
               "outline": []
@@ -1774,14 +1826,87 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                   "foldPrefix": "^",
                   "name": "CoffeeScript"
                 },
-                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-grunt/tests.coffee",
-                "projectPath": "packages/shrub-grunt/tests.coffee",
-                "targetPath": "packages/shrub-grunt/tests",
-                "pageTitle": "packages/shrub-grunt/tests",
-                "title": "tests"
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-grunt/modules.coffee",
+                "projectPath": "packages/shrub-grunt/modules.coffee",
+                "targetPath": "packages/shrub-grunt/modules",
+                "pageTitle": "packages/shrub-grunt/modules",
+                "title": "modules"
               },
               "depth": 3,
               "outline": []
+            }, {
+              "type": "folder",
+              "data": {
+                "path": "packages/shrub-grunt/tests",
+                "title": "tests"
+              },
+              "depth": 3,
+              "children": [
+                {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-grunt/tests/build.coffee",
+                    "projectPath": "packages/shrub-grunt/tests/build.coffee",
+                    "targetPath": "packages/shrub-grunt/tests/build",
+                    "pageTitle": "packages/shrub-grunt/tests/build",
+                    "title": "build"
+                  },
+                  "depth": 4,
+                  "outline": []
+                }, {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-grunt/tests/index.coffee",
+                    "projectPath": "packages/shrub-grunt/tests/index.coffee",
+                    "targetPath": "packages/shrub-grunt/tests/index",
+                    "pageTitle": "packages/shrub-grunt/tests/index",
+                    "title": "index"
+                  },
+                  "depth": 4,
+                  "outline": []
+                }, {
+                  "type": "file",
+                  "data": {
+                    "language": {
+                      "nameMatchers": [".coffee", "Cakefile"],
+                      "pygmentsLexer": "coffee-script",
+                      "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                      "strictMultiLineEnd": false,
+                      "singleLineComment": ["#"],
+                      "ignorePrefix": "}",
+                      "foldPrefix": "^",
+                      "name": "CoffeeScript"
+                    },
+                    "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-grunt/tests/run.coffee",
+                    "projectPath": "packages/shrub-grunt/tests/run.coffee",
+                    "targetPath": "packages/shrub-grunt/tests/run",
+                    "pageTitle": "packages/shrub-grunt/tests/run",
+                    "title": "run"
+                  },
+                  "depth": 4,
+                  "outline": []
+                }
+              ]
             }
           ]
         }, {
@@ -1983,6 +2108,14 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                         "level": 3,
                         "title": "::addRoute",
                         "slug": "addroute"
+                      },
+                      "depth": 3
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 3,
+                        "title": "::cluster",
+                        "slug": "cluster"
                       },
                       "depth": 3
                     }, {
@@ -2260,6 +2393,37 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
         }, {
           "type": "folder",
           "data": {
+            "path": "packages/shrub-install",
+            "title": "shrub-install"
+          },
+          "depth": 2,
+          "children": [
+            {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-install/index.coffee",
+                "projectPath": "packages/shrub-install/index.coffee",
+                "targetPath": "packages/shrub-install/index",
+                "pageTitle": "packages/shrub-install/index",
+                "title": "index"
+              },
+              "depth": 3,
+              "outline": []
+            }
+          ]
+        }, {
+          "type": "folder",
+          "data": {
             "path": "packages/shrub-limiter",
             "title": "shrub-limiter"
           },
@@ -2335,6 +2499,169 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "slug": "rate-limiter"
                   },
                   "depth": 1
+                }
+              ]
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-limiter/limiter.coffee",
+                "projectPath": "packages/shrub-limiter/limiter.coffee",
+                "targetPath": "packages/shrub-limiter/limiter",
+                "pageTitle": "packages/shrub-limiter/limiter",
+                "title": "limiter"
+              },
+              "depth": 3,
+              "outline": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 1,
+                    "title": "Limits",
+                    "slug": "limits"
+                  },
+                  "depth": 1,
+                  "children": [
+                    {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "Limiter",
+                        "slug": "limiter"
+                      },
+                      "depth": 2
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "threshold",
+                        "slug": "threshold"
+                      },
+                      "depth": 2,
+                      "children": [
+                        {
+                          "type": "heading",
+                          "data": {
+                            "level": 3,
+                            "title": ".add",
+                            "slug": "add"
+                          },
+                          "depth": 3
+                        }, {
+                          "type": "heading",
+                          "data": {
+                            "level": 3,
+                            "title": ".accrueAndCheckThreshold",
+                            "slug": "accrueandcheckthreshold"
+                          },
+                          "depth": 3
+                        }, {
+                          "type": "heading",
+                          "data": {
+                            "level": 3,
+                            "title": ".score",
+                            "slug": "score"
+                          },
+                          "depth": 3
+                        }, {
+                          "type": "heading",
+                          "data": {
+                            "level": 3,
+                            "title": ".ttl",
+                            "slug": "ttl"
+                          },
+                          "depth": 3
+                        }, {
+                          "type": "heading",
+                          "data": {
+                            "level": 3,
+                            "title": ".checkThreshold",
+                            "slug": "checkthreshold"
+                          },
+                          "depth": 3,
+                          "children": [
+                            {
+                              "type": "heading",
+                              "data": {
+                                "level": 4,
+                                "title": "._largest",
+                                "slug": "-largest"
+                              },
+                              "depth": 4
+                            }
+                          ]
+                        }, {
+                          "type": "heading",
+                          "data": {
+                            "level": 3,
+                            "title": ".add",
+                            "slug": "add"
+                          },
+                          "depth": 3
+                        }, {
+                          "type": "heading",
+                          "data": {
+                            "level": 3,
+                            "title": ".score",
+                            "slug": "score"
+                          },
+                          "depth": 3
+                        }, {
+                          "type": "heading",
+                          "data": {
+                            "level": 3,
+                            "title": ".ttl",
+                            "slug": "ttl"
+                          },
+                          "depth": 3
+                        }
+                      ]
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "ThresholdBase",
+                        "slug": "thresholdbase"
+                      },
+                      "depth": 2,
+                      "children": [
+                        {
+                          "type": "heading",
+                          "data": {
+                            "level": 3,
+                            "title": ".every",
+                            "slug": "every"
+                          },
+                          "depth": 3
+                        }
+                      ]
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "ThresholdMultiplier",
+                        "slug": "thresholdmultiplier"
+                      },
+                      "depth": 2
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 2,
+                        "title": "ThresholdFinal",
+                        "slug": "thresholdfinal"
+                      },
+                      "depth": 2
+                    }
+                  ]
                 }
               ]
             }
@@ -2720,6 +3047,27 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                   "depth": 1
                 }
               ]
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-session/store.coffee",
+                "projectPath": "packages/shrub-session/store.coffee",
+                "targetPath": "packages/shrub-session/store",
+                "pageTitle": "packages/shrub-session/store",
+                "title": "store"
+              },
+              "depth": 3,
+              "outline": []
             }
           ]
         }, {
@@ -3052,42 +3400,70 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "title": "Socket.IO",
                     "slug": "socketio"
                   },
-                  "depth": 1,
-                  "children": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "SocketIoManager",
-                        "slug": "socketiomanager"
-                      },
-                      "depth": 2
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "::channelsSocketIsIn",
-                        "slug": "channelssocketisin"
-                      },
-                      "depth": 2
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "::listen",
-                        "slug": "listen"
-                      },
-                      "depth": 2
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 2,
-                        "title": "::socketsInChannel",
-                        "slug": "socketsinchannel"
-                      },
-                      "depth": 2
-                    }
-                  ]
+                  "depth": 1
+                }
+              ]
+            }, {
+              "type": "file",
+              "data": {
+                "language": {
+                  "nameMatchers": [".coffee", "Cakefile"],
+                  "pygmentsLexer": "coffee-script",
+                  "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
+                  "strictMultiLineEnd": false,
+                  "singleLineComment": ["#"],
+                  "ignorePrefix": "}",
+                  "foldPrefix": "^",
+                  "name": "CoffeeScript"
+                },
+                "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/packages/shrub-socket-socket.io/manager.coffee",
+                "projectPath": "packages/shrub-socket-socket.io/manager.coffee",
+                "targetPath": "packages/shrub-socket-socket.io/manager",
+                "pageTitle": "packages/shrub-socket-socket.io/manager",
+                "title": "manager"
+              },
+              "depth": 3,
+              "outline": [
+                {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "SocketIoManager",
+                    "slug": "socketiomanager"
+                  },
+                  "depth": 2
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "::channels",
+                    "slug": "channels"
+                  },
+                  "depth": 2
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "::channels",
+                    "slug": "channels"
+                  },
+                  "depth": 2
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "::listen",
+                    "slug": "listen"
+                  },
+                  "depth": 2
+                }, {
+                  "type": "heading",
+                  "data": {
+                    "level": 2,
+                    "title": "::socketsInChannel",
+                    "slug": "socketsinchannel"
+                  },
+                  "depth": 2
                 }
               ]
             }
@@ -3939,6 +4315,14 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "depth": 2
                         }
                       ]
+                    }, {
+                      "type": "heading",
+                      "data": {
+                        "level": 1,
+                        "title": "Secure by default.",
+                        "slug": "secure-by-default"
+                      },
+                      "depth": 1
                     }
                   ]
                 }, {
@@ -4397,64 +4781,6 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
               "foldPrefix": "^",
               "name": "CoffeeScript"
             },
-            "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/server/audit.coffee",
-            "projectPath": "server/audit.coffee",
-            "targetPath": "server/audit",
-            "pageTitle": "server/audit",
-            "title": "audit"
-          },
-          "depth": 2,
-          "outline": [
-            {
-              "type": "heading",
-              "data": {
-                "level": 1,
-                "title": "Audit",
-                "slug": "audit"
-              },
-              "depth": 1,
-              "children": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 3,
-                    "title": "fingerprint",
-                    "slug": "fingerprint"
-                  },
-                  "depth": 3
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 3,
-                    "title": "fingerprintKeys",
-                    "slug": "fingerprintkeys"
-                  },
-                  "depth": 3
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 3,
-                    "title": "fingerprintRaw",
-                    "slug": "fingerprintraw"
-                  },
-                  "depth": 3
-                }
-              ]
-            }
-          ]
-        }, {
-          "type": "file",
-          "data": {
-            "language": {
-              "nameMatchers": [".coffee", "Cakefile"],
-              "pygmentsLexer": "coffee-script",
-              "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-              "strictMultiLineEnd": false,
-              "singleLineComment": ["#"],
-              "ignorePrefix": "}",
-              "foldPrefix": "^",
-              "name": "CoffeeScript"
-            },
             "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/server/bootstrap.coffee",
             "projectPath": "server/bootstrap.coffee",
             "targetPath": "server/bootstrap",
@@ -4591,169 +4917,6 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                     "slug": "hasher"
                   },
                   "depth": 3
-                }
-              ]
-            }
-          ]
-        }, {
-          "type": "file",
-          "data": {
-            "language": {
-              "nameMatchers": [".coffee", "Cakefile"],
-              "pygmentsLexer": "coffee-script",
-              "multiLineComment": ["###*", " *", " ###", "###", "#", "###", "###*", "#", "###"],
-              "strictMultiLineEnd": false,
-              "singleLineComment": ["#"],
-              "ignorePrefix": "}",
-              "foldPrefix": "^",
-              "name": "CoffeeScript"
-            },
-            "sourcePath": "/media/ext/mnt/home/cha0s6983/dev/code/js/shrub/server/limits.coffee",
-            "projectPath": "server/limits.coffee",
-            "targetPath": "server/limits",
-            "pageTitle": "server/limits",
-            "title": "limits"
-          },
-          "depth": 2,
-          "outline": [
-            {
-              "type": "heading",
-              "data": {
-                "level": 1,
-                "title": "Limits",
-                "slug": "limits"
-              },
-              "depth": 1,
-              "children": [
-                {
-                  "type": "heading",
-                  "data": {
-                    "level": 2,
-                    "title": "Limiter",
-                    "slug": "limiter"
-                  },
-                  "depth": 2,
-                  "children": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".add",
-                        "slug": "add"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".accrueAndCheckThreshold",
-                        "slug": "accrueandcheckthreshold"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".score",
-                        "slug": "score"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".ttl",
-                        "slug": "ttl"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".checkThreshold",
-                        "slug": "checkthreshold"
-                      },
-                      "depth": 3,
-                      "children": [
-                        {
-                          "type": "heading",
-                          "data": {
-                            "level": 4,
-                            "title": "._largest",
-                            "slug": "-largest"
-                          },
-                          "depth": 4
-                        }
-                      ]
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".add",
-                        "slug": "add"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".score",
-                        "slug": "score"
-                      },
-                      "depth": 3
-                    }, {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".ttl",
-                        "slug": "ttl"
-                      },
-                      "depth": 3
-                    }
-                  ]
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 2,
-                    "title": "ThresholdBase",
-                    "slug": "thresholdbase"
-                  },
-                  "depth": 2,
-                  "children": [
-                    {
-                      "type": "heading",
-                      "data": {
-                        "level": 3,
-                        "title": ".every",
-                        "slug": "every"
-                      },
-                      "depth": 3
-                    }
-                  ]
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 2,
-                    "title": "ThresholdMultiplier",
-                    "slug": "thresholdmultiplier"
-                  },
-                  "depth": 2
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 2,
-                    "title": "ThresholdFinal",
-                    "slug": "thresholdfinal"
-                  },
-                  "depth": 2
-                }, {
-                  "type": "heading",
-                  "data": {
-                    "level": 2,
-                    "title": "threshold",
-                    "slug": "threshold"
-                  },
-                  "depth": 2
                 }
               ]
             }

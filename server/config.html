@@ -15,36 +15,34 @@
 <p><em>Load configuration from the settings file and package defaults.</em></p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.load = </span><span class="nf">-&gt;</span>
 
   <span class="c1"># Ensure the configuration file exists.</span>
-  <span class="k">unless</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">existsSync</span> <span class="nv">settingsFilename = </span><span class="s">&quot;./config/settings.json&quot;</span>
-    <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span> <span class="s">&quot;Settings file not found! You should copy config/default.settings.json to config/settings.json&quot;</span>
-  
+  <span class="k">unless</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">existsSync</span> <span class="nv">settingsFilename = </span><span class="s">&#39;./config/settings.json&#39;</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span> <span class="s">&#39;Settings file not found! You should copy config/default.settings.json to config/settings.json&#39;</span>
+
   <span class="nx">nconf</span><span class="p">.</span><span class="nx">argv</span><span class="p">().</span><span class="nx">env</span><span class="p">().</span><span class="nx">file</span> <span class="nx">settingsFilename</span>
-  
+
   <span class="nx">nconf</span><span class="p">.</span><span class="nx">defaults</span> <span class="nv">path: </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">__dirname</span><span class="si">}</span><span class="s">/..&quot;</span>
-    
+
   <span class="k">return</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="loadpackagesettings">loadPackageSettings</h3>
 
 <p><em>Load package settings as defaults in the configuration</em></p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.loadPackageSettings = </span><span class="nf">-&gt;</span>
 
   <span class="c1"># Register packages.</span>
-  <span class="nx">debug</span> <span class="s">&quot;Registering packages...&quot;</span>
-  
+  <span class="nx">debug</span> <span class="s">&#39;Registering packages...&#39;</span>
+
   <span class="nx">pkgman</span><span class="p">.</span><span class="nx">registerPackageList</span> <span class="nx">nconf</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;packageList&#39;</span>
-  
-  <span class="nx">debug</span> <span class="s">&quot;Packages registered.&quot;</span>
-  
+
+  <span class="nx">debug</span> <span class="s">&#39;Packages registered.&#39;</span>
+
   <span class="nv">packageSettings = </span><span class="k">new</span> <span class="nx">Config</span><span class="p">()</span>
   <span class="k">for</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span> <span class="k">of</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="s">&#39;packageSettings&#39;</span>
     <span class="nx">packageSettings</span><span class="p">.</span><span class="nx">set</span> <span class="nx">key</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\//g</span><span class="p">,</span> <span class="s">&#39;:&#39;</span><span class="p">),</span> <span class="nx">value</span>
-    
-  <span class="nx">nconf</span><span class="p">.</span><span class="nx">defaults</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>packageSettings</code>.
+
+  <span class="nx">nconf</span><span class="p">.</span><span class="nx">defaults</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>packageSettings</code>.
 Invoked when the server application is loading configuration. Allows
 packages to define their own default settings.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">packageSettings: </span><span class="nx">packageSettings</span><span class="p">.</span><span class="nx">toJSON</span><span class="p">()</span>
-    
+
     <span class="nv">path: </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">__dirname</span><span class="si">}</span><span class="s">/..&quot;</span>
-    
-  <span class="k">return</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="set">set</h3>
+
+  <span class="k">return</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h3 id="set">set</h3>
 
 <p><em>Set a configuration value by key.</em></p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.set = </span><span class="nf">(key, value) -&gt;</span> <span class="nx">nconf</span><span class="p">.</span><span class="nx">set</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span></div></div></div></div></body></html>

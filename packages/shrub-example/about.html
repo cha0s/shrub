@@ -3,14 +3,13 @@
 <p>Define a route to access the README.md page.</p></div></div><div class="code"><div class="wrapper"><span class="nv">fs = </span><span class="nx">require</span> <span class="s">&#39;fs&#39;</span>
 
 <span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookhttproutes">Implements hook <code>httpRoutes</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;httpRoutes&#39;</span><span class="p">,</span> <span class="nf">(http) -&gt;</span>
-    <span class="nv">routes = </span><span class="p">[]</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Provide the README file.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">routes</span><span class="p">.</span><span class="nx">push</span>
+    <span class="nv">routes = </span><span class="p">[]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Provide the README file.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">routes</span><span class="p">.</span><span class="nx">push</span>
       <span class="nv">path: </span><span class="s">&#39;/shrub-example/about/README.md&#39;</span>
       <span class="nv">receiver: </span><span class="nf">(req, res) -&gt;</span>
-        
+
         <span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span> <span class="s">&#39;README.md&#39;</span><span class="p">,</span> <span class="nf">(error, buffer) -&gt;</span>
           <span class="k">throw</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
-          
+
           <span class="nx">res</span><span class="p">.</span><span class="nx">end</span> <span class="nx">buffer</span>
-        
+
     <span class="k">return</span> <span class="nx">routes</span></div></div></div></div></body></html>

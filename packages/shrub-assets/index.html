@@ -1,59 +1,51 @@
 <!DOCTYPE html><html lang="en"><head><title>packages/shrub-assets/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="packages/shrub-assets/index"><meta name="groc-project-path" content="packages/shrub-assets/index.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-assets/index.coffee">packages/shrub-assets/index.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="assets">Assets</h1>
 
-<p>Serve different JS based on whether the server is running in production mode.</p></div></div><div class="code"><div class="wrapper"><span class="nv">_ = </span><span class="nx">require</span> <span class="s">&#39;underscore&#39;</span>
-<span class="nv">config = </span><span class="nx">require</span> <span class="s">&#39;config&#39;</span>
-<span class="nv">middleware = </span><span class="nx">require</span> <span class="s">&#39;middleware&#39;</span>
-<span class="nv">pkgman = </span><span class="nx">require</span> <span class="s">&#39;pkgman&#39;</span>
-
-<span class="nv">debug = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;debug&#39;</span><span class="p">)</span> <span class="s">&#39;shrub:assets:middleware&#39;</span>
+<p>Serve different JS based on whether the server is running in production mode.</p></div></div><div class="code"><div class="wrapper"><span class="nv">config = </span><span class="nx">require</span> <span class="s">&#39;config&#39;</span>
 
 <span class="nv">assets = </span><span class="kc">null</span>
 
 <span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookclearcaches">Implements hook <code>clearCaches</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;clearCaches&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
-    
-    <span class="nv">assets = </span><span class="kc">null</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookassetmiddleware">Implements hook <code>assetMiddleware</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;assetMiddleware&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
-    
+
+    <span class="nv">assets = </span><span class="kc">null</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookassetmiddleware">Implements hook <code>assetMiddleware</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;assetMiddleware&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+
     <span class="nv">label: </span><span class="s">&#39;Shrub&#39;</span>
     <span class="nv">middleware: </span><span class="p">[</span>
-  
+
       <span class="nf">(assets, next) -&gt;</span>
-        
+
         <span class="k">if</span> <span class="s">&#39;production&#39;</span> <span class="o">is</span> <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;NODE_ENV&#39;</span>
           <span class="nx">assets</span><span class="p">.</span><span class="nx">scripts</span><span class="p">.</span><span class="nx">push</span> <span class="s">&#39;/lib/shrub/shrub.min.js&#39;</span>
         <span class="k">else</span>
           <span class="nx">assets</span><span class="p">.</span><span class="nx">scripts</span><span class="p">.</span><span class="nx">push</span> <span class="s">&#39;/lib/shrub/shrub.js&#39;</span>
-          
-        <span class="nx">assets</span><span class="p">.</span><span class="nx">styleSheets</span><span class="p">.</span><span class="nx">push</span> <span class="s">&#39;/css/shrub.css&#39;</span>
-        
-        <span class="nx">next</span><span class="p">()</span>
-        
-    <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookgruntconfig">Implements hook <code>gruntConfig</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;gruntConfig&#39;</span><span class="p">,</span> <span class="nf">(gruntConfig) -&gt;</span>
-    
-    <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">copy</span> <span class="o">?=</span> <span class="p">{}</span>
-    <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">watch</span> <span class="o">?=</span> <span class="p">{}</span>
-    
-    <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">copy</span><span class="p">[</span><span class="s">&#39;shrub-assets&#39;</span><span class="p">]</span> <span class="o">=</span>
-      <span class="nv">files: </span><span class="p">[</span>
-        <span class="nv">src: </span><span class="s">&#39;**/*&#39;</span>
-        <span class="nv">dest: </span><span class="s">&#39;app&#39;</span>
-        <span class="nv">expand: </span><span class="kc">true</span>
-        <span class="nv">cwd: </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">__dirname</span><span class="si">}</span><span class="s">/app&quot;</span>
-      <span class="p">]</span>
 
-    <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">watch</span><span class="p">[</span><span class="s">&#39;shrub-assets&#39;</span><span class="p">]</span> <span class="o">=</span>
+        <span class="nx">assets</span><span class="p">.</span><span class="nx">styleSheets</span><span class="p">.</span><span class="nx">push</span> <span class="s">&#39;/css/shrub.css&#39;</span>
+
+        <span class="nx">next</span><span class="p">()</span>
+
+    <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookgruntconfig">Implements hook <code>gruntConfig</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;gruntConfig&#39;</span><span class="p">,</span> <span class="nf">(gruntConfig) -&gt;</span>
+
+    <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">configureTask</span> <span class="s">&#39;copy&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-assets&#39;</span><span class="p">,</span> <span class="nv">files: </span><span class="p">[</span>
+      <span class="nv">src: </span><span class="s">&#39;**/*&#39;</span>
+      <span class="nv">dest: </span><span class="s">&#39;app&#39;</span>
+      <span class="nv">expand: </span><span class="kc">true</span>
+      <span class="nv">cwd: </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">__dirname</span><span class="si">}</span><span class="s">/app&quot;</span>
+    <span class="p">]</span>
+
+    <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">configureTask</span><span class="p">(</span>
+      <span class="s">&#39;watch&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-assets&#39;</span>
 
       <span class="nv">files: </span><span class="p">[</span>
         <span class="s">&quot;</span><span class="si">#{</span><span class="nx">__dirname</span><span class="si">}</span><span class="s">/app/**/*&quot;</span>
       <span class="p">]</span>
       <span class="nv">tasks: </span><span class="s">&#39;build:shrub-assets&#39;</span>
-    
-    <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">shrub</span><span class="p">.</span><span class="nx">tasks</span><span class="p">[</span><span class="s">&#39;build:shrub-assets&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">)</span>
+
+    <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">registerTask</span> <span class="s">&#39;build:shrub-assets&#39;</span><span class="p">,</span> <span class="p">[</span>
       <span class="s">&#39;newer:copy:shrub-assets&#39;</span>
     <span class="p">]</span>
-    
-    <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">shrub</span><span class="p">.</span><span class="nx">tasks</span><span class="p">[</span><span class="s">&#39;build&#39;</span><span class="p">].</span><span class="nx">push</span> <span class="s">&#39;build:shrub-assets&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookpackagesettings">Implements hook <code>packageSettings</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;packageSettings&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
-    
+
+    <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">registerTask</span> <span class="s">&#39;build&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;build:shrub-assets&#39;</span><span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookpackagesettings">Implements hook <code>packageSettings</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;packageSettings&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+
     <span class="nv">assetMiddleware: </span><span class="p">[</span>
       <span class="s">&#39;shrub-assets/jquery&#39;</span>
       <span class="s">&#39;shrub-socket-socket.io&#39;</span>
@@ -63,23 +55,26 @@
       <span class="s">&#39;shrub-html5-local-storage&#39;</span>
       <span class="s">&#39;shrub-config&#39;</span>
     <span class="p">]</span>
-    
+
   <span class="nx">registrar</span><span class="p">.</span><span class="nx">recur</span> <span class="p">[</span>
     <span class="s">&#39;angular&#39;</span><span class="p">,</span> <span class="s">&#39;bootstrap&#39;</span><span class="p">,</span> <span class="s">&#39;jquery&#39;</span><span class="p">,</span> <span class="s">&#39;ui-bootstrap&#39;</span>
   <span class="p">]</span>
-  
+
 <span class="nv">exports.assets = </span><span class="nf">-&gt;</span>
   <span class="k">return</span> <span class="nx">assets</span> <span class="k">if</span> <span class="nx">assets</span><span class="o">?</span>
-  
+
+  <span class="nv">debug = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;debug&#39;</span><span class="p">)</span> <span class="s">&#39;shrub-silly:assets:middleware&#39;</span>
+
+  <span class="nv">middleware = </span><span class="nx">require</span> <span class="s">&#39;middleware&#39;</span>
+
   <span class="nv">assets = scripts: </span><span class="p">[],</span> <span class="nv">styleSheets: </span><span class="p">[]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>assetMiddleware</code>.
-Invoked to gather script assets for requests.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">debug</span> <span class="s">&quot;- Loading asset middleware...&quot;</span>
+Invoked to gather script assets for requests.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">debug</span> <span class="s">&#39;- Loading asset middleware...&#39;</span>
   <span class="nv">assetMiddleware = </span><span class="nx">middleware</span><span class="p">.</span><span class="nx">fromHook</span><span class="p">(</span>
     <span class="s">&#39;assetMiddleware&#39;</span>
-    <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&quot;packageSettings:shrub-assets:assetMiddleware&quot;</span>
+    <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;packageSettings:shrub-assets:assetMiddleware&#39;</span>
   <span class="p">)</span>
-  <span class="nx">debug</span> <span class="s">&quot;- Asset middleware loaded.&quot;</span>
-  
+  <span class="nx">debug</span> <span class="s">&#39;- Asset middleware loaded.&#39;</span>
+
   <span class="nx">assetMiddleware</span><span class="p">.</span><span class="nx">dispatch</span> <span class="nx">assets</span><span class="p">,</span> <span class="nf">(error) -&gt;</span> <span class="k">throw</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
-  
-  <span class="nx">assets</span>
-  </div></div></div></div></body></html>
+
+  <span class="nx">assets</span></div></div></div></div></body></html>

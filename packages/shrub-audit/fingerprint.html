@@ -1,0 +1,41 @@
+<!DOCTYPE html><html lang="en"><head><title>packages/shrub-audit/fingerprint</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="packages/shrub-audit/fingerprint"><meta name="groc-project-path" content="packages/shrub-audit/fingerprint.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-audit/fingerprint.coffee">packages/shrub-audit/fingerprint.coffee</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nv">pkgman = </span><span class="nx">require</span> <span class="s">&#39;pkgman&#39;</span>
+
+<span class="nv">module.exports = </span><span class="k">class</span> <span class="nx">Fingerprint</span>
+
+  <span class="vi">@get: </span><span class="nf">(req, excluded = []) -&gt;</span>
+    <span class="nv">fingerprint = </span><span class="p">{}</span>
+
+    <span class="k">for</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span> <span class="k">of</span> <span class="nx">@raw</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">excluded</span>
+      <span class="k">continue</span> <span class="k">unless</span> <span class="nx">value</span><span class="o">?</span>
+      <span class="nx">fingerprint</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span>
+
+    <span class="nx">fingerprint</span>
+
+  <span class="vi">@inlineKeys: </span><span class="nf">(req, excluded = []) -&gt;</span>
+    <span class="s">&quot;</span><span class="si">#{</span><span class="nx">key</span><span class="si">}</span><span class="s">:</span><span class="si">#{</span><span class="nx">value</span><span class="si">}</span><span class="s">&quot;</span> <span class="k">for</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span> <span class="k">of</span> <span class="nx">@get</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">excluded</span>
+
+  <span class="vi">@keys: </span><span class="nf">(req, excluded = []) -&gt;</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span> <span class="nx">@raw</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">excluded</span>
+
+  <span class="vi">@raw: </span><span class="nf">(req, excluded = []) -&gt;</span>
+    <span class="nv">raw = </span><span class="p">{}</span>
+
+    <span class="nv">_excluded = </span><span class="p">{}</span>
+    <span class="nx">_excluded</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="kc">true</span> <span class="k">for</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">excluded</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>fingerprint</code>.
+Allows a package to specify unique keys for this request, e.g. IP
+address, session ID, etc. Implementations take a request object as
+the only parameter. The request parameter may be null.</p></div></div><div class="code"><div class="wrapper">    <span class="k">for</span> <span class="nx">keys</span> <span class="k">in</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invokeFlat</span> <span class="s">&#39;fingerprint&#39;</span><span class="p">,</span> <span class="nx">req</span>
+      <span class="k">for</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span> <span class="k">of</span> <span class="nx">keys</span> <span class="o">?</span> <span class="p">{}</span>
+        <span class="k">continue</span> <span class="k">if</span> <span class="nx">_excluded</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span>
+        <span class="nx">raw</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span>
+
+    <span class="nx">raw</span>
+
+  <span class="nv">constructor: </span><span class="nf">(@_req) -&gt;</span>
+
+  <span class="nv">get: </span><span class="nf">(excluded) -&gt;</span> <span class="nx">Fingerprint</span><span class="p">.</span><span class="nx">get</span> <span class="nx">@_req</span><span class="p">,</span> <span class="nx">excluded</span>
+
+  <span class="nv">inlineKeys: </span><span class="nf">(excluded) -&gt;</span> <span class="nx">Fingerprint</span><span class="p">.</span><span class="nx">inlineKeys</span> <span class="nx">@_req</span><span class="p">,</span> <span class="nx">excluded</span>
+
+  <span class="nv">keys: </span><span class="nf">(excluded) -&gt;</span> <span class="nx">Fingerprint</span><span class="p">.</span><span class="nx">keys</span> <span class="nx">@_req</span><span class="p">,</span> <span class="nx">excluded</span>
+
+  <span class="nv">raw: </span><span class="nf">(excluded) -&gt;</span> <span class="nx">Fingerprint</span><span class="p">.</span><span class="nx">raw</span> <span class="nx">@_req</span><span class="p">,</span> <span class="nx">excluded</span></div></div></div></div></body></html>

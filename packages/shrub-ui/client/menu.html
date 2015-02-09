@@ -1,109 +1,107 @@
 <!DOCTYPE html><html lang="en"><head><title>packages/shrub-ui/client/menu</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="packages/shrub-ui/client/menu"><meta name="groc-project-path" content="packages/shrub-ui/client/menu.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-ui/client/menu.coffee">packages/shrub-ui/client/menu.coffee</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookcontroller">Implements hook <code>controller</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;controller&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
     <span class="s">&#39;$compile&#39;</span><span class="p">,</span> <span class="s">&#39;$location&#39;</span><span class="p">,</span> <span class="s">&#39;$scope&#39;</span>
     <span class="k">class</span> <span class="nx">MenuController</span>
-      
+
       <span class="nv">constructor: </span><span class="nf">($compile, $location, $scope) -&gt;</span>
         <span class="nv">self = </span><span class="k">this</span>
-        
+
         <span class="nv">self.linkMap = </span><span class="p">{}</span>
-        
+
         <span class="nx">$scope</span><span class="p">.</span><span class="nx">$watch</span><span class="p">(</span>
           <span class="nf">-&gt;</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">menu</span>
           <span class="nf">-&gt;</span> <span class="nx">self</span><span class="p">.</span><span class="nx">rebuildTree</span> <span class="nx">$compile</span><span class="p">,</span> <span class="nx">$scope</span> <span class="k">if</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">menu</span><span class="o">?</span>
           <span class="kc">true</span>
         <span class="p">)</span>
-        
+
         <span class="nx">$scope</span><span class="p">.</span><span class="nx">$watchGroup</span><span class="p">(</span>
           <span class="p">[</span>
             <span class="nf">-&gt;</span> <span class="nx">$location</span><span class="p">.</span><span class="nx">path</span><span class="p">()</span>
             <span class="nf">-&gt;</span> <span class="nx">self</span><span class="p">.</span><span class="nx">linkMap</span>
           <span class="p">]</span>
-          <span class="nf">(newValues, oldValues) -&gt;</span>
-          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Paths without the leading slash.</p></div></div><div class="code"><div class="wrapper">            <span class="k">if</span> <span class="nv">oldPath = </span><span class="nx">oldValues</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+          <span class="nf">(newValues, oldValues) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Paths without the leading slash.</p></div></div><div class="code"><div class="wrapper">            <span class="k">if</span> <span class="nv">oldPath = </span><span class="nx">oldValues</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
               <span class="nv">oldPath = </span><span class="nx">oldPath</span><span class="p">.</span><span class="nx">substr</span> <span class="mi">1</span>
               <span class="k">if</span> <span class="nx">self</span><span class="p">.</span><span class="nx">linkMap</span><span class="p">[</span><span class="nx">oldPath</span><span class="p">]</span><span class="o">?</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">attributes</span><span class="o">?</span><span class="p">.</span><span class="nx">class</span><span class="o">?</span>
                 <span class="nv">attributes = </span><span class="nx">self</span><span class="p">.</span><span class="nx">linkMap</span><span class="p">[</span><span class="nx">oldPath</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nx">attributes</span>
                 <span class="k">if</span> <span class="nx">attributes</span><span class="p">.</span><span class="nx">class</span><span class="p">.</span><span class="nx">length</span>
                   <span class="nv">index = </span><span class="nx">attributes</span><span class="p">.</span><span class="nx">class</span><span class="p">.</span><span class="nx">indexOf</span> <span class="s">&#39;active&#39;</span>
                   <span class="nx">attributes</span><span class="p">.</span><span class="nx">class</span><span class="p">.</span><span class="nx">splice</span> <span class="nx">index</span><span class="p">,</span> <span class="mi">1</span>
-              
+
             <span class="nv">newPath = </span><span class="nx">newValues</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">substr</span> <span class="mi">1</span>
             <span class="k">if</span> <span class="nx">self</span><span class="p">.</span><span class="nx">linkMap</span><span class="p">[</span><span class="nx">newPath</span><span class="p">]</span><span class="o">?</span>
               <span class="nv">attributes = </span><span class="nx">self</span><span class="p">.</span><span class="nx">linkMap</span><span class="p">[</span><span class="nx">newPath</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="nx">attributes</span>
               <span class="p">(</span><span class="nx">attributes</span><span class="p">.</span><span class="nx">class</span> <span class="o">?=</span> <span class="p">[]).</span><span class="nx">push</span> <span class="s">&#39;active&#39;</span>
-              
+
         <span class="p">)</span>
-          
+
       <span class="nv">rebuildTree: </span><span class="nf">($compile, $scope) -&gt;</span>
         <span class="nv">self = </span><span class="k">this</span>
-        
+
         <span class="nv">self.linkMap = </span><span class="p">{}</span>
         <span class="nv">$scope.list = </span><span class="p">{}</span>
-          
+
         <span class="nv">rebuildBranch = </span><span class="nf">(list, branch) -&gt;</span>
-          
+
           <span class="nx">list</span><span class="p">.</span><span class="nx">attributes</span> <span class="o">?=</span> <span class="p">{}</span>
-          
+
           <span class="nv">buildItem = </span><span class="nf">(leaf) -&gt;</span>
-            
+
             <span class="nv">item = </span><span class="nx">angular</span><span class="p">.</span><span class="nx">copy</span> <span class="nx">leaf</span>
             <span class="nx">item</span><span class="p">.</span><span class="nx">attributes</span> <span class="o">?=</span> <span class="p">{}</span>
             <span class="nv">item.markup = </span><span class="p">[]</span>
-            
+
             <span class="k">if</span> <span class="nx">leaf</span><span class="p">.</span><span class="nx">markupBefore</span><span class="o">?</span>
               <span class="nx">item</span><span class="p">.</span><span class="nx">markup</span><span class="p">.</span><span class="nx">push</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">element</span> <span class="nx">leaf</span><span class="p">.</span><span class="nx">markupBefore</span>
-              
+
             <span class="nx">item</span><span class="p">.</span><span class="nx">markup</span><span class="p">.</span><span class="nx">push</span> <span class="nv">linkElement = </span><span class="nx">angular</span><span class="p">.</span><span class="nx">element</span> <span class="s">&#39;&lt;a&gt;&#39;</span>
             <span class="nx">linkElement</span><span class="p">.</span><span class="nx">attr</span> <span class="s">&#39;data-shrub-ui-attributes&#39;</span><span class="p">,</span> <span class="s">&#39;attributes&#39;</span>
             <span class="nx">linkElement</span><span class="p">.</span><span class="nx">attr</span> <span class="s">&#39;href&#39;</span><span class="p">,</span> <span class="nx">leaf</span><span class="p">.</span><span class="nx">path</span>
             <span class="nx">linkElement</span><span class="p">.</span><span class="nx">html</span> <span class="nx">leaf</span><span class="p">.</span><span class="nx">label</span>
-            
+
             <span class="nv">compileScope = </span><span class="nx">$scope</span><span class="p">.</span><span class="nx">$new</span> <span class="kc">true</span>
             <span class="nv">compileScope.attributes = </span><span class="nx">leaf</span><span class="p">.</span><span class="nx">linkAttributes</span>
-            
+
             <span class="nx">$compile</span><span class="p">(</span><span class="nx">linkElement</span><span class="p">)(</span><span class="nx">compileScope</span><span class="p">)</span>
-            
+
             <span class="nx">linkElement</span><span class="p">.</span><span class="nx">removeAttr</span> <span class="s">&#39;data-shrub-ui-attributes&#39;</span>
 
             <span class="k">if</span> <span class="nx">leaf</span><span class="p">.</span><span class="nx">markupAfter</span><span class="o">?</span>
               <span class="nx">item</span><span class="p">.</span><span class="nx">markup</span><span class="p">.</span><span class="nx">push</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">element</span> <span class="nx">leaf</span><span class="p">.</span><span class="nx">markupAfter</span>
-            
+
             <span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">linkMap</span><span class="p">[</span><span class="nx">leaf</span><span class="p">.</span><span class="nx">path</span><span class="p">]</span> <span class="o">?=</span> <span class="p">[]).</span><span class="nx">push</span> <span class="nx">item</span>
-            
+
             <span class="k">if</span> <span class="nx">leaf</span><span class="p">.</span><span class="nx">list</span><span class="o">?</span>
-              
+
               <span class="nv">item.list = </span><span class="nx">angular</span><span class="p">.</span><span class="nx">copy</span> <span class="nx">leaf</span><span class="p">.</span><span class="nx">list</span>
               <span class="nx">rebuildBranch</span> <span class="nx">item</span><span class="p">.</span><span class="nx">list</span><span class="p">,</span> <span class="nx">leaf</span><span class="p">.</span><span class="nx">list</span>
-              
+
             <span class="nx">item</span>
-            
+
           <span class="nv">list.items = </span><span class="k">for</span> <span class="nx">leaf</span> <span class="k">in</span> <span class="nx">branch</span><span class="p">.</span><span class="nx">items</span>
             <span class="nx">buildItem</span> <span class="nx">leaf</span>
-            
+
           <span class="k">return</span>
-        
+
         <span class="nv">$scope.list = </span><span class="nx">angular</span><span class="p">.</span><span class="nx">copy</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">menu</span>
         <span class="nx">rebuildBranch</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">list</span><span class="p">,</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">menu</span>
-        
-  <span class="p">]</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookdirective">Implements hook <code>directive</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;directive&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
-    
+
+  <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookdirective">Implements hook <code>directive</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;directive&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
+
     <span class="s">&#39;$compile&#39;</span><span class="p">,</span> <span class="s">&#39;$timeout&#39;</span>
     <span class="nf">($compile, $timeout) -&gt;</span>
-      
+
       <span class="nv">directive = </span><span class="p">{}</span>
-      
+
       <span class="nv">directive.bindToController = </span><span class="kc">true</span>
-      
+
       <span class="nv">directive.candidateKeys = </span><span class="p">[</span>
         <span class="s">&#39;menu.name&#39;</span>
       <span class="p">]</span>
-      
+
       <span class="nv">directive.scope =</span>
-        
+
         <span class="nv">menu: </span><span class="s">&#39;=&#39;</span>
-        
-      <span class="nv">directive.template = </span><span class="s">&quot;&quot;&quot;</span>
+
+      <span class="nv">directive.template = </span><span class="s">&#39;&#39;&#39;</span>
 
 <span class="s">&lt;ul</span>
 <span class="s">  data-shrub-ui-list</span>
@@ -111,8 +109,8 @@
 <span class="s">  data-list=&quot;list&quot;</span>
 <span class="s">&gt;&lt;/ul&gt;</span>
 
-<span class="s">&quot;&quot;&quot;</span>
-      
+<span class="s">&#39;&#39;&#39;</span>
+
       <span class="nx">directive</span>
-      
+
   <span class="p">]</span></div></div></div></div></body></html>

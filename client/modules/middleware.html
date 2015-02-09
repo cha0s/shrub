@@ -1,9 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><title>client/modules/middleware</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="client/modules/middleware"><meta name="groc-project-path" content="client/modules/middleware.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/client/modules/middleware.coffee">client/modules/middleware.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="middleware">Middleware</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nv">i8n = </span><span class="nx">require</span> <span class="s">&#39;inflection&#39;</span>
-
-<span class="nv">config = </span><span class="nx">require</span> <span class="s">&#39;config&#39;</span>
-<span class="nv">pkgman = </span><span class="nx">require</span> <span class="s">&#39;pkgman&#39;</span>
-
-<span class="nv">debug = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;debug&#39;</span><span class="p">)</span> <span class="s">&#39;shrub:middleware&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="middleware">Middleware</h2>
+<!DOCTYPE html><html lang="en"><head><title>client/modules/middleware</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="client/modules/middleware"><meta name="groc-project-path" content="client/modules/middleware.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/client/modules/middleware.coffee">client/modules/middleware.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="middleware">Middleware</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="p">{</span><span class="nx">EventEmitter</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">&#39;events&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="middleware">Middleware</h2>
 
 <p>Implements a middleware stack. middleware functions can be added to the
 stack with <code>use</code>. Calling <code>dispatch</code> invokes the middleware functions
@@ -18,81 +13,78 @@ there was an error, it must be thrown or passed as the first argument to
 additional parameter at the beginning of the function signature: <code>error</code>.
 Error-handling middleware are only called if a previous middleware threw or
 passed an error. Conversely, non-error-handling middleware are skipped if a
-previous error occurred.</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.Middleware = </span><span class="k">class</span> <span class="nx">Middleware</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="constructor"><em>constructor</em></h2>
+previous error occurred.</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.Middleware = </span><span class="k">class</span> <span class="nx">Middleware</span> <span class="k">extends</span> <span class="nx">EventEmitter</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="constructor"><em>constructor</em></h2>
 
-<p><em>Create a middleware stack.</em></p></div></div><div class="code"><div class="wrapper">  <span class="nv">constructor: </span><span class="nf">-&gt;</span>
-    
-    <span class="vi">@_middleware = </span><span class="p">[]</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="use">::use</h2>
+<p><em>Create a middleware stack.</em></p></div></div><div class="code"><div class="wrapper">  <span class="nv">constructor: </span><span class="nf">-&gt;</span> <span class="vi">@_middleware = </span><span class="p">[]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="use">::use</h2>
 
 <p><em>Add a middleware function to the stack.</em></p>
 
 <ul>
-<li>(function) <code>fn</code> - A middleware function. </li>
-</ul></div></div><div class="code"><div class="wrapper">  <span class="nv">use: </span><span class="nf">(fn, label) -&gt;</span> <span class="nx">@_middleware</span><span class="p">.</span><span class="nx">push</span> <span class="nv">fn: </span><span class="nx">fn</span><span class="p">,</span> <span class="nv">label: </span><span class="nx">label</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="dispatch">::dispatch</h2>
+<li>(function) <code>fn</code> - A middleware function.</li>
+</ul></div></div><div class="code"><div class="wrapper">  <span class="nv">use: </span><span class="nf">(fn) -&gt;</span> <span class="nx">@_middleware</span><span class="p">.</span><span class="nx">push</span> <span class="nx">fn</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="dispatch">::dispatch</h2>
 
 <p><em>Invoke the middleware functions serially.</em></p>
 
 <ul>
-<li><p>(mixed) <code>...</code> - One or more values to pass to the middleware. </p></li>
+<li><p>(mixed) <code>...</code> - One or more values to pass to the middleware.</p></li>
 <li><p>(function) <code>fn</code> - A function invoked when the middleware stack has
 finished. If an error occurred, it will be passed as the first
-argument. </p></li>
+argument.</p></li>
 </ul></div></div><div class="code"><div class="wrapper">  <span class="nv">dispatch: </span><span class="nf">(args..., fn) -&gt;</span>
-    
+    <span class="nv">self = </span><span class="k">this</span>
+
     <span class="nv">index = </span><span class="mi">0</span>
-    
-    <span class="nv">invoke = </span><span class="nf">(error) =&gt;</span>
-    
-      <span class="k">if</span> <span class="nx">index</span> <span class="o">&gt;</span> <span class="mi">0</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nv">label = </span><span class="nx">@_middleware</span><span class="p">[</span><span class="nx">index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">].</span><span class="nx">label</span><span class="p">)</span><span class="o">?</span>
-          <span class="nx">debug</span> <span class="s">&quot;Invoked `</span><span class="si">#{</span><span class="nx">label</span><span class="si">}</span><span class="s">`.&quot;</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Call <code>fn</code> with any error if we're done.</p></div></div><div class="code"><div class="wrapper">      <span class="k">return</span> <span class="nx">fn</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">index</span> <span class="o">is</span> <span class="nx">@_middleware</span><span class="p">.</span><span class="nx">length</span>
-      
-      <span class="p">{</span><span class="nv">fn: </span><span class="nx">current</span><span class="p">,</span> <span class="nx">label</span><span class="p">}</span> <span class="o">=</span> <span class="nx">@_middleware</span><span class="p">[</span><span class="nx">index</span><span class="o">++</span><span class="p">]</span>
-      
-      <span class="nx">debug</span> <span class="s">&quot;Invoking `</span><span class="si">#{</span><span class="nx">label</span><span class="si">}</span><span class="s">`...&quot;</span> <span class="k">if</span> <span class="nx">label</span><span class="o">?</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Error-handling middleware.</p></div></div><div class="code"><div class="wrapper">      <span class="k">if</span> <span class="nx">current</span><span class="p">.</span><span class="nx">length</span> <span class="o">is</span> <span class="nx">args</span><span class="p">.</span><span class="nx">length</span> <span class="o">+</span> <span class="mi">2</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>An error occurred previously.</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
-          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Try to invoke the middleware, if it throws, just catch
+
+    <span class="nv">invoke = </span><span class="nf">(error) -&gt;</span>
+
+      <span class="nx">self</span><span class="p">.</span><span class="nx">emit</span> <span class="s">&#39;invoked&#39;</span><span class="p">,</span> <span class="nx">self</span><span class="p">.</span><span class="nx">_middleware</span><span class="p">[</span><span class="nx">index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nx">index</span> <span class="o">&gt;</span> <span class="mi">0</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Call <code>fn</code> with any error if we're done.</p></div></div><div class="code"><div class="wrapper">      <span class="k">return</span> <span class="nx">fn</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">index</span> <span class="o">is</span> <span class="nx">self</span><span class="p">.</span><span class="nx">_middleware</span><span class="p">.</span><span class="nx">length</span>
+
+      <span class="nv">current = </span><span class="nx">self</span><span class="p">.</span><span class="nx">_middleware</span><span class="p">[</span><span class="nx">index</span><span class="o">++</span><span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Error-handling middleware.</p></div></div><div class="code"><div class="wrapper">      <span class="k">if</span> <span class="nx">current</span><span class="p">.</span><span class="nx">length</span> <span class="o">is</span> <span class="nx">args</span><span class="p">.</span><span class="nx">length</span> <span class="o">+</span> <span class="mi">2</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>An error occurred previously.</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="nx">error</span><span class="o">?</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Try to invoke the middleware, if it throws, just catch
 the error and pass it along.</p></div></div><div class="code"><div class="wrapper">          <span class="k">try</span>
-            <span class="nv">localArgs = </span><span class="nx">args</span><span class="p">.</span><span class="nx">slice</span> <span class="mi">0</span>
+            <span class="nv">localArgs = </span><span class="nx">args</span><span class="p">.</span><span class="nx">concat</span><span class="p">()</span>
             <span class="nx">localArgs</span><span class="p">.</span><span class="nx">unshift</span> <span class="nx">error</span>
-            <span class="nx">localArgs</span><span class="p">.</span><span class="nx">push</span> <span class="nf">(error) -&gt;</span> <span class="nx">invoke</span> <span class="nx">error</span>
+            <span class="nx">localArgs</span><span class="p">.</span><span class="nx">push</span> <span class="nx">invoke</span>
+            <span class="nx">self</span><span class="p">.</span><span class="nx">emit</span> <span class="s">&#39;invoking&#39;</span><span class="p">,</span> <span class="nx">current</span>
             <span class="nx">current</span> <span class="nx">localArgs</span><span class="p">...</span>
           <span class="k">catch</span> <span class="nx">error</span>
-            <span class="nx">invoke</span> <span class="nx">error</span>
-          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>No previous error; skip this middleware.</p></div></div><div class="code"><div class="wrapper">        <span class="k">else</span>
-          
-          <span class="nx">invoke</span> <span class="nx">error</span>
-          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Non-error-handling middleware.</p></div></div><div class="code"><div class="wrapper">      <span class="k">else</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>An error occurred previously, skip this middleware.</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
-          
-          <span class="nx">invoke</span> <span class="nx">error</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>No previous error.</p></div></div><div class="code"><div class="wrapper">        <span class="k">else</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Try to invoke the middleware, if it throws, just catch
+            <span class="nx">invoke</span> <span class="nx">error</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>No previous error; skip this middleware.</p></div></div><div class="code"><div class="wrapper">        <span class="k">else</span>
+
+          <span class="nx">invoke</span> <span class="nx">error</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Non-error-handling middleware.</p></div></div><div class="code"><div class="wrapper">      <span class="k">else</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>An error occurred previously, skip this middleware.</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
+
+          <span class="nx">invoke</span> <span class="nx">error</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>No previous error.</p></div></div><div class="code"><div class="wrapper">        <span class="k">else</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Try to invoke the middleware, if it throws, just catch
 the error and pass it along.</p></div></div><div class="code"><div class="wrapper">          <span class="k">try</span>
-            <span class="nv">localArgs = </span><span class="nx">args</span><span class="p">.</span><span class="nx">slice</span> <span class="mi">0</span>
-            <span class="nx">localArgs</span><span class="p">.</span><span class="nx">push</span> <span class="nf">(error) -&gt;</span> <span class="nx">invoke</span> <span class="nx">error</span>
+            <span class="nv">localArgs = </span><span class="nx">args</span><span class="p">.</span><span class="nx">concat</span><span class="p">()</span>
+            <span class="nx">localArgs</span><span class="p">.</span><span class="nx">push</span> <span class="nx">invoke</span>
+            <span class="nx">self</span><span class="p">.</span><span class="nx">emit</span> <span class="s">&#39;invoking&#39;</span><span class="p">,</span> <span class="nx">current</span>
             <span class="nx">current</span> <span class="nx">localArgs</span><span class="p">...</span>
           <span class="k">catch</span> <span class="nx">error</span>
-            <span class="nx">invoke</span> <span class="nx">error</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Kick things off.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">invoke</span><span class="p">()</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="fromhook">fromHook</h2>
+            <span class="nx">invoke</span> <span class="nx">error</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Kick things off.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">invoke</span><span class="p">()</span>
+
+<span class="nv">i8n = </span><span class="nx">require</span> <span class="s">&#39;inflection&#39;</span>
+
+<span class="nv">config = </span><span class="nx">require</span> <span class="s">&#39;config&#39;</span>
+<span class="nv">pkgman = </span><span class="nx">require</span> <span class="s">&#39;pkgman&#39;</span>
+
+<span class="nv">debug = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;debug&#39;</span><span class="p">)</span> <span class="s">&#39;shrub:middleware&#39;</span>
+<span class="nv">debugSilly = </span><span class="nx">require</span><span class="p">(</span><span class="s">&#39;debug&#39;</span><span class="p">)</span> <span class="s">&#39;shrub-silly:middleware&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="fromhook">fromHook</h2>
 
 <p>Create a middleware stack from the results of a hook and path configuration.</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.fromHook = </span><span class="nf">(hook, paths, args...) -&gt;</span>
-  
-  <span class="nv">middleware = </span><span class="k">new</span> <span class="nx">Middleware</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke the hook and <code>use</code> the middleware in the paths configuration
+
+  <span class="nv">middleware = </span><span class="k">new</span> <span class="nx">Middleware</span><span class="p">()</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke the hook and <code>use</code> the middleware in the paths configuration
 order.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">args</span><span class="p">.</span><span class="nx">unshift</span> <span class="nx">hook</span>
   <span class="nv">hookResults = </span><span class="nx">pkgman</span><span class="p">.</span><span class="nx">invoke</span> <span class="nx">args</span><span class="p">...</span>
-  <span class="k">for</span> <span class="nx">path</span> <span class="k">in</span> <span class="nx">paths</span>
+  <span class="k">for</span> <span class="nx">path</span> <span class="k">in</span> <span class="nx">paths</span> <span class="o">?</span> <span class="p">[]</span>
     <span class="k">continue</span> <span class="k">unless</span> <span class="p">(</span><span class="nv">spec = </span><span class="nx">hookResults</span><span class="p">[</span><span class="nx">path</span><span class="p">])</span><span class="o">?</span>
-    
-    <span class="nx">debug</span> <span class="s">&quot;- - </span><span class="si">#{</span><span class="nx">spec</span><span class="p">.</span><span class="nx">label</span><span class="si">}</span><span class="s">&quot;</span>
-    
-    <span class="nx">middleware</span><span class="p">.</span><span class="nx">use</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">spec</span><span class="p">.</span><span class="nx">label</span> <span class="k">for</span> <span class="nx">_</span> <span class="k">in</span> <span class="nx">spec</span><span class="p">.</span><span class="nx">middleware</span> <span class="o">?</span> <span class="p">[]</span>
-  
+
+    <span class="nx">debugSilly</span> <span class="s">&quot;- - </span><span class="si">#{</span><span class="nx">spec</span><span class="p">.</span><span class="nx">label</span><span class="si">}</span><span class="s">&quot;</span>
+
+    <span class="k">for</span> <span class="nx">fn</span> <span class="k">in</span> <span class="nx">spec</span><span class="p">.</span><span class="nx">middleware</span> <span class="o">?</span> <span class="p">[]</span>
+      <span class="nv">fn.label = </span><span class="nx">spec</span><span class="p">.</span><span class="nx">label</span>
+      <span class="nx">middleware</span><span class="p">.</span><span class="nx">use</span> <span class="nx">fn</span><span class="p">,</span> <span class="nx">spec</span><span class="p">.</span><span class="nx">label</span>
+
+  <span class="nx">middleware</span><span class="p">.</span><span class="nx">on</span> <span class="s">&#39;invoking&#39;</span><span class="p">,</span> <span class="nf">(fn) -&gt;</span> <span class="nx">debugSilly</span> <span class="s">&quot;Invoking </span><span class="si">#{</span><span class="nx">fn</span><span class="p">.</span><span class="nx">label</span><span class="si">}</span><span class="s">&quot;</span>
+  <span class="nx">middleware</span><span class="p">.</span><span class="nx">on</span> <span class="s">&#39;invoked&#39;</span><span class="p">,</span> <span class="nf">(fn) -&gt;</span> <span class="nx">debugSilly</span> <span class="s">&quot;Invoked </span><span class="si">#{</span><span class="nx">fn</span><span class="p">.</span><span class="nx">label</span><span class="si">}</span><span class="s">&quot;</span>
+
   <span class="nx">middleware</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="fromshortname">fromShortName</h2>
 
 <p>Create a middleware stack from a short name. e.g. "example thing hook".</p>
@@ -110,21 +102,20 @@ like:</p>
 
 <p>debug "User before login middleware loaded."</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.fromShortName = </span><span class="nf">(shortName, packageName) -&gt;</span>
 
-  <span class="nx">debug</span> <span class="s">&quot;- Loading </span><span class="si">#{</span><span class="nx">shortName</span><span class="si">}</span><span class="s"> middleware...&quot;</span>
-  
+  <span class="nx">debugSilly</span> <span class="s">&quot;- Loading </span><span class="si">#{</span><span class="nx">shortName</span><span class="si">}</span><span class="s"> middleware...&quot;</span>
+
   <span class="p">[</span><span class="nx">firstPart</span><span class="p">,</span> <span class="nx">keyParts</span><span class="p">...]</span> <span class="o">=</span> <span class="nx">shortName</span><span class="p">.</span><span class="nx">split</span> <span class="s">&#39; &#39;</span>
   <span class="nx">packageName</span> <span class="o">?=</span> <span class="nx">firstPart</span>
-  <span class="nv">key = </span><span class="nx">keyParts</span><span class="p">.</span><span class="nx">join</span> <span class="s">&#39;_&#39;</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p><code>TODO</code>: this really should be unified, making this unnecessary.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">configKey = </span><span class="k">if</span> <span class="nx">global</span><span class="o">?</span> <span class="k">then</span> <span class="s">&#39;packageSettings&#39;</span> <span class="k">else</span> <span class="s">&#39;packageConfig&#39;</span>
-  
+  <span class="nv">key = </span><span class="nx">keyParts</span><span class="p">.</span><span class="nx">join</span> <span class="s">&#39;_&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p><code>TODO</code>: this really should be unified, making this unnecessary.</p></div></div><div class="code"><div class="wrapper">  <span class="nv">configKey = </span><span class="k">if</span> <span class="nx">global</span><span class="o">?</span> <span class="k">then</span> <span class="s">&#39;packageSettings&#39;</span> <span class="k">else</span> <span class="s">&#39;packageConfig&#39;</span>
+
   <span class="nv">middleware = </span><span class="nx">exports</span><span class="p">.</span><span class="nx">fromHook</span><span class="p">(</span>
     <span class="s">&quot;</span><span class="si">#{</span><span class="nx">firstPart</span><span class="si">}#{</span><span class="nx">i8n</span><span class="p">.</span><span class="nx">camelize</span> <span class="nx">key</span><span class="si">}</span><span class="s">Middleware&quot;</span>
-    
+
     <span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&quot;</span><span class="si">#{</span><span class="nx">configKey</span><span class="si">}</span><span class="s">:</span><span class="si">#{</span><span class="nx">packageName</span><span class="si">}</span><span class="s">:</span><span class="si">#{</span>
       <span class="nx">i8n</span><span class="p">.</span><span class="nx">camelize</span> <span class="nx">key</span><span class="p">,</span> <span class="kc">true</span>
     <span class="si">}</span><span class="s">Middleware&quot;</span>
   <span class="p">)</span>
-  
-  <span class="nx">debug</span> <span class="s">&quot;- </span><span class="si">#{</span><span class="nx">i8n</span><span class="p">.</span><span class="nx">capitalize</span> <span class="nx">shortName</span><span class="si">}</span><span class="s"> middleware loaded.&quot;</span>
-  
+
+  <span class="nx">debugSilly</span> <span class="s">&quot;- </span><span class="si">#{</span><span class="nx">i8n</span><span class="p">.</span><span class="nx">capitalize</span> <span class="nx">shortName</span><span class="si">}</span><span class="s"> middleware loaded.&quot;</span>
+
   <span class="nx">middleware</span></div></div></div></div></body></html>

@@ -115,9 +115,7 @@ description and a list of implementing packages for each hook.</p>
 <li><p>shrub-user (<a href="./packages/shrub-user/client/index.html#implementshookservice">client</a>)</p></li></ul></li>
 <li><h2 id="servicemock"><code>serviceMock</code></h2>
 
-<p><h5>Allows packages to decorate mock Angular services. Implementations should return an <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>. </h5></p>
-
-<ul><li>shrub-user (<a href="./packages/shrub-user/client/index.html#implementshookservicemock">client</a>)</li></ul></li>
+<p><h5>Allows packages to decorate mock Angular services. Implementations should return an <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>. </h5></p></li>
 </ul>
 
 <p>Invoked in <a href="./packages/shrub-assets/index.html">packages/shrub-assets/index.coffee</a>:</p>
@@ -135,6 +133,18 @@ description and a list of implementing packages for each hook.</p>
 <li><p>shrub-html5-local-storage (<a href="./packages/shrub-html5-local-storage/index.html#implementshookassetmiddleware">server</a>)</p></li>
 <li><p>shrub-html5-notification (<a href="./packages/shrub-html5-notification/index.html#implementshookassetmiddleware">server</a>)</p></li>
 <li><p>shrub-socket-socket.io (<a href="./packages/shrub-socket-socket.io/index.html#implementshookassetmiddleware">server</a>)</p></li></ul></li>
+</ul>
+
+<p>Invoked in <a href="./packages/shrub-audit/fingerprint.html">packages/shrub-audit/fingerprint.coffee</a>:</p>
+
+<ul>
+<li><h2 id="fingerprint"><code>fingerprint</code></h2>
+
+<p><h5>Allows a package to specify unique keys for this request, e.g. IP address, session ID, etc. Implementations take a request object as the only parameter. The request parameter may be null. </h5></p>
+
+<ul><li><p>shrub-core (<a href="./packages/shrub-core/index.html#implementshookfingerprint">server</a>)</p></li>
+<li><p>shrub-session (<a href="./packages/shrub-session/index.html#implementshookfingerprint">server</a>)</p></li>
+<li><p>shrub-user (<a href="./packages/shrub-user/index.html#implementshookfingerprint">server</a>)</p></li></ul></li>
 </ul>
 
 <p>Invoked in <a href="./packages/shrub-config/index.html">packages/shrub-config/index.coffee</a>:</p>
@@ -211,9 +221,12 @@ description and a list of implementing packages for each hook.</p>
 <p>Invoked in <a href="./packages/shrub-grunt/angular.html">packages/shrub-grunt/angular.coffee</a>:</p>
 
 <ul>
-<li><h2 id="angularappdependencies"><code>angularAppDependencies</code></h2>
+<li><h2 id="angularcoredependencies"><code>angularCoreDependencies</code></h2>
 
-<p><h5></h5></p></li>
+<p><h5></h5></p>
+
+<ul><li><p>shrub-html5-local-storage (<a href="./packages/shrub-html5-local-storage/index.html#implementshookangularcoredependencies">server</a>)</p></li>
+<li><p>shrub-html5-notification (<a href="./packages/shrub-html5-notification/index.html#implementshookangularcoredependencies">server</a>)</p></li></ul></li>
 </ul>
 
 <p>Invoked in <a href="./packages/shrub-http/index.html">packages/shrub-http/index.coffee</a>:</p>
@@ -244,6 +257,7 @@ description and a list of implementing packages for each hook.</p>
 <p><h5>Invoked every time an HTTP connection is established. <code>TODO</code>: Rename express to http, so we can use a short name. </h5></p>
 
 <ul><li><p>shrub-angular (<a href="./packages/shrub-angular/index.html#implementshookhttpmiddleware">server</a>)</p></li>
+<li><p>shrub-audit (<a href="./packages/shrub-audit/index.html#implementshookhttpmiddleware">server</a>)</p></li>
 <li><p>shrub-config (<a href="./packages/shrub-config/index.html#implementshookhttpmiddleware">server</a>)</p></li>
 <li><p>shrub-core (<a href="./packages/shrub-core/index.html#implementshookhttpmiddleware">server</a>)</p></li>
 <li><p>shrub-form (<a href="./packages/shrub-form/index.html#implementshookhttpmiddleware">server</a>)</p></li>
@@ -258,16 +272,6 @@ description and a list of implementing packages for each hook.</p>
 <li><p>shrub-villiany (<a href="./packages/shrub-villiany/index.html#implementshookhttpmiddleware">server</a>)</p></li></ul></li>
 </ul>
 
-<p>Invoked in <a href="./packages/shrub-limiter/index.html">packages/shrub-limiter/index.coffee</a>:</p>
-
-<ul>
-<li><h2 id="limiterapplicationmiddleware"><code>limiterApplicationMiddleware</code></h2>
-
-<p><h5>Invoked when a limit is applied. </h5></p>
-
-<ul><li>shrub-villiany (<a href="./packages/shrub-villiany/index.html#implementshooklimiterapplicationmiddleware">server</a>)</li></ul></li>
-</ul>
-
 <p>Invoked in <a href="./packages/shrub-orm/client/index.html">packages/shrub-orm/client/index.coffee</a>:</p>
 
 <ul>
@@ -276,6 +280,27 @@ description and a list of implementing packages for each hook.</p>
 <p><h5>Allows packages to create Waterline collections. </h5></p>
 
 <ul><li><p>shrub-limiter (<a href="./packages/shrub-limiter/index.html#implementshookcollections">server</a>)</p></li>
+<li><p>shrub-session (<a href="./packages/shrub-session/index.html#implementshookcollections">server</a>)</p></li>
+<li><p>shrub-ui/notifications (<a href="./packages/shrub-ui/notifications.html#implementshookcollections">server</a>)</p></li>
+<li><p>shrub-user (<a href="./packages/shrub-user/client/index.html#implementshookcollections">client</a>, <a href="./packages/shrub-user/index.html#implementshookcollections">server</a>)</p></li>
+<li><p>shrub-villiany (<a href="./packages/shrub-villiany/index.html#implementshookcollections">server</a>)</p></li></ul></li>
+<li><h2 id="collectionsalter"><code>collectionsAlter</code></h2>
+
+<p><h5>Allows packages to alter any Waterline collections defined. </h5></p>
+
+<ul><li><p>shrub-orm (<a href="./packages/shrub-orm/client/index.html#implementshookcollectionsalter">client</a>)</p></li>
+<li><p>shrub-user (<a href="./packages/shrub-user/client/index.html#implementshookcollectionsalter">client</a>, <a href="./packages/shrub-user/index.html#implementshookcollectionsalter">server</a>)</p></li></ul></li>
+</ul>
+
+<p>Invoked in <a href="./packages/shrub-orm/index.html">packages/shrub-orm/index.coffee</a>:</p>
+
+<ul>
+<li><h2 id="collections"><code>collections</code></h2>
+
+<p><h5>Allows packages to create Waterline collections. </h5></p>
+
+<ul><li><p>shrub-limiter (<a href="./packages/shrub-limiter/index.html#implementshookcollections">server</a>)</p></li>
+<li><p>shrub-session (<a href="./packages/shrub-session/index.html#implementshookcollections">server</a>)</p></li>
 <li><p>shrub-ui/notifications (<a href="./packages/shrub-ui/notifications.html#implementshookcollections">server</a>)</p></li>
 <li><p>shrub-user (<a href="./packages/shrub-user/client/index.html#implementshookcollections">client</a>, <a href="./packages/shrub-user/index.html#implementshookcollections">server</a>)</p></li>
 <li><p>shrub-villiany (<a href="./packages/shrub-villiany/index.html#implementshookcollections">server</a>)</p></li></ul></li>
@@ -295,6 +320,7 @@ description and a list of implementing packages for each hook.</p>
 <p><h5>Allow packages to add values to the REPL's context. </h5></p>
 
 <ul><li><p>shrub-core (<a href="./packages/shrub-core/index.html#implementshookreplcontext">server</a>)</p></li>
+<li><p>shrub-install (<a href="./packages/shrub-install/index.html#implementshookreplcontext">server</a>)</p></li>
 <li><p>shrub-orm (<a href="./packages/shrub-orm/index.html#implementshookreplcontext">server</a>)</p></li>
 <li><p>shrub-socket (<a href="./packages/shrub-socket/index.html#implementshookreplcontext">server</a>)</p></li>
 <li><p>shrub-user/register (<a href="./packages/shrub-user/register.html#implementshookreplcontext">server</a>)</p></li></ul></li>
@@ -335,7 +361,8 @@ description and a list of implementing packages for each hook.</p>
 
 <p><h5>Invoked when a socket connection begins. Packages may throw an instance of <code>SocketManager.AuthorizationFailure</code> to reject the socket connection as unauthorized. </h5></p>
 
-<ul><li><p>shrub-core (<a href="./packages/shrub-core/index.html#implementshooksocketauthorizationmiddleware">server</a>)</p></li>
+<ul><li><p>shrub-audit (<a href="./packages/shrub-audit/index.html#implementshooksocketauthorizationmiddleware">server</a>)</p></li>
+<li><p>shrub-core (<a href="./packages/shrub-core/index.html#implementshooksocketauthorizationmiddleware">server</a>)</p></li>
 <li><p>shrub-http-express/session (<a href="./packages/shrub-http-express/session.html#implementshooksocketauthorizationmiddleware">server</a>)</p></li>
 <li><p>shrub-user (<a href="./packages/shrub-user/index.html#implementshooksocketauthorizationmiddleware">server</a>)</p></li>
 <li><p>shrub-villiany (<a href="./packages/shrub-villiany/index.html#implementshooksocketauthorizationmiddleware">server</a>)</p></li></ul></li>
@@ -387,18 +414,6 @@ description and a list of implementing packages for each hook.</p>
 <ul><li>shrub-repl (<a href="./packages/shrub-repl/index.html#implementshookready">server</a>)</li></ul></li>
 </ul>
 
-<p>Invoked in <a href="./server/audit.html">server/audit.coffee</a>:</p>
-
-<ul>
-<li><h2 id="fingerprint"><code>fingerprint</code></h2>
-
-<p><h5>Allows a package to specify unique keys for this request, e.g. IP address, session ID, etc. Implementations take a request object as the only parameter. The request parameter may be null. </h5></p>
-
-<ul><li><p>shrub-core (<a href="./packages/shrub-core/index.html#implementshookfingerprint">server</a>)</p></li>
-<li><p>shrub-session (<a href="./packages/shrub-session/index.html#implementshookfingerprint">server</a>)</p></li>
-<li><p>shrub-user (<a href="./packages/shrub-user/index.html#implementshookfingerprint">server</a>)</p></li></ul></li>
-</ul>
-
 <p>Invoked in <a href="./server/config.html">server/config.coffee</a>:</p>
 
 <ul>
@@ -410,7 +425,6 @@ description and a list of implementing packages for each hook.</p>
 <li><p>shrub-assets (<a href="./packages/shrub-assets/index.html#implementshookpackagesettings">server</a>)</p></li>
 <li><p>shrub-core (<a href="./packages/shrub-core/index.html#implementshookpackagesettings">server</a>)</p></li>
 <li><p>shrub-http (<a href="./packages/shrub-http/index.html#implementshookpackagesettings">server</a>)</p></li>
-<li><p>shrub-limiter (<a href="./packages/shrub-limiter/index.html#implementshookpackagesettings">server</a>)</p></li>
 <li><p>shrub-nodemailer (<a href="./packages/shrub-nodemailer/index.html#implementshookpackagesettings">server</a>)</p></li>
 <li><p>shrub-orm (<a href="./packages/shrub-orm/index.html#implementshookpackagesettings">server</a>)</p></li>
 <li><p>shrub-repl (<a href="./packages/shrub-repl/index.html#implementshookpackagesettings">server</a>)</p></li>

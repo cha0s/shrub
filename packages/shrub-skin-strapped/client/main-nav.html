@@ -1,10 +1,10 @@
 <!DOCTYPE html><html lang="en"><head><title>packages/shrub-skin-strapped/client/main-nav</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="packages/shrub-skin-strapped/client/main-nav"><meta name="groc-project-path" content="packages/shrub-skin-strapped/client/main-nav.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-skin-strapped/client/main-nav.coffee">packages/shrub-skin-strapped/client/main-nav.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="navigation">Navigation</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookdirective">Implements hook <code>directive</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;directive&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
     <span class="s">&#39;shrub-ui/window-title&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-user&#39;</span>
     <span class="nf">(windowTitle, user) -&gt;</span>
-    
+
       <span class="nv">link: </span><span class="nf">(scope, elm, attr) -&gt;</span>
-        
-        <span class="nv">scope.menu = </span>
+
+        <span class="nv">scope.menu =</span>
 
           <span class="nv">name: </span><span class="s">&#39;main-nav&#39;</span>
           <span class="nv">attributes:</span>
@@ -26,19 +26,19 @@
             <span class="nv">path: </span><span class="s">&#39;user/logout&#39;</span>
             <span class="nv">label: </span><span class="s">&#39;Sign out&#39;</span>
           <span class="p">]</span>
-        
+
         <span class="nv">scope.user = </span><span class="nx">user</span><span class="p">.</span><span class="nx">instance</span><span class="p">()</span>
-        
+
         <span class="nx">scope</span><span class="p">.</span><span class="nx">$watch</span><span class="p">(</span>
           <span class="nf">-&gt;</span> <span class="nx">windowTitle</span><span class="p">.</span><span class="nx">page</span><span class="p">()</span>
           <span class="nf">-&gt;</span> <span class="nv">scope.pageTitle = </span><span class="nx">windowTitle</span><span class="p">.</span><span class="nx">page</span><span class="p">()</span>
         <span class="p">)</span>
-        
-      <span class="nv">template: </span><span class="s">&quot;&quot;&quot;</span>
-<span class="s">  </span>
+
+      <span class="nv">template: </span><span class="s">&#39;&#39;&#39;</span>
+
 <span class="s">&lt;nav class=&quot;navbar navbar-default&quot; role=&quot;navigation&quot;&gt;</span>
 <span class="s">  &lt;div class=&quot;container-fluid&quot;&gt;</span>
-<span class="s">  </span>
+
 <span class="s">    &lt;div class=&quot;navbar-header&quot;&gt;</span>
 <span class="s">      &lt;button type=&quot;button&quot; class=&quot;navbar-toggle&quot; data-toggle=&quot;collapse&quot; data-target=&quot;.shrub-skin-strapped-ui-nav&quot;&gt;</span>
 <span class="s">        &lt;span class=&quot;sr-only&quot;&gt;Toggle navigation&lt;/span&gt;</span>
@@ -46,24 +46,33 @@
 <span class="s">        &lt;span class=&quot;icon-bar&quot;&gt;&lt;/span&gt;</span>
 <span class="s">        &lt;span class=&quot;icon-bar&quot;&gt;&lt;/span&gt;</span>
 <span class="s">      &lt;/button&gt;</span>
-<span class="s">      &lt;a class=&quot;navbar-brand&quot; href=&quot;</span><span class="err">#</span><span class="s">&quot;&gt;&lt;span data-ng-bind=&quot;pageTitle&quot;&gt;&lt;/span&gt;&lt;/a&gt;</span>
-<span class="s">    &lt;/div&gt;</span>
-<span class="s">    </span>
-<span class="s">    &lt;div class=&quot;navbar-collapse collapse shrub-skin-strapped-ui-nav&quot;&gt;</span>
+
+<span class="s">      &lt;a class=&quot;navbar-brand&quot; href=&quot;#&quot;&gt;&lt;span data-ng-bind=&quot;pageTitle&quot;&gt;&lt;/span&gt;&lt;/a&gt;</span>
 
 <span class="s">      &lt;div</span>
-<span class="s">        class=&quot;navbar-text navbar-right navbar-notification&quot;</span>
+<span class="s">        class=&quot;mobile navbar-notification&quot;</span>
 <span class="s">        data-shrub-ui-notifications</span>
 <span class="s">        data-queue-name=&quot;shrubExampleGeneral&quot;</span>
 <span class="s">      &gt;</span>
 <span class="s">      &lt;/div&gt;</span>
-<span class="s">      </span>
+
+<span class="s">    &lt;/div&gt;</span>
+
+<span class="s">    &lt;div class=&quot;navbar-collapse collapse shrub-skin-strapped-ui-nav&quot;&gt;</span>
+
+<span class="s">      &lt;div</span>
+<span class="s">        class=&quot;desktop navbar-notification navbar-right&quot;</span>
+<span class="s">        data-shrub-ui-notifications</span>
+<span class="s">        data-queue-name=&quot;shrubExampleGeneral&quot;</span>
+<span class="s">      &gt;</span>
+<span class="s">      &lt;/div&gt;</span>
+
 <span class="s">      &lt;p class=&quot;navbar-text navbar-right identity-wrapper&quot;&gt;</span>
 <span class="s">        &lt;span class=&quot;identity&quot;&gt;</span>
 <span class="s">          You are &lt;span class=&quot;username&quot; data-ng-bind=&quot;user.name&quot;&gt;&lt;/span&gt;</span>
 <span class="s">        &lt;/span&gt;</span>
 <span class="s">      &lt;/p&gt;</span>
-<span class="s">      </span>
+
 <span class="s">      &lt;div</span>
 <span class="s">        data-shrub-ui-menu</span>
 <span class="s">        data-menu=&quot;menu&quot;</span>
@@ -72,6 +81,6 @@
 <span class="s">  &lt;/div&gt;</span>
 <span class="s">&lt;/nav&gt;</span>
 
-<span class="s">&quot;&quot;&quot;</span>
-      
+<span class="s">&#39;&#39;&#39;</span>
+
   <span class="p">]</span></div></div></div></div></body></html>

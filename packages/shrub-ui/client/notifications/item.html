@@ -1,26 +1,71 @@
 <!DOCTYPE html><html lang="en"><head><title>packages/shrub-ui/client/notifications/item</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../../"><meta name="groc-document-path" content="packages/shrub-ui/client/notifications/item"><meta name="groc-project-path" content="packages/shrub-ui/client/notifications/item.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../../assets/style.css"><script type="text/javascript" src="../../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-ui/client/notifications/item.coffee">packages/shrub-ui/client/notifications/item.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="notification-item">Notification item</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookdirective">Implements hook <code>directive</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;directive&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
-    <span class="s">&#39;shrub-ui/notifications&#39;</span>
-    <span class="nf">(notifications) -&gt;</span>
-    
+    <span class="s">&#39;shrub-ui/notifications&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-rpc&#39;</span>
+    <span class="nf">(notifications, rpc) -&gt;</span>
+
       <span class="nv">directive = </span><span class="p">{}</span>
-      
+
       <span class="nv">directive.candidateKeys = </span><span class="p">[</span>
         <span class="p">[</span><span class="s">&#39;queueName&#39;</span><span class="p">,</span> <span class="s">&#39;notification.type&#39;</span><span class="p">]</span>
         <span class="s">&#39;notification.type&#39;</span>
         <span class="s">&#39;queueName&#39;</span>
       <span class="p">]</span>
-      
+
+      <span class="nv">directive.link = </span><span class="nf">(scope, element) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Remove the notification from the queue.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">scope.remove = </span><span class="nf">($event) -&gt;</span>
+          <span class="nx">$event</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">()</span>
+
+          <span class="nv">ids = </span><span class="p">[</span><span class="nx">scope</span><span class="p">.</span><span class="nx">notification</span><span class="p">.</span><span class="nx">id</span><span class="p">]</span>
+          <span class="nx">rpc</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span>
+            <span class="s">&#39;shrub.ui.notifications.remove&#39;</span>
+            <span class="nv">ids: </span><span class="nx">ids</span>
+          <span class="p">)</span>
+          <span class="nv">index = </span><span class="nx">scope</span><span class="p">.</span><span class="nx">queue</span><span class="p">.</span><span class="nx">remove</span> <span class="nx">ids</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Toggle the notification's marked-as-read state.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">scope.toggleMarkedAsRead = </span><span class="nf">($event) -&gt;</span>
+          <span class="nx">$event</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">()</span>
+
+          <span class="nx">scope</span><span class="p">.</span><span class="nx">markAsRead</span><span class="p">(</span>
+            <span class="nx">scope</span><span class="p">.</span><span class="nx">notification</span><span class="p">,</span> <span class="o">not</span> <span class="nx">scope</span><span class="p">.</span><span class="nx">notification</span><span class="p">.</span><span class="nx">markedAsRead</span>
+          <span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Watch the marked-as-read state and make some changes.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">scope</span><span class="p">.</span><span class="nx">$watch</span> <span class="s">&#39;notification.markedAsRead&#39;</span><span class="p">,</span> <span class="nf">(markedAsRead) -&gt;</span>
+
+          <span class="k">if</span> <span class="nx">markedAsRead</span>
+            <span class="nx">element</span><span class="p">.</span><span class="nx">addClass</span> <span class="s">&#39;marked-as-read&#39;</span>
+            <span class="nv">scope.iconClass = </span><span class="s">&#39;glyphicon-check&#39;</span>
+            <span class="nv">scope.title = </span><span class="s">&#39;Mark as unread&#39;</span>
+          <span class="k">else</span>
+            <span class="nx">element</span><span class="p">.</span><span class="nx">removeClass</span> <span class="s">&#39;marked-as-read&#39;</span>
+            <span class="nv">scope.iconClass = </span><span class="s">&#39;glyphicon-eye-open&#39;</span>
+            <span class="nv">scope.title = </span><span class="s">&#39;Mark as read&#39;</span>
+
       <span class="nv">directive.scope = </span><span class="kc">true</span>
-        
-      <span class="nv">directive.template = </span><span class="s">&quot;&quot;&quot;</span>
+
+      <span class="nv">directive.template = </span><span class="s">&#39;&#39;&#39;</span>
+
+<span class="s">&lt;a</span>
+<span class="s">  data-ng-click=&quot;remove($event)&quot;</span>
+<span class="s">  data-ng-if=&quot;notification.mayRemove&quot;</span>
+<span class="s">&gt;</span>
+<span class="s">  &lt;span</span>
+<span class="s">    class=&quot;remove glyphicon glyphicon-remove&quot;</span>
+<span class="s">    tabindex=&quot;0&quot;</span>
+<span class="s">    title=&quot;Remove&quot;</span>
+<span class="s">  &gt;&lt;/span&gt;</span>
+<span class="s">&lt;/a&gt;</span>
+
+<span class="s">&lt;a</span>
+<span class="s">  data-ng-click=&quot;toggleMarkedAsRead($event)&quot;</span>
+<span class="s">&gt;</span>
+<span class="s">  &lt;span</span>
+<span class="s">    class=&quot;mark-as-read glyphicon&quot;</span>
+<span class="s">    data-ng-class=&quot;iconClass&quot;</span>
+<span class="s">    tabindex=&quot;0&quot;</span>
+<span class="s">    title=&quot;{{title}}&quot;</span>
+<span class="s">  &gt;&lt;/span&gt;</span>
+<span class="s">&lt;/a&gt;</span>
 
 <span class="s">&lt;div</span>
 <span class="s">  data-ng-bind=&quot;notification.variables | json&quot;</span>
 <span class="s">&gt;&lt;/div&gt;</span>
 
-<span class="s">&quot;&quot;&quot;</span>
-      
+<span class="s">&#39;&#39;&#39;</span>
+
       <span class="nx">directive</span>
-      
-  <span class="p">]</span>
-    </div></div></div></div></body></html>
+
+  <span class="p">]</span></div></div></div></div></body></html>

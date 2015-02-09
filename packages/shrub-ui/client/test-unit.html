@@ -1,50 +1,50 @@
 <!DOCTYPE html><html lang="en"><head><title>packages/shrub-ui/client/test-unit</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="packages/shrub-ui/client/test-unit"><meta name="groc-project-path" content="packages/shrub-ui/client/test-unit.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-ui/client/test-unit.coffee">packages/shrub-ui/client/test-unit.coffee</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nx">describe</span> <span class="s">&#39;md&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
-  
+
   <span class="nv">markdown = </span><span class="kc">null</span>
-  
+
   <span class="nx">beforeEach</span> <span class="nf">-&gt;</span>
-    
+
     <span class="nx">inject</span> <span class="nf">(shrubUiMarkdownFilter) -&gt;</span> <span class="nv">markdown = </span><span class="nx">shrubUiMarkdownFilter</span>
-    
+
   <span class="nx">it</span> <span class="s">&#39;should be able to parse markdown into HTML&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
-    
+
     <span class="nx">expect</span><span class="p">(</span><span class="nx">markdown</span><span class="p">(</span><span class="s">&#39;Oh, *hello*&#39;</span><span class="p">)).</span><span class="nx">toEqual</span><span class="p">(</span><span class="s">&#39;&lt;p&gt;Oh, &lt;em&gt;hello&lt;/em&gt;&lt;/p&gt;\n&#39;</span><span class="p">);</span>
 
   <span class="nx">it</span> <span class="s">&#39;should sanitize HTML by default&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
-    
+
     <span class="nx">expect</span><span class="p">(</span><span class="nx">markdown</span><span class="p">(</span><span class="s">&#39;Oh, &lt;div&gt;hello&lt;/div&gt;&#39;</span><span class="p">)).</span><span class="nx">toEqual</span><span class="p">(</span><span class="s">&#39;&lt;p&gt;Oh, &amp;lt;div&amp;gt;hello&amp;lt;/div&amp;gt;&lt;/p&gt;\n&#39;</span><span class="p">);</span>
 
   <span class="nx">it</span> <span class="s">&#39;should allow unsanitized HTML, if requested&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
-    
+
     <span class="nx">expect</span><span class="p">(</span><span class="nx">markdown</span><span class="p">(</span><span class="s">&#39;Oh, &lt;div&gt;hello&lt;/div&gt;&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">)).</span><span class="nx">toEqual</span><span class="p">(</span><span class="s">&#39;&lt;p&gt;Oh, &lt;div&gt;hello&lt;/div&gt;&lt;/p&gt;\n&#39;</span><span class="p">);</span>
 
 <span class="nx">describe</span> <span class="s">&#39;messages&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
-  
+
   <span class="nv">messages = </span><span class="kc">null</span>
-  
+
   <span class="nx">beforeEach</span> <span class="nf">-&gt;</span>
-    
+
     <span class="nx">inject</span> <span class="p">[</span>
       <span class="s">&#39;shrub-ui/messages&#39;</span>
       <span class="nf">(_messages_) -&gt;</span> <span class="nv">messages = </span><span class="nx">_messages_</span>
     <span class="p">]</span>
-    
+
   <span class="nx">it</span> <span class="s">&#39;should allow adding and removing messages&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
-    
+
     <span class="nx">messages</span><span class="p">.</span><span class="nx">add</span> <span class="nv">text: </span><span class="s">&#39;Testing&#39;</span>
     <span class="nx">expect</span><span class="p">(</span><span class="nx">messages</span><span class="p">.</span><span class="nx">top</span><span class="p">().</span><span class="nx">text</span><span class="p">).</span><span class="nx">toBe</span> <span class="s">&#39;Testing&#39;</span>
     <span class="nx">expect</span><span class="p">(</span><span class="nx">messages</span><span class="p">.</span><span class="nx">count</span><span class="p">()).</span><span class="nx">toBe</span> <span class="mi">1</span>
-    
+
     <span class="nx">messages</span><span class="p">.</span><span class="nx">removeTop</span><span class="p">()</span>
     <span class="nx">expect</span><span class="p">(</span><span class="nx">messages</span><span class="p">.</span><span class="nx">top</span><span class="p">()).</span><span class="nx">toBe</span> <span class="kc">undefined</span>
     <span class="nx">expect</span><span class="p">(</span><span class="nx">messages</span><span class="p">.</span><span class="nx">count</span><span class="p">()).</span><span class="nx">toBe</span> <span class="mi">0</span>
-    
+
   <span class="nx">it</span> <span class="s">&#39;should accept message batches from the socket&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
-    
+
     <span class="nx">inject</span> <span class="p">[</span>
       <span class="s">&#39;$timeout&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-socket&#39;</span>
       <span class="nf">($timeout, socket) -&gt;</span>
-      
+
         <span class="nx">socket</span><span class="p">.</span><span class="nx">stimulateOn</span><span class="p">(</span>
           <span class="s">&#39;shrub.ui.messages&#39;</span>
           <span class="nv">messages: </span><span class="p">[</span>
@@ -57,27 +57,27 @@
             <span class="nv">text: </span><span class="s">&#39;Testing&#39;</span>
           <span class="p">]</span>
         <span class="p">)</span>
-        
+
         <span class="nx">$timeout</span><span class="p">.</span><span class="nx">flush</span><span class="p">()</span>
-        
+
         <span class="nx">expect</span><span class="p">(</span><span class="nx">messages</span><span class="p">.</span><span class="nx">count</span><span class="p">()).</span><span class="nx">toBe</span> <span class="mi">4</span>
     <span class="p">]</span>
 
 <span class="nx">describe</span> <span class="s">&#39;title&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
-  
+
   <span class="nv">windowTitle = </span><span class="kc">null</span>
-  
+
   <span class="nx">beforeEach</span> <span class="nf">-&gt;</span>
-    
+
     <span class="nx">inject</span> <span class="p">[</span>
       <span class="s">&#39;shrub-ui/window-title&#39;</span>
       <span class="nf">(_windowTitle_) -&gt;</span> <span class="nv">windowTitle = </span><span class="nx">_windowTitle_</span>
     <span class="p">]</span>
-    
+
   <span class="nx">it</span> <span class="s">&#39;should set window title to page title [separator] site title by default when the page title is set&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
-    
+
     <span class="nx">windowTitle</span><span class="p">.</span><span class="nx">setPage</span> <span class="s">&#39;Home&#39;</span>
-    
+
     <span class="nx">expect</span><span class="p">(</span><span class="nx">windowTitle</span><span class="p">.</span><span class="nx">get</span><span class="p">()).</span><span class="nx">toBe</span> <span class="s">&quot;</span><span class="si">#{</span>
       <span class="nx">windowTitle</span><span class="p">.</span><span class="nx">page</span><span class="p">()</span>
     <span class="si">}#{</span>
@@ -87,8 +87,7 @@
     <span class="si">}</span><span class="s">&quot;</span>
 
   <span class="nx">it</span> <span class="s">&#39;should allow page title to be set without altering the window title&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
-    
+
     <span class="nx">windowTitle</span><span class="p">.</span><span class="nx">setPage</span> <span class="s">&#39;Home&#39;</span><span class="p">,</span> <span class="kc">false</span>
-    
-    <span class="nx">expect</span><span class="p">(</span><span class="nx">windowTitle</span><span class="p">.</span><span class="nx">get</span><span class="p">()).</span><span class="o">not</span><span class="p">.</span><span class="nx">toContain</span> <span class="s">&#39;Home&#39;</span>
-    </div></div></div></div></body></html>
+
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">windowTitle</span><span class="p">.</span><span class="nx">get</span><span class="p">()).</span><span class="o">not</span><span class="p">.</span><span class="nx">toContain</span> <span class="s">&#39;Home&#39;</span></div></div></div></div></body></html>

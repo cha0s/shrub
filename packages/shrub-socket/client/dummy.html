@@ -8,18 +8,18 @@
 
   <span class="nv">constructor: </span><span class="nf">($timeout) -&gt;</span>
     <span class="k">super</span>
-    
+
     <span class="vi">@_$timeout = </span><span class="nx">$timeout</span>
-    
+
     <span class="vi">@_emitMap = </span><span class="p">{}</span>
     <span class="vi">@_onMap = </span><span class="p">{}</span>
 
   <span class="nv">catchEmit: </span><span class="nf">(eventName, fn) -&gt;</span> <span class="p">(</span><span class="nx">@_emitMap</span><span class="p">[</span><span class="nx">eventName</span><span class="p">]</span> <span class="o">?=</span> <span class="p">[]).</span><span class="nx">push</span> <span class="nx">fn</span>
-    
+
   <span class="nv">emit: </span><span class="nf">(eventName, data, done) -&gt;</span>
     <span class="nx">@_$timeout</span> <span class="o">=&gt;</span> <span class="nx">fn</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">done</span> <span class="k">for</span> <span class="nx">fn</span> <span class="k">in</span> <span class="nx">@_emitMap</span><span class="p">[</span><span class="nx">eventName</span><span class="p">]</span> <span class="o">?</span> <span class="p">[]</span>
 
   <span class="kc">on</span><span class="o">:</span> <span class="nf">(eventName, fn) -&gt;</span> <span class="p">(</span><span class="nx">@_onMap</span><span class="p">[</span><span class="nx">eventName</span><span class="p">]</span> <span class="o">?=</span> <span class="p">[]).</span><span class="nx">push</span> <span class="nx">fn</span>
-  
+
   <span class="nv">stimulateOn: </span><span class="nf">(eventName, data) -&gt;</span>
     <span class="nx">@_$timeout</span> <span class="o">=&gt;</span> <span class="nx">fn</span> <span class="nx">data</span> <span class="k">for</span> <span class="nx">fn</span> <span class="k">in</span> <span class="nx">@_onMap</span><span class="p">[</span><span class="nx">eventName</span><span class="p">]</span> <span class="o">?</span> <span class="p">[]</span></div></div></div></div></body></html>

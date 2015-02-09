@@ -1,55 +1,53 @@
-<!DOCTYPE html><html lang="en"><head><title>packages/shrub-user/client/register</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="packages/shrub-user/client/register"><meta name="groc-project-path" content="packages/shrub-user/client/register.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-user/client/register.coffee">packages/shrub-user/client/register.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="user-register">User register</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nv">errors = </span><span class="nx">require</span> <span class="s">&#39;errors&#39;</span>
+<!DOCTYPE html><html lang="en"><head><title>packages/shrub-user/client/register</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="packages/shrub-user/client/register"><meta name="groc-project-path" content="packages/shrub-user/client/register.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-user/client/register.coffee">packages/shrub-user/client/register.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="user-register">User register</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookroute">Implements hook <code>route</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;route&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
 
-<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookroute">Implements hook <code>route</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;route&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
-    
     <span class="nv">path: </span><span class="s">&#39;user/register&#39;</span>
     <span class="nv">title: </span><span class="s">&#39;Sign up&#39;</span>
-    
+
     <span class="nv">controller: </span><span class="p">[</span>
       <span class="s">&#39;$location&#39;</span><span class="p">,</span> <span class="s">&#39;$scope&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-ui/messages&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-rpc&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-user&#39;</span>
       <span class="nf">($location, $scope, messages, rpc, user) -&gt;</span>
         <span class="k">return</span> <span class="nx">$location</span><span class="p">.</span><span class="nx">path</span> <span class="s">&#39;/&#39;</span> <span class="k">if</span> <span class="nx">user</span><span class="p">.</span><span class="nx">isLoggedIn</span><span class="p">()</span>
-          
+
         <span class="nv">$scope.form =</span>
-          
+
           <span class="nv">key: </span><span class="s">&#39;shrub-user-register&#39;</span>
-          
+
           <span class="nv">submits: </span><span class="p">[</span>
-            
+
             <span class="nx">rpc</span><span class="p">.</span><span class="nx">formSubmitHandler</span> <span class="nf">(error, result) -&gt;</span>
               <span class="k">return</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
-              
+
               <span class="nx">messages</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span>
-                <span class="nv">text: </span><span class="s">&quot;An email has been sent with account registration details. Please check your email.&quot;</span>
+                <span class="nv">text: </span><span class="s">&#39;An email has been sent with account registration details. Please check your email.&#39;</span>
               <span class="p">)</span>
-              
+
               <span class="nx">$location</span><span class="p">.</span><span class="nx">path</span> <span class="s">&#39;/&#39;</span>
 
           <span class="p">]</span>
-          
+
           <span class="nv">fields:</span>
-          
+
             <span class="nv">username:</span>
               <span class="nv">type: </span><span class="s">&#39;text&#39;</span>
-              <span class="nv">label: </span><span class="s">&quot;Username&quot;</span>
+              <span class="nv">label: </span><span class="s">&#39;Username&#39;</span>
               <span class="nv">required: </span><span class="kc">true</span>
-            
+
             <span class="nv">email:</span>
               <span class="nv">type: </span><span class="s">&#39;email&#39;</span>
-              <span class="nv">label: </span><span class="s">&quot;Email&quot;</span>
+              <span class="nv">label: </span><span class="s">&#39;Email&#39;</span>
               <span class="nv">required: </span><span class="kc">true</span>
-            
+
             <span class="nv">submit:</span>
               <span class="nv">type: </span><span class="s">&#39;submit&#39;</span>
-              <span class="nv">value: </span><span class="s">&quot;Sign up&quot;</span>
-            
+              <span class="nv">value: </span><span class="s">&#39;Sign up&#39;</span>
+
     <span class="p">]</span>
-    
-    <span class="nv">template: </span><span class="s">&quot;&quot;&quot;</span>
-<span class="s">  </span>
+
+    <span class="nv">template: </span><span class="s">&#39;&#39;&#39;</span>
+
 <span class="s">&lt;div</span>
 <span class="s">  data-shrub-form</span>
 <span class="s">  data-form=&quot;form&quot;</span>
 <span class="s">&gt;&lt;/div&gt;</span>
 
-<span class="s">&quot;&quot;&quot;</span></div></div></div></div></body></html>
+<span class="s">&#39;&#39;&#39;</span></div></div></div></div></body></html>

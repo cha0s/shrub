@@ -15,13 +15,13 @@ parses the source files and generates the respective documentation files.</p></d
 
 <span class="nv">sources = </span><span class="p">{}</span>
 <span class="k">for</span> <span class="nx">filename</span> <span class="k">of</span> <span class="nx">files</span>
-  
+
   <span class="nv">raw = </span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span> <span class="nx">filename</span><span class="p">,</span> <span class="nv">encoding: </span><span class="s">&#39;utf8&#39;</span>
   <span class="nv">lines = </span><span class="nx">raw</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s">&#39;\n&#39;</span><span class="p">).</span><span class="nx">map</span> <span class="nf">(line) -&gt;</span> <span class="nx">line</span><span class="p">.</span><span class="nx">trim</span><span class="p">()</span>
-  
+
   <span class="nv">commentLines = </span><span class="nx">lines</span><span class="p">.</span><span class="nx">map</span> <span class="nf">(line) -&gt;</span>
     <span class="k">if</span> <span class="nx">line</span><span class="p">.</span><span class="nx">match</span> <span class="sr">/^\#\s.+/</span> <span class="k">then</span> <span class="nx">line</span> <span class="k">else</span> <span class="s">&#39;&#39;</span>
-  
+
   <span class="nx">sources</span><span class="p">[</span><span class="nx">filename</span><span class="p">]</span> <span class="o">=</span>
     <span class="nv">raw: </span><span class="nx">raw</span>
     <span class="nv">lines: </span><span class="nx">lines</span>
@@ -29,19 +29,19 @@ parses the source files and generates the respective documentation files.</p></d
 
 <span class="c1"># Get the type and name of this package (if any).</span>
 <span class="nv">packageTypeAndName = </span><span class="nf">(filename, onlyParent) -&gt;</span>
-  
+
   <span class="k">return</span> <span class="k">unless</span> <span class="p">(</span><span class="nv">matches = </span><span class="nx">filename</span><span class="p">.</span><span class="nx">match</span> <span class="sr">/([^/]+)\/([^/]+)\/([^/]+)/</span><span class="p">)</span><span class="o">?</span>
   <span class="k">return</span> <span class="k">if</span> <span class="o">-</span><span class="mi">1</span> <span class="o">is</span> <span class="p">[</span><span class="s">&#39;custom&#39;</span><span class="p">,</span> <span class="s">&#39;packages&#39;</span><span class="p">].</span><span class="nx">indexOf</span> <span class="nx">matches</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-  
+
   <span class="nv">parts = </span><span class="nx">filename</span><span class="p">.</span><span class="nx">split</span> <span class="s">&#39;/&#39;</span>
   <span class="nv">parts = </span><span class="nx">parts</span><span class="p">.</span><span class="nx">slice</span> <span class="mi">1</span>
-  
+
   <span class="nv">type = </span><span class="k">if</span> <span class="nx">matches</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">is</span> <span class="s">&#39;client&#39;</span>
-    
+
     <span class="nx">parts</span><span class="p">.</span><span class="nx">splice</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
-    
+
     <span class="s">&#39;client&#39;</span>
-    
+
   <span class="k">else</span>
 
     <span class="s">&#39;server&#39;</span>
@@ -53,28 +53,28 @@ parses the source files and generates the respective documentation files.</p></d
 
   <span class="c1"># Chop off trailing &#39;index&#39;</span>
   <span class="nx">parts</span><span class="p">.</span><span class="nx">pop</span><span class="p">()</span> <span class="k">if</span> <span class="nx">parts</span><span class="p">[</span><span class="nx">parts</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">is</span> <span class="s">&#39;index&#39;</span>
-  
+
   <span class="c1"># Only return parent package?</span>
   <span class="nv">parts = </span><span class="nx">parts</span><span class="p">.</span><span class="nx">slice</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span> <span class="k">if</span> <span class="nx">onlyParent</span>
-  
+
   <span class="nv">type: </span><span class="nx">type</span><span class="p">,</span> <span class="nv">name: </span><span class="nx">parts</span><span class="p">.</span><span class="nx">join</span> <span class="s">&#39;/&#39;</span>
-  
+
 <span class="nv">packageInformation = </span><span class="p">{}</span>
 <span class="nv">packageLookup = </span><span class="p">{}</span>
 <span class="k">for</span> <span class="nx">filename</span><span class="p">,</span> <span class="p">{</span><span class="nx">commentLines</span><span class="p">}</span> <span class="k">of</span> <span class="nx">sources</span>
-  
+
   <span class="k">continue</span> <span class="k">unless</span> <span class="p">(</span><span class="nv">typeAndName = </span><span class="nx">packageTypeAndName</span> <span class="nx">filename</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span><span class="o">?</span>
   <span class="p">{</span><span class="nx">type</span><span class="p">,</span> <span class="nx">name</span><span class="p">}</span> <span class="o">=</span> <span class="nx">typeAndName</span>
-  
+
   <span class="nx">packageInformation</span><span class="p">[</span><span class="nx">type</span><span class="p">]</span> <span class="o">?=</span> <span class="p">{}</span>
   <span class="nx">packageLookup</span><span class="p">[</span><span class="nx">filename</span><span class="p">]</span> <span class="o">=</span> <span class="nv">name: </span><span class="nx">name</span><span class="p">,</span> <span class="nv">type: </span><span class="nx">type</span>
-  
+
   <span class="c1"># Only do this once for each package.</span>
   <span class="k">continue</span> <span class="k">if</span> <span class="nx">packageInformation</span><span class="p">[</span><span class="nx">type</span><span class="p">][</span><span class="nx">name</span><span class="p">]</span><span class="o">?</span>
   <span class="k">continue</span> <span class="k">unless</span> <span class="nx">filename</span><span class="p">.</span><span class="nx">match</span> <span class="sr">/\/index\.(coffee|js)$/</span>
-  
+
   <span class="nx">packageInformation</span><span class="p">[</span><span class="nx">type</span><span class="p">][</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="nv">filename: </span><span class="nx">filename</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Generate hook documentation.</p></div></div><div class="code"><div class="wrapper"><span class="nv">generateHookDocumentation = </span><span class="nx">do</span> <span class="nf">-&gt;</span>
-  
+
   <span class="nv">markdown = </span><span class="s">&quot;&quot;&quot;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Hook overview</p></div></div><div class="code"><div class="wrapper"><span class="s">Shrub implements message passing between packages through a hook system. Hooks</span>
 <span class="s">may be invoked with [pkgman.invoke()](/client/modules/pkgman.html), and are</span>
 <span class="s">implemented in packages by exporting `pkgmanRegister`.</span>
@@ -83,42 +83,42 @@ parses the source files and generates the respective documentation files.</p></d
 <span class="s">`httpListening` hook, our code would look like:</span>
 
 <span class="s">  exports.pkgmanRegister = (registrar) -&gt;</span>
-<span class="s">    </span>
+
 <span class="s">    registrar.registerHook &#39;httpListening&#39;, -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Your code goes here...</p></div></div><div class="code"><div class="wrapper"><span class="s">The list below was dynamically generated from the source code. There is a</span>
 <span class="s">description and a list of implementing packages for each hook.</span>
 
 <span class="s">&quot;&quot;&quot;</span>
-  
+
   <span class="nv">packagesImplementingHook = </span><span class="nf">(hookName) -&gt;</span>
-  
+
     <span class="nv">implementsPattern = </span><span class="k">new</span> <span class="nb">RegExp</span> <span class="s">&quot;^\#\\s(\#\# )?Implements hook `</span><span class="si">#{</span>
       <span class="nx">hookName</span>
     <span class="si">}</span><span class="s">`&quot;</span>
-      
+
     <span class="nv">packages = </span><span class="p">{}</span>
-    
+
     <span class="k">for</span> <span class="nx">filename</span><span class="p">,</span> <span class="p">{</span><span class="nx">commentLines</span><span class="p">}</span> <span class="k">of</span> <span class="nx">sources</span>
       <span class="k">continue</span> <span class="k">unless</span> <span class="p">(</span><span class="nv">typeAndName = </span><span class="nx">packageTypeAndName</span> <span class="nx">filename</span><span class="p">,</span> <span class="kc">false</span><span class="p">)</span><span class="o">?</span>
       <span class="nv">typeAndName.filename = </span><span class="nx">filename</span>
-      
+
       <span class="nv">some = </span><span class="nx">commentLines</span><span class="p">.</span><span class="nx">some</span> <span class="nf">(line) -&gt;</span> <span class="nx">line</span><span class="p">.</span><span class="nx">match</span> <span class="nx">implementsPattern</span>
       <span class="k">if</span> <span class="nx">some</span>
-      
+
         <span class="nv">package_ = </span><span class="nx">packages</span><span class="p">[</span><span class="nx">typeAndName</span><span class="p">.</span><span class="nx">name</span><span class="p">]</span> <span class="o">?=</span> <span class="nx">typeAndName</span>
         <span class="p">(</span><span class="nx">package_</span><span class="p">.</span><span class="nx">typesAndFilenames</span> <span class="o">?=</span> <span class="p">[]).</span><span class="nx">push</span>
-          <span class="nv">type: </span><span class="nx">typeAndName</span><span class="p">.</span><span class="nx">type</span><span class="p">,</span> <span class="nv">filename: </span><span class="nx">filename</span> 
-        
+          <span class="nv">type: </span><span class="nx">typeAndName</span><span class="p">.</span><span class="nx">type</span><span class="p">,</span> <span class="nv">filename: </span><span class="nx">filename</span>
+
     <span class="nx">package_</span> <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">package_</span> <span class="k">of</span> <span class="nx">packages</span>
-  
+
   <span class="nv">hookInformation = </span><span class="p">{}</span>
   <span class="k">for</span> <span class="nx">filename</span><span class="p">,</span> <span class="p">{</span><span class="nx">commentLines</span><span class="p">}</span> <span class="k">of</span> <span class="nx">sources</span>
-    
+
     <span class="k">for</span> <span class="nx">commentLine</span><span class="p">,</span> <span class="nx">index</span> <span class="k">in</span> <span class="nx">commentLines</span>
-      
+
       <span class="c1"># Find the comment with the hook invocation, and retrieve the</span>
       <span class="c1"># hook name.</span>
       <span class="k">if</span> <span class="nv">matches = </span><span class="nx">commentLine</span><span class="p">.</span><span class="nx">match</span> <span class="sr">/^\#\sInvoke hook `([^`]+)`/</span>
-        
+
         <span class="c1"># Look ahead until we hit an empty line; all following lines</span>
         <span class="c1"># until then are the hook description.</span>
         <span class="nv">description = </span><span class="s">&#39;&#39;</span>
@@ -129,32 +129,32 @@ parses the source files and generates the respective documentation files.</p></d
           <span class="nx">description</span> <span class="o">+=</span> <span class="nx">matches</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">replace</span><span class="p">(</span>
             <span class="s">&#39;}&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span>
           <span class="p">).</span><span class="nx">trim</span><span class="p">()</span> <span class="o">+</span> <span class="s">&#39; &#39;</span>
-          
+
           <span class="nx">lookaheadIndex</span> <span class="o">+=</span> <span class="mi">1</span>
-        
+
         <span class="c1"># Key what we&#39;ve found by filename.</span>
         <span class="p">(</span><span class="nx">hookInformation</span><span class="p">[</span><span class="nx">filename</span><span class="p">]</span> <span class="o">?=</span> <span class="p">[]).</span><span class="nx">push</span>
-        
+
           <span class="nv">description: </span><span class="nx">description</span>
           <span class="nv">name: </span><span class="nx">hookName</span>
-  
+
   <span class="c1"># Output the hook information.</span>
   <span class="nv">alphabetical = </span><span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">hookInformation</span><span class="p">).</span><span class="nx">sort</span><span class="p">()</span>
   <span class="k">for</span> <span class="nx">filename</span> <span class="k">in</span> <span class="nx">alphabetical</span>
     <span class="nv">hooks = </span><span class="nx">hookInformation</span><span class="p">[</span><span class="nx">filename</span><span class="p">]</span>
-    
+
     <span class="c1"># Top-level list: filenames</span>
     <span class="nx">markdown</span> <span class="o">+=</span> <span class="s">&quot;&quot;&quot;</span>
 
 <span class="s">Invoked in [</span><span class="si">#{</span><span class="nx">filename</span><span class="si">}</span><span class="s">](./</span><span class="si">#{</span><span class="nx">filename</span><span class="p">.</span><span class="nx">replace</span> <span class="sr">/(coffee|js)/</span><span class="p">,</span> <span class="s">&#39;html&#39;</span><span class="si">}</span><span class="s">):</span>
 
 <span class="s">&quot;&quot;&quot;</span>
-    
+
     <span class="c1"># Second-level list: hook names and descriptions.</span>
     <span class="k">for</span> <span class="p">{</span><span class="nx">name</span><span class="p">,</span> <span class="nx">description</span><span class="p">}</span> <span class="k">in</span> <span class="nx">hooks</span>
-      
+
       <span class="nv">packages = </span><span class="nx">packagesImplementingHook</span> <span class="nx">name</span>
-      
+
       <span class="nx">markdown</span> <span class="o">+=</span> <span class="s">&quot;&quot;&quot;</span>
 
 <span class="s">* </span><span class="err">##</span><span class="s"> `</span><span class="si">#{</span><span class="nx">name</span><span class="si">}</span><span class="s">`</span>
@@ -162,11 +162,11 @@ parses the source files and generates the respective documentation files.</p></d
 <span class="s">\t &lt;h5&gt;</span><span class="si">#{</span><span class="nx">description</span><span class="si">}</span><span class="s">&lt;/h5&gt;</span>
 
 <span class="s">&quot;&quot;&quot;</span>
-      
+
       <span class="k">continue</span> <span class="k">if</span> <span class="nx">packages</span><span class="p">.</span><span class="nx">length</span> <span class="o">is</span> <span class="mi">0</span>
-      
+
       <span class="k">for</span> <span class="nx">package_</span> <span class="k">in</span> <span class="nx">packages</span>
-        
+
         <span class="nv">links = </span><span class="p">[]</span>
         <span class="k">for</span> <span class="p">{</span><span class="nx">type</span><span class="p">,</span> <span class="nx">filename</span><span class="p">}</span> <span class="k">in</span> <span class="nx">package_</span><span class="p">.</span><span class="nx">typesAndFilenames</span>
 
@@ -176,7 +176,7 @@ parses the source files and generates the respective documentation files.</p></d
 <span class="si">}</span><span class="s">\#implementshook</span><span class="si">#{</span>
   <span class="nx">name</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span>
 <span class="si">}</span><span class="s">&quot;&gt;</span><span class="si">#{</span><span class="nx">type</span><span class="si">}</span><span class="s">&lt;/a&gt;</span>
-<span class="s">&quot;&quot;&quot;</span>         
+<span class="s">&quot;&quot;&quot;</span>
 
         <span class="nx">markdown</span> <span class="o">+=</span> <span class="s">&quot;&quot;&quot;</span>
 
@@ -187,60 +187,59 @@ parses the source files and generates the respective documentation files.</p></d
 <span class="si">}</span><span class="s">)</span>
 
 <span class="s">&quot;&quot;&quot;</span>
-      
-  <span class="nx">fs</span><span class="p">.</span><span class="nx">writeFileSync</span> <span class="s">&quot;documentation/hooks.md&quot;</span><span class="p">,</span> <span class="nx">markdown</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Generate TODO documentation.</p></div></div><div class="code"><div class="wrapper"><span class="nv">generateTodoDocumentation = </span><span class="nx">do</span> <span class="nf">-&gt;</span>
-  
-  <span class="nv">markdown = </span><span class="s">&quot;&quot;&quot;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>TODO list</p></div></div><div class="code"><div class="wrapper"><span class="s">Shrub -- like any project -- always presents a path for improvement. This is</span>
+
+  <span class="nx">fs</span><span class="p">.</span><span class="nx">writeFileSync</span> <span class="s">&#39;documentation/hooks.md&#39;</span><span class="p">,</span> <span class="nx">markdown</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Generate TODO documentation.</p></div></div><div class="code"><div class="wrapper"><span class="nv">generateTodoDocumentation = </span><span class="nx">do</span> <span class="nf">-&gt;</span>
+
+  <span class="nv">markdown = </span><span class="s">&#39;&#39;&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>TODO list</p></div></div><div class="code"><div class="wrapper"><span class="s">Shrub -- like any project -- always presents a path for improvement. This is</span>
 <span class="s">a dynamically generated listing of TODO items, each with a line of code</span>
 <span class="s">context.</span>
 
 
-<span class="s">&quot;&quot;&quot;</span>
-  
+<span class="s">&#39;&#39;&#39;</span>
+
   <span class="nv">todoInformation = </span><span class="p">{}</span>
   <span class="k">for</span> <span class="nx">filename</span><span class="p">,</span> <span class="p">{</span><span class="nx">lines</span><span class="p">}</span> <span class="k">of</span> <span class="nx">sources</span>
-    
+
     <span class="k">for</span> <span class="nx">line</span><span class="p">,</span> <span class="nx">index</span> <span class="k">in</span> <span class="nx">lines</span>
-      
+
       <span class="c1"># Find the comment with the TODO, and retrieve the description.</span>
       <span class="k">if</span> <span class="nv">matches = </span><span class="nx">line</span><span class="p">.</span><span class="nx">match</span> <span class="sr">/^\#\s(?:}\s+)?`TODO`:\s(.*)$/</span>
-      
+
         <span class="c1"># Look ahead until we hit an empty line; all following lines</span>
         <span class="c1"># until then are the TODO description.</span>
         <span class="nv">description = </span><span class="nx">matches</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39; &#39;</span>
         <span class="nv">lookaheadIndex = </span><span class="nx">index</span> <span class="o">+</span> <span class="mi">1</span>
         <span class="k">while</span> <span class="nv">lookaheadLine = </span><span class="nx">lines</span><span class="p">[</span><span class="nx">lookaheadIndex</span><span class="p">]</span>
           <span class="k">break</span> <span class="k">unless</span> <span class="p">(</span><span class="nv">matches = </span><span class="nx">lookaheadLine</span><span class="p">.</span><span class="nx">match</span> <span class="sr">/^\#\s(.*)$/</span><span class="p">)</span><span class="o">?</span>
-          
+
           <span class="nx">description</span> <span class="o">+=</span> <span class="nx">matches</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">replace</span><span class="p">(</span>
             <span class="s">&#39;}&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span>
           <span class="p">).</span><span class="nx">trim</span><span class="p">()</span> <span class="o">+</span> <span class="s">&#39; &#39;</span>
-          
-          <span class="nx">lookaheadIndex</span> <span class="o">+=</span> <span class="mi">1</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Look ahead until we find a non-comment. We'll use this as
+
+          <span class="nx">lookaheadIndex</span> <span class="o">+=</span> <span class="mi">1</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Look ahead until we find a non-comment. We'll use this as
 context for the TODO item.</p></div></div><div class="code"><div class="wrapper">        <span class="k">while</span> <span class="nx">lines</span><span class="p">[</span><span class="nx">lookaheadIndex</span><span class="p">].</span><span class="nx">match</span> <span class="sr">/^(\#|$)/</span>
           <span class="nx">lookaheadIndex</span> <span class="o">+=</span> <span class="mi">1</span>
-        
+
         <span class="p">(</span><span class="nx">todoInformation</span><span class="p">[</span><span class="nx">filename</span><span class="p">]</span> <span class="o">?=</span> <span class="p">[]).</span><span class="nx">push</span>
-          
+
           <span class="nv">context: </span><span class="nx">lines</span><span class="p">[</span><span class="nx">lookaheadIndex</span><span class="p">]</span>
           <span class="nv">description: </span><span class="nx">description</span>
-        
+
   <span class="c1"># Output the TODO information.</span>
   <span class="nv">alphabetical = </span><span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">todoInformation</span><span class="p">).</span><span class="nx">sort</span><span class="p">()</span>
   <span class="k">for</span> <span class="nx">filename</span> <span class="k">in</span> <span class="nx">alphabetical</span>
     <span class="nv">todos = </span><span class="nx">todoInformation</span><span class="p">[</span><span class="nx">filename</span><span class="p">]</span>
-    
+
     <span class="c1"># Top-level list: filenames</span>
     <span class="nx">markdown</span> <span class="o">+=</span> <span class="s">&quot;&quot;&quot;</span>
 
 <span class="s">[</span><span class="si">#{</span><span class="nx">filename</span><span class="si">}</span><span class="s">](./</span><span class="si">#{</span><span class="nx">filename</span><span class="p">.</span><span class="nx">replace</span> <span class="sr">/(coffee|js)/</span><span class="p">,</span> <span class="s">&#39;html&#39;</span><span class="si">}</span><span class="s">)</span>
 
 <span class="s">&quot;&quot;&quot;</span>
-    
+
     <span class="c1"># Second-level list: TODO descriptions.</span>
     <span class="k">for</span> <span class="p">{</span><span class="nx">context</span><span class="p">,</span> <span class="nx">description</span><span class="p">}</span> <span class="k">in</span> <span class="nx">todos</span>
-      
+
       <span class="nx">markdown</span> <span class="o">+=</span> <span class="s">&quot;&quot;&quot;</span>
 
 <span class="s">* </span><span class="err">####</span><span class="s"> `</span><span class="si">#{</span><span class="nx">context</span><span class="si">}</span><span class="s">`</span>
@@ -248,34 +247,34 @@ context for the TODO item.</p></div></div><div class="code"><div class="wrapper"
 <span class="s">\t </span><span class="si">#{</span><span class="nx">description</span><span class="si">}</span><span class="s"></span>
 
 <span class="s">&quot;&quot;&quot;</span>
-    
-  <span class="nx">fs</span><span class="p">.</span><span class="nx">writeFileSync</span> <span class="s">&quot;documentation/todos.md&quot;</span><span class="p">,</span> <span class="nx">markdown</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Generate package documentation.</p></div></div><div class="code"><div class="wrapper"><span class="nv">generatePackageDocumentation = </span><span class="nx">do</span> <span class="nf">-&gt;</span>
-  
-  <span class="nv">markdown = </span><span class="s">&quot;&quot;&quot;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Package overview</p></div></div><div class="code"><div class="wrapper"><span class="s">Packages are how Shrub organizes functionality. Packages may be provided for</span>
+
+  <span class="nx">fs</span><span class="p">.</span><span class="nx">writeFileSync</span> <span class="s">&#39;documentation/todos.md&#39;</span><span class="p">,</span> <span class="nx">markdown</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Generate package documentation.</p></div></div><div class="code"><div class="wrapper"><span class="nv">generatePackageDocumentation = </span><span class="nx">do</span> <span class="nf">-&gt;</span>
+
+  <span class="nv">markdown = </span><span class="s">&#39;&#39;&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Package overview</p></div></div><div class="code"><div class="wrapper"><span class="s">Packages are how Shrub organizes functionality. Packages may be provided for</span>
 <span class="s">the server or the client (or both).</span>
 
 <span class="s">This page provides a listing of packages in this project, along with a short</span>
 <span class="s">description of the functionality they provide.</span>
 
 
-<span class="s">&quot;&quot;&quot;</span>
-  
+<span class="s">&#39;&#39;&#39;</span>
+
   <span class="k">for</span> <span class="nx">type</span><span class="p">,</span> <span class="nx">package_</span> <span class="k">of</span> <span class="nx">packageInformation</span>
     <span class="k">for</span> <span class="nx">name</span><span class="p">,</span> <span class="p">{</span><span class="nx">filename</span><span class="p">}</span> <span class="k">of</span> <span class="nx">package_</span>
       <span class="p">{</span><span class="nx">commentLines</span><span class="p">}</span> <span class="o">=</span> <span class="nx">sources</span><span class="p">[</span><span class="nx">filename</span><span class="p">]</span>
-      
+
       <span class="nx">packageInformation</span><span class="p">[</span><span class="nx">type</span><span class="p">][</span><span class="nx">name</span><span class="p">].</span><span class="nv">description = </span><span class="s">&#39;&#39;</span>
-  
+
       <span class="c1"># Nothing to do if there are no comments.</span>
       <span class="k">continue</span> <span class="k">unless</span> <span class="nx">commentLines</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span>
-      
+
       <span class="c1"># Jump to the second comment.</span>
       <span class="nv">index = </span><span class="mi">0</span>
       <span class="nx">index</span> <span class="o">+=</span> <span class="mi">1</span> <span class="k">while</span> <span class="nx">commentLines</span><span class="p">[</span><span class="nx">index</span><span class="p">]</span> <span class="o">is</span> <span class="s">&#39;&#39;</span>
       <span class="k">continue</span> <span class="k">if</span> <span class="nx">index</span> <span class="o">is</span> <span class="nx">commentLines</span><span class="p">.</span><span class="nx">length</span>
       <span class="nx">index</span> <span class="o">+=</span> <span class="mi">2</span>
       <span class="k">continue</span> <span class="k">if</span> <span class="nx">index</span> <span class="o">is</span> <span class="nx">commentLines</span><span class="p">.</span><span class="nx">length</span>
-      
+
       <span class="c1"># Get everything until the comment ends as the package</span>
       <span class="c1"># description.</span>
       <span class="nv">description = </span><span class="s">&#39;&#39;</span>
@@ -287,27 +286,27 @@ context for the TODO item.</p></div></div><div class="code"><div class="wrapper"
         <span class="nx">description</span> <span class="o">+=</span> <span class="nx">matches</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">replace</span><span class="p">(</span>
           <span class="s">&#39;}&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span>
         <span class="p">).</span><span class="nx">trim</span><span class="p">()</span> <span class="o">+</span> <span class="s">&#39; &#39;</span>
-        
+
         <span class="nx">index</span> <span class="o">+=</span> <span class="mi">1</span>
-      
+
       <span class="nx">packageInformation</span><span class="p">[</span><span class="nx">type</span><span class="p">][</span><span class="nx">name</span><span class="p">].</span><span class="nv">description = </span><span class="nx">description</span><span class="p">.</span><span class="nx">trim</span><span class="p">()</span>
-      
+
   <span class="c1"># Output the package information.</span>
   <span class="k">for</span> <span class="nx">type</span> <span class="k">in</span> <span class="p">[</span><span class="s">&#39;client&#39;</span><span class="p">,</span> <span class="s">&#39;server&#39;</span><span class="p">]</span>
     <span class="nv">alphabetical = </span><span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">packageInformation</span><span class="p">[</span><span class="nx">type</span><span class="p">]).</span><span class="nx">sort</span><span class="p">()</span>
-    
+
     <span class="nv">humanizeType = client: </span><span class="s">&#39;Client-side&#39;</span><span class="p">,</span> <span class="nv">server: </span><span class="s">&#39;Server-side&#39;</span>
-    
+
     <span class="c1"># Top-level list: type</span>
     <span class="nx">markdown</span> <span class="o">+=</span> <span class="s">&quot;&quot;&quot;</span>
-<span class="s">    </span>
+
 <span class="err">##</span><span class="si">#{</span><span class="nx">humanizeType</span><span class="p">[</span><span class="nx">type</span><span class="p">]</span><span class="si">}</span><span class="s"></span>
 
 <span class="s">&quot;&quot;&quot;</span>
-    
+
     <span class="k">for</span> <span class="nx">packageName</span> <span class="k">in</span> <span class="nx">alphabetical</span>
       <span class="p">{</span><span class="nx">description</span><span class="p">,</span> <span class="nx">filename</span><span class="p">}</span> <span class="o">=</span> <span class="nx">packageInformation</span><span class="p">[</span><span class="nx">type</span><span class="p">][</span><span class="nx">packageName</span><span class="p">]</span>
-      
+
       <span class="c1"># Second-level list: packages with descriptions.</span>
       <span class="nx">markdown</span> <span class="o">+=</span> <span class="s">&quot;&quot;&quot;</span>
 
@@ -316,5 +315,5 @@ context for the TODO item.</p></div></div><div class="code"><div class="wrapper"
 <span class="s">\t &lt;h4&gt;</span><span class="si">#{</span><span class="nx">description</span><span class="si">}</span><span class="s">&lt;/h4&gt;</span>
 
 <span class="s">&quot;&quot;&quot;</span>
-    
-  <span class="nx">fs</span><span class="p">.</span><span class="nx">writeFileSync</span> <span class="s">&quot;documentation/packages.md&quot;</span><span class="p">,</span> <span class="nx">markdown</span></div></div></div></div></body></html>
+
+  <span class="nx">fs</span><span class="p">.</span><span class="nx">writeFileSync</span> <span class="s">&#39;documentation/packages.md&#39;</span><span class="p">,</span> <span class="nx">markdown</span></div></div></div></div></body></html>

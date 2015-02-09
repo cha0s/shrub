@@ -1,39 +1,63 @@
 <!DOCTYPE html><html lang="en"><head><title>packages/shrub-limiter/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="packages/shrub-limiter/index"><meta name="groc-project-path" content="packages/shrub-limiter/index.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-limiter/index.coffee">packages/shrub-limiter/index.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="rate-limiter">Rate limiter</h1>
 
 <p>Limits the rate at which clients can do certain operations, like call RPC
-endpoints.</p></div></div><div class="code"><div class="wrapper"><span class="nv">moment = </span><span class="nx">require</span> <span class="s">&#39;moment&#39;</span>
-<span class="nv">Promise = </span><span class="nx">require</span> <span class="s">&#39;bluebird&#39;</span>
-
-<span class="nv">audit = </span><span class="nx">require</span> <span class="s">&#39;audit&#39;</span>
-<span class="nv">errors = </span><span class="nx">require</span> <span class="s">&#39;errors&#39;</span>
-<span class="nv">middleware = </span><span class="nx">require</span> <span class="s">&#39;middleware&#39;</span>
-<span class="nv">pkgman = </span><span class="nx">require</span> <span class="s">&#39;pkgman&#39;</span>
-
-<span class="p">{</span><span class="nx">Limiter</span><span class="p">,</span> <span class="nx">threshold</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">&#39;limits&#39;</span>
-
-<span class="nv">exports.SKIP = SKIP = </span><span class="mi">0</span>
-<span class="nv">exports.IGNORE = IGNORE = </span><span class="mi">1</span>
+endpoints.</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.SKIP = SKIP = </span><span class="p">{}</span>
 
 <span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookcollections">Implements hook <code>collections</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;collections&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
-    
-    <span class="s">&#39;shrub-limit&#39;</span><span class="o">:</span>
-    
-      <span class="nv">attributes:</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The limiter key.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">key:</span>
+
+    <span class="nv">_ = </span><span class="nx">require</span> <span class="s">&#39;lodash&#39;</span>
+
+    <span class="nv">Limit =</span>
+
+      <span class="nv">attributes:</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>The limiter key.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">key:</span>
           <span class="nv">type: </span><span class="s">&#39;string&#39;</span>
-          <span class="nv">index: </span><span class="kc">true</span>
-          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Scores accrued for this limit.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">scores:</span>
-          <span class="nv">type: </span><span class="s">&#39;array&#39;</span>
-          <span class="nv">defaultsTo: </span><span class="p">[]</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookendpointalter">Implements hook <code>endpointAlter</code></h2>
+          <span class="nv">index: </span><span class="kc">true</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Scores accrued for this limit.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">scores:</span>
+          <span class="nv">collection: </span><span class="s">&#39;shrub-limit-score&#39;</span>
+          <span class="nv">via: </span><span class="s">&#39;limit&#39;</span>
+
+        <span class="nv">accrue: </span><span class="nf">(score) -&gt;</span>
+          <span class="nx">@scores</span><span class="p">.</span><span class="nx">add</span> <span class="nv">score: </span><span class="nx">score</span>
+
+          <span class="k">return</span> <span class="k">this</span>
+
+        <span class="nv">passed: </span><span class="nf">(threshold) -&gt;</span> <span class="mi">0</span> <span class="o">&gt;=</span> <span class="nx">@ttl</span> <span class="nx">threshold</span>
+
+        <span class="nv">reset: </span><span class="nf">-&gt;</span>
+
+          <span class="c1"># Remove all scores.</span>
+          <span class="nx">@scores</span><span class="p">.</span><span class="nx">remove</span> <span class="nx">id</span> <span class="k">for</span> <span class="nx">id</span> <span class="k">in</span> <span class="nx">_</span><span class="p">.</span><span class="nx">pluck</span> <span class="nx">@scores</span><span class="p">,</span> <span class="s">&#39;id&#39;</span>
+          <span class="vi">@createdAt = </span><span class="k">new</span> <span class="nb">Date</span><span class="p">()</span>
+
+          <span class="k">return</span> <span class="k">this</span>
+
+        <span class="nv">score: </span><span class="nf">-&gt;</span>
+
+          <span class="c1"># Sum all the scores.</span>
+          <span class="nx">_</span><span class="p">.</span><span class="nx">pluck</span><span class="p">(</span><span class="nx">@scores</span><span class="p">,</span> <span class="s">&#39;score&#39;</span><span class="p">).</span><span class="nx">reduce</span> <span class="p">(</span><span class="nf">(l, r) -&gt;</span> <span class="nx">l</span> <span class="o">+</span> <span class="nx">r</span><span class="p">),</span> <span class="mi">0</span>
+
+        <span class="nv">ttl: </span><span class="nf">(threshold) -&gt;</span>
+
+          <span class="c1"># Calculate in seconds.</span>
+          <span class="nv">diff = </span><span class="p">(</span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span> <span class="o">-</span> <span class="nx">@createdAt</span><span class="p">.</span><span class="nx">getTime</span><span class="p">())</span> <span class="o">/</span> <span class="mi">1000</span>
+          <span class="nb">Math</span><span class="p">.</span><span class="nx">ceil</span> <span class="nx">threshold</span> <span class="o">-</span> <span class="nx">diff</span>
+
+    <span class="nv">LimitScore =</span>
+
+      <span class="nv">attributes:</span>
+
+        <span class="nv">score: </span><span class="s">&#39;integer&#39;</span>
+
+        <span class="nv">limit: model: </span><span class="s">&#39;shrub-limit&#39;</span>
+
+    <span class="s">&#39;shrub-limit&#39;</span><span class="o">:</span> <span class="nx">Limit</span>
+    <span class="s">&#39;shrub-limit-score&#39;</span><span class="o">:</span> <span class="nx">LimitScore</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookendpointalter">Implements hook <code>endpointAlter</code></h2>
 
 <p>Allow RPC endpoint definitions to specify rate limiters.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;endpointAlter&#39;</span><span class="p">,</span> <span class="nf">(endpoints) -&gt;</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke hook <code>limiterApplicationMiddleware</code>.
-Invoked when a limit is applied.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">limiterApplicationMiddleware = </span><span class="nx">middleware</span><span class="p">.</span><span class="nx">fromShortName</span><span class="p">(</span>
-      <span class="s">&#39;limiter application&#39;</span>
-      <span class="s">&#39;shrub-limiter&#39;</span>
-    <span class="p">)</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>A limiter on a route is defined like:</p>
+
+    <span class="nv">moment = </span><span class="nx">require</span> <span class="s">&#39;moment&#39;</span>
+
+    <span class="nv">errors = </span><span class="nx">require</span> <span class="s">&#39;errors&#39;</span>
+    <span class="nv">pkgman = </span><span class="nx">require</span> <span class="s">&#39;pkgman&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>A limiter on a route is defined like:</p>
 
 <ul>
 <li><p><code>message</code>: The message returned to the client when the threshold is
@@ -45,47 +69,49 @@ this limiter.</p></li>
 <a href="http://shrub.doc.com.dev/hooks.html#fingerprint">audit keys</a> to ignore
 when determining the total limit. In this example, the IP address and
 session ID would be ignored.</p></li>
-</ul></div></div><div class="code"><div class="wrapper">    
-    <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">endpoints</span><span class="p">).</span><span class="nx">forEach</span> <span class="nf">(route) -&gt;</span>
+</ul></div></div><div class="code"><div class="wrapper">    <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="nx">endpoints</span><span class="p">).</span><span class="nx">forEach</span> <span class="nf">(route) -&gt;</span>
       <span class="nv">endpoint = </span><span class="nx">endpoints</span><span class="p">[</span><span class="nx">route</span><span class="p">]</span>
-      
+
       <span class="c1"># No limter? Nevermind...</span>
-      <span class="k">return</span> <span class="k">unless</span> <span class="nx">endpoint</span><span class="p">.</span><span class="nx">limiter</span><span class="o">?</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Create a limiter based on the threshold defined.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">endpoint.limiter.instance = </span><span class="k">new</span> <span class="nx">Limiter</span><span class="p">(</span>
-        <span class="s">&quot;rpc://</span><span class="si">#{</span><span class="nx">route</span><span class="si">}</span><span class="s">&quot;</span>
-        <span class="nx">endpoint</span><span class="p">.</span><span class="nx">limiter</span><span class="p">.</span><span class="nx">threshold</span>
-      <span class="p">)</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Set defaults.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">endpoint</span><span class="p">.</span><span class="nx">limiter</span><span class="p">.</span><span class="nx">ignoreKeys</span> <span class="o">?=</span> <span class="p">[]</span>
-      <span class="nx">endpoint</span><span class="p">.</span><span class="nx">limiter</span><span class="p">.</span><span class="nx">message</span> <span class="o">?=</span> <span class="s">&quot;You are doing that too much.&quot;</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Add a validator, where we'll check the threshold.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">endpoint</span><span class="p">.</span><span class="nx">validators</span><span class="p">.</span><span class="nx">push</span> <span class="nf">(req, res, next) -&gt;</span>
-        
-        <span class="p">{</span><span class="nx">ignoreKeys</span><span class="p">,</span> <span class="nx">instance</span><span class="p">}</span> <span class="o">=</span> <span class="nx">endpoint</span><span class="p">.</span><span class="nx">limiter</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Ignore keys.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">fingerprint = </span><span class="nx">audit</span><span class="p">.</span><span class="nx">fingerprint</span> <span class="nx">req</span>
-        <span class="k">delete</span> <span class="nx">fingerprint</span><span class="p">[</span><span class="nx">excludedKey</span><span class="p">]</span> <span class="k">for</span> <span class="nx">excludedKey</span> <span class="k">in</span> <span class="nx">ignoreKeys</span>
-        
-        <span class="nv">keys = </span><span class="p">(</span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">key</span><span class="si">}</span><span class="s">:</span><span class="si">#{</span><span class="nx">value</span><span class="si">}</span><span class="s">&quot;</span> <span class="k">for</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span> <span class="k">of</span> <span class="nx">fingerprint</span><span class="p">)</span>
-        
-        <span class="k">for</span> <span class="nx">rule</span> <span class="k">in</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invokeFlat</span> <span class="s">&#39;limiterCheck&#39;</span><span class="p">,</span> <span class="nx">req</span><span class="p">,</span> <span class="nx">endpoint</span><span class="p">,</span> <span class="nx">keys</span>
+      <span class="k">return</span> <span class="k">unless</span> <span class="nx">endpoint</span><span class="p">.</span><span class="nx">limiter</span><span class="o">?</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Create a limiter based on the threshold defined.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">endpoint.limiter.instance = </span><span class="k">new</span> <span class="nx">Limiter</span><span class="p">(</span>
+        <span class="s">&quot;rpc://</span><span class="si">#{</span><span class="nx">route</span><span class="si">}</span><span class="s">&quot;</span><span class="p">,</span> <span class="nx">endpoint</span><span class="p">.</span><span class="nx">limiter</span><span class="p">.</span><span class="nx">threshold</span>
+      <span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Set defaults.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">endpoint</span><span class="p">.</span><span class="nx">limiter</span><span class="p">.</span><span class="nx">excludedKeys</span> <span class="o">?=</span> <span class="p">[]</span>
+      <span class="nx">endpoint</span><span class="p">.</span><span class="nx">limiter</span><span class="p">.</span><span class="nx">message</span> <span class="o">?=</span> <span class="s">&#39;You are doing that too much.&#39;</span>
+      <span class="nx">endpoint</span><span class="p">.</span><span class="nx">limiter</span><span class="p">.</span><span class="nx">villianyScore</span> <span class="o">?=</span> <span class="mi">20</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Add a validator, where we'll check the threshold.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">endpoint</span><span class="p">.</span><span class="nx">validators</span><span class="p">.</span><span class="nx">push</span> <span class="nf">(req, res, next) -&gt;</span>
+
+        <span class="p">{</span>
+          <span class="nx">excludedKeys</span>
+          <span class="nx">instance</span>
+          <span class="nx">message</span>
+          <span class="nx">villianyScore</span>
+        <span class="p">}</span> <span class="o">=</span> <span class="nx">endpoint</span><span class="p">.</span><span class="nx">limiter</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Allow packages to check and optionally skip the limiter.</p></div></div><div class="code"><div class="wrapper">        <span class="k">for</span> <span class="nx">rule</span> <span class="k">in</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">invokeFlat</span> <span class="s">&#39;limiterCheck&#39;</span><span class="p">,</span> <span class="nx">req</span>
           <span class="k">continue</span> <span class="k">unless</span> <span class="nx">rule</span><span class="o">?</span>
           <span class="k">return</span> <span class="nx">next</span><span class="p">()</span> <span class="k">if</span> <span class="nx">SKIP</span> <span class="o">is</span> <span class="nx">rule</span>
-          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Accrue a hit and check the threshold.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">instance</span><span class="p">.</span><span class="nx">accrueAndCheckThreshold</span><span class="p">(</span><span class="nx">keys</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">(isLimited) -&gt;</span>
-          <span class="k">return</span> <span class="nx">next</span><span class="p">()</span> <span class="k">unless</span> <span class="nx">isLimited</span>
-          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Don't pass req directly, since it can be mutated by
-routes, and violate other routes' expectations.</p></div></div><div class="code"><div class="wrapper">          <span class="nv">limiterReq = </span><span class="p">{}</span>
-          <span class="nx">limiterReq</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span> <span class="k">for</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">value</span> <span class="k">of</span> <span class="nx">req</span>
-          <span class="nv">limiterReq.endpoint = </span><span class="nx">endpoint</span>
-          <span class="nv">limiterReq.keys = </span><span class="nx">keys</span>
-          <span class="nv">limiterReq.route = </span><span class="nx">route</span>
 
-          <span class="nx">limiterApplicationMiddleware</span><span class="p">.</span><span class="nx">dispatch</span> <span class="nx">limiterReq</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nf">(error) -&gt;</span>
-            <span class="k">return</span> <span class="nx">next</span> <span class="nx">error</span> <span class="k">if</span> <span class="nx">error</span><span class="o">?</span>
-            <span class="nx">next</span><span class="p">()</span>
-          
-        <span class="p">).</span><span class="nx">catch</span> <span class="nx">next</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshooktransmittableerror">Implements hook <code>transmittableError</code></h2>
+        <span class="nv">inlineKeys = </span><span class="nx">req</span><span class="p">.</span><span class="nx">fingerprint</span><span class="p">.</span><span class="nx">inlineKeys</span> <span class="nx">excludedKeys</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Build a nice error message for the client, so they
+hopefully will stop doing that.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">sendLimiterError = </span><span class="nf">-&gt;</span>
+          <span class="nx">instance</span><span class="p">.</span><span class="nx">ttl</span><span class="p">(</span><span class="nx">inlineKeys</span><span class="p">).</span><span class="nx">then</span> <span class="nf">(ttl) -&gt;</span>
+            <span class="nx">next</span> <span class="nx">errors</span><span class="p">.</span><span class="nx">instantiate</span><span class="p">(</span>
+              <span class="s">&#39;limiterThreshold&#39;</span>
+              <span class="nx">message</span>
+              <span class="nx">moment</span><span class="p">().</span><span class="nx">add</span><span class="p">(</span><span class="s">&#39;seconds&#39;</span><span class="p">,</span> <span class="nx">ttl</span><span class="p">).</span><span class="nx">fromNow</span><span class="p">()</span>
+            <span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Accrue a hit and check the threshold.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">instance</span><span class="p">.</span><span class="nx">accrueAndCheckThreshold</span><span class="p">(</span><span class="nx">inlineKeys</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nf">(isLimited) -&gt;</span>
+          <span class="k">return</span> <span class="nx">next</span><span class="p">()</span> <span class="k">unless</span> <span class="nx">isLimited</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Zero score skips the villiany check.</p></div></div><div class="code"><div class="wrapper">          <span class="k">return</span> <span class="nx">sendLimiterError</span><span class="p">()</span> <span class="k">if</span> <span class="nx">villianyScore</span> <span class="o">is</span> <span class="mi">0</span>
+          <span class="k">unless</span> <span class="nx">pkgman</span><span class="p">.</span><span class="nx">packageExists</span> <span class="s">&#39;shrub-villiany&#39;</span>
+            <span class="k">return</span> <span class="nx">sendLimiterError</span><span class="p">()</span>
 
-<p>Just defer to client, where the error is defined.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;transmittableError&#39;</span><span class="p">,</span> <span class="nx">require</span><span class="p">(</span><span class="s">&#39;./client&#39;</span><span class="p">).</span><span class="nx">transmittableError</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookpackagesettings">Implements hook <code>packageSettings</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;packageSettings&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
-    
-    <span class="nv">applicationMiddleware: </span><span class="p">[</span>
-      <span class="s">&#39;shrub-villiany&#39;</span>
-    <span class="p">]</span></div></div></div></div></body></html>
+          <span class="nx">req</span><span class="p">.</span><span class="nx">reportVilliany</span><span class="p">(</span>
+            <span class="nx">villianyScore</span>
+            <span class="s">&quot;rpc://</span><span class="si">#{</span><span class="nx">req</span><span class="p">.</span><span class="nx">route</span><span class="si">}</span><span class="s">:limiter&quot;</span>
+            <span class="nx">excludedKeys</span>
+
+          <span class="p">).</span><span class="nx">then</span> <span class="nf">(isVillian) -&gt;</span>
+            <span class="k">return</span> <span class="nx">next</span><span class="p">()</span> <span class="k">if</span> <span class="nx">isVillian</span>
+
+            <span class="nx">sendLimiterError</span><span class="p">()</span>
+
+        <span class="p">).</span><span class="nx">catch</span> <span class="nx">next</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshooktransmittableerror">Implements hook <code>transmittableError</code></h2>
+
+<p>Just defer to client, where the error is defined.</p></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;transmittableError&#39;</span><span class="p">,</span> <span class="nx">require</span><span class="p">(</span><span class="s">&#39;./client&#39;</span><span class="p">).</span><span class="nx">transmittableError</span>
+
+<span class="nv">exports.Limiter = Limiter = </span><span class="nx">require</span> <span class="s">&#39;./limiter&#39;</span></div></div></div></div></body></html>

@@ -3,33 +3,27 @@
 <span class="nv">Promise = </span><span class="nx">require</span> <span class="s">&#39;bluebird&#39;</span>
 
 <span class="p">{</span><span class="nx">fork</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s">&#39;child_process&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Fork the process in order to inject require paths in if necessary.</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.fork = </span><span class="nf">-&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>First make sure we have default require paths.</p></div></div><div class="code"><div class="wrapper">  <span class="k">if</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">SHRUB_REQUIRE_PATH</span><span class="o">?</span>
-  
+
     <span class="nv">SHRUB_REQUIRE_PATH = </span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">SHRUB_REQUIRE_PATH</span>
-  
+
   <span class="k">else</span>
-  
-    <span class="nv">SHRUB_REQUIRE_PATH = </span><span class="s">&#39;custom:.:packages:server:client/modules&#39;</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Fork the process to inject require paths into it.</p></div></div><div class="code"><div class="wrapper">  <span class="k">if</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">SHRUB_FORKED</span><span class="o">?</span>
-  
+
+    <span class="nv">SHRUB_REQUIRE_PATH = </span><span class="s">&#39;custom:.:packages:server:client/modules&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Fork the process to inject require paths into it.</p></div></div><div class="code"><div class="wrapper">  <span class="k">if</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">SHRUB_FORKED</span><span class="o">?</span>
+
     <span class="k">return</span> <span class="kc">null</span>
-    
-  <span class="k">else</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Pass arguments to the child process.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">args = </span><span class="nx">process</span><span class="p">.</span><span class="nx">argv</span><span class="p">.</span><span class="nx">slice</span> <span class="mi">2</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Pass the environment to the child process.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">options = env: </span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Integrate any NODE_PATH after the shrub require paths.</p></div></div><div class="code"><div class="wrapper">    <span class="k">if</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_PATH</span><span class="o">?</span>
-      <span class="nx">SHRUB_REQUIRE_PATH</span> <span class="o">+=</span> <span class="s">&quot;:</span><span class="si">#{</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_PATH</span><span class="si">}</span><span class="s">&quot;</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Inject shrub require paths as the new NODE_PATH</p></div></div><div class="code"><div class="wrapper">    <span class="nv">options.env.NODE_PATH = </span><span class="nx">SHRUB_REQUIRE_PATH</span>
-    <span class="nv">options.env.SHRUB_FORKED = </span><span class="kc">true</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Fork it</p></div></div><div class="code"><div class="wrapper">    <span class="nx">fork</span> <span class="nx">process</span><span class="p">.</span><span class="nx">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">options</span>
+
+  <span class="k">else</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Pass arguments to the child process.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">args = </span><span class="nx">process</span><span class="p">.</span><span class="nx">argv</span><span class="p">.</span><span class="nx">slice</span> <span class="mi">2</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Pass the environment to the child process.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">options = env: </span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Integrate any NODE_PATH after the shrub require paths.</p></div></div><div class="code"><div class="wrapper">    <span class="k">if</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_PATH</span><span class="o">?</span>
+      <span class="nx">SHRUB_REQUIRE_PATH</span> <span class="o">+=</span> <span class="s">&quot;:</span><span class="si">#{</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_PATH</span><span class="si">}</span><span class="s">&quot;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Inject shrub require paths as the new NODE_PATH</p></div></div><div class="code"><div class="wrapper">    <span class="nv">options.env.NODE_PATH = </span><span class="nx">SHRUB_REQUIRE_PATH</span>
+    <span class="nv">options.env.SHRUB_FORKED = </span><span class="kc">true</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Fork it</p></div></div><div class="code"><div class="wrapper">    <span class="nx">fork</span> <span class="nx">process</span><span class="p">.</span><span class="nx">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">options</span>
 
 <span class="nv">exports.openServerPort = </span><span class="nf">-&gt;</span>
 
   <span class="k">new</span> <span class="nx">Promise</span> <span class="nf">(resolve, reject) -&gt;</span>
-  
+
     <span class="nv">server = </span><span class="nx">net</span><span class="p">.</span><span class="nx">createServer</span><span class="p">()</span>
 
     <span class="nx">server</span><span class="p">.</span><span class="nx">listen</span> <span class="mi">0</span><span class="p">,</span> <span class="nf">-&gt;</span>
       <span class="p">{</span><span class="nx">port</span><span class="p">}</span> <span class="o">=</span> <span class="nx">server</span><span class="p">.</span><span class="nx">address</span><span class="p">()</span>
       <span class="nx">server</span><span class="p">.</span><span class="nx">close</span> <span class="nf">-&gt;</span> <span class="nx">resolve</span> <span class="nx">port</span>
-      
+
     <span class="nx">server</span><span class="p">.</span><span class="nx">on</span> <span class="s">&#39;error&#39;</span><span class="p">,</span> <span class="nx">reject</span></div></div></div></div></body></html>

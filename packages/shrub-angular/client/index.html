@@ -2,8 +2,7 @@
 
 <p>Hang up any sandbox if we don't need it anymore.</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookapprun">Implements hook <code>appRun</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;appRun&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
     <span class="s">&#39;$window&#39;</span><span class="p">,</span> <span class="s">&#39;shrub-rpc&#39;</span>
-    <span class="nf">($window, rpc) -&gt;</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Hang up the socket unless it's the local (Node.js) client.</p></div></div><div class="code"><div class="wrapper">      <span class="k">unless</span> <span class="nx">$window</span><span class="p">.</span><span class="nx">navigator</span><span class="p">.</span><span class="nx">userAgent</span><span class="p">.</span><span class="nx">match</span> <span class="sr">/^Node\.js .*$/</span>
+    <span class="nf">($window, rpc) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Hang up the socket unless it's the local (Node.js) client.</p></div></div><div class="code"><div class="wrapper">      <span class="k">unless</span> <span class="nx">$window</span><span class="p">.</span><span class="nx">navigator</span><span class="p">.</span><span class="nx">userAgent</span><span class="p">.</span><span class="nx">match</span> <span class="sr">/^Node\.js .*$/</span>
         <span class="nx">rpc</span><span class="p">.</span><span class="nx">call</span> <span class="s">&#39;shrub.hangup&#39;</span>
-  
+
   <span class="p">]</span></div></div></div></div></body></html>

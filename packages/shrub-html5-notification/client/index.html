@@ -4,27 +4,24 @@
         <span class="nv">icon: </span><span class="s">&#39;/img/shrub.png&#39;</span>
         <span class="nv">lang: </span><span class="s">&#39;en&#39;</span>
       <span class="p">)</span>
-      
+
   <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookprovider">Implements hook <code>provider</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;provider&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
     <span class="s">&#39;NotificationProvider&#39;</span>
     <span class="nf">(NotificationProvider) -&gt;</span>
-    
-      <span class="nv">provider = </span><span class="p">{}</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Forward.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">provider.setOptions = </span><span class="nf">(options) -&gt;</span>
-        <span class="nx">NotificationProvider</span><span class="p">.</span><span class="nx">setOptions</span> <span class="nx">options</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>I am not really a fan of using new as an API here.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">provider.$get = </span><span class="p">[</span>
+
+      <span class="nv">provider = </span><span class="p">{}</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Forward.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">provider.setOptions = </span><span class="nf">(options) -&gt;</span>
+        <span class="nx">NotificationProvider</span><span class="p">.</span><span class="nx">setOptions</span> <span class="nx">options</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>I am not really a fan of using new as an API here.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">provider.$get = </span><span class="p">[</span>
         <span class="s">&#39;Notification&#39;</span>
         <span class="nf">(Notification) -&gt;</span>
-          
+
           <span class="nv">service = </span><span class="p">{}</span>
-          
+
           <span class="nv">service.create = </span><span class="nf">(title, options) -&gt;</span>
             <span class="k">new</span> <span class="nx">Notification</span> <span class="nx">title</span><span class="p">,</span> <span class="nx">options</span>
-          
+
           <span class="nx">service</span>
       <span class="p">]</span>
-    
+
       <span class="nx">provider</span>
-      
-  <span class="p">]</span>
-  </div></div></div></div></body></html>
+
+  <span class="p">]</span></div></div></div></div></body></html>

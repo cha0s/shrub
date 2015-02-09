@@ -1,0 +1,141 @@
+<!DOCTYPE html><html lang="en"><head><title>packages/shrub-grunt/tests/run</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="packages/shrub-grunt/tests/run"><meta name="groc-project-path" content="packages/shrub-grunt/tests/run.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-grunt/tests/run.coffee">packages/shrub-grunt/tests/run.coffee</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookgruntconfig">Implements hook <code>gruntConfig</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;gruntConfig&#39;</span><span class="p">,</span> <span class="nf">(gruntConfig, grunt) -&gt;</span>
+
+    <span class="nv">child_process = </span><span class="nx">require</span> <span class="s">&#39;child_process&#39;</span>
+
+    <span class="nv">tcpPortUsed = </span><span class="nx">require</span> <span class="s">&#39;tcp-port-used&#39;</span>
+
+    <span class="nv">e2eServerChild = </span><span class="kc">null</span>
+
+    <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">configureTask</span><span class="p">(</span>
+      <span class="s">&#39;karma&#39;</span><span class="p">,</span> <span class="s">&#39;testsUnit&#39;</span>
+
+      <span class="nv">options:</span>
+
+        <span class="nv">basePath: </span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">__dirname</span><span class="si">}</span><span class="s">/../../..&quot;</span>
+
+        <span class="nv">files: </span><span class="p">[</span>
+          <span class="s">&#39;app/lib/angular/angular.js&#39;</span>
+          <span class="s">&#39;app/lib/angular/angular-*.js&#39;</span>
+          <span class="s">&#39;test/lib/angular/angular-mocks.js&#39;</span>
+          <span class="s">&#39;app/lib/shrub/shrub.js&#39;</span>
+          <span class="s">&#39;test/unit/config.js&#39;</span>
+          <span class="s">&#39;test/unit/tests.js&#39;</span>
+        <span class="p">]</span>
+
+        <span class="nv">exclude: </span><span class="p">[</span>
+          <span class="s">&#39;app/lib/angular/angular-loader.js&#39;</span>
+          <span class="s">&#39;app/lib/angular/*.min.js&#39;</span>
+          <span class="s">&#39;app/lib/angular/angular-scenario.js&#39;</span>
+        <span class="p">]</span>
+
+        <span class="nv">frameworks: </span><span class="p">[</span>
+          <span class="s">&#39;jasmine&#39;</span>
+        <span class="p">]</span>
+
+        <span class="nv">browsers: </span><span class="p">[</span>
+          <span class="s">&#39;Chrome&#39;</span>
+        <span class="p">]</span>
+
+        <span class="nv">plugins: </span><span class="p">[</span>
+          <span class="s">&#39;karma-junit-reporter&#39;</span>
+          <span class="s">&#39;karma-chrome-launcher&#39;</span>
+          <span class="s">&#39;karma-firefox-launcher&#39;</span>
+          <span class="s">&#39;karma-jasmine&#39;</span>
+        <span class="p">]</span>
+
+        <span class="nv">singleRun: </span><span class="kc">true</span>
+
+        <span class="nv">junitReporter:</span>
+
+          <span class="nv">outputFile: </span><span class="s">&#39;test_out/unit.xml&#39;</span>
+          <span class="nv">suite: </span><span class="s">&#39;unit&#39;</span>
+
+    <span class="p">)</span>
+
+    <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">configureTask</span><span class="p">(</span>
+      <span class="s">&#39;protractor&#39;</span><span class="p">,</span> <span class="s">&#39;testsE2e&#39;</span>
+
+      <span class="nv">options:</span>
+        <span class="nv">configFile: </span><span class="s">&#39;config/protractor.conf.js&#39;</span>
+        <span class="nv">keepAlive: </span><span class="kc">false</span>
+        <span class="nv">noColor: </span><span class="kc">true</span>
+
+    <span class="p">)</span>
+
+    <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">registerTask</span> <span class="s">&#39;tests:e2eServerUp&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+
+      <span class="nv">done = </span><span class="nx">@async</span><span class="p">()</span>
+
+      <span class="nv">bootstrap = </span><span class="nx">require</span> <span class="s">&#39;bootstrap&#39;</span>
+      <span class="nx">bootstrap</span><span class="p">.</span><span class="nx">openServerPort</span><span class="p">().</span><span class="nx">then</span> <span class="nf">(port) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Pass arguments to the child process.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">args = </span><span class="nx">process</span><span class="p">.</span><span class="nx">argv</span><span class="p">.</span><span class="nx">slice</span> <span class="mi">2</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Pass the environment to the child process.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">options = env: </span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span>
+        <span class="nx">options</span><span class="p">.</span><span class="nx">env</span><span class="p">[</span><span class="s">&#39;E2E&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;true&#39;</span>
+        <span class="nx">options</span><span class="p">.</span><span class="nx">env</span><span class="p">[</span><span class="s">&#39;packageSettings:shrub-http:port&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">port</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Fork it</p></div></div><div class="code"><div class="wrapper">        <span class="nv">e2eServerChild = </span><span class="nx">child_process</span><span class="p">.</span><span class="nx">fork</span><span class="p">(</span>
+          <span class="s">&quot;</span><span class="si">#{</span><span class="nx">__dirname</span><span class="si">}</span><span class="s">/../../../node_modules/coffee-script/bin/coffee&quot;</span>
+          <span class="p">[</span><span class="s">&quot;</span><span class="si">#{</span><span class="nx">__dirname</span><span class="si">}</span><span class="s">/../../../server.coffee&quot;</span><span class="p">]</span>
+          <span class="nx">options</span>
+        <span class="p">)</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Inject the port configuration.</p></div></div><div class="code"><div class="wrapper">        <span class="nv">protractorConfig = </span><span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">taskConfiguration</span><span class="p">(</span>
+          <span class="s">&#39;protractor&#39;</span><span class="p">,</span> <span class="s">&#39;testsE2e&#39;</span>
+        <span class="p">)</span>
+        <span class="nv">baseUrl = </span><span class="s">&quot;http://localhost:</span><span class="si">#{</span><span class="nx">port</span><span class="si">}</span><span class="s">/&quot;</span>
+        <span class="nv">protractorConfig.options.args = baseUrl: </span><span class="nx">baseUrl</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Wait for the server to come up.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">grunt</span><span class="p">.</span><span class="nx">log</span><span class="p">.</span><span class="nx">write</span> <span class="s">&#39;Waiting for E2E server to come up...&#39;</span>
+        <span class="nx">tcpPortUsed</span><span class="p">.</span><span class="nx">waitUntilUsed</span><span class="p">(</span><span class="nx">port</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">30000</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span>
+
+          <span class="nf">-&gt;</span>
+            <span class="nx">grunt</span><span class="p">.</span><span class="nx">task</span><span class="p">.</span><span class="nx">run</span> <span class="s">&#39;protractor:testsE2e&#39;</span>
+            <span class="nx">done</span><span class="p">()</span>
+
+          <span class="nf">(error) -&gt;</span> <span class="nx">grunt</span><span class="p">.</span><span class="nx">fail</span><span class="p">.</span><span class="nx">fatal</span> <span class="s">&#39;E2E server never came up after 30 seconds!&#39;</span>
+        <span class="p">)</span>
+
+    <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">registerTask</span> <span class="s">&#39;tests:e2eServerDown&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+      <span class="nx">e2eServerChild</span><span class="p">.</span><span class="nx">on</span> <span class="s">&#39;close&#39;</span><span class="p">,</span> <span class="nx">@async</span><span class="p">()</span>
+      <span class="nx">e2eServerChild</span><span class="p">.</span><span class="nx">kill</span><span class="p">()</span>
+
+    <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">registerTask</span> <span class="s">&#39;tests:e2e&#39;</span><span class="p">,</span> <span class="p">[</span>
+      <span class="s">&#39;buildOnce&#39;</span>
+      <span class="s">&#39;tests:e2eServerUp&#39;</span>
+      <span class="s">&#39;tests:e2eServerDown&#39;</span>
+    <span class="p">]</span>
+
+    <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">registerTask</span> <span class="s">&#39;tests:unitConfig&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+
+      <span class="nv">done = </span><span class="nx">@async</span><span class="p">()</span>
+
+      <span class="nv">req = grunt: </span><span class="kc">true</span>
+
+      <span class="nv">shrubConfig = </span><span class="nx">require</span> <span class="s">&#39;shrub-config&#39;</span>
+      <span class="nx">shrubConfig</span><span class="p">.</span><span class="nx">renderPackageConfig</span><span class="p">(</span><span class="nx">req</span><span class="p">).</span><span class="nx">then</span> <span class="nf">(code) -&gt;</span>
+
+        <span class="nx">grunt</span><span class="p">.</span><span class="nx">file</span><span class="p">.</span><span class="nx">write</span> <span class="s">&#39;test/unit/config.js&#39;</span><span class="p">,</span> <span class="nx">code</span>
+
+        <span class="nx">done</span><span class="p">()</span>
+
+    <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">registerTask</span> <span class="s">&#39;tests:unit&#39;</span><span class="p">,</span> <span class="p">[</span>
+      <span class="s">&#39;buildOnce&#39;</span>
+      <span class="s">&#39;tests:unitConfig&#39;</span>
+      <span class="s">&#39;karma:testsUnit&#39;</span>
+    <span class="p">]</span>
+
+    <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">registerTask</span> <span class="s">&#39;tests:jasmineFunction&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+
+      <span class="nv">done = </span><span class="nx">@async</span><span class="p">()</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Spawn node Jasmine</p></div></div><div class="code"><div class="wrapper">      <span class="nx">child_process</span><span class="p">.</span><span class="nx">spawn</span><span class="p">(</span>
+        <span class="s">&#39;node&#39;</span>
+        <span class="p">[</span>
+          <span class="s">&quot;</span><span class="si">#{</span><span class="nx">__dirname</span><span class="si">}</span><span class="s">/../../../node_modules/jasmine-node/lib/jasmine-node/cli.js&quot;</span>
+          <span class="s">&#39;--coffee&#39;</span><span class="p">,</span> <span class="s">&#39;client&#39;</span><span class="p">,</span> <span class="s">&#39;packages&#39;</span><span class="p">,</span> <span class="s">&#39;custom&#39;</span>
+        <span class="p">]</span>
+        <span class="nv">stdio: </span><span class="s">&#39;inherit&#39;</span>
+      <span class="p">).</span><span class="nx">on</span> <span class="s">&#39;close&#39;</span><span class="p">,</span> <span class="nf">(code) -&gt;</span>
+        <span class="k">return</span> <span class="nx">done</span><span class="p">()</span> <span class="k">if</span> <span class="nx">code</span> <span class="o">is</span> <span class="mi">0</span>
+        <span class="nx">grunt</span><span class="p">.</span><span class="nx">fail</span><span class="p">.</span><span class="nx">fatal</span> <span class="s">&#39;Jasmine tests not passing!&#39;</span>
+
+    <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">registerTask</span> <span class="s">&#39;tests:jasmine&#39;</span><span class="p">,</span> <span class="p">[</span>
+      <span class="s">&#39;buildOnce&#39;</span>
+      <span class="s">&#39;tests:jasmineFunction&#39;</span>
+    <span class="p">]</span>
+
+    <span class="nx">gruntConfig</span><span class="p">.</span><span class="nx">registerTask</span> <span class="s">&#39;tests&#39;</span><span class="p">,</span> <span class="p">[</span>
+       <span class="s">&#39;tests:jasmine&#39;</span>
+       <span class="s">&#39;tests:unit&#39;</span>
+       <span class="s">&#39;tests:e2e&#39;</span>
+    <span class="p">]</span></div></div></div></div></body></html>

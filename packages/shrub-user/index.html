@@ -1,134 +1,226 @@
 <!DOCTYPE html><html lang="en"><head><title>packages/shrub-user/index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../"><meta name="groc-document-path" content="packages/shrub-user/index"><meta name="groc-project-path" content="packages/shrub-user/index.coffee"><meta name="groc-github-url" content="https://github.com/cha0s/shrub"><link rel="stylesheet" type="text/css" media="all" href="../../assets/style.css"><script type="text/javascript" src="../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/cha0s/shrub/blob/master/packages/shrub-user/index.coffee">packages/shrub-user/index.coffee</a></div></div><div id="document"><div class="segment"></div><div class="segment"><div class="comments"><div class="wrapper"><h1 id="user">User</h1>
 
-<p>User operations. </p></div></div><div class="code"><div class="wrapper"><span class="nv">passport = </span><span class="nx">require</span> <span class="s">&#39;passport&#39;</span>
-<span class="nv">Promise = </span><span class="nx">require</span> <span class="s">&#39;bluebird&#39;</span>
+<p>User operations.</p></div></div><div class="code"><div class="wrapper"><span class="nv">passport = </span><span class="kc">null</span>
+<span class="nv">Promise = </span><span class="kc">null</span>
 
-<span class="nv">crypto = </span><span class="nx">require</span> <span class="s">&#39;server/crypto&#39;</span>
-<span class="nv">orm = </span><span class="nx">require</span> <span class="s">&#39;shrub-orm&#39;</span>
+<span class="nv">orm = </span><span class="kc">null</span>
 
 <span class="nv">clientModule = </span><span class="nx">require</span> <span class="s">&#39;./client&#39;</span>
 
-<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookconfig">Implements hook <code>config</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;config&#39;</span><span class="p">,</span> <span class="nf">(req) -&gt;</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Send a redacted version of the request user.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">redactFor</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span> <span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="o">?</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookendpointfinished">Implements hook <code>endpointFinished</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;endpointFinished&#39;</span><span class="p">,</span> <span class="nf">(routeReq, result, req) -&gt;</span>
-    <span class="k">return</span> <span class="k">unless</span> <span class="nx">routeReq</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span><span class="o">?</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Touch and save the session after every RPC call finishes.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">deferred = </span><span class="nx">Promise</span><span class="p">.</span><span class="nx">defer</span><span class="p">()</span>
-    <span class="nx">routeReq</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">touch</span><span class="p">().</span><span class="nx">save</span> <span class="nx">deferred</span><span class="p">.</span><span class="nx">callback</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Propagate changes back up to the original request.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">deferred</span><span class="p">.</span><span class="nx">promise</span><span class="p">.</span><span class="nx">then</span> <span class="nf">-&gt;</span> <span class="nv">req.user = </span><span class="nx">routeReq</span><span class="p">.</span><span class="nx">user</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookfingerprint">Implements hook <code>fingerprint</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;fingerprint&#39;</span><span class="p">,</span> <span class="nf">(req) -&gt;</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>User (ID).</p></div></div><div class="code"><div class="wrapper">    <span class="nv">user: </span><span class="k">if</span> <span class="nx">req</span><span class="o">?</span><span class="p">.</span><span class="nx">user</span><span class="o">?</span><span class="p">.</span><span class="nx">id</span><span class="o">?</span> <span class="k">then</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookhttpmiddleware">Implements hook <code>httpMiddleware</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;httpMiddleware&#39;</span><span class="p">,</span> <span class="nf">(http) -&gt;</span>
-    
+<span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookprebootstrap">Implements hook <code>preBootstrap</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;preBootstrap&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+
+    <span class="nv">passport = </span><span class="nx">require</span> <span class="s">&#39;passport&#39;</span>
+    <span class="nv">Promise = </span><span class="nx">require</span> <span class="s">&#39;bluebird&#39;</span>
+
+    <span class="nv">orm = </span><span class="nx">require</span> <span class="s">&#39;shrub-orm&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookconfig">Implements hook <code>config</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;config&#39;</span><span class="p">,</span> <span class="nf">(req) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Send a redacted version of the request user.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">redactFor</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span> <span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="o">?</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookendpointfinished">Implements hook <code>endpointFinished</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;endpointFinished&#39;</span><span class="p">,</span> <span class="nf">(routeReq, result, req) -&gt;</span>
+    <span class="k">return</span> <span class="k">unless</span> <span class="nx">routeReq</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span><span class="o">?</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Touch and save the session after every RPC call finishes.</p></div></div><div class="code"><div class="wrapper">    <span class="nx">routeReq</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">touch</span><span class="p">().</span><span class="nx">save</span><span class="p">().</span><span class="nx">then</span> <span class="nf">(user) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Propagate changes back up to the original request.</p></div></div><div class="code"><div class="wrapper">      <span class="nv">req.user = </span><span class="nx">routeReq</span><span class="p">.</span><span class="nx">user</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookfingerprint">Implements hook <code>fingerprint</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;fingerprint&#39;</span><span class="p">,</span> <span class="nf">(req) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>User (ID).</p></div></div><div class="code"><div class="wrapper">    <span class="nv">user: </span><span class="k">if</span> <span class="nx">req</span><span class="o">?</span><span class="p">.</span><span class="nx">user</span><span class="o">?</span><span class="p">.</span><span class="nx">id</span><span class="o">?</span> <span class="k">then</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span>
+
+  <span class="nv">instantiateAnonymous = </span><span class="nf">-&gt;</span>
+
+    <span class="vi">@user = </span><span class="nx">orm</span><span class="p">.</span><span class="nx">collection</span><span class="p">(</span><span class="s">&#39;shrub-user&#39;</span><span class="p">).</span><span class="nx">instantiate</span><span class="p">()</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Add to anonymous group.</p></div></div><div class="code"><div class="wrapper">    <span class="vi">@user.groups = </span><span class="p">[</span>
+      <span class="nx">orm</span><span class="p">.</span><span class="nx">collection</span><span class="p">(</span><span class="s">&#39;shrub-user-group&#39;</span><span class="p">).</span><span class="nx">instantiate</span> <span class="nv">group: </span><span class="mi">2</span>
+    <span class="p">]</span>
+
+    <span class="nx">@user</span><span class="p">.</span><span class="nx">populateAll</span><span class="p">()</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookhttpmiddleware">Implements hook <code>httpMiddleware</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;httpMiddleware&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+
     <span class="nv">label: </span><span class="s">&#39;Load user using passport&#39;</span>
     <span class="nv">middleware: </span><span class="p">[</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Passport middleware.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">passport</span><span class="p">.</span><span class="nx">initialize</span><span class="p">()</span>
-      <span class="nx">passport</span><span class="p">.</span><span class="nx">session</span><span class="p">()</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Set the user into the request.</p></div></div><div class="code"><div class="wrapper">      <span class="nf">(req, res, next) -&gt;</span>
-        
-        <span class="nv">User = </span><span class="nx">orm</span><span class="p">.</span><span class="nx">collection</span> <span class="s">&#39;shrub-user&#39;</span>
-        <span class="nv">req.user = </span><span class="nx">User</span><span class="p">.</span><span class="nx">instantiate</span><span class="p">()</span> <span class="k">unless</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="o">?</span>
-        
-        <span class="nx">next</span><span class="p">()</span>
-      
-    <span class="p">]</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookcollections">Implements hook <code>collections</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;collections&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke the client hook implementation.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">collections = </span><span class="nx">clientModule</span><span class="p">.</span><span class="nx">collections</span><span class="p">()</span>
-    
-    <span class="p">{</span><span class="s">&#39;shrub-user&#39;</span><span class="o">:</span> <span class="nx">User</span><span class="p">}</span> <span class="o">=</span> <span class="nx">collections</span>
-    
-    <span class="p">(</span><span class="nv">User.redactors = </span><span class="p">[]).</span><span class="nx">push</span> <span class="nf">(redacted) -&gt;</span>
-    
-      <span class="k">delete</span> <span class="nx">redacted</span><span class="p">.</span><span class="nx">iname</span>
-      <span class="k">delete</span> <span class="nx">redacted</span><span class="p">.</span><span class="nx">plaintext</span> <span class="k">if</span> <span class="nx">redacted</span><span class="p">.</span><span class="nx">plaintext</span><span class="o">?</span>
-      <span class="k">delete</span> <span class="nx">redacted</span><span class="p">.</span><span class="nx">salt</span>
-      <span class="k">delete</span> <span class="nx">redacted</span><span class="p">.</span><span class="nx">passwordHash</span>
-      <span class="k">delete</span> <span class="nx">redacted</span><span class="p">.</span><span class="nx">resetPasswordToken</span>
-      <span class="k">return</span> <span class="k">unless</span> <span class="nx">redacted</span><span class="p">.</span><span class="nx">email</span><span class="o">?</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Different redacted means full email redaction.</p></div></div><div class="code"><div class="wrapper">      <span class="k">if</span> <span class="nx">@id</span> <span class="o">isnt</span> <span class="nx">redacted</span><span class="p">.</span><span class="nx">id</span>
-        <span class="k">delete</span> <span class="nx">redacted</span><span class="p">.</span><span class="nx">email</span>
-        <span class="k">return</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Decrypt the e-mail if redacting for the same user.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">crypto</span><span class="p">.</span><span class="nx">decrypt</span><span class="p">(</span><span class="nx">redacted</span><span class="p">.</span><span class="nx">email</span><span class="p">).</span><span class="nx">then</span> <span class="nf">(email) -&gt;</span>
-        <span class="nv">redacted.email = </span><span class="nx">email</span>
 
-    <span class="nx">collections</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookcollectionsalter">Implements hook <code>collectionsAlter</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;collectionsAlter&#39;</span><span class="p">,</span> <span class="nf">(collections) -&gt;</span>
+      <span class="nf">(req, res, next) -&gt;</span>
+
+        <span class="nv">req.instantiateAnonymous = </span><span class="nx">instantiateAnonymous</span>
+        <span class="nx">next</span><span class="p">()</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Passport middleware.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">passport</span><span class="p">.</span><span class="nx">initialize</span><span class="p">()</span>
+      <span class="nx">passport</span><span class="p">.</span><span class="nx">session</span><span class="p">()</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Set the user into the request.</p></div></div><div class="code"><div class="wrapper">      <span class="nf">(req, res, next) -&gt;</span>
+        <span class="nv">promise = </span><span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="o">?</span>
+          <span class="nx">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">()</span>
+        <span class="k">else</span>
+          <span class="nx">req</span><span class="p">.</span><span class="nx">instantiateAnonymous</span><span class="p">()</span>
+
+        <span class="nx">promise</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nf">-&gt;</span> <span class="nx">next</span><span class="p">()).</span><span class="nx">catch</span> <span class="nx">next</span>
+
+    <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookcollections">Implements hook <code>collections</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;collections&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+
+    <span class="nv">crypto = </span><span class="nx">require</span> <span class="s">&#39;server/crypto&#39;</span>
+
+    <span class="nv">autoIname = </span><span class="nf">(values, cb) -&gt;</span>
+      <span class="nv">values.iname = </span><span class="nx">values</span><span class="p">.</span><span class="nx">name</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span>
+      <span class="nx">cb</span><span class="p">()</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Invoke the client hook implementation.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">collections = </span><span class="nx">clientModule</span><span class="p">.</span><span class="nx">collections</span><span class="p">()</span>
+
+    <span class="p">{</span>
+      <span class="s">&#39;shrub-group&#39;</span><span class="o">:</span> <span class="nx">Group</span>
+      <span class="s">&#39;shrub-group-permission&#39;</span><span class="o">:</span> <span class="nx">GroupPermission</span>
+      <span class="s">&#39;shrub-user&#39;</span><span class="o">:</span> <span class="nx">User</span>
+      <span class="s">&#39;shrub-user-group&#39;</span><span class="o">:</span> <span class="nx">UserGroup</span>
+      <span class="s">&#39;shrub-user-permission&#39;</span><span class="o">:</span> <span class="nx">UserPermission</span>
+    <span class="p">}</span> <span class="o">=</span> <span class="nx">collections</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Case-insensitivized name.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">Group.attributes.iname =</span>
+      <span class="nv">type: </span><span class="s">&#39;string&#39;</span>
+      <span class="nv">size: </span><span class="mi">24</span>
+      <span class="nv">index: </span><span class="kc">true</span>
+
+    <span class="nv">Group.autoCreatedAt = </span><span class="kc">false</span>
+    <span class="nv">Group.autoUpdatedAt = </span><span class="kc">false</span>
+
+    <span class="nv">Group.beforeCreate = </span><span class="nx">autoIname</span>
+    <span class="nv">Group.beforeUpdate = </span><span class="nx">autoIname</span>
+
+    <span class="nv">GroupPermission.autoCreatedAt = </span><span class="kc">false</span>
+    <span class="nv">GroupPermission.autoUpdatedAt = </span><span class="kc">false</span>
+
+    <span class="nv">User.beforeCreate = </span><span class="nx">autoIname</span>
+    <span class="nv">User.beforeUpdate = </span><span class="nx">autoIname</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Case-insensitivized name.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">User.attributes.iname =</span>
+      <span class="nv">type: </span><span class="s">&#39;string&#39;</span>
+      <span class="nv">size: </span><span class="mi">24</span>
+      <span class="nv">index: </span><span class="kc">true</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Hash of the plaintext password.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">User.attributes.passwordHash =</span>
+      <span class="nv">type: </span><span class="s">&#39;string&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>A token which can be used to reset the user's password (once).</p></div></div><div class="code"><div class="wrapper">    <span class="nv">User.attributes.resetPasswordToken =</span>
+      <span class="nv">type: </span><span class="s">&#39;string&#39;</span>
+      <span class="nv">size: </span><span class="mi">48</span>
+      <span class="nv">index: </span><span class="kc">true</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>A 512-bit salt used to cryptographically hash the user's password.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">User.attributes.salt =</span>
+      <span class="nv">type: </span><span class="s">&#39;string&#39;</span>
+      <span class="nv">size: </span><span class="mi">128</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Update a user's last accessed time. Return the user for chaining.</p></div></div><div class="code"><div class="wrapper">    <span class="nv">User.attributes.touch = </span><span class="nf">-&gt;</span>
+      <span class="vi">@lastAccessed = </span><span class="p">(</span><span class="k">new</span> <span class="nb">Date</span><span class="p">()).</span><span class="nx">toISOString</span><span class="p">()</span>
+      <span class="k">this</span>
+
+    <span class="nv">User.attributes.populateAll = </span><span class="nf">-&gt;</span>
+      <span class="nv">self = </span><span class="k">this</span>
+
+      <span class="nv">Group_ = </span><span class="nx">orm</span><span class="p">.</span><span class="nx">collection</span> <span class="s">&#39;shrub-group&#39;</span>
+
+      <span class="vi">@permissions = </span><span class="nx">@permissions</span><span class="p">.</span><span class="nx">map</span> <span class="nf">({permission}) -&gt;</span> <span class="nx">permission</span>
+
+      <span class="nv">promises = </span><span class="k">for</span> <span class="p">{</span><span class="nx">group</span><span class="p">},</span> <span class="nx">index</span> <span class="k">in</span> <span class="nx">@groups</span>
+        <span class="nx">do</span> <span class="nf">(group, index) -&gt;</span>
+          <span class="nx">Group_</span><span class="p">.</span><span class="nx">findOne</span><span class="p">(</span><span class="nv">id: </span><span class="nx">group</span><span class="p">).</span><span class="nx">populateAll</span><span class="p">().</span><span class="nx">then</span> <span class="nf">(group_) -&gt;</span>
+            <span class="nx">self</span><span class="p">.</span><span class="nx">groups</span><span class="p">[</span><span class="nx">index</span><span class="p">]</span> <span class="o">=</span> <span class="nx">group_</span>
+
+      <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">promises</span><span class="p">).</span><span class="nx">then</span> <span class="nf">-&gt;</span> <span class="nx">self</span>
+
+    <span class="nv">User.attributes.toJSON = </span><span class="nf">-&gt;</span>
+      <span class="nv">O = </span><span class="nx">@toObject</span><span class="p">()</span>
+      <span class="nv">O.groups = </span><span class="nx">@groups</span>
+      <span class="nv">O.permissions = </span><span class="nx">@permission</span>
+      <span class="nx">O</span>
+
+    <span class="nv">User.redactors = </span><span class="p">[</span><span class="nf">(redactFor) -&gt;</span>
+      <span class="nv">self = </span><span class="k">this</span>
+
+      <span class="k">delete</span> <span class="nx">self</span><span class="p">.</span><span class="nx">iname</span>
+      <span class="k">delete</span> <span class="nx">self</span><span class="p">.</span><span class="nx">plaintext</span> <span class="k">if</span> <span class="nx">self</span><span class="p">.</span><span class="nx">plaintext</span><span class="o">?</span>
+      <span class="k">delete</span> <span class="nx">self</span><span class="p">.</span><span class="nx">salt</span>
+      <span class="k">delete</span> <span class="nx">self</span><span class="p">.</span><span class="nx">passwordHash</span>
+      <span class="k">delete</span> <span class="nx">self</span><span class="p">.</span><span class="nx">resetPasswordToken</span>
+
+      <span class="k">for</span> <span class="nx">group</span> <span class="k">in</span> <span class="nx">self</span><span class="p">.</span><span class="nx">groups</span>
+
+        <span class="k">for</span> <span class="nx">permission</span> <span class="k">in</span> <span class="nx">group</span><span class="p">.</span><span class="nx">permissions</span> <span class="o">?</span> <span class="p">[]</span>
+
+          <span class="k">delete</span> <span class="nx">permission</span><span class="p">.</span><span class="nx">group</span>
+          <span class="k">delete</span> <span class="nx">permission</span><span class="p">.</span><span class="nx">id</span>
+
+        <span class="k">delete</span> <span class="nx">group</span><span class="p">.</span><span class="nx">iname</span>
+        <span class="k">delete</span> <span class="nx">group</span><span class="p">.</span><span class="nx">id</span>
+
+      <span class="nx">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">().</span><span class="nx">then</span> <span class="nf">-&gt;</span>
+        <span class="k">return</span> <span class="k">unless</span> <span class="nx">self</span><span class="p">.</span><span class="nx">email</span><span class="o">?</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Different redacted means full email redaction.</p></div></div><div class="code"><div class="wrapper">        <span class="k">if</span> <span class="nx">redactFor</span><span class="p">.</span><span class="nx">id</span> <span class="o">isnt</span> <span class="nx">self</span><span class="p">.</span><span class="nx">id</span>
+          <span class="k">delete</span> <span class="nx">self</span><span class="p">.</span><span class="nx">email</span>
+          <span class="k">return</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Decrypt the e-mail if redacting for the same user.</p></div></div><div class="code"><div class="wrapper">        <span class="nx">crypto</span><span class="p">.</span><span class="nx">decrypt</span><span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">email</span><span class="p">).</span><span class="nx">then</span> <span class="nf">(email) -&gt;</span>
+          <span class="nv">self.email = </span><span class="nx">email</span>
+
+    <span class="p">]</span>
+
+    <span class="nv">UserGroup.autoCreatedAt = </span><span class="kc">false</span>
+    <span class="nv">UserGroup.autoUpdatedAt = </span><span class="kc">false</span>
+
+    <span class="nv">UserGroup.attributes.populateAll = </span><span class="nf">-&gt;</span>
+      <span class="nv">self = </span><span class="k">this</span>
+
+      <span class="nv">Group_ = </span><span class="nx">orm</span><span class="p">.</span><span class="nx">collection</span> <span class="s">&#39;shrub-group&#39;</span>
+      <span class="nx">Group_</span><span class="p">.</span><span class="nx">findOne</span><span class="p">(</span><span class="nv">id: </span><span class="nx">self</span><span class="p">.</span><span class="nx">group</span><span class="p">).</span><span class="nx">populateAll</span><span class="p">().</span><span class="nx">then</span> <span class="nf">(group_) -&gt;</span>
+        <span class="nv">self.group = </span><span class="nx">group_</span>
+
+        <span class="k">return</span> <span class="nx">self</span>
+
+    <span class="nv">UserGroup.attributes.depopulateAll = </span><span class="nf">-&gt;</span>
+      <span class="vi">@group = </span><span class="nx">@group</span><span class="p">.</span><span class="nx">id</span>
+
+      <span class="k">return</span> <span class="k">this</span>
+
+    <span class="nv">UserPermission.autoCreatedAt = </span><span class="kc">false</span>
+    <span class="nv">UserPermission.autoUpdatedAt = </span><span class="kc">false</span>
+
+    <span class="nx">collections</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookcollectionsalter">Implements hook <code>collectionsAlter</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;collectionsAlter&#39;</span><span class="p">,</span> <span class="nf">(collections) -&gt;</span>
     <span class="nx">clientModule</span><span class="p">.</span><span class="nx">collectionsAlter</span> <span class="nx">collections</span>
-    
+
     <span class="k">for</span> <span class="nx">identity</span><span class="p">,</span> <span class="nx">collection</span> <span class="k">of</span> <span class="nx">collections</span>
       <span class="nx">do</span> <span class="nf">(identity, collection) -&gt;</span>
-      
+
         <span class="nx">collection</span><span class="p">.</span><span class="nx">redactors</span> <span class="o">?=</span> <span class="p">[]</span>
         <span class="nv">collection.attributes.redactFor = </span><span class="nf">(user) -&gt;</span>
           <span class="nv">redacted = </span><span class="nx">@toJSON</span><span class="p">()</span>
-          
+          <span class="nv">redacted.toJSON = </span><span class="kc">undefined</span>
+
           <span class="nx">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span>
             <span class="k">for</span> <span class="nx">redactor</span> <span class="k">in</span> <span class="nx">collection</span><span class="p">.</span><span class="nx">redactors</span>
-              <span class="nx">redactor</span><span class="p">.</span><span class="nx">call</span> <span class="nx">user</span><span class="p">,</span> <span class="nx">redacted</span>
+              <span class="nx">redactor</span><span class="p">.</span><span class="nx">call</span> <span class="nx">redacted</span><span class="p">,</span> <span class="nx">user</span>
           <span class="p">).</span><span class="nx">then</span> <span class="nf">-&gt;</span> <span class="nx">redacted</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookpackagesettings">Implements hook <code>packageSettings</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;packageSettings&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
-    
+
     <span class="nv">beforeLoginMiddleware: </span><span class="p">[]</span>
-    
+
     <span class="nv">afterLoginMiddleware: </span><span class="p">[]</span>
-    
+
     <span class="nv">beforeLogoutMiddleware: </span><span class="p">[</span>
       <span class="s">&#39;shrub-user&#39;</span>
     <span class="p">]</span>
-  
+
     <span class="nv">afterLogoutMiddleware: </span><span class="p">[</span>
       <span class="s">&#39;shrub-user&#39;</span>
-    <span class="p">]</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshooksocketauthorizationmiddleware">Implements hook <code>socketAuthorizationMiddleware</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;socketAuthorizationMiddleware&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
-    
+    <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshooksocketauthorizationmiddleware">Implements hook <code>socketAuthorizationMiddleware</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;socketAuthorizationMiddleware&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+
     <span class="nv">label: </span><span class="s">&#39;Load user using passport&#39;</span>
     <span class="nv">middleware: </span><span class="p">[</span>
-    </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Passport middleware.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">passport</span><span class="p">.</span><span class="nx">initialize</span><span class="p">()</span>
-      <span class="nx">passport</span><span class="p">.</span><span class="nx">session</span><span class="p">()</span>
-      </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Set the user into the request.</p></div></div><div class="code"><div class="wrapper">      <span class="nf">(req, res, next) -&gt;</span>
-        
-        <span class="nv">User = </span><span class="nx">orm</span><span class="p">.</span><span class="nx">collection</span> <span class="s">&#39;shrub-user&#39;</span>
-        <span class="nv">req.user = </span><span class="nx">User</span><span class="p">.</span><span class="nx">instantiate</span><span class="p">()</span> <span class="k">unless</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="o">?</span>
-        
-        <span class="nx">next</span><span class="p">()</span>
-    
-    <span class="p">]</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshooksocketconnectionmiddleware">Implements hook <code>socketConnectionMiddleware</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;socketConnectionMiddleware&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
-    
+
+      <span class="nf">(req, res, next) -&gt;</span>
+
+        <span class="nv">req.instantiateAnonymous = </span><span class="nx">instantiateAnonymous</span>
+        <span class="nx">next</span><span class="p">()</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Passport middleware.</p></div></div><div class="code"><div class="wrapper">      <span class="nx">passport</span><span class="p">.</span><span class="nx">initialize</span><span class="p">()</span>
+      <span class="nx">passport</span><span class="p">.</span><span class="nx">session</span><span class="p">()</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Set the user into the request.</p></div></div><div class="code"><div class="wrapper">      <span class="nf">(req, res, next) -&gt;</span>
+        <span class="nv">promise = </span><span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="o">?</span>
+          <span class="nx">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">()</span>
+        <span class="k">else</span>
+          <span class="nx">req</span><span class="p">.</span><span class="nx">instantiateAnonymous</span><span class="p">()</span>
+
+        <span class="nx">promise</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nf">-&gt;</span> <span class="nx">next</span><span class="p">()).</span><span class="nx">catch</span> <span class="nx">next</span>
+
+    <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshooksocketconnectionmiddleware">Implements hook <code>socketConnectionMiddleware</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;socketConnectionMiddleware&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+
     <span class="nv">label: </span><span class="s">&#39;Join channel for user&#39;</span>
     <span class="nv">middleware: </span><span class="p">[</span>
-    
-      <span class="nf">(req, res, next) -&gt;</span>
-        </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Join a channel for the username.</p></div></div><div class="code"><div class="wrapper">        <span class="k">return</span> <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="p">.</span><span class="nx">join</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="nx">next</span> <span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span><span class="o">?</span>
-        
+
+      <span class="nf">(req, res, next) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Join a channel for the username.</p></div></div><div class="code"><div class="wrapper">        <span class="k">return</span> <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="p">.</span><span class="nx">join</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="nx">next</span> <span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span><span class="o">?</span>
+
         <span class="nx">next</span><span class="p">()</span>
-    
-    <span class="p">]</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookuserbeforelogoutmiddleware">Implements hook <code>userBeforeLogoutMiddleware</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;userBeforeLogoutMiddleware&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
-    
+
+    <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookuserbeforelogoutmiddleware">Implements hook <code>userBeforeLogoutMiddleware</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;userBeforeLogoutMiddleware&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+
     <span class="nv">label: </span><span class="s">&#39;Tell client to log out, and leave the user channel&#39;</span>
     <span class="nv">middleware: </span><span class="p">[</span>
-    
+
       <span class="nf">({req, user}, res, next) -&gt;</span>
-        
-        <span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="o">?</span>
-          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Tell client to log out.</p></div></div><div class="code"><div class="wrapper">          <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="p">.</span><span class="nx">emit</span> <span class="s">&#39;shrub.user.logout&#39;</span>
-          </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Leave the user channel.</p></div></div><div class="code"><div class="wrapper">          <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="p">.</span><span class="nx">leave</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">name</span> <span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span><span class="o">?</span>
-        
+
+        <span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="o">?</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Tell client to log out.</p></div></div><div class="code"><div class="wrapper">          <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="p">.</span><span class="nx">emit</span> <span class="s">&#39;shrub.user.logout&#39;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Leave the user channel.</p></div></div><div class="code"><div class="wrapper">          <span class="nx">req</span><span class="p">.</span><span class="nx">socket</span><span class="p">.</span><span class="nx">leave</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">name</span> <span class="k">if</span> <span class="nx">req</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">id</span><span class="o">?</span>
+
         <span class="nx">next</span><span class="p">()</span>
-        
-    <span class="p">]</span>
-  </div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookuserafterlogoutmiddleware">Implements hook <code>userAfterLogoutMiddleware</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;userAfterLogoutMiddleware&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
-    
+
+    <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookuserafterlogoutmiddleware">Implements hook <code>userAfterLogoutMiddleware</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;userAfterLogoutMiddleware&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span>
+
     <span class="nv">label: </span><span class="s">&#39;Instantiate anonymous user&#39;</span>
     <span class="nv">middleware: </span><span class="p">[</span>
-    
+
       <span class="nf">({req, user}, res, next) -&gt;</span>
-        
-        <span class="nv">User = </span><span class="nx">orm</span><span class="p">.</span><span class="nx">collection</span> <span class="s">&#39;shrub-user&#39;</span>
-        <span class="nv">req.user = </span><span class="nx">User</span><span class="p">.</span><span class="nx">instantiate</span><span class="p">()</span>
-        
-        <span class="nx">next</span><span class="p">()</span>
-        
+
+        <span class="nx">req</span><span class="p">.</span><span class="nx">instantiateAnonymous</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nf">-&gt;</span> <span class="nx">next</span><span class="p">()).</span><span class="nx">catch</span> <span class="nx">next</span>
+
     <span class="p">]</span>
-  
+
   <span class="nx">registrar</span><span class="p">.</span><span class="nx">recur</span> <span class="p">[</span>
     <span class="s">&#39;forgot&#39;</span><span class="p">,</span> <span class="s">&#39;login&#39;</span><span class="p">,</span> <span class="s">&#39;logout&#39;</span><span class="p">,</span> <span class="s">&#39;register&#39;</span><span class="p">,</span> <span class="s">&#39;reset&#39;</span>
   <span class="p">]</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="loadbyname">loadByName</h2>
@@ -136,6 +228,6 @@
 <p><em>Load a user by name.</em></p>
 
 <p>(string) <code>name</code> - The name of the user to load.</p></div></div><div class="code"><div class="wrapper"><span class="nv">exports.loadByName = </span><span class="nf">(name) -&gt;</span>
-  
+
   <span class="nv">User = </span><span class="nx">orm</span><span class="p">.</span><span class="nx">collection</span> <span class="s">&#39;shrub-user&#39;</span>
-  <span class="nx">User</span><span class="p">.</span><span class="nx">findOne</span> <span class="nv">iname: </span><span class="nx">name</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span></div></div></div></div></body></html>
+  <span class="nx">User</span><span class="p">.</span><span class="nx">findOne</span><span class="p">(</span><span class="nv">iname: </span><span class="nx">name</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()).</span><span class="nx">populateAll</span><span class="p">()</span></div></div></div></div></body></html>

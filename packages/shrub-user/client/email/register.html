@@ -3,18 +3,18 @@
 <span class="nv">exports.pkgmanRegister = </span><span class="nf">(registrar) -&gt;</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><h2 id="implementshookdirective">Implements hook <code>directive</code></h2></div></div><div class="code"><div class="wrapper">  <span class="nx">registrar</span><span class="p">.</span><span class="nx">registerHook</span> <span class="s">&#39;directive&#39;</span><span class="p">,</span> <span class="nf">-&gt;</span> <span class="p">[</span>
     <span class="s">&#39;shrub-ui/window-title&#39;</span>
     <span class="nf">(windowTitle) -&gt;</span>
-      
+
       <span class="nv">directive = </span><span class="p">{}</span>
-      
+
       <span class="nv">directive.link = </span><span class="nf">(scope) -&gt;</span>
-        
+
         <span class="nx">windowTitle</span><span class="p">.</span><span class="nx">setPage</span> <span class="s">&#39;Registration details&#39;</span>
-        
+
         <span class="nv">scope.siteName = </span><span class="nx">config</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;packageConfig:shrub-core:siteName&#39;</span>
-      
+
       <span class="nv">directive.scope = </span><span class="kc">true</span>
-      
-      <span class="nv">directive.template = </span><span class="s">&quot;&quot;&quot;</span>
+
+      <span class="nv">directive.template = </span><span class="s">&#39;&#39;&#39;</span>
 
 <span class="s">&lt;p&gt;</span>
 <span class="s">  Hello, &lt;span</span>
@@ -62,8 +62,8 @@
 <span class="s">  &lt;/small&gt;</span>
 <span class="s">&lt;/p&gt;</span>
 
-<span class="s">&quot;&quot;&quot;</span>
-      
+<span class="s">&#39;&#39;&#39;</span>
+
       <span class="nx">directive</span>
-      
+
   <span class="p">]</span></div></div></div></div></body></html>

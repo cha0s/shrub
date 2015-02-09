@@ -50,7 +50,15 @@ context.</p>
 <p>Rename express to http, so we can use a short name. </p></li>
 </ul>
 
-<p><a href="./packages/shrub-socket-socket.io/index.html">packages/shrub-socket-socket.io/index.coffee</a></p>
+<p><a href="./packages/shrub-limiter/limiter.html">packages/shrub-limiter/limiter.coffee</a></p>
+
+<ul>
+<li><h4 id="moduleexportsclasslimiter"><code>module.exports = class Limiter</code></h4>
+
+<p>Rewrite this comment </p></li>
+</ul>
+
+<p><a href="./packages/shrub-socket-socket.io/manager.html">packages/shrub-socket-socket.io/manager.coffee</a></p>
 
 <ul>
 <li><h4 id="socketsinchannelchannelname"><code>socketsInChannel: (channelName) -&gt;</code></h4>
@@ -72,18 +80,12 @@ context.</p>
 <li><h4 id="serviceloginmethodusernamepassword"><code>service.login = (method, username, password) -&gt;</code></h4>
 
 <p>username and password are tightly coupled to local strategy. Change that. </p></li>
-<li><h4 id="ddelegatefakeloginusernamepasswordpasswordid1"><code>$delegate.fakeLogin = (username, password = 'password', id = 1) -&gt;</code></h4>
+<li><h4 id="servicefakeloginusernamepasswordid"><code>service.fakeLogin = (username, password, id) -&gt;</code></h4>
 
 <p>This will change when login method generalization happens. </p></li>
-<li><h4 id="haspermissionpermfalse"><code>hasPermission: (perm) -&gt; false</code></h4>
-
-<p>Access control structure. </p></li>
 <li><h4 id="shrubuserusercollections"><code>{'shrub-user': User} = collections</code></h4>
 
 <p>This is broken since ORM change </p></li>
-<li><h4 id="returnresolveifuserinstanceofuser_model"><code>return resolve()# if user instanceof User._model</code></h4>
-
-<p>See if we can do this without using the internal _model property. </p></li>
 </ul>
 
 <p><a href="./packages/shrub-user/forgot.html">packages/shrub-user/forgot.coffee</a></p>
@@ -130,12 +132,4 @@ context.</p>
 <li><h4 id="returnpkgmaninvokereadyunlesserror"><code>return pkgman.invoke 'ready' unless error?</code></h4>
 
 <p>Remove this; implementations should use <code>bootstrapMiddleware</code>. </p></li>
-</ul>
-
-<p><a href="./server/limits.html">server/limits.coffee</a></p>
-
-<ul>
-<li><h4 id="exportslimiterclasslimiter"><code>exports.Limiter = class Limiter</code></h4>
-
-<p>Do this with ORM so it isn't tied to redis. </p></li>
 </ul></div></div></div></div></body></html>
