@@ -30,8 +30,13 @@ exports.pkgmanRegister = (registrar) ->
 			{body} = req
 			{email, password, username} = body
 
+			{
+				'shrub-ui-notification': Notification
+				'shrub-user': User
+			} = orm.collections()
+
 			# Register a new user.
-			exports.register(username, email, password).then((user) ->
+			User.register(username, email, password).then((user) ->
 
 				# Send an email to the new user's email with a one-time login
 				# link.
@@ -53,7 +58,7 @@ exports.pkgmanRegister = (registrar) ->
 
 					user: user
 
-				orm.collection('shrub-ui-notification').createFromRequest(
+				Notification.createFromRequest(
 					req, 'shrubExampleGeneral'
 					type: 'register'
 					name: user.name
@@ -75,48 +80,6 @@ exports.pkgmanRegister = (registrar) ->
 
 	# ## Implements hook `replContext`
 	registrar.registerHook 'replContext', (context) ->
-
-		context.registerUser = exports.register
-
-# ## register
-#
-# *Register a user in the system.*
-#
-# * (string) `name` - Name of the new user.
-#
-# * (string) `email` - Email address of the new user.
-#
-# * (string) `password` - The new user's password.
-#
-# `TODO`: Should be a class method on the shrub-user collection.
-exports.register = (name, email, password) ->
-
-	crypto = require 'server/crypto'
-
-	User = orm.collection 'shrub-user'
-	User.create(name: name).then((user) ->
-
-		# Encrypt the email.
-		crypto.encrypt(email.toLowerCase()).then((encryptedEmail) ->
-
-			user.email = encryptedEmail
-
-			# Set the password encryption details.
-			crypto.hasher plaintext: password
-
-		).then((hashed) ->
-
-			user.plaintext = hashed.plaintext
-			user.salt = hashed.salt.toString 'hex'
-			user.passwordHash = hashed.key.toString 'hex'
-
-			# Generate a one-time login token.
-			crypto.randomBytes 24
-
-		).then (token) ->
-
-			user.resetPasswordToken = token.toString 'hex'
-
-			user.save()
-	)
-
+		orm = require 'shrub-orm'
+		User = orm.collection 'shrub-user'
+		context.registerUser = -> User.register arguments...

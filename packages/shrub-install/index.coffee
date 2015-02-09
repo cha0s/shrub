@@ -64,7 +64,7 @@ reinstall = (name = 'admin', email = 'admin@example.com', password = 'admin') ->
 			Group.create name: 'Administrator'
 
 			# Create superuser.
-			require('shrub-user/register').register name, email, password
+			User.register name, email, password
 		]
 
 	).then(([groups..., user]) ->

@@ -194,7 +194,6 @@ exports.collectionsAlter = (collections) ->
 
 	Promise = require 'bluebird'
 
-	# `TODO`: This is broken since ORM change
 	{'shrub-user': User} = collections
 
 	# Implement all the built-in collection methods as authenticated versions,

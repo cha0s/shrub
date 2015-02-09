@@ -93,11 +93,11 @@ may be invoked with [pkgman.invoke()](/client/modules/pkgman.html), and are
 implemented in packages by exporting `pkgmanRegister`.
 
 For instance, if we are implementing a package and want to implement the
-`httpListening` hook, our code would look like:
+`preBootstrap` hook, our code would look like:
 
 	exports.pkgmanRegister = (registrar) ->
 
-		registrar.registerHook 'httpListening', ->
+		registrar.registerHook 'preBootstrap', ->
 
 			# Your code goes here...
 

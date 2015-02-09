@@ -41,11 +41,7 @@ unless fork()
 
 	bootstrapMiddleware.dispatch (error) ->
 
-		# Invoke hook `ready`.
-		# Invoked after the server is initialized and ready.
-		# `TODO`: Remove this; implementations should use
-		# `bootstrapMiddleware`.
-		return pkgman.invoke 'ready' unless error?
+		return debug 'Bootstrap complete.' unless error?
 
 		console.error errors.stack error
 		throw error
@@ -55,5 +51,6 @@ unless fork()
 	# } Signal listeners and process cleanup.
 	process.on 'SIGINT', -> process.exit()
 	process.on 'SIGTERM', -> process.exit()
+	process.on 'unhandledException', -> process.exit()
 
 	process.on 'exit', -> pkgman.invoke 'processExit'

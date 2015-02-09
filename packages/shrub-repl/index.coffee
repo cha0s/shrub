@@ -33,57 +33,66 @@ exports.pkgmanRegister = (registrar) ->
 	# ## Implements hook `processExit`
 	registrar.registerHook 'processExit', -> server?.close()
 
-	# ## Implements hook `ready`
-	registrar.registerHook 'ready', ->
+	# ## Implements hook `bootstrapMiddleware`
+	registrar.registerHook 'bootstrapMiddleware', ->
 
-		settings = config.get 'packageSettings:shrub-repl'
+		orm = require 'shrub-orm'
 
-		server = net.createServer (socket) ->
+		label: 'REPL'
+		middleware: [
 
-			settings = config.get 'packageSettings:shrub-repl'
+			(next) ->
 
-			# Invoke hook `replContext`.
-			# Allow packages to add values to the REPL's context.
-			pkgman.invoke 'replContext', context = {}
+				settings = config.get 'packageSettings:shrub-repl'
 
-			opts =
-				prompt: settings.prompt
-				input: socket
-				output: socket
-				ignoreUndefined: true
+				server = net.createServer (socket) ->
 
-			# Allow settings to define whether the REPL runs CoffeeScript.
-			if settings.useCoffee
+					# Invoke hook `replContext`.
+					# Allow packages to add values to the REPL's context.
+					pkgman.invoke 'replContext', context = {}
 
-				opts.prompt = "#{settings.prompt}(coffee) "
+					opts =
+						prompt: settings.prompt
+						input: socket
+						output: socket
+						ignoreUndefined: true
 
-				# } Define our own eval function, using CoffeeScript.
-				opts.eval = (cmd, context, filename, callback) ->
+					# Allow settings to define whether the REPL runs
+					# CoffeeScript.
+					if settings.useCoffee
 
-					# } Handle blank lines correctly.
-					return callback null, undefined if cmd is '(\n)'
+						opts.prompt = "(coffee) #{settings.prompt}"
 
-					try
+						# } Define our own eval function, using CoffeeScript.
+						opts.eval = (cmd, context, filename, callback) ->
 
-						callback null, CoffeeScript.eval(
-							cmd
-							sandbox: context
-							filename: filename
-						)
+							# } Handle blank lines correctly.
+							return callback null, undefined if cmd is '(\n)'
 
-					catch error
+							try
 
-						callback error
+								callback null, CoffeeScript.eval(
+									cmd
+									sandbox: context
+									filename: filename
+								)
 
-			# Spin up the server, inject the values from `replContext`, and prepare
-			# for later cleanup.
-			repl = replServer.start opts
-			repl.context[key] = value for key, value of context
-			repl.on 'exit', -> socket.end()
+							catch error
 
-		# } Try to be tidy about things.
-		fs.unlink(
-			settings.socket
-			-> server.listen settings.socket, ->
-				debug "REPL server listening at #{settings.socket}"
-		)
+								callback error
+
+					# Spin up the server, inject the values from `replContext`,
+					# and prepare for later cleanup.
+					repl = replServer.start opts
+					repl.context[key] = value for key, value of context
+					repl.on 'exit', -> socket.end()
+
+				# } Try to be tidy about things.
+				fs.unlink settings.socket, (error) ->
+					return next error if error.code isnt 'ENOENT' if error?
+					server.listen settings.socket, (error) ->
+						return next error if error?
+						debug "REPL server listening at #{settings.socket}"
+						next()
+
+		]

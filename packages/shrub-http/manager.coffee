@@ -34,34 +34,22 @@ exports.Manager = class HttpManager
 
 		# Invoke hook `httpInitializing`.
 		# Invoked before the server is bound on the listening port.
-		# `TODO`: Remove this hook; implementations should be using
-		# `bootstrapMiddleware`.
 		pkgman.invoke 'httpInitializing', this
 
 		# Start listening.
-		@listen().then => Promise.all(
-
-			# Invoke hook `httpListening`.
-			# Invoked once the server is listening, but before
-			# initialization finishes. Implementations should return a
-			# promise. When all promises are fulfilled, initialization
-			# finishes.
-			# `TODO`: Remove this hook; implementations should be using
-			# `bootstrapMiddleware`.
-			pkgman.invokeFlat 'httpListening', this
-
-		)
+		@listen()
 
 	# ### ::listen
 	#
 	# *Listen for HTTP connections.*
 	listen: ->
+		self = this
 
-		new Promise (resolve, reject) =>
+		new Promise (resolve, reject) ->
 
-			do tryListener = =>
+			do tryListener = ->
 
-				@listener().done(
+				self.listener().done(
 					resolve
 
 					(error) ->
@@ -94,7 +82,6 @@ exports.Manager = class HttpManager
 
 		# Invoke hook `httpMiddleware`.
 		# Invoked every time an HTTP connection is established.
-		# `TODO`: Rename express to http, so we can use a short name.
 		@_middleware = middleware.fromHook(
 			'httpMiddleware', httpMiddleware, this
 		)

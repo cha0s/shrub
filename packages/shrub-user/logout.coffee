@@ -31,7 +31,6 @@ exports.pkgmanRegister = (registrar) ->
 
 				# Invoke hook `userBeforeLogoutMiddleware`.
 				# Invoked before a user logs out.
-				# `TODO`: Remove res param from implementations.
 				userBeforeLogoutMiddleware = middleware.fromShortName(
 					'user before logout'
 					'shrub-user'
@@ -39,7 +38,6 @@ exports.pkgmanRegister = (registrar) ->
 
 				# Invoke hook `userAfterLogoutMiddleware`.
 				# Invoked after a user logs out.
-				# `TODO`: Remove res param from implementations.
 				userAfterLogoutMiddleware = middleware.fromShortName(
 					'user after logout'
 					'shrub-user'
@@ -50,14 +48,12 @@ exports.pkgmanRegister = (registrar) ->
 
 					new Promise (resolve, reject) =>
 
-						logoutReq = req: this, user: @user
-
-						userBeforeLogoutMiddleware.dispatch logoutReq, null, (error) =>
+						userBeforeLogoutMiddleware.dispatch req, (error) =>
 							return reject error if error?
 
 							logout.call this
 
-							userAfterLogoutMiddleware.dispatch logoutReq, null, (error) ->
+							userAfterLogoutMiddleware.dispatch req, (error) ->
 								return reject error if error?
 
 								resolve()

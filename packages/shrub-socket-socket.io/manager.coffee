@@ -3,6 +3,8 @@
 #
 # A socket factory implemented with [Socket.IO](http://socket.io/).
 
+Promise = null
+
 config = null
 
 SocketManager = require '../shrub-socket/manager'
@@ -12,6 +14,8 @@ module.exports = class SocketIoManager extends SocketManager
 	# ## *constructor*
 	constructor: ->
 		super
+
+		Promise = require 'bluebird'
 
 		config ?= require 'config'
 
@@ -29,14 +33,15 @@ module.exports = class SocketIoManager extends SocketManager
 					subClient: redis.createClient()
 				)
 
-	# ## ::channels
+	# ## ::broadcast
 	#
-	# *Get a list of channels a socket is in.*
+	# *Broadcast data to clients in a room.*
 	#
-	# * (string) `room` - The channel to broadcast to.
+	# * (string) `channel` - The channel to broadcast to.
+	# * (string) `event` - The event to broadcast.
 	# * (mixed) `data` - The data to broadcast.
-	broadcast: (room, event, data) ->
-		@io.in(room).emit event, data
+	broadcast: (channel, event, data) ->
+		@io.in(channel).emit event, data
 		this
 
 	# ## ::channels
@@ -45,6 +50,29 @@ module.exports = class SocketIoManager extends SocketManager
 	#
 	# * (socket) `socket` - A socket.
 	channels: (socket) -> socket.rooms
+
+	# ## ::clients
+	#
+	# *Get a list of clients in a channel.*
+	#
+	# * (string) `channel` - The channel to check.
+	clients: (channel) ->
+		self = this
+		new Promise (resolve, reject) ->
+			self.io.in(channel).clients (error, clients) ->
+				return reject error if error?
+				resolve clients
+
+	# ## ::intercom
+	#
+	# *Broadcast data to server sockets in a room.*
+	#
+	# * (string) `channel` - The channel to broadcast to.
+	# * (string) `event` - The event to broadcast.
+	# * (mixed) `data` - The data to broadcast.
+	intercom: (channel, event, data) ->
+		@io.in(channel).intercom event, data
+		this
 
 	# ## ::listen
 	# Implements `SocketManager::listen`.
@@ -92,18 +120,3 @@ module.exports = class SocketIoManager extends SocketManager
 					return logger.error errors.stack error if error?
 
 					socket.emit 'initialized'
-
-	# ## ::socketsInChannel
-	#
-	# *Get a list of sockets in a channel.*
-	#
-	# `TODO`: This only works on a single node. socket.io needs to implement
-	# this.
-	#
-	# * (string) `channelName` - The channel or 'room' name.
-	socketsInChannel: (channelName) ->
-
-		for socketId, isConnected of @io.sockets.adapter.rooms[channelName]
-			continue unless isConnected
-
-			@io.sockets.adapter.nsp.connected[socketId]

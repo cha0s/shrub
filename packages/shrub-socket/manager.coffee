@@ -61,5 +61,5 @@ module.exports = class SocketManager extends EventEmitter
 	# "Pure virtual" methods.
 	)) for method in [
 
-		'broadcast', 'channels', 'listen'
+		'broadcast', 'channels', 'clients', 'intercom', 'listen'
 	]

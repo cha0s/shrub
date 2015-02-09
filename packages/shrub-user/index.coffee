@@ -163,6 +163,43 @@ exports.pkgmanRegister = (registrar) ->
 			O.permissions = @permission
 			O
 
+		# ## register
+		#
+		# *Register a user in the system.*
+		#
+		# * (string) `name` - Name of the new user.
+		#
+		# * (string) `email` - Email address of the new user.
+		#
+		# * (string) `password` - The new user's password.
+		User.register = (name, email, password) ->
+
+			@create(name: name).then((user) ->
+
+				# Encrypt the email.
+				crypto.encrypt(email.toLowerCase()).then((encryptedEmail) ->
+
+					user.email = encryptedEmail
+
+					# Set the password encryption details.
+					crypto.hasher plaintext: password
+
+				).then((hashed) ->
+
+					user.plaintext = hashed.plaintext
+					user.salt = hashed.salt.toString 'hex'
+					user.passwordHash = hashed.key.toString 'hex'
+
+					# Generate a one-time login token.
+					crypto.randomBytes 24
+
+				).then (token) ->
+
+					user.resetPasswordToken = token.toString 'hex'
+
+					user.save()
+			)
+
 		User.redactors = [(redactFor) ->
 			self = this
 
@@ -297,17 +334,18 @@ exports.pkgmanRegister = (registrar) ->
 		label: 'Tell client to log out, and leave the user channel'
 		middleware: [
 
-			({req, user}, res, next) ->
+			(req, next) ->
 
-				if req.socket?
+				return next() unless req.socket?
 
-					# Tell client to log out.
-					req.socket.emit 'shrub.user.logout'
+				# Tell client to log out.
+				req.socket.emit 'shrub.user.logout'
 
-					# Leave the user channel.
-					req.socket.leave req.user.name if req.user.id?
-
-				next()
+				# Leave the user channel.
+				if req.user.id?
+					req.socket.leave req.user.name, next
+				else
+					next()
 
 		]
 
@@ -317,8 +355,7 @@ exports.pkgmanRegister = (registrar) ->
 		label: 'Instantiate anonymous user'
 		middleware: [
 
-			({req, user}, res, next) ->
-
+			(req, next) ->
 				req.instantiateAnonymous().then(-> next()).catch next
 
 		]

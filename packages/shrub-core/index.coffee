@@ -70,6 +70,7 @@ exports.pkgmanRegister = (registrar) ->
 			'shrub-angular'
 			'shrub-ui/notifications'
 			'shrub-nodemailer'
+			'shrub-repl'
 		]
 
 		# Global site crypto key.
