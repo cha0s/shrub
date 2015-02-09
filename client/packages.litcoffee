@@ -42,7 +42,7 @@ Allows packages to define Angular controllers. Implementations should return an
 
 Normalize, augment, and register a directive.
 
-          registerDirective = (name, path, injected) -> ($injector) ->
+          prepareDirective = (name, path, injected) -> ($injector) ->
             directive = $injector.invoke injected
 
 Ensure a compilation function exists for the directive, and ensure that by
@@ -60,11 +60,8 @@ method, as well as passing execution on to the original `link` function.
             link = directive.link
             directive.link = (scope, element, attrs, controllers) ->
               if controllers?
-                unless angular.isArray controllers
-                  controllers = [controllers]
-
-                for controller in controllers
-                  controller.link? arguments...
+                controllers = [controllers] unless angular.isArray controllers
+                controller.link? arguments... for controller in controllers
 
               link? arguments...
 
@@ -88,7 +85,7 @@ Handle a bunch of internal Angular normalization.
             directive.restrict ?= 'EA'
 
             if angular.isObject directive.scope
-              directiveIsolateBindings directive
+              directive.$$isolateBindings = isolateBindingsFor directive
 
 Invoke hook `augmentDirective`.
 Allows packages to augment the directives defined by packages. One example is
@@ -108,7 +105,7 @@ does.
 
 Internal Angular state that we have to reset.
 
-          directiveIsolateBindings = (directive) ->
+          isolateBindingsFor = (directive) ->
 
             LOCAL_REGEXP = /^\s*([@&]|=(\*?))(\??)\s*(\w*)\s*$/
 
@@ -117,13 +114,14 @@ Internal Angular state that we have to reset.
             for scopeName, definition of directive.scope
               match = definition.match LOCAL_REGEXP
 
-              unless match
-                throw angular.$$minErr('$compile')(
-                  'iscp'
-                  "Invalid isolate scope definition for directive
-                  '{0}'. Definition: {... {1}: '{2}' ...}"
-                  directive.name, scopeName, definition
-                )
+              throw angular.$$minErr('$compile')(
+                'iscp'
+                "
+                  Invalid isolate scope definition for directive '{0}'.
+                  Definition: {... {1}: '{2}' ...}
+                "
+                directive.name, scopeName, definition
+              ) unless match
 
               bindings[scopeName] =
                 mode: match[1][0]
@@ -131,7 +129,7 @@ Internal Angular state that we have to reset.
                 optional: match[3] is '?'
                 attrName: match[4] or scopeName
 
-            directive.$$isolateBindings = bindings
+            return bindings
 
 Invoke hook `directive`.
 Allows packages to define Angular directives. Implementations should return an
@@ -140,7 +138,6 @@ Allows packages to define Angular directives. Implementations should return an
           for path, injected of pkgman.invoke 'directive'
             do (path, injected) ->
               directiveName = pkgman.normalizePath path
-
               debug directiveName
 
 First, register it through Angular's normal registration mechanism. This sets
@@ -152,8 +149,7 @@ Follow that by normalizing, augmenting, and registering the directive again.
 It will run over the previous definition, ensuring everything works nicely.
 
               $provide.factory "#{directiveName}Directive", [
-                '$injector'
-                registerDirective directiveName, path, injected
+                '$injector', prepareDirective directiveName, path, injected
               ]
 
           debug 'Directives registered.'
@@ -166,9 +162,7 @@ function.
 
           for path, injected of pkgman.invoke 'filter'
             filterName = pkgman.normalizePath path
-
             debug filterName
-
             $filterProvider.register filterName, injected
 
           debug 'Filters registered.'
@@ -181,7 +175,6 @@ Allows packages to define Angular providers. Implementations should return an
 
           for path, provider of pkgman.invoke 'provider'
             debug path
-
             $provide.provider path, provider
 
           debug 'Providers registered.'
@@ -194,7 +187,6 @@ Allows packages to define Angular services. Implementations should return an
 
           for path, injected of pkgman.invoke 'service'
             debug path
-
             $provide.service path, injected
 
           debug 'Services registered.'
