@@ -11,127 +11,127 @@ pkgman = require 'pkgman'
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `directive`
-	registrar.registerHook 'directive', -> [
-		'$compile', '$injector', '$log', '$q', 'shrub-form', 'shrub-require'
-		($compile, $injector, $log, $q, formService, require) ->
+  # ## Implements hook `directive`
+  registrar.registerHook 'directive', -> [
+    '$compile', '$injector', '$log', '$q', 'shrub-form', 'shrub-require'
+    ($compile, $injector, $log, $q, formService, require) ->
 
-			link: (scope, element, attrs) ->
+      link: (scope, element, attrs) ->
 
-				formScope = null
+        formScope = null
 
-				scope.$watch attrs.form, (form) ->
-					return unless form?
+        scope.$watch attrs.form, (form) ->
+          return unless form?
 
-					form.key ?= attrs.form
+          form.key ?= attrs.form
 
-					(scope['$shrubSubmit'] ?= {})[form.key] = ($event) ->
+          (scope['$shrubSubmit'] ?= {})[form.key] = ($event) ->
 
-						values = {}
-						for name, field of form.fields
-							values[field.name] = field.value
+            values = {}
+            for name, field of form.fields
+              values[field.name] = field.value
 
-						promises = for submit in form.submits
-							submit values, form, $event
+            promises = for submit in form.submits
+              submit values, form, $event
 
-						$q.all promises
+            $q.all promises
 
-					# Create the form element.
-					$form = angular.element '<form />'
-					$form.addClass form.key
+          # Create the form element.
+          $form = angular.element '<form />'
+          $form.addClass form.key
 
-					# Default method to POST.
-					$form.attr 'method', attrs.method ? 'POST'
-					$form.attr 'data-ng-submit', "$shrubSubmit['#{form.key}']($event)"
+          # Default method to POST.
+          $form.attr 'method', attrs.method ? 'POST'
+          $form.attr 'data-ng-submit', "$shrubSubmit['#{form.key}']($event)"
 
-					# Build the form fields.
-					for name, field of form.fields
+          # Build the form fields.
+          for name, field of form.fields
 
-						field.name ?= name
+            field.name ?= name
 
-						unless (widget = formService.widgets[field.type])?
+            unless (widget = formService.widgets[field.type])?
 
-							$log.warn "Form `#{
-								form.key
-							}` contains non-existent field type `#{
-								field.type
-							}`!"
-							continue
+              $log.warn "Form `#{
+                form.key
+              }` contains non-existent field type `#{
+                field.type
+              }`!"
+              continue
 
-						$form.append """
+            $form.append """
 
 <div
-	data-#{widget.directive}
-	data-field="#{attrs.form}.fields['#{name}']"
+  data-#{widget.directive}
+  data-field="#{attrs.form}.fields['#{name}']"
 ></div>
 
 """
 
-					# Add hidden form key to allow server-side
-					# interception/processing.
-					$formKeyElement = angular.element '<input type="hidden" />'
-					$formKeyElement.attr name: 'formKey', value: form.key
-					$form.append $formKeyElement
+          # Add hidden form key to allow server-side
+          # interception/processing.
+          $formKeyElement = angular.element '<input type="hidden" />'
+          $formKeyElement.attr name: 'formKey', value: form.key
+          $form.append $formKeyElement
 
-					# Invoke hook `formAlter`.
-					pkgman.invokeFlat 'formAlter', form, $form
+          # Invoke hook `formAlter`.
+          pkgman.invokeFlat 'formAlter', form, $form
 
-					# Invoke hook `formFormIdAlter`.
-					hookName = "form#{i8n.camelize i8n.underscore form.key}Alter"
-					pkgman.invokeFlat hookName, form, $form
+          # Invoke hook `formFormIdAlter`.
+          hookName = "form#{i8n.camelize i8n.underscore form.key}Alter"
+          pkgman.invokeFlat hookName, form, $form
 
-					# Remove any old stuff.
-					if formScope
-						formScope.$destroy()
-						element.find('form').remove()
+          # Remove any old stuff.
+          if formScope
+            formScope.$destroy()
+            element.find('form').remove()
 
-					# Insert and compile the form element.
-					element.append $form
-					$compile($form) formScope = scope.$new()
+          # Insert and compile the form element.
+          element.append $form
+          $compile($form) formScope = scope.$new()
 
-					# Register the form in the system.
-					formService.cache form.key, formScope, $form
+          # Register the form in the system.
+          formService.cache form.key, formScope, $form
 
-	]
+  ]
 
-	# ## Implements hook `service`
-	registrar.registerHook 'service', -> [
+  # ## Implements hook `service`
+  registrar.registerHook 'service', -> [
 
-		->
+    ->
 
-			service = forms: {}, widgets: {}
+      service = forms: {}, widgets: {}
 
-			# ## form.cache
-			#
-			# Cache a form for later lookup.
-			#
-			# * (string) `key` - The form key.
-			#
-			# * (Scope) `scope` - The form's Angular scope.
-			#
-			# * (Element) `element` - The form's jqLite element.
-			service.cache = (key, scope, element) ->
-				service.forms[key] = scope: scope, element: element
+      # ## form.cache
+      #
+      # Cache a form for later lookup.
+      #
+      # * (string) `key` - The form key.
+      #
+      # * (Scope) `scope` - The form's Angular scope.
+      #
+      # * (Element) `element` - The form's jqLite element.
+      service.cache = (key, scope, element) ->
+        service.forms[key] = scope: scope, element: element
 
-			# Invoke hook `formWidgets`.
-			for formWidgets in pkgman.invokeFlat 'formWidgets'
-				formWidgets = [formWidgets] unless _.isArray formWidgets
+      # Invoke hook `formWidgets`.
+      for formWidgets in pkgman.invokeFlat 'formWidgets'
+        formWidgets = [formWidgets] unless _.isArray formWidgets
 
-				for formWidget in formWidgets
-					continue unless formWidget.directive?
-					service.widgets[formWidget.type] = formWidget
+        for formWidget in formWidgets
+          continue unless formWidget.directive?
+          service.widgets[formWidget.type] = formWidget
 
-			service
+      service
 
-	]
+  ]
 
-	registrar.recur [
-		'widget/checkbox'
-		'widget/checkboxes'
-		'widget/hidden'
-		'widget/radio'
-		'widget/radios'
-		'widget/submit'
-		'widget/select'
-		'widget/text'
-	]
+  registrar.recur [
+    'widget/checkbox'
+    'widget/checkboxes'
+    'widget/hidden'
+    'widget/radio'
+    'widget/radios'
+    'widget/submit'
+    'widget/select'
+    'widget/text'
+  ]

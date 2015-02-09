@@ -3,49 +3,49 @@ config = require 'config'
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `gruntConfig`
-	registrar.registerHook 'gruntConfig', (gruntConfig) ->
+  # ## Implements hook `gruntConfig`
+  registrar.registerHook 'gruntConfig', (gruntConfig) ->
 
-		gruntConfig.configureTask 'copy', 'shrub-html5-notification', files: [
-			src: '**/*'
-			dest: 'app'
-			expand: true
-			cwd: "#{__dirname}/app"
-		]
+    gruntConfig.configureTask 'copy', 'shrub-html5-notification', files: [
+      src: '**/*'
+      dest: 'app'
+      expand: true
+      cwd: "#{__dirname}/app"
+    ]
 
-		gruntConfig.configureTask(
-			'watch', 'shrub-html5-notification'
+    gruntConfig.configureTask(
+      'watch', 'shrub-html5-notification'
 
-			files: [
-				"#{__dirname}/app/**/*"
-			]
-			tasks: 'build:shrub-html5-notification'
-		)
+      files: [
+        "#{__dirname}/app/**/*"
+      ]
+      tasks: 'build:shrub-html5-notification'
+    )
 
-		gruntConfig.registerTask 'build:shrub-html5-notification', [
-			'newer:copy:shrub-html5-notification'
-		]
+    gruntConfig.registerTask 'build:shrub-html5-notification', [
+      'newer:copy:shrub-html5-notification'
+    ]
 
-		gruntConfig.registerTask 'build', ['build:shrub-html5-notification']
+    gruntConfig.registerTask 'build', ['build:shrub-html5-notification']
 
-	# ## Implements hook `assetMiddleware`
-	registrar.registerHook 'assetMiddleware', ->
+  # ## Implements hook `assetMiddleware`
+  registrar.registerHook 'assetMiddleware', ->
 
-		label: 'Angular HTML5 notifications'
-		middleware: [
+    label: 'Angular HTML5 notifications'
+    middleware: [
 
-			(assets, next) ->
+      (assets, next) ->
 
-				if 'production' is config.get 'NODE_ENV'
-					assets.scripts.push '/lib/angular/angular-notification.min.js'
-				else
-					assets.scripts.push '/lib/angular/angular-notification.js'
+        if 'production' is config.get 'NODE_ENV'
+          assets.scripts.push '/lib/angular/angular-notification.min.js'
+        else
+          assets.scripts.push '/lib/angular/angular-notification.js'
 
-				next()
+        next()
 
-		]
+    ]
 
-	# ## Implements hook `angularCoreDependencies`
-	registrar.registerHook 'angularCoreDependencies', -> [
-		'notification'
-	]
+  # ## Implements hook `angularCoreDependencies`
+  registrar.registerHook 'angularCoreDependencies', -> [
+    'notification'
+  ]

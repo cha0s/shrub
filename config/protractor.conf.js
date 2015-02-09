@@ -1,21 +1,21 @@
 exports.config = {
-	allScriptsTimeout: 11000,
+  allScriptsTimeout: 11000,
 
-	specs: [
-		'../test/e2e/scenarios.js'
-	],
+  specs: [
+    '../test/e2e/scenarios.js'
+  ],
 
-	capabilities: {
-		'browserName': 'chrome'
-	},
+  capabilities: {
+    'browserName': 'chrome'
+  },
 
-	baseUrl: 'http://localhost:4201/',
+  baseUrl: 'http://localhost:4201/',
 
-	framework: 'jasmine',
+  framework: 'jasmine',
 
-	jasmineNodeOpts: {
-		defaultTimeoutInterval: 30000
-	},
+  jasmineNodeOpts: {
+    defaultTimeoutInterval: 30000
+  },
 
-	onPrepare: '../test/e2e/extensions.js'
+  onPrepare: '../test/e2e/extensions.js'
 };

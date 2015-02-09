@@ -1,126 +1,126 @@
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `controller`
-	registrar.registerHook 'controller', -> [
-		'$compile', '$location', '$scope'
-		class MenuController
+  # ## Implements hook `controller`
+  registrar.registerHook 'controller', -> [
+    '$compile', '$location', '$scope'
+    class MenuController
 
-			constructor: ($compile, $location, $scope) ->
-				self = this
+      constructor: ($compile, $location, $scope) ->
+        self = this
 
-				self.linkMap = {}
+        self.linkMap = {}
 
-				$scope.$watch(
-					-> $scope.menu
-					-> self.rebuildTree $compile, $scope if $scope.menu?
-					true
-				)
+        $scope.$watch(
+          -> $scope.menu
+          -> self.rebuildTree $compile, $scope if $scope.menu?
+          true
+        )
 
-				$scope.$watchGroup(
-					[
-						-> $location.path()
-						-> self.linkMap
-					]
-					(newValues, oldValues) ->
+        $scope.$watchGroup(
+          [
+            -> $location.path()
+            -> self.linkMap
+          ]
+          (newValues, oldValues) ->
 
-						# Paths without the leading slash.
-						if oldPath = oldValues[0]
-							oldPath = oldPath.substr 1
-							if self.linkMap[oldPath]?[0].attributes?.class?
-								attributes = self.linkMap[oldPath][0].attributes
-								if attributes.class.length
-									index = attributes.class.indexOf 'active'
-									attributes.class.splice index, 1
+            # Paths without the leading slash.
+            if oldPath = oldValues[0]
+              oldPath = oldPath.substr 1
+              if self.linkMap[oldPath]?[0].attributes?.class?
+                attributes = self.linkMap[oldPath][0].attributes
+                if attributes.class.length
+                  index = attributes.class.indexOf 'active'
+                  attributes.class.splice index, 1
 
-						newPath = newValues[0].substr 1
-						if self.linkMap[newPath]?
-							attributes = self.linkMap[newPath][0].attributes
-							(attributes.class ?= []).push 'active'
+            newPath = newValues[0].substr 1
+            if self.linkMap[newPath]?
+              attributes = self.linkMap[newPath][0].attributes
+              (attributes.class ?= []).push 'active'
 
-				)
+        )
 
-			rebuildTree: ($compile, $scope) ->
-				self = this
+      rebuildTree: ($compile, $scope) ->
+        self = this
 
-				self.linkMap = {}
-				$scope.list = {}
+        self.linkMap = {}
+        $scope.list = {}
 
-				rebuildBranch = (list, branch) ->
+        rebuildBranch = (list, branch) ->
 
-					list.attributes ?= {}
+          list.attributes ?= {}
 
-					buildItem = (leaf) ->
+          buildItem = (leaf) ->
 
-						item = angular.copy leaf
-						item.attributes ?= {}
-						item.markup = []
+            item = angular.copy leaf
+            item.attributes ?= {}
+            item.markup = []
 
-						if leaf.markupBefore?
-							item.markup.push angular.element leaf.markupBefore
+            if leaf.markupBefore?
+              item.markup.push angular.element leaf.markupBefore
 
-						item.markup.push linkElement = angular.element '<a>'
-						linkElement.attr 'data-shrub-ui-attributes', 'attributes'
-						linkElement.attr 'href', leaf.path
-						linkElement.html leaf.label
+            item.markup.push linkElement = angular.element '<a>'
+            linkElement.attr 'data-shrub-ui-attributes', 'attributes'
+            linkElement.attr 'href', leaf.path
+            linkElement.html leaf.label
 
-						compileScope = $scope.$new true
-						compileScope.attributes = leaf.linkAttributes
+            compileScope = $scope.$new true
+            compileScope.attributes = leaf.linkAttributes
 
-						$compile(linkElement)(compileScope)
+            $compile(linkElement)(compileScope)
 
-						linkElement.removeAttr 'data-shrub-ui-attributes'
+            linkElement.removeAttr 'data-shrub-ui-attributes'
 
-						if leaf.markupAfter?
-							item.markup.push angular.element leaf.markupAfter
+            if leaf.markupAfter?
+              item.markup.push angular.element leaf.markupAfter
 
-						(self.linkMap[leaf.path] ?= []).push item
+            (self.linkMap[leaf.path] ?= []).push item
 
-						if leaf.list?
+            if leaf.list?
 
-							item.list = angular.copy leaf.list
-							rebuildBranch item.list, leaf.list
+              item.list = angular.copy leaf.list
+              rebuildBranch item.list, leaf.list
 
-						item
+            item
 
-					list.items = for leaf in branch.items
-						buildItem leaf
+          list.items = for leaf in branch.items
+            buildItem leaf
 
-					return
+          return
 
-				$scope.list = angular.copy $scope.menu
-				rebuildBranch $scope.list, $scope.menu
+        $scope.list = angular.copy $scope.menu
+        rebuildBranch $scope.list, $scope.menu
 
-	]
+  ]
 
-	# ## Implements hook `directive`
-	registrar.registerHook 'directive', -> [
+  # ## Implements hook `directive`
+  registrar.registerHook 'directive', -> [
 
-		'$compile', '$timeout'
-		($compile, $timeout) ->
+    '$compile', '$timeout'
+    ($compile, $timeout) ->
 
-			directive = {}
+      directive = {}
 
-			directive.bindToController = true
+      directive.bindToController = true
 
-			directive.candidateKeys = [
-				'menu.name'
-			]
+      directive.candidateKeys = [
+        'menu.name'
+      ]
 
-			directive.scope =
+      directive.scope =
 
-				menu: '='
+        menu: '='
 
-			directive.template = '''
+      directive.template = '''
 
 <ul
-	data-shrub-ui-list
-	data-shrub-ui-attributes="list.attributes"
-	data-list="list"
+  data-shrub-ui-list
+  data-shrub-ui-attributes="list.attributes"
+  data-list="list"
 ></ul>
 
 '''
 
-			directive
+      directive
 
-	]
+  ]

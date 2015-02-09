@@ -1,17 +1,17 @@
 
 methods = [
-	'create', 'createOnce', 'destroy', 'find', 'findOrCreate'
-	'registerCollection', 'registerConnection', 'update'
+  'create', 'createOnce', 'destroy', 'find', 'findOrCreate'
+  'registerCollection', 'registerConnection', 'update'
 ]
 
 module.exports = do ->
 
-	adapter = {}
+  adapter = {}
 
-	adapter.syncable = false
+  adapter.syncable = false
 
-	for method in methods
+  for method in methods
 
-		do (method) -> adapter[method] = -> arguments[arguments.length - 1]()
+    do (method) -> adapter[method] = -> arguments[arguments.length - 1]()
 
-	adapter
+  adapter

@@ -3,22 +3,22 @@ config = require 'config'
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `assetMiddleware`
-	registrar.registerHook 'assetMiddleware', ->
+  # ## Implements hook `assetMiddleware`
+  registrar.registerHook 'assetMiddleware', ->
 
-		label: 'UI Bootstrap'
-		middleware: [
+    label: 'UI Bootstrap'
+    middleware: [
 
-			(assets, next) ->
+      (assets, next) ->
 
-				if 'production' is config.get 'NODE_ENV'
+        if 'production' is config.get 'NODE_ENV'
 
-					assets.scripts.push '/lib/angular-ui/bootstrap/ui-bootstrap-tpls-0.10.0.min.js'
+          assets.scripts.push '/lib/angular-ui/bootstrap/ui-bootstrap-tpls-0.10.0.min.js'
 
-				else
+        else
 
-					assets.scripts.push '/lib/angular-ui/bootstrap/ui-bootstrap-tpls-0.10.0.js'
+          assets.scripts.push '/lib/angular-ui/bootstrap/ui-bootstrap-tpls-0.10.0.js'
 
-				next()
+        next()
 
-		]
+    ]

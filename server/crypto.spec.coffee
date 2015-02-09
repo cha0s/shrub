@@ -6,47 +6,47 @@ cryptoKey = 'This should be a sufficiently long encryption key. For testing.'
 
 describe 'crypto', ->
 
-	it 'can encrypt and decrypt information', ->
+  it 'can encrypt and decrypt information', ->
 
-		texts = []
+    texts = []
 
-		for i in [0...100]
+    for i in [0...100]
 
-			texts[i] = String.fromCharCode Math.floor Math.random() * 256
-			texts[i] += texts[i - 1] if i > 0
+      texts[i] = String.fromCharCode Math.floor Math.random() * 256
+      texts[i] += texts[i - 1] if i > 0
 
-		ciphertexts = []
-		ciphertextsPromise = null
+    ciphertexts = []
+    ciphertextsPromise = null
 
-		runs ->
+    runs ->
 
-			ciphertexts = for text in texts
+      ciphertexts = for text in texts
 
-				crypto.encrypt text, cryptoKey
+        crypto.encrypt text, cryptoKey
 
-			ciphertextsPromise = Promise.all ciphertexts
+      ciphertextsPromise = Promise.all ciphertexts
 
-		waitsFor -> ciphertextsPromise.isFulfilled()
+    waitsFor -> ciphertextsPromise.isFulfilled()
 
-		deciphertexts = []
-		deciphertextsPromise = null
+    deciphertexts = []
+    deciphertextsPromise = null
 
-		runs ->
+    runs ->
 
-			ciphertexts = ciphertextsPromise.inspect().value()
+      ciphertexts = ciphertextsPromise.inspect().value()
 
-			deciphertexts = for ciphertext in ciphertexts
+      deciphertexts = for ciphertext in ciphertexts
 
-				crypto.decrypt ciphertext, cryptoKey
+        crypto.decrypt ciphertext, cryptoKey
 
-			deciphertextsPromise = Promise.all deciphertexts
+      deciphertextsPromise = Promise.all deciphertexts
 
-		waitsFor -> deciphertextsPromise.isFulfilled()
+    waitsFor -> deciphertextsPromise.isFulfilled()
 
-		runs ->
+    runs ->
 
-			deciphertexts = deciphertextsPromise.inspect().value()
+      deciphertexts = deciphertextsPromise.inspect().value()
 
-			for text, i in texts
+      for text, i in texts
 
-				expect(text).toBe deciphertexts[i]
+        expect(text).toBe deciphertexts[i]

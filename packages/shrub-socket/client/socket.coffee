@@ -3,10 +3,10 @@ errors = require 'errors'
 
 module.exports = class Socket
 
-	constructor: ->
+  constructor: ->
 
-	disconnect: ->
+  disconnect: ->
 
-	emit: (eventName, data, fn) ->
+  emit: (eventName, data, fn) ->
 
-	on: (eventName, fn) ->
+  on: (eventName, fn) ->

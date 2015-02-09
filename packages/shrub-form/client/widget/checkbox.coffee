@@ -3,46 +3,46 @@ _ = require 'lodash'
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `directive`
-	registrar.registerHook 'directive', -> [
-		->
+  # ## Implements hook `directive`
+  registrar.registerHook 'directive', -> [
+    ->
 
-			scope: field: '=?'
+      scope: field: '=?'
 
-			template: '''
+      template: '''
 
 <div class="checkbox">
 
-	<label>
+  <label>
 
-		<input
-			name="{{field.name}}"
-			type="checkbox"
+    <input
+      name="{{field.name}}"
+      type="checkbox"
 
-			data-ng-model="field.value"
-		>
+      data-ng-model="field.value"
+    >
 
-		{{field.label}}
+    {{field.label}}
 
-	</label>
+  </label>
 
 </div>
 
 '''
 
-	]
+  ]
 
-	assignToElement = (element, value) -> element.prop 'checked', 'on' is value
+  assignToElement = (element, value) -> element.prop 'checked', 'on' is value
 
-	# ## Implements hook `formWidgets`
-	registrar.registerHook 'formWidgets', ->
+  # ## Implements hook `formWidgets`
+  registrar.registerHook 'formWidgets', ->
 
-		widgets = []
+    widgets = []
 
-		widgets.push
+    widgets.push
 
-			type: 'checkbox'
-			assignToElement: assignToElement
-			directive: 'shrub-form-widget-checkbox'
+      type: 'checkbox'
+      assignToElement: assignToElement
+      directive: 'shrub-form-widget-checkbox'
 
-		widgets
+    widgets

@@ -3,6 +3,6 @@
 
 exports.pkgmanRegister = (registrar) ->
 
-	registrar.recur [
-		'forgot', 'register'
-	]
+  registrar.recur [
+    'forgot', 'register'
+  ]

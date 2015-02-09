@@ -5,72 +5,72 @@
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `service`
-	registrar.registerHook 'service', -> [
-		'$injector', '$q', 'shrub-pkgman', 'shrub-socket'
-		({invoke}, {defer}, pkgman, socket) ->
+  # ## Implements hook `service`
+  registrar.registerHook 'service', -> [
+    '$injector', '$q', 'shrub-pkgman', 'shrub-socket'
+    ({invoke}, {defer}, pkgman, socket) ->
 
-			errors = require 'errors'
+      errors = require 'errors'
 
-			service = {}
+      service = {}
 
-			# ## rpc.call
-			#
-			# Call the server with some data.
-			#
-			# * (string) `route` - The RPC endpoint route, e.g. `user.login`.
-			#
-			# * (mixed) `data` - The data to send to the server.
-			#
-			# Returns a promise, either resolved with the result of the response
-			# from the server, or rejected with the error from the server.
-			service.call = (route, data) ->
+      # ## rpc.call
+      #
+      # Call the server with some data.
+      #
+      # * (string) `route` - The RPC endpoint route, e.g. `user.login`.
+      #
+      # * (mixed) `data` - The data to send to the server.
+      #
+      # Returns a promise, either resolved with the result of the response
+      # from the server, or rejected with the error from the server.
+      service.call = (route, data) ->
 
-				deferred = defer()
+        deferred = defer()
 
-				socket.emit "rpc://#{route}", data, ({error, result}) ->
-					if error?
-						deferred.reject errors.unserialize error
-					else
-						deferred.resolve result
+        socket.emit "rpc://#{route}", data, ({error, result}) ->
+          if error?
+            deferred.reject errors.unserialize error
+          else
+            deferred.resolve result
 
-				invoke(
-					injectable, null
+        invoke(
+          injectable, null
 
-					route: route
-					data: data
-					result: deferred.promise
+          route: route
+          data: data
+          result: deferred.promise
 
-				) for injectable in pkgman.invokeFlat 'rpcCall'
+        ) for injectable in pkgman.invokeFlat 'rpcCall'
 
-				deferred.promise
+        deferred.promise
 
-			# Handle RPC calls.
-			service.formSubmitHandler = (route, handler) ->
+      # Handle RPC calls.
+      service.formSubmitHandler = (route, handler) ->
 
-				unless handler?
-					handler = route
-					route = null
+        unless handler?
+          handler = route
+          route = null
 
-				(values, form) ->
+        (values, form) ->
 
-					service.call(
-						exports.normalizeRouteName route ? form.key
-						values
-					).then(
-						(result) -> handler null, result
-						(error) -> handler error
-					)
+          service.call(
+            exports.normalizeRouteName route ? form.key
+            values
+          ).then(
+            (result) -> handler null, result
+            (error) -> handler error
+          )
 
-			service
+      service
 
-	]
+  ]
 
 exports.normalizeRouteName = (name) ->
 
-	i8n = require 'inflection'
+  i8n = require 'inflection'
 
-	name = i8n.underscore name
-	name = i8n.dasherize name.toLowerCase()
-	name = i8n.underscore name
-	name.replace /[-\/]/g, '.'
+  name = i8n.underscore name
+  name = i8n.dasherize name.toLowerCase()
+  name = i8n.underscore name
+  name.replace /[-\/]/g, '.'

@@ -41,64 +41,64 @@
 #
 module.exports = new class Config
 
-	# ### *constructor*
-	#
-	# *Create a configuration wrapper.*
-	#
-	# * (object) `config` - The configuration tree.
-	constructor: (@config = {}) ->
+  # ### *constructor*
+  #
+  # *Create a configuration wrapper.*
+  #
+  # * (object) `config` - The configuration tree.
+  constructor: (@config = {}) ->
 
-	# ### .from
-	#
-	# *Set configuration from one object.*
-	#
-	# * (object) `config` - The configuration object.
-	from: (@config) ->
+  # ### .from
+  #
+  # *Set configuration from one object.*
+  #
+  # * (object) `config` - The configuration object.
+  from: (@config) ->
 
-	# ### .get
-	#
-	# *Get a value by key.*
-	#
-	# * (string) `key` - The key to look up, e.g. parent:child:grandchild
-	get: (key) ->
+  # ### .get
+  #
+  # *Get a value by key.*
+  #
+  # * (string) `key` - The key to look up, e.g. parent:child:grandchild
+  get: (key) ->
 
-		current = @config
-		for part in key.split ':'
-			current = current?[part]
-		current
+    current = @config
+    for part in key.split ':'
+      current = current?[part]
+    current
 
-	# ### .has
-	#
-	# *Check whether a key exists.*
-	#
-	# * (string) `key` - The key to look up, e.g. parent:child:grandchild
-	has: (key) ->
+  # ### .has
+  #
+  # *Check whether a key exists.*
+  #
+  # * (string) `key` - The key to look up, e.g. parent:child:grandchild
+  has: (key) ->
 
-		current = @config
-		for part in key.split ':'
-			return false unless part of current
-			current = current[part]
+    current = @config
+    for part in key.split ':'
+      return false unless part of current
+      current = current[part]
 
-		return true
+    return true
 
-	# ### .set
-	#
-	# *Set a value by key.*
-	#
-	# * (string) `key` - The key to look up, e.g. parent:child:grandchild
-	# * (any) `value` - The value to store at the key location.
-	set: (key, value) ->
+  # ### .set
+  #
+  # *Set a value by key.*
+  #
+  # * (string) `key` - The key to look up, e.g. parent:child:grandchild
+  # * (any) `value` - The value to store at the key location.
+  set: (key, value) ->
 
-		[parts..., last] = key.split ':'
-		current = @config
-		for part in parts
-			current = (current[part] ?= {})
+    [parts..., last] = key.split ':'
+    current = @config
+    for part in parts
+      current = (current[part] ?= {})
 
-		current[last] = value
+    current[last] = value
 
-	# ### .toJSON
-	#
-	# *Return config object for serialization.*
-	toJSON: -> @config
+  # ### .toJSON
+  #
+  # *Return config object for serialization.*
+  toJSON: -> @config
 
 module.exports.Config = Config

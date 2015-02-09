@@ -13,56 +13,56 @@ collections = {}
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `collectionsAlter`
+  # ## Implements hook `collectionsAlter`
 #	registrar.registerHook 'collectionsAlter', (collections_) ->
 #
 #		collection.connection = 'socket' for collection in collections_
 
-	# ## Implements hook `service`
-	registrar.registerHook 'service', -> [
-		'$http'
-		($http) ->
+  # ## Implements hook `service`
+  registrar.registerHook 'service', -> [
+    '$http'
+    ($http) ->
 
-			service = {}
+      service = {}
 
-			exports.initialize()
+      exports.initialize()
 
-			service.collection = (identity) -> collections[identity]
+      service.collection = (identity) -> collections[identity]
 
-			service.collections = -> collections
+      service.collections = -> collections
 
-			service
+      service
 
-	]
+  ]
 
 exports.initialize = ->
 
-	# Invoke hook `collections`.
-	# Allows packages to create Waterline collections.
-	collections_ = {}
-	for collectionList in pkgman.invokeFlat 'collections'
-		for identity, collection of collectionList
+  # Invoke hook `collections`.
+  # Allows packages to create Waterline collections.
+  collections_ = {}
+  for collectionList in pkgman.invokeFlat 'collections'
+    for identity, collection of collectionList
 
-			# Collection defaults.
-			collection.identity ?= identity
-			collections_[collection.identity] = collection
+      # Collection defaults.
+      collection.identity ?= identity
+      collections_[collection.identity] = collection
 
-			# Instantiate a model with defaults supplied.
-			collection.instantiate = (values = {}) ->
-				model = JSON.parse JSON.stringify values
+      # Instantiate a model with defaults supplied.
+      collection.instantiate = (values = {}) ->
+        model = JSON.parse JSON.stringify values
 
-				for key, value of @attributes
-					continue unless value.defaultsTo?
+        for key, value of @attributes
+          continue unless value.defaultsTo?
 
-					model[key] ?= if 'function' is typeof value.defaultsTo
-						value.defaultsTo.call model
-					else
-						JSON.parse JSON.stringify value.defaultsTo
+          model[key] ?= if 'function' is typeof value.defaultsTo
+            value.defaultsTo.call model
+          else
+            JSON.parse JSON.stringify value.defaultsTo
 
-				model
+        model
 
-	# Invoke hook `collectionsAlter`.
-	# Allows packages to alter any Waterline collections defined.
-	pkgman.invoke 'collectionsAlter', collections_
+  # Invoke hook `collectionsAlter`.
+  # Allows packages to alter any Waterline collections defined.
+  pkgman.invoke 'collectionsAlter', collections_
 
-	collections = collections_
+  collections = collections_

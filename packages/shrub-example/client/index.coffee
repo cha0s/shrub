@@ -5,6 +5,6 @@
 
 exports.pkgmanRegister = (registrar) ->
 
-	registrar.recur [
-		'about', 'home'
-	]
+  registrar.recur [
+    'about', 'home'
+  ]

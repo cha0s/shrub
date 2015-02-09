@@ -3,96 +3,96 @@
 
 module.exports = (grunt) ->
 
-	# Fork so we can bootstrap a Shrub environment.
-	if child = fork()
-		grunt.registerTask 'bootstrap', ->
+  # Fork so we can bootstrap a Shrub environment.
+  if child = fork()
+    grunt.registerTask 'bootstrap', ->
 
-			done = @async()
+      done = @async()
 
-			child.on 'close', (code) ->
+      child.on 'close', (code) ->
 
-				return done() if code is 0
+        return done() if code is 0
 
-				grunt.fail.fatal 'Child process failed', code
+        grunt.fail.fatal 'Child process failed', code
 
-		# Forward all tasks.
-		{tasks} = require 'grunt/lib/grunt/cli'
-		grunt.registerTask tasks[0] ? 'default', ['bootstrap']
-		grunt.registerTask(task, (->)) for task in tasks.slice 1
+    # Forward all tasks.
+    {tasks} = require 'grunt/lib/grunt/cli'
+    grunt.registerTask tasks[0] ? 'default', ['bootstrap']
+    grunt.registerTask(task, (->)) for task in tasks.slice 1
 
-		return
+    return
 
-	config = require 'config'
-	pkgman = require 'pkgman'
+  config = require 'config'
+  pkgman = require 'pkgman'
 
-	# } Load configuration.
-	config.load()
-	config.loadPackageSettings()
+  # } Load configuration.
+  config.load()
+  config.loadPackageSettings()
 
-	class GruntConfiguration
+  class GruntConfiguration
 
-		constructor: ->
+    constructor: ->
 
-			@_npmTasks = []
-			@_taskConfig = {}
-			@_tasks = {}
+      @_npmTasks = []
+      @_taskConfig = {}
+      @_tasks = {}
 
-			@pkg = grunt.file.readJSON 'package.json'
+      @pkg = grunt.file.readJSON 'package.json'
 
-		configureTask: (task, key, config_) ->
+    configureTask: (task, key, config_) ->
 
-			(@_taskConfig[task] ?= {})[key] = config_
+      (@_taskConfig[task] ?= {})[key] = config_
 
-			return
+      return
 
-		finish: ->
+    finish: ->
 
-			# Initialize configuration.
-			grunt.initConfig @_taskConfig
+      # Initialize configuration.
+      grunt.initConfig @_taskConfig
 
-			# Load NPM tasks.
-			npmTasksLoaded = {}
-			for task in @_npmTasks
-				continue if npmTasksLoaded[task]?
-				npmTasksLoaded[task] = true
-				grunt.loadNpmTasks task
+      # Load NPM tasks.
+      npmTasksLoaded = {}
+      for task in @_npmTasks
+        continue if npmTasksLoaded[task]?
+        npmTasksLoaded[task] = true
+        grunt.loadNpmTasks task
 
-			# Register custom tasks.
-			grunt.registerTask task, actions for task, actions of @_tasks
+      # Register custom tasks.
+      grunt.registerTask task, actions for task, actions of @_tasks
 
-			return
+      return
 
-		taskConfiguration: (task, key) -> @_taskConfig[task]?[key]
+    taskConfiguration: (task, key) -> @_taskConfig[task]?[key]
 
-		loadNpmTasks: (tasks) ->
+    loadNpmTasks: (tasks) ->
 
-			@_npmTasks.push task for task in tasks
+      @_npmTasks.push task for task in tasks
 
-			return
+      return
 
-		registerTask: (task, subtasksOrFunction) ->
+    registerTask: (task, subtasksOrFunction) ->
 
-			if 'function' is typeof subtasksOrFunction
-				@_tasks[task] = subtasksOrFunction
-			else
-				(@_tasks[task] ?= []).push subtasksOrFunction...
+      if 'function' is typeof subtasksOrFunction
+        @_tasks[task] = subtasksOrFunction
+      else
+        (@_tasks[task] ?= []).push subtasksOrFunction...
 
-			return
+      return
 
-	gruntConfig = new GruntConfiguration grunt
+  gruntConfig = new GruntConfiguration grunt
 
-	gruntConfig.registerTask 'production', ['build']
-	gruntConfig.registerTask 'default', ['buildOnce']
+  gruntConfig.registerTask 'production', ['build']
+  gruntConfig.registerTask 'default', ['buildOnce']
 
-	built = false
+  built = false
 
-	gruntConfig.registerTask 'buildOnce', ->
-		return if built
-		built = true
+  gruntConfig.registerTask 'buildOnce', ->
+    return if built
+    built = true
 
-		grunt.task.run 'build'
+    grunt.task.run 'build'
 
-	pkgman.invoke 'gruntConfig', gruntConfig, grunt
-	pkgman.invoke 'gruntConfigAlter', gruntConfig, grunt
+  pkgman.invoke 'gruntConfig', gruntConfig, grunt
+  pkgman.invoke 'gruntConfigAlter', gruntConfig, grunt
 
-	gruntConfig.finish()
+  gruntConfig.finish()

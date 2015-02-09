@@ -3,6 +3,6 @@
 
 exports.pkgmanRegister = (registrar) ->
 
-	registrar.recur [
-		'notifications'
-	]
+  registrar.recur [
+    'notifications'
+  ]

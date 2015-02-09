@@ -18,24 +18,24 @@ coreDependencies.push 'shrub.require'
  # Core module: pulls in some Angular modules, and our own modules.
 angular.module('shrub.core', coreDependencies)
 
-	.config([
-		'$injector', 'shrub-pkgmanProvider'
-		({invoke}, {invokeFlat}) ->
+  .config([
+    '$injector', 'shrub-pkgmanProvider'
+    ({invoke}, {invokeFlat}) ->
 
-			# Invoke hook `appConfig`.
-			# Invoked when the Angular application is in the configuration
-			# phase.
-			invoke injectable for injectable in invokeFlat 'appConfig'
+      # Invoke hook `appConfig`.
+      # Invoked when the Angular application is in the configuration
+      # phase.
+      invoke injectable for injectable in invokeFlat 'appConfig'
 
-	])
+  ])
 
-	.run([
+  .run([
 
-		'$injector', 'shrub-pkgman'
-		({invoke}, {invokeFlat}) ->
+    '$injector', 'shrub-pkgman'
+    ({invoke}, {invokeFlat}) ->
 
-			# Invoke hook `appRun`.
-			# Invoked when the Angular application is run.
-			invoke injectable for injectable in invokeFlat 'appRun'
+      # Invoke hook `appRun`.
+      # Invoked when the Angular application is run.
+      invoke injectable for injectable in invokeFlat 'appRun'
 
-	])
+  ])

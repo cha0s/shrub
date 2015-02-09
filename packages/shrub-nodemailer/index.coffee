@@ -18,68 +18,68 @@ transport = null
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `preBootstrap`
-	registrar.registerHook 'preBootstrap', ->
+  # ## Implements hook `preBootstrap`
+  registrar.registerHook 'preBootstrap', ->
 
-		Promise = require 'bluebird'
+    Promise = require 'bluebird'
 
-		config = require 'config'
+    config = require 'config'
 
-		skin = require 'shrub-skin'
+    skin = require 'shrub-skin'
 
-	# ## Implements hook `bootstrapMiddleware`
-	registrar.registerHook 'bootstrapMiddleware', ->
+  # ## Implements hook `bootstrapMiddleware`
+  registrar.registerHook 'bootstrapMiddleware', ->
 
-		nodemailer = require 'nodemailer'
+    nodemailer = require 'nodemailer'
 
-		{Sandbox} = require 'sandboxes'
+    {Sandbox} = require 'sandboxes'
 
-		label: 'Bootstrap nodemailer'
-		middleware: [
+    label: 'Bootstrap nodemailer'
+    middleware: [
 
-			(next) ->
+      (next) ->
 
-				settings = config.get 'packageSettings:shrub-nodemailer'
+        settings = config.get 'packageSettings:shrub-nodemailer'
 
-				# Instantiate the email transport.
-				transport = nodemailer.createTransport(
-					require(settings.transport.module)(
-						settings.transport.options
-					)
-				)
+        # Instantiate the email transport.
+        transport = nodemailer.createTransport(
+          require(settings.transport.module)(
+            settings.transport.options
+          )
+        )
 
-				# Render the app HTML and create a sandbox with it.
-				skin.renderAppHtml().then((html) ->
+        # Render the app HTML and create a sandbox with it.
+        skin.renderAppHtml().then((html) ->
 
-					sandbox = new Sandbox()
-					sandbox.createDocument html, url: "http://localhost:#{
-						config.get 'packageSettings:shrub-http:port'
-					}/home"
+          sandbox = new Sandbox()
+          sandbox.createDocument html, url: "http://localhost:#{
+            config.get 'packageSettings:shrub-http:port'
+          }/home"
 
-				).then(->
+        ).then(->
 
-					# Augment it with functionality we'll find useful and
-					# convenient.
-					augmentSandbox sandbox
+          # Augment it with functionality we'll find useful and
+          # convenient.
+          augmentSandbox sandbox
 
-				).then(-> next()
+        ).then(-> next()
 
-				).catch next
+        ).catch next
 
-		]
+    ]
 
-	# ## Implements hook `packageSettings`
-	registrar.registerHook 'packageSettings', ->
+  # ## Implements hook `packageSettings`
+  registrar.registerHook 'packageSettings', ->
 
-		# Default site email information.
-		siteEmail:
-			address: 'admin@example.com'
-			name: 'Site administrator'
+    # Default site email information.
+    siteEmail:
+      address: 'admin@example.com'
+      name: 'Site administrator'
 
-		# Passed through directly to nodemailer.
-		transport:
-			module: 'nodemailer-sendmail-transport'
-			options: {}
+    # Passed through directly to nodemailer.
+    transport:
+      module: 'nodemailer-sendmail-transport'
+      options: {}
 
 # ## sendMail
 #
@@ -94,163 +94,163 @@ exports.pkgmanRegister = (registrar) ->
 #   scope when compiling the directive for the email output.
 exports.sendMail = (directive, mail, scope) ->
 
-	path = config.get 'path'
-	siteEmail = config.get 'packageSettings:shrub-nodemailer:siteEmail'
+  path = config.get 'path'
+  siteEmail = config.get 'packageSettings:shrub-nodemailer:siteEmail'
 
-	Promise.resolve().then(->
+  Promise.resolve().then(->
 
-		sandbox.inject [
-			'$rootScope', '$compile'
-			($rootScope, $compile) ->
+    sandbox.inject [
+      '$rootScope', '$compile'
+      ($rootScope, $compile) ->
 
-				$scope = $rootScope.$new()
-				$scope[key] = value for key, value of scope
-				$element = $compile("<div data-#{directive}></div>")($scope)
+        $scope = $rootScope.$new()
+        $scope[key] = value for key, value of scope
+        $element = $compile("<div data-#{directive}></div>")($scope)
 
-				# Just to be sure :)
-				$rootScope.$digest() for i in [0...10]
+        # Just to be sure :)
+        $rootScope.$digest() for i in [0...10]
 
-				sandbox.prepareHtmlForEmail $element.html()
+        sandbox.prepareHtmlForEmail $element.html()
 
-		]
+    ]
 
-	).then((html) ->
+  ).then((html) ->
 
-		mail.html = html if html?
+    mail.html = html if html?
 
-	).then(->
+  ).then(->
 
-		# If the from field wasn't specified, look it up in the configuration.
-		unless mail.from
-			unless siteEmail.address
-				throw new Error 'Email sent without `from` field, and no site email address is defined!'
+    # If the from field wasn't specified, look it up in the configuration.
+    unless mail.from
+      unless siteEmail.address
+        throw new Error 'Email sent without `from` field, and no site email address is defined!'
 
-			# Use the address by default.
-			mail.from = siteEmail.address
+      # Use the address by default.
+      mail.from = siteEmail.address
 
-			# Format if there is a site email name
-			mail.from = "#{siteEmail.name} <#{mail.from}>" if siteEmail.name
+      # Format if there is a site email name
+      mail.from = "#{siteEmail.name} <#{mail.from}>" if siteEmail.name
 
-		# Parse the HTML to plain text as a default if no plain text was
-		# provided.
-		mail.text ?= sandbox.text mail.html if mail.html?
+    # Parse the HTML to plain text as a default if no plain text was
+    # provided.
+    mail.text ?= sandbox.text mail.html if mail.html?
 
-		# Send the mail.
-		new Promise (resolve, reject) ->
-			transport.sendMail mail, (error) ->
+    # Send the mail.
+    new Promise (resolve, reject) ->
+      transport.sendMail mail, (error) ->
 
-				return reject error if error?
-				resolve()
+        return reject error if error?
+        resolve()
 
-	)
+  )
 
 # Augment the sandbox with the ability to rewrite HTML for email, and emit HTML
 # as text.
 augmentSandbox = (sandbox) ->
 
-	# Convenience.
-	$ = sandbox._window.$
+  # Convenience.
+  $ = sandbox._window.$
 
-	selectors = {}
+  selectors = {}
 
-	htmlCssText = ''
-	bodyCssText = ''
+  htmlCssText = ''
+  bodyCssText = ''
 
-	# Gather all CSS selectors and rules ahead of time.
-	gatherSelectors = ->
-		for stylesheet in sandbox._window.document.styleSheets
-			for rule in stylesheet.cssRules
-				continue unless rule.selectorText?
+  # Gather all CSS selectors and rules ahead of time.
+  gatherSelectors = ->
+    for stylesheet in sandbox._window.document.styleSheets
+      for rule in stylesheet.cssRules
+        continue unless rule.selectorText?
 
-				# Split into individual selectors.
-				parts = rule.selectorText.split(
+        # Split into individual selectors.
+        parts = rule.selectorText.split(
 
-					','
+          ','
 
-				).map((selector) ->
+        ).map((selector) ->
 
-					# Trim whitespace.
-					selector.trim()
+          # Trim whitespace.
+          selector.trim()
 
-				).filter (selector) ->
+        ).filter (selector) ->
 
-					# Filter pseudo selectors.
-					return false if selector.match /[:@]/
+          # Filter pseudo selectors.
+          return false if selector.match /[:@]/
 
-					# Collect html and body rules manually.
-					if selector is 'html'
-						htmlCssText += rule.style.cssText
-						return false
+          # Collect html and body rules manually.
+          if selector is 'html'
+            htmlCssText += rule.style.cssText
+            return false
 
-					if selector is 'body'
-						bodyCssText += rule.style.cssText
-						return false
+          if selector is 'body'
+            bodyCssText += rule.style.cssText
+            return false
 
-					true
+          true
 
-				# Rejoin the selectors.
-				selector = parts.join ','
+        # Rejoin the selectors.
+        selector = parts.join ','
 
-				# Normalize the rule(s).
-				selectors[selector] ?= ''
-				selectors[selector] += rule.style.cssText.split(
+        # Normalize the rule(s).
+        selectors[selector] ?= ''
+        selectors[selector] += rule.style.cssText.split(
 
-					';'
+          ';'
 
-				).filter((rule) ->
+        ).filter((rule) ->
 
-					rule isnt ''
+          rule isnt ''
 
-				).map((rule) ->
+        ).map((rule) ->
 
-					rule.trim()
+          rule.trim()
 
-				).sort().join '; '
-				selectors[selector] += ';'
+        ).sort().join '; '
+        selectors[selector] += ';'
 
-		# Merge as many rules as we can, so we'll have less work to do for
-		# each application.
-		cssTextCache = {}
-		for selector, cssText of selectors
-			(cssTextCache[cssText] ?= []).push selector
+    # Merge as many rules as we can, so we'll have less work to do for
+    # each application.
+    cssTextCache = {}
+    for selector, cssText of selectors
+      (cssTextCache[cssText] ?= []).push selector
 
-		for cssText, selectors_ of cssTextCache
-			selectors[selectors_.join ','] = cssText
+    for cssText, selectors_ of cssTextCache
+      selectors[selectors_.join ','] = cssText
 
-	# ### sandbox.inject
-	#
-	# *Inject an [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation) with dependencies.*
-	#
-	# * (mixed) `injectable` - An annotated function to inject with
-	#   dependencies.
-	sandbox.inject = (injectable) ->
-		injector = @_window.angular.element(@_window.document).injector()
-		injector.invoke injectable
+  # ### sandbox.inject
+  #
+  # *Inject an [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation) with dependencies.*
+  #
+  # * (mixed) `injectable` - An annotated function to inject with
+  #   dependencies.
+  sandbox.inject = (injectable) ->
+    injector = @_window.angular.element(@_window.document).injector()
+    injector.invoke injectable
 
-	# CREDIT: http://devintorr.es/blog/2010/05/26/turn-css-rules-into-inline-style-attributes-using-jquery/
-	# With some improvements, of course.
-	sandbox.inlineCss = (html) ->
-		for selector, cssText of selectors
-			for element in $(selector, $(html))
-				element.style.cssText += cssText
+  # CREDIT: http://devintorr.es/blog/2010/05/26/turn-css-rules-into-inline-style-attributes-using-jquery/
+  # With some improvements, of course.
+  sandbox.inlineCss = (html) ->
+    for selector, cssText of selectors
+      for element in $(selector, $(html))
+        element.style.cssText += cssText
 
-	# Prepare HTML for email; inject all CSS inline and insert niceties
-	# like a nav on top.
-	sandbox.prepareHtmlForEmail = (html) ->
+  # Prepare HTML for email; inject all CSS inline and insert niceties
+  # like a nav on top.
+  sandbox.prepareHtmlForEmail = (html) ->
 
-		# Clone the body and insert the HTML into the main application
-		# area.
-		$body = $('body').clone()
+    # Clone the body and insert the HTML into the main application
+    # area.
+    $body = $('body').clone()
 
-		# Let the skin manage the mail HTML.
-		pkgman = require 'pkgman'
-		pkgman.invokePackage skin.activeKey(), 'mailHtml', $body, html, $
+    # Let the skin manage the mail HTML.
+    pkgman = require 'pkgman'
+    pkgman.invokePackage skin.activeKey(), 'mailHtml', $body, html, $
 
-		# Inject all the styles inline.
-		sandbox.inlineCss $body
+    # Inject all the styles inline.
+    sandbox.inlineCss $body
 
-		# Return a valid HTML document.
-		"""
+    # Return a valid HTML document.
+    """
 <!doctype html>
 <html style=#{htmlCssText}">
 <body style=#{bodyCssText}">
@@ -259,46 +259,46 @@ augmentSandbox = (sandbox) ->
 </html>
 """
 
-	# Convert HTML to text.
-	sandbox.text = (html) ->
+  # Convert HTML to text.
+  sandbox.text = (html) ->
 
-		text = $(html).text()
+    text = $(html).text()
 
-		# Remove tab characters.
-		text = text.replace /\t/g, ''
+    # Remove tab characters.
+    text = text.replace /\t/g, ''
 
-		# Remove excessive empty lines.
-		emptyLines = 0
-		text = text.split('').reduce(
-			(l, r) ->
+    # Remove excessive empty lines.
+    emptyLines = 0
+    text = text.split('').reduce(
+      (l, r) ->
 
-				if (l.slice -1) is '\n' and r is '\n'
-					emptyLines += 1
-				else
-					emptyLines = 0
+        if (l.slice -1) is '\n' and r is '\n'
+          emptyLines += 1
+        else
+          emptyLines = 0
 
-				if emptyLines > 1
-					l
-				else
-					l + r
+        if emptyLines > 1
+          l
+        else
+          l + r
 
-			''
-		).trim()
+      ''
+    ).trim()
 
-	new Promise (resolve) ->
+  new Promise (resolve) ->
 
-		sandbox.inject [
-			'$sniffer', 'shrub-socket'
-			($sniffer, socket) ->
+    sandbox.inject [
+      '$sniffer', 'shrub-socket'
+      ($sniffer, socket) ->
 
-				# } Don't even try HTML 5 history on the server side.
-				$sniffer.history = false
+        # } Don't even try HTML 5 history on the server side.
+        $sniffer.history = false
 
-				# } Let the socket finish initialization.
-				socket.on 'initialized', ->
+        # } Let the socket finish initialization.
+        socket.on 'initialized', ->
 
-					gatherSelectors()
+          gatherSelectors()
 
-					resolve sandbox
+          resolve sandbox
 
-		]
+    ]

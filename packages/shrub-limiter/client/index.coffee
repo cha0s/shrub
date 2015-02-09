@@ -9,15 +9,15 @@
 # passing..
 class LimiterThresholdError extends TransmittableError
 
-	constructor: (message, @time) -> super
+  constructor: (message, @time) -> super
 
-	key: 'limiterThreshold'
-	template: ':message You may try again :time.'
-	toJSON: -> [@key, @message, @time]
+  key: 'limiterThreshold'
+  template: ':message You may try again :time.'
+  toJSON: -> [@key, @message, @time]
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `transmittableError`
-	registrar.registerHook 'transmittableError', exports.transmittableError
+  # ## Implements hook `transmittableError`
+  registrar.registerHook 'transmittableError', exports.transmittableError
 
 exports.transmittableError = -> LimiterThresholdError

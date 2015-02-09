@@ -3,16 +3,16 @@
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `httpMiddleware`
-	#
-	# Serve static files.
-	registrar.registerHook 'httpMiddleware', (http) ->
+  # ## Implements hook `httpMiddleware`
+  #
+  # Serve static files.
+  registrar.registerHook 'httpMiddleware', (http) ->
 
-		express = require 'express'
+    express = require 'express'
 
-		config = require 'config'
+    config = require 'config'
 
-		label: 'Serve static files'
-		middleware: [
-			express.static config.get 'packageSettings:shrub-http:path'
-		]
+    label: 'Serve static files'
+    middleware: [
+      express.static config.get 'packageSettings:shrub-http:path'
+    ]

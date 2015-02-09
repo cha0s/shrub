@@ -13,105 +13,105 @@ httpManager = null
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `bootstrapMiddleware`
-	registrar.registerHook 'bootstrapMiddleware', ->
+  # ## Implements hook `bootstrapMiddleware`
+  registrar.registerHook 'bootstrapMiddleware', ->
 
-		label: 'Bootstrap HTTP server'
-		middleware: [
+    label: 'Bootstrap HTTP server'
+    middleware: [
 
-			(next) ->
+      (next) ->
 
-				{manager, port} = config.get 'packageSettings:shrub-http'
+        {manager, port} = config.get 'packageSettings:shrub-http'
 
-				{Manager} = require manager.module
+        {Manager} = require manager.module
 
-				# Spin up the HTTP server, and initialize it.
-				httpManager = new Manager()
+        # Spin up the HTTP server, and initialize it.
+        httpManager = new Manager()
 
-				# Spawn workers into a cluster.
-				httpManager.cluster()
+        # Spawn workers into a cluster.
+        httpManager.cluster()
 
-				httpManager.initialize().then(->
+        httpManager.initialize().then(->
 
-					debug "Shrub HTTP server up and running on port #{port}!"
-					next()
+          debug "Shrub HTTP server up and running on port #{port}!"
+          next()
 
-				).catch next
+        ).catch next
 
-		]
+    ]
 
-	# ## Implements hook `httpInitializing`
-	registrar.registerHook 'httpInitializing', (http) ->
+  # ## Implements hook `httpInitializing`
+  registrar.registerHook 'httpInitializing', (http) ->
 
-		# Invoke hook `httpRoutes`.
-		# Allows packages to specify HTTP routes. Implementations should
-		# return an array of route specifications. See
-		# [shrub-orm-rest's implementation]
-		# (/packages/shrub-orm-rest/index.coffee#implementshookhttproutes) as
-		# an example.
-		debugSilly '- Registering routes...'
-		for routeList in pkgman.invokeFlat 'httpRoutes', http
+    # Invoke hook `httpRoutes`.
+    # Allows packages to specify HTTP routes. Implementations should
+    # return an array of route specifications. See
+    # [shrub-orm-rest's implementation]
+    # (/packages/shrub-orm-rest/index.coffee#implementshookhttproutes) as
+    # an example.
+    debugSilly '- Registering routes...'
+    for routeList in pkgman.invokeFlat 'httpRoutes', http
 
-			for route in routeList
-				route.verb ?= 'get'
+      for route in routeList
+        route.verb ?= 'get'
 
-				debugSilly "- - #{
-					route.verb.toUpperCase()
-				} #{
-					route.path
-				}"
+        debugSilly "- - #{
+          route.verb.toUpperCase()
+        } #{
+          route.path
+        }"
 
-				http.addRoute route
-		debugSilly '- Routes registered.'
+        http.addRoute route
+    debugSilly '- Routes registered.'
 
-	# ## Implements hook `httpMiddleware`
-	registrar.registerHook 'httpMiddleware', (http) ->
+  # ## Implements hook `httpMiddleware`
+  registrar.registerHook 'httpMiddleware', (http) ->
 
-		label: 'Finalize HTTP request'
-		middleware: [
+    label: 'Finalize HTTP request'
+    middleware: [
 
-			(req, res, next) ->
+      (req, res, next) ->
 
-				if req.delivery?
+        if req.delivery?
 
-					res.send req.delivery
+          res.send req.delivery
 
-				else
+        else
 
-					res.status 501
-					res.end '<h1>501 Internal Server Error</h1>'
+          res.status 501
+          res.end '<h1>501 Internal Server Error</h1>'
 
-		]
+    ]
 
-	# ## Implements hook `packageSettings`
-	registrar.registerHook 'packageSettings', ->
+  # ## Implements hook `packageSettings`
+  registrar.registerHook 'packageSettings', ->
 
-		manager:
+    manager:
 
-			# Module implementing the socket manager.
-			module: 'shrub-http-express'
+      # Module implementing the socket manager.
+      module: 'shrub-http-express'
 
-		middleware: [
-			'shrub-core'
-			'shrub-socket/factory'
-			'shrub-http-express/session'
-			'shrub-user'
-			'shrub-audit'
-			'shrub-http-express/logger'
-			'shrub-villiany'
-			'shrub-form'
-			'shrub-http-express/routes'
-			'shrub-http-express/static'
-			'shrub-config'
-			'shrub-skin/path'
-			'shrub-assets'
-			'shrub-skin/render'
-			'shrub-angular'
-			'shrub-http-express/errors'
-		]
+    middleware: [
+      'shrub-core'
+      'shrub-socket/factory'
+      'shrub-http-express/session'
+      'shrub-user'
+      'shrub-audit'
+      'shrub-http-express/logger'
+      'shrub-villiany'
+      'shrub-form'
+      'shrub-http-express/routes'
+      'shrub-http-express/static'
+      'shrub-config'
+      'shrub-skin/path'
+      'shrub-assets'
+      'shrub-skin/render'
+      'shrub-angular'
+      'shrub-http-express/errors'
+    ]
 
-		path: "#{config.get 'path'}/app"
+    path: "#{config.get 'path'}/app"
 
-		port: 4201
+    port: 4201
 
 exports.manager = -> httpManager

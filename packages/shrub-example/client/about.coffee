@@ -3,29 +3,29 @@
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `route`
-	registrar.registerHook 'route', ->
+  # ## Implements hook `route`
+  registrar.registerHook 'route', ->
 
-		path: 'about'
-		title: 'About'
+    path: 'about'
+    title: 'About'
 
-		controller: [
-			'$http', '$scope'
-			($http, $scope) ->
+    controller: [
+      '$http', '$scope'
+      ($http, $scope) ->
 
-				$scope.about = ''
+        $scope.about = ''
 
-				$http.get('/shrub-example/about/README.md').success((data) ->
-					$scope.about = data
-				)
+        $http.get('/shrub-example/about/README.md').success((data) ->
+          $scope.about = data
+        )
 
-		]
+    ]
 
-		template: '''
+    template: '''
 
 <span
-	class="about"
-	data-ng-bind-html="about | shrubUiMarkdown:false"
+  class="about"
+  data-ng-bind-html="about | shrubUiMarkdown:false"
 ></span>
 
 '''

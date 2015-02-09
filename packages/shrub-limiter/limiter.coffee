@@ -18,222 +18,222 @@ orm = null
 # `TODO`: Rewrite this comment
 module.exports = class Limiter
 
-	# ## threshold
-	#
-	# Expose a factory method for constructing Threshold instances. A
-	# Threshold is defined like:
-	#
-	# 	{Limiter} = require 'shrub-limiter'
-	# 	Limiter.threshold(4).every(20).minutes()
-	#
-	# Which means that the threshold represents the allowance of a score of 4
-	# to accumulate over the period of 20 minutes. If more score is accrued
-	# during that window, then the threshold is said to be crossed.
-	@threshold: (score) -> new ThresholdBase score
+  # ## threshold
+  #
+  # Expose a factory method for constructing Threshold instances. A
+  # Threshold is defined like:
+  #
+  # 	{Limiter} = require 'shrub-limiter'
+  # 	Limiter.threshold(4).every(20).minutes()
+  #
+  # Which means that the threshold represents the allowance of a score of 4
+  # to accumulate over the period of 20 minutes. If more score is accrued
+  # during that window, then the threshold is said to be crossed.
+  @threshold: (score) -> new ThresholdBase score
 
-	# ### *constructor*
-	#
-	# *Create a limiter.*
-	#
-	# * (string) `key` - A unique key for this limiter,
-	#   e.g. "rpc://user.login:limiter"
-	#
-	# * (Threshold) `threshold` - A threshold, see below for details.
-	constructor: (key, @threshold, @excluded = []) ->
+  # ### *constructor*
+  #
+  # *Create a limiter.*
+  #
+  # * (string) `key` - A unique key for this limiter,
+  #   e.g. "rpc://user.login:limiter"
+  #
+  # * (Threshold) `threshold` - A threshold, see below for details.
+  constructor: (key, @threshold, @excluded = []) ->
 
-		# } Make sure it's a threshold.
-		throw new TypeError(
-			"Limiter(#{key}) must be constructed with a valid threshold!"
-		) unless @threshold instanceof ThresholdFinal
+    # } Make sure it's a threshold.
+    throw new TypeError(
+      "Limiter(#{key}) must be constructed with a valid threshold!"
+    ) unless @threshold instanceof ThresholdFinal
 
-		Promise ?= require 'bluebird'
+    Promise ?= require 'bluebird'
 
-		orm ?= require 'shrub-orm'
+    orm ?= require 'shrub-orm'
 
-		# } Create the low-level limiter.
-		@limiter = new LimiterManager key, @threshold.calculateSeconds()
+    # } Create the low-level limiter.
+    @limiter = new LimiterManager key, @threshold.calculateSeconds()
 
-	# ### .add
-	#
-	# *Accrue score for a limiter.*
-	#
-	# * (array) `keys` - An array of keys, e.g. a flattened array of keys
-	#   from [`audit.fingerprint()`](./audit.html)
-	#
-	# * (integer) `score` - The score to add. Defaults to 1.
-	accrue: (keys, score = 1) ->
-		Promise.all (@limiter.accrue key, score for key in keys)
+  # ### .add
+  #
+  # *Accrue score for a limiter.*
+  #
+  # * (array) `keys` - An array of keys, e.g. a flattened array of keys
+  #   from [`audit.fingerprint()`](./audit.html)
+  #
+  # * (integer) `score` - The score to add. Defaults to 1.
+  accrue: (keys, score = 1) ->
+    Promise.all (@limiter.accrue key, score for key in keys)
 
-	# ### .accrueAndCheckThreshold
-	#
-	# *Add score to a limiter, and check it against the threshold.*
-	#
-	# * (array) `keys` - An array of keys, e.g. a flattened array of keys
-	#   from [`audit.fingerprint()`](./audit.html)
-	#
-	# * (integer) `score` - The score to add. Defaults to 1.
-	accrueAndCheckThreshold: (keys, score = 1) ->
-		@accrue(keys, score).then => @checkThreshold keys
+  # ### .accrueAndCheckThreshold
+  #
+  # *Add score to a limiter, and check it against the threshold.*
+  #
+  # * (array) `keys` - An array of keys, e.g. a flattened array of keys
+  #   from [`audit.fingerprint()`](./audit.html)
+  #
+  # * (integer) `score` - The score to add. Defaults to 1.
+  accrueAndCheckThreshold: (keys, score = 1) ->
+    @accrue(keys, score).then => @checkThreshold keys
 
-	# ### .score
-	#
-	# *Check score for a limiter.*
-	#
-	# * (array) `keys` - An array of keys, e.g. a flattened array of keys
-	#   from [`audit.fingerprint()`](./audit.html)
-	score: (keys) -> @_largest keys, 'score'
+  # ### .score
+  #
+  # *Check score for a limiter.*
+  #
+  # * (array) `keys` - An array of keys, e.g. a flattened array of keys
+  #   from [`audit.fingerprint()`](./audit.html)
+  score: (keys) -> @_largest keys, 'score'
 
-	# ### .ttl
-	#
-	# *Time-to-live for a limiter.*
-	#
-	# * (array) `keys` - An array of keys, e.g. a flattened array of keys
-	#   from [`audit.fingerprint()`](./audit.html)
-	ttl: (keys) -> @_largest keys, 'ttl'
+  # ### .ttl
+  #
+  # *Time-to-live for a limiter.*
+  #
+  # * (array) `keys` - An array of keys, e.g. a flattened array of keys
+  #   from [`audit.fingerprint()`](./audit.html)
+  ttl: (keys) -> @_largest keys, 'ttl'
 
-	# ### .checkThreshold
-	#
-	# *Check the current limiter score against the threshold.*
-	#
-	# * (array) `keys` - An array of keys, e.g. a flattened array of keys
-	#   from [`audit.fingerprint()`](./audit.html)
-	checkThreshold: (keys) ->
-		@score(keys).then (score) => score > @threshold.score()
+  # ### .checkThreshold
+  #
+  # *Check the current limiter score against the threshold.*
+  #
+  # * (array) `keys` - An array of keys, e.g. a flattened array of keys
+  #   from [`audit.fingerprint()`](./audit.html)
+  checkThreshold: (keys) ->
+    @score(keys).then (score) => score > @threshold.score()
 
-	# #### ._largest
-	#
-	# (internal) *Find the largest result from a group of results.*
-	_largest: (keys, index) ->
-		Promise.all(
-			@limiter[index] key for key in keys
+  # #### ._largest
+  #
+  # (internal) *Find the largest result from a group of results.*
+  _largest: (keys, index) ->
+    Promise.all(
+      @limiter[index] key for key in keys
 
-		).then (reduction) ->
-			reduction.reduce ((l, r) -> if l > r then l else r), -Infinity
+    ).then (reduction) ->
+      reduction.reduce ((l, r) -> if l > r then l else r), -Infinity
 
 class LimiterManager
 
-	constructor: (@key, @threshold) ->
+  constructor: (@key, @threshold) ->
 
-	# ### .add
-	#
-	# *Add score to a limiter.*
-	#
-	# * (string) `id` - The ID of the limiter.
-	#
-	# * (integer) `score` - The score to add. Defaults to 1.
-	accrue: (id, score = 1) ->
-		key = "#{@key}:#{id}"
+  # ### .add
+  #
+  # *Add score to a limiter.*
+  #
+  # * (string) `id` - The ID of the limiter.
+  #
+  # * (integer) `score` - The score to add. Defaults to 1.
+  accrue: (id, score = 1) ->
+    key = "#{@key}:#{id}"
 
-		Limit = orm.collection 'shrub-limit'
-		Limit.findOrCreate(
-			key: key
-		,
-			key: key
-		).populateAll().then((limit) =>
+    Limit = orm.collection 'shrub-limit'
+    Limit.findOrCreate(
+      key: key
+    ,
+      key: key
+    ).populateAll().then((limit) =>
 
-			# } Reset if it's expired.
-			limit.reset() if 0 >= limit.ttl @threshold
+      # } Reset if it's expired.
+      limit.reset() if 0 >= limit.ttl @threshold
 
-			return limit
+      return limit
 
-		).then (limit) -> limit.accrue(parseInt score).save()
+    ).then (limit) -> limit.accrue(parseInt score).save()
 
-	# ### .score
-	#
-	# *Check score for a limiter.*
-	#
-	# * (string) `id` - The ID of the limiter.
-	score: (id) ->
+  # ### .score
+  #
+  # *Check score for a limiter.*
+  #
+  # * (string) `id` - The ID of the limiter.
+  score: (id) ->
 
-		# } Get all scores for this limiter.
-		Limit = orm.collection 'shrub-limit'
-		Limit.findOne(key: "#{@key}:#{id}").populateAll().then (limit) =>
-			return 0 unless limit?
-			return limit.score() if 0 < limit.ttl @threshold
+    # } Get all scores for this limiter.
+    Limit = orm.collection 'shrub-limit'
+    Limit.findOne(key: "#{@key}:#{id}").populateAll().then (limit) =>
+      return 0 unless limit?
+      return limit.score() if 0 < limit.ttl @threshold
 
-			# } Reset if it's expired.
-			limit.reset().save().then -> 0
+      # } Reset if it's expired.
+      limit.reset().save().then -> 0
 
-	# ### .ttl
-	#
-	# *Time-to-live for a limiter.*
-	#
-	# * (string) `id` - The ID of the limiter.
-	ttl: (id) ->
+  # ### .ttl
+  #
+  # *Time-to-live for a limiter.*
+  #
+  # * (string) `id` - The ID of the limiter.
+  ttl: (id) ->
 
-		Limit = orm.collection 'shrub-limit'
-		Limit.findOne(key: "#{@key}:#{id}").then (limit) =>
-			return 0 unless limit?
-			return ttl if 0 < ttl = limit.ttl @threshold
+    Limit = orm.collection 'shrub-limit'
+    Limit.findOne(key: "#{@key}:#{id}").then (limit) =>
+      return 0 unless limit?
+      return ttl if 0 < ttl = limit.ttl @threshold
 
-			# } Reset if it's expired.
-			limit.reset().save().then -> 0
+      # } Reset if it's expired.
+      limit.reset().save().then -> 0
 
 # ## ThresholdBase
 #
 # The base class used to define a threshold.
 class ThresholdBase
 
-	# ### *constructor*
-	#
-	# *Create a threshold base object.*
-	#
-	# * (integer) `score` - The maximum score allowed to accrue.
-	constructor: (@_score) ->
+  # ### *constructor*
+  #
+  # *Create a threshold base object.*
+  #
+  # * (integer) `score` - The maximum score allowed to accrue.
+  constructor: (@_score) ->
 
-	# ### .every
-	#
-	# *Define the quantity of time this threshold concerns.*
-	#
-	# * (integer) `amount` - The quantity of time units this threshold
-	#   concerns. e.g, if the threshold is every 5 minutes, this will be `5`.
-	every: (amount) -> new ThresholdMultiplier @_score, amount
+  # ### .every
+  #
+  # *Define the quantity of time this threshold concerns.*
+  #
+  # * (integer) `amount` - The quantity of time units this threshold
+  #   concerns. e.g, if the threshold is every 5 minutes, this will be `5`.
+  every: (amount) -> new ThresholdMultiplier @_score, amount
 
 # ## ThresholdMultiplier
 #
 # A threshold class to collect the multiplier.
 class ThresholdMultiplier
 
-	# ### *constructor*
-	#
-	# *Create a threshold.*
-	#
-	# * (integer) `score` - Passed along from ThresholdBase.
-	#
-	# * (integer) `amount` - Passed along from ThresholdBase.
-	constructor: (@_score, @_amount) ->
+  # ### *constructor*
+  #
+  # *Create a threshold.*
+  #
+  # * (integer) `score` - Passed along from ThresholdBase.
+  #
+  # * (integer) `amount` - Passed along from ThresholdBase.
+  constructor: (@_score, @_amount) ->
 
-		@_multiplier = 1
+    @_multiplier = 1
 
-	# Add a method for each multipler. This is this way just to DRY things up.
-	multipliers =
-		milliseconds: 1 / 1000
-		seconds: 1
-		minutes: 60
+  # Add a method for each multipler. This is this way just to DRY things up.
+  multipliers =
+    milliseconds: 1 / 1000
+    seconds: 1
+    minutes: 60
 
-	for key, multiplier of multipliers
-		do (key, multiplier) ->
-			ThresholdMultiplier::[key] = ->
-				@_multiplier = multiplier
+  for key, multiplier of multipliers
+    do (key, multiplier) ->
+      ThresholdMultiplier::[key] = ->
+        @_multiplier = multiplier
 
-				# } Return a finalized threshold.
-				new ThresholdFinal @_score, @_amount, @_multiplier
+        # } Return a finalized threshold.
+        new ThresholdFinal @_score, @_amount, @_multiplier
 
 # ## ThresholdFinal
 #
 # A finalized threshold definition.
 class ThresholdFinal
 
-	# ### *constructor*
-	#
-	# *Create a threshold.*
-	#
-	# * (integer) `score` - Passed along from ThresholdMultiplier.
-	#
-	# * (integer) `amount` - Passed along from ThresholdMultiplier.
-	#
-	# * (integer) `multiplier` - Passed along from ThresholdMultiplier.
-	constructor: (score, amount, multiplier) ->
+  # ### *constructor*
+  #
+  # *Create a threshold.*
+  #
+  # * (integer) `score` - Passed along from ThresholdMultiplier.
+  #
+  # * (integer) `amount` - Passed along from ThresholdMultiplier.
+  #
+  # * (integer) `multiplier` - Passed along from ThresholdMultiplier.
+  constructor: (score, amount, multiplier) ->
 
-		@calculateSeconds = -> amount * multiplier
-		@score = -> score
+    @calculateSeconds = -> amount * multiplier
+    @score = -> score

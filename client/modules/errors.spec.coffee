@@ -2,42 +2,42 @@ errors = require 'errors'
 
 describe 'errors', ->
 
-	error = null
+  error = null
 
-	beforeEach ->
+  beforeEach ->
 
-		error = errors.instantiate 'unknown', 'Test'
+    error = errors.instantiate 'unknown', 'Test'
 
-	it 'instantiates errors', ->
+  it 'instantiates errors', ->
 
-		expect(error instanceof Error).toBe true
+    expect(error instanceof Error).toBe true
 
-	it "handles (even abstract errors') messages", ->
+  it "handles (even abstract errors') messages", ->
 
-		expect(errors.message error).toBe 'Unknown error: Test'
+    expect(errors.message error).toBe 'Unknown error: Test'
 
-		expect(errors.message new Error 'Foo').toBe 'Unknown error: Foo'
+    expect(errors.message new Error 'Foo').toBe 'Unknown error: Foo'
 
-		expect(errors.message 'Blah').toBe 'Unknown error: Blah'
+    expect(errors.message 'Blah').toBe 'Unknown error: Blah'
 
-	it 'serializes (even abstract) errors', ->
+  it 'serializes (even abstract) errors', ->
 
-		O = errors.serialize error
-		expect(O[0]).toBe error.key
-		expect(O[1]).toBe error.message
+    O = errors.serialize error
+    expect(O[0]).toBe error.key
+    expect(O[1]).toBe error.message
 
-		O = errors.serialize new Error 'Foobar'
-		expect(O[0]).not.toBeDefined()
-		expect(O[1]).toBe 'Foobar'
+    O = errors.serialize new Error 'Foobar'
+    expect(O[0]).not.toBeDefined()
+    expect(O[1]).toBe 'Foobar'
 
-		O = errors.serialize 'Hmm'
-		expect(O[0]).not.toBeDefined()
-		expect(O[1]).toBe 'Hmm'
+    O = errors.serialize 'Hmm'
+    expect(O[0]).not.toBeDefined()
+    expect(O[1]).toBe 'Hmm'
 
-	it 'unserializes (even abstract) errors', ->
+  it 'unserializes (even abstract) errors', ->
 
-		O = errors.serialize error
-		expect(errors.message errors.unserialize O).toBe errors.message error
+    O = errors.serialize error
+    expect(errors.message errors.unserialize O).toBe errors.message error
 
-		O = [undefined, 'Blah']
-		expect(errors.message errors.unserialize O).toBe 'Unknown error: Blah'
+    O = [undefined, 'Blah']
+    expect(errors.message errors.unserialize O).toBe 'Unknown error: Blah'

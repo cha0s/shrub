@@ -9,91 +9,91 @@ assets = null
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `clearCaches`
-	registrar.registerHook 'clearCaches', ->
+  # ## Implements hook `clearCaches`
+  registrar.registerHook 'clearCaches', ->
 
-		assets = null
+    assets = null
 
-	# ## Implements hook `assetMiddleware`
-	registrar.registerHook 'assetMiddleware', ->
+  # ## Implements hook `assetMiddleware`
+  registrar.registerHook 'assetMiddleware', ->
 
-		label: 'Shrub'
-		middleware: [
+    label: 'Shrub'
+    middleware: [
 
-			(assets, next) ->
+      (assets, next) ->
 
-				if 'production' is config.get 'NODE_ENV'
-					assets.scripts.push '/lib/shrub/shrub.min.js'
-				else
-					assets.scripts.push '/lib/shrub/shrub.js'
+        if 'production' is config.get 'NODE_ENV'
+          assets.scripts.push '/lib/shrub/shrub.min.js'
+        else
+          assets.scripts.push '/lib/shrub/shrub.js'
 
-				assets.styleSheets.push '/css/shrub.css'
+        assets.styleSheets.push '/css/shrub.css'
 
-				next()
+        next()
 
-		]
+    ]
 
 
-	# ## Implements hook `gruntConfig`
-	registrar.registerHook 'gruntConfig', (gruntConfig) ->
+  # ## Implements hook `gruntConfig`
+  registrar.registerHook 'gruntConfig', (gruntConfig) ->
 
-		gruntConfig.configureTask 'copy', 'shrub-assets', files: [
-			src: '**/*'
-			dest: 'app'
-			expand: true
-			cwd: "#{__dirname}/app"
-		]
+    gruntConfig.configureTask 'copy', 'shrub-assets', files: [
+      src: '**/*'
+      dest: 'app'
+      expand: true
+      cwd: "#{__dirname}/app"
+    ]
 
-		gruntConfig.configureTask(
-			'watch', 'shrub-assets'
+    gruntConfig.configureTask(
+      'watch', 'shrub-assets'
 
-			files: [
-				"#{__dirname}/app/**/*"
-			]
-			tasks: 'build:shrub-assets'
-		)
+      files: [
+        "#{__dirname}/app/**/*"
+      ]
+      tasks: 'build:shrub-assets'
+    )
 
-		gruntConfig.registerTask 'build:shrub-assets', [
-			'newer:copy:shrub-assets'
-		]
+    gruntConfig.registerTask 'build:shrub-assets', [
+      'newer:copy:shrub-assets'
+    ]
 
-		gruntConfig.registerTask 'build', ['build:shrub-assets']
+    gruntConfig.registerTask 'build', ['build:shrub-assets']
 
-	# ## Implements hook `packageSettings`
-	registrar.registerHook 'packageSettings', ->
+  # ## Implements hook `packageSettings`
+  registrar.registerHook 'packageSettings', ->
 
-		assetMiddleware: [
-			'shrub-assets/jquery'
-			'shrub-socket-socket.io'
-			'shrub-assets/angular'
-			'shrub-assets'
-			'shrub-html5-notification'
-			'shrub-html5-local-storage'
-			'shrub-config'
-		]
+    assetMiddleware: [
+      'shrub-assets/jquery'
+      'shrub-socket-socket.io'
+      'shrub-assets/angular'
+      'shrub-assets'
+      'shrub-html5-notification'
+      'shrub-html5-local-storage'
+      'shrub-config'
+    ]
 
-	registrar.recur [
-		'angular', 'bootstrap', 'jquery', 'ui-bootstrap'
-	]
+  registrar.recur [
+    'angular', 'bootstrap', 'jquery', 'ui-bootstrap'
+  ]
 
 exports.assets = ->
-	return assets if assets?
+  return assets if assets?
 
-	debug = require('debug') 'shrub-silly:assets:middleware'
+  debug = require('debug') 'shrub-silly:assets:middleware'
 
-	middleware = require 'middleware'
+  middleware = require 'middleware'
 
-	assets = scripts: [], styleSheets: []
+  assets = scripts: [], styleSheets: []
 
-	# Invoke hook `assetMiddleware`.
-	# Invoked to gather script assets for requests.
-	debug '- Loading asset middleware...'
-	assetMiddleware = middleware.fromHook(
-		'assetMiddleware'
-		config.get 'packageSettings:shrub-assets:assetMiddleware'
-	)
-	debug '- Asset middleware loaded.'
+  # Invoke hook `assetMiddleware`.
+  # Invoked to gather script assets for requests.
+  debug '- Loading asset middleware...'
+  assetMiddleware = middleware.fromHook(
+    'assetMiddleware'
+    config.get 'packageSettings:shrub-assets:assetMiddleware'
+  )
+  debug '- Asset middleware loaded.'
 
-	assetMiddleware.dispatch assets, (error) -> throw error if error?
+  assetMiddleware.dispatch assets, (error) -> throw error if error?
 
-	assets
+  assets

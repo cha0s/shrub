@@ -19,8 +19,8 @@ logging = require 'logging'
 # } Hax: Fix document.domain since jsdom has a stub here.
 level2Html = require 'jsdom/lib/jsdom/level2/html'
 Object.defineProperties(
-	level2Html.dom.level2.html.HTMLDocument.prototype
-	domain: get: -> 'localhost'
+  level2Html.dom.level2.html.HTMLDocument.prototype
+  domain: get: -> 'localhost'
 )
 
 # ## Sandbox
@@ -28,103 +28,103 @@ Object.defineProperties(
 # some methods to inspect the state of the document.
 exports.Sandbox = class Sandbox
 
-	# ### *constructor*
-	#
-	# *Spin up a DOM.*
-	constructor: ->
+  # ### *constructor*
+  #
+  # *Spin up a DOM.*
+  constructor: ->
 
-		@_cleanupFunctions = []
-		@_window = null
+    @_cleanupFunctions = []
+    @_window = null
 
-	# ### .close
-	#
-	# *Close a DOM.*
-	close: ->
+  # ### .close
+  #
+  # *Close a DOM.*
+  close: ->
 
-		# } If the window is already gone, nope out.
-		return Promise.resolve() unless @_window?
+    # } If the window is already gone, nope out.
+    return Promise.resolve() unless @_window?
 
-		# } Run all the registered cleanup functions.
-		Promise.all(
-			fn() for fn in @_cleanupFunctions
+    # } Run all the registered cleanup functions.
+    Promise.all(
+      fn() for fn in @_cleanupFunctions
 
-		# } Suppress cleanup errors.
-		).catch(->
+    # } Suppress cleanup errors.
+    ).catch(->
 
-		# } Actually close the window and null it out.
-		).finally =>
+    # } Actually close the window and null it out.
+    ).finally =>
 
-			@_window.close()
-			@_window = null
+      @_window.close()
+      @_window = null
 
-	createDocument: (html, options = {}) ->
+  createDocument: (html, options = {}) ->
 
-		# } Set up a DOM, forwarding our cookie and navigating to the entry
-		# } point.
-		document = jsdom(
-			html, jsdom.defaultLevel
+    # } Set up a DOM, forwarding our cookie and navigating to the entry
+    # } point.
+    document = jsdom(
+      html, jsdom.defaultLevel
 
-			cookie: options.cookie
-			cookieDomain: options.cookieDomain ? 'localhost'
+      cookie: options.cookie
+      cookieDomain: options.cookieDomain ? 'localhost'
 
-			url: options.url ? "http://localhost:#{
-				config.get 'packageSettings:shrub-http:port'
-			}/"
-		)
-		@_window = window = document.createWindow()
+      url: options.url ? "http://localhost:#{
+        config.get 'packageSettings:shrub-http:port'
+      }/"
+    )
+    @_window = window = document.createWindow()
 
-		# } Capture "client" console logs.
-		for level in ['info', 'log', 'debug', 'warn', 'error']
-			do (level) -> window.console[level] = (args...) ->
+    # } Capture "client" console logs.
+    for level in ['info', 'log', 'debug', 'warn', 'error']
+      do (level) -> window.console[level] = (args...) ->
 
-				# } Make errors as detailed as possible.
-				for arg, i in args
-					if arg instanceof Error
-						args[i] = errors.stack arg
-					else
-						arg
+        # } Make errors as detailed as possible.
+        for arg, i in args
+          if arg instanceof Error
+            args[i] = errors.stack arg
+          else
+            arg
 
-				console[level] args...
+        console[level] args...
 
-		# } Hack in WebSocket.
-		window.WebSocket = WebSocket
+    # } Hack in WebSocket.
+    window.WebSocket = WebSocket
 
-		sandbox = this
-		new Promise (resolve, reject) ->
+    sandbox = this
+    new Promise (resolve, reject) ->
 
-			# When the window is loaded, we'll reject with any error, or
-			# resolve.
-			window.onload = ->
+      # When the window is loaded, we'll reject with any error, or
+      # resolve.
+      window.onload = ->
 
-				for documentError in window.document.errors ? []
-					if documentError.data?.error?
-						error = new Error "#{
-							documentError.message
-						}\n#{
-							errors.stack documentError.data.error
-						}"
+        for documentError in window.document.errors ? []
+          if documentError.data?.error?
+            error = new Error "#{
+              documentError.message
+            }\n#{
+              errors.stack documentError.data.error
+            }"
 
-				if error?
-					reject error
-				else
-					resolve sandbox
+        if error?
+          reject error
+        else
+          resolve sandbox
 
-	# ### .emitHtml
-	#
-	# *Emit the document as HTML.*
-	emitHtml: -> """
+  # ### .emitHtml
+  #
+  # *Emit the document as HTML.*
+  emitHtml: -> """
 <!doctype html>
 #{@_window.document.innerHTML}
 """
 
-	# ### .registerCleanupFunction
-	#
-	# *Register a function to run when the sandbox is closing.*
-	#
-	# * (function) `fn` - The function to run when the sandbox is closing.
-	registerCleanupFunction: (fn) -> @_cleanupFunctions.push fn
+  # ### .registerCleanupFunction
+  #
+  # *Register a function to run when the sandbox is closing.*
+  #
+  # * (function) `fn` - The function to run when the sandbox is closing.
+  registerCleanupFunction: (fn) -> @_cleanupFunctions.push fn
 
-	# ### .url
-	#
-	# *The current URL the sandbox is at.*
-	url: -> @_window.location.href
+  # ### .url
+  #
+  # *The current URL the sandbox is at.*
+  url: -> @_window.location.href

@@ -1,43 +1,43 @@
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `appConfig`
-	registrar.registerHook 'appConfig', -> [
-		'shrub-html5-notificationProvider'
-		(notificationProvider) ->
+  # ## Implements hook `appConfig`
+  registrar.registerHook 'appConfig', -> [
+    'shrub-html5-notificationProvider'
+    (notificationProvider) ->
 
-			# Shrub defaults.
-			notificationProvider.setOptions(
-				icon: '/img/shrub.png'
-				lang: 'en'
-			)
+      # Shrub defaults.
+      notificationProvider.setOptions(
+        icon: '/img/shrub.png'
+        lang: 'en'
+      )
 
-	]
+  ]
 
-	# ## Implements hook `provider`
-	registrar.registerHook 'provider', -> [
-		'NotificationProvider'
-		(NotificationProvider) ->
+  # ## Implements hook `provider`
+  registrar.registerHook 'provider', -> [
+    'NotificationProvider'
+    (NotificationProvider) ->
 
-			provider = {}
+      provider = {}
 
-			# Forward.
-			provider.setOptions = (options) ->
-				NotificationProvider.setOptions options
+      # Forward.
+      provider.setOptions = (options) ->
+        NotificationProvider.setOptions options
 
-			# I am not really a fan of using new as an API here.
-			provider.$get = [
-				'Notification'
-				(Notification) ->
+      # I am not really a fan of using new as an API here.
+      provider.$get = [
+        'Notification'
+        (Notification) ->
 
-					service = {}
+          service = {}
 
-					service.create = (title, options) ->
-						new Notification title, options
+          service.create = (title, options) ->
+            new Notification title, options
 
-					service
-			]
+          service
+      ]
 
-			provider
+      provider
 
-	]
+  ]

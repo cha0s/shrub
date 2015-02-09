@@ -1,35 +1,35 @@
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `directive`
-	registrar.registerHook 'directive', -> [
-		->
+  # ## Implements hook `directive`
+  registrar.registerHook 'directive', -> [
+    ->
 
-			scope: field: '=?'
+      scope: field: '=?'
 
-			template: '''
+      template: '''
 
 <input
-	name="{{field.name}}"
-	type="hidden"
-	value="{{field.value}}"
+  name="{{field.name}}"
+  type="hidden"
+  value="{{field.value}}"
 >
 
 '''
 
-	]
+  ]
 
-	assignToElement = (element, value) -> element.attr 'value', value
+  assignToElement = (element, value) -> element.attr 'value', value
 
-	# ## Implements hook `formWidgets`
-	registrar.registerHook 'formWidgets', ->
+  # ## Implements hook `formWidgets`
+  registrar.registerHook 'formWidgets', ->
 
-		widgets = []
+    widgets = []
 
-		widgets.push
+    widgets.push
 
-			type: 'hidden'
-			assignToElement: assignToElement
-			directive: 'shrub-form-widget-hidden'
+      type: 'hidden'
+      assignToElement: assignToElement
+      directive: 'shrub-form-widget-hidden'
 
-		widgets
+    widgets

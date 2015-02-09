@@ -3,22 +3,22 @@ config = require 'config'
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `assetMiddleware`
-	registrar.registerHook 'assetMiddleware', ->
+  # ## Implements hook `assetMiddleware`
+  registrar.registerHook 'assetMiddleware', ->
 
-		label: 'jQuery'
-		middleware: [
+    label: 'jQuery'
+    middleware: [
 
-			(assets, next) ->
+      (assets, next) ->
 
-				if 'production' is config.get 'NODE_ENV'
+        if 'production' is config.get 'NODE_ENV'
 
-					assets.scripts.push '//code.jquery.com/jquery-2.1.3.min.js'
+          assets.scripts.push '//code.jquery.com/jquery-2.1.3.min.js'
 
-				else
+        else
 
-					assets.scripts.push '/lib/jquery/jquery-2.1.3.js'
+          assets.scripts.push '/lib/jquery/jquery-2.1.3.js'
 
-				next()
+        next()
 
-		]
+    ]

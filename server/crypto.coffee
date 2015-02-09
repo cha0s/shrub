@@ -17,17 +17,17 @@ Promise = require 'bluebird'
 #   to the site's global crypto key.
 exports.encrypt = (message, password) ->
 
-	new Promise (resolve, reject) ->
+  new Promise (resolve, reject) ->
 
-		cipher = crypto.createCipher(
-			'aes256'
-			password ? config.get 'packageSettings:shrub-core:cryptoKey'
-		)
+    cipher = crypto.createCipher(
+      'aes256'
+      password ? config.get 'packageSettings:shrub-core:cryptoKey'
+    )
 
-		cipherText = []
-		cipherText.push cipher.update message, 'binary', 'hex'
-		cipherText.push cipher.final 'hex'
-		resolve cipherText.join ''
+    cipherText = []
+    cipherText.push cipher.update message, 'binary', 'hex'
+    cipherText.push cipher.final 'hex'
+    resolve cipherText.join ''
 
 # ### decrypt
 #
@@ -39,24 +39,24 @@ exports.encrypt = (message, password) ->
 #   to the site's global crypto key.
 exports.decrypt = (message, password) ->
 
-	new Promise (resolve, reject) ->
+  new Promise (resolve, reject) ->
 
-		decipher = crypto.createDecipher(
-			'aes256'
-			password ? config.get 'packageSettings:shrub-core:cryptoKey'
-		)
-		decipher.setAutoPadding false
+    decipher = crypto.createDecipher(
+      'aes256'
+      password ? config.get 'packageSettings:shrub-core:cryptoKey'
+    )
+    decipher.setAutoPadding false
 
-		decipherText = []
-		decipherText.push decipher.update message, 'hex', 'binary'
-		decipherText.push decipher.final 'binary'
-		decipherText = decipherText.join ''
+    decipherText = []
+    decipherText.push decipher.update message, 'hex', 'binary'
+    decipherText.push decipher.final 'binary'
+    decipherText = decipherText.join ''
 
-		# } Slice off the padding.
-		if 16 >= code = decipherText.charCodeAt decipherText.length - 1
-			decipherText = decipherText.slice 0, -code
+    # } Slice off the padding.
+    if 16 >= code = decipherText.charCodeAt decipherText.length - 1
+      decipherText = decipherText.slice 0, -code
 
-		resolve decipherText
+    resolve decipherText
 
 # ### hasher
 #
@@ -81,32 +81,32 @@ exports.decrypt = (message, password) ->
 #     verifying hashes, otherwise verification will fail.
 exports.hasher = (options = {}) ->
 
-	# Generate random 8-character base64 password if none provided
-	unless options.plaintext?
+  # Generate random 8-character base64 password if none provided
+  unless options.plaintext?
 
-		return exports.randomBytes(6).then((buffer) ->
-			options.plaintext = buffer.toString 'base64'
-			exports.hasher options
-		)
+    return exports.randomBytes(6).then((buffer) ->
+      options.plaintext = buffer.toString 'base64'
+      exports.hasher options
+    )
 
-	# Generate random 512-bit salt if no salt provided
-	unless options.salt?
+  # Generate random 512-bit salt if no salt provided
+  unless options.salt?
 
-		return exports.randomBytes(64).then((buffer) ->
-			options.salt = buffer
-			exports.hasher options
-		)
+    return exports.randomBytes(64).then((buffer) ->
+      options.salt = buffer
+      exports.hasher options
+    )
 
-	# } Node.js PBKDF2 forces sha1
-	options.hash = 'sha1'
-	options.iterations = options.iterations ? 10000
+  # } Node.js PBKDF2 forces sha1
+  options.hash = 'sha1'
+  options.iterations = options.iterations ? 10000
 
-	exports.pbkdf2(
-		options.plaintext, options.salt, options.iterations, 64
+  exports.pbkdf2(
+    options.plaintext, options.salt, options.iterations, 64
 
-	).then (key) ->
-		options.key = new Buffer key
-		options
+  ).then (key) ->
+    options.key = new Buffer key
+    options
 
 # Promisify some useful node.js crypto functions.
 exports.pbkdf2 = Promise.promisify crypto.pbkdf2, crypto

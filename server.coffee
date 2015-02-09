@@ -10,47 +10,47 @@
 # Fork the process to inject require paths into it.
 unless fork()
 
-	Promise = require 'bluebird'
+  Promise = require 'bluebird'
 
-	debug = require('debug') 'shrub:server'
-	debugSilly = require('debug') 'shrub-silly:server'
+  debug = require('debug') 'shrub:server'
+  debugSilly = require('debug') 'shrub-silly:server'
 
-	errors = require 'errors'
-	middleware = require 'middleware'
-	pkgman = require 'pkgman'
+  errors = require 'errors'
+  middleware = require 'middleware'
+  pkgman = require 'pkgman'
 
-	# } Load configuration.
-	debug 'Loading config...'
+  # } Load configuration.
+  debug 'Loading config...'
 
-	config = require 'config'
-	config.load()
-	config.loadPackageSettings()
+  config = require 'config'
+  config.load()
+  config.loadPackageSettings()
 
-	debug 'Config loaded.'
+  debug 'Config loaded.'
 
-	debugSilly 'Pre bootstrap phase...'
-	pkgman.invoke 'preBootstrap'
-	debugSilly 'Pre bootstrap phase completed.'
+  debugSilly 'Pre bootstrap phase...'
+  pkgman.invoke 'preBootstrap'
+  debugSilly 'Pre bootstrap phase completed.'
 
-	debugSilly 'Loading bootstrap middleware...'
-	bootstrapMiddleware = middleware.fromHook(
-		'bootstrapMiddleware'
-		config.get 'packageSettings:shrub-core:bootstrapMiddleware'
-	)
-	debugSilly 'Bootstrap middleware loaded.'
+  debugSilly 'Loading bootstrap middleware...'
+  bootstrapMiddleware = middleware.fromHook(
+    'bootstrapMiddleware'
+    config.get 'packageSettings:shrub-core:bootstrapMiddleware'
+  )
+  debugSilly 'Bootstrap middleware loaded.'
 
-	bootstrapMiddleware.dispatch (error) ->
+  bootstrapMiddleware.dispatch (error) ->
 
-		return debug 'Bootstrap complete.' unless error?
+    return debug 'Bootstrap complete.' unless error?
 
-		console.error errors.stack error
-		throw error
+    console.error errors.stack error
+    throw error
 
-	# Do our best to guarantee that hook `processExit` will always be invoked.
+  # Do our best to guarantee that hook `processExit` will always be invoked.
 
-	# } Signal listeners and process cleanup.
-	process.on 'SIGINT', -> process.exit()
-	process.on 'SIGTERM', -> process.exit()
-	process.on 'unhandledException', -> process.exit()
+  # } Signal listeners and process cleanup.
+  process.on 'SIGINT', -> process.exit()
+  process.on 'SIGTERM', -> process.exit()
+  process.on 'unhandledException', -> process.exit()
 
-	process.on 'exit', -> pkgman.invoke 'processExit'
+  process.on 'exit', -> pkgman.invoke 'processExit'

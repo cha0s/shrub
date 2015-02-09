@@ -1,39 +1,39 @@
 {
-	"packageList": [
-		"shrub-assets",
-		"shrub-audit",
-		"shrub-config",
-		"shrub-core",
-		"shrub-example",
-		"shrub-http-express",
-		"shrub-files",
-		"shrub-form",
-		"shrub-grunt",
-		"shrub-html5-local-storage",
-		"shrub-html5-notification",
-		"shrub-http",
-		"shrub-install",
-		"shrub-limiter",
-		"shrub-logger",
-		"shrub-nodemailer",
-		"shrub-orm",
-		"shrub-repl",
-		"shrub-rpc",
-		"shrub-schema",
-		"shrub-skin",
-		"shrub-skin-strapped",
-		"shrub-session",
-		"shrub-socket",
-		"shrub-socket-socket.io",
-		"shrub-ui",
-		"shrub-user",
-		"shrub-villiany"
-	],
-	"packageSettings": {
-		"shrub-core": {
-			"trustedProxies": [
-				"127.0.0.1"
-			]
-		}
-	}
+  "packageList": [
+    "shrub-assets",
+    "shrub-audit",
+    "shrub-config",
+    "shrub-core",
+    "shrub-example",
+    "shrub-http-express",
+    "shrub-files",
+    "shrub-form",
+    "shrub-grunt",
+    "shrub-html5-local-storage",
+    "shrub-html5-notification",
+    "shrub-http",
+    "shrub-install",
+    "shrub-limiter",
+    "shrub-logger",
+    "shrub-nodemailer",
+    "shrub-orm",
+    "shrub-repl",
+    "shrub-rpc",
+    "shrub-schema",
+    "shrub-skin",
+    "shrub-skin-strapped",
+    "shrub-session",
+    "shrub-socket",
+    "shrub-socket-socket.io",
+    "shrub-ui",
+    "shrub-user",
+    "shrub-villiany"
+  ],
+  "packageSettings": {
+    "shrub-core": {
+      "trustedProxies": [
+        "127.0.0.1"
+      ]
+    }
+  }
 }

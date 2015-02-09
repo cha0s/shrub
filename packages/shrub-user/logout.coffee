@@ -3,61 +3,61 @@
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `endpoint`
-	registrar.registerHook 'endpoint', ->
+  # ## Implements hook `endpoint`
+  registrar.registerHook 'endpoint', ->
 
-		route: 'shrub.user.logout'
+    route: 'shrub.user.logout'
 
-		receiver: (req, fn) ->
+    receiver: (req, fn) ->
 
-			# Log out.
-			req.logOut().nodeify fn
+      # Log out.
+      req.logOut().nodeify fn
 
-	# ## Implements hook `bootstrapMiddleware`
-	registrar.registerHook 'bootstrapMiddleware', ->
+  # ## Implements hook `bootstrapMiddleware`
+  registrar.registerHook 'bootstrapMiddleware', ->
 
-		Promise = require 'bluebird'
+    Promise = require 'bluebird'
 
-		middleware = require 'middleware'
+    middleware = require 'middleware'
 
-		label: 'Bootstrap user logout'
-		middleware: [
+    label: 'Bootstrap user logout'
+    middleware: [
 
-			(next) ->
+      (next) ->
 
-				{IncomingMessage} = require 'http'
+        {IncomingMessage} = require 'http'
 
-				req = IncomingMessage.prototype
+        req = IncomingMessage.prototype
 
-				# Invoke hook `userBeforeLogoutMiddleware`.
-				# Invoked before a user logs out.
-				userBeforeLogoutMiddleware = middleware.fromShortName(
-					'user before logout'
-					'shrub-user'
-				)
+        # Invoke hook `userBeforeLogoutMiddleware`.
+        # Invoked before a user logs out.
+        userBeforeLogoutMiddleware = middleware.fromShortName(
+          'user before logout'
+          'shrub-user'
+        )
 
-				# Invoke hook `userAfterLogoutMiddleware`.
-				# Invoked after a user logs out.
-				userAfterLogoutMiddleware = middleware.fromShortName(
-					'user after logout'
-					'shrub-user'
-				)
+        # Invoke hook `userAfterLogoutMiddleware`.
+        # Invoked after a user logs out.
+        userAfterLogoutMiddleware = middleware.fromShortName(
+          'user after logout'
+          'shrub-user'
+        )
 
-				logout = req.passportLogOut = req.logout
-				req.logout = req.logOut = ->
+        logout = req.passportLogOut = req.logout
+        req.logout = req.logOut = ->
 
-					new Promise (resolve, reject) =>
+          new Promise (resolve, reject) =>
 
-						userBeforeLogoutMiddleware.dispatch req, (error) =>
-							return reject error if error?
+            userBeforeLogoutMiddleware.dispatch req, (error) =>
+              return reject error if error?
 
-							logout.call this
+              logout.call this
 
-							userAfterLogoutMiddleware.dispatch req, (error) ->
-								return reject error if error?
+              userAfterLogoutMiddleware.dispatch req, (error) ->
+                return reject error if error?
 
-								resolve()
+                resolve()
 
-				next()
+        next()
 
-		]
+    ]

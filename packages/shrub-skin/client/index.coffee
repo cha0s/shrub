@@ -8,278 +8,278 @@ pkgman = require 'pkgman'
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `augmentDirective`
-	registrar.registerHook 'augmentDirective', (directive, path) -> [
+  # ## Implements hook `augmentDirective`
+  registrar.registerHook 'augmentDirective', (directive, path) -> [
 
-		'$cacheFactory', '$compile', '$http', '$injector', '$interpolate', '$q', '$rootScope'
-		($cacheFactory, $compile, $http, $injector, $interpolate, $q, $rootScope) ->
+    '$cacheFactory', '$compile', '$http', '$injector', '$interpolate', '$q', '$rootScope'
+    ($cacheFactory, $compile, $http, $injector, $interpolate, $q, $rootScope) ->
 
-			# Ensure ID is a candidate.
-			directive.candidateKeys ?= []
-			directive.candidateKeys.unshift 'id'
+      # Ensure ID is a candidate.
+      directive.candidateKeys ?= []
+      directive.candidateKeys.unshift 'id'
 
-			currentSkinKey = null
-			defaultSkinKey = config.get 'packageConfig:shrub-skin:default'
+      currentSkinKey = null
+      defaultSkinKey = config.get 'packageConfig:shrub-skin:default'
 
-			# Proxy link function to add our own directive retrieval and
-			# compilation step.
-			link = directive.link
-			directive.link = (scope, element, attr, controller, transclude) ->
-
-				candidateHooksInvoked = {}
+      # Proxy link function to add our own directive retrieval and
+      # compilation step.
+      link = directive.link
+      directive.link = (scope, element, attr, controller, transclude) ->
+
+        candidateHooksInvoked = {}
 
-				# Save top-level arguments for later calls to link functions.
-				topLevelArgs = arguments
+        # Save top-level arguments for later calls to link functions.
+        topLevelArgs = arguments
 
-				# Current template candidate.
-				candidate = undefined
-
-				recalculateCandidate = ->
+        # Current template candidate.
+        candidate = undefined
+
+        recalculateCandidate = ->
 
-					# Get the skin assets.
-					skinAssets = config.get(
-						"packageConfig:shrub-skin:assets:#{currentSkinKey}"
-					)
+          # Get the skin assets.
+          skinAssets = config.get(
+            "packageConfig:shrub-skin:assets:#{currentSkinKey}"
+          )
 
-					# Track changes to the current template candidate.
-					oldCandidate = candidate
-
-					# Build a list of all candidates by first attempting to
-					# interpolate candidate keys, and falling back to
-					# attribute values, if any. Candidate arrays are
-					# joined by single dashes.
-					candidateList = do ->
-						list = []
+          # Track changes to the current template candidate.
+          oldCandidate = candidate
+
+          # Build a list of all candidates by first attempting to
+          # interpolate candidate keys, and falling back to
+          # attribute values, if any. Candidate arrays are
+          # joined by single dashes.
+          candidateList = do ->
+            list = []
 
-						for keys in directive.candidateKeys
-							keys = [keys] unless angular.isArray keys
+            for keys in directive.candidateKeys
+              keys = [keys] unless angular.isArray keys
 
-							item = []
-							for key in keys
+              item = []
+              for key in keys
 
-								specific = scope[key]
-								specific = attr[key] unless specific
+                specific = scope[key]
+                specific = attr[key] unless specific
 
-								item.push specific if specific
+                item.push specific if specific
 
-							item = item.join '-'
-							list.push item if item
+              item = item.join '-'
+              list.push item if item
 
-						list
+            list
 
-					# Map the candidate list to template filenames and
-					# add the base path template candidate.
-					candidateTemplates = for candidate_ in candidateList
-						"#{path}--#{candidate_}.html"
-					candidateTemplates.push "#{path}.html"
+          # Map the candidate list to template filenames and
+          # add the base path template candidate.
+          candidateTemplates = for candidate_ in candidateList
+            "#{path}--#{candidate_}.html"
+          candidateTemplates.push "#{path}.html"
 
-					# Return the first existing template. The asset
-					# templates are already sorted by descending
-					# specificity.
-					candidate = do ->
-						for uri in candidateTemplates
-							return uri if skinAssets?.templates?[uri]
+          # Return the first existing template. The asset
+          # templates are already sorted by descending
+          # specificity.
+          candidate = do ->
+            for uri in candidateTemplates
+              return uri if skinAssets?.templates?[uri]
 
-						return null
+            return null
 
-					# If the candidate changed, clear the hook invocation
-					# cache and relink.
-					if candidate isnt oldCandidate
-						candidateHooksInvoked = {}
+          # If the candidate changed, clear the hook invocation
+          # cache and relink.
+          if candidate isnt oldCandidate
+            candidateHooksInvoked = {}
 
-						# Insert and compile the template HTML if it exists.
-						if skinAssets?.templates?[candidate]
+            # Insert and compile the template HTML if it exists.
+            if skinAssets?.templates?[candidate]
 
-							# Insert and compile HTML.
-							element.html skinAssets.templates[candidate]
-							$compile(element.contents())(scope)
+              # Insert and compile HTML.
+              element.html skinAssets.templates[candidate]
+              $compile(element.contents())(scope)
 
-						# Call directive link function.
-						link topLevelArgs... if link?
+            # Call directive link function.
+            link topLevelArgs... if link?
 
-					# Invoke the candidate link hooks.
-					invocations = [
-						'skinLink'
-						"skinLink--#{directive.name}"
-					]
+          # Invoke the candidate link hooks.
+          invocations = [
+            'skinLink'
+            "skinLink--#{directive.name}"
+          ]
 
-					# Add the candidates in reverse order, so they
-					# ascend in specificity.
-					invocations.push(
-						"skinLink--#{directive.name}--#{c}"
-					) for c in candidateList.reverse()
+          # Add the candidates in reverse order, so they
+          # ascend in specificity.
+          invocations.push(
+            "skinLink--#{directive.name}--#{c}"
+          ) for c in candidateList.reverse()
 
-					for hook in invocations
-						continue if candidateHooksInvoked[hook]
-						candidateHooksInvoked[hook] = true
-						for f in pkgman.invokeFlat hook
+          for hook in invocations
+            continue if candidateHooksInvoked[hook]
+            candidateHooksInvoked[hook] = true
+            for f in pkgman.invokeFlat hook
 
-							$injector.invoke(
-								f, null
-								$scope: scope
-								$element: element
-								$attr: attr
-								$controller: controller
-								$transclude: transclude
-							)
+              $injector.invoke(
+                f, null
+                $scope: scope
+                $element: element
+                $attr: attr
+                $controller: controller
+                $transclude: transclude
+              )
 
-				applySkin = (skinKey) ->
-					currentSkinKey = skinKey
-					recalculateCandidate()
+        applySkin = (skinKey) ->
+          currentSkinKey = skinKey
+          recalculateCandidate()
 
-				applySkin defaultSkinKey
+        applySkin defaultSkinKey
 
-				# Relink again every time the skin changes.
-				$rootScope.$on 'shrub-skin.changed', (event, skinKey) ->
-					candidateHooksInvoked = {}
-					applySkin skinKey
+        # Relink again every time the skin changes.
+        $rootScope.$on 'shrub-skin.changed', (event, skinKey) ->
+          candidateHooksInvoked = {}
+          applySkin skinKey
 
-				# Set watches for all candidate-related values.
-				keysSeen = {}
-				watchers = []
-				for keys in directive.candidateKeys
+        # Set watches for all candidate-related values.
+        keysSeen = {}
+        watchers = []
+        for keys in directive.candidateKeys
 
-					keys = [keys] unless angular.isArray keys
-					for key in keys
-						continue if keysSeen[key]
-						keysSeen[key] = true
+          keys = [keys] unless angular.isArray keys
+          for key in keys
+            continue if keysSeen[key]
+            keysSeen[key] = true
 
-						attr.$observe key, recalculateCandidate
-						watchers.push -> scope[attr[key]]
+            attr.$observe key, recalculateCandidate
+            watchers.push -> scope[attr[key]]
 
-				scope.$watchGroup watchers, recalculateCandidate
+        scope.$watchGroup watchers, recalculateCandidate
 
-	]
+  ]
 
-	# ## Implements hook `provider`
-	registrar.registerHook 'provider', -> [
+  # ## Implements hook `provider`
+  registrar.registerHook 'provider', -> [
 
-		'$injector', '$provide'
-		($injector, $provide) ->
+    '$injector', '$provide'
+    ($injector, $provide) ->
 
-			provider = {}
+      provider = {}
 
-			provider.$get = [
-				'$http', '$interval', '$q', '$rootScope', '$window'
-				($http, $interval, $q, $rootScope, $window) ->
+      provider.$get = [
+        '$http', '$interval', '$q', '$rootScope', '$window'
+        ($http, $interval, $q, $rootScope, $window) ->
 
-					service = {}
+          service = {}
 
-					service.addStylesheet = (href) ->
+          service.addStylesheet = (href) ->
 
-						deferred = $q.defer()
+            deferred = $q.defer()
 
-						styleSheets = $window.document.styleSheets
-						index = styleSheets.length
+            styleSheets = $window.document.styleSheets
+            index = styleSheets.length
 
-						element = $window.document.createElement 'link'
-						element.type = 'text/css'
-						element.rel = 'stylesheet'
-						element.href = "/skin/shrub-skin-strapped/#{href}"
-						element.className = 'skin'
-						angular.element('head').append element
+            element = $window.document.createElement 'link'
+            element.type = 'text/css'
+            element.rel = 'stylesheet'
+            element.href = "/skin/shrub-skin-strapped/#{href}"
+            element.className = 'skin'
+            angular.element('head').append element
 
-						resolve = -> deferred.resolve()
+            resolve = -> deferred.resolve()
 
-						wasParsed = ->
+            wasParsed = ->
 
-							try
+              try
 
-								styleSheet = styleSheets[index]
+                styleSheet = styleSheets[index]
 
-								return true if styleSheet.cssRules
-								return true if styleSheet.rules?.length
+                return true if styleSheet.cssRules
+                return true if styleSheet.rules?.length
 
-								return false
+                return false
 
-							catch error
+              catch error
 
-								return false
+                return false
 
-						# A rare case where IE actually does the right thing!
-						# (and Opera).
-						if $window.opera or -1 isnt $window.navigator.userAgent.indexOf 'MSIE'
+            # A rare case where IE actually does the right thing!
+            # (and Opera).
+            if $window.opera or -1 isnt $window.navigator.userAgent.indexOf 'MSIE'
 
-							element.onload = resolve
-							element.onreadystatechange = ->
-								switch @readyState
-									when 'loaded', 'complete'
-										resolve()
+              element.onload = resolve
+              element.onreadystatechange = ->
+                switch @readyState
+                  when 'loaded', 'complete'
+                    resolve()
 
-						# Everyone else needs to resort to polling.
-						else
+            # Everyone else needs to resort to polling.
+            else
 
-							poll = $interval ->
+              poll = $interval ->
 
-								if wasParsed()
+                if wasParsed()
 
-									$interval.cancel poll
-									resolve()
+                  $interval.cancel poll
+                  resolve()
 
-								return
+                return
 
-							, 10
+              , 10
 
-						deferred.promise
+            deferred.promise
 
-					service.addStylesheets = (hrefs) ->
-						$q.all (service.addStylesheet href for href in hrefs)
+          service.addStylesheets = (hrefs) ->
+            $q.all (service.addStylesheet href for href in hrefs)
 
-					addBodyCloak = ->
+          addBodyCloak = ->
 
-						$body = angular.element 'body'
-						$body.addClass 'shrub-skin-cloak'
+            $body = angular.element 'body'
+            $body.addClass 'shrub-skin-cloak'
 
-					removeBodyCloak = ->
+          removeBodyCloak = ->
 
-						$body = angular.element 'body'
-						$body.removeClass 'shrub-skin-cloak'
+            $body = angular.element 'body'
+            $body.removeClass 'shrub-skin-cloak'
 
-					removeSkinStylesheets = ->
+          removeSkinStylesheets = ->
 
-						$head = angular.element 'head'
-						head = $head[0]
+            $head = angular.element 'head'
+            head = $head[0]
 
-						node = head.firstChild
-						while node
+            node = head.firstChild
+            while node
 
-							nextNode = node.nextSibling
+              nextNode = node.nextSibling
 
-							if 'LINK' is node.tagName
-								if angular.element(node).hasClass 'skin'
-									head.removeChild node
+              if 'LINK' is node.tagName
+                if angular.element(node).hasClass 'skin'
+                  head.removeChild node
 
-							node = nextNode
+              node = nextNode
 
-						return
+            return
 
-					environmentKey = if 'production' is cache.get 'environment'
-						'production'
-					else
-						'default'
+          environmentKey = if 'production' is cache.get 'environment'
+            'production'
+          else
+            'default'
 
-					service.change = (skinKey) ->
+          service.change = (skinKey) ->
 
-						# Cloak the body.
-						addBodyCloak()
-						removeSkinStylesheets()
+            # Cloak the body.
+            addBodyCloak()
+            removeSkinStylesheets()
 
-						skinAssets = config.get(
-							"packageConfig:shrub-skin:assets:#{skinKey}"
-						)
+            skinAssets = config.get(
+              "packageConfig:shrub-skin:assets:#{skinKey}"
+            )
 
-						# Uncloak and notify when finished.
-						service.addStylesheets(
-							skinAssets.styleSheets[environmentKey]
-						).finally ->
-							removeBodyCloak()
+            # Uncloak and notify when finished.
+            service.addStylesheets(
+              skinAssets.styleSheets[environmentKey]
+            ).finally ->
+              removeBodyCloak()
 
-							$rootScope.$broadcast 'shrub-skin.changed', skinKey
+              $rootScope.$broadcast 'shrub-skin.changed', skinKey
 
-					service
+          service
 
-			]
+      ]
 
-			provider
+      provider
 
-	]
+  ]

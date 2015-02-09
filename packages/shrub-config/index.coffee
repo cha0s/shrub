@@ -14,102 +14,102 @@ pkgman = require 'pkgman'
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `assetMiddleware`
-	registrar.registerHook 'assetMiddleware', ->
+  # ## Implements hook `assetMiddleware`
+  registrar.registerHook 'assetMiddleware', ->
 
-		label: 'Config'
-		middleware: [
+    label: 'Config'
+    middleware: [
 
-			(assets, next) ->
+      (assets, next) ->
 
-				assets.scripts.push '/js/config.js'
+        assets.scripts.push '/js/config.js'
 
-				next()
+        next()
 
-		]
+    ]
 
-	# ## Implements hook `httpMiddleware`
-	registrar.registerHook 'httpMiddleware', (http) ->
+  # ## Implements hook `httpMiddleware`
+  registrar.registerHook 'httpMiddleware', (http) ->
 
-		label: 'Serve package configuration'
-		middleware: [
+    label: 'Serve package configuration'
+    middleware: [
 
-			# Serve the configuration module.
-			(req, res, next) ->
+      # Serve the configuration module.
+      (req, res, next) ->
 
-				# Only if the path matches.
-				return next() unless req.url is '/js/config.js'
+        # Only if the path matches.
+        return next() unless req.url is '/js/config.js'
 
-				exports.renderPackageConfig(req).then((code) ->
+        exports.renderPackageConfig(req).then((code) ->
 
-					# } Format the configuration to look nice.
-					prettyPrintConfig = ->
+          # } Format the configuration to look nice.
+          prettyPrintConfig = ->
 
-						jsonArgs = [config_]
+            jsonArgs = [config_]
 
-						if 'production' isnt config.get 'NODE_ENV'
-							jsonArgs = jsonArgs.concat [null, '  ']
+            if 'production' isnt config.get 'NODE_ENV'
+              jsonArgs = jsonArgs.concat [null, '  ']
 
-						stringified = JSON.stringify jsonArgs...
-						[first, rest...] = stringified.split '\n'
-						([first].concat rest.map (line) -> '    ' + line).join '\n'
+            stringified = JSON.stringify jsonArgs...
+            [first, rest...] = stringified.split '\n'
+            ([first].concat rest.map (line) -> '    ' + line).join '\n'
 
-					# Emit the configuration module.
-					res.setHeader 'Content-Type', 'text/javascript'
-					res.send code
+          # Emit the configuration module.
+          res.setHeader 'Content-Type', 'text/javascript'
+          res.send code
 
-				).catch next
+        ).catch next
 
-		]
+    ]
 
 exports.renderPackageConfig = (req) ->
 
-	# Invoke hook `config`.
-	# Allows packages to specify configuration that will be sent to the client.
-	# Implementations may return an object, or a promise that resolves to an
-	# object.
-	subconfigs = pkgman.invoke 'config', req
+  # Invoke hook `config`.
+  # Allows packages to specify configuration that will be sent to the client.
+  # Implementations may return an object, or a promise that resolves to an
+  # object.
+  subconfigs = pkgman.invoke 'config', req
 
-	Promise.all(
+  Promise.all(
 
-		promise for path, promise of subconfigs
+    promise for path, promise of subconfigs
 
-	).then (fulfilledSubconfigs) ->
+  ).then (fulfilledSubconfigs) ->
 
-		# } Merge ALL the configs.
-		config_ = new Config()
+    # } Merge ALL the configs.
+    config_ = new Config()
 
-		# } Package-independent...
-		config_.set 'packageList', config.get 'packageList'
+    # } Package-independent...
+    config_.set 'packageList', config.get 'packageList'
 
-		index = 0
-		for path of subconfigs
+    index = 0
+    for path of subconfigs
 
-			subconfig = fulfilledSubconfigs[index++]
-			for key, value of subconfig
-				continue unless value?
+      subconfig = fulfilledSubconfigs[index++]
+      for key, value of subconfig
+        continue unless value?
 
-				config_.set "packageConfig:#{
-					path.replace /\//g, ':'
-				}:#{
-					key.replace /\//g, ':'
-				}", value
+        config_.set "packageConfig:#{
+          path.replace /\//g, ':'
+        }:#{
+          key.replace /\//g, ':'
+        }", value
 
-		pkgman.invoke 'configAlter', req, config_
+    pkgman.invoke 'configAlter', req, config_
 
-		# } Format the configuration to look nice.
-		prettyPrintConfig = ->
+    # } Format the configuration to look nice.
+    prettyPrintConfig = ->
 
-			jsonArgs = [config_]
+      jsonArgs = [config_]
 
-			if 'production' isnt config.get 'NODE_ENV'
-				jsonArgs = jsonArgs.concat [null, '  ']
+      if 'production' isnt config.get 'NODE_ENV'
+        jsonArgs = jsonArgs.concat [null, '  ']
 
-			stringified = JSON.stringify jsonArgs...
-			[first, rest...] = stringified.split '\n'
-			([first].concat rest.map (line) -> '    ' + line).join '\n'
+      stringified = JSON.stringify jsonArgs...
+      [first, rest...] = stringified.split '\n'
+      ([first].concat rest.map (line) -> '    ' + line).join '\n'
 
-		"""
+    """
 
 angular.module(
   'shrub.config', ['shrub.require']

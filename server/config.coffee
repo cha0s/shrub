@@ -26,42 +26,42 @@ exports.has = (key) -> nconf.has key
 # *Load configuration from the settings file and package defaults.*
 exports.load = ->
 
-	# } Ensure the configuration file exists.
-	unless fs.existsSync settingsFilename = './config/settings.json'
-		throw new Error 'Settings file not found! You should copy config/default.settings.json to config/settings.json'
+  # } Ensure the configuration file exists.
+  unless fs.existsSync settingsFilename = './config/settings.json'
+    throw new Error 'Settings file not found! You should copy config/default.settings.json to config/settings.json'
 
-	nconf.argv().env().file settingsFilename
+  nconf.argv().env().file settingsFilename
 
-	nconf.defaults path: "#{__dirname}/.."
+  nconf.defaults path: "#{__dirname}/.."
 
-	return
+  return
 
 # ### loadPackageSettings
 #
 # *Load package settings as defaults in the configuration*
 exports.loadPackageSettings = ->
 
-	# } Register packages.
-	debug 'Registering packages...'
+  # } Register packages.
+  debug 'Registering packages...'
 
-	pkgman.registerPackageList nconf.get 'packageList'
+  pkgman.registerPackageList nconf.get 'packageList'
 
-	debug 'Packages registered.'
+  debug 'Packages registered.'
 
-	packageSettings = new Config()
-	for key, value of pkgman.invoke 'packageSettings'
-		packageSettings.set key.replace(/\//g, ':'), value
+  packageSettings = new Config()
+  for key, value of pkgman.invoke 'packageSettings'
+    packageSettings.set key.replace(/\//g, ':'), value
 
-	nconf.defaults
+  nconf.defaults
 
-		# Invoke hook `packageSettings`.
-		# Invoked when the server application is loading configuration. Allows
-		# packages to define their own default settings.
-		packageSettings: packageSettings.toJSON()
+    # Invoke hook `packageSettings`.
+    # Invoked when the server application is loading configuration. Allows
+    # packages to define their own default settings.
+    packageSettings: packageSettings.toJSON()
 
-		path: "#{__dirname}/.."
+    path: "#{__dirname}/.."
 
-	return
+  return
 
 # ### set
 #

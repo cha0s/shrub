@@ -15,79 +15,79 @@ Promise = null
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `preBootstrap`
-	registrar.registerHook 'preBootstrap', ->
+  # ## Implements hook `preBootstrap`
+  registrar.registerHook 'preBootstrap', ->
 
-		http = require 'http'
+    http = require 'http'
 
-		express = require 'express'
-		sticky = require 'sticky-session'
+    express = require 'express'
+    sticky = require 'sticky-session'
 
-		Promise = require 'bluebird'
+    Promise = require 'bluebird'
 
-	registrar.recur [
-		'errors', 'logger', 'routes', 'session', 'static'
-	]
+  registrar.recur [
+    'errors', 'logger', 'routes', 'session', 'static'
+  ]
 
 # An implementation of [HttpManager](../http/manager.html) using the
 # Express framework.
 {Manager: HttpManager} = require '../shrub-http/manager'
 exports.Manager = class Express extends HttpManager
 
-	# ### *constructor*
-	#
-	# *Create the server.*
-	constructor: ->
-		super
+  # ### *constructor*
+  #
+  # *Create the server.*
+  constructor: ->
+    super
 
-		# } Create the Express instance.
-		@_app = express()
+    # } Create the Express instance.
+    @_app = express()
 
-		# } Register middleware.
-		@registerMiddleware()
+    # } Register middleware.
+    @registerMiddleware()
 
-		# } Spin up an HTTP server.
-		@_server = http.createServer @_app
+    # } Spin up an HTTP server.
+    @_server = http.createServer @_app
 
-		# } Connect (no pun) Express's middleware system to ours.
-		@_app.use (req, res, next) => @_middleware.dispatch req, res, next
+    # } Connect (no pun) Express's middleware system to ours.
+    @_app.use (req, res, next) => @_middleware.dispatch req, res, next
 
-	# ### ::addRoute
-	#
-	# *Add HTTP routes.*
-	addRoute: ({verb, path, receiver}) -> @_app[verb] path, receiver
+  # ### ::addRoute
+  #
+  # *Add HTTP routes.*
+  addRoute: ({verb, path, receiver}) -> @_app[verb] path, receiver
 
-	# ### ::cluster
-	#
-	# *Spawn workers and tie them together into a cluster.*
-	cluster: ->
+  # ### ::cluster
+  #
+  # *Spawn workers and tie them together into a cluster.*
+  cluster: ->
 
-		coreConfig = config.get 'packageSettings:shrub-core'
-		@_server = sticky(
-			num: coreConfig.workers
-			trustedAddresses: coreConfig.trustedProxies
-			@_server
-		)
+    coreConfig = config.get 'packageSettings:shrub-core'
+    @_server = sticky(
+      num: coreConfig.workers
+      trustedAddresses: coreConfig.trustedProxies
+      @_server
+    )
 
-		return
+    return
 
-	# ### ::listener
-	#
-	# *Listen for HTTP connections.*
-	listener: ->
+  # ### ::listener
+  #
+  # *Listen for HTTP connections.*
+  listener: ->
 
-		new Promise (resolve, reject) =>
+    new Promise (resolve, reject) =>
 
-			@_server.on 'error', reject
+      @_server.on 'error', reject
 
-			@_server.once 'listening', =>
-				@_server.removeListener 'error', reject
-				resolve()
+      @_server.once 'listening', =>
+        @_server.removeListener 'error', reject
+        resolve()
 
-			# } Bind to the listen port.
-			@_server.listen @port()
+      # } Bind to the listen port.
+      @_server.listen @port()
 
-	# ### ::server
-	#
-	# *The node HTTP server instance.*
-	server: -> @_server
+  # ### ::server
+  #
+  # *The node HTTP server instance.*
+  server: -> @_server

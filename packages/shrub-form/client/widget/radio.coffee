@@ -3,54 +3,54 @@ _ = require 'lodash'
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `directive`
-	registrar.registerHook 'directive', -> [
-		->
+  # ## Implements hook `directive`
+  registrar.registerHook 'directive', -> [
+    ->
 
-			scope: field: '=?'
+      scope: field: '=?'
 
-			link: (scope, element) ->
+      link: (scope, element) ->
 
-				scope.$watch 'field', (field) ->
+        scope.$watch 'field', (field) ->
 
-					element.find('input').attr 'data-ng-model', field.value
+          element.find('input').attr 'data-ng-model', field.value
 
-			template: '''
+      template: '''
 
 <div class="radio">
 
-	<label>
+  <label>
 
-		<input
-			name="{{field.name}}"
-			type="radio"
+    <input
+      name="{{field.name}}"
+      type="radio"
 
-			data-ng-value="field.selectedValue"
-		>
+      data-ng-value="field.selectedValue"
+    >
 
-		{{field.label}}
+    {{field.label}}
 
-	</label>
+  </label>
 
 </div>
 
 '''
 
-	]
+  ]
 
-	assignToElement = (element, value) ->
+  assignToElement = (element, value) ->
 
-		element.prop 'checked', true
+    element.prop 'checked', true
 
-	# ## Implements hook `formWidgets`
-	registrar.registerHook 'formWidgets', ->
+  # ## Implements hook `formWidgets`
+  registrar.registerHook 'formWidgets', ->
 
-		widgets = []
+    widgets = []
 
-		widgets.push
+    widgets.push
 
-			type: 'radio'
-			assignToElement: assignToElement
-			directive: 'shrub-form-widget-radio'
+      type: 'radio'
+      assignToElement: assignToElement
+      directive: 'shrub-form-widget-radio'
 
-		widgets
+    widgets

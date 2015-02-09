@@ -1,6 +1,6 @@
 
 exports.pkgmanRegister = (registrar) ->
 
-	registrar.recur [
-		'build', 'run'
-	]
+  registrar.recur [
+    'build', 'run'
+  ]

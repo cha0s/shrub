@@ -21,86 +21,86 @@
 # previous error occurred.
 exports.Middleware = class Middleware extends EventEmitter
 
-	# ## *constructor*
-	#
-	# *Create a middleware stack.*
-	constructor: -> @_middleware = []
+  # ## *constructor*
+  #
+  # *Create a middleware stack.*
+  constructor: -> @_middleware = []
 
-	# ## ::use
-	#
-	# *Add a middleware function to the stack.*
-	#
-	# * (function) `fn` - A middleware function.
-	use: (fn) -> @_middleware.push fn
+  # ## ::use
+  #
+  # *Add a middleware function to the stack.*
+  #
+  # * (function) `fn` - A middleware function.
+  use: (fn) -> @_middleware.push fn
 
-	# ## ::dispatch
-	#
-	# *Invoke the middleware functions serially.*
-	#
-	# * (mixed) `...` - One or more values to pass to the middleware.
-	#
-	# * (function) `fn` - A function invoked when the middleware stack has
-	#   finished. If an error occurred, it will be passed as the first
-	#   argument.
-	dispatch: (args..., fn) ->
-		self = this
+  # ## ::dispatch
+  #
+  # *Invoke the middleware functions serially.*
+  #
+  # * (mixed) `...` - One or more values to pass to the middleware.
+  #
+  # * (function) `fn` - A function invoked when the middleware stack has
+  #   finished. If an error occurred, it will be passed as the first
+  #   argument.
+  dispatch: (args..., fn) ->
+    self = this
 
-		index = 0
+    index = 0
 
-		invoke = (error) ->
+    invoke = (error) ->
 
-			self.emit 'invoked', self._middleware[index - 1] if index > 0
+      self.emit 'invoked', self._middleware[index - 1] if index > 0
 
-			# Call `fn` with any error if we're done.
-			return fn error if index is self._middleware.length
+      # Call `fn` with any error if we're done.
+      return fn error if index is self._middleware.length
 
-			current = self._middleware[index++]
+      current = self._middleware[index++]
 
-			# Error-handling middleware.
-			if current.length is args.length + 2
+      # Error-handling middleware.
+      if current.length is args.length + 2
 
-				# An error occurred previously.
-				if error?
+        # An error occurred previously.
+        if error?
 
-					# Try to invoke the middleware, if it throws, just catch
-					# the error and pass it along.
-					try
-						localArgs = args.concat()
-						localArgs.unshift error
-						localArgs.push invoke
-						self.emit 'invoking', current
-						current localArgs...
-					catch error
-						invoke error
+          # Try to invoke the middleware, if it throws, just catch
+          # the error and pass it along.
+          try
+            localArgs = args.concat()
+            localArgs.unshift error
+            localArgs.push invoke
+            self.emit 'invoking', current
+            current localArgs...
+          catch error
+            invoke error
 
-				# No previous error; skip this middleware.
-				else
+        # No previous error; skip this middleware.
+        else
 
-					invoke error
+          invoke error
 
-			# Non-error-handling middleware.
-			else
+      # Non-error-handling middleware.
+      else
 
-				# An error occurred previously, skip this middleware.
-				if error?
+        # An error occurred previously, skip this middleware.
+        if error?
 
-					invoke error
+          invoke error
 
-				# No previous error.
-				else
+        # No previous error.
+        else
 
-					# Try to invoke the middleware, if it throws, just catch
-					# the error and pass it along.
-					try
-						localArgs = args.concat()
-						localArgs.push invoke
-						self.emit 'invoking', current
-						current localArgs...
-					catch error
-						invoke error
+          # Try to invoke the middleware, if it throws, just catch
+          # the error and pass it along.
+          try
+            localArgs = args.concat()
+            localArgs.push invoke
+            self.emit 'invoking', current
+            current localArgs...
+          catch error
+            invoke error
 
-		# Kick things off.
-		invoke()
+    # Kick things off.
+    invoke()
 
 i8n = require 'inflection'
 
@@ -115,25 +115,25 @@ debugSilly = require('debug') 'shrub-silly:middleware'
 # Create a middleware stack from the results of a hook and path configuration.
 exports.fromHook = (hook, paths, args...) ->
 
-	middleware = new Middleware()
+  middleware = new Middleware()
 
-	# Invoke the hook and `use` the middleware in the paths configuration
-	# order.
-	args.unshift hook
-	hookResults = pkgman.invoke args...
-	for path in paths ? []
-		continue unless (spec = hookResults[path])?
+  # Invoke the hook and `use` the middleware in the paths configuration
+  # order.
+  args.unshift hook
+  hookResults = pkgman.invoke args...
+  for path in paths ? []
+    continue unless (spec = hookResults[path])?
 
-		debugSilly "- - #{spec.label}"
+    debugSilly "- - #{spec.label}"
 
-		for fn in spec.middleware ? []
-			fn.label = spec.label
-			middleware.use fn, spec.label
+    for fn in spec.middleware ? []
+      fn.label = spec.label
+      middleware.use fn, spec.label
 
-	middleware.on 'invoking', (fn) -> debugSilly "Invoking #{fn.label}"
-	middleware.on 'invoked', (fn) -> debugSilly "Invoked #{fn.label}"
+  middleware.on 'invoking', (fn) -> debugSilly "Invoking #{fn.label}"
+  middleware.on 'invoked', (fn) -> debugSilly "Invoked #{fn.label}"
 
-	middleware
+  middleware
 
 # ## fromShortName
 #
@@ -154,23 +154,23 @@ exports.fromHook = (hook, paths, args...) ->
 #
 exports.fromShortName = (shortName, packageName) ->
 
-	debugSilly "- Loading #{shortName} middleware..."
+  debugSilly "- Loading #{shortName} middleware..."
 
-	[firstPart, keyParts...] = shortName.split ' '
-	packageName ?= firstPart
-	key = keyParts.join '_'
+  [firstPart, keyParts...] = shortName.split ' '
+  packageName ?= firstPart
+  key = keyParts.join '_'
 
-	# `TODO`: this really should be unified, making this unnecessary.
-	configKey = if global? then 'packageSettings' else 'packageConfig'
+  # `TODO`: this really should be unified, making this unnecessary.
+  configKey = if global? then 'packageSettings' else 'packageConfig'
 
-	middleware = exports.fromHook(
-		"#{firstPart}#{i8n.camelize key}Middleware"
+  middleware = exports.fromHook(
+    "#{firstPart}#{i8n.camelize key}Middleware"
 
-		config.get "#{configKey}:#{packageName}:#{
-			i8n.camelize key, true
-		}Middleware"
-	)
+    config.get "#{configKey}:#{packageName}:#{
+      i8n.camelize key, true
+    }Middleware"
+  )
 
-	debugSilly "- #{i8n.capitalize shortName} middleware loaded."
+  debugSilly "- #{i8n.capitalize shortName} middleware loaded."
 
-	middleware
+  middleware

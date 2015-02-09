@@ -3,52 +3,52 @@
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `route`
-	registrar.registerHook 'route', ->
+  # ## Implements hook `route`
+  registrar.registerHook 'route', ->
 
-		path: 'user/forgot'
-		title: 'Forgot password'
+    path: 'user/forgot'
+    title: 'Forgot password'
 
-		controller: [
-			'$location', '$scope', 'shrub-ui/messages', 'shrub-rpc', 'shrub-user'
-			($location, $scope, messages, rpc, user) ->
-				return $location.path '/' if user.isLoggedIn()
+    controller: [
+      '$location', '$scope', 'shrub-ui/messages', 'shrub-rpc', 'shrub-user'
+      ($location, $scope, messages, rpc, user) ->
+        return $location.path '/' if user.isLoggedIn()
 
-				$scope.form =
+        $scope.form =
 
-					key: 'shrub-user-forgot'
+          key: 'shrub-user-forgot'
 
-					submits: [
+          submits: [
 
-						rpc.formSubmitHandler (error, result) ->
-							return if error?
+            rpc.formSubmitHandler (error, result) ->
+              return if error?
 
-							messages.add(
-								text: 'A reset link will be emailed.'
-							)
+              messages.add(
+                text: 'A reset link will be emailed.'
+              )
 
-							$location.path '/'
+              $location.path '/'
 
-					]
+          ]
 
-					fields:
+          fields:
 
-						usernameOrEmail:
-							type: 'text'
-							label: 'Username or Email'
-							required: true
+            usernameOrEmail:
+              type: 'text'
+              label: 'Username or Email'
+              required: true
 
-						submit:
-							type: 'submit'
-							value: 'Email reset link'
+            submit:
+              type: 'submit'
+              value: 'Email reset link'
 
-		]
+    ]
 
-		template: '''
+    template: '''
 
 <div
-	data-shrub-form
-	data-form="form"
+  data-shrub-form
+  data-form="form"
 ></div>
 
 '''

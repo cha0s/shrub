@@ -1,75 +1,75 @@
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `bootstrapMiddleware`
-	registrar.registerHook 'bootstrapMiddleware', (context) ->
+  # ## Implements hook `bootstrapMiddleware`
+  registrar.registerHook 'bootstrapMiddleware', (context) ->
 
-		orm = require 'shrub-orm'
+    orm = require 'shrub-orm'
 
-		label: 'Installation'
-		middleware: [
+    label: 'Installation'
+    middleware: [
 
-			(next) ->
+      (next) ->
 
-				# No superuser? Install...
-				User = orm.collection 'shrub-user'
-				User.findOne(id: 1).then((user) ->
-					return if user?
+        # No superuser? Install...
+        User = orm.collection 'shrub-user'
+        User.findOne(id: 1).then((user) ->
+          return if user?
 
-					reinstall()
+          reinstall()
 
-				).then(-> next()).catch next
+        ).then(-> next()).catch next
 
-		]
+    ]
 
-	# ## Implements hook `replContext`
-	registrar.registerHook 'replContext', (context) ->
+  # ## Implements hook `replContext`
+  registrar.registerHook 'replContext', (context) ->
 
-		context.install = reinstall
+    context.install = reinstall
 
 reinstall = (name = 'admin', email = 'admin@example.com', password = 'admin') ->
 
-	Promise = require 'bluebird'
+  Promise = require 'bluebird'
 
-	orm = require 'shrub-orm'
+  orm = require 'shrub-orm'
 
-	# Refresh all collections.
-	Promise.all(
+  # Refresh all collections.
+  Promise.all(
 
-		for identity, collection of orm.collections()
-			new Promise (resolve, reject) ->
-				collection.drop (error) ->
-					return reject error if error?
-					resolve()
+    for identity, collection of orm.collections()
+      new Promise (resolve, reject) ->
+        collection.drop (error) ->
+          return reject error if error?
+          resolve()
 
-	).then(->
+  ).then(->
 
-		new Promise (resolve, reject) ->
-			orm.teardown (error) ->
-				return reject error if error?
-				orm.initialize (error) ->
-					return reject error if error?
-					resolve()
+    new Promise (resolve, reject) ->
+      orm.teardown (error) ->
+        return reject error if error?
+        orm.initialize (error) ->
+          return reject error if error?
+          resolve()
 
-	).then(->
+  ).then(->
 
-		Group = orm.collection 'shrub-group'
-		User = orm.collection 'shrub-user'
+    Group = orm.collection 'shrub-group'
+    User = orm.collection 'shrub-user'
 
-		Promise.all [
+    Promise.all [
 
-			# Create groups.
-			Group.create name: 'Anonymous'
-			Group.create name: 'Authenticated'
-			Group.create name: 'Administrator'
+      # Create groups.
+      Group.create name: 'Anonymous'
+      Group.create name: 'Authenticated'
+      Group.create name: 'Administrator'
 
-			# Create superuser.
-			User.register name, email, password
-		]
+      # Create superuser.
+      User.register name, email, password
+    ]
 
-	).then(([groups..., user]) ->
+  ).then(([groups..., user]) ->
 
-		user.groups.add group: groups[2].id
-		user.save().then()
+    user.groups.add group: groups[2].id
+    user.save().then()
 
-	).catch console.error
+  ).catch console.error

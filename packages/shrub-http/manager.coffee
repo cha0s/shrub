@@ -18,82 +18,82 @@ httpMiddlewareDebug = require('debug') 'shrub-silly:http:middleware'
 # [Express](./packages/http/Express.html)).
 exports.Manager = class HttpManager
 
-	# ### *constructor*
-	#
-	# *Create the server.*
-	constructor: ->
+  # ### *constructor*
+  #
+  # *Create the server.*
+  constructor: ->
 
-		@_config = config.get 'packageSettings:shrub-http'
+    @_config = config.get 'packageSettings:shrub-http'
 
-		@_middleware = null
+    @_middleware = null
 
-	# ### .initialize
-	#
-	# *Initialize the server.*
-	initialize: ->
+  # ### .initialize
+  #
+  # *Initialize the server.*
+  initialize: ->
 
-		# Invoke hook `httpInitializing`.
-		# Invoked before the server is bound on the listening port.
-		pkgman.invoke 'httpInitializing', this
+    # Invoke hook `httpInitializing`.
+    # Invoked before the server is bound on the listening port.
+    pkgman.invoke 'httpInitializing', this
 
-		# Start listening.
-		@listen()
+    # Start listening.
+    @listen()
 
-	# ### ::listen
-	#
-	# *Listen for HTTP connections.*
-	listen: ->
-		self = this
+  # ### ::listen
+  #
+  # *Listen for HTTP connections.*
+  listen: ->
+    self = this
 
-		new Promise (resolve, reject) ->
+    new Promise (resolve, reject) ->
 
-			do tryListener = ->
+      do tryListener = ->
 
-				self.listener().done(
-					resolve
+        self.listener().done(
+          resolve
 
-					(error) ->
-						return reject error unless 'EADDRINUSE' is error.code
+          (error) ->
+            return reject error unless 'EADDRINUSE' is error.code
 
-						httpDebug 'HTTP port in use... retrying in 2 seconds'
-						setTimeout tryListener, 2000
+            httpDebug 'HTTP port in use... retrying in 2 seconds'
+            setTimeout tryListener, 2000
 
-				)
+        )
 
-	# ### ::path
-	#
-	# *The path where static files are served from.*
-	path: -> @_config.path
+  # ### ::path
+  #
+  # *The path where static files are served from.*
+  path: -> @_config.path
 
-	# ### .port
-	#
-	# *Get the port this server (is|will be) listening on.*
-	port: -> @_config.port
+  # ### .port
+  #
+  # *Get the port this server (is|will be) listening on.*
+  port: -> @_config.port
 
-	# ### .registerMiddleware
-	#
-	# *Gather and initialize HTTP middleware.*
-	registerMiddleware: ->
+  # ### .registerMiddleware
+  #
+  # *Gather and initialize HTTP middleware.*
+  registerMiddleware: ->
 
-		httpMiddlewareDebug '- Loading HTTP middleware...'
+    httpMiddlewareDebug '- Loading HTTP middleware...'
 
-		httpMiddleware = @_config.middleware.concat()
-		httpMiddleware.push 'shrub-http'
+    httpMiddleware = @_config.middleware.concat()
+    httpMiddleware.push 'shrub-http'
 
-		# Invoke hook `httpMiddleware`.
-		# Invoked every time an HTTP connection is established.
-		@_middleware = middleware.fromHook(
-			'httpMiddleware', httpMiddleware, this
-		)
+    # Invoke hook `httpMiddleware`.
+    # Invoked every time an HTTP connection is established.
+    @_middleware = middleware.fromHook(
+      'httpMiddleware', httpMiddleware, this
+    )
 
-		httpMiddlewareDebug '- HTTP middleware loaded.'
+    httpMiddlewareDebug '- HTTP middleware loaded.'
 
-	# } Ensure any subclass implements these methods.
-	this::[method] = (-> throw new ReferenceError(
-		"HttpManager::#{method} is a pure virtual method!"
+  # } Ensure any subclass implements these methods.
+  this::[method] = (-> throw new ReferenceError(
+    "HttpManager::#{method} is a pure virtual method!"
 
-	# "Pure virtual" methods.
-	)) for method in [
+  # "Pure virtual" methods.
+  )) for method in [
 
-		'addRoute', 'cluster', 'listener', 'server'
-	]
+    'addRoute', 'cluster', 'listener', 'server'
+  ]

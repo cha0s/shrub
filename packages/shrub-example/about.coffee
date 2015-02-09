@@ -7,18 +7,18 @@ fs = require 'fs'
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `httpRoutes`
-	registrar.registerHook 'httpRoutes', (http) ->
-		routes = []
+  # ## Implements hook `httpRoutes`
+  registrar.registerHook 'httpRoutes', (http) ->
+    routes = []
 
-		# Provide the README file.
-		routes.push
-			path: '/shrub-example/about/README.md'
-			receiver: (req, res) ->
+    # Provide the README file.
+    routes.push
+      path: '/shrub-example/about/README.md'
+      receiver: (req, res) ->
 
-				fs.readFile 'README.md', (error, buffer) ->
-					throw error if error?
+        fs.readFile 'README.md', (error, buffer) ->
+          throw error if error?
 
-					res.end buffer
+          res.end buffer
 
-		return routes
+    return routes

@@ -3,96 +3,96 @@
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `endpoint`
-	registrar.registerHook 'endpoint', ->
+  # ## Implements hook `endpoint`
+  registrar.registerHook 'endpoint', ->
 
-		Promise = require 'bluebird'
+    Promise = require 'bluebird'
 
-		config = require 'config'
+    config = require 'config'
 
-		nodemailer = require 'shrub-nodemailer'
-		orm = require 'shrub-orm'
+    nodemailer = require 'shrub-nodemailer'
+    orm = require 'shrub-orm'
 
-		crypto = require 'server/crypto'
+    crypto = require 'server/crypto'
 
-		{Limiter} = require 'shrub-limiter'
+    {Limiter} = require 'shrub-limiter'
 
-		limiter: threshold: Limiter.threshold(1).every(30).seconds()
+    limiter: threshold: Limiter.threshold(1).every(30).seconds()
 
-		route: 'shrub.user.forgot'
+    route: 'shrub.user.forgot'
 
-		receiver: (req, fn) ->
+    receiver: (req, fn) ->
 
-			User = orm.collection 'shrub-user'
+      User = orm.collection 'shrub-user'
 
-			# Cancel promise flow if the user doesn't exist.
-			class NoSuchUser extends Error
-				constructor: (@message) ->
+      # Cancel promise flow if the user doesn't exist.
+      class NoSuchUser extends Error
+        constructor: (@message) ->
 
-			# Look up the user.
-			Promise.resolve().then(->
+      # Look up the user.
+      Promise.resolve().then(->
 
-				# Search for username or encrypted email.
-				if -1 is req.body.usernameOrEmail.indexOf '@'
+        # Search for username or encrypted email.
+        if -1 is req.body.usernameOrEmail.indexOf '@'
 
-					iname: req.body.usernameOrEmail.toLowerCase()
+          iname: req.body.usernameOrEmail.toLowerCase()
 
-				else
+        else
 
-					crypto.encrypt(
-						req.body.usernameOrEmail.toLowerCase()
+          crypto.encrypt(
+            req.body.usernameOrEmail.toLowerCase()
 
-					).then (encryptedEmail) -> email: encryptedEmail
+          ).then (encryptedEmail) -> email: encryptedEmail
 
-			).then((filter) ->
+      ).then((filter) ->
 
-				# Find the user.
-				User.findOne filter
+        # Find the user.
+        User.findOne filter
 
-			).then((@user) ->
-				throw new NoSuchUser unless @user?
+      ).then((@user) ->
+        throw new NoSuchUser unless @user?
 
-				# Generate a one-time login token.
-				crypto.randomBytes 24
+        # Generate a one-time login token.
+        crypto.randomBytes 24
 
-			).then((token) ->
+      ).then((token) ->
 
-				@user.resetPasswordToken = token.toString 'hex'
+        @user.resetPasswordToken = token.toString 'hex'
 
-				# Decrypt the user's email address.
-				crypto.decrypt @user.email
+        # Decrypt the user's email address.
+        crypto.decrypt @user.email
 
-			).then((email) ->
+      ).then((email) ->
 
-				# Send an email to the user's email with a one-time login
-				# link.
-				siteHostname = config.get 'packageSettings:shrub-core:siteHostname'
-				siteUrl = "http://#{siteHostname}"
+        # Send an email to the user's email with a one-time login
+        # link.
+        siteHostname = config.get 'packageSettings:shrub-core:siteHostname'
+        siteUrl = "http://#{siteHostname}"
 
-				scope =
+        scope =
 
-					email: email
+          email: email
 
-					# `TODO`: HTTPS
-					loginUrl: "#{
-						siteUrl
-					}/user/reset/#{
-						user.resetPasswordToken
-					}"
+          # `TODO`: HTTPS
+          loginUrl: "#{
+            siteUrl
+          }/user/reset/#{
+            user.resetPasswordToken
+          }"
 
-					siteUrl: siteUrl
+          siteUrl: siteUrl
 
-					user: @user
+          user: @user
 
-				nodemailer.sendMail(
-					'shrub-user-email-forgot'
-				,
-					to: email
-					subject: 'Password recovery request'
-				,
-					scope
-				)
+        nodemailer.sendMail(
+          'shrub-user-email-forgot'
+        ,
+          to: email
+          subject: 'Password recovery request'
+        ,
+          scope
+        )
 
-				@user.save()
+        @user.save()
 
-			).then(-> fn()).catch(NoSuchUser, -> fn()).catch fn
+      ).then(-> fn()).catch(NoSuchUser, -> fn()).catch fn

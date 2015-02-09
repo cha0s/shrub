@@ -1,163 +1,163 @@
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `gruntConfig`
-	registrar.registerHook 'gruntConfig', (gruntConfig, grunt) ->
+  # ## Implements hook `gruntConfig`
+  registrar.registerHook 'gruntConfig', (gruntConfig, grunt) ->
 
-		child_process = require 'child_process'
+    child_process = require 'child_process'
 
-		tcpPortUsed = require 'tcp-port-used'
+    tcpPortUsed = require 'tcp-port-used'
 
-		e2eServerChild = null
+    e2eServerChild = null
 
-		gruntConfig.configureTask(
-			'karma', 'testsUnit'
+    gruntConfig.configureTask(
+      'karma', 'testsUnit'
 
-			options:
+      options:
 
-				basePath: "#{__dirname}/../../.."
+        basePath: "#{__dirname}/../../.."
 
-				files: [
-					'app/lib/angular/angular.js'
-					'app/lib/angular/angular-*.js'
-					'test/lib/angular/angular-mocks.js'
-					'app/lib/shrub/shrub.js'
-					'test/unit/config.js'
-					'test/unit/tests.js'
-				]
+        files: [
+          'app/lib/angular/angular.js'
+          'app/lib/angular/angular-*.js'
+          'test/lib/angular/angular-mocks.js'
+          'app/lib/shrub/shrub.js'
+          'test/unit/config.js'
+          'test/unit/tests.js'
+        ]
 
-				exclude: [
-					'app/lib/angular/angular-loader.js'
-					'app/lib/angular/*.min.js'
-					'app/lib/angular/angular-scenario.js'
-				]
+        exclude: [
+          'app/lib/angular/angular-loader.js'
+          'app/lib/angular/*.min.js'
+          'app/lib/angular/angular-scenario.js'
+        ]
 
-				frameworks: [
-					'jasmine'
-				]
+        frameworks: [
+          'jasmine'
+        ]
 
-				browsers: [
-					'Chrome'
-				]
+        browsers: [
+          'Chrome'
+        ]
 
-				plugins: [
-					'karma-junit-reporter'
-					'karma-chrome-launcher'
-					'karma-firefox-launcher'
-					'karma-jasmine'
-				]
+        plugins: [
+          'karma-junit-reporter'
+          'karma-chrome-launcher'
+          'karma-firefox-launcher'
+          'karma-jasmine'
+        ]
 
-				singleRun: true
+        singleRun: true
 
-				junitReporter:
+        junitReporter:
 
-					outputFile: 'test_out/unit.xml'
-					suite: 'unit'
+          outputFile: 'test_out/unit.xml'
+          suite: 'unit'
 
-		)
+    )
 
-		gruntConfig.configureTask(
-			'protractor', 'testsE2e'
+    gruntConfig.configureTask(
+      'protractor', 'testsE2e'
 
-			options:
-				configFile: 'config/protractor.conf.js'
-				keepAlive: false
-				noColor: true
+      options:
+        configFile: 'config/protractor.conf.js'
+        keepAlive: false
+        noColor: true
 
-		)
+    )
 
-		gruntConfig.registerTask 'tests:e2eServerUp', ->
+    gruntConfig.registerTask 'tests:e2eServerUp', ->
 
-			done = @async()
+      done = @async()
 
-			bootstrap = require 'bootstrap'
-			bootstrap.openServerPort().then (port) ->
+      bootstrap = require 'bootstrap'
+      bootstrap.openServerPort().then (port) ->
 
-				# Pass arguments to the child process.
-				args = process.argv.slice 2
+        # Pass arguments to the child process.
+        args = process.argv.slice 2
 
-				# Pass the environment to the child process.
-				options = env: process.env
-				options.env['E2E'] = 'true'
-				options.env['packageSettings:shrub-http:port'] = port
+        # Pass the environment to the child process.
+        options = env: process.env
+        options.env['E2E'] = 'true'
+        options.env['packageSettings:shrub-http:port'] = port
 
-				# Fork it
-				e2eServerChild = child_process.fork(
-					"#{__dirname}/../../../node_modules/coffee-script/bin/coffee"
-					["#{__dirname}/../../../server.coffee"]
-					options
-				)
+        # Fork it
+        e2eServerChild = child_process.fork(
+          "#{__dirname}/../../../node_modules/coffee-script/bin/coffee"
+          ["#{__dirname}/../../../server.coffee"]
+          options
+        )
 
-				# Inject the port configuration.
-				protractorConfig = gruntConfig.taskConfiguration(
-					'protractor', 'testsE2e'
-				)
-				baseUrl = "http://localhost:#{port}/"
-				protractorConfig.options.args = baseUrl: baseUrl
+        # Inject the port configuration.
+        protractorConfig = gruntConfig.taskConfiguration(
+          'protractor', 'testsE2e'
+        )
+        baseUrl = "http://localhost:#{port}/"
+        protractorConfig.options.args = baseUrl: baseUrl
 
-				# Wait for the server to come up.
-				grunt.log.write 'Waiting for E2E server to come up...'
-				tcpPortUsed.waitUntilUsed(port, 400, 30000).then(
+        # Wait for the server to come up.
+        grunt.log.write 'Waiting for E2E server to come up...'
+        tcpPortUsed.waitUntilUsed(port, 400, 30000).then(
 
-					->
-						grunt.task.run 'protractor:testsE2e'
-						done()
+          ->
+            grunt.task.run 'protractor:testsE2e'
+            done()
 
-					(error) -> grunt.fail.fatal 'E2E server never came up after 30 seconds!'
-				)
+          (error) -> grunt.fail.fatal 'E2E server never came up after 30 seconds!'
+        )
 
-		gruntConfig.registerTask 'tests:e2eServerDown', ->
-			e2eServerChild.on 'close', @async()
-			e2eServerChild.kill()
+    gruntConfig.registerTask 'tests:e2eServerDown', ->
+      e2eServerChild.on 'close', @async()
+      e2eServerChild.kill()
 
-		gruntConfig.registerTask 'tests:e2e', [
-			'buildOnce'
-			'tests:e2eServerUp'
-			'tests:e2eServerDown'
-		]
+    gruntConfig.registerTask 'tests:e2e', [
+      'buildOnce'
+      'tests:e2eServerUp'
+      'tests:e2eServerDown'
+    ]
 
-		gruntConfig.registerTask 'tests:unitConfig', ->
+    gruntConfig.registerTask 'tests:unitConfig', ->
 
-			done = @async()
+      done = @async()
 
-			req = grunt: true
+      req = grunt: true
 
-			shrubConfig = require 'shrub-config'
-			shrubConfig.renderPackageConfig(req).then (code) ->
+      shrubConfig = require 'shrub-config'
+      shrubConfig.renderPackageConfig(req).then (code) ->
 
-				grunt.file.write 'test/unit/config.js', code
+        grunt.file.write 'test/unit/config.js', code
 
-				done()
+        done()
 
-		gruntConfig.registerTask 'tests:unit', [
-			'buildOnce'
-			'tests:unitConfig'
-			'karma:testsUnit'
-		]
+    gruntConfig.registerTask 'tests:unit', [
+      'buildOnce'
+      'tests:unitConfig'
+      'karma:testsUnit'
+    ]
 
-		gruntConfig.registerTask 'tests:jasmineFunction', ->
+    gruntConfig.registerTask 'tests:jasmineFunction', ->
 
-			done = @async()
+      done = @async()
 
-			# Spawn node Jasmine
-			child_process.spawn(
-				'node'
-				[
-					"#{__dirname}/../../../node_modules/jasmine-node/lib/jasmine-node/cli.js"
-					'--coffee', 'client', 'packages', 'custom'
-				]
-				stdio: 'inherit'
-			).on 'close', (code) ->
-				return done() if code is 0
-				grunt.fail.fatal 'Jasmine tests not passing!'
+      # Spawn node Jasmine
+      child_process.spawn(
+        'node'
+        [
+          "#{__dirname}/../../../node_modules/jasmine-node/lib/jasmine-node/cli.js"
+          '--coffee', 'client', 'packages', 'custom'
+        ]
+        stdio: 'inherit'
+      ).on 'close', (code) ->
+        return done() if code is 0
+        grunt.fail.fatal 'Jasmine tests not passing!'
 
-		gruntConfig.registerTask 'tests:jasmine', [
-			'buildOnce'
-			'tests:jasmineFunction'
-		]
+    gruntConfig.registerTask 'tests:jasmine', [
+      'buildOnce'
+      'tests:jasmineFunction'
+    ]
 
-		gruntConfig.registerTask 'tests', [
-			 'tests:jasmine'
-			 'tests:unit'
-			 'tests:e2e'
-		]
+    gruntConfig.registerTask 'tests', [
+       'tests:jasmine'
+       'tests:unit'
+       'tests:e2e'
+    ]

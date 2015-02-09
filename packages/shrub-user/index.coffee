@@ -12,357 +12,357 @@ clientModule = require './client'
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `preBootstrap`
-	registrar.registerHook 'preBootstrap', ->
+  # ## Implements hook `preBootstrap`
+  registrar.registerHook 'preBootstrap', ->
 
-		passport = require 'passport'
-		Promise = require 'bluebird'
+    passport = require 'passport'
+    Promise = require 'bluebird'
 
-		orm = require 'shrub-orm'
+    orm = require 'shrub-orm'
 
-	# ## Implements hook `config`
-	registrar.registerHook 'config', (req) ->
+  # ## Implements hook `config`
+  registrar.registerHook 'config', (req) ->
 
-		# Send a redacted version of the request user.
-		req.user.redactFor req.user if req.user?
+    # Send a redacted version of the request user.
+    req.user.redactFor req.user if req.user?
 
-	# ## Implements hook `endpointFinished`
-	registrar.registerHook 'endpointFinished', (routeReq, result, req) ->
-		return unless routeReq.user.id?
+  # ## Implements hook `endpointFinished`
+  registrar.registerHook 'endpointFinished', (routeReq, result, req) ->
+    return unless routeReq.user.id?
 
-		# Touch and save the session after every RPC call finishes.
-		routeReq.user.touch().save().then (user) ->
+    # Touch and save the session after every RPC call finishes.
+    routeReq.user.touch().save().then (user) ->
 
-			# Propagate changes back up to the original request.
-			req.user = routeReq.user
+      # Propagate changes back up to the original request.
+      req.user = routeReq.user
 
-	# ## Implements hook `fingerprint`
-	registrar.registerHook 'fingerprint', (req) ->
+  # ## Implements hook `fingerprint`
+  registrar.registerHook 'fingerprint', (req) ->
 
-		# User (ID).
-		user: if req?.user?.id? then req.user.id
+    # User (ID).
+    user: if req?.user?.id? then req.user.id
 
-	instantiateAnonymous = ->
+  instantiateAnonymous = ->
 
-		@user = orm.collection('shrub-user').instantiate()
+    @user = orm.collection('shrub-user').instantiate()
 
-		# Add to anonymous group.
-		@user.groups = [
-			orm.collection('shrub-user-group').instantiate group: 2
-		]
+    # Add to anonymous group.
+    @user.groups = [
+      orm.collection('shrub-user-group').instantiate group: 2
+    ]
 
-		@user.populateAll()
+    @user.populateAll()
 
-	# ## Implements hook `httpMiddleware`
-	registrar.registerHook 'httpMiddleware', ->
+  # ## Implements hook `httpMiddleware`
+  registrar.registerHook 'httpMiddleware', ->
 
-		label: 'Load user using passport'
-		middleware: [
+    label: 'Load user using passport'
+    middleware: [
 
-			(req, res, next) ->
+      (req, res, next) ->
 
-				req.instantiateAnonymous = instantiateAnonymous
-				next()
+        req.instantiateAnonymous = instantiateAnonymous
+        next()
 
-			# Passport middleware.
-			passport.initialize()
-			passport.session()
+      # Passport middleware.
+      passport.initialize()
+      passport.session()
 
-			# Set the user into the request.
-			(req, res, next) ->
-				promise = if req.user?
-					Promise.resolve()
-				else
-					req.instantiateAnonymous()
+      # Set the user into the request.
+      (req, res, next) ->
+        promise = if req.user?
+          Promise.resolve()
+        else
+          req.instantiateAnonymous()
 
-				promise.then(-> next()).catch next
+        promise.then(-> next()).catch next
 
-		]
+    ]
 
-	# ## Implements hook `collections`
-	registrar.registerHook 'collections', ->
+  # ## Implements hook `collections`
+  registrar.registerHook 'collections', ->
 
-		crypto = require 'server/crypto'
+    crypto = require 'server/crypto'
 
-		autoIname = (values, cb) ->
-			values.iname = values.name.toLowerCase()
-			cb()
+    autoIname = (values, cb) ->
+      values.iname = values.name.toLowerCase()
+      cb()
 
-		# Invoke the client hook implementation.
-		collections = clientModule.collections()
+    # Invoke the client hook implementation.
+    collections = clientModule.collections()
 
-		{
-			'shrub-group': Group
-			'shrub-group-permission': GroupPermission
-			'shrub-user': User
-			'shrub-user-group': UserGroup
-			'shrub-user-permission': UserPermission
-		} = collections
+    {
+      'shrub-group': Group
+      'shrub-group-permission': GroupPermission
+      'shrub-user': User
+      'shrub-user-group': UserGroup
+      'shrub-user-permission': UserPermission
+    } = collections
 
-		# Case-insensitivized name.
-		Group.attributes.iname =
-			type: 'string'
-			size: 24
-			index: true
+    # Case-insensitivized name.
+    Group.attributes.iname =
+      type: 'string'
+      size: 24
+      index: true
 
-		Group.autoCreatedAt = false
-		Group.autoUpdatedAt = false
+    Group.autoCreatedAt = false
+    Group.autoUpdatedAt = false
 
-		Group.beforeCreate = autoIname
-		Group.beforeUpdate = autoIname
+    Group.beforeCreate = autoIname
+    Group.beforeUpdate = autoIname
 
-		GroupPermission.autoCreatedAt = false
-		GroupPermission.autoUpdatedAt = false
+    GroupPermission.autoCreatedAt = false
+    GroupPermission.autoUpdatedAt = false
 
-		User.beforeCreate = autoIname
-		User.beforeUpdate = autoIname
+    User.beforeCreate = autoIname
+    User.beforeUpdate = autoIname
 
-		# Case-insensitivized name.
-		User.attributes.iname =
-			type: 'string'
-			size: 24
-			index: true
+    # Case-insensitivized name.
+    User.attributes.iname =
+      type: 'string'
+      size: 24
+      index: true
 
-		# Hash of the plaintext password.
-		User.attributes.passwordHash =
-			type: 'string'
+    # Hash of the plaintext password.
+    User.attributes.passwordHash =
+      type: 'string'
 
-		# A token which can be used to reset the user's password (once).
-		User.attributes.resetPasswordToken =
-			type: 'string'
-			size: 48
-			index: true
+    # A token which can be used to reset the user's password (once).
+    User.attributes.resetPasswordToken =
+      type: 'string'
+      size: 48
+      index: true
 
-		# A 512-bit salt used to cryptographically hash the user's password.
-		User.attributes.salt =
-			type: 'string'
-			size: 128
+    # A 512-bit salt used to cryptographically hash the user's password.
+    User.attributes.salt =
+      type: 'string'
+      size: 128
 
-		# Update a user's last accessed time. Return the user for chaining.
-		User.attributes.touch = ->
-			@lastAccessed = (new Date()).toISOString()
-			this
+    # Update a user's last accessed time. Return the user for chaining.
+    User.attributes.touch = ->
+      @lastAccessed = (new Date()).toISOString()
+      this
 
-		User.attributes.populateAll = ->
-			self = this
+    User.attributes.populateAll = ->
+      self = this
 
-			Group_ = orm.collection 'shrub-group'
+      Group_ = orm.collection 'shrub-group'
 
-			@permissions = @permissions.map ({permission}) -> permission
+      @permissions = @permissions.map ({permission}) -> permission
 
-			promises = for {group}, index in @groups
-				do (group, index) ->
-					Group_.findOne(id: group).populateAll().then (group_) ->
-						self.groups[index] = group_
+      promises = for {group}, index in @groups
+        do (group, index) ->
+          Group_.findOne(id: group).populateAll().then (group_) ->
+            self.groups[index] = group_
 
-			Promise.all(promises).then -> self
+      Promise.all(promises).then -> self
 
-		User.attributes.toJSON = ->
-			O = @toObject()
-			O.groups = @groups
-			O.permissions = @permission
-			O
+    User.attributes.toJSON = ->
+      O = @toObject()
+      O.groups = @groups
+      O.permissions = @permission
+      O
 
-		# ## register
-		#
-		# *Register a user in the system.*
-		#
-		# * (string) `name` - Name of the new user.
-		#
-		# * (string) `email` - Email address of the new user.
-		#
-		# * (string) `password` - The new user's password.
-		User.register = (name, email, password) ->
+    # ## register
+    #
+    # *Register a user in the system.*
+    #
+    # * (string) `name` - Name of the new user.
+    #
+    # * (string) `email` - Email address of the new user.
+    #
+    # * (string) `password` - The new user's password.
+    User.register = (name, email, password) ->
 
-			@create(name: name).then((user) ->
+      @create(name: name).then((user) ->
 
-				# Encrypt the email.
-				crypto.encrypt(email.toLowerCase()).then((encryptedEmail) ->
+        # Encrypt the email.
+        crypto.encrypt(email.toLowerCase()).then((encryptedEmail) ->
 
-					user.email = encryptedEmail
+          user.email = encryptedEmail
 
-					# Set the password encryption details.
-					crypto.hasher plaintext: password
+          # Set the password encryption details.
+          crypto.hasher plaintext: password
 
-				).then((hashed) ->
+        ).then((hashed) ->
 
-					user.plaintext = hashed.plaintext
-					user.salt = hashed.salt.toString 'hex'
-					user.passwordHash = hashed.key.toString 'hex'
+          user.plaintext = hashed.plaintext
+          user.salt = hashed.salt.toString 'hex'
+          user.passwordHash = hashed.key.toString 'hex'
 
-					# Generate a one-time login token.
-					crypto.randomBytes 24
+          # Generate a one-time login token.
+          crypto.randomBytes 24
 
-				).then (token) ->
+        ).then (token) ->
 
-					user.resetPasswordToken = token.toString 'hex'
+          user.resetPasswordToken = token.toString 'hex'
 
-					user.save()
-			)
+          user.save()
+      )
 
-		User.redactors = [(redactFor) ->
-			self = this
+    User.redactors = [(redactFor) ->
+      self = this
 
-			delete self.iname
-			delete self.plaintext if self.plaintext?
-			delete self.salt
-			delete self.passwordHash
-			delete self.resetPasswordToken
+      delete self.iname
+      delete self.plaintext if self.plaintext?
+      delete self.salt
+      delete self.passwordHash
+      delete self.resetPasswordToken
 
-			for group in self.groups
+      for group in self.groups
 
-				for permission in group.permissions ? []
+        for permission in group.permissions ? []
 
-					delete permission.group
-					delete permission.id
+          delete permission.group
+          delete permission.id
 
-				delete group.iname
-				delete group.id
+        delete group.iname
+        delete group.id
 
-			Promise.resolve().then ->
-				return unless self.email?
+      Promise.resolve().then ->
+        return unless self.email?
 
-				# Different redacted means full email redaction.
-				if redactFor.id isnt self.id
-					delete self.email
-					return
+        # Different redacted means full email redaction.
+        if redactFor.id isnt self.id
+          delete self.email
+          return
 
-				# Decrypt the e-mail if redacting for the same user.
-				crypto.decrypt(self.email).then (email) ->
-					self.email = email
+        # Decrypt the e-mail if redacting for the same user.
+        crypto.decrypt(self.email).then (email) ->
+          self.email = email
 
-		]
+    ]
 
-		UserGroup.autoCreatedAt = false
-		UserGroup.autoUpdatedAt = false
+    UserGroup.autoCreatedAt = false
+    UserGroup.autoUpdatedAt = false
 
-		UserGroup.attributes.populateAll = ->
-			self = this
+    UserGroup.attributes.populateAll = ->
+      self = this
 
-			Group_ = orm.collection 'shrub-group'
-			Group_.findOne(id: self.group).populateAll().then (group_) ->
-				self.group = group_
+      Group_ = orm.collection 'shrub-group'
+      Group_.findOne(id: self.group).populateAll().then (group_) ->
+        self.group = group_
 
-				return self
+        return self
 
-		UserGroup.attributes.depopulateAll = ->
-			@group = @group.id
+    UserGroup.attributes.depopulateAll = ->
+      @group = @group.id
 
-			return this
+      return this
 
-		UserPermission.autoCreatedAt = false
-		UserPermission.autoUpdatedAt = false
+    UserPermission.autoCreatedAt = false
+    UserPermission.autoUpdatedAt = false
 
-		collections
+    collections
 
-	# ## Implements hook `collectionsAlter`
-	registrar.registerHook 'collectionsAlter', (collections) ->
-		clientModule.collectionsAlter collections
+  # ## Implements hook `collectionsAlter`
+  registrar.registerHook 'collectionsAlter', (collections) ->
+    clientModule.collectionsAlter collections
 
-		for identity, collection of collections
-			do (identity, collection) ->
+    for identity, collection of collections
+      do (identity, collection) ->
 
-				collection.redactors ?= []
-				collection.attributes.redactFor = (user) ->
-					redacted = @toJSON()
-					redacted.toJSON = undefined
+        collection.redactors ?= []
+        collection.attributes.redactFor = (user) ->
+          redacted = @toJSON()
+          redacted.toJSON = undefined
 
-					Promise.all(
-						for redactor in collection.redactors
-							redactor.call redacted, user
-					).then -> redacted
+          Promise.all(
+            for redactor in collection.redactors
+              redactor.call redacted, user
+          ).then -> redacted
 
-	# ## Implements hook `packageSettings`
-	registrar.registerHook 'packageSettings', ->
+  # ## Implements hook `packageSettings`
+  registrar.registerHook 'packageSettings', ->
 
-		beforeLoginMiddleware: []
+    beforeLoginMiddleware: []
 
-		afterLoginMiddleware: []
+    afterLoginMiddleware: []
 
-		beforeLogoutMiddleware: [
-			'shrub-user'
-		]
+    beforeLogoutMiddleware: [
+      'shrub-user'
+    ]
 
-		afterLogoutMiddleware: [
-			'shrub-user'
-		]
+    afterLogoutMiddleware: [
+      'shrub-user'
+    ]
 
-	# ## Implements hook `socketAuthorizationMiddleware`
-	registrar.registerHook 'socketAuthorizationMiddleware', ->
+  # ## Implements hook `socketAuthorizationMiddleware`
+  registrar.registerHook 'socketAuthorizationMiddleware', ->
 
-		label: 'Load user using passport'
-		middleware: [
+    label: 'Load user using passport'
+    middleware: [
 
-			(req, res, next) ->
+      (req, res, next) ->
 
-				req.instantiateAnonymous = instantiateAnonymous
-				next()
+        req.instantiateAnonymous = instantiateAnonymous
+        next()
 
-			# Passport middleware.
-			passport.initialize()
-			passport.session()
+      # Passport middleware.
+      passport.initialize()
+      passport.session()
 
-			# Set the user into the request.
-			(req, res, next) ->
-				promise = if req.user?
-					Promise.resolve()
-				else
-					req.instantiateAnonymous()
+      # Set the user into the request.
+      (req, res, next) ->
+        promise = if req.user?
+          Promise.resolve()
+        else
+          req.instantiateAnonymous()
 
-				promise.then(-> next()).catch next
+        promise.then(-> next()).catch next
 
-		]
+    ]
 
-	# ## Implements hook `socketConnectionMiddleware`
-	registrar.registerHook 'socketConnectionMiddleware', ->
+  # ## Implements hook `socketConnectionMiddleware`
+  registrar.registerHook 'socketConnectionMiddleware', ->
 
-		label: 'Join channel for user'
-		middleware: [
+    label: 'Join channel for user'
+    middleware: [
 
-			(req, res, next) ->
+      (req, res, next) ->
 
-				# Join a channel for the username.
-				return req.socket.join req.user.name, next if req.user.id?
+        # Join a channel for the username.
+        return req.socket.join req.user.name, next if req.user.id?
 
-				next()
+        next()
 
-		]
+    ]
 
-	# ## Implements hook `userBeforeLogoutMiddleware`
-	registrar.registerHook 'userBeforeLogoutMiddleware', ->
+  # ## Implements hook `userBeforeLogoutMiddleware`
+  registrar.registerHook 'userBeforeLogoutMiddleware', ->
 
-		label: 'Tell client to log out, and leave the user channel'
-		middleware: [
+    label: 'Tell client to log out, and leave the user channel'
+    middleware: [
 
-			(req, next) ->
+      (req, next) ->
 
-				return next() unless req.socket?
+        return next() unless req.socket?
 
-				# Tell client to log out.
-				req.socket.emit 'shrub.user.logout'
+        # Tell client to log out.
+        req.socket.emit 'shrub.user.logout'
 
-				# Leave the user channel.
-				if req.user.id?
-					req.socket.leave req.user.name, next
-				else
-					next()
+        # Leave the user channel.
+        if req.user.id?
+          req.socket.leave req.user.name, next
+        else
+          next()
 
-		]
+    ]
 
-	# ## Implements hook `userAfterLogoutMiddleware`
-	registrar.registerHook 'userAfterLogoutMiddleware', ->
+  # ## Implements hook `userAfterLogoutMiddleware`
+  registrar.registerHook 'userAfterLogoutMiddleware', ->
 
-		label: 'Instantiate anonymous user'
-		middleware: [
+    label: 'Instantiate anonymous user'
+    middleware: [
 
-			(req, next) ->
-				req.instantiateAnonymous().then(-> next()).catch next
+      (req, next) ->
+        req.instantiateAnonymous().then(-> next()).catch next
 
-		]
+    ]
 
-	registrar.recur [
-		'forgot', 'login', 'logout', 'register', 'reset'
-	]
+  registrar.recur [
+    'forgot', 'login', 'logout', 'register', 'reset'
+  ]
 
 # ## loadByName
 #
@@ -371,5 +371,5 @@ exports.pkgmanRegister = (registrar) ->
 # (string) `name` - The name of the user to load.
 exports.loadByName = (name) ->
 
-	User = orm.collection 'shrub-user'
-	User.findOne(iname: name.toLowerCase()).populateAll()
+  User = orm.collection 'shrub-user'
+  User.findOne(iname: name.toLowerCase()).populateAll()

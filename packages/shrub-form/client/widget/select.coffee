@@ -3,48 +3,48 @@ _ = require 'lodash'
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `directive`
-	registrar.registerHook 'directive', -> [
-		->
+  # ## Implements hook `directive`
+  registrar.registerHook 'directive', -> [
+    ->
 
-			scope: field: '=?'
+      scope: field: '=?'
 
-			template: '''
+      template: '''
 
 <div class="form-group">
 
-	<label
-		data-ng-bind="field.label"
-	></label>
+  <label
+    data-ng-bind="field.label"
+  ></label>
 
-	<select
-		class="form-control"
-		name="{{field.name}}"
+  <select
+    class="form-control"
+    name="{{field.name}}"
 
-		data-ng-model="field.value"
-		data-ng-required="field.required"
-		data-ng-options="{{field.options}}"
-	></select>
+    data-ng-model="field.value"
+    data-ng-required="field.required"
+    data-ng-options="{{field.options}}"
+  ></select>
 
 </div>
 
 '''
 
-	]
+  ]
 
-	assignToElement = (element, value) ->
+  assignToElement = (element, value) ->
 
-		element.find("option[value=\"#{value}\"]").prop 'selected', true
+    element.find("option[value=\"#{value}\"]").prop 'selected', true
 
-	# ## Implements hook `formWidgets`
-	registrar.registerHook 'formWidgets', ->
+  # ## Implements hook `formWidgets`
+  registrar.registerHook 'formWidgets', ->
 
-		widgets = []
+    widgets = []
 
-		widgets.push
+    widgets.push
 
-			type: 'select'
-			assignToElement: assignToElement
-			directive: 'shrub-form-widget-select'
+      type: 'select'
+      assignToElement: assignToElement
+      directive: 'shrub-form-widget-select'
 
-		widgets
+    widgets

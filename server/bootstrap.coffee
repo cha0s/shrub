@@ -8,47 +8,47 @@ Promise = require 'bluebird'
 # Fork the process in order to inject require paths in if necessary.
 exports.fork = ->
 
-	# First make sure we have default require paths.
-	if process.env.SHRUB_REQUIRE_PATH?
+  # First make sure we have default require paths.
+  if process.env.SHRUB_REQUIRE_PATH?
 
-		SHRUB_REQUIRE_PATH = process.env.SHRUB_REQUIRE_PATH
+    SHRUB_REQUIRE_PATH = process.env.SHRUB_REQUIRE_PATH
 
-	else
+  else
 
-		SHRUB_REQUIRE_PATH = 'custom:.:packages:server:client/modules'
+    SHRUB_REQUIRE_PATH = 'custom:.:packages:server:client/modules'
 
-	# Fork the process to inject require paths into it.
-	if process.env.SHRUB_FORKED?
+  # Fork the process to inject require paths into it.
+  if process.env.SHRUB_FORKED?
 
-		return null
+    return null
 
-	else
+  else
 
-		# Pass arguments to the child process.
-		args = process.argv.slice 2
+    # Pass arguments to the child process.
+    args = process.argv.slice 2
 
-		# Pass the environment to the child process.
-		options = env: process.env
+    # Pass the environment to the child process.
+    options = env: process.env
 
-		# Integrate any NODE_PATH after the shrub require paths.
-		if process.env.NODE_PATH?
-			SHRUB_REQUIRE_PATH += ":#{process.env.NODE_PATH}"
+    # Integrate any NODE_PATH after the shrub require paths.
+    if process.env.NODE_PATH?
+      SHRUB_REQUIRE_PATH += ":#{process.env.NODE_PATH}"
 
-		# Inject shrub require paths as the new NODE_PATH
-		options.env.NODE_PATH = SHRUB_REQUIRE_PATH
-		options.env.SHRUB_FORKED = true
+    # Inject shrub require paths as the new NODE_PATH
+    options.env.NODE_PATH = SHRUB_REQUIRE_PATH
+    options.env.SHRUB_FORKED = true
 
-		# Fork it
-		fork process.argv[1], args, options
+    # Fork it
+    fork process.argv[1], args, options
 
 exports.openServerPort = ->
 
-	new Promise (resolve, reject) ->
+  new Promise (resolve, reject) ->
 
-		server = net.createServer()
+    server = net.createServer()
 
-		server.listen 0, ->
-			{port} = server.address()
-			server.close -> resolve port
+    server.listen 0, ->
+      {port} = server.address()
+      server.close -> resolve port
 
-		server.on 'error', reject
+    server.on 'error', reject

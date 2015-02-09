@@ -3,61 +3,61 @@
 
 exports.pkgmanRegister = (registrar) ->
 
-	registrar.registerHook 'skinLink--shrubUiNotifications', -> [
-		'$compile', '$scope', '$element', '$attr'
-		($compile, scope, element, attr) ->
+  registrar.registerHook 'skinLink--shrubUiNotifications', -> [
+    '$compile', '$scope', '$element', '$attr'
+    ($compile, scope, element, attr) ->
 
-			# Initialize the popover.
-			($button = element.find 'button').popover
+      # Initialize the popover.
+      ($button = element.find 'button').popover
 
-				container: 'body'
-				content: -> element.find '.notifications'
-				html: true
-				placement: 'bottom'
-				template: """
+        container: 'body'
+        content: -> element.find '.notifications'
+        html: true
+        placement: 'bottom'
+        template: """
 
 <div class="popover popover-notifications popover-#{attr.queueName}" role="tooltip">
-	<div class="arrow"></div>
-	<div class="popover-title"></div>
-	<div class="popover-content"></div>
+  <div class="arrow"></div>
+  <div class="popover-title"></div>
+  <div class="popover-content"></div>
 </div>
 
 """
-				title: ->
+        title: ->
 
-					tpl = '''
+          tpl = '''
 
 <div
-	class="title"
-	data-shrub-ui-notifications-title
+  class="title"
+  data-shrub-ui-notifications-title
 ></div>
 
 '''
 
-					$compile(tpl)(scope)
+          $compile(tpl)(scope)
 
 
-			# When the notifications are opened, acknowledge them.
-			$button.on 'show.bs.popover', -> scope.$emit 'shrub.ui.notifications.acknowledged'
+      # When the notifications are opened, acknowledge them.
+      $button.on 'show.bs.popover', -> scope.$emit 'shrub.ui.notifications.acknowledged'
 
-			# Wait for the new queue to be compiled into the DOM, and then
-			# reposition the popover, since the new content may shift it.
-			scope.$watch(
-				'queue.notifications()', -> scope.$$postDigest ->
-					return unless (pop = $button.data 'bs.popover').$tip?
-					return unless pop.$tip.hasClass 'in'
-					pop.applyPlacement(
-						pop.getCalculatedOffset(
-							'bottom', pop.getPosition()
-							pop.$tip[0].offsetWidth
-							pop.$tip[0].offsetHeight
-						)
-						'bottom'
-					)
-				true
-			)
+      # Wait for the new queue to be compiled into the DOM, and then
+      # reposition the popover, since the new content may shift it.
+      scope.$watch(
+        'queue.notifications()', -> scope.$$postDigest ->
+          return unless (pop = $button.data 'bs.popover').$tip?
+          return unless pop.$tip.hasClass 'in'
+          pop.applyPlacement(
+            pop.getCalculatedOffset(
+              'bottom', pop.getPosition()
+              pop.$tip[0].offsetWidth
+              pop.$tip[0].offsetHeight
+            )
+            'bottom'
+          )
+        true
+      )
 
-			scope.$on 'shrub.ui.notification.clicked', -> $button.popover 'hide'
+      scope.$on 'shrub.ui.notification.clicked', -> $button.popover 'hide'
 
-	]
+  ]
 

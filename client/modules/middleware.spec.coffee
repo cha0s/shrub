@@ -3,84 +3,84 @@ middleware = require 'middleware'
 
 describe 'middleware', ->
 
-	it 'can use and dispatch', ->
+  it 'can use and dispatch', ->
 
-		middleware_ = new middleware.Middleware()
+    middleware_ = new middleware.Middleware()
 
-		first = false
-		second = false
-		third = false
+    first = false
+    second = false
+    third = false
 
-		middleware_.use (req, res, next) ->
+    middleware_.use (req, res, next) ->
 
-			first = req.foo is 69 and res.foo is 420
+      first = req.foo is 69 and res.foo is 420
 
-			next()
+      next()
 
-		middleware_.use (req, res, next) ->
+    middleware_.use (req, res, next) ->
 
-			second = req.foo is 69 and res.foo is 420
+      second = req.foo is 69 and res.foo is 420
 
-			next()
+      next()
 
-		req = foo: 69
-		res = foo: 420
+    req = foo: 69
+    res = foo: 420
 
-		middleware_.dispatch req, res, (error) ->
+    middleware_.dispatch req, res, (error) ->
 
-			third = not error?
+      third = not error?
 
-		expect(first).toBe true
-		expect(second).toBe true
-		expect(third).toBe true
+    expect(first).toBe true
+    expect(second).toBe true
+    expect(third).toBe true
 
-	it 'can properly handle errors', ->
+  it 'can properly handle errors', ->
 
-		middleware_ = new middleware.Middleware()
+    middleware_ = new middleware.Middleware()
 
-		first = true
-		second = false
-		third = true
-		fourth = false
-		fifth = false
+    first = true
+    second = false
+    third = true
+    fourth = false
+    fifth = false
 
-		middleware_.use (req, res, next) ->
+    middleware_.use (req, res, next) ->
 
-			next new Error()
+      next new Error()
 
-		middleware_.use (req, res, next) ->
+    middleware_.use (req, res, next) ->
 
-			first = false
+      first = false
 
-			next()
+      next()
 
-		middleware_.use (error, req, res, next) ->
+    middleware_.use (error, req, res, next) ->
 
-			second = true
+      second = true
 
-			throw new Error()
+      throw new Error()
 
-		middleware_.use (req, res, next) ->
+    middleware_.use (req, res, next) ->
 
-			third = false
+      third = false
 
-			next()
+      next()
 
-		middleware_.use (error, req, res, next) ->
+    middleware_.use (error, req, res, next) ->
 
-			fourth = true
+      fourth = true
 
-			next error
+      next error
 
-		req = null
-		res = null
+    req = null
+    res = null
 
-		middleware_.dispatch req, res, (error) ->
+    middleware_.dispatch req, res, (error) ->
 
-			fifth = error?
+      fifth = error?
 
-		expect(first).toBe true
-		expect(second).toBe true
-		expect(third).toBe true
-		expect(fourth).toBe true
-		expect(fifth).toBe true
+    expect(first).toBe true
+    expect(second).toBe true
+    expect(third).toBe true
+    expect(fourth).toBe true
+    expect(fifth).toBe true

@@ -1,32 +1,32 @@
 
 exports.pkgmanRegister = (registrar) ->
 
-	# ## Implements hook `httpMiddleware`
-	registrar.registerHook 'httpMiddleware', (http) ->
+  # ## Implements hook `httpMiddleware`
+  registrar.registerHook 'httpMiddleware', (http) ->
 
-		label: 'Store fingerprint'
-		middleware: [
+    label: 'Store fingerprint'
+    middleware: [
 
-			(req, res, next) ->
+      (req, res, next) ->
 
-				req.fingerprint = new exports.Fingerprint req
+        req.fingerprint = new exports.Fingerprint req
 
-				next()
+        next()
 
-		]
+    ]
 
-	# ## Implements hook `socketAuthorizationMiddleware`
-	registrar.registerHook 'socketAuthorizationMiddleware', (http) ->
+  # ## Implements hook `socketAuthorizationMiddleware`
+  registrar.registerHook 'socketAuthorizationMiddleware', (http) ->
 
-		label: 'Store fingerprint'
-		middleware: [
+    label: 'Store fingerprint'
+    middleware: [
 
-			(req, res, next) ->
+      (req, res, next) ->
 
-				req.fingerprint = new exports.Fingerprint req
+        req.fingerprint = new exports.Fingerprint req
 
-				next()
+        next()
 
-		]
+    ]
 
 exports.Fingerprint = require './fingerprint'
