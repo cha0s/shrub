@@ -41,7 +41,7 @@ exports.pkgmanRegister = (registrar) ->
 
       # Fork it
       {fork} = require 'child_process'
-      child = fork "#{__dirname}/../../server.coffee", args, options
+      child = fork "#{__dirname}/../../server.litcoffee", args, options
 
       child.on 'close', (code) ->
 
