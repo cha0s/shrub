@@ -27,7 +27,8 @@ Set an injector so that Angular injection can occur out of band.
           angular_ = require 'angular'
           angular_.setInjector $injector
 
-Invoke hook `controller`.
+## Invoke hook `controller`.
+
 Allows packages to define Angular controllers. Implementations should return an
 [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
 
@@ -89,7 +90,8 @@ Handle a bunch of internal Angular normalization.
             if angular.isObject directive.scope
               directive.$$isolateBindings = isolateBindingsFor directive
 
-Invoke hook `augmentDirective`.
+## Invoke hook `augmentDirective`.
+
 Allows packages to augment the directives defined by packages. One example is
 the automatic relinking functionality implemented by
 [shrub-skin](../packages/shrub-skin/client/index.coffee#L12).
@@ -133,7 +135,8 @@ Internal Angular state that we have to reset.
 
             return bindings
 
-Invoke hook `directive`.
+## Invoke hook `directive`.
+
 Allows packages to define Angular directives. Implementations should return an
 [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
 
@@ -158,7 +161,8 @@ It will run over the previous definition, ensuring everything works nicely.
 
           debug 'Registering filters...'
 
-Invoke hook `filter`.
+## Invoke hook `filter`.
+
 Allows packages to define Angular filters. Implementations should return a
 function.
 
@@ -169,7 +173,8 @@ function.
 
           debug 'Filters registered.'
 
-Invoke hook `provider`.
+## Invoke hook `provider`.
+
 Allows packages to define Angular providers. Implementations should return an
 [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
 
@@ -181,7 +186,8 @@ Allows packages to define Angular providers. Implementations should return an
 
           debug 'Providers registered.'
 
-Invoke hook `service`.
+## Invoke hook `service`.
+
 Allows packages to define Angular services. Implementations should return an
 [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
 

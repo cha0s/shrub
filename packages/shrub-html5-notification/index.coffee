@@ -45,7 +45,7 @@ exports.pkgmanRegister = (registrar) ->
 
     ]
 
-  # ## Implements hook `angularCoreDependencies`
-  registrar.registerHook 'angularCoreDependencies', -> [
+  # ## Implements hook `angularPackageDependencies`
+  registrar.registerHook 'angularPackageDependencies', -> [
     'notification'
   ]

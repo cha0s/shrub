@@ -9,7 +9,7 @@ exports.pkgmanRegister = (registrar) ->
 
       files: [
         src: [
-          'client/app.coffee'
+          'client/app.litcoffee'
         ]
         dest: 'build/js/app/app.js'
       ]
@@ -37,8 +37,7 @@ exports.pkgmanRegister = (registrar) ->
       'watch', 'angular'
 
       files: [
-        'client/app.coffee'
-        'client/app-dependencies.coffee'
+        'client/app.litcoffee'
       ]
       tasks: [
         'build:angular', 'build:shrub'
@@ -46,26 +45,26 @@ exports.pkgmanRegister = (registrar) ->
       options: livereload: true
     )
 
-    gruntConfig.registerTask 'angularCoreDependencies:angular', ->
+    gruntConfig.registerTask 'angularPackageDependencies:angular', ->
 
       pkgman = require 'pkgman'
 
       dependencies = []
 
-      # Invoke hook `angularCoreDependencies`.
-      for dependenciesList in pkgman.invokeFlat 'angularCoreDependencies'
+      # Invoke hook `angularPackageDependencies`.
+      for dependenciesList in pkgman.invokeFlat 'angularPackageDependencies'
         dependencies.push.apply dependencies, dependenciesList
 
-      js = '\nvar dependencies = [];\n\n\n'
-      js += "dependencies.push('#{
-        dependencies.join "');\ndependencies.push('"
+      js = '\nvar packageDependencies = [];\n\n\n'
+      js += "packageDependencies.push('#{
+        dependencies.join "');\npackageDependencies.push('"
       }');\n" if dependencies.length > 0
 
       grunt.file.write 'build/js/app/app-dependencies.js', js
 
     gruntConfig.registerTask 'build:angular', [
       'newer:coffee:angular'
-      'angularCoreDependencies:angular'
+      'angularPackageDependencies:angular'
       'concat:angular'
     ]
 
