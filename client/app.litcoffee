@@ -36,6 +36,8 @@ Define the core Shrub module.
 #### Invoke hook `appConfig`.
 
 Invoked when the Angular application is in the configuration phase.
+Implementations should return an
+[annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
 
           invoke injectable for injectable in invokeFlat 'appConfig'
 
@@ -48,8 +50,9 @@ Invoked when the Angular application is in the configuration phase.
 
 #### Invoke hook `appRun`.
 
-Invoked when the Angular application is the run phase. This is where things
-begin to get interesting. :)
+Invoked when the Angular application is the run phase. Implementations should
+return an
+[annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
 
           invoke injectable for injectable in invokeFlat 'appRun'
 
