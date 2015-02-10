@@ -1,8 +1,4 @@
 
-net = require 'net'
-
-Promise = require 'bluebird'
-
 {fork} = require 'child_process'
 
 # Fork the process in order to inject require paths in if necessary.
@@ -40,15 +36,3 @@ exports.fork = ->
 
     # Fork it
     fork process.argv[1], args, options
-
-exports.openServerPort = ->
-
-  new Promise (resolve, reject) ->
-
-    server = net.createServer()
-
-    server.listen 0, ->
-      {port} = server.address()
-      server.close -> resolve port
-
-    server.on 'error', reject

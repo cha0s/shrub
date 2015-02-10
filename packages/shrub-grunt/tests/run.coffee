@@ -70,8 +70,7 @@ exports.pkgmanRegister = (registrar) ->
 
       done = @async()
 
-      bootstrap = require 'bootstrap'
-      bootstrap.openServerPort().then (port) ->
+      openServerPort().then (port) ->
 
         # Pass arguments to the child process.
         args = process.argv.slice 2
@@ -84,7 +83,7 @@ exports.pkgmanRegister = (registrar) ->
         # Fork it
         e2eServerChild = child_process.fork(
           "#{__dirname}/../../../node_modules/coffee-script/bin/coffee"
-          ["#{__dirname}/../../../server.coffee"]
+          ["#{__dirname}/../../../server.litcoffee"]
           options
         )
 
@@ -105,6 +104,22 @@ exports.pkgmanRegister = (registrar) ->
 
           (error) -> grunt.fail.fatal 'E2E server never came up after 30 seconds!'
         )
+
+    openServerPort = ->
+
+      net = require 'net'
+
+      Promise = require 'bluebird'
+
+      new Promise (resolve, reject) ->
+
+        server = net.createServer()
+
+        server.listen 0, ->
+          {port} = server.address()
+          server.close -> resolve port
+
+        server.on 'error', reject
 
     gruntConfig.registerTask 'tests:e2eServerDown', ->
       e2eServerChild.on 'close', @async()

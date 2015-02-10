@@ -32,44 +32,11 @@ Load the configuration.
 
 #### Invoke hook `preBootstrap`.
 
-Invoked before the application bootstrap phase. This allows applications to
-reference modules or other pakcages which greatly speeds up the `require`
-process for those packages. This is important to keep the build process as fast
-as possible.
+Invoked before the application bootstrap phase.
 
-If your package `require`s heavy modules, you should require them in an
-implementation of hook `preBootstrap`. For instance, say you have a package
-like:
+[See the `preBootstrap` hook documentation](documentation/hooks/preBootstrap.md)
 
-```coffeescript
-someHeavyModule = require 'some-heavy-module'
-
-exports.pkgmanRegister = (registrar) ->
-
-  registrar.registerHook 'someHook', ->
-
-    someHeavyModule.doSomething()
-```
-
-This will slow the build process down, since `some-heavy-module` must be
-loaded when loading your package. Use this pattern instead:
-
-```coffeescript
-someHeavyModule = null
-
-exports.pkgmanRegister = (registrar) ->
-
-  registrar.registerHook 'preBootstrap', ->
-
-    someHeavyModule = require 'some-heavy-module'
-
-  registrar.registerHook 'someHook', ->
-
-    someHeavyModule.doSomething()
-```
-
-So that the heavy module will not be `require`d until hook `preBootstrap` is
-invoked.
+###### TODO Link to an example in docs, we can't do inline code.
 
 ###### TODO: Link to an instance of this in shrub core.
 
