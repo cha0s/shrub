@@ -36,8 +36,6 @@ Invoked before the application bootstrap phase.
 
 [See the `preBootstrap` hook documentation](documentation/hooks/preBootstrap.md)
 
-###### TODO Link to an example in docs, we can't do inline code.
-
 ###### TODO: Link to an instance of this in shrub core.
 
       debugSilly 'Pre bootstrap phase...'
