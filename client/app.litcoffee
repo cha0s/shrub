@@ -1,6 +1,9 @@
 
 # Application entry point.
 
+*Definition of the main top-level Angular module, with dependency gathering
+and config/run hook invocation.*
+
 Top-level module.
 
     angular.module 'shrub', ['shrub.core']
