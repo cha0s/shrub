@@ -106,10 +106,6 @@
         parts.pop() if parts[parts.length - 1] is 'index'
         return parts.join '/'
 
-    fs.createReadStream('docs/index.md').pipe(
-      fs.createWriteStream 'docs/index.md'
-    )
-
     fileStatsListPromise = _getFilesByType().then (allFiles) ->
 
       allFilesPromises = for type, files of allFiles
