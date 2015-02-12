@@ -43,6 +43,7 @@
   },
   "devDependencies": {
     "browserify": "3.28.0",
+    "byline": "^4.2.1",
     "coffeelint": "^1.8.1",
     "groc": "git://github.com/cha0s/groc.git",
     "grunt": "git://github.com/cha0s/grunt.git",
