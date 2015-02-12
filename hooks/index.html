@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Hooks - Shrub</title>
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script>
+  <script src="../js/theme.js"></script>
+
+  <style>
+    body {font-size: 90%;}
+    pre, code {font-size: 100%;}
+    h3, h4, h5, h6 {color: #2980b9; font-weight: 300}
+  </style> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Shrub</a>
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+      <ul class="current">
+    
+        
+            <li class="toctree-l1 current">
+                <a class="current" href=".">Hooks</a>
+            </li>
+        
+
+    
+        
+            <li class="toctree-l1 ">
+                <a class="" href="../todos">TODO list</a>
+            </li>
+        
+
+    
+        
+        <span>Source code</span>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/client/app">client/app.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/client/packages">client/packages.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/client/require">client/require.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/dox">dox.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-form">packages/shrub-form/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/server">server.litcoffee</a>
+                    
+                </li>
+            
+        
+
+    
+</ul>
+
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
+        <a href=".."></a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    <li>Hooks</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="https://github.com/cha0s/shrub" class="icon icon-github"> Edit on GitHub</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              <h1 id="hook-system">Hook system</h1>
+<p>Hooks are how Shrub allows packages to implement (or invoke) dynamic
+behavior. Hooks can also serve as a form of message passing between
+packages.</p>
+<p>To implement a hook, export a <code>pkgmanRegister</code> method which takes a
+<code>registrar</code> argument, and use the registrar to register your hook:</p>
+<pre><code class="javascript">
+exports.pkgmanRegister = function(registrar) {
+
+  registrar.registerHook('someHook', function() {
+    doStuff();
+  }
+
+  registrar.registerHook('someOtherHook', function(arg) {
+    doOtherStuffWith(arg);
+  }
+}
+
+</code></pre>
+
+<p>To invoke a hook, require <code>pkgman</code> and use the <code>invoke</code> method:</p>
+<pre><code class="javascript">
+var pkgman = require('pkgman');
+
+var results = pkgman.invoke('someOtherHook', arg);
+
+</code></pre>
+
+<p>Any arguments following the hook name will be passed along to the
+implementations. Hooks are invoked synchronously. For more information
+about <code>pkgman</code>, see</p>
+<h6 id="todo-link-to-pkgman-documentation-when-complete">TODO: Link to <code>pkgman</code> documentation when complete.</h6>
+<h2 id="angularnavigationmiddleware">angularNavigationMiddleware</h2>
+<h3 id="1-implementations">1 implementation(s)</h3>
+<ul>
+<li>packages/shrub-form (<a href="../source/packages/shrub-form#implements-hook-angularnavigationmiddleware">server</a>)</li>
+</ul>
+<h2 id="appconfig">appConfig</h2>
+<h3 id="1-invocations">1 invocation(s)</h3>
+<ul>
+<li>client/app (<a href="../source/client/app#invoke-hook-appconfig">client</a>)</li>
+</ul>
+<h2 id="apprun">appRun</h2>
+<h3 id="1-invocations_1">1 invocation(s)</h3>
+<ul>
+<li>client/app (<a href="../source/client/app#invoke-hook-apprun">client</a>)</li>
+</ul>
+<h2 id="augmentdirective">augmentDirective</h2>
+<h3 id="1-invocations_2">1 invocation(s)</h3>
+<ul>
+<li>client/packages (<a href="../source/client/packages#invoke-hook-augmentdirective">client</a>)</li>
+</ul>
+<h2 id="bootstrapmiddleware">bootstrapMiddleware</h2>
+<h3 id="1-invocations_3">1 invocation(s)</h3>
+<ul>
+<li>server (<a href="../source/server#invoke-hook-bootstrapmiddleware">server</a>)</li>
+</ul>
+<h2 id="controller">controller</h2>
+<h3 id="1-invocations_4">1 invocation(s)</h3>
+<ul>
+<li>client/packages (<a href="../source/client/packages#invoke-hook-controller">client</a>)</li>
+</ul>
+<h2 id="directive">directive</h2>
+<h3 id="1-invocations_5">1 invocation(s)</h3>
+<ul>
+<li>client/packages (<a href="../source/client/packages#invoke-hook-directive">client</a>)</li>
+</ul>
+<h2 id="filter">filter</h2>
+<h3 id="1-invocations_6">1 invocation(s)</h3>
+<ul>
+<li>client/packages (<a href="../source/client/packages#invoke-hook-filter">client</a>)</li>
+</ul>
+<h2 id="httpmiddleware">httpMiddleware</h2>
+<h3 id="1-implementations_1">1 implementation(s)</h3>
+<ul>
+<li>packages/shrub-form (<a href="../source/packages/shrub-form#implements-hook-httpmiddleware">server</a>)</li>
+</ul>
+<h2 id="prebootstrap">preBootstrap</h2>
+<p><em>Invoked before the application bootstrap phase.</em></p>
+<h3 id="mitigate-slow-build-times">Mitigate slow build times</h3>
+<p>If your package <code>require</code>s heavy modules, you should require them in an
+implementation of hook <code>preBootstrap</code>. For instance, say you have a package
+like:</p>
+<pre><code class="javascript">var someHeavyModule = require('some-heavy-module');
+
+exports.pkgmanRegister = function(registrar) {
+
+  registrar.registerHook('someHook', function() {
+    someHeavyModule.doSomething();
+  }
+}
+
+</code></pre>
+
+<p>This will slow the build process down, since <code>some-heavy-module</code> must be
+loaded when loading your package. Use this pattern instead:</p>
+<pre><code class="javascript">var someHeavyModule = null;
+
+exports.pkgmanRegister = function(registrar) {
+
+  registrar.registerHook('preBootstrap', function() {
+    someHeavyModule = require('some-heavy-module');
+  }
+
+  registrar.registerHook('someHook', function() {
+    someHeavyModule.doSomething();
+  }
+}
+
+</code></pre>
+
+<p>So that the heavy module will not be <code>require</code>d until hook <code>preBootstrap</code> is
+invoked.</p>
+<h3 id="1-invocations_7">1 invocation(s)</h3>
+<ul>
+<li>server (<a href="../source/server#invoke-hook-prebootstrap">server</a>)</li>
+</ul>
+<h2 id="processexit">processExit</h2>
+<h3 id="1-invocations_8">1 invocation(s)</h3>
+<ul>
+<li>server (<a href="../source/server#invoke-hook-processexit">server</a>)</li>
+</ul>
+<h2 id="provider">provider</h2>
+<h3 id="1-invocations_9">1 invocation(s)</h3>
+<ul>
+<li>client/packages (<a href="../source/client/packages#invoke-hook-provider">client</a>)</li>
+</ul>
+<h2 id="service">service</h2>
+<h3 id="1-invocations_10">1 invocation(s)</h3>
+<ul>
+<li>client/packages (<a href="../source/client/packages#invoke-hook-service">client</a>)</li>
+</ul>
+
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../todos" class="btn btn-neutral float-right" title="TODO list"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+    <!-- Copyright etc -->
+    </p>
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+        
+            <a class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+        
+      <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      <span style="margin-left: 15px"><a href="../todos" style="color: #fcfcfc">Next &raquo;</a></span>
+    </span>
+</div>
+</body>
+</html>

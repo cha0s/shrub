@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>client/packages.litcoffee - Shrub</title>
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../../css/highlight.css">
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="../../../js/highlight.pack.js"></script>
+  <script src="../../../js/theme.js"></script>
+
+  <style>
+    body {font-size: 90%;}
+    pre, code {font-size: 100%;}
+    h3, h4, h5, h6 {color: #2980b9; font-weight: 300}
+  </style> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../../.." class="icon icon-home"> Shrub</a>
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+      <ul class="current">
+    
+        
+            <li class="toctree-l1 ">
+                <a class="" href="../../../hooks">Hooks</a>
+            </li>
+        
+
+    
+        
+            <li class="toctree-l1 ">
+                <a class="" href="../../../todos">TODO list</a>
+            </li>
+        
+
+    
+        
+        <span>Source code</span>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../app">client/app.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 current">
+                    <a class="current" href=".">client/packages.litcoffee</a>
+                    
+                        <ul>
+                        
+                            <li class="toctree-l2"><a href="#package-management-for-angular">Package management for Angular</a></li>
+                            
+                                <li><a class="toctree-l3" href="#invoke-hook-controller">Invoke hook controller.</a></li>
+                            
+                                <li><a class="toctree-l3" href="#invoke-hook-augmentdirective">Invoke hook augmentDirective.</a></li>
+                            
+                                <li><a class="toctree-l3" href="#invoke-hook-directive">Invoke hook directive.</a></li>
+                            
+                                <li><a class="toctree-l3" href="#invoke-hook-filter">Invoke hook filter.</a></li>
+                            
+                                <li><a class="toctree-l3" href="#invoke-hook-provider">Invoke hook provider.</a></li>
+                            
+                                <li><a class="toctree-l3" href="#invoke-hook-service">Invoke hook service.</a></li>
+                            
+                        
+                        </ul>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../require">client/require.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../dox">dox.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../packages/shrub-form">packages/shrub-form/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../server">server.litcoffee</a>
+                    
+                </li>
+            
+        
+
+    
+</ul>
+
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
+        <a href="../../.."></a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../..">Docs</a> &raquo;</li>
+    <li>client/packages.litcoffee</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="https://github.com/cha0s/shrub" class="icon icon-github"> Edit on GitHub</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              <h1 id="package-management-for-angular">Package management for Angular</h1>
+<p><em>This is where shrub's package system meets Angular's module system. Packages'
+implementations of controllers, services, filters, providers, and directives
+are gathered and registered into Angular.</em></p>
+<pre><code>angular.module('shrub.packages', [
+  'shrub.require'
+  'shrub.pkgman'
+])
+
+  .config([
+    '$compileProvider', '$controllerProvider', '$filterProvider'
+    '$injector', '$provide', 'shrub-pkgmanProvider'
+    'shrub-requireProvider'
+    (
+      $compileProvider, $controllerProvider, $filterProvider
+      $injector, $provide, pkgman, {require}
+    ) -&gt;
+
+      config = require 'config'
+      debug = require('debug') 'shrub:angular'
+</code></pre>
+<p>Set an injector so that Angular injection can occur out of band.</p>
+<pre><code>      angular_ = require 'angular'
+      angular_.setInjector $injector
+</code></pre>
+<h4 id="invoke-hook-controller">Invoke hook <code>controller</code>.</h4>
+<p>Allows packages to define Angular controllers. Implementations should return an
+<a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>.</p>
+<pre><code>      debug 'Registering controllers...'
+
+      for path, injected of pkgman.invoke 'controller'
+        controllerName = pkgman.normalizePath path
+        debug controllerName
+        $controllerProvider.register controllerName, injected
+
+      debug 'Controllers registered.'
+
+      debug 'Registering directives...'
+</code></pre>
+<p>Normalize, augment, and register a directive.</p>
+<pre><code>      prepareDirective = (name, path, injected) -&gt; ($injector) -&gt;
+</code></pre>
+<p>Normalize the directive to object form.</p>
+<pre><code>        directive = $injector.invoke injected
+        directive = link: directive if angular.isFunction directive
+</code></pre>
+<p>Ensure a compilation function exists for the directive which by default
+returns the <code>link</code> function.</p>
+<pre><code>        directive.compile ?= -&gt; directive.link
+</code></pre>
+<p>Proxy any defined link function, firing any attached any controllers' <code>link</code>
+method, as well as passing execution on to the original <code>link</code> function.</p>
+<pre><code>        link = directive.link
+        directive.link = (scope, element, attrs, controllers) -&gt;
+          if controllers?
+            controllers = [controllers] unless angular.isArray controllers
+            controller.link? arguments... for controller in controllers
+
+          link? arguments...
+</code></pre>
+<p>Ensure the directive has a name. Defaults to the normalized path of the
+implementing package.</p>
+<pre><code>        directive.name ?= name
+</code></pre>
+<p>If controller binding is specified, the controller defaults to the directive
+name. In other words, if you define a directive and a controller in the same
+package, and specify <code>directive.bindToController = true</code>, your directive will
+include the controller automatically.</p>
+<pre><code>        if directive.bindToController
+          directive.controller ?= directive.name
+</code></pre>
+<p>Handle a bunch of internal Angular normalization.</p>
+<pre><code>        directive.require ?= directive.controller and directive.name
+        directive.priority ?= 0
+        directive.restrict ?= 'EA'
+
+        if angular.isObject directive.scope
+          directive.$$isolateBindings = isolateBindingsFor directive
+</code></pre>
+<h4 id="invoke-hook-augmentdirective">Invoke hook <code>augmentDirective</code>.</h4>
+<p>Allows packages to augment the directives defined by packages. One example is
+the automatic relinking functionality implemented by
+<a href="../../../../packages/shrub-skin/client/index.coffee#L12">shrub-skin</a>.</p>
+<pre><code>        for injectedDirective in pkgman.invokeFlat(
+          'augmentDirective', directive, path
+        )
+          $injector.invoke injectedDirective
+</code></pre>
+<p>Haven't gone deep enough into Angular to understand why this has to be, but it
+does.</p>
+<pre><code>        directive.index = 0
+        return [directive]
+</code></pre>
+<p>Internal Angular state that we have to reset.</p>
+<pre><code>      isolateBindingsFor = (directive) -&gt;
+
+        LOCAL_REGEXP = /^\s*([@&amp;]|=(\*?))(\??)\s*(\w*)\s*$/
+
+        bindings = {}
+
+        for scopeName, definition of directive.scope
+          match = definition.match LOCAL_REGEXP
+
+          throw angular.$$minErr('$compile')(
+            'iscp'
+            "
+              Invalid isolate scope definition for directive '{0}'.
+              Definition: {... {1}: '{2}' ...}
+            "
+            directive.name, scopeName, definition
+          ) unless match
+
+          bindings[scopeName] =
+            mode: match[1][0]
+            collection: match[2] is '*'
+            optional: match[3] is '?'
+            attrName: match[4] or scopeName
+
+        return bindings
+</code></pre>
+<h4 id="invoke-hook-directive">Invoke hook <code>directive</code>.</h4>
+<p>Allows packages to define Angular directives. Implementations should return an
+<a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>.</p>
+<pre><code>      for path, injected of pkgman.invoke 'directive'
+        do (path, injected) -&gt;
+          directiveName = pkgman.normalizePath path
+          debug directiveName
+</code></pre>
+<p>First, register it through Angular's normal registration mechanism. This sets
+a bunch of internal state we don't have access to.</p>
+<pre><code>          $compileProvider.directive directiveName, injected
+</code></pre>
+<p>Follow that by normalizing, augmenting, and registering the directive again.
+It will run over the previous definition, ensuring everything works nicely.</p>
+<pre><code>          $provide.factory "#{directiveName}Directive", [
+            '$injector', prepareDirective directiveName, path, injected
+          ]
+
+      debug 'Directives registered.'
+
+      debug 'Registering filters...'
+</code></pre>
+<h4 id="invoke-hook-filter">Invoke hook <code>filter</code>.</h4>
+<p>Allows packages to define Angular filters. Implementations should return a
+function.</p>
+<pre><code>      for path, injected of pkgman.invoke 'filter'
+        filterName = pkgman.normalizePath path
+        debug filterName
+        $filterProvider.register filterName, injected
+
+      debug 'Filters registered.'
+</code></pre>
+<h4 id="invoke-hook-provider">Invoke hook <code>provider</code>.</h4>
+<p>Allows packages to define Angular providers. Implementations should return an
+<a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>.</p>
+<pre><code>      debug 'Registering providers...'
+
+      for path, provider of pkgman.invoke 'provider'
+        debug path
+        $provide.provider path, provider
+
+      debug 'Providers registered.'
+</code></pre>
+<h4 id="invoke-hook-service">Invoke hook <code>service</code>.</h4>
+<p>Allows packages to define Angular services. Implementations should return an
+<a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>.</p>
+<pre><code>      debug 'Registering services...'
+
+      for path, injected of pkgman.invoke 'service'
+        debug path
+        $provide.service path, injected
+
+      debug 'Services registered.'
+
+  ])
+</code></pre>
+<p>The module that provides Angular with access to Shrub's package manager.</p>
+<pre><code>angular.module('shrub.pkgman', [
+  'shrub.require'
+])
+
+  .provider 'shrub-pkgman', [
+    '$provide', 'shrub-requireProvider'
+    ($provide, {require}) -&gt;
+
+      config = require 'config'
+      debug = require('debug') 'shrub:pkgman'
+      pkgman = require 'pkgman'
+
+      debug 'Loading packages...'
+</code></pre>
+<p>Load the package list from configuration.</p>
+<pre><code>      pkgman.registerPackageList config.get 'packageList'
+
+      debug 'Packages loaded.'
+</code></pre>
+<p>Simply pass along pkgman as the 'service'.</p>
+<pre><code>      pkgman.$get = -&gt; pkgman
+
+      return pkgman
+  ]
+</code></pre>
+
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../require" class="btn btn-neutral float-right" title="client/require.litcoffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../app" class="btn btn-neutral" title="client/app.litcoffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+    <!-- Copyright etc -->
+    </p>
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+        
+            <a class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+        
+      <span><a href="../app" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      <span style="margin-left: 15px"><a href="../require" style="color: #fcfcfc">Next &raquo;</a></span>
+    </span>
+</div>
+</body>
+</html>

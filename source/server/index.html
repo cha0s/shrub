@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>server.litcoffee - Shrub</title>
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+  <script src="../../js/theme.js"></script>
+
+  <style>
+    body {font-size: 90%;}
+    pre, code {font-size: 100%;}
+    h3, h4, h5, h6 {color: #2980b9; font-weight: 300}
+  </style> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Shrub</a>
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+      <ul class="current">
+    
+        
+            <li class="toctree-l1 ">
+                <a class="" href="../../hooks">Hooks</a>
+            </li>
+        
+
+    
+        
+            <li class="toctree-l1 ">
+                <a class="" href="../../todos">TODO list</a>
+            </li>
+        
+
+    
+        
+        <span>Source code</span>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../client/app">client/app.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../client/packages">client/packages.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../client/require">client/require.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../dox">dox.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../packages/shrub-form">packages/shrub-form/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 current">
+                    <a class="current" href=".">server.litcoffee</a>
+                    
+                        <ul>
+                        
+                            <li class="toctree-l2"><a href="#server-application-entry-point">Server application entry point</a></li>
+                            
+                                <li><a class="toctree-l3" href="#invoke-hook-prebootstrap">Invoke hook preBootstrap.</a></li>
+                            
+                                <li><a class="toctree-l3" href="#invoke-hook-bootstrapmiddleware">Invoke hook bootstrapMiddleware.</a></li>
+                            
+                                <li><a class="toctree-l3" href="#invoke-hook-processexit">Invoke hook processExit.</a></li>
+                            
+                        
+                        </ul>
+                    
+                </li>
+            
+        
+
+    
+</ul>
+
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
+        <a href="../.."></a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    <li>server.litcoffee</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="https://github.com/cha0s/shrub" class="icon icon-github"> Edit on GitHub</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              <h1 id="server-application-entry-point">Server application entry point</h1>
+<p><em>Load the configuration, invoke the bootstrap hooks, and listen for signals
+and process exit.</em></p>
+<p>The core bootstrap phase injects environment into a forked copy of the
+application including require paths to allow core and custom packages to be
+included without qualification.</p>
+<pre><code>{fork} = require "./server/bootstrap"
+unless fork()
+
+  Promise = require 'bluebird'
+
+  debug = require('debug') 'shrub:server'
+  debugSilly = require('debug') 'shrub-silly:server'
+
+  errors = require 'errors'
+  middleware = require 'middleware'
+  pkgman = require 'pkgman'
+</code></pre>
+<p>Load the configuration.</p>
+<pre><code>  debug 'Loading config...'
+
+  config = require 'config'
+  config.load()
+  config.loadPackageSettings()
+
+  debug 'Config loaded.'
+</code></pre>
+<h4 id="invoke-hook-prebootstrap">Invoke hook <code>preBootstrap</code>.</h4>
+<p>Invoked before the application bootstrap phase.</p>
+<p><a href="../../hooks#prebootstrap">See the <code>preBootstrap</code> hook documentation</a></p>
+<h6 id="todo-link-to-an-instance-of-this-in-shrub-core">TODO: Link to an instance of this in shrub core.</h6>
+<pre><code>  debugSilly 'Pre bootstrap phase...'
+  pkgman.invoke 'preBootstrap'
+  debugSilly 'Pre bootstrap phase completed.'
+</code></pre>
+<h4 id="invoke-hook-bootstrapmiddleware">Invoke hook <code>bootstrapMiddleware</code>.</h4>
+<p>Invoked during the application bootstrap phase. Packages implementing this hook
+should return an instance of <code>MiddlewareGroup</code>.</p>
+<h6 id="todo-link-to-an-instance-of-this-in-shrub-core_1">TODO: Link to an instance of this in shrub core.</h6>
+<h6 id="todo-currently-middleware-hook-implementations-return-an-ad-hoc-structure-but-middlewaregroup-will-be-the-preferred-mechanism-in-the-future">TODO: Currently middleware hook implementations return an ad-hoc structure, but MiddlewareGroup will be the preferred mechanism in the future.</h6>
+<p>This is where the real heavy-lifting instantiation occurs. For instance, this
+is where the HTTP server is constructed by <code>shrub-http</code> and made to listen on
+a port, where <code>shrub-nodemailer</code> instantiates its sandbox, etc.</p>
+<pre><code>  debugSilly 'Loading bootstrap middleware...'
+  bootstrapMiddleware = middleware.fromHook(
+    'bootstrapMiddleware'
+    config.get 'packageSettings:shrub-core:bootstrapMiddleware'
+  )
+  debugSilly 'Bootstrap middleware loaded.'
+</code></pre>
+<p>Dispatch the bootstrap middleware stack and log if everything is okay.</p>
+<pre><code>  bootstrapMiddleware.dispatch (error) -&gt;
+    return debug 'Bootstrap complete.' unless error?
+</code></pre>
+<p>Log and throw any error. This will be caught by the unhandledException
+listener below.</p>
+<pre><code>    console.error errors.stack error
+    throw error
+</code></pre>
+<h4 id="invoke-hook-processexit">Invoke hook <code>processExit</code>.</h4>
+<p>We do our best to guarantee that hook <code>processExit</code> will always be invoked,
+even when an exception or signal arises.</p>
+<h6 id="todo-link-to-an-instance-of-this-in-shrub-core_2">TODO: Link to an instance of this in shrub core.</h6>
+<pre><code>  process.on 'exit', -&gt; pkgman.invoke 'processExit'
+
+  process.on 'SIGINT', -&gt; process.exit()
+  process.on 'SIGTERM', -&gt; process.exit()
+  process.on 'unhandledException', -&gt; process.exit()
+</code></pre>
+
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../packages/shrub-form" class="btn btn-neutral" title="packages/shrub-form/index.litcoffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+    <!-- Copyright etc -->
+    </p>
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+        
+            <a class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+        
+      <span><a href="../packages/shrub-form" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      <span style="margin-left: 15px"><a href="" style="color: #fcfcfc">Next &raquo;</a></span>
+    </span>
+</div>
+</body>
+</html>

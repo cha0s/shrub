@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TODO list - Shrub</title>
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script>
+  <script src="../js/theme.js"></script>
+
+  <style>
+    body {font-size: 90%;}
+    pre, code {font-size: 100%;}
+    h3, h4, h5, h6 {color: #2980b9; font-weight: 300}
+  </style> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Shrub</a>
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+      <ul class="current">
+    
+        
+            <li class="toctree-l1 ">
+                <a class="" href="../hooks">Hooks</a>
+            </li>
+        
+
+    
+        
+            <li class="toctree-l1 current">
+                <a class="current" href=".">TODO list</a>
+            </li>
+        
+
+    
+        
+        <span>Source code</span>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/client/app">client/app.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/client/packages">client/packages.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/client/require">client/require.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/dox">dox.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-form">packages/shrub-form/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/server">server.litcoffee</a>
+                    
+                </li>
+            
+        
+
+    
+</ul>
+
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
+        <a href=".."></a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    <li>TODO list</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="https://github.com/cha0s/shrub" class="icon icon-github"> Edit on GitHub</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              <h1 id="todo-list">TODO list</h1>
+<p>Shrub -- like any project -- always presents a path for improvement. This
+is a dynamically generated list of TODO items, each with context.</p>
+<blockquote>
+<p><code>packageDependencies</code> will be automatically generated and populated by Grunt.
+Packages implement the hook <code>angularPackageDependencies</code> to specify their
+3rd-party module dependencies.</p>
+<h2 id="todo-link-this-to-where-this-happens-in-grunt-for-illustration">TODO: Link this to where this happens in Grunt for illustration.</h2>
+<pre><code>coreDependencies.push packageDependencies...
+</code></pre>
+</blockquote>
+<h6 id="the-above-found-in-clientapplitcoffee20">the above found in <a href="../source/client/app#todo-link-this-to-where-this-happens-in-grunt-for-illustration">client/app.litcoffee:20</a></h6>
+<blockquote>
+<p>Invoked before the application bootstrap phase.</p>
+<p><a href="../hooks#prebootstrap">See the <code>preBootstrap</code> hook documentation</a></p>
+<h2 id="todo-link-to-an-instance-of-this-in-shrub-core">TODO: Link to an instance of this in shrub core.</h2>
+<pre><code>  debugSilly 'Pre bootstrap phase...'
+  pkgman.invoke 'preBootstrap'
+</code></pre>
+</blockquote>
+<h6 id="the-above-found-in-serverlitcoffee38">the above found in <a href="../source/server#todo-link-to-an-instance-of-this-in-shrub-core">server.litcoffee:38</a></h6>
+<blockquote>
+<p>Invoked during the application bootstrap phase. Packages implementing this hook
+should return an instance of <code>MiddlewareGroup</code>.</p>
+<h2 id="todo-link-to-an-instance-of-this-in-shrub-core_1">TODO: Link to an instance of this in shrub core.</h2>
+<h6 id="todo-currently-middleware-hook-implementations-return-an-ad-hoc-structure-but-middlewaregroup-will-be-the-preferred-mechanism-in-the-future">TODO: Currently middleware hook implementations return an ad-hoc structure, but MiddlewareGroup will be the preferred mechanism in the future.</h6>
+</blockquote>
+<h6 id="the-above-found-in-serverlitcoffee49">the above found in <a href="../source/server#todo-link-to-an-instance-of-this-in-shrub-core_1">server.litcoffee:49</a></h6>
+<blockquote>
+<p>should return an instance of <code>MiddlewareGroup</code>.</p>
+<h6 id="todo-link-to-an-instance-of-this-in-shrub-core_2">TODO: Link to an instance of this in shrub core.</h6>
+<h2 id="todo-currently-middleware-hook-implementations-return-an-ad-hoc-structure-but-middlewaregroup-will-be-the-preferred-mechanism-in-the-future_1">TODO: Currently middleware hook implementations return an ad-hoc structure, but MiddlewareGroup will be the preferred mechanism in the future.</h2>
+<p>This is where the real heavy-lifting instantiation occurs. For instance, this
+is where the HTTP server is constructed by <code>shrub-http</code> and made to listen on</p>
+</blockquote>
+<h6 id="the-above-found-in-serverlitcoffee51">the above found in <a href="../source/server#todo-currently-middleware-hook-implementations-return-an-ad-hoc-structure-but-middlewaregroup-will-be-the-preferred-mechanism-in-the-future">server.litcoffee:51</a></h6>
+<blockquote>
+<p>We do our best to guarantee that hook <code>processExit</code> will always be invoked,
+even when an exception or signal arises.</p>
+<h2 id="todo-link-to-an-instance-of-this-in-shrub-core_3">TODO: Link to an instance of this in shrub core.</h2>
+<pre><code>  process.on 'exit', -&gt; pkgman.invoke 'processExit'
+</code></pre>
+</blockquote>
+<h6 id="the-above-found-in-serverlitcoffee80">the above found in <a href="../source/server#todo-link-to-an-instance-of-this-in-shrub-core_2">server.litcoffee:80</a></h6>
+
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../source/client/app" class="btn btn-neutral float-right" title="client/app.litcoffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../hooks" class="btn btn-neutral" title="Hooks"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+    <!-- Copyright etc -->
+    </p>
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+        
+            <a class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+        
+      <span><a href="../hooks" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      <span style="margin-left: 15px"><a href="../source/client/app" style="color: #fcfcfc">Next &raquo;</a></span>
+    </span>
+</div>
+</body>
+</html>

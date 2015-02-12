@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>client/require.litcoffee - Shrub</title>
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../../css/highlight.css">
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="../../../js/highlight.pack.js"></script>
+  <script src="../../../js/theme.js"></script>
+
+  <style>
+    body {font-size: 90%;}
+    pre, code {font-size: 100%;}
+    h3, h4, h5, h6 {color: #2980b9; font-weight: 300}
+  </style> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../../.." class="icon icon-home"> Shrub</a>
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+      <ul class="current">
+    
+        
+            <li class="toctree-l1 ">
+                <a class="" href="../../../hooks">Hooks</a>
+            </li>
+        
+
+    
+        
+            <li class="toctree-l1 ">
+                <a class="" href="../../../todos">TODO list</a>
+            </li>
+        
+
+    
+        
+        <span>Source code</span>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../app">client/app.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../packages">client/packages.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 current">
+                    <a class="current" href=".">client/require.litcoffee</a>
+                    
+                        <ul>
+                        
+                            <li class="toctree-l2"><a href="#require-system-for-angular">Require system for Angular</a></li>
+                            
+                        
+                        </ul>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../dox">dox.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../packages/shrub-form">packages/shrub-form/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../server">server.litcoffee</a>
+                    
+                </li>
+            
+        
+
+    
+</ul>
+
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
+        <a href="../../.."></a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../..">Docs</a> &raquo;</li>
+    <li>client/require.litcoffee</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="https://github.com/cha0s/shrub" class="icon icon-github"> Edit on GitHub</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              <h1 id="require-system-for-angular">Require system for Angular</h1>
+<p><em>Implement require in the spirit of NodeJS.</em></p>
+<p>Resolve the module name.</p>
+<pre><code>_resolveModuleName = (name, parentFilename) -&gt;
+</code></pre>
+<p>Strip <code>/index</code> from the end, if necessary.</p>
+<pre><code>  checkModuleName = (name) -&gt;
+    return name if requires_[name]?
+    return "#{name}/index" if requires_["#{name}/index"]?
+
+  return checked if (checked = checkModuleName name)?
+</code></pre>
+<p>Resolve relative paths. We have to check methods on <code>path</code>. See below for more.</p>
+<pre><code>  path = _require 'path'
+  return checked if (checked = checkModuleName(
+    path.resolve(path.dirname(parentFilename), name).substr 1
+  ))? if path.dirname? and path.resolve?
+</code></pre>
+<p>Oops, nothing resolved...</p>
+<pre><code>  throw new Error "Cannot find module '#{name}'"
+</code></pre>
+<p>Internal require function. Uses the parent filename to resolve relative paths.</p>
+<pre><code>_require = (name, parentFilename) -&gt;
+</code></pre>
+<p>Module inclusion is cached.</p>
+<pre><code>  unless requires_[name = _resolveModuleName name, parentFilename].module?
+</code></pre>
+<p>Extract the module function ahead of time, so we can set up module/exports and
+assign it to the old value. Setting this up ahead of time avoids cycles.</p>
+<pre><code>    f = requires_[name]
+    exports = {}
+    module = exports: exports
+    requires_[name] = module: module
+</code></pre>
+<p>Include <code>path</code>, you may observe that this is dangerous because we're within
+the require system itself. This is correct and we have to check for <code>dirname</code>
+to ensure the object has been required and populated.</p>
+<pre><code>    path = _require 'path'
+    __dirname = (path.dirname? name) ? ''
+    __filename = name
+</code></pre>
+<p>Execute the top-level module function, passing in all of our objects.</p>
+<pre><code>    f(
+      module, exports, (name) -&gt; _require name, __filename
+      __dirname, __filename
+    )
+
+  requires_[name].module.exports
+</code></pre>
+<p>Provide require API to Angular.</p>
+<pre><code>require = (name) -&gt; _require name, ''
+angular.module('shrub.require', []).provider 'shrub-require', -&gt;
+  require: require
+  $get: -&gt; require
+</code></pre>
+
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../dox" class="btn btn-neutral float-right" title="dox.litcoffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../packages" class="btn btn-neutral" title="client/packages.litcoffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+    <!-- Copyright etc -->
+    </p>
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+        
+            <a class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+        
+      <span><a href="../packages" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      <span style="margin-left: 15px"><a href="../../dox" style="color: #fcfcfc">Next &raquo;</a></span>
+    </span>
+</div>
+</body>
+</html>
