@@ -125,11 +125,10 @@
           <div role="main">
             <div class="section">
               <h1 id="hook-system">Hook system</h1>
-<p>Hooks are how Shrub allows packages to implement (or invoke) dynamic
-behavior. Hooks can also serve as a form of message passing between
-packages.</p>
-<p>To implement a hook, export a <code>pkgmanRegister</code> method which takes a
-<code>registrar</code> argument, and use the registrar to register your hook:</p>
+<p>Hooks are how Shrub allows packages to implement (or invoke) dynamic behavior.
+Hooks can also serve as a form of message passing between packages.</p>
+<p>To implement a hook, export a <code>pkgmanRegister</code> method which takes a <code>registrar</code>
+argument, and use the registrar to register your hook:</p>
 <pre><code class="javascript">
 exports.pkgmanRegister = function(registrar) {
 
@@ -140,7 +139,7 @@ exports.pkgmanRegister = function(registrar) {
   registrar.registerHook('someOtherHook', function(arg) {
     doOtherStuffWith(arg);
   }
-}
+};
 
 </code></pre>
 
@@ -153,8 +152,8 @@ var results = pkgman.invoke('someOtherHook', arg);
 </code></pre>
 
 <p>Any arguments following the hook name will be passed along to the
-implementations. Hooks are invoked synchronously. For more information
-about <code>pkgman</code>, see</p>
+implementations. Hooks are invoked synchronously. For more information about
+<code>pkgman</code>, see</p>
 <h6 id="todo-link-to-pkgman-documentation-when-complete">TODO: Link to <code>pkgman</code> documentation when complete.</h6>
 <h2 id="angularnavigationmiddleware">angularNavigationMiddleware</h2>
 <h3 id="1-implementations">1 implementation(s)</h3>
@@ -214,7 +213,7 @@ exports.pkgmanRegister = function(registrar) {
   registrar.registerHook('someHook', function() {
     someHeavyModule.doSomething();
   }
-}
+};
 
 </code></pre>
 
@@ -231,7 +230,7 @@ exports.pkgmanRegister = function(registrar) {
   registrar.registerHook('someHook', function() {
     someHeavyModule.doSomething();
   }
-}
+};
 
 </code></pre>
 

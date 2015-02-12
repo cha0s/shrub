@@ -181,48 +181,7 @@
 
     ).then(({hookFiles, hooks, implementations, invocations}) ->
 
-      render = '''
-    # Hook system
-
-    Hooks are how Shrub allows packages to implement (or invoke) dynamic
-    behavior. Hooks can also serve as a form of message passing between
-    packages.
-
-    To implement a hook, export a `pkgmanRegister` method which takes a
-    `registrar` argument, and use the registrar to register your hook:
-
-    ```javascript
-
-    exports.pkgmanRegister = function(registrar) {
-
-      registrar.registerHook('someHook', function() {
-        doStuff();
-      }
-
-      registrar.registerHook('someOtherHook', function(arg) {
-        doOtherStuffWith(arg);
-      }
-    }
-
-    ```
-
-    To invoke a hook, require `pkgman` and use the `invoke` method:
-
-    ```javascript
-
-    var pkgman = require('pkgman');
-
-    var results = pkgman.invoke('someOtherHook', arg);
-
-    ```
-
-    Any arguments following the hook name will be passed along to the
-    implementations. Hooks are invoked synchronously. For more information
-    about `pkgman`, see
-
-    ###### TODO: Link to `pkgman` documentation when complete.
-
-    '''
+      render = fs.readFileSync 'docs/hooks.template.md', 'utf8'
 
       for hook in hooks
 
@@ -268,13 +227,7 @@
 
     fileStatsListPromise.then((fileStatsList) ->
 
-      render = '''
-      # TODO list
-
-      Shrub &mdash; like any project &mdash; always presents a path for improvement. This
-      is a dynamically generated list of TODO items, each with context.
-
-      '''
+      render = fs.readFileSync 'docs/todos.template.md', 'utf8'
 
       for fileStats in fileStatsList
 
@@ -317,7 +270,7 @@
 
     _getFiles().then (files) ->
 
-      yml = fs.readFileSync 'docs/mkdocs.yml.template', 'utf8'
+      yml = fs.readFileSync 'docs/mkdocs.template.yml', 'utf8'
 
       for file in files
         parts = file.split '/'
