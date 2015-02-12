@@ -2,7 +2,7 @@
 # Welcome!
 
 Shrub is a full-stack JavaScript application framework. It is
-organized into [packages](/) which implement
+organized into [packages](packages) which implement
 [hooks](hooks), as a means of communicating between each other and
 influencing the way the entire application behaves.
 

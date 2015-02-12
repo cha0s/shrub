@@ -16,4 +16,4 @@
 /config/settings.json
 
 /gh-pages
-./mkdocs.yml
+mkdocs.yml

@@ -7,6 +7,6 @@ docs_dir: 'docs'
 site_dir: 'gh-pages'
 pages:
 - [index.md, 'Home']
-- [hooks.md, 'Hooks']
-- [packages.md, 'Packages']
-- [todos.md, 'TODO list']
+- [hooks.md, 'Dynamic', 'Hooks']
+- [packages.md, 'Dynamic', 'Packages']
+- [todos.md, 'Dynamic', 'TODO list']
