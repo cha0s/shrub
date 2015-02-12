@@ -1,4 +1,8 @@
 
+# Documentation generation
+
+*Generate the dynamic portions of Shrub's documentation.*
+
     fs = require 'fs'
     path = require 'path'
     {Transform} = require 'stream'
@@ -63,7 +67,7 @@
           index: todo
           lines: @lines.slice start, end
 
-    _getFiles = (spec) ->
+    _getFiles = ->
       new Promise (resolve, reject) ->
         glob(
           '{{client,custom,packages,server}/**/*.litcoffee,*.litcoffee}'
@@ -72,7 +76,31 @@
             resolve files
         )
 
-    _getFilesByType = (spec) -> _getFiles(spec).then (files) ->
+    _getPackageFiles = ->  _getFiles().then (files) ->
+      new Promise (resolve, reject) ->
+        glob(
+          '{custom,packages}/**/*.litcoffee'
+          (error, files) ->
+            return reject error if error?
+            resolve files
+        )
+
+    _hookToId = (hook) -> hook.replace(
+      /[^0-9A-Za-z-]+/g, '-'
+    ).toLowerCase()
+
+    _removeExtension = (filename) ->
+
+        dirname = path.dirname filename
+        if dirname is '.' then dirname = '' else dirname += '/'
+        extname = path.extname filename
+        filename = "#{dirname}#{path.basename filename, extname}"
+
+        parts = filename.split '/'
+        parts.pop() if parts[parts.length - 1] is 'index'
+        return parts.join '/'
+
+    _sortFilesByType = (files) ->
 
       client = []
       server = []
@@ -91,24 +119,9 @@
 
       client: client, server: server
 
-    _hookToId = (hook) -> hook.replace(
-      /[^0-9A-Za-z-]+/g, '-'
-    ).toLowerCase()
+    fileStatsListPromise = _getFiles().then (allFiles) ->
 
-    _removeExtension = (filename) ->
-
-        dirname = path.dirname filename
-        if dirname is '.' then dirname = '' else dirname += '/'
-        extname = path.extname filename
-        filename = "#{dirname}#{path.basename filename, extname}"
-
-        parts = filename.split '/'
-        parts.pop() if parts[parts.length - 1] is 'index'
-        return parts.join '/'
-
-    fileStatsListPromise = _getFilesByType().then (allFiles) ->
-
-      allFilesPromises = for type, files of allFiles
+      allFilesPromises = for type, files of _sortFilesByType allFiles
 
         typePromises = for file in files
 
@@ -181,48 +194,7 @@
 
     ).then(({hookFiles, hooks, implementations, invocations}) ->
 
-      render = '''
-    # Hook system
-
-    Hooks are how Shrub allows packages to implement (or invoke) dynamic
-    behavior. Hooks can also serve as a form of message passing between
-    packages.
-
-    To implement a hook, export a `pkgmanRegister` method which takes a
-    `registrar` argument, and use the registrar to register your hook:
-
-    ```javascript
-
-    exports.pkgmanRegister = function(registrar) {
-
-      registrar.registerHook('someHook', function() {
-        doStuff();
-      }
-
-      registrar.registerHook('someOtherHook', function(arg) {
-        doOtherStuffWith(arg);
-      }
-    }
-
-    ```
-
-    To invoke a hook, require `pkgman` and use the `invoke` method:
-
-    ```javascript
-
-    var pkgman = require('pkgman');
-
-    var results = pkgman.invoke('someOtherHook', arg);
-
-    ```
-
-    Any arguments following the hook name will be passed along to the
-    implementations. Hooks are invoked synchronously. For more information
-    about `pkgman`, see
-
-    ###### TODO: Link to `pkgman` documentation when complete.
-
-    '''
+      render = fs.readFileSync 'docs/hooks.template.md', 'utf8'
 
       for hook in hooks
 
@@ -268,13 +240,7 @@
 
     fileStatsListPromise.then((fileStatsList) ->
 
-      render = '''
-      # TODO list
-
-      Shrub &mdash; like any project &mdash; always presents a path for improvement. This
-      is a dynamically generated list of TODO items, each with context.
-
-      '''
+      render = fs.readFileSync 'docs/todos.template.md', 'utf8'
 
       for fileStats in fileStatsList
 
@@ -317,7 +283,7 @@
 
     _getFiles().then (files) ->
 
-      yml = fs.readFileSync 'docs/mkdocs.yml.template', 'utf8'
+      yml = fs.readFileSync 'docs/mkdocs.template.yml', 'utf8'
 
       for file in files
         parts = file.split '/'
@@ -336,3 +302,40 @@
       fs.writeFileSync 'mkdocs.yml', yml
 
       return
+
+    _getPackageFiles().then (allFiles) ->
+
+      render = fs.readFileSync 'docs/packages.template.md', 'utf8'
+      render += '\n'
+
+      for type, files of _sortFilesByType allFiles
+
+        render += if type is 'client'
+          '## Client-side'
+        else
+          '## Server-side'
+
+        render += '\n\n'
+
+        for file in files
+
+          data = fs.readFileSync file, 'utf8'
+
+          chunks = data.split '\n\n'
+
+          path = _removeExtension file
+          pkg = path.split('/').pop()
+
+          render += "### [#{pkg}](source/#{path})\n\n"
+
+          description = chunks[1]
+
+Description is wrapped in asterisks, i.e. italicized in markdown.
+
+          if 42 is description.charCodeAt 0 and 42 is description.charCodeAt chunks.length - 1
+            render += "#{description}\n\n"
+
+
+      fs.writeFileSync 'docs/packages.md', render
+
+

@@ -1,8 +1,7 @@
-
 # Form processing.
 
-Handle form and method parsing, and submission of POST'ed data into the
-Angular sandbox.
+*Handle form and method parsing, and submission of POST'ed data into the
+Angular sandbox.*
 
     exports.pkgmanRegister = (registrar) ->
 

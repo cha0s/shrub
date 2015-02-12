@@ -8,6 +8,7 @@ site_dir: 'gh-pages'
 pages:
 - [index.md, 'Home']
 - [hooks.md, 'Hooks']
+- [packages.md, 'Packages']
 - [todos.md, 'TODO list']
 - [source/client/app.litcoffee, 'Source code', 'client/app.litcoffee']
 - [source/client/packages.litcoffee, 'Source code', 'client/packages.litcoffee']
