@@ -14,7 +14,7 @@ exports.pkgmanRegister = function(registrar) {
   registrar.registerHook('someHook', function() {
     someHeavyModule.doSomething();
   }
-}
+};
 
 ```
 
@@ -33,7 +33,7 @@ exports.pkgmanRegister = function(registrar) {
   registrar.registerHook('someHook', function() {
     someHeavyModule.doSomething();
   }
-}
+};
 
 ```
 
