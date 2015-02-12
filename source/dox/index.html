@@ -50,6 +50,13 @@
     
         
             <li class="toctree-l1 ">
+                <a class="" href="../../packages">Packages</a>
+            </li>
+        
+
+    
+        
+            <li class="toctree-l1 ">
                 <a class="" href="../../todos">TODO list</a>
             </li>
         
@@ -77,6 +84,9 @@
                     <a class="current" href=".">dox.litcoffee</a>
                     
                         <ul>
+                        
+                            <li class="toctree-l2"><a href="#documentation-generation">Documentation generation</a></li>
+                            
                         
                         </ul>
                     
@@ -128,7 +138,9 @@
 </div>
           <div role="main">
             <div class="section">
-              <pre><code>fs = require 'fs'
+              <h1 id="documentation-generation">Documentation generation</h1>
+<p><em>Generate the dynamic portions of Shrub's documentation.</em></p>
+<pre><code>fs = require 'fs'
 path = require 'path'
 {Transform} = require 'stream'
 
@@ -192,7 +204,7 @@ class Todos extends Transform
       index: todo
       lines: @lines.slice start, end
 
-_getFiles = (spec) -&gt;
+_getFiles = -&gt;
   new Promise (resolve, reject) -&gt;
     glob(
       '{{client,custom,packages,server}/**/*.litcoffee,*.litcoffee}'
@@ -201,7 +213,31 @@ _getFiles = (spec) -&gt;
         resolve files
     )
 
-_getFilesByType = (spec) -&gt; _getFiles(spec).then (files) -&gt;
+_getPackageFiles = -&gt;  _getFiles().then (files) -&gt;
+  new Promise (resolve, reject) -&gt;
+    glob(
+      '{custom,packages}/**/*.litcoffee'
+      (error, files) -&gt;
+        return reject error if error?
+        resolve files
+    )
+
+_hookToId = (hook) -&gt; hook.replace(
+  /[^0-9A-Za-z-]+/g, '-'
+).toLowerCase()
+
+_removeExtension = (filename) -&gt;
+
+    dirname = path.dirname filename
+    if dirname is '.' then dirname = '' else dirname += '/'
+    extname = path.extname filename
+    filename = "#{dirname}#{path.basename filename, extname}"
+
+    parts = filename.split '/'
+    parts.pop() if parts[parts.length - 1] is 'index'
+    return parts.join '/'
+
+_sortFilesByType = (files) -&gt;
 
   client = []
   server = []
@@ -220,24 +256,9 @@ _getFilesByType = (spec) -&gt; _getFiles(spec).then (files) -&gt;
 
   client: client, server: server
 
-_hookToId = (hook) -&gt; hook.replace(
-  /[^0-9A-Za-z-]+/g, '-'
-).toLowerCase()
+fileStatsListPromise = _getFiles().then (allFiles) -&gt;
 
-_removeExtension = (filename) -&gt;
-
-    dirname = path.dirname filename
-    if dirname is '.' then dirname = '' else dirname += '/'
-    extname = path.extname filename
-    filename = "#{dirname}#{path.basename filename, extname}"
-
-    parts = filename.split '/'
-    parts.pop() if parts[parts.length - 1] is 'index'
-    return parts.join '/'
-
-fileStatsListPromise = _getFilesByType().then (allFiles) -&gt;
-
-  allFilesPromises = for type, files of allFiles
+  allFilesPromises = for type, files of _sortFilesByType allFiles
 
     typePromises = for file in files
 
@@ -418,6 +439,40 @@ _getFiles().then (files) -&gt;
   fs.writeFileSync 'mkdocs.yml', yml
 
   return
+
+_getPackageFiles().then (allFiles) -&gt;
+
+  render = fs.readFileSync 'docs/packages.template.md', 'utf8'
+  render += '\n'
+
+  for type, files of _sortFilesByType allFiles
+
+    render += if type is 'client'
+      '## Client-side'
+    else
+      '## Server-side'
+
+    render += '\n\n'
+
+    for file in files
+
+      data = fs.readFileSync file, 'utf8'
+
+      chunks = data.split '\n\n'
+
+      path = _removeExtension file
+      pkg = path.split('/').pop()
+
+      render += "### [#{pkg}](source/#{path})\n\n"
+
+      description = chunks[1]
+</code></pre>
+<p>Description is wrapped in asterisks, i.e. italicized in markdown.</p>
+<pre><code>      if 42 is description.charCodeAt 0 and 42 is description.charCodeAt chunks.length - 1
+        render += "#{description}\n\n"
+
+
+  fs.writeFileSync 'docs/packages.md', render
 </code></pre>
 
             </div>
