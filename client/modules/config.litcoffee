@@ -54,7 +54,7 @@ Returns: `true`
 
 ###### TODO: Is this necessary? If not, remove it.
 
-    @Config = Config
+      Config: Config
 
 ## *constructor*
 
