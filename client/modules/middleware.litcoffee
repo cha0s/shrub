@@ -100,6 +100,7 @@ No previous error.
             else
 
 Try to invoke the middleware, if it throws, just catch the error and pass it along.
+
               try
                 localArgs = args.concat()
                 localArgs.push invoke
