@@ -1,4 +1,3 @@
-
 # Server application entry point
 
 *Load the configuration, invoke the bootstrap hooks, and listen for signals
