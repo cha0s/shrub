@@ -3,6 +3,7 @@
 
 *Generate the dynamic portions of Shrub's documentation.*
 
+    {exec} = require 'child_process'
     fs = require 'fs'
     path = require 'path'
     {Transform} = require 'stream'
@@ -81,17 +82,6 @@ Gather all source files.
       new Promise (resolve, reject) ->
         glob(
           '{{client,custom,packages,server}/**/*.litcoffee,*.litcoffee}'
-          (error, files) ->
-            return reject error if error?
-            resolve files
-        )
-
-Gather all package files.
-
-    _allPackageFiles = ->  _allSourceFiles().then (files) ->
-      new Promise (resolve, reject) ->
-        glob(
-          '{custom,packages}/**/*.litcoffee'
           (error, files) ->
             return reject error if error?
             resolve files
@@ -342,42 +332,74 @@ Add them under the 'Source code' path.
 
 Render the packages page.
 
-    _allPackageFiles().then (allFiles) ->
+    fileStatsListPromise.then((fileStatsList) ->
 
       render = fs.readFileSync 'docs/packages.template.md', 'utf8'
       render += '\n'
 
-Render by type, client first, then server.
+      type = null
 
-      for type, files of _collateFilesByType allFiles
+      for fileStats in fileStatsList
 
-        render += if type is 'client'
-          '## Client-side'
-        else
-          '## Server-side'
+        if fileStats.type isnt type
+          type = fileStats.type
 
-        render += '\n\n'
+          render += if type is 'client'
+            '## Client-side'
+          else
+            '## Server-side'
 
-        for file in files
+          render += '\n\n'
+
+        parts = fileStats.file.split '/'
+        continue unless ~['custom', 'packages'].indexOf parts[0]
 
 Link to the package.
 
-          path = _sourcePath file
-          pkg = path.split('/').pop()
+        sourcePath = _sourcePath fileStats.file
 
-          render += "### [#{pkg}](source/#{path})\n\n"
+        parts = sourcePath.split '/'
+        parts.pop() if parts[parts.length - 1] is 'client'
+        sourcePath = parts.join '/'
+
+        pkg = sourcePath.split('/').pop()
+
+        render += "### [#{pkg}](source/#{sourcePath})"
 
 Naively parse out the file description. It must be wrapped in asterisks, i.e.
 italicized in markdown.
 
-          data = fs.readFileSync file, 'utf8'
-          chunks = data.split '\n\n'
-          description = chunks[1]
-          continue unless 42 is description.charCodeAt 0
-          continue unless 42 is description.charCodeAt chunks.length - 1
+###### TODO: This 'chunk' parsing should be done with a Transform like the others.
 
+        data = fs.readFileSync fileStats.file, 'utf8'
+        chunks = data.split '\n\n'
+
+        title = chunks[0]
+        if 35 is title.charCodeAt 0
+          render += " &mdash; #{title.substr 2}"
+
+        render += '\n\n'
+
+        description = chunks[1]
+        if 42 is description.charCodeAt 0 and 42 is description.charCodeAt description.length - 1
           render += "#{description}\n\n"
+
+        if fileStats.implementations.length > 0
+          # render += '<h5 class="package-hook-heading">Implements:</h5>\n\n'
+          render += '!!! note "Implements hooks"\n    '
+          render += fileStats.implementations.map((hook) ->
+            "[#{hook}](source/#{sourcePath}#implements-hook-#{hook.toLowerCase()})"
+          ).join ', '
+          render += '\n\n'
+
+        if fileStats.invocations.length > 0
+          # render += '<h5 class="package-hook-heading">Invokes:</h5>\n\n'
+          render += '!!! note "Invokes hooks"\n    '
+          render += fileStats.invocations.map((hook) ->
+            "[#{hook}](source/#{sourcePath}#invoke-hook-#{hook.toLowerCase()})"
+          ).join ', '
+          render += '\n\n'
 
       fs.writeFileSync 'docs/packages.md', render
 
-
+    )

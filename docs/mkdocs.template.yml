@@ -3,10 +3,17 @@ theme: readthedocs
 site_author: "cha0s"
 repo_url: https://github.com/cha0s/shrub
 #include_search: true
+
+extra_css:
+- css/extra.css
+
+markdown_extensions:
+- admonition
+
 docs_dir: 'docs'
 site_dir: 'gh-pages'
 pages:
 - [index.md, 'Home']
-- [hooks.md, 'Hooks']
-- [packages.md, 'Packages']
-- [todos.md, 'TODO list']
+- [hooks.md, 'Reference', 'Hooks']
+- [packages.md, 'Reference', 'Packages']
+- [todos.md, 'Reference', 'TODO list']
