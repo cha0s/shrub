@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>server/crypto.litcoffee - Shrub</title>
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../../css/highlight.css">
+  <link href="../../../css/extra.css" rel="stylesheet">
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="../../../js/highlight.pack.js"></script>
+  <script src="../../../js/theme.js"></script>
+
+  <style>
+    body {font-size: 90%;}
+    pre, code {font-size: 100%;}
+    h3, h4, h5, h6 {color: #2980b9; font-weight: 300}
+  </style> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../../.." class="icon icon-home"> Shrub</a>
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+      <ul class="current">
+    
+        
+        <span>Reference</span>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../hooks">Hooks</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../packages">Packages</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../todos">TODO list</a>
+                    
+                </li>
+            
+        
+
+    
+        
+        <span>Source code</span>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../client/app">client/app.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../client/modules/angular">client/modules/angular.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../client/modules/config">client/modules/config.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../client/modules/errors">client/modules/errors.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../client/modules/logging">client/modules/logging.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../client/modules/middleware">client/modules/middleware.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../client/modules/pkgman">client/modules/pkgman.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../client/packages">client/packages.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../client/require">client/require.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../dox">dox.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../packages/shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../packages/shrub-angular">packages/shrub-angular/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../packages/shrub-form">packages/shrub-form/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="..">server.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../bootstrap">server/bootstrap.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../config">server/config.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 current">
+                    <a class="current" href=".">server/crypto.litcoffee</a>
+                    
+                        <ul>
+                        
+                            <li class="toctree-l2"><a href="#crypto">Crypto</a></li>
+                            
+                                <li><a class="toctree-l3" href="#cryptoencrypt">crypto.encrypt</a></li>
+                            
+                                <li><a class="toctree-l3" href="#cryptodecrypt">crypto.decrypt</a></li>
+                            
+                                <li><a class="toctree-l3" href="#cryptohasher">crypto.hasher</a></li>
+                            
+                        
+                        </ul>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../logging">server/logging.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../sandboxes">server/sandboxes.litcoffee</a>
+                    
+                </li>
+            
+        
+
+    
+</ul>
+
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
+        <a href="../../.."></a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../..">Docs</a> &raquo;</li>
+    <li>server/crypto.litcoffee</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="https://github.com/cha0s/shrub" class="icon icon-github"> Edit on GitHub</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              <h1 id="crypto">Crypto</h1>
+<p><em>Cryptographic helper functions.</em></p>
+<pre><code>crypto = require 'crypto'
+config = require 'config'
+Promise = require 'bluebird'
+</code></pre>
+<h2 id="cryptoencrypt">crypto.encrypt</h2>
+<ul>
+<li>(string) <code>message</code> - The message to encrypt.</li>
+<li>(optional string) <code>password</code> - The password to use to encrypt the message.
+  Defaults to the site's global crypto key.</li>
+</ul>
+<p><em>AES encrypt a message with a password.</em></p>
+<pre><code>exports.encrypt = (message, password) -&gt;
+
+  new Promise (resolve, reject) -&gt;
+
+    cipher = crypto.createCipher(
+      'aes256'
+      password ? config.get 'packageSettings:shrub-core:cryptoKey'
+    )
+
+    cipherText = []
+    cipherText.push cipher.update message, 'binary', 'hex'
+    cipherText.push cipher.final 'hex'
+    resolve cipherText.join ''
+</code></pre>
+<h2 id="cryptodecrypt">crypto.decrypt</h2>
+<ul>
+<li>(string) <code>message</code> - The message to decrypt.</li>
+<li>(optional string) <code>password</code> - The password to use to decrypt the message.
+  Defaults to the site's global crypto key.</li>
+</ul>
+<p><em>AES decrypt a message with a password.</em></p>
+<pre><code>exports.decrypt = (message, password) -&gt;
+
+  new Promise (resolve, reject) -&gt;
+
+    decipher = crypto.createDecipher(
+      'aes256'
+      password ? config.get 'packageSettings:shrub-core:cryptoKey'
+    )
+    decipher.setAutoPadding false
+
+    decipherText = []
+    decipherText.push decipher.update message, 'hex', 'binary'
+    decipherText.push decipher.final 'binary'
+    decipherText = decipherText.join ''
+
+    # Slice off any padding.
+    if 16 &gt;= code = decipherText.charCodeAt decipherText.length - 1
+      decipherText = decipherText.slice 0, -code
+
+    resolve decipherText
+</code></pre>
+<h2 id="cryptohasher">crypto.hasher</h2>
+<p>CREDIT:
+<a href="https://gist.github.com/boronine/3548196">https://gist.github.com/boronine/3548196</a>
+cha0s promisify'd it and made it work with Buffer objects.</p>
+<ul>
+<li>(object) <code>options</code> - The options to use. The options object may include the
+  following values:<ul>
+<li><code>plaintext</code>: The plaintext password to hash and return as <code>key</code>. If none
+  is provided, an 8-character random plaintext password will be generated.</li>
+<li><code>salt</code>: The salt to hash the password with. If none is provided, a
+  512-bit salt will be generated.</li>
+<li><code>iterations</code>: The number of iterations to use for the PBKDF. Defaults to
+  10000. <strong>NOTE:</strong> This <strong><em>must</em></strong> be the same number when generating and
+  verifying hashes, otherwise verification will fail.</li>
+</ul>
+</li>
+</ul>
+<p><em>Cryptographic authentication functionality.</em></p>
+<pre><code>exports.hasher = (options = {}) -&gt;
+</code></pre>
+<p>Generate random 8-character base64 password if none provided</p>
+<pre><code>  unless options.plaintext?
+
+    return exports.randomBytes(6).then((buffer) -&gt;
+      options.plaintext = buffer.toString 'base64'
+      exports.hasher options
+    )
+</code></pre>
+<p>Generate random 512-bit salt if no salt provided</p>
+<pre><code>  unless options.salt?
+
+    return exports.randomBytes(64).then((buffer) -&gt;
+      options.salt = buffer
+      exports.hasher options
+    )
+
+  # Node.js PBKDF2 forces sha1
+  options.hash = 'sha1'
+  options.iterations = options.iterations ? 10000
+
+  exports.pbkdf2(
+    options.plaintext, options.salt, options.iterations, 64
+
+  ).then (key) -&gt;
+    options.key = new Buffer key
+    options
+</code></pre>
+<p>Promisify some useful node.js crypto functions.</p>
+<pre><code>exports.pbkdf2 = Promise.promisify crypto.pbkdf2, crypto
+exports.randomBytes = Promise.promisify crypto.randomBytes, crypto
+</code></pre>
+
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../logging" class="btn btn-neutral float-right" title="server/logging.litcoffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../config" class="btn btn-neutral" title="server/config.litcoffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+    <!-- Copyright etc -->
+    </p>
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+        
+            <a class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+        
+      <span><a href="../config" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      <span style="margin-left: 15px"><a href="../logging" style="color: #fcfcfc">Next &raquo;</a></span>
+    </span>
+</div>
+</body>
+</html>

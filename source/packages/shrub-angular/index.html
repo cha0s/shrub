@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>packages/shrub-angular/index.litcoffee - Shrub</title>
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../../css/highlight.css">
+  <link href="../../../css/extra.css" rel="stylesheet">
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="../../../js/highlight.pack.js"></script>
+  <script src="../../../js/theme.js"></script>
+
+  <style>
+    body {font-size: 90%;}
+    pre, code {font-size: 100%;}
+    h3, h4, h5, h6 {color: #2980b9; font-weight: 300}
+  </style> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../../.." class="icon icon-home"> Shrub</a>
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+      <ul class="current">
+    
+        
+        <span>Reference</span>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../hooks">Hooks</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../packages">Packages</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../todos">TODO list</a>
+                    
+                </li>
+            
+        
+
+    
+        
+        <span>Source code</span>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../client/app">client/app.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../client/modules/angular">client/modules/angular.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../client/modules/config">client/modules/config.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../client/modules/errors">client/modules/errors.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../client/modules/logging">client/modules/logging.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../client/modules/middleware">client/modules/middleware.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../client/modules/pkgman">client/modules/pkgman.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../client/packages">client/packages.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../client/require">client/require.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../dox">dox.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="client">packages/shrub-angular/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 current">
+                    <a class="current" href=".">packages/shrub-angular/index.litcoffee</a>
+                    
+                        <ul>
+                        
+                            <li class="toctree-l2"><a href="#angular-on-the-server">Angular on the server</a></li>
+                            
+                                <li><a class="toctree-l3" href="#todo-sandbox-pool-might-be-better-handled-by-sandboxes">TODO: Sandbox pool, might be better handled by sandboxes.</a></li>
+                            
+                                <li><a class="toctree-l3" href="#implements-hook-endpoint">Implements hook endpoint.</a></li>
+                            
+                                <li><a class="toctree-l3" href="#implements-hook-httpmiddleware">Implements hook httpMiddleware.</a></li>
+                            
+                                <li><a class="toctree-l3" href="#implements-hook-bootstrapmiddleware">Implements hook bootstrapMiddleware.</a></li>
+                            
+                                <li><a class="toctree-l3" href="#invoke-hook-angularnavigationmiddleware">Invoke hook angularNavigationMiddleware.</a></li>
+                            
+                                <li><a class="toctree-l3" href="#implements-hook-packagesettings">Implements hook packageSettings.</a></li>
+                            
+                                <li><a class="toctree-l3" href="#constructor">constructor</a></li>
+                            
+                                <li><a class="toctree-l3" href="#sandboxmanagercreate">SandboxManager#create</a></li>
+                            
+                                <li><a class="toctree-l3" href="#sandboxclose-monkeypatch">Sandbox#close (monkeypatch)</a></li>
+                            
+                                <li><a class="toctree-l3" href="#sandboxmanagerlookup">SandboxManager#lookup</a></li>
+                            
+                                <li><a class="toctree-l3" href="#sandboxmanagerlookuporcreate">SandboxManager#lookupOrCreate</a></li>
+                            
+                                <li><a class="toctree-l3" href="#sandboxtouch">Sandbox#touch</a></li>
+                            
+                                <li><a class="toctree-l3" href="#sandboxsetrredirectionhtml">Sandbox#(setR|r)edirectionHtml</a></li>
+                            
+                                <li><a class="toctree-l3" href="#sandboxsetrredirectionpath">Sandbox#(setR|r)edirectionPath</a></li>
+                            
+                                <li><a class="toctree-l3" href="#sandboxcatchangularredirection">Sandbox#catchAngularRedirection</a></li>
+                            
+                                <li><a class="toctree-l3" href="#sandboxcheckpathchanges">Sandbox#checkPathChanges</a></li>
+                            
+                                <li><a class="toctree-l3" href="#sandboxnavigate">Sandbox#navigate</a></li>
+                            
+                                <li><a class="toctree-l3" href="#sandboxpathredirectsto">Sandbox#pathRedirectsTo</a></li>
+                            
+                                <li><a class="toctree-l3" href="#sandboxinject">Sandbox#inject</a></li>
+                            
+                        
+                        </ul>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-form">packages/shrub-form/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../server">server.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../server/bootstrap">server/bootstrap.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../server/config">server/config.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../server/crypto">server/crypto.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../server/logging">server/logging.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../server/sandboxes">server/sandboxes.litcoffee</a>
+                    
+                </li>
+            
+        
+
+    
+</ul>
+
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
+        <a href="../../.."></a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../..">Docs</a> &raquo;</li>
+    <li>packages/shrub-angular/index.litcoffee</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="https://github.com/cha0s/shrub" class="icon icon-github"> Edit on GitHub</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              <h1 id="angular-on-the-server">Angular on the server</h1>
+<p><em>A sandboxed version of Angular, for clients lacking JS.</em></p>
+<h6 id="todo-sandbox-pool-might-be-better-handled-by-sandboxes">TODO: Sandbox pool, might be better handled by <a href="../../../source/server/sandboxes">sandboxes</a>.</h6>
+<pre><code>_ = require 'lodash'
+Promise = require 'bluebird'
+url = require 'url'
+
+config = require 'config'
+debug = require('debug') 'shrub:angular'
+middleware = require 'middleware'
+{Sandbox} = require 'sandboxes'
+</code></pre>
+<p>The middleware dispatched every time sandboxed angular is navigated.</p>
+<pre><code>navigationMiddleware = []
+
+exports.pkgmanRegister = (registrar) -&gt;
+</code></pre>
+<h4 id="implements-hook-endpoint">Implements hook <code>endpoint</code>.</h4>
+<p>Allow a JSful client to call us back and inform us that we don't need to
+hold their sandbox.</p>
+<pre><code>  registrar.registerHook 'endpoint', -&gt;
+
+    route: 'shrub.hangup'
+    receiver: (req, fn) -&gt;
+</code></pre>
+<h6 id="todo-cookie-less-clients-wont-have-a-valid-session-id-to-call-with-this-should-be-some-other-token-perhaps-csrf">TODO: Cookie-less clients won't have a valid session ID to call with. This should be some other token, perhaps CSRF.</h6>
+<pre><code>      id = req.session?.id
+      if (sandbox = sandboxManager.lookup id)?
+        sandbox.close().finally -&gt; fn()
+      else
+        fn()
+</code></pre>
+<h4 id="implements-hook-httpmiddleware">Implements hook <code>httpMiddleware</code>.</h4>
+<p>If configuration dictates, render the client-side Angular application in a
+sandbox.</p>
+<pre><code>  registrar.registerHook 'httpMiddleware', (http) -&gt;
+
+    label: 'Render page with Angular'
+    middleware: [
+
+      (req, res, next) -&gt;
+</code></pre>
+<p>Skip render in a sandbox?</p>
+<pre><code>        settings = config.get 'packageSettings:shrub-angular'
+        return next() unless settings.render
+</code></pre>
+<p>Thrown when a request is complete.</p>
+<pre><code>        class ResponseComplete extends Error
+          constructor: (@message) -&gt;
+
+        # } After the template is rendered, lookup or create the sandbox.
+        Promise.resolve(req.delivery).bind({}).then((html) -&gt;
+
+          sandboxManager.lookupOrCreate(
+            html
+          ,
+            cookie: req.headers.cookie
+</code></pre>
+<h6 id="todo-multiline">TODO: Multiline.</h6>
+<pre><code>            url: "http://localhost:#{config.get 'packageSettings:shrub-http:port'}/shrub-entry-point"
+          ,
+            req.session.id
+          )
+
+        ).then((@sandbox) -&gt;
+</code></pre>
+<p>Emit the HTML from before the last redirection.</p>
+<pre><code>          if (redirectionHtml = @sandbox.redirectionHtml())?
+            @sandbox.setRedirectionHtml null
+            res.end redirectionHtml
+            throw new ResponseComplete()
+</code></pre>
+<p>Check for any new redirection and handle it.</p>
+<pre><code>          if (redirectionPath = @sandbox.redirectionPath())?
+            @sandbox.setRedirectionPath null
+            res.redirect redirectionPath
+            throw new ResponseComplete()
+
+          {path} = url.parse req.url
+          @sandbox.navigate path, req.body
+
+        ).then(-&gt;
+
+          emission = @sandbox.emitHtml()
+</code></pre>
+<p>If a redirect happened in the sandbox, actually redirect
+the browser and save the emission for the next request.</p>
+<pre><code>          if (redirectionPath = @sandbox.redirectionPath())?
+            @sandbox.setRedirectionPath null
+            @sandbox.setRedirectionHtml emission
+            res.redirect redirectionPath
+</code></pre>
+<p>Otherwise, just emit.</p>
+<pre><code>          else
+
+            req.delivery = emission
+            next()
+</code></pre>
+<p>The request was completed early.</p>
+<pre><code>        ).catch(ResponseComplete, -&gt;
+
+        ).catch next
+
+  ]
+</code></pre>
+<h4 id="implements-hook-bootstrapmiddleware">Implements hook <code>bootstrapMiddleware</code>.</h4>
+<pre><code>  registrar.registerHook 'bootstrapMiddleware', -&gt;
+
+    label: 'Bootstrap Angular'
+    middleware: [
+
+      (next) -&gt;
+</code></pre>
+<p>Always disable sandbox rendering in end-to-end testing mode.</p>
+<pre><code>        if config.get 'E2E'
+          config.set 'packageSettings:shrub-angular:render', false
+</code></pre>
+<h4 id="invoke-hook-angularnavigationmiddleware">Invoke hook <code>angularNavigationMiddleware</code>.</h4>
+<p>Load the navigation middleware.</p>
+<pre><code>        navigationMiddleware = middleware.fromShortName(
+          'angular navigation', 'shrub-angular'
+        )
+
+        next()
+
+    ]
+</code></pre>
+<h4 id="implements-hook-packagesettings">Implements hook <code>packageSettings</code>.</h4>
+<pre><code>  registrar.registerHook 'packageSettings', -&gt;
+</code></pre>
+<p>Default navigation middleware.</p>
+<pre><code>    navigationMiddleware: [
+      'shrub-form'
+    ]
+</code></pre>
+<p>Should we render in the sandbox?</p>
+<pre><code>    render: true
+</code></pre>
+<p>Time-to-live for rendering sandboxes.</p>
+<pre><code>    ttl: 1000 * 60 * 5
+</code></pre>
+<p>This class handles instantiation of new sandboxes, as well as providing a
+mechanism for registering and looking up persistent sandboxes using an id.</p>
+<pre><code>sandboxManager = new class SandboxManager
+</code></pre>
+<h2 id="constructor"><em>constructor</em></h2>
+<p><em>Initialize the persistent store.</em></p>
+<pre><code>  constructor: -&gt;
+
+    @_sandboxes = {}
+</code></pre>
+<h2 id="sandboxmanagercreate">SandboxManager#create</h2>
+<ul>
+<li>(string) <code>html</code> - The HTML to use as the sandbox document.</li>
+<li>(string) <code>cookie</code> - The cookie to use for the document.</li>
+<li>(optional string) <code>id</code> - An ID for looking up this sandbox later.</li>
+</ul>
+<p><em>Create a sandbox.</em></p>
+<pre><code>  create: (html, options, id = null) -&gt;
+
+    debug "Creating sandbox ID: #{id}"
+
+    sandbox = new Sandbox()
+    sandbox.id = id
+</code></pre>
+<h2 id="sandboxclose-monkeypatch">Sandbox#close (monkeypatch)</h2>
+<p><em>Remove from the manager when closing.</em></p>
+<pre><code>    close = sandbox.close
+    sandbox.close = =&gt;
+      debug "Closing sandbox ID: #{id}"
+
+      @_sandboxes[id] = null
+      close.apply sandbox
+</code></pre>
+<p>Create the document.</p>
+<pre><code>    (@_sandboxes[id] = sandbox).createDocument html, options
+</code></pre>
+<h2 id="sandboxmanagerlookup">SandboxManager#lookup</h2>
+<ul>
+<li>(string) <code>id</code> - An ID for looking up this sandbox later.</li>
+</ul>
+<p><em>Look up a sandbox by ID.</em></p>
+<pre><code>  lookup: (id) -&gt; @_sandboxes[id]?.touch()
+</code></pre>
+<h2 id="sandboxmanagerlookuporcreate">SandboxManager#lookupOrCreate</h2>
+<ul>
+<li>(string) <code>html</code> - The HTML to use as the sandbox document if creating.</li>
+<li>(string) <code>cookie</code> - The cookie to use for the document if creating.</li>
+<li>(optional string) <code>id</code> - An ID either for looking up later (if creating), or
+  as a search now.</li>
+</ul>
+<p><em>Look up a sandbox by ID, or create one if none is registered for this
+ID.</em></p>
+<pre><code>  lookupOrCreate: (html, options, id = null) -&gt;
+
+    if (sandbox = @lookup id)?
+
+      Promise.resolve sandbox
+
+    else
+
+      @create(html, options, id).then (sandbox) -&gt; augmentSandbox sandbox
+</code></pre>
+<p>Augment a sandbox with Angular-specific functionality.</p>
+<pre><code>augmentSandbox = (sandbox) -&gt;
+</code></pre>
+<h2 id="sandboxtouch">Sandbox#touch</h2>
+<p><em>Reset the time-to-live for a sandbox.</em></p>
+<pre><code>  ttl = config.get 'packageSettings:shrub-angular:ttl'
+  toucher = _.debounce (-&gt; sandbox.close()), ttl
+  do sandbox.touch = -&gt;
+    debug "Touched sandbox ID: #{id}"
+
+    toucher()
+    sandbox
+</code></pre>
+<h2 id="sandboxsetrredirectionhtml">Sandbox#(setR|r)edirectionHtml</h2>
+<ul>
+<li>(string) <code>html</code> - The HTML to be deliviered.</li>
+</ul>
+<p><em>HTML to be delivered upon the next request using this sandbox.</em></p>
+<pre><code>  redirectionHtml = null
+  sandbox.redirectionHtml = -&gt; redirectionHtml
+  sandbox.setRedirectionHtml = (html) -&gt; redirectionHtml = html
+</code></pre>
+<h2 id="sandboxsetrredirectionpath">Sandbox#(setR|r)edirectionPath</h2>
+<ul>
+<li>(string) <code>path</code> - The URL path to redirect to.</li>
+</ul>
+<p><em>The path that the client will be redirected to at the end of this
+request.</em></p>
+<pre><code>  redirectionPath = null
+  sandbox.redirectionPath = -&gt; redirectionPath
+  sandbox.setRedirectionPath = (path) -&gt; redirectionPath = path
+</code></pre>
+<h2 id="sandboxcatchangularredirection">Sandbox#catchAngularRedirection</h2>
+<ul>
+<li>(string) <code>path</code> - URL path.</li>
+</ul>
+<p><em>Check whether Angular was redirected, and set the client redirection
+path if it was.</em></p>
+<pre><code>  sandbox.catchAngularRedirection = (path) -&gt;
+    self = this
+
+    @inject [
+      '$location'
+      ($location) -&gt;
+
+        return if path is $location.url()
+
+        if redirect = self.pathRedirectsTo $location.url()
+          self.setRedirectionPath redirect
+        else
+          self.setRedirectionPath $location.url()
+
+    ]
+</code></pre>
+<h2 id="sandboxcheckpathchanges">Sandbox#checkPathChanges</h2>
+<ul>
+<li>(string) <code>path</code> - URL path.</li>
+</ul>
+<p><em>Check whether the navigation path is different than the current Angular
+location path. If it is, redirect Angular.</em></p>
+<pre><code>  sandbox.checkPathChanges = (path) -&gt;
+    self = this
+
+    new Promise (resolve) -&gt;
+
+      self.inject [
+        '$location', '$rootScope'
+        ($location, $rootScope) -&gt;
+
+          # } Nowhere to go?
+          return resolve() if path is url.parse(self.url()).path
+
+          # } Navigate Angular to the request path.
+          unlisten = $rootScope.$on 'shrub.core.routeRendered', -&gt;
+            unlisten()
+            resolve()
+
+          $rootScope.$apply -&gt; $location.path path
+
+      ]
+</code></pre>
+<h2 id="sandboxnavigate">Sandbox#navigate</h2>
+<ul>
+<li>(string) <code>path</code> - URL path.</li>
+<li>(string) <code>body</code> - Request body.</li>
+</ul>
+<p><em>Navigate angular to a path, and dispatch navigation middleware.</em></p>
+<pre><code>  sandbox.navigate = (path, body) -&gt;
+    self = this
+
+    @checkPathChanges(path).then -&gt;
+
+      new Promise (resolve, reject) -&gt;
+
+        req =
+          body: body
+          path: path
+          sandbox: sandbox
+</code></pre>
+<h6 id="todo-remove-unused-res-parameter">TODO: Remove unused <code>res</code> parameter.</h6>
+<pre><code>        navigationMiddleware.dispatch req, null, (error) =&gt;
+          return reject error if error?
+
+          self.catchAngularRedirection path
+          resolve()
+</code></pre>
+<h2 id="sandboxpathredirectsto">Sandbox#pathRedirectsTo</h2>
+<ul>
+<li>(string) <code>path</code> - URL path.</li>
+</ul>
+<p><em>Check where a path would be redirected by Angular's router.</em></p>
+<pre><code>  sandbox.pathRedirectsTo = (path) -&gt;
+
+    routes = null
+
+    @inject [
+      '$route'
+      ($route) -&gt; routes = $route.routes
+    ]
+</code></pre>
+<p>Perfect match.</p>
+<pre><code>    if routes[path]?
+</code></pre>
+<p>Does this path redirect? Do an HTTP redirect.</p>
+<pre><code>      return routes[path].redirectTo if routes[path].redirectTo?
+
+    else
+
+      match = false
+</code></pre>
+<p>Check for any regexs.</p>
+<pre><code>      for key, route of routes
+        if route.regexp?.test path
+</code></pre>
+<h6 id="todo-need-to-extract-params-to-build-redirectto-its-a-small-enough-mismatch-to-ignore-for-now">TODO: Need to extract params to build redirectTo, it's a small enough mismatch to ignore for now.</h6>
+<pre><code>          return
+</code></pre>
+<p>Angular's $routeProvider.otherwise() target.</p>
+<pre><code>      return routes[null].redirectTo if routes[null]?
+</code></pre>
+<h2 id="sandboxinject">Sandbox#inject</h2>
+<ul>
+<li>(mixed) <code>injectable</code> - An annotated function to inject with
+  dependencies.</li>
+</ul>
+<p><em>Inject an
+<a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>
+with dependencies.</em></p>
+<pre><code>  sandbox.inject = (injectable) -&gt;
+
+    injector = @_window.angular.element(@_window.document).injector()
+    injector.invoke injectable
+</code></pre>
+<p>Make sure the socket is dead.</p>
+<pre><code>  sandbox.registerCleanupFunction -&gt;
+
+    new Promise (resolve) -&gt;
+
+      sandbox.inject [
+        'shrub-socket'
+        (socket) -&gt;
+
+          socket.on 'disconnect', -&gt; resolve()
+          socket.disconnect()
+
+      ]
+
+  new Promise (resolve) -&gt;
+
+    sandbox.inject [
+      '$sniffer', 'shrub-socket'
+      ($sniffer, socket) -&gt;
+</code></pre>
+<p>Don't even try HTML 5 history on the server side.</p>
+<pre><code>        $sniffer.history = false
+</code></pre>
+<p>Let the socket finish initialization.</p>
+<pre><code>        socket.on 'initialized', -&gt; resolve sandbox
+
+    ]
+</code></pre>
+
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../shrub-form" class="btn btn-neutral float-right" title="packages/shrub-form/index.litcoffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="client" class="btn btn-neutral" title="packages/shrub-angular/client/index.litcoffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+    <!-- Copyright etc -->
+    </p>
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+        
+            <a class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+        
+      <span><a href="client" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      <span style="margin-left: 15px"><a href="../shrub-form" style="color: #fcfcfc">Next &raquo;</a></span>
+    </span>
+</div>
+</body>
+</html>

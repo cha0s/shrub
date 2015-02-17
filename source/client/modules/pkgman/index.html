@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>client/modules/pkgman.litcoffee - Shrub</title>
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../css/highlight.css">
+  <link href="../../../../css/extra.css" rel="stylesheet">
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="../../../../js/highlight.pack.js"></script>
+  <script src="../../../../js/theme.js"></script>
+
+  <style>
+    body {font-size: 90%;}
+    pre, code {font-size: 100%;}
+    h3, h4, h5, h6 {color: #2980b9; font-weight: 300}
+  </style> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../../../.." class="icon icon-home"> Shrub</a>
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+      <ul class="current">
+    
+        
+        <span>Reference</span>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../../hooks">Hooks</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../../packages">Packages</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../../todos">TODO list</a>
+                    
+                </li>
+            
+        
+
+    
+        
+        <span>Source code</span>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../app">client/app.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../angular">client/modules/angular.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../config">client/modules/config.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../errors">client/modules/errors.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../logging">client/modules/logging.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../middleware">client/modules/middleware.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 current">
+                    <a class="current" href=".">client/modules/pkgman.litcoffee</a>
+                    
+                        <ul>
+                        
+                            <li class="toctree-l2"><a href="#package-manager">Package manager</a></li>
+                            
+                                <li><a class="toctree-l3" href="#constructor">constructor</a></li>
+                            
+                                <li><a class="toctree-l3" href="#pkgmanregistrarpath">PkgmanRegistrar#path</a></li>
+                            
+                                <li><a class="toctree-l3" href="#pkgmanregistrarrecur">PkgmanRegistrar#recur</a></li>
+                            
+                                <li><a class="toctree-l3" href="#pkgmanregistrarregisterhook">PkgmanRegistrar#registerHook</a></li>
+                            
+                                <li><a class="toctree-l3" href="#pkgmanrebuildpackagecache">pkgman.rebuildPackageCache</a></li>
+                            
+                                <li><a class="toctree-l3" href="#pkgmanregisterpackagelist">pkgman.registerPackageList</a></li>
+                            
+                                <li><a class="toctree-l3" href="#pkgmaninvoke">pkgman.invoke</a></li>
+                            
+                                <li><a class="toctree-l3" href="#pkgmaninvokeflat">pkgman.invokeFlat</a></li>
+                            
+                                <li><a class="toctree-l3" href="#pkgmaninvokepackage">pkgman.invokePackage</a></li>
+                            
+                                <li><a class="toctree-l3" href="#pkgmanpackageexists">pkgman.packageExists</a></li>
+                            
+                                <li><a class="toctree-l3" href="#pkgmanpackagesimplementing">pkgman.packagesImplementing</a></li>
+                            
+                                <li><a class="toctree-l3" href="#pkgmannormalizepath">pkgman.normalizePath</a></li>
+                            
+                        
+                        </ul>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../packages">client/packages.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../require">client/require.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../dox">dox.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../packages/shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../packages/shrub-angular">packages/shrub-angular/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../packages/shrub-form">packages/shrub-form/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../server">server.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../server/bootstrap">server/bootstrap.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../server/config">server/config.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../server/crypto">server/crypto.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../server/logging">server/logging.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../server/sandboxes">server/sandboxes.litcoffee</a>
+                    
+                </li>
+            
+        
+
+    
+</ul>
+
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
+        <a href="../../../.."></a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../..">Docs</a> &raquo;</li>
+    <li>client/modules/pkgman.litcoffee</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="https://github.com/cha0s/shrub" class="icon icon-github"> Edit on GitHub</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              <h1 id="package-manager">Package manager</h1>
+<p><em>Registers packages and handles hook registration and invocation as well as
+introspection.</em></p>
+<pre><code>debug = require('debug') 'shrub:pkgman'
+debugSilly = require('debug') 'shrub-silly:pkgman'
+</code></pre>
+<p>Index by hook and path for faster invocation and introspection.</p>
+<pre><code>hookIndex = {}
+pathIndex = {}
+</code></pre>
+<p>A list of registered packages.</p>
+<pre><code>_packages = []
+
+class PkgmanRegistrar
+</code></pre>
+<p>Registrar function passed to packages to allow them to register hooks and/or
+recur into their own subpackages to allow them to.</p>
+<h2 id="constructor"><em>constructor</em></h2>
+<p><em>Instantiate the registrar with the current (sub)package path.</em></p>
+<pre><code>  constructor: (@_path) -&gt;
+</code></pre>
+<h2 id="pkgmanregistrarpath">PkgmanRegistrar#path</h2>
+<p><em>Get the current (sub) package path.</em></p>
+<pre><code>  path: -&gt; @_path
+</code></pre>
+<h2 id="pkgmanregistrarrecur">PkgmanRegistrar#recur</h2>
+<ul>
+<li>(string array) <code>paths</code> - The list of submodule paths to register.</li>
+</ul>
+<p><em>Recur into subpackages to register them and allow them to register hooks
+and/or recur further.</em></p>
+<pre><code>  recur: (paths) -&gt;
+
+    for path in paths
+
+      subpath = "#{@_path}/#{path}"
+
+      debugSilly "Requiring #{subpath}"
+      submodule = require subpath
+      debugSilly "Required #{subpath}"
+
+      debugSilly "Registering hooks for #{subpath}"
+      submodule.pkgmanRegister? new PkgmanRegistrar subpath
+      debugSilly "Registered hooks for #{subpath}"
+
+    return
+</code></pre>
+<h2 id="pkgmanregistrarregisterhook">PkgmanRegistrar#registerHook</h2>
+<ul>
+<li>
+<p>(optional string) <code>submodule</code> - Register this hook under a submodule. This is
+  a convenience for when you might need to register more than one
+  implementation of a hook, bur prefer to keep both implementations in the same
+  physical file.</p>
+</li>
+<li>
+<p>(string) <code>hook</code> - The name of the hook to register.</p>
+</li>
+<li>
+<p>(function) <code>impl</code> - The hook implementation function. This is invoked when
+  the hook is invoked. The signature of the implementation function may vary,
+  consult the documentation for the specific hook to learn more.</p>
+</li>
+</ul>
+<h6 id="todo-link-to-an-instance-of-using-the-submodule-arg-in-core-if-one-exists">TODO: Link to an instance of using the <code>submodule</code> arg in core if one exists.</h6>
+<pre><code>  registerHook: (submodule, hook, impl) -&gt;
+</code></pre>
+<p>If <code>submodule</code> was passed in, modify the path this hook is registered against.</p>
+<pre><code>    if impl?
+
+      path = "#{@_path}/#{submodule}"
+</code></pre>
+<p>Otherwise, fix up the args.</p>
+<pre><code>    else
+
+      path = @_path
+      impl = hook
+      hook = submodule
+</code></pre>
+<p>Populate the indexes with the registered hook.</p>
+<pre><code>    debugSilly "Registering hook #{hook}"
+
+    (hookIndex[hook] ?= []).push path
+    (pathIndex[path] ?= {})[hook] = impl
+
+    debugSilly "Registered hook #{hook}"
+</code></pre>
+<h2 id="pkgmanrebuildpackagecache">pkgman.rebuildPackageCache</h2>
+<p><em>Rebuild the package cache.</em> <strong>Do not invoke this unless you are absolutely
+sure you know what you're doing.</strong></p>
+<pre><code>exports.rebuildPackageCache = -&gt;
+  modules = {}
+  hookIndex = {}
+  pathIndex = {}
+
+  for name in _packages
+</code></pre>
+<p>Try to require the package module.</p>
+<pre><code>    try
+
+      debugSilly "Requiring package #{name}"
+
+      module_ = require name
+
+    catch error
+</code></pre>
+<p>Suppress missing package errors.</p>
+<pre><code>      if error.toString() is "Error: Cannot find module '#{name}'"
+        debug "Missing package #{name}."
+        continue
+
+      throw error
+
+    debugSilly "Required package #{name}"
+
+    modules[name] = module_
+</code></pre>
+<p>Register hooks.</p>
+<pre><code>  for path, module_ of modules
+
+    debugSilly "Registering hooks for #{path}"
+    module_.pkgmanRegister? new PkgmanRegistrar path
+    debugSilly "Registered hooks for #{path}"
+
+  return
+</code></pre>
+<h2 id="pkgmanregisterpackagelist">pkgman.registerPackageList</h2>
+<ul>
+<li>(string array) <code>packages</code> - The list of packages to register.</li>
+</ul>
+<p><em>Register a list of packages.</em></p>
+<pre><code>exports.registerPackageList = (packages) -&gt;
+  _packages.push.apply _packages, packages
+  exports.rebuildPackageCache()
+</code></pre>
+<h2 id="pkgmaninvoke">pkgman.invoke</h2>
+<ul>
+<li>(string) <code>hook</code> - The name of the hook to invoke.</li>
+<li>(args...) <code>args</code> - Arguments to pass along to implementations of the hook.</li>
+</ul>
+<p><em>Invoke a hook with arguments. Return the result as an object, keyed by package
+path.</em></p>
+<pre><code>exports.invoke = (hook, args...) -&gt;
+
+  results = {}
+
+  for path in exports.packagesImplementing hook
+    results[path] = exports.invokePackage path, hook, args...
+
+  return results
+</code></pre>
+<h2 id="pkgmaninvokeflat">pkgman.invokeFlat</h2>
+<ul>
+<li>(string) <code>hook</code> - The name of the hook to invoke.</li>
+<li>(args...) <code>args</code> - Arguments to pass along to implementations of the hook.</li>
+</ul>
+<p><em>Invoke a hook with arguments. Return the result as an array.</em></p>
+<pre><code>exports.invokeFlat = (hook, args...) -&gt;
+
+  for path in exports.packagesImplementing hook
+    exports.invokePackage path, hook, args...
+</code></pre>
+<h2 id="pkgmaninvokepackage">pkgman.invokePackage</h2>
+<ul>
+<li>(string) <code>path</code> - The path of the package whose implementation we're
+  invoking.</li>
+<li>(string) <code>hook</code> - The name of the hook to invoke.</li>
+<li>(args...) <code>args</code> - Arguments to pass along to the hook implementation.</li>
+</ul>
+<p><em>Invoke a package's implementation of a hook with arguments. Return the
+result.</em></p>
+<pre><code>exports.invokePackage = (path, hook, args...) -&gt;
+  pathIndex?[path]?[hook]? args...
+</code></pre>
+<h2 id="pkgmanpackageexists">pkgman.packageExists</h2>
+<ul>
+<li>(string) <code>name</code> - The name of the package to check.</li>
+</ul>
+<p><em>Check whether a package exists.</em></p>
+<pre><code>exports.packageExists = (name) -&gt; -1 isnt _packages.indexOf name
+</code></pre>
+<h2 id="pkgmanpackagesimplementing">pkgman.packagesImplementing</h2>
+<ul>
+<li>(string) <code>hook</code> - The hook to check.</li>
+</ul>
+<p><em>Return a list of packages implementing the hook.</em></p>
+<pre><code>exports.packagesImplementing = (hook) -&gt; hookIndex?[hook] ? []
+</code></pre>
+<h2 id="pkgmannormalizepath">pkgman.normalizePath</h2>
+<ul>
+<li>(string) <code>path</code> - The path to normalize.</li>
+</ul>
+<p><em>Converts a package path (e.g. <code>shrub-user/login</code>) to a normalized path (e.g.
+<code>shrubUserLogin</code>).</em></p>
+<pre><code>exports.normalizePath = (path) -&gt;
+
+  i8n = require 'inflection'
+
+  parts = for part, i in path.split '/'
+    i8n.camelize(
+      part.replace /[^\w]/g, '_'
+      0 is i
+    )
+
+  i8n.camelize (i8n.underscore parts.join ''), true
+</code></pre>
+
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../packages" class="btn btn-neutral float-right" title="client/packages.litcoffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../middleware" class="btn btn-neutral" title="client/modules/middleware.litcoffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+    <!-- Copyright etc -->
+    </p>
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+        
+            <a class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+        
+      <span><a href="../middleware" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      <span style="margin-left: 15px"><a href="../../packages" style="color: #fcfcfc">Next &raquo;</a></span>
+    </span>
+</div>
+</body>
+</html>

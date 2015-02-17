@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>client/modules/middleware.litcoffee - Shrub</title>
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../css/highlight.css">
+  <link href="../../../../css/extra.css" rel="stylesheet">
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="../../../../js/highlight.pack.js"></script>
+  <script src="../../../../js/theme.js"></script>
+
+  <style>
+    body {font-size: 90%;}
+    pre, code {font-size: 100%;}
+    h3, h4, h5, h6 {color: #2980b9; font-weight: 300}
+  </style> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../../../.." class="icon icon-home"> Shrub</a>
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+      <ul class="current">
+    
+        
+        <span>Reference</span>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../../hooks">Hooks</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../../packages">Packages</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../../todos">TODO list</a>
+                    
+                </li>
+            
+        
+
+    
+        
+        <span>Source code</span>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../app">client/app.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../angular">client/modules/angular.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../config">client/modules/config.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../errors">client/modules/errors.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../logging">client/modules/logging.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 current">
+                    <a class="current" href=".">client/modules/middleware.litcoffee</a>
+                    
+                        <ul>
+                        
+                            <li class="toctree-l2"><a href="#abstract-middleware-stacks">Abstract middleware stacks</a></li>
+                            
+                                <li><a class="toctree-l3" href="#constructor">constructor</a></li>
+                            
+                                <li><a class="toctree-l3" href="#middlwareuse">Middlware#use</a></li>
+                            
+                                <li><a class="toctree-l3" href="#middlewaredispatch">Middleware#dispatch</a></li>
+                            
+                                <li><a class="toctree-l3" href="#middlewarefromhook">middleware.fromHook</a></li>
+                            
+                                <li><a class="toctree-l3" href="#middlewarefromshortname">middleware.fromShortName</a></li>
+                            
+                        
+                        </ul>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../pkgman">client/modules/pkgman.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../packages">client/packages.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../require">client/require.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../dox">dox.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../packages/shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../packages/shrub-angular">packages/shrub-angular/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../packages/shrub-form">packages/shrub-form/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../server">server.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../server/bootstrap">server/bootstrap.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../server/config">server/config.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../server/crypto">server/crypto.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../server/logging">server/logging.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../server/sandboxes">server/sandboxes.litcoffee</a>
+                    
+                </li>
+            
+        
+
+    
+</ul>
+
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
+        <a href="../../../.."></a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../..">Docs</a> &raquo;</li>
+    <li>client/modules/middleware.litcoffee</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="https://github.com/cha0s/shrub" class="icon icon-github"> Edit on GitHub</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              <h1 id="abstract-middleware-stacks">Abstract middleware stacks</h1>
+<pre><code>{EventEmitter} = require 'events'
+
+config = require 'config'
+pkgman = require 'pkgman'
+
+exports.Middleware = class Middleware extends EventEmitter
+</code></pre>
+<p>Implements a middleware stack. Middleware functions can be added to the stack
+with <code>use</code>. Calling <code>dispatch</code> invokes the middleware functions serially.</p>
+<p>Each middleware accepts an arbitrary parameters and finally a <code>next</code> function.
+When a middleware finishes, it must call the <code>next</code> function. If there was an
+error, it must be thrown or passed as the first argument to <code>next</code>. If no error
+occurred, <code>next</code> must be invoked without arguments.</p>
+<p>Error-handling middleware can also be defined. These middleware take an
+additional parameter at the beginning of the function signature: <code>error</code>.
+Error-handling middleware are only called if a previous middleware threw or
+passed an error. Conversely, non-error-handling middleware are skipped if a
+previous error occurred.</p>
+<h2 id="constructor"><em>constructor</em></h2>
+<p><em>Create a middleware stack.</em></p>
+<pre><code>  constructor: -&gt; @_middleware = []
+</code></pre>
+<h2 id="middlwareuse">Middlware#use</h2>
+<ul>
+<li>(function) <code>fn</code> - A middleware function.</li>
+</ul>
+<p><em>Add a middleware function to the stack.</em></p>
+<pre><code>  use: (fn) -&gt; @_middleware.push fn
+</code></pre>
+<h2 id="middlewaredispatch">Middleware#dispatch</h2>
+<ul>
+<li>(mixed) <code>...</code> - One or more values to pass to the middleware.</li>
+<li>(function) <code>fn</code> - A function invoked when the middleware stack has
+  finished. If an error occurred, it will be passed as the first
+  argument.</li>
+</ul>
+<p><em>Invoke the middleware functions serially.</em></p>
+<pre><code>  dispatch: (args..., fn) -&gt;
+    self = this
+
+    index = 0
+
+    invoke = (error) -&gt;
+
+      self.emit 'invoked', self._middleware[index - 1] if index &gt; 0
+</code></pre>
+<p>Call <code>fn</code> with any error if we're done.</p>
+<pre><code>      return fn error if index is self._middleware.length
+
+      current = self._middleware[index++]
+</code></pre>
+<p>Error-handling middleware.</p>
+<pre><code>      if current.length is args.length + 2
+</code></pre>
+<p>An error occurred previously.</p>
+<pre><code>        if error?
+</code></pre>
+<p>Try to invoke the middleware, if it throws, just catch the error and pass it
+along.</p>
+<pre><code>          try
+            localArgs = args.concat()
+            localArgs.unshift error
+            localArgs.push invoke
+            self.emit 'invoking', current
+            current localArgs...
+          catch error
+            invoke error
+</code></pre>
+<p>No previous error; skip this middleware.</p>
+<pre><code>        else
+
+          invoke error
+</code></pre>
+<p>Non-error-handling middleware.</p>
+<pre><code>      else
+</code></pre>
+<p>An error occurred previously, skip this middleware.</p>
+<pre><code>        if error?
+
+          invoke error
+</code></pre>
+<p>No previous error.</p>
+<pre><code>        else
+</code></pre>
+<p>Try to invoke the middleware, if it throws, just catch the error and pass it along.</p>
+<pre><code>          try
+            localArgs = args.concat()
+            localArgs.push invoke
+            self.emit 'invoking', current
+            current localArgs...
+          catch error
+            invoke error
+</code></pre>
+<p>Kick things off.</p>
+<pre><code>    invoke()
+
+debug = require('debug') 'shrub:middleware'
+debugSilly = require('debug') 'shrub-silly:middleware'
+</code></pre>
+<h2 id="middlewarefromhook">middleware.fromHook</h2>
+<p><em>Create a middleware stack from the results of a hook and path configuration.</em></p>
+<pre><code>exports.fromHook = (hook, paths, args...) -&gt;
+
+  middleware = new Middleware()
+</code></pre>
+<p>Invoke the hook and <code>use</code> the middleware in the paths configuration order.</p>
+<pre><code>  args.unshift hook
+  hookResults = pkgman.invoke args...
+  for path in paths ? []
+    continue unless (spec = hookResults[path])?
+
+    debugSilly "- - #{spec.label}"
+
+    for fn in spec.middleware ? []
+      fn.label = spec.label
+      middleware.use fn, spec.label
+
+  middleware.on 'invoking', (fn) -&gt; debugSilly "Invoking #{fn.label}"
+  middleware.on 'invoked', (fn) -&gt; debugSilly "Invoked #{fn.label}"
+
+  middleware
+</code></pre>
+<h2 id="middlewarefromshortname">middleware.fromShortName</h2>
+<p><em>Create a middleware stack from a short name. e.g. "example thing hook".</em></p>
+<p>The short name is converted into log messages, a hook name, and configuration
+key. In the case where we passed in "user before login", this would look
+like:</p>
+<pre><code class="coffeescript">debug &quot;Loading user before login middleware...&quot;
+
+middleware = exports.fromHook(
+    &quot;userBeforeLoginMiddleware&quot;
+    config.get &quot;packageSettings:user:beforeLoginMiddleware&quot;
+)
+
+debug &quot;User before login middleware loaded.&quot;
+</code></pre>
+
+<h6 id="todo-this-is-bad-and-it-should-go-away">TODO: This is bad and it should go away.</h6>
+<pre><code>exports.fromShortName = (shortName, packageName) -&gt;
+
+  i8n = require 'inflection'
+
+  debugSilly "- Loading #{shortName} middleware..."
+
+  [firstPart, keyParts...] = shortName.split ' '
+  packageName ?= firstPart
+  key = keyParts.join '_'
+</code></pre>
+<h6 id="todo-this-really-should-be-unified-making-this-unnecessary">TODO: this really should be unified, making this unnecessary.</h6>
+<pre><code>  configKey = if global? then 'packageSettings' else 'packageConfig'
+
+  middleware = exports.fromHook(
+    "#{firstPart}#{i8n.camelize key}Middleware"
+
+    config.get "#{configKey}:#{packageName}:#{
+      i8n.camelize key, true
+    }Middleware"
+  )
+
+  debugSilly "- #{i8n.capitalize shortName} middleware loaded."
+
+  middleware
+</code></pre>
+
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../pkgman" class="btn btn-neutral float-right" title="client/modules/pkgman.litcoffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../logging" class="btn btn-neutral" title="client/modules/logging.litcoffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+    <!-- Copyright etc -->
+    </p>
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+        
+            <a class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+        
+      <span><a href="../logging" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      <span style="margin-left: 15px"><a href="../pkgman" style="color: #fcfcfc">Next &raquo;</a></span>
+    </span>
+</div>
+</body>
+</html>
