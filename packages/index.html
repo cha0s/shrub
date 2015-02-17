@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
   <link rel="stylesheet" href="../css/highlight.css">
+  <link href="../css/extra.css" rel="stylesheet">
 
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
@@ -42,23 +43,36 @@
       <ul class="current">
     
         
-            <li class="toctree-l1 ">
-                <a class="" href="../hooks">Hooks</a>
-            </li>
-        
-
-    
-        
-            <li class="toctree-l1 current">
-                <a class="current" href=".">Packages</a>
-            </li>
-        
-
-    
-        
-            <li class="toctree-l1 ">
-                <a class="" href="../todos">TODO list</a>
-            </li>
+        <span>Reference</span>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../hooks">Hooks</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 current">
+                    <a class="current" href=".">Packages</a>
+                    
+                        <ul>
+                        
+                            <li class="toctree-l2"><a href="#package-overview">Package overview</a></li>
+                            
+                                <li><a class="toctree-l3" href="#todo-write-a-tutorial-where-we-create-a-package">TODO: Write a tutorial where we create a package.</a></li>
+                            
+                                <li><a class="toctree-l3" href="#client-side">Client-side</a></li>
+                            
+                                <li><a class="toctree-l3" href="#server-side">Server-side</a></li>
+                            
+                        
+                        </ul>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../todos">TODO list</a>
+                    
+                </li>
+            
         
 
     
@@ -67,6 +81,36 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../source/client/app">client/app.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/client/modules/angular">client/modules/angular.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/client/modules/config">client/modules/config.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/client/modules/errors">client/modules/errors.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/client/modules/logging">client/modules/logging.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/client/modules/middleware">client/modules/middleware.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/client/modules/pkgman">client/modules/pkgman.litcoffee</a>
                     
                 </li>
             
@@ -86,12 +130,47 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-angular">packages/shrub-angular/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../source/packages/shrub-form">packages/shrub-form/index.litcoffee</a>
                     
                 </li>
             
                 <li class="toctree-l1 ">
                     <a class="" href="../source/server">server.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/server/bootstrap">server/bootstrap.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/server/config">server/config.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/server/crypto">server/crypto.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/server/logging">server/logging.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/server/sandboxes">server/sandboxes.litcoffee</a>
                     
                 </li>
             
@@ -138,10 +217,29 @@ the server or the client (or both).</p>
 description of the functionality they provide.</p>
 <h6 id="todo-write-a-tutorial-where-we-create-a-package">TODO: Write a tutorial where we create a package.</h6>
 <h2 id="client-side">Client-side</h2>
+<h3 id="shrub-angular-communicate-with-angular-on-the-server"><a href="../source/packages/shrub-angular">shrub-angular</a> &mdash; Communicate with Angular on the server</h3>
+<div class="admonition note">
+<p class="admonition-title">Implements hooks</p>
+<p><a href="../source/packages/shrub-angular#implements-hook-apprun">appRun</a></p>
+</div>
 <h2 id="server-side">Server-side</h2>
-<h3 id="shrub-form"><a href="../source/packages/shrub-form">shrub-form</a></h3>
+<h3 id="shrub-angular-angular-on-the-server"><a href="../source/packages/shrub-angular">shrub-angular</a> &mdash; Angular on the server</h3>
+<p><em>A sandboxed version of Angular, for clients lacking JS.</em></p>
+<div class="admonition note">
+<p class="admonition-title">Implements hooks</p>
+<p><a href="../source/packages/shrub-angular#implements-hook-endpoint">endpoint</a>, <a href="../source/packages/shrub-angular#implements-hook-httpmiddleware">httpMiddleware</a>, <a href="../source/packages/shrub-angular#implements-hook-bootstrapmiddleware">bootstrapMiddleware</a>, <a href="../source/packages/shrub-angular#implements-hook-packagesettings">packageSettings</a></p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Invokes hooks</p>
+<p><a href="../source/packages/shrub-angular#invoke-hook-angularnavigationmiddleware">angularNavigationMiddleware</a></p>
+</div>
+<h3 id="shrub-form-form-processing"><a href="../source/packages/shrub-form">shrub-form</a> &mdash; Form processing</h3>
 <p><em>Handle form and method parsing, and submission of POST'ed data into the
 Angular sandbox.</em></p>
+<div class="admonition note">
+<p class="admonition-title">Implements hooks</p>
+<p><a href="../source/packages/shrub-form#implements-hook-angularnavigationmiddleware">angularNavigationMiddleware</a>, <a href="../source/packages/shrub-form#implements-hook-httpmiddleware">httpMiddleware</a></p>
+</div>
 
             </div>
           </div>

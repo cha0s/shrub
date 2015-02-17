@@ -1,4 +1,4 @@
-# Form processing.
+# Form processing
 
 *Handle form and method parsing, and submission of POST'ed data into the
 Angular sandbox.*
@@ -20,7 +20,7 @@ sandbox and let it do its thing.
             {body, sandbox} = req
 
 Make sure there's a formKey in the submission.
-`TODO`: CRSF check needed here.
+###### TODO: CRSF check needed here.
 
             return next() unless body.formKey?
 

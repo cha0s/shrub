@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
   <link rel="stylesheet" href="../css/highlight.css">
+  <link href="../css/extra.css" rel="stylesheet">
 
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
@@ -42,23 +43,64 @@
       <ul class="current">
     
         
-            <li class="toctree-l1 current">
-                <a class="current" href=".">Hooks</a>
-            </li>
-        
-
-    
-        
-            <li class="toctree-l1 ">
-                <a class="" href="../packages">Packages</a>
-            </li>
-        
-
-    
-        
-            <li class="toctree-l1 ">
-                <a class="" href="../todos">TODO list</a>
-            </li>
+        <span>Reference</span>
+            
+                <li class="toctree-l1 current">
+                    <a class="current" href=".">Hooks</a>
+                    
+                        <ul>
+                        
+                            <li class="toctree-l2"><a href="#hook-system">Hook system</a></li>
+                            
+                                <li><a class="toctree-l3" href="#todo-link-to-pkgman-documentation-when-complete">TODO: Link to pkgman documentation when complete.</a></li>
+                            
+                                <li><a class="toctree-l3" href="#angularnavigationmiddleware">angularNavigationMiddleware</a></li>
+                            
+                                <li><a class="toctree-l3" href="#appconfig">appConfig</a></li>
+                            
+                                <li><a class="toctree-l3" href="#apprun">appRun</a></li>
+                            
+                                <li><a class="toctree-l3" href="#augmentdirective">augmentDirective</a></li>
+                            
+                                <li><a class="toctree-l3" href="#bootstrapmiddleware">bootstrapMiddleware</a></li>
+                            
+                                <li><a class="toctree-l3" href="#controller">controller</a></li>
+                            
+                                <li><a class="toctree-l3" href="#directive">directive</a></li>
+                            
+                                <li><a class="toctree-l3" href="#endpoint">endpoint</a></li>
+                            
+                                <li><a class="toctree-l3" href="#filter">filter</a></li>
+                            
+                                <li><a class="toctree-l3" href="#httpmiddleware">httpMiddleware</a></li>
+                            
+                                <li><a class="toctree-l3" href="#packagesettings">packageSettings</a></li>
+                            
+                                <li><a class="toctree-l3" href="#prebootstrap">preBootstrap</a></li>
+                            
+                                <li><a class="toctree-l3" href="#processexit">processExit</a></li>
+                            
+                                <li><a class="toctree-l3" href="#provider">provider</a></li>
+                            
+                                <li><a class="toctree-l3" href="#service">service</a></li>
+                            
+                                <li><a class="toctree-l3" href="#transmittableerror">transmittableError</a></li>
+                            
+                        
+                        </ul>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../packages">Packages</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../todos">TODO list</a>
+                    
+                </li>
+            
         
 
     
@@ -67,6 +109,36 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../source/client/app">client/app.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/client/modules/angular">client/modules/angular.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/client/modules/config">client/modules/config.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/client/modules/errors">client/modules/errors.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/client/modules/logging">client/modules/logging.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/client/modules/middleware">client/modules/middleware.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/client/modules/pkgman">client/modules/pkgman.litcoffee</a>
                     
                 </li>
             
@@ -86,12 +158,47 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-angular">packages/shrub-angular/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../source/packages/shrub-form">packages/shrub-form/index.litcoffee</a>
                     
                 </li>
             
                 <li class="toctree-l1 ">
                     <a class="" href="../source/server">server.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/server/bootstrap">server/bootstrap.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/server/config">server/config.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/server/crypto">server/crypto.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/server/logging">server/logging.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/server/sandboxes">server/sandboxes.litcoffee</a>
                     
                 </li>
             
@@ -163,49 +270,76 @@ implementations. Hooks are invoked synchronously. For more information about
 <code>pkgman</code>, see</p>
 <h6 id="todo-link-to-pkgman-documentation-when-complete">TODO: Link to <code>pkgman</code> documentation when complete.</h6>
 <h2 id="angularnavigationmiddleware">angularNavigationMiddleware</h2>
-<h3 id="1-implementations">1 implementation(s)</h3>
+<h3 id="1-implementationss">1 implementations(s)</h3>
 <ul>
 <li>packages/shrub-form (<a href="../source/packages/shrub-form#implements-hook-angularnavigationmiddleware">server</a>)</li>
 </ul>
+<h3 id="1-invocationss">1 invocations(s)</h3>
+<ul>
+<li>packages/shrub-angular (<a href="../source/packages/shrub-angular#invoke-hook-angularnavigationmiddleware">server</a>)</li>
+</ul>
 <h2 id="appconfig">appConfig</h2>
-<h3 id="1-invocations">1 invocation(s)</h3>
+<h3 id="1-invocationss_1">1 invocations(s)</h3>
 <ul>
 <li>client/app (<a href="../source/client/app#invoke-hook-appconfig">client</a>)</li>
 </ul>
 <h2 id="apprun">appRun</h2>
-<h3 id="1-invocations_1">1 invocation(s)</h3>
+<h3 id="1-implementationss_1">1 implementations(s)</h3>
+<ul>
+<li>packages/shrub-angular/client (<a href="../source/packages/shrub-angular/client#implements-hook-apprun">client</a>)</li>
+</ul>
+<h3 id="1-invocationss_2">1 invocations(s)</h3>
 <ul>
 <li>client/app (<a href="../source/client/app#invoke-hook-apprun">client</a>)</li>
 </ul>
 <h2 id="augmentdirective">augmentDirective</h2>
-<h3 id="1-invocations_2">1 invocation(s)</h3>
+<h3 id="1-invocationss_3">1 invocations(s)</h3>
 <ul>
 <li>client/packages (<a href="../source/client/packages#invoke-hook-augmentdirective">client</a>)</li>
 </ul>
 <h2 id="bootstrapmiddleware">bootstrapMiddleware</h2>
-<h3 id="1-invocations_3">1 invocation(s)</h3>
+<h3 id="1-implementationss_2">1 implementations(s)</h3>
+<ul>
+<li>packages/shrub-angular (<a href="../source/packages/shrub-angular#implements-hook-bootstrapmiddleware">server</a>)</li>
+</ul>
+<h3 id="1-invocationss_4">1 invocations(s)</h3>
 <ul>
 <li>server (<a href="../source/server#invoke-hook-bootstrapmiddleware">server</a>)</li>
 </ul>
 <h2 id="controller">controller</h2>
-<h3 id="1-invocations_4">1 invocation(s)</h3>
+<h3 id="1-invocationss_5">1 invocations(s)</h3>
 <ul>
 <li>client/packages (<a href="../source/client/packages#invoke-hook-controller">client</a>)</li>
 </ul>
 <h2 id="directive">directive</h2>
-<h3 id="1-invocations_5">1 invocation(s)</h3>
+<h3 id="1-invocationss_6">1 invocations(s)</h3>
 <ul>
 <li>client/packages (<a href="../source/client/packages#invoke-hook-directive">client</a>)</li>
 </ul>
+<h2 id="endpoint">endpoint</h2>
+<h3 id="1-implementationss_3">1 implementations(s)</h3>
+<ul>
+<li>packages/shrub-angular (<a href="../source/packages/shrub-angular#implements-hook-endpoint">server</a>)</li>
+</ul>
 <h2 id="filter">filter</h2>
-<h3 id="1-invocations_6">1 invocation(s)</h3>
+<h3 id="1-invocationss_7">1 invocations(s)</h3>
 <ul>
 <li>client/packages (<a href="../source/client/packages#invoke-hook-filter">client</a>)</li>
 </ul>
 <h2 id="httpmiddleware">httpMiddleware</h2>
-<h3 id="1-implementations_1">1 implementation(s)</h3>
+<h3 id="2-implementationss">2 implementations(s)</h3>
 <ul>
+<li>packages/shrub-angular (<a href="../source/packages/shrub-angular#implements-hook-httpmiddleware">server</a>)</li>
 <li>packages/shrub-form (<a href="../source/packages/shrub-form#implements-hook-httpmiddleware">server</a>)</li>
+</ul>
+<h2 id="packagesettings">packageSettings</h2>
+<h3 id="1-implementationss_4">1 implementations(s)</h3>
+<ul>
+<li>packages/shrub-angular (<a href="../source/packages/shrub-angular#implements-hook-packagesettings">server</a>)</li>
+</ul>
+<h3 id="1-invocationss_8">1 invocations(s)</h3>
+<ul>
+<li>server/config (<a href="../source/server/config#invoke-hook-packagesettings">server</a>)</li>
 </ul>
 <h2 id="prebootstrap">preBootstrap</h2>
 <p><em>Invoked before the application bootstrap phase.</em></p>
@@ -243,24 +377,29 @@ exports.pkgmanRegister = function(registrar) {
 
 <p>So that the heavy module will not be <code>require</code>d until hook <code>preBootstrap</code> is
 invoked.</p>
-<h3 id="1-invocations_7">1 invocation(s)</h3>
+<h3 id="1-invocationss_9">1 invocations(s)</h3>
 <ul>
 <li>server (<a href="../source/server#invoke-hook-prebootstrap">server</a>)</li>
 </ul>
 <h2 id="processexit">processExit</h2>
-<h3 id="1-invocations_8">1 invocation(s)</h3>
+<h3 id="1-invocationss_10">1 invocations(s)</h3>
 <ul>
 <li>server (<a href="../source/server#invoke-hook-processexit">server</a>)</li>
 </ul>
 <h2 id="provider">provider</h2>
-<h3 id="1-invocations_9">1 invocation(s)</h3>
+<h3 id="1-invocationss_11">1 invocations(s)</h3>
 <ul>
 <li>client/packages (<a href="../source/client/packages#invoke-hook-provider">client</a>)</li>
 </ul>
 <h2 id="service">service</h2>
-<h3 id="1-invocations_10">1 invocation(s)</h3>
+<h3 id="1-invocationss_12">1 invocations(s)</h3>
 <ul>
 <li>client/packages (<a href="../source/client/packages#invoke-hook-service">client</a>)</li>
+</ul>
+<h2 id="transmittableerror">transmittableError</h2>
+<h3 id="1-invocationss_13">1 invocations(s)</h3>
+<ul>
+<li>client/modules/errors (<a href="../source/client/modules/errors#invoke-hook-transmittableerror">client</a>)</li>
 </ul>
 
             </div>

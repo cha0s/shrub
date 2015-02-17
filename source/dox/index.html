@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
   <link rel="stylesheet" href="../../css/highlight.css">
+  <link href="../../css/extra.css" rel="stylesheet">
 
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
@@ -42,23 +43,23 @@
       <ul class="current">
     
         
-            <li class="toctree-l1 ">
-                <a class="" href="../../hooks">Hooks</a>
-            </li>
-        
-
-    
-        
-            <li class="toctree-l1 ">
-                <a class="" href="../../packages">Packages</a>
-            </li>
-        
-
-    
-        
-            <li class="toctree-l1 ">
-                <a class="" href="../../todos">TODO list</a>
-            </li>
+        <span>Reference</span>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../hooks">Hooks</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../packages">Packages</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../todos">TODO list</a>
+                    
+                </li>
+            
         
 
     
@@ -67,6 +68,36 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../client/app">client/app.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../client/modules/angular">client/modules/angular.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../client/modules/config">client/modules/config.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../client/modules/errors">client/modules/errors.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../client/modules/logging">client/modules/logging.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../client/modules/middleware">client/modules/middleware.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../client/modules/pkgman">client/modules/pkgman.litcoffee</a>
                     
                 </li>
             
@@ -87,8 +118,20 @@
                         
                             <li class="toctree-l2"><a href="#documentation-generation">Documentation generation</a></li>
                             
+                                <li><a class="toctree-l3" href="#todo-this-chunk-parsing-should-be-done-with-a-transform-like-the-others">TODO: This 'chunk' parsing should be done with a Transform like the others.</a></li>
+                            
                         
                         </ul>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../packages/shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../packages/shrub-angular">packages/shrub-angular/index.litcoffee</a>
                     
                 </li>
             
@@ -99,6 +142,31 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../server">server.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../server/bootstrap">server/bootstrap.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../server/config">server/config.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../server/crypto">server/crypto.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../server/logging">server/logging.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../server/sandboxes">server/sandboxes.litcoffee</a>
                     
                 </li>
             
@@ -140,7 +208,8 @@
             <div class="section">
               <h1 id="documentation-generation">Documentation generation</h1>
 <p><em>Generate the dynamic portions of Shrub's documentation.</em></p>
-<pre><code>fs = require 'fs'
+<pre><code>{exec} = require 'child_process'
+fs = require 'fs'
 path = require 'path'
 {Transform} = require 'stream'
 
@@ -148,8 +217,9 @@ _ = require 'lodash'
 {LineStream} = require 'byline'
 glob = require 'grunt/node_modules/glob'
 Promise = require 'bluebird'
-
-class HookInvocations extends Transform
+</code></pre>
+<p>Implement a Transform stream to accumulate hook invocations from a source file.</p>
+<pre><code>class HookInvocations extends Transform
 
   constructor: -&gt;
     super
@@ -162,8 +232,10 @@ class HookInvocations extends Transform
       @list.push matches[1]
 
     done()
-
-class HookImplementations extends Transform
+</code></pre>
+<p>Implement a Transform stream to accumulate hook implementations from a source
+file.</p>
+<pre><code>class HookImplementations extends Transform
 
   constructor: -&gt;
     super
@@ -176,8 +248,10 @@ class HookImplementations extends Transform
       @list.push matches[1]
 
     done()
-
-class Todos extends Transform
+</code></pre>
+<p>Implement a Transform stream fo accumulate TODOs from a source file. Also
+caches lines to be able to build context around each TODO item.</p>
+<pre><code>class Todos extends Transform
 
   @context = 4
 
@@ -203,8 +277,9 @@ class Todos extends Transform
 
       index: todo
       lines: @lines.slice start, end
-
-_getFiles = -&gt;
+</code></pre>
+<p>Gather all source files.</p>
+<pre><code>_allSourceFiles = -&gt;
   new Promise (resolve, reject) -&gt;
     glob(
       '{{client,custom,packages,server}/**/*.litcoffee,*.litcoffee}'
@@ -212,21 +287,15 @@ _getFiles = -&gt;
         return reject error if error?
         resolve files
     )
-
-_getPackageFiles = -&gt;  _getFiles().then (files) -&gt;
-  new Promise (resolve, reject) -&gt;
-    glob(
-      '{custom,packages}/**/*.litcoffee'
-      (error, files) -&gt;
-        return reject error if error?
-        resolve files
-    )
-
-_hookToId = (hook) -&gt; hook.replace(
+</code></pre>
+<p>Generate an HTML ID from a hook name.</p>
+<pre><code>_idFromHook = (hook) -&gt; hook.replace(
   /[^0-9A-Za-z-]+/g, '-'
 ).toLowerCase()
-
-_removeExtension = (filename) -&gt;
+</code></pre>
+<p>Get the source path from a filename. This removes the extension and any /index
+portion from the end of the filename.</p>
+<pre><code>_sourcePath = (filename) -&gt;
 
     dirname = path.dirname filename
     if dirname is '.' then dirname = '' else dirname += '/'
@@ -236,8 +305,9 @@ _removeExtension = (filename) -&gt;
     parts = filename.split '/'
     parts.pop() if parts[parts.length - 1] is 'index'
     return parts.join '/'
-
-_sortFilesByType = (files) -&gt;
+</code></pre>
+<p>Collate a list of files by type (client or server).</p>
+<pre><code>_collateFilesByType = (files) -&gt;
 
   client = []
   server = []
@@ -255,10 +325,11 @@ _sortFilesByType = (files) -&gt;
       server.push file
 
   client: client, server: server
+</code></pre>
+<p>Gather statistics for all files.</p>
+<pre><code>fileStatsListPromise = _allSourceFiles().then (allFiles) -&gt;
 
-fileStatsListPromise = _getFiles().then (allFiles) -&gt;
-
-  allFilesPromises = for type, files of _sortFilesByType allFiles
+  allFilesPromises = for type, files of _collateFilesByType allFiles
 
     typePromises = for file in files
 
@@ -266,15 +337,18 @@ fileStatsListPromise = _getFiles().then (allFiles) -&gt;
 
         fstream = fs.createReadStream file
         fstream.pipe lineStream = new LineStream keepEmptyLines: true
-
-        lineStream.pipe hookImplementations = new HookImplementations()
+</code></pre>
+<p>Pass all files through the Transform list to parse out relevant information.</p>
+<pre><code>        lineStream.pipe hookImplementations = new HookImplementations()
         lineStream.pipe hookInvocations = new HookInvocations()
         lineStream.pipe todos = new Todos()
 
         fstream.on 'error', reject
 
         fstream.on 'end', -&gt;
-          resolve(
+</code></pre>
+<p>Include all information from Transform streams in the statistics.</p>
+<pre><code>          resolve(
             type: type
             file: file
             implementations: hookImplementations.list
@@ -286,34 +360,30 @@ fileStatsListPromise = _getFiles().then (allFiles) -&gt;
 
   Promise.all(allFilesPromises).then (fileStatsLists) -&gt;
     _.flatten fileStatsLists
-
-fileStatsListPromise.then((fileStatsList) -&gt;
+</code></pre>
+<p>Massage the statistics to help rendering the hooks page.</p>
+<pre><code>fileStatsListPromise.then((fileStatsList) -&gt;
 
   hooksIndex = {}
-  implementations = {}
-  invocations = {}
+
+  indexes = {}
+  keys = ['implementations', 'invocations']
 
   for fileStats in fileStatsList
 
-    for implementation in fileStats.implementations
-      impl = implementations[implementation] ?= {}
-      (impl[fileStats.file] ?= []).push fileStats.type
+    for key in keys
+      indexes[key] ?= {}
 
-      hooksIndex[implementation] = true
+      for hook in fileStats[key]
+        indexes[key][hook] ?= {}
+        (indexes[key][hook][fileStats.file] ?= []).push fileStats.type
 
-    for invocation in fileStats.invocations
-      invo = invocations[invocation] ?= {}
-      (invo[fileStats.file] ?= []).push fileStats.type
+        hooksIndex[hook] = true
 
-      hooksIndex[invocation] = true
-
-  for hook, stats of implementations
-    for file of stats
-      stats[file] = _.unique stats[file] ? []
-
-  for hook, stats of invocations
-    for file of stats
-      stats[file] = _.unique stats[file] ? []
+  for key in keys
+    for hook, stats of indexes[key]
+      for file of stats
+        stats[file] = _.unique stats[file] ? []
 
   hooks = (hook for hook of hooksIndex).sort()
 
@@ -324,12 +394,24 @@ fileStatsListPromise.then((fileStatsList) -&gt;
     catch error
       ''
 
-  hookFiles: hookFiles
-  hooks: hooks
-  implementations: implementations
-  invocations: invocations
+  O =
+    hookFiles: hookFiles
+    hooks: hooks
 
-).then(({hookFiles, hooks, implementations, invocations}) -&gt;
+  O[key] = indexes[key] for key in keys
+
+  return O
+</code></pre>
+<p>Render the hooks page.</p>
+<pre><code>).then((O) -&gt;
+
+  {hookFiles, hooks} = O
+
+  keys = ['implementations', 'invocations']
+
+  wordingFor =
+    implementations: 'implements'
+    invocations: 'invoke'
 
   render = fs.readFileSync 'docs/hooks.template.md', 'utf8'
 
@@ -338,35 +420,22 @@ fileStatsListPromise.then((fileStatsList) -&gt;
     render += "## #{hook}\n\n"
     render += hookFiles[hook] + '\n\n' if hookFiles[hook]
 
-    if implementations[hook]?
+    for key in keys
 
-      implementationCount = Object.keys(implementations[hook]).length
-      render += "### #{implementationCount} implementation(s)\n\n"
+      if O[key][hook]?
 
-      for file, types of implementations[hook]
+        count = Object.keys(O[key][hook]).length
+        render += "### #{count} #{key}(s)\n\n"
 
-        file = _removeExtension file
+        for file, types of O[key][hook]
 
-        types = types.map (type) -&gt; "[#{type}](source/#{file}#implements-hook-#{hook.toLowerCase()})"
+          file = _sourcePath file
 
-        render += "* #{file} (#{types.join ','})\n"
+          types = types.map (type) -&gt; "[#{type}](source/#{file}##{wordingFor[key]}-hook-#{hook.toLowerCase()})"
 
-      render += '\n'
+          render += "* #{file} (#{types.join ','})\n"
 
-    if invocations[hook]?
-
-      invocationCount = Object.keys(invocations[hook]).length
-      render += "### #{invocationCount} invocation(s)\n\n"
-
-      for file, types of invocations[hook]
-
-        file = _removeExtension file
-
-        types = types.map (type) -&gt; "[#{type}](source/#{file}#invoke-hook-#{hook.toLowerCase()})"
-
-        render += "* #{file} (#{types.join ','})\n"
-
-      render += '\n'
+        render += '\n'
 
   new Promise (resolve, reject) -&gt;
     fs.writeFile 'docs/hooks.md', render, (error) -&gt;
@@ -374,14 +443,17 @@ fileStatsListPromise.then((fileStatsList) -&gt;
       resolve()
 
 ).done()
-
-fileStatsListPromise.then((fileStatsList) -&gt;
+</code></pre>
+<p>Render the TODOs page.</p>
+<pre><code>fileStatsListPromise.then((fileStatsList) -&gt;
 
   render = fs.readFileSync 'docs/todos.template.md', 'utf8'
 
   for fileStats in fileStatsList
-
-    idMap = {}
+</code></pre>
+<p>Keep track of used IDs, it will be necessary to link to the correct location
+hash in the case of multiple TODO items with the same wording.</p>
+<pre><code>    idMap = {}
 
     for todo in fileStats.todos
 
@@ -390,9 +462,11 @@ fileStatsListPromise.then((fileStatsList) -&gt;
       id = ''
       for line, index in todo.lines
         render += '&gt;'
-
-        if index is Todos.context
-          id = _hookToId(line).slice 1, -1
+</code></pre>
+<p>If this is the line with the TODO, parse the ID from the TODO item text, and
+render it as h2 (TODO are h6) to increase visibility.</p>
+<pre><code>        if index is Todos.context
+          id = _idFromHook(line).slice 1, -1
 
           render += line.slice 4
         else
@@ -401,9 +475,10 @@ fileStatsListPromise.then((fileStatsList) -&gt;
 
       render += '\n'
 
-      filename = _removeExtension fileStats.file
-
-      if idMap[id]?
+      filename = _sourcePath fileStats.file
+</code></pre>
+<p>Keep track of ID usage and modify the location hash for subsequent uses.</p>
+<pre><code>      if idMap[id]?
         idMap[id] += 1
         id += "_#{idMap[id]}"
       else
@@ -417,8 +492,9 @@ fileStatsListPromise.then((fileStatsList) -&gt;
       resolve()
 
 ).done()
-
-_getFiles().then (files) -&gt;
+</code></pre>
+<p>Add all the source files to a generated mkdocs.yml</p>
+<pre><code>_allSourceFiles().then (files) -&gt;
 
   yml = fs.readFileSync 'docs/mkdocs.template.yml', 'utf8'
 
@@ -433,46 +509,83 @@ _getFiles().then (files) -&gt;
     fs.createReadStream(file).pipe(
       fs.createWriteStream("docs/source/#{file}")
     )
-
-    yml += "- [source/#{file}, 'Source code', '#{file}']\n"
+</code></pre>
+<p>Add them under the 'Source code' path.</p>
+<pre><code>    yml += "- [source/#{file}, 'Source code', '#{file}']\n"
 
   fs.writeFileSync 'mkdocs.yml', yml
 
   return
-
-_getPackageFiles().then (allFiles) -&gt;
+</code></pre>
+<p>Render the packages page.</p>
+<pre><code>fileStatsListPromise.then((fileStatsList) -&gt;
 
   render = fs.readFileSync 'docs/packages.template.md', 'utf8'
   render += '\n'
 
-  for type, files of _sortFilesByType allFiles
+  type = null
 
-    render += if type is 'client'
-      '## Client-side'
-    else
-      '## Server-side'
+  for fileStats in fileStatsList
+
+    if fileStats.type isnt type
+      type = fileStats.type
+
+      render += if type is 'client'
+        '## Client-side'
+      else
+        '## Server-side'
+
+      render += '\n\n'
+
+    parts = fileStats.file.split '/'
+    continue unless ~['custom', 'packages'].indexOf parts[0]
+</code></pre>
+<p>Link to the package.</p>
+<pre><code>    sourcePath = _sourcePath fileStats.file
+
+    parts = sourcePath.split '/'
+    parts.pop() if parts[parts.length - 1] is 'client'
+    sourcePath = parts.join '/'
+
+    pkg = sourcePath.split('/').pop()
+
+    render += "### [#{pkg}](source/#{sourcePath})"
+</code></pre>
+<p>Naively parse out the file description. It must be wrapped in asterisks, i.e.
+italicized in markdown.</p>
+<h6 id="todo-this-chunk-parsing-should-be-done-with-a-transform-like-the-others">TODO: This 'chunk' parsing should be done with a Transform like the others.</h6>
+<pre><code>    data = fs.readFileSync fileStats.file, 'utf8'
+    chunks = data.split '\n\n'
+
+    title = chunks[0]
+    if 35 is title.charCodeAt 0
+      render += " &amp;mdash; #{title.substr 2}"
 
     render += '\n\n'
 
-    for file in files
+    description = chunks[1]
+    if 42 is description.charCodeAt 0 and 42 is description.charCodeAt description.length - 1
+      render += "#{description}\n\n"
 
-      data = fs.readFileSync file, 'utf8'
+    if fileStats.implementations.length &gt; 0
+      # render += '&lt;h5 class="package-hook-heading"&gt;Implements:&lt;/h5&gt;\n\n'
+      render += '!!! note "Implements hooks"\n    '
+      render += fileStats.implementations.map((hook) -&gt;
+        "[#{hook}](source/#{sourcePath}#implements-hook-#{hook.toLowerCase()})"
+      ).join ', '
+      render += '\n\n'
 
-      chunks = data.split '\n\n'
-
-      path = _removeExtension file
-      pkg = path.split('/').pop()
-
-      render += "### [#{pkg}](source/#{path})\n\n"
-
-      description = chunks[1]
-</code></pre>
-<p>Description is wrapped in asterisks, i.e. italicized in markdown.</p>
-<pre><code>      if 42 is description.charCodeAt 0 and 42 is description.charCodeAt chunks.length - 1
-        render += "#{description}\n\n"
-
+    if fileStats.invocations.length &gt; 0
+      # render += '&lt;h5 class="package-hook-heading"&gt;Invokes:&lt;/h5&gt;\n\n'
+      render += '!!! note "Invokes hooks"\n    '
+      render += fileStats.invocations.map((hook) -&gt;
+        "[#{hook}](source/#{sourcePath}#invoke-hook-#{hook.toLowerCase()})"
+      ).join ', '
+      render += '\n\n'
 
   fs.writeFileSync 'docs/packages.md', render
+
+)
 </code></pre>
 
             </div>
@@ -481,7 +594,7 @@ _getPackageFiles().then (allFiles) -&gt;
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../packages/shrub-form" class="btn btn-neutral float-right" title="packages/shrub-form/index.litcoffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../packages/shrub-angular/client" class="btn btn-neutral float-right" title="packages/shrub-angular/client/index.litcoffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../client/require" class="btn btn-neutral" title="client/require.litcoffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -513,7 +626,7 @@ _getPackageFiles().then (allFiles) -&gt;
             <a class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
         
       <span><a href="../client/require" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      <span style="margin-left: 15px"><a href="../packages/shrub-form" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span style="margin-left: 15px"><a href="../packages/shrub-angular/client" style="color: #fcfcfc">Next &raquo;</a></span>
     </span>
 </div>
 </body>

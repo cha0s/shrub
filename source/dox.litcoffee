@@ -3,6 +3,7 @@
 
 *Generate the dynamic portions of Shrub's documentation.*
 
+    {exec} = require 'child_process'
     fs = require 'fs'
     path = require 'path'
     {Transform} = require 'stream'
@@ -11,6 +12,8 @@
     {LineStream} = require 'byline'
     glob = require 'grunt/node_modules/glob'
     Promise = require 'bluebird'
+
+Implement a Transform stream to accumulate hook invocations from a source file.
 
     class HookInvocations extends Transform
 
@@ -26,6 +29,9 @@
 
         done()
 
+Implement a Transform stream to accumulate hook implementations from a source
+file.
+
     class HookImplementations extends Transform
 
       constructor: ->
@@ -39,6 +45,9 @@
           @list.push matches[1]
 
         done()
+
+Implement a Transform stream fo accumulate TODOs from a source file. Also
+caches lines to be able to build context around each TODO item.
 
     class Todos extends Transform
 
@@ -67,7 +76,9 @@
           index: todo
           lines: @lines.slice start, end
 
-    _getFiles = ->
+Gather all source files.
+
+    _allSourceFiles = ->
       new Promise (resolve, reject) ->
         glob(
           '{{client,custom,packages,server}/**/*.litcoffee,*.litcoffee}'
@@ -76,20 +87,16 @@
             resolve files
         )
 
-    _getPackageFiles = ->  _getFiles().then (files) ->
-      new Promise (resolve, reject) ->
-        glob(
-          '{custom,packages}/**/*.litcoffee'
-          (error, files) ->
-            return reject error if error?
-            resolve files
-        )
+Generate an HTML ID from a hook name.
 
-    _hookToId = (hook) -> hook.replace(
+    _idFromHook = (hook) -> hook.replace(
       /[^0-9A-Za-z-]+/g, '-'
     ).toLowerCase()
 
-    _removeExtension = (filename) ->
+Get the source path from a filename. This removes the extension and any /index
+portion from the end of the filename.
+
+    _sourcePath = (filename) ->
 
         dirname = path.dirname filename
         if dirname is '.' then dirname = '' else dirname += '/'
@@ -100,7 +107,9 @@
         parts.pop() if parts[parts.length - 1] is 'index'
         return parts.join '/'
 
-    _sortFilesByType = (files) ->
+Collate a list of files by type (client or server).
+
+    _collateFilesByType = (files) ->
 
       client = []
       server = []
@@ -119,9 +128,11 @@
 
       client: client, server: server
 
-    fileStatsListPromise = _getFiles().then (allFiles) ->
+Gather statistics for all files.
 
-      allFilesPromises = for type, files of _sortFilesByType allFiles
+    fileStatsListPromise = _allSourceFiles().then (allFiles) ->
+
+      allFilesPromises = for type, files of _collateFilesByType allFiles
 
         typePromises = for file in files
 
@@ -130,6 +141,8 @@
             fstream = fs.createReadStream file
             fstream.pipe lineStream = new LineStream keepEmptyLines: true
 
+Pass all files through the Transform list to parse out relevant information.
+
             lineStream.pipe hookImplementations = new HookImplementations()
             lineStream.pipe hookInvocations = new HookInvocations()
             lineStream.pipe todos = new Todos()
@@ -137,6 +150,9 @@
             fstream.on 'error', reject
 
             fstream.on 'end', ->
+
+Include all information from Transform streams in the statistics.
+
               resolve(
                 type: type
                 file: file
@@ -150,33 +166,30 @@
       Promise.all(allFilesPromises).then (fileStatsLists) ->
         _.flatten fileStatsLists
 
+Massage the statistics to help rendering the hooks page.
+
     fileStatsListPromise.then((fileStatsList) ->
 
       hooksIndex = {}
-      implementations = {}
-      invocations = {}
+
+      indexes = {}
+      keys = ['implementations', 'invocations']
 
       for fileStats in fileStatsList
 
-        for implementation in fileStats.implementations
-          impl = implementations[implementation] ?= {}
-          (impl[fileStats.file] ?= []).push fileStats.type
+        for key in keys
+          indexes[key] ?= {}
 
-          hooksIndex[implementation] = true
+          for hook in fileStats[key]
+            indexes[key][hook] ?= {}
+            (indexes[key][hook][fileStats.file] ?= []).push fileStats.type
 
-        for invocation in fileStats.invocations
-          invo = invocations[invocation] ?= {}
-          (invo[fileStats.file] ?= []).push fileStats.type
+            hooksIndex[hook] = true
 
-          hooksIndex[invocation] = true
-
-      for hook, stats of implementations
-        for file of stats
-          stats[file] = _.unique stats[file] ? []
-
-      for hook, stats of invocations
-        for file of stats
-          stats[file] = _.unique stats[file] ? []
+      for key in keys
+        for hook, stats of indexes[key]
+          for file of stats
+            stats[file] = _.unique stats[file] ? []
 
       hooks = (hook for hook of hooksIndex).sort()
 
@@ -187,12 +200,25 @@
         catch error
           ''
 
-      hookFiles: hookFiles
-      hooks: hooks
-      implementations: implementations
-      invocations: invocations
+      O =
+        hookFiles: hookFiles
+        hooks: hooks
 
-    ).then(({hookFiles, hooks, implementations, invocations}) ->
+      O[key] = indexes[key] for key in keys
+
+      return O
+
+Render the hooks page.
+
+    ).then((O) ->
+
+      {hookFiles, hooks} = O
+
+      keys = ['implementations', 'invocations']
+
+      wordingFor =
+        implementations: 'implements'
+        invocations: 'invoke'
 
       render = fs.readFileSync 'docs/hooks.template.md', 'utf8'
 
@@ -201,35 +227,22 @@
         render += "## #{hook}\n\n"
         render += hookFiles[hook] + '\n\n' if hookFiles[hook]
 
-        if implementations[hook]?
+        for key in keys
 
-          implementationCount = Object.keys(implementations[hook]).length
-          render += "### #{implementationCount} implementation(s)\n\n"
+          if O[key][hook]?
 
-          for file, types of implementations[hook]
+            count = Object.keys(O[key][hook]).length
+            render += "### #{count} #{key}(s)\n\n"
 
-            file = _removeExtension file
+            for file, types of O[key][hook]
 
-            types = types.map (type) -> "[#{type}](source/#{file}#implements-hook-#{hook.toLowerCase()})"
+              file = _sourcePath file
 
-            render += "* #{file} (#{types.join ','})\n"
+              types = types.map (type) -> "[#{type}](source/#{file}##{wordingFor[key]}-hook-#{hook.toLowerCase()})"
 
-          render += '\n'
+              render += "* #{file} (#{types.join ','})\n"
 
-        if invocations[hook]?
-
-          invocationCount = Object.keys(invocations[hook]).length
-          render += "### #{invocationCount} invocation(s)\n\n"
-
-          for file, types of invocations[hook]
-
-            file = _removeExtension file
-
-            types = types.map (type) -> "[#{type}](source/#{file}#invoke-hook-#{hook.toLowerCase()})"
-
-            render += "* #{file} (#{types.join ','})\n"
-
-          render += '\n'
+            render += '\n'
 
       new Promise (resolve, reject) ->
         fs.writeFile 'docs/hooks.md', render, (error) ->
@@ -238,11 +251,16 @@
 
     ).done()
 
+Render the TODOs page.
+
     fileStatsListPromise.then((fileStatsList) ->
 
       render = fs.readFileSync 'docs/todos.template.md', 'utf8'
 
       for fileStats in fileStatsList
+
+Keep track of used IDs, it will be necessary to link to the correct location
+hash in the case of multiple TODO items with the same wording.
 
         idMap = {}
 
@@ -254,8 +272,11 @@
           for line, index in todo.lines
             render += '>'
 
+If this is the line with the TODO, parse the ID from the TODO item text, and
+render it as h2 (TODO are h6) to increase visibility.
+
             if index is Todos.context
-              id = _hookToId(line).slice 1, -1
+              id = _idFromHook(line).slice 1, -1
 
               render += line.slice 4
             else
@@ -264,7 +285,9 @@
 
           render += '\n'
 
-          filename = _removeExtension fileStats.file
+          filename = _sourcePath fileStats.file
+
+Keep track of ID usage and modify the location hash for subsequent uses.
 
           if idMap[id]?
             idMap[id] += 1
@@ -281,7 +304,9 @@
 
     ).done()
 
-    _getFiles().then (files) ->
+Add all the source files to a generated mkdocs.yml
+
+    _allSourceFiles().then (files) ->
 
       yml = fs.readFileSync 'docs/mkdocs.template.yml', 'utf8'
 
@@ -297,45 +322,84 @@
           fs.createWriteStream("docs/source/#{file}")
         )
 
+Add them under the 'Source code' path.
+
         yml += "- [source/#{file}, 'Source code', '#{file}']\n"
 
       fs.writeFileSync 'mkdocs.yml', yml
 
       return
 
-    _getPackageFiles().then (allFiles) ->
+Render the packages page.
+
+    fileStatsListPromise.then((fileStatsList) ->
 
       render = fs.readFileSync 'docs/packages.template.md', 'utf8'
       render += '\n'
 
-      for type, files of _sortFilesByType allFiles
+      type = null
 
-        render += if type is 'client'
-          '## Client-side'
-        else
-          '## Server-side'
+      for fileStats in fileStatsList
+
+        if fileStats.type isnt type
+          type = fileStats.type
+
+          render += if type is 'client'
+            '## Client-side'
+          else
+            '## Server-side'
+
+          render += '\n\n'
+
+        parts = fileStats.file.split '/'
+        continue unless ~['custom', 'packages'].indexOf parts[0]
+
+Link to the package.
+
+        sourcePath = _sourcePath fileStats.file
+
+        parts = sourcePath.split '/'
+        parts.pop() if parts[parts.length - 1] is 'client'
+        sourcePath = parts.join '/'
+
+        pkg = sourcePath.split('/').pop()
+
+        render += "### [#{pkg}](source/#{sourcePath})"
+
+Naively parse out the file description. It must be wrapped in asterisks, i.e.
+italicized in markdown.
+
+###### TODO: This 'chunk' parsing should be done with a Transform like the others.
+
+        data = fs.readFileSync fileStats.file, 'utf8'
+        chunks = data.split '\n\n'
+
+        title = chunks[0]
+        if 35 is title.charCodeAt 0
+          render += " &mdash; #{title.substr 2}"
 
         render += '\n\n'
 
-        for file in files
+        description = chunks[1]
+        if 42 is description.charCodeAt 0 and 42 is description.charCodeAt description.length - 1
+          render += "#{description}\n\n"
 
-          data = fs.readFileSync file, 'utf8'
+        if fileStats.implementations.length > 0
+          # render += '<h5 class="package-hook-heading">Implements:</h5>\n\n'
+          render += '!!! note "Implements hooks"\n    '
+          render += fileStats.implementations.map((hook) ->
+            "[#{hook}](source/#{sourcePath}#implements-hook-#{hook.toLowerCase()})"
+          ).join ', '
+          render += '\n\n'
 
-          chunks = data.split '\n\n'
-
-          path = _removeExtension file
-          pkg = path.split('/').pop()
-
-          render += "### [#{pkg}](source/#{path})\n\n"
-
-          description = chunks[1]
-
-Description is wrapped in asterisks, i.e. italicized in markdown.
-
-          if 42 is description.charCodeAt 0 and 42 is description.charCodeAt chunks.length - 1
-            render += "#{description}\n\n"
-
+        if fileStats.invocations.length > 0
+          # render += '<h5 class="package-hook-heading">Invokes:</h5>\n\n'
+          render += '!!! note "Invokes hooks"\n    '
+          render += fileStats.invocations.map((hook) ->
+            "[#{hook}](source/#{sourcePath}#invoke-hook-#{hook.toLowerCase()})"
+          ).join ', '
+          render += '\n\n'
 
       fs.writeFileSync 'docs/packages.md', render
 
-
+    )
