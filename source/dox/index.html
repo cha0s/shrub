@@ -545,9 +545,8 @@ render it as h2 (TODO are h6) to increase visibility.</p>
 
     parts = sourcePath.split '/'
     parts.pop() if parts[parts.length - 1] is 'client'
-    sourcePath = parts.join '/'
-
-    pkg = sourcePath.split('/').pop()
+    pkg = parts.join '/'
+    pkg = pkg.split('/').pop()
 
     render += "### [#{pkg}](source/#{sourcePath})"
 </code></pre>
@@ -568,7 +567,6 @@ italicized in markdown.</p>
       render += "#{description}\n\n"
 
     if fileStats.implementations.length &gt; 0
-      # render += '&lt;h5 class="package-hook-heading"&gt;Implements:&lt;/h5&gt;\n\n'
       render += '!!! note "Implements hooks"\n    '
       render += fileStats.implementations.map((hook) -&gt;
         "[#{hook}](source/#{sourcePath}#implements-hook-#{hook.toLowerCase()})"
@@ -576,7 +574,6 @@ italicized in markdown.</p>
       render += '\n\n'
 
     if fileStats.invocations.length &gt; 0
-      # render += '&lt;h5 class="package-hook-heading"&gt;Invokes:&lt;/h5&gt;\n\n'
       render += '!!! note "Invokes hooks"\n    '
       render += fileStats.invocations.map((hook) -&gt;
         "[#{hook}](source/#{sourcePath}#invoke-hook-#{hook.toLowerCase()})"

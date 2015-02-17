@@ -360,9 +360,8 @@ Link to the package.
 
         parts = sourcePath.split '/'
         parts.pop() if parts[parts.length - 1] is 'client'
-        sourcePath = parts.join '/'
-
-        pkg = sourcePath.split('/').pop()
+        pkg = parts.join '/'
+        pkg = pkg.split('/').pop()
 
         render += "### [#{pkg}](source/#{sourcePath})"
 
@@ -385,7 +384,6 @@ italicized in markdown.
           render += "#{description}\n\n"
 
         if fileStats.implementations.length > 0
-          # render += '<h5 class="package-hook-heading">Implements:</h5>\n\n'
           render += '!!! note "Implements hooks"\n    '
           render += fileStats.implementations.map((hook) ->
             "[#{hook}](source/#{sourcePath}#implements-hook-#{hook.toLowerCase()})"
@@ -393,7 +391,6 @@ italicized in markdown.
           render += '\n\n'
 
         if fileStats.invocations.length > 0
-          # render += '<h5 class="package-hook-heading">Invokes:</h5>\n\n'
           render += '!!! note "Invokes hooks"\n    '
           render += fileStats.invocations.map((hook) ->
             "[#{hook}](source/#{sourcePath}#invoke-hook-#{hook.toLowerCase()})"
