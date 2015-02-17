@@ -334,6 +334,29 @@ Render the packages page.
 
     fileStatsListPromise.then((fileStatsList) ->
 
+Sort by package name first.
+
+      newList = []
+
+      for fileStats in fileStatsList
+
+        parts = fileStats.file.split '/'
+        continue unless ~['custom', 'packages'].indexOf parts[0]
+
+        sourcePath = _sourcePath fileStats.file
+
+        parts = sourcePath.split '/'
+        parts.pop() if parts[parts.length - 1] is 'client'
+        pkg = parts.join '/'
+        fileStats.pkg = pkg.split('/').slice(1).join '/'
+
+        newList.push fileStats
+
+      newList.sort (l, r) ->
+        if l.pkg < r.pkg then -1 else if l.pkg > r.pkg then 1 else 0
+
+    ).then((fileStatsList) ->
+
       render = fs.readFileSync 'docs/packages.template.md', 'utf8'
       render += '\n'
 
@@ -351,20 +374,14 @@ Render the packages page.
 
           render += '\n\n'
 
-        parts = fileStats.file.split '/'
-        continue unless ~['custom', 'packages'].indexOf parts[0]
+        isSubpackage = fileStats.pkg.split('/').length isnt 1
 
 Link to the package.
 
         sourcePath = _sourcePath fileStats.file
 
-        parts = sourcePath.split '/'
-        parts.pop() if parts[parts.length - 1] is 'client'
-        sourcePath = parts.join '/'
-
-        pkg = sourcePath.split('/').pop()
-
-        render += "### [#{pkg}](source/#{sourcePath})"
+        render += '> ' if isSubpackage
+        render += "### [#{fileStats.pkg}](source/#{sourcePath})"
 
 Naively parse out the file description. It must be wrapped in asterisks, i.e.
 italicized in markdown.
@@ -382,10 +399,11 @@ italicized in markdown.
 
         description = chunks[1]
         if 42 is description.charCodeAt 0 and 42 is description.charCodeAt description.length - 1
+          render += '> ' if isSubpackage
           render += "#{description}\n\n"
 
         if fileStats.implementations.length > 0
-          # render += '<h5 class="package-hook-heading">Implements:</h5>\n\n'
+          render += '> ' if isSubpackage
           render += '!!! note "Implements hooks"\n    '
           render += fileStats.implementations.map((hook) ->
             "[#{hook}](source/#{sourcePath}#implements-hook-#{hook.toLowerCase()})"
@@ -393,7 +411,7 @@ italicized in markdown.
           render += '\n\n'
 
         if fileStats.invocations.length > 0
-          # render += '<h5 class="package-hook-heading">Invokes:</h5>\n\n'
+          render += '> ' if isSubpackage
           render += '!!! note "Invokes hooks"\n    '
           render += fileStats.invocations.map((hook) ->
             "[#{hook}](source/#{sourcePath}#invoke-hook-#{hook.toLowerCase()})"
