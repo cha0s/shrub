@@ -380,8 +380,14 @@ Link to the package.
 
         sourcePath = _sourcePath fileStats.file
 
-        render += '> ' if isSubpackage
-        render += "### [#{fileStats.pkg}](source/#{sourcePath})"
+        if isSubpackage
+          render += '> '
+          parts = fileStats.pkg.split '/'
+          parentPkg = parts.shift()
+          subPkg = parts.join '/'
+          render += "### [<small>#{parentPkg}/</small>#{subPkg}](source/#{sourcePath})"
+        else
+          render += "### [#{fileStats.pkg}](source/#{sourcePath})"
 
 Naively parse out the file description. It must be wrapped in asterisks, i.e.
 italicized in markdown.
