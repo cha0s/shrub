@@ -136,6 +136,21 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../packages/shrub-assets/angular">packages/shrub-assets/angular.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../packages/shrub-assets">packages/shrub-assets/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../packages/shrub-assets/jquery">packages/shrub-assets/jquery.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../packages/shrub-form">packages/shrub-form/index.litcoffee</a>
                     
                 </li>
@@ -519,6 +534,28 @@ render it as h2 (TODO are h6) to increase visibility.</p>
 </code></pre>
 <p>Render the packages page.</p>
 <pre><code>fileStatsListPromise.then((fileStatsList) -&gt;
+</code></pre>
+<p>Sort by package name first.</p>
+<pre><code>  newList = []
+
+  for fileStats in fileStatsList
+
+    parts = fileStats.file.split '/'
+    continue unless ~['custom', 'packages'].indexOf parts[0]
+
+    sourcePath = _sourcePath fileStats.file
+
+    parts = sourcePath.split '/'
+    parts.pop() if parts[parts.length - 1] is 'client'
+    pkg = parts.join '/'
+    fileStats.pkg = pkg.split('/').slice(1).join '/'
+
+    newList.push fileStats
+
+  newList.sort (l, r) -&gt;
+    if l.pkg &lt; r.pkg then -1 else if l.pkg &gt; r.pkg then 1 else 0
+
+).then((fileStatsList) -&gt;
 
   render = fs.readFileSync 'docs/packages.template.md', 'utf8'
   render += '\n'
@@ -537,18 +574,13 @@ render it as h2 (TODO are h6) to increase visibility.</p>
 
       render += '\n\n'
 
-    parts = fileStats.file.split '/'
-    continue unless ~['custom', 'packages'].indexOf parts[0]
+    isSubpackage = fileStats.pkg.split('/').length isnt 1
 </code></pre>
 <p>Link to the package.</p>
 <pre><code>    sourcePath = _sourcePath fileStats.file
 
-    parts = sourcePath.split '/'
-    parts.pop() if parts[parts.length - 1] is 'client'
-    pkg = parts.join '/'
-    pkg = pkg.split('/').pop()
-
-    render += "### [#{pkg}](source/#{sourcePath})"
+    render += '&gt; ' if isSubpackage
+    render += "### [#{fileStats.pkg}](source/#{sourcePath})"
 </code></pre>
 <p>Naively parse out the file description. It must be wrapped in asterisks, i.e.
 italicized in markdown.</p>
@@ -564,9 +596,11 @@ italicized in markdown.</p>
 
     description = chunks[1]
     if 42 is description.charCodeAt 0 and 42 is description.charCodeAt description.length - 1
+      render += '&gt; ' if isSubpackage
       render += "#{description}\n\n"
 
     if fileStats.implementations.length &gt; 0
+      render += '&gt; ' if isSubpackage
       render += '!!! note "Implements hooks"\n    '
       render += fileStats.implementations.map((hook) -&gt;
         "[#{hook}](source/#{sourcePath}#implements-hook-#{hook.toLowerCase()})"
@@ -574,6 +608,7 @@ italicized in markdown.</p>
       render += '\n\n'
 
     if fileStats.invocations.length &gt; 0
+      render += '&gt; ' if isSubpackage
       render += '!!! note "Invokes hooks"\n    '
       render += fileStats.invocations.map((hook) -&gt;
         "[#{hook}](source/#{sourcePath}#invoke-hook-#{hook.toLowerCase()})"

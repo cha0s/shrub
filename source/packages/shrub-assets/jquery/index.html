@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>client/modules/logging.litcoffee - Shrub</title>
+  <title>packages/shrub-assets/jquery.litcoffee - Shrub</title>
   
 
   
@@ -67,60 +67,47 @@
         <span>Source code</span>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../../app">client/app.litcoffee</a>
+                    <a class="" href="../../../client/app">client/app.litcoffee</a>
                     
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../angular">client/modules/angular.litcoffee</a>
+                    <a class="" href="../../../client/modules/angular">client/modules/angular.litcoffee</a>
                     
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../config">client/modules/config.litcoffee</a>
+                    <a class="" href="../../../client/modules/config">client/modules/config.litcoffee</a>
                     
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../errors">client/modules/errors.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 current">
-                    <a class="current" href=".">client/modules/logging.litcoffee</a>
-                    
-                        <ul>
-                        
-                            <li class="toctree-l2"><a href="#logging">Logging</a></li>
-                            
-                                <li><a class="toctree-l3" href="#todo-this-isnt-much-use-on-the-client-to-properly-log-we-would-have-to-hook-into-localstorage">TODO: This isn't much use on the client. To properly log, we would have to hook into localStorage.</a></li>
-                            
-                                <li><a class="toctree-l3" href="#loggercreate">logger.create</a></li>
-                            
-                                <li><a class="toctree-l3" href="#loggerdefaultlogger">logger.defaultLogger</a></li>
-                            
-                        
-                        </ul>
+                    <a class="" href="../../../client/modules/errors">client/modules/errors.litcoffee</a>
                     
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../middleware">client/modules/middleware.litcoffee</a>
+                    <a class="" href="../../../client/modules/logging">client/modules/logging.litcoffee</a>
                     
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../pkgman">client/modules/pkgman.litcoffee</a>
+                    <a class="" href="../../../client/modules/middleware">client/modules/middleware.litcoffee</a>
                     
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../../packages">client/packages.litcoffee</a>
+                    <a class="" href="../../../client/modules/pkgman">client/modules/pkgman.litcoffee</a>
                     
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../../require">client/require.litcoffee</a>
+                    <a class="" href="../../../client/packages">client/packages.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../client/require">client/require.litcoffee</a>
                     
                 </li>
             
@@ -130,32 +117,41 @@
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
+                    <a class="" href="../../shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
                     
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-angular">packages/shrub-angular/index.litcoffee</a>
+                    <a class="" href="../../shrub-angular">packages/shrub-angular/index.litcoffee</a>
                     
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-assets/angular">packages/shrub-assets/angular.litcoffee</a>
+                    <a class="" href="../angular">packages/shrub-assets/angular.litcoffee</a>
                     
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-assets">packages/shrub-assets/index.litcoffee</a>
+                    <a class="" href="..">packages/shrub-assets/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 current">
+                    <a class="current" href=".">packages/shrub-assets/jquery.litcoffee</a>
+                    
+                        <ul>
+                        
+                            <li class="toctree-l2"><a href="#jquery-assets">jQuery assets</a></li>
+                            
+                                <li><a class="toctree-l3" href="#implements-hook-assetmiddleware">Implements hook assetMiddleware.</a></li>
+                            
+                        
+                        </ul>
                     
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-assets/jquery">packages/shrub-assets/jquery.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-form">packages/shrub-form/index.litcoffee</a>
+                    <a class="" href="../../shrub-form">packages/shrub-form/index.litcoffee</a>
                     
                 </li>
             
@@ -212,7 +208,7 @@
           <div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../../../..">Docs</a> &raquo;</li>
-    <li>client/modules/logging.litcoffee</li>
+    <li>packages/shrub-assets/jquery.litcoffee</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -225,33 +221,30 @@
 </div>
           <div role="main">
             <div class="section">
-              <h1 id="logging">Logging</h1>
-<p><em>A unified interface for logging information.</em></p>
-<h6 id="todo-this-isnt-much-use-on-the-client-to-properly-log-we-would-have-to-hook-into-localstorage">TODO: This isn't much use on the client. To properly log, we would have to hook into localStorage.</h6>
+              <h1 id="jquery-assets">jQuery assets</h1>
 <pre><code>config = require 'config'
-</code></pre>
-<h2 id="loggercreate">logger.create</h2>
-<ul>
-<li>(string) <code>type</code> - The type of log.</li>
-</ul>
-<p><em>Create a new logger instance.</em></p>
-<pre><code>exports.create = (type) -&gt;
 
-  augmentedConsoleFunction = (key) -&gt; -&gt;
-    args = (arg for arg in arguments)
-    args.unshift type
-    console[key].apply console, args
-
-  logger = {}
-  logger[key] = augmentedConsoleFunction key for key in [
-    'debug', 'error', 'info', 'log', 'warn'
-  ]
-  logger
+exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h2 id="loggerdefaultlogger">logger.defaultLogger</h2>
-<p><em>Create a default logger, for convenience.</em></p>
-<pre><code>defaultLogger = exports.create 'shrub'
-exports.defaultLogger = defaultLogger
+<h4 id="implements-hook-assetmiddleware">Implements hook <code>assetMiddleware</code>.</h4>
+<pre><code>  registrar.registerHook 'assetMiddleware', -&gt;
+
+    label: 'jQuery'
+    middleware: [
+
+      (assets, next) -&gt;
+
+        if 'production' is config.get 'NODE_ENV'
+
+          assets.scripts.push '//code.jquery.com/jquery-2.1.3.min.js'
+
+        else
+
+          assets.scripts.push '/lib/jquery/jquery-2.1.3.js'
+
+        next()
+
+    ]
 </code></pre>
 
             </div>
@@ -260,10 +253,10 @@ exports.defaultLogger = defaultLogger
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../middleware" class="btn btn-neutral float-right" title="client/modules/middleware.litcoffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../../shrub-form" class="btn btn-neutral float-right" title="packages/shrub-form/index.litcoffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../errors" class="btn btn-neutral" title="client/modules/errors.litcoffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href=".." class="btn btn-neutral" title="packages/shrub-assets/index.litcoffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -291,8 +284,8 @@ exports.defaultLogger = defaultLogger
         
             <a class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
         
-      <span><a href="../errors" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      <span style="margin-left: 15px"><a href="../middleware" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      <span style="margin-left: 15px"><a href="../../shrub-form" style="color: #fcfcfc">Next &raquo;</a></span>
     </span>
 </div>
 </body>
