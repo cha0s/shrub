@@ -12,3 +12,7 @@ h1:target, h2:target, h3:target, h4:target, h5:target, h6:target {
   margin-left: 0;
   padding-left: 24px;
 }
+
+.rst-content blockquote h3 small {
+  color: #aaa;
+}

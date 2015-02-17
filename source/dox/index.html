@@ -579,8 +579,14 @@ render it as h2 (TODO are h6) to increase visibility.</p>
 <p>Link to the package.</p>
 <pre><code>    sourcePath = _sourcePath fileStats.file
 
-    render += '&gt; ' if isSubpackage
-    render += "### [#{fileStats.pkg}](source/#{sourcePath})"
+    if isSubpackage
+      render += '&gt; '
+      parts = fileStats.pkg.split '/'
+      parentPkg = parts.shift()
+      subPkg = parts.join '/'
+      render += "### [&lt;small&gt;#{parentPkg}/&lt;/small&gt;#{subPkg}](source/#{sourcePath})"
+    else
+      render += "### [#{fileStats.pkg}](source/#{sourcePath})"
 </code></pre>
 <p>Naively parse out the file description. It must be wrapped in asterisks, i.e.
 italicized in markdown.</p>
