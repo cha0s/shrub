@@ -155,6 +155,21 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-audit/fingerprint">packages/shrub-audit/fingerprint.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-audit">packages/shrub-audit/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-config">packages/shrub-config/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../source/packages/shrub-form">packages/shrub-form/index.litcoffee</a>
                     
                 </li>
@@ -270,6 +285,30 @@ description of the functionality they provide.</p>
 <p><a href="../source/packages/shrub-assets/jquery#implements-hook-assetmiddleware">assetMiddleware</a></p>
 </div>
 </blockquote>
+<h3 id="shrub-audit-auditing"><a href="../source/packages/shrub-audit">shrub-audit</a> &mdash; Auditing</h3>
+<p><em>Track users through the request. This can be used to weed out bad behavior,
+for analytics, or anything else.</em></p>
+<div class="admonition note">
+<p class="admonition-title">Implements hooks</p>
+<p><a href="../source/packages/shrub-audit#implements-hook-httpmiddleware">httpMiddleware</a>, <a href="../source/packages/shrub-audit#implements-hook-socketauthorizationmiddleware">socketAuthorizationMiddleware</a></p>
+</div>
+<blockquote>
+<h3 id="shrub-auditfingerprint-fingerprint-class"><a href="../source/packages/shrub-audit/fingerprint"><small>shrub-audit/</small>fingerprint</a> &mdash; Fingerprint class</h3>
+<div class="admonition note">
+<p class="admonition-title">Invokes hooks</p>
+<p><a href="../source/packages/shrub-audit/fingerprint#invoke-hook-fingerprint">fingerprint</a></p>
+</div>
+</blockquote>
+<h3 id="shrub-config-configuration"><a href="../source/packages/shrub-config">shrub-config</a> &mdash; Configuration</h3>
+<p><em>Gathers configuration and serves it as an Angular module for clients.</em></p>
+<div class="admonition note">
+<p class="admonition-title">Implements hooks</p>
+<p><a href="../source/packages/shrub-config#implements-hook-assetmiddleware">assetMiddleware</a>, <a href="../source/packages/shrub-config#implements-hook-httpmiddleware">httpMiddleware</a></p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Invokes hooks</p>
+<p><a href="../source/packages/shrub-config#invoke-hook-config">config</a></p>
+</div>
 <h3 id="shrub-form-form-processing"><a href="../source/packages/shrub-form">shrub-form</a> &mdash; Form processing</h3>
 <p><em>Handle form and method parsing, and submission of POST'ed data into the
 Angular sandbox.</em></p>

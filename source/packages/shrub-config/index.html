@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>packages/shrub-assets/index.litcoffee - Shrub</title>
+  <title>packages/shrub-config/index.litcoffee - Shrub</title>
   
 
   
@@ -127,34 +127,17 @@
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="angular">packages/shrub-assets/angular.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 current">
-                    <a class="current" href=".">packages/shrub-assets/index.litcoffee</a>
-                    
-                        <ul>
-                        
-                            <li class="toctree-l2"><a href="#assets-management">Assets management</a></li>
-                            
-                                <li><a class="toctree-l3" href="#implements-hook-clearcaches">Implements hook clearCaches.</a></li>
-                            
-                                <li><a class="toctree-l3" href="#implements-hook-assetmiddleware">Implements hook assetMiddleware.</a></li>
-                            
-                                <li><a class="toctree-l3" href="#implements-hook-gruntconfig">Implements hook gruntConfig.</a></li>
-                            
-                                <li><a class="toctree-l3" href="#implements-hook-packagesettings">Implements hook packageSettings.</a></li>
-                            
-                                <li><a class="toctree-l3" href="#invoke-hook-assetmiddleware">Invoke hook assetMiddleware.</a></li>
-                            
-                        
-                        </ul>
+                    <a class="" href="../shrub-assets/angular">packages/shrub-assets/angular.litcoffee</a>
                     
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="jquery">packages/shrub-assets/jquery.litcoffee</a>
+                    <a class="" href="../shrub-assets">packages/shrub-assets/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-assets/jquery">packages/shrub-assets/jquery.litcoffee</a>
                     
                 </li>
             
@@ -168,8 +151,21 @@
                     
                 </li>
             
-                <li class="toctree-l1 ">
-                    <a class="" href="../shrub-config">packages/shrub-config/index.litcoffee</a>
+                <li class="toctree-l1 current">
+                    <a class="current" href=".">packages/shrub-config/index.litcoffee</a>
+                    
+                        <ul>
+                        
+                            <li class="toctree-l2"><a href="#configuration">Configuration</a></li>
+                            
+                                <li><a class="toctree-l3" href="#implements-hook-assetmiddleware">Implements hook assetMiddleware.</a></li>
+                            
+                                <li><a class="toctree-l3" href="#implements-hook-httpmiddleware">Implements hook httpMiddleware.</a></li>
+                            
+                                <li><a class="toctree-l3" href="#shrub-configrenderpackageconfig">shrub-config.renderPackageConfig</a></li>
+                            
+                        
+                        </ul>
                     
                 </li>
             
@@ -231,7 +227,7 @@
           <div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../../..">Docs</a> &raquo;</li>
-    <li>packages/shrub-assets/index.litcoffee</li>
+    <li>packages/shrub-config/index.litcoffee</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -244,101 +240,110 @@
 </div>
           <div role="main">
             <div class="section">
-              <h1 id="assets-management">Assets management</h1>
-<p><em>Gather, build, and serve assets defined by packages.</em></p>
-<pre><code>config = require 'config'
+              <h1 id="configuration">Configuration</h1>
+<p><em>Gathers configuration and serves it as an Angular module for clients.</em></p>
+<pre><code>_ = require 'lodash'
+Promise = require 'bluebird'
+url = require 'url'
 
-assets = null
+config = require 'config'
+pkgman = require 'pkgman'
+
+{Config} = require 'client/modules/config'
 
 exports.pkgmanRegister = (registrar) -&gt;
-</code></pre>
-<h4 id="implements-hook-clearcaches">Implements hook <code>clearCaches</code>.</h4>
-<pre><code>  registrar.registerHook 'clearCaches', -&gt;
-
-    assets = null
 </code></pre>
 <h4 id="implements-hook-assetmiddleware">Implements hook <code>assetMiddleware</code>.</h4>
 <pre><code>  registrar.registerHook 'assetMiddleware', -&gt;
 
-    label: 'Shrub'
+    label: 'Config'
     middleware: [
 
       (assets, next) -&gt;
 
-        if 'production' is config.get 'NODE_ENV'
-          assets.scripts.push '/lib/shrub/shrub.min.js'
-        else
-          assets.scripts.push '/lib/shrub/shrub.js'
-
-        assets.styleSheets.push '/css/shrub.css'
+        assets.scripts.push '/js/config.js'
 
         next()
 
     ]
 </code></pre>
-<h4 id="implements-hook-gruntconfig">Implements hook <code>gruntConfig</code>.</h4>
-<pre><code>  registrar.registerHook 'gruntConfig', (gruntConfig) -&gt;
+<h4 id="implements-hook-httpmiddleware">Implements hook <code>httpMiddleware</code>.</h4>
+<pre><code>  registrar.registerHook 'httpMiddleware', (http) -&gt;
 
-    gruntConfig.configureTask 'copy', 'shrub-assets', files: [
-      src: '**/*'
-      dest: 'app'
-      expand: true
-      cwd: "#{__dirname}/app"
-    ]
-
-    gruntConfig.configureTask(
-      'watch', 'shrub-assets'
-
-      files: [
-        "#{__dirname}/app/**/*"
-      ]
-      tasks: 'build:shrub-assets'
-    )
-
-    gruntConfig.registerTask 'build:shrub-assets', [
-      'newer:copy:shrub-assets'
-    ]
-
-    gruntConfig.registerTask 'build', ['build:shrub-assets']
+    label: 'Serve package configuration'
+    middleware: [
 </code></pre>
-<h4 id="implements-hook-packagesettings">Implements hook <code>packageSettings</code>.</h4>
-<pre><code>  registrar.registerHook 'packageSettings', -&gt;
-
-    assetMiddleware: [
-      'shrub-assets/jquery'
-      'shrub-socket-socket.io'
-      'shrub-assets/angular'
-      'shrub-assets'
-      'shrub-html5-notification'
-      'shrub-html5-local-storage'
-      'shrub-config'
-    ]
-
-  registrar.recur [
-    'angular', 'jquery'
-  ]
-
-exports.assets = -&gt;
-  return assets if assets?
-
-  debug = require('debug') 'shrub-silly:assets:middleware'
-
-  middleware = require 'middleware'
-
-  assets = scripts: [], styleSheets: []
+<p>Serve the configuration module.</p>
+<pre><code>      (req, res, next) -&gt;
 </code></pre>
-<h4 id="invoke-hook-assetmiddleware">Invoke hook <code>assetMiddleware</code>.</h4>
-<p>Invoked to gather script assets for requests.</p>
-<pre><code>  debug '- Loading asset middleware...'
-  assetMiddleware = middleware.fromHook(
-    'assetMiddleware'
-    config.get 'packageSettings:shrub-assets:assetMiddleware'
-  )
-  debug '- Asset middleware loaded.'
+<p>Only if the path matches.</p>
+<pre><code>        return next() unless req.url is '/js/config.js'
 
-  assetMiddleware.dispatch assets, (error) -&gt; throw error if error?
+        exports.renderPackageConfig(req).then((code) -&gt;
+</code></pre>
+<p>Emit the configuration module.</p>
+<pre><code>          res.setHeader 'Content-Type', 'text/javascript'
+          res.send code
 
-  assets
+        ).catch next
+
+    ]
+</code></pre>
+<h2 id="shrub-configrenderpackageconfig">shrub-config.renderPackageConfig</h2>
+<ul>
+<li>(http.IncomingRequest) <code>req</code> - The request object.</li>
+</ul>
+<p>USe a client's request object to render configuration.</p>
+<pre><code>exports.renderPackageConfig = (req) -&gt;
+</code></pre>
+<h4 id="invoke-hook-config">Invoke hook <code>config</code>.</h4>
+<p>Allows packages to specify configuration that will be sent to the client.
+Implementations may return an object, or a promise that resolves to an object.</p>
+<pre><code>  subconfigs = pkgman.invoke 'config', req
+
+  Promise.all(
+
+    promise for path, promise of subconfigs
+
+  ).then (fulfilledSubconfigs) -&gt;
+
+    config_ = new Config()
+</code></pre>
+<p>Package-independent...</p>
+<pre><code>    config_.set 'packageList', config.get 'packageList'
+</code></pre>
+<p>Merge in the subconfigs.</p>
+<pre><code>    index = 0
+    for path of subconfigs
+
+      subconfig = fulfilledSubconfigs[index++]
+      for key, value of subconfig
+        continue unless value?
+</code></pre>
+<h6 id="todo-multiline">TODO: Multiline</h6>
+<pre><code>        config_.set "packageConfig:#{path.replace /\//g, ':'}:#{key.replace /\//g, ':'}", value
+
+    pkgman.invoke 'configAlter', req, config_
+</code></pre>
+<p>Format the configuration to look nice.</p>
+<pre><code>    prettyPrintConfig = -&gt;
+
+      jsonArgs = [config_]
+
+      if 'production' isnt config.get 'NODE_ENV'
+        jsonArgs = jsonArgs.concat [null, '  ']
+
+      stringified = JSON.stringify jsonArgs...
+      [first, rest...] = stringified.split '\n'
+      ([first].concat rest.map (line) -&gt; '    ' + line).join '\n'
+
+    """
+angular.module('shrub.config', ['shrub.require']).config([
+  'shrub-requireProvider', function(requireProvider) {
+    requireProvider.require('config').from(#{prettyPrintConfig()});
+  }
+]);
+  """
 </code></pre>
 
             </div>
@@ -347,10 +352,10 @@ exports.assets = -&gt;
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="jquery" class="btn btn-neutral float-right" title="packages/shrub-assets/jquery.litcoffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../shrub-form" class="btn btn-neutral float-right" title="packages/shrub-form/index.litcoffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="angular" class="btn btn-neutral" title="packages/shrub-assets/angular.litcoffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../shrub-audit" class="btn btn-neutral" title="packages/shrub-audit/index.litcoffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -378,8 +383,8 @@ exports.assets = -&gt;
         
             <a class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
         
-      <span><a href="angular" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      <span style="margin-left: 15px"><a href="jquery" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../shrub-audit" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      <span style="margin-left: 15px"><a href="../shrub-form" style="color: #fcfcfc">Next &raquo;</a></span>
     </span>
 </div>
 </body>

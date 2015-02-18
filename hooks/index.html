@@ -68,6 +68,8 @@
                             
                                 <li><a class="toctree-l3" href="#clearcaches">clearCaches</a></li>
                             
+                                <li><a class="toctree-l3" href="#config">config</a></li>
+                            
                                 <li><a class="toctree-l3" href="#controller">controller</a></li>
                             
                                 <li><a class="toctree-l3" href="#directive">directive</a></li>
@@ -75,6 +77,8 @@
                                 <li><a class="toctree-l3" href="#endpoint">endpoint</a></li>
                             
                                 <li><a class="toctree-l3" href="#filter">filter</a></li>
+                            
+                                <li><a class="toctree-l3" href="#fingerprint">fingerprint</a></li>
                             
                                 <li><a class="toctree-l3" href="#gruntconfig">gruntConfig</a></li>
                             
@@ -89,6 +93,8 @@
                                 <li><a class="toctree-l3" href="#provider">provider</a></li>
                             
                                 <li><a class="toctree-l3" href="#service">service</a></li>
+                            
+                                <li><a class="toctree-l3" href="#socketauthorizationmiddleware">socketAuthorizationMiddleware</a></li>
                             
                                 <li><a class="toctree-l3" href="#transmittableerror">transmittableError</a></li>
                             
@@ -185,6 +191,21 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../source/packages/shrub-assets/jquery">packages/shrub-assets/jquery.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-audit/fingerprint">packages/shrub-audit/fingerprint.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-audit">packages/shrub-audit/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-config">packages/shrub-config/index.litcoffee</a>
                     
                 </li>
             
@@ -314,11 +335,12 @@ implementations. Hooks are invoked synchronously. For more information about
 <li>client/app (<a href="../source/client/app#invoke-hook-apprun">client</a>)</li>
 </ul>
 <h2 id="assetmiddleware">assetMiddleware</h2>
-<h3 id="3-implementationss">3 implementations(s)</h3>
+<h3 id="4-implementationss">4 implementations(s)</h3>
 <ul>
 <li>packages/shrub-assets/angular (<a href="../source/packages/shrub-assets/angular#implements-hook-assetmiddleware">server</a>)</li>
 <li>packages/shrub-assets (<a href="../source/packages/shrub-assets#implements-hook-assetmiddleware">server</a>)</li>
 <li>packages/shrub-assets/jquery (<a href="../source/packages/shrub-assets/jquery#implements-hook-assetmiddleware">server</a>)</li>
+<li>packages/shrub-config (<a href="../source/packages/shrub-config#implements-hook-assetmiddleware">server</a>)</li>
 </ul>
 <h3 id="1-invocationss_3">1 invocations(s)</h3>
 <ul>
@@ -343,13 +365,18 @@ implementations. Hooks are invoked synchronously. For more information about
 <ul>
 <li>packages/shrub-assets (<a href="../source/packages/shrub-assets#implements-hook-clearcaches">server</a>)</li>
 </ul>
-<h2 id="controller">controller</h2>
+<h2 id="config">config</h2>
 <h3 id="1-invocationss_6">1 invocations(s)</h3>
+<ul>
+<li>packages/shrub-config (<a href="../source/packages/shrub-config#invoke-hook-config">server</a>)</li>
+</ul>
+<h2 id="controller">controller</h2>
+<h3 id="1-invocationss_7">1 invocations(s)</h3>
 <ul>
 <li>client/packages (<a href="../source/client/packages#invoke-hook-controller">client</a>)</li>
 </ul>
 <h2 id="directive">directive</h2>
-<h3 id="1-invocationss_7">1 invocations(s)</h3>
+<h3 id="1-invocationss_8">1 invocations(s)</h3>
 <ul>
 <li>client/packages (<a href="../source/client/packages#invoke-hook-directive">client</a>)</li>
 </ul>
@@ -359,9 +386,14 @@ implementations. Hooks are invoked synchronously. For more information about
 <li>packages/shrub-angular (<a href="../source/packages/shrub-angular#implements-hook-endpoint">server</a>)</li>
 </ul>
 <h2 id="filter">filter</h2>
-<h3 id="1-invocationss_8">1 invocations(s)</h3>
+<h3 id="1-invocationss_9">1 invocations(s)</h3>
 <ul>
 <li>client/packages (<a href="../source/client/packages#invoke-hook-filter">client</a>)</li>
+</ul>
+<h2 id="fingerprint">fingerprint</h2>
+<h3 id="1-invocationss_10">1 invocations(s)</h3>
+<ul>
+<li>packages/shrub-audit/fingerprint (<a href="../source/packages/shrub-audit/fingerprint#invoke-hook-fingerprint">server</a>)</li>
 </ul>
 <h2 id="gruntconfig">gruntConfig</h2>
 <h3 id="1-implementationss_5">1 implementations(s)</h3>
@@ -369,18 +401,20 @@ implementations. Hooks are invoked synchronously. For more information about
 <li>packages/shrub-assets (<a href="../source/packages/shrub-assets#implements-hook-gruntconfig">server</a>)</li>
 </ul>
 <h2 id="httpmiddleware">httpMiddleware</h2>
-<h3 id="2-implementationss">2 implementations(s)</h3>
+<h3 id="4-implementationss_1">4 implementations(s)</h3>
 <ul>
 <li>packages/shrub-angular (<a href="../source/packages/shrub-angular#implements-hook-httpmiddleware">server</a>)</li>
+<li>packages/shrub-audit (<a href="../source/packages/shrub-audit#implements-hook-httpmiddleware">server</a>)</li>
+<li>packages/shrub-config (<a href="../source/packages/shrub-config#implements-hook-httpmiddleware">server</a>)</li>
 <li>packages/shrub-form (<a href="../source/packages/shrub-form#implements-hook-httpmiddleware">server</a>)</li>
 </ul>
 <h2 id="packagesettings">packageSettings</h2>
-<h3 id="2-implementationss_1">2 implementations(s)</h3>
+<h3 id="2-implementationss">2 implementations(s)</h3>
 <ul>
 <li>packages/shrub-angular (<a href="../source/packages/shrub-angular#implements-hook-packagesettings">server</a>)</li>
 <li>packages/shrub-assets (<a href="../source/packages/shrub-assets#implements-hook-packagesettings">server</a>)</li>
 </ul>
-<h3 id="1-invocationss_9">1 invocations(s)</h3>
+<h3 id="1-invocationss_11">1 invocations(s)</h3>
 <ul>
 <li>server/config (<a href="../source/server/config#invoke-hook-packagesettings">server</a>)</li>
 </ul>
@@ -420,27 +454,32 @@ exports.pkgmanRegister = function(registrar) {
 
 <p>So that the heavy module will not be <code>require</code>d until hook <code>preBootstrap</code> is
 invoked.</p>
-<h3 id="1-invocationss_10">1 invocations(s)</h3>
+<h3 id="1-invocationss_12">1 invocations(s)</h3>
 <ul>
 <li>server (<a href="../source/server#invoke-hook-prebootstrap">server</a>)</li>
 </ul>
 <h2 id="processexit">processExit</h2>
-<h3 id="1-invocationss_11">1 invocations(s)</h3>
+<h3 id="1-invocationss_13">1 invocations(s)</h3>
 <ul>
 <li>server (<a href="../source/server#invoke-hook-processexit">server</a>)</li>
 </ul>
 <h2 id="provider">provider</h2>
-<h3 id="1-invocationss_12">1 invocations(s)</h3>
+<h3 id="1-invocationss_14">1 invocations(s)</h3>
 <ul>
 <li>client/packages (<a href="../source/client/packages#invoke-hook-provider">client</a>)</li>
 </ul>
 <h2 id="service">service</h2>
-<h3 id="1-invocationss_13">1 invocations(s)</h3>
+<h3 id="1-invocationss_15">1 invocations(s)</h3>
 <ul>
 <li>client/packages (<a href="../source/client/packages#invoke-hook-service">client</a>)</li>
 </ul>
+<h2 id="socketauthorizationmiddleware">socketAuthorizationMiddleware</h2>
+<h3 id="1-implementationss_6">1 implementations(s)</h3>
+<ul>
+<li>packages/shrub-audit (<a href="../source/packages/shrub-audit#implements-hook-socketauthorizationmiddleware">server</a>)</li>
+</ul>
 <h2 id="transmittableerror">transmittableError</h2>
-<h3 id="1-invocationss_14">1 invocations(s)</h3>
+<h3 id="1-invocationss_16">1 invocations(s)</h3>
 <ul>
 <li>client/modules/errors (<a href="../source/client/modules/errors#invoke-hook-transmittableerror">client</a>)</li>
 </ul>

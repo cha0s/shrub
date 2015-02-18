@@ -88,6 +88,8 @@
                             
                                 <li><a class="toctree-l3" href="#the-above-found-in-packagesshrub-angularindexlitcoffee384">the above found in packages/shrub-angular/index.litcoffee:384</a></li>
                             
+                                <li><a class="toctree-l3" href="#the-above-found-in-packagesshrub-configindexlitcoffee92">the above found in packages/shrub-config/index.litcoffee:92</a></li>
+                            
                                 <li><a class="toctree-l3" href="#the-above-found-in-packagesshrub-formindexlitcoffee22">the above found in packages/shrub-form/index.litcoffee:22</a></li>
                             
                                 <li><a class="toctree-l3" href="#the-above-found-in-serverlitcoffee37">the above found in server.litcoffee:37</a></li>
@@ -133,6 +135,8 @@
                                 <li><a class="toctree-l3" href="#todo-remove-unused-res-parameter">TODO: Remove unused res parameter.</a></li>
                             
                                 <li><a class="toctree-l3" href="#todo-need-to-extract-params-to-build-redirectto-its-a-small-enough-mismatch-to-ignore-for-now">TODO: Need to extract params to build redirectTo, it's a small enough mismatch to ignore for now.</a></li>
+                            
+                                <li><a class="toctree-l3" href="#todo-multiline_1">TODO: Multiline</a></li>
                             
                                 <li><a class="toctree-l3" href="#todo-crsf-check-needed-here">TODO: CRSF check needed here.</a></li>
                             
@@ -232,6 +236,21 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../source/packages/shrub-assets/jquery">packages/shrub-assets/jquery.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-audit/fingerprint">packages/shrub-audit/fingerprint.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-audit">packages/shrub-audit/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-config">packages/shrub-config/index.litcoffee</a>
                     
                 </li>
             
@@ -430,6 +449,16 @@ Promise = require 'bluebird'
 </code></pre>
 </blockquote>
 <h6 id="the-above-found-in-packagesshrub-angularindexlitcoffee384">the above found in <a href="../source/packages/shrub-angular#todo-need-to-extract-params-to-build-redirectto-it-s-a-small-enough-mismatch-to-ignore-for-now">packages/shrub-angular/index.litcoffee:384</a></h6>
+<blockquote>
+<pre><code>      subconfig = fulfilledSubconfigs[index++]
+      for key, value of subconfig
+        continue unless value?
+</code></pre>
+<h2 id="todo-multiline_1">TODO: Multiline</h2>
+<pre><code>        config_.set "packageConfig:#{path.replace /\//g, ':'}:#{key.replace /\//g, ':'}", value
+</code></pre>
+</blockquote>
+<h6 id="the-above-found-in-packagesshrub-configindexlitcoffee92">the above found in <a href="../source/packages/shrub-config#todo-multilin">packages/shrub-config/index.litcoffee:92</a></h6>
 <blockquote>
 <pre><code>        {body, sandbox} = req
 </code></pre>
