@@ -1,5 +1,8 @@
 # Auditing
 
+*Track users through the request. This can be used to weed out bad behavior,
+for analytics, or anything else.*
+
     exports.pkgmanRegister = (registrar) ->
 
 #### Implements hook `httpMiddleware`.
