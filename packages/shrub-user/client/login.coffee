@@ -1,21 +1,25 @@
 
 # # User login
 
+config = require 'config'
+
 exports.pkgmanRegister = (registrar) ->
 
-  # ## Implements hook `routeMock`
-  registrar.registerHook 'e2e', 'routeMock', ->
+  if 'e2e' is config.get 'testMode'
 
-    path: 'e2e/user/login/:destination'
+    # ## Implements hook `route`
+    registrar.registerHook 'e2e', 'route', ->
 
-    controller: [
-      '$location', '$routeParams', 'shrub-rpc', 'shrub-socket', 'shrub-user'
-      ($location, {destination}, rpc, socket, user) ->
+      path: 'e2e/user/login/:destination'
 
-        user.fakeLogin('cha0s').then ->
-          $location.path "/user/#{destination}"
+      controller: [
+        '$location', '$routeParams', 'shrub-rpc', 'shrub-socket', 'shrub-user'
+        ($location, {destination}, rpc, socket, user) ->
 
-    ]
+          user.fakeLogin('cha0s').then ->
+            $location.path "/user/#{destination}"
+
+      ]
 
   # ## Implements hook `transmittableError`
   registrar.registerHook 'transmittableError', exports.transmittableError
