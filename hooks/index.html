@@ -54,6 +54,10 @@
                             
                                 <li><a class="toctree-l3" href="#todo-link-to-pkgman-documentation-when-complete">TODO: Link to pkgman documentation when complete.</a></li>
                             
+                                <li><a class="toctree-l3" href="#ahrefsanitizationwhilelist">aHrefSanitizationWhilelist</a></li>
+                            
+                                <li><a class="toctree-l3" href="#ahrefsanitizationwhitelist">aHrefSanitizationWhitelist</a></li>
+                            
                                 <li><a class="toctree-l3" href="#angularnavigationmiddleware">angularNavigationMiddleware</a></li>
                             
                                 <li><a class="toctree-l3" href="#appconfig">appConfig</a></li>
@@ -80,9 +84,19 @@
                             
                                 <li><a class="toctree-l3" href="#fingerprint">fingerprint</a></li>
                             
+                                <li><a class="toctree-l3" href="#formalter">formAlter</a></li>
+                            
+                                <li><a class="toctree-l3" href="#formformidalter">formFormIdAlter</a></li>
+                            
+                                <li><a class="toctree-l3" href="#formwidgets">formWidgets</a></li>
+                            
                                 <li><a class="toctree-l3" href="#gruntconfig">gruntConfig</a></li>
                             
                                 <li><a class="toctree-l3" href="#httpmiddleware">httpMiddleware</a></li>
+                            
+                                <li><a class="toctree-l3" href="#httproutes">httpRoutes</a></li>
+                            
+                                <li><a class="toctree-l3" href="#notificationqueue">notificationQueue</a></li>
                             
                                 <li><a class="toctree-l3" href="#packagesettings">packageSettings</a></li>
                             
@@ -91,6 +105,10 @@
                                 <li><a class="toctree-l3" href="#processexit">processExit</a></li>
                             
                                 <li><a class="toctree-l3" href="#provider">provider</a></li>
+                            
+                                <li><a class="toctree-l3" href="#replcontext">replContext</a></li>
+                            
+                                <li><a class="toctree-l3" href="#route">route</a></li>
                             
                                 <li><a class="toctree-l3" href="#service">service</a></li>
                             
@@ -210,6 +228,86 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-core/client">packages/shrub-core/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-core">packages/shrub-core/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-example/about">packages/shrub-example/about.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-example/client/about">packages/shrub-example/client/about.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-example/client/home">packages/shrub-example/client/home.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-example/client">packages/shrub-example/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-example">packages/shrub-example/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-form/client">packages/shrub-form/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-form/client/widget/checkbox">packages/shrub-form/client/widget/checkbox.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-form/client/widget/checkboxes">packages/shrub-form/client/widget/checkboxes.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-form/client/widget/hidden">packages/shrub-form/client/widget/hidden.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-form/client/widget/radio">packages/shrub-form/client/widget/radio.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-form/client/widget/radios">packages/shrub-form/client/widget/radios.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-form/client/widget/select">packages/shrub-form/client/widget/select.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-form/client/widget/submit">packages/shrub-form/client/widget/submit.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-form/client/widget/text">packages/shrub-form/client/widget/text.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../source/packages/shrub-form">packages/shrub-form/index.litcoffee</a>
                     
                 </li>
@@ -311,26 +409,42 @@ var results = pkgman.invoke('someOtherHook', arg);
 implementations. Hooks are invoked synchronously. For more information about
 <code>pkgman</code>, see</p>
 <h6 id="todo-link-to-pkgman-documentation-when-complete">TODO: Link to <code>pkgman</code> documentation when complete.</h6>
-<h2 id="angularnavigationmiddleware">angularNavigationMiddleware</h2>
+<h2 id="ahrefsanitizationwhilelist">aHrefSanitizationWhilelist</h2>
+<h3 id="1-invocationss">1 invocations(s)</h3>
+<ul>
+<li>packages/shrub-core/client (<a href="../source/packages/shrub-core/client#invoke-hook-ahrefsanitizationwhilelist">client</a>)</li>
+</ul>
+<h2 id="ahrefsanitizationwhitelist">aHrefSanitizationWhitelist</h2>
 <h3 id="1-implementationss">1 implementations(s)</h3>
+<ul>
+<li>packages/shrub-core/client (<a href="../source/packages/shrub-core/client#implements-hook-ahrefsanitizationwhitelist">client</a>)</li>
+</ul>
+<h2 id="angularnavigationmiddleware">angularNavigationMiddleware</h2>
+<h3 id="1-implementationss_1">1 implementations(s)</h3>
 <ul>
 <li>packages/shrub-form (<a href="../source/packages/shrub-form#implements-hook-angularnavigationmiddleware">server</a>)</li>
 </ul>
-<h3 id="1-invocationss">1 invocations(s)</h3>
+<h3 id="1-invocationss_1">1 invocations(s)</h3>
 <ul>
 <li>packages/shrub-angular (<a href="../source/packages/shrub-angular#invoke-hook-angularnavigationmiddleware">server</a>)</li>
 </ul>
 <h2 id="appconfig">appConfig</h2>
-<h3 id="1-invocationss_1">1 invocations(s)</h3>
+<h3 id="2-implementationss">2 implementations(s)</h3>
+<ul>
+<li>packages/shrub-core/client (<a href="../source/packages/shrub-core/client#implements-hook-appconfig">client</a>)</li>
+<li>packages/shrub-example/client/home (<a href="../source/packages/shrub-example/client/home#implements-hook-appconfig">client</a>)</li>
+</ul>
+<h3 id="1-invocationss_2">1 invocations(s)</h3>
 <ul>
 <li>client/app (<a href="../source/client/app#invoke-hook-appconfig">client</a>)</li>
 </ul>
 <h2 id="apprun">appRun</h2>
-<h3 id="1-implementationss_1">1 implementations(s)</h3>
+<h3 id="2-implementationss_1">2 implementations(s)</h3>
 <ul>
 <li>packages/shrub-angular/client (<a href="../source/packages/shrub-angular/client#implements-hook-apprun">client</a>)</li>
+<li>packages/shrub-core/client (<a href="../source/packages/shrub-core/client#implements-hook-apprun">client</a>)</li>
 </ul>
-<h3 id="1-invocationss_2">1 invocations(s)</h3>
+<h3 id="1-invocationss_3">1 invocations(s)</h3>
 <ul>
 <li>client/app (<a href="../source/client/app#invoke-hook-apprun">client</a>)</li>
 </ul>
@@ -342,12 +456,12 @@ implementations. Hooks are invoked synchronously. For more information about
 <li>packages/shrub-assets/jquery (<a href="../source/packages/shrub-assets/jquery#implements-hook-assetmiddleware">server</a>)</li>
 <li>packages/shrub-config (<a href="../source/packages/shrub-config#implements-hook-assetmiddleware">server</a>)</li>
 </ul>
-<h3 id="1-invocationss_3">1 invocations(s)</h3>
+<h3 id="1-invocationss_4">1 invocations(s)</h3>
 <ul>
 <li>packages/shrub-assets (<a href="../source/packages/shrub-assets#invoke-hook-assetmiddleware">server</a>)</li>
 </ul>
 <h2 id="augmentdirective">augmentDirective</h2>
-<h3 id="1-invocationss_4">1 invocations(s)</h3>
+<h3 id="1-invocationss_5">1 invocations(s)</h3>
 <ul>
 <li>client/packages (<a href="../source/client/packages#invoke-hook-augmentdirective">client</a>)</li>
 </ul>
@@ -356,7 +470,7 @@ implementations. Hooks are invoked synchronously. For more information about
 <ul>
 <li>packages/shrub-angular (<a href="../source/packages/shrub-angular#implements-hook-bootstrapmiddleware">server</a>)</li>
 </ul>
-<h3 id="1-invocationss_5">1 invocations(s)</h3>
+<h3 id="1-invocationss_6">1 invocations(s)</h3>
 <ul>
 <li>server (<a href="../source/server#invoke-hook-bootstrapmiddleware">server</a>)</li>
 </ul>
@@ -366,55 +480,113 @@ implementations. Hooks are invoked synchronously. For more information about
 <li>packages/shrub-assets (<a href="../source/packages/shrub-assets#implements-hook-clearcaches">server</a>)</li>
 </ul>
 <h2 id="config">config</h2>
-<h3 id="1-invocationss_6">1 invocations(s)</h3>
+<h3 id="1-implementationss_4">1 implementations(s)</h3>
+<ul>
+<li>packages/shrub-core (<a href="../source/packages/shrub-core#implements-hook-config">server</a>)</li>
+</ul>
+<h3 id="1-invocationss_7">1 invocations(s)</h3>
 <ul>
 <li>packages/shrub-config (<a href="../source/packages/shrub-config#invoke-hook-config">server</a>)</li>
 </ul>
 <h2 id="controller">controller</h2>
-<h3 id="1-invocationss_7">1 invocations(s)</h3>
+<h3 id="1-invocationss_8">1 invocations(s)</h3>
 <ul>
 <li>client/packages (<a href="../source/client/packages#invoke-hook-controller">client</a>)</li>
 </ul>
 <h2 id="directive">directive</h2>
-<h3 id="1-invocationss_8">1 invocations(s)</h3>
+<h3 id="9-implementationss">9 implementations(s)</h3>
+<ul>
+<li>packages/shrub-form/client (<a href="../source/packages/shrub-form/client#implements-hook-directive">client</a>)</li>
+<li>packages/shrub-form/client/widget/checkbox (<a href="../source/packages/shrub-form/client/widget/checkbox#implements-hook-directive">client</a>)</li>
+<li>packages/shrub-form/client/widget/checkboxes (<a href="../source/packages/shrub-form/client/widget/checkboxes#implements-hook-directive">client</a>)</li>
+<li>packages/shrub-form/client/widget/hidden (<a href="../source/packages/shrub-form/client/widget/hidden#implements-hook-directive">client</a>)</li>
+<li>packages/shrub-form/client/widget/radio (<a href="../source/packages/shrub-form/client/widget/radio#implements-hook-directive">client</a>)</li>
+<li>packages/shrub-form/client/widget/radios (<a href="../source/packages/shrub-form/client/widget/radios#implements-hook-directive">client</a>)</li>
+<li>packages/shrub-form/client/widget/select (<a href="../source/packages/shrub-form/client/widget/select#implements-hook-directive">client</a>)</li>
+<li>packages/shrub-form/client/widget/submit (<a href="../source/packages/shrub-form/client/widget/submit#implements-hook-directive">client</a>)</li>
+<li>packages/shrub-form/client/widget/text (<a href="../source/packages/shrub-form/client/widget/text#implements-hook-directive">client</a>)</li>
+</ul>
+<h3 id="1-invocationss_9">1 invocations(s)</h3>
 <ul>
 <li>client/packages (<a href="../source/client/packages#invoke-hook-directive">client</a>)</li>
 </ul>
 <h2 id="endpoint">endpoint</h2>
-<h3 id="1-implementationss_4">1 implementations(s)</h3>
+<h3 id="1-implementationss_5">1 implementations(s)</h3>
 <ul>
 <li>packages/shrub-angular (<a href="../source/packages/shrub-angular#implements-hook-endpoint">server</a>)</li>
 </ul>
 <h2 id="filter">filter</h2>
-<h3 id="1-invocationss_9">1 invocations(s)</h3>
+<h3 id="1-invocationss_10">1 invocations(s)</h3>
 <ul>
 <li>client/packages (<a href="../source/client/packages#invoke-hook-filter">client</a>)</li>
 </ul>
 <h2 id="fingerprint">fingerprint</h2>
-<h3 id="1-invocationss_10">1 invocations(s)</h3>
+<h3 id="1-implementationss_6">1 implementations(s)</h3>
+<ul>
+<li>packages/shrub-core (<a href="../source/packages/shrub-core#implements-hook-fingerprint">server</a>)</li>
+</ul>
+<h3 id="1-invocationss_11">1 invocations(s)</h3>
 <ul>
 <li>packages/shrub-audit/fingerprint (<a href="../source/packages/shrub-audit/fingerprint#invoke-hook-fingerprint">server</a>)</li>
 </ul>
+<h2 id="formalter">formAlter</h2>
+<h3 id="1-invocationss_12">1 invocations(s)</h3>
+<ul>
+<li>packages/shrub-form/client (<a href="../source/packages/shrub-form/client#invoke-hook-formalter">client</a>)</li>
+</ul>
+<h2 id="formformidalter">formFormIdAlter</h2>
+<h3 id="1-invocationss_13">1 invocations(s)</h3>
+<ul>
+<li>packages/shrub-form/client (<a href="../source/packages/shrub-form/client#invoke-hook-formformidalter">client</a>)</li>
+</ul>
+<h2 id="formwidgets">formWidgets</h2>
+<h3 id="8-implementationss">8 implementations(s)</h3>
+<ul>
+<li>packages/shrub-form/client/widget/checkbox (<a href="../source/packages/shrub-form/client/widget/checkbox#implements-hook-formwidgets">client</a>)</li>
+<li>packages/shrub-form/client/widget/checkboxes (<a href="../source/packages/shrub-form/client/widget/checkboxes#implements-hook-formwidgets">client</a>)</li>
+<li>packages/shrub-form/client/widget/hidden (<a href="../source/packages/shrub-form/client/widget/hidden#implements-hook-formwidgets">client</a>)</li>
+<li>packages/shrub-form/client/widget/radio (<a href="../source/packages/shrub-form/client/widget/radio#implements-hook-formwidgets">client</a>)</li>
+<li>packages/shrub-form/client/widget/radios (<a href="../source/packages/shrub-form/client/widget/radios#implements-hook-formwidgets">client</a>)</li>
+<li>packages/shrub-form/client/widget/select (<a href="../source/packages/shrub-form/client/widget/select#implements-hook-formwidgets">client</a>)</li>
+<li>packages/shrub-form/client/widget/submit (<a href="../source/packages/shrub-form/client/widget/submit#implements-hook-formwidgets">client</a>)</li>
+<li>packages/shrub-form/client/widget/text (<a href="../source/packages/shrub-form/client/widget/text#implements-hook-formwidgets">client</a>)</li>
+</ul>
+<h3 id="1-invocationss_14">1 invocations(s)</h3>
+<ul>
+<li>packages/shrub-form/client (<a href="../source/packages/shrub-form/client#invoke-hook-formwidgets">client</a>)</li>
+</ul>
 <h2 id="gruntconfig">gruntConfig</h2>
-<h3 id="1-implementationss_5">1 implementations(s)</h3>
+<h3 id="1-implementationss_7">1 implementations(s)</h3>
 <ul>
 <li>packages/shrub-assets (<a href="../source/packages/shrub-assets#implements-hook-gruntconfig">server</a>)</li>
 </ul>
 <h2 id="httpmiddleware">httpMiddleware</h2>
-<h3 id="4-implementationss_1">4 implementations(s)</h3>
+<h3 id="5-implementationss">5 implementations(s)</h3>
 <ul>
 <li>packages/shrub-angular (<a href="../source/packages/shrub-angular#implements-hook-httpmiddleware">server</a>)</li>
 <li>packages/shrub-audit (<a href="../source/packages/shrub-audit#implements-hook-httpmiddleware">server</a>)</li>
 <li>packages/shrub-config (<a href="../source/packages/shrub-config#implements-hook-httpmiddleware">server</a>)</li>
+<li>packages/shrub-core (<a href="../source/packages/shrub-core#implements-hook-httpmiddleware">server</a>)</li>
 <li>packages/shrub-form (<a href="../source/packages/shrub-form#implements-hook-httpmiddleware">server</a>)</li>
 </ul>
+<h2 id="httproutes">httpRoutes</h2>
+<h3 id="1-implementationss_8">1 implementations(s)</h3>
+<ul>
+<li>packages/shrub-example/about (<a href="../source/packages/shrub-example/about#implements-hook-httproutes">server</a>)</li>
+</ul>
+<h2 id="notificationqueue">notificationQueue</h2>
+<h3 id="1-implementationss_9">1 implementations(s)</h3>
+<ul>
+<li>packages/shrub-example (<a href="../source/packages/shrub-example#implements-hook-notificationqueue">server</a>)</li>
+</ul>
 <h2 id="packagesettings">packageSettings</h2>
-<h3 id="2-implementationss">2 implementations(s)</h3>
+<h3 id="3-implementationss">3 implementations(s)</h3>
 <ul>
 <li>packages/shrub-angular (<a href="../source/packages/shrub-angular#implements-hook-packagesettings">server</a>)</li>
 <li>packages/shrub-assets (<a href="../source/packages/shrub-assets#implements-hook-packagesettings">server</a>)</li>
+<li>packages/shrub-core (<a href="../source/packages/shrub-core#implements-hook-packagesettings">server</a>)</li>
 </ul>
-<h3 id="1-invocationss_11">1 invocations(s)</h3>
+<h3 id="1-invocationss_15">1 invocations(s)</h3>
 <ul>
 <li>server/config (<a href="../source/server/config#invoke-hook-packagesettings">server</a>)</li>
 </ul>
@@ -454,32 +626,53 @@ exports.pkgmanRegister = function(registrar) {
 
 <p>So that the heavy module will not be <code>require</code>d until hook <code>preBootstrap</code> is
 invoked.</p>
-<h3 id="1-invocationss_12">1 invocations(s)</h3>
+<h3 id="1-invocationss_16">1 invocations(s)</h3>
 <ul>
 <li>server (<a href="../source/server#invoke-hook-prebootstrap">server</a>)</li>
 </ul>
 <h2 id="processexit">processExit</h2>
-<h3 id="1-invocationss_13">1 invocations(s)</h3>
+<h3 id="1-invocationss_17">1 invocations(s)</h3>
 <ul>
 <li>server (<a href="../source/server#invoke-hook-processexit">server</a>)</li>
 </ul>
 <h2 id="provider">provider</h2>
-<h3 id="1-invocationss_14">1 invocations(s)</h3>
+<h3 id="1-invocationss_18">1 invocations(s)</h3>
 <ul>
 <li>client/packages (<a href="../source/client/packages#invoke-hook-provider">client</a>)</li>
 </ul>
+<h2 id="replcontext">replContext</h2>
+<h3 id="1-implementationss_10">1 implementations(s)</h3>
+<ul>
+<li>packages/shrub-core (<a href="../source/packages/shrub-core#implements-hook-replcontext">server</a>)</li>
+</ul>
+<h2 id="route">route</h2>
+<h3 id="3-implementationss_1">3 implementations(s)</h3>
+<ul>
+<li>packages/shrub-core/client (<a href="../source/packages/shrub-core/client#implements-hook-route">client</a>)</li>
+<li>packages/shrub-example/client/about (<a href="../source/packages/shrub-example/client/about#implements-hook-route">client</a>)</li>
+<li>packages/shrub-example/client/home (<a href="../source/packages/shrub-example/client/home#implements-hook-route">client</a>)</li>
+</ul>
+<h3 id="1-invocationss_19">1 invocations(s)</h3>
+<ul>
+<li>packages/shrub-core/client (<a href="../source/packages/shrub-core/client#invoke-hook-route">client</a>)</li>
+</ul>
 <h2 id="service">service</h2>
-<h3 id="1-invocationss_15">1 invocations(s)</h3>
+<h3 id="1-implementationss_11">1 implementations(s)</h3>
+<ul>
+<li>packages/shrub-form/client (<a href="../source/packages/shrub-form/client#implements-hook-service">client</a>)</li>
+</ul>
+<h3 id="1-invocationss_20">1 invocations(s)</h3>
 <ul>
 <li>client/packages (<a href="../source/client/packages#invoke-hook-service">client</a>)</li>
 </ul>
 <h2 id="socketauthorizationmiddleware">socketAuthorizationMiddleware</h2>
-<h3 id="1-implementationss_6">1 implementations(s)</h3>
+<h3 id="2-implementationss_2">2 implementations(s)</h3>
 <ul>
 <li>packages/shrub-audit (<a href="../source/packages/shrub-audit#implements-hook-socketauthorizationmiddleware">server</a>)</li>
+<li>packages/shrub-core (<a href="../source/packages/shrub-core#implements-hook-socketauthorizationmiddleware">server</a>)</li>
 </ul>
 <h2 id="transmittableerror">transmittableError</h2>
-<h3 id="1-invocationss_16">1 invocations(s)</h3>
+<h3 id="1-invocationss_21">1 invocations(s)</h3>
 <ul>
 <li>client/modules/errors (<a href="../source/client/modules/errors#invoke-hook-transmittableerror">client</a>)</li>
 </ul>

@@ -353,6 +353,8 @@ Sort by package name first.
         newList.push fileStats
 
       newList.sort (l, r) ->
+        return -1 if l.type is 'client' and r.type is 'server'
+        return 1 if l.type is 'server' and r.type is 'client'
         if l.pkg < r.pkg then -1 else if l.pkg > r.pkg then 1 else 0
 
     ).then((fileStatsList) ->
