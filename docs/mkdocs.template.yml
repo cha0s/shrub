@@ -14,6 +14,7 @@ docs_dir: 'docs'
 site_dir: 'gh-pages'
 pages:
 - [index.md, 'Home']
+- ['guide/getting-started.md', 'Guide', 'Getting Started']
 - [hooks.md, 'Reference', 'Hooks']
 - [packages.md, 'Reference', 'Packages']
 - [todos.md, 'Reference', 'TODO list']
