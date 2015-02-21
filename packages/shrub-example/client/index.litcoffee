@@ -1,4 +1,4 @@
-# Example
+# Example package
 
     exports.pkgmanRegister = (registrar) ->
 

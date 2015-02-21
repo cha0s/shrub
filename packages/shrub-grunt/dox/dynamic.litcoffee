@@ -1,7 +1,4 @@
-
-# Documentation generation
-
-*Generate the dynamic portions of Shrub's documentation.*
+# Grunt build process - Dynamic documentation
 
     {exec} = require 'child_process'
     fs = require 'fs'

@@ -22,6 +22,4 @@ Provide the README file.
 
               res.end buffer
 
-        console.log routes
-
         return routes
