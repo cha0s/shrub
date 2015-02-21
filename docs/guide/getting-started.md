@@ -59,7 +59,7 @@ exports.pkgmanRegister = function(registrar) {
 
   registrar.registerHook('preBootstrap', function() {
     console.log('I hooked into shrub!');
-  }
+  });
 };
 ```
 
