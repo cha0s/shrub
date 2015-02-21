@@ -116,9 +116,11 @@
                             
                                 <li><a class="toctree-l3" href="#the-above-found-in-packagesshrub-formindexlitcoffee22">the above found in packages/shrub-form/index.litcoffee:22</a></li>
                             
-                                <li><a class="toctree-l3" href="#the-above-found-in-packagesshrub-gruntdoxdynamiclitcoffee393">the above found in packages/shrub-grunt/dox/dynamic.litcoffee:393</a></li>
+                                <li><a class="toctree-l3" href="#the-above-found-in-packagesshrub-gruntdoxdynamiclitcoffee181">the above found in packages/shrub-grunt/dox/dynamic.litcoffee:181</a></li>
                             
-                                <li><a class="toctree-l3" href="#the-above-found-in-packagesshrub-gruntdoxdynamiclitcoffee425">the above found in packages/shrub-grunt/dox/dynamic.litcoffee:425</a></li>
+                                <li><a class="toctree-l3" href="#the-above-found-in-packagesshrub-gruntdoxdynamiclitcoffee397">the above found in packages/shrub-grunt/dox/dynamic.litcoffee:397</a></li>
+                            
+                                <li><a class="toctree-l3" href="#the-above-found-in-packagesshrub-gruntdoxdynamiclitcoffee429">the above found in packages/shrub-grunt/dox/dynamic.litcoffee:429</a></li>
                             
                                 <li><a class="toctree-l3" href="#the-above-found-in-packagesshrub-httpmanagerlitcoffee4">the above found in packages/shrub-http/manager.litcoffee:4</a></li>
                             
@@ -222,6 +224,8 @@
                                 <li><a class="toctree-l3" href="#todo-multiline_3">TODO: Multiline</a></li>
                             
                                 <li><a class="toctree-l3" href="#todo-crsf-check-needed-here">TODO: CRSF check needed here.</a></li>
+                            
+                                <li><a class="toctree-l3" href="#todo-need-to-merge-these-here-so-there-wont-be-clientserver-dupes-on-hooks-page">TODO: Need to merge these here so there won't be client/server dupes on hooks page.</a></li>
                             
                                 <li><a class="toctree-l3" href="#todo-this-chunk-parsing-should-be-done-with-a-transform-like-the-others">TODO: This 'chunk' parsing should be done with a Transform like the others.</a></li>
                             
@@ -1153,6 +1157,16 @@ Promise = require 'bluebird'
 </blockquote>
 <h6 id="the-above-found-in-packagesshrub-formindexlitcoffee22">the above found in <a href="../source/packages/shrub-form#todo-crsf-check-needed-here">packages/shrub-form/index.litcoffee:22</a></h6>
 <blockquote>
+<pre><code>    for key in keys
+      indexes[key] ?= {}
+</code></pre>
+<h2 id="todo-need-to-merge-these-here-so-there-wont-be-clientserver-dupes-on-hooks-page">TODO: Need to merge these here so there won't be client/server dupes on hooks page.</h2>
+<pre><code>      for hook in fileStats[key]
+        indexes[key][hook] ?= {}
+</code></pre>
+</blockquote>
+<h6 id="the-above-found-in-packagesshrub-gruntdoxdynamiclitcoffee181">the above found in <a href="../source/packages/shrub-grunt/dox/dynamic#todo-need-to-merge-these-here-so-there-won-t-be-client-server-dupes-on-hooks-page">packages/shrub-grunt/dox/dynamic.litcoffee:181</a></h6>
+<blockquote>
 <p>Naively parse out the file description. It must be wrapped in asterisks, i.e.
 italicized in markdown.</p>
 <h2 id="todo-this-chunk-parsing-should-be-done-with-a-transform-like-the-others">TODO: This 'chunk' parsing should be done with a Transform like the others.</h2>
@@ -1160,7 +1174,7 @@ italicized in markdown.</p>
     chunks = data.split '\n\n'
 </code></pre>
 </blockquote>
-<h6 id="the-above-found-in-packagesshrub-gruntdoxdynamiclitcoffee393">the above found in <a href="../source/packages/shrub-grunt/dox/dynamic#todo-this-chunk-parsing-should-be-done-with-a-transform-like-the-others">packages/shrub-grunt/dox/dynamic.litcoffee:393</a></h6>
+<h6 id="the-above-found-in-packagesshrub-gruntdoxdynamiclitcoffee397">the above found in <a href="../source/packages/shrub-grunt/dox/dynamic#todo-this-chunk-parsing-should-be-done-with-a-transform-like-the-others">packages/shrub-grunt/dox/dynamic.litcoffee:397</a></h6>
 <blockquote>
 <pre><code>        "[#{hook}](source/#{sourcePath}#invoke-hook-#{hook.toLowerCase()})"
       ).join ', '
@@ -1170,7 +1184,7 @@ italicized in markdown.</p>
 <pre><code>  fs.writeFileSync 'docs/packages.md', render
 </code></pre>
 </blockquote>
-<h6 id="the-above-found-in-packagesshrub-gruntdoxdynamiclitcoffee425">the above found in <a href="../source/packages/shrub-grunt/dox/dynamic#todo-we-should-do-some-preprocessing-hre-with-a-transform-namely-linking-the-hook-headers-to-their-respective-documentation">packages/shrub-grunt/dox/dynamic.litcoffee:425</a></h6>
+<h6 id="the-above-found-in-packagesshrub-gruntdoxdynamiclitcoffee429">the above found in <a href="../source/packages/shrub-grunt/dox/dynamic#todo-we-should-do-some-preprocessing-hre-with-a-transform-namely-linking-the-hook-headers-to-their-respective-documentation">packages/shrub-grunt/dox/dynamic.litcoffee:429</a></h6>
 <blockquote>
 <h1 id="http-manager">HTTP Manager</h1>
 <p><em>Manage an HTTP server instance.</em></p>

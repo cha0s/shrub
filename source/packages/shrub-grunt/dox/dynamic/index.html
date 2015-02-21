@@ -253,6 +253,8 @@
                         
                             <li class="toctree-l2"><a href="#grunt-build-process-dynamic-documentation">Grunt build process - Dynamic documentation</a></li>
                             
+                                <li><a class="toctree-l3" href="#todo-need-to-merge-these-here-so-there-wont-be-clientserver-dupes-on-hooks-page">TODO: Need to merge these here so there won't be client/server dupes on hooks page.</a></li>
+                            
                                 <li><a class="toctree-l3" href="#todo-this-chunk-parsing-should-be-done-with-a-transform-like-the-others">TODO: This 'chunk' parsing should be done with a Transform like the others.</a></li>
                             
                                 <li><a class="toctree-l3" href="#todo-we-should-do-some-preprocessing-hre-with-a-transform-namely-linking-the-hook-headers-to-their-respective-documentation">TODO: We should do some preprocessing hre with a transform, namely linking the hook headers to their respective documentation.</a></li>
@@ -782,6 +784,8 @@ caches lines to be able to build context around each TODO item.</p>
 <p>Generate an HTML ID from a hook name.</p>
 <pre><code>_idFromHook = (hook) -&gt; hook.replace(
   /[^0-9A-Za-z-]+/g, '-'
+).replace(
+  /\-+/g, '-'
 ).toLowerCase()
 </code></pre>
 <p>Get the source path from a filename. This removes the extension and any /index
@@ -864,8 +868,9 @@ portion from the end of the filename.</p>
 
     for key in keys
       indexes[key] ?= {}
-
-      for hook in fileStats[key]
+</code></pre>
+<h6 id="todo-need-to-merge-these-here-so-there-wont-be-clientserver-dupes-on-hooks-page">TODO: Need to merge these here so there won't be client/server dupes on hooks page.</h6>
+<pre><code>      for hook in fileStats[key]
         indexes[key][hook] ?= {}
         (indexes[key][hook][fileStats.file] ?= []).push fileStats.type
 
@@ -922,7 +927,7 @@ portion from the end of the filename.</p>
 
           file = _sourcePath file
 
-          types = types.map (type) -&gt; "[#{type}](source/#{file}##{wordingFor[key]}-hook-#{hook.toLowerCase()})"
+          types = types.map (type) -&gt; "[#{type}](source/#{file}##{wordingFor[key]}-hook-#{_idFromHook hook})"
 
           render += "* #{file} (#{types.join ','})\n"
 
