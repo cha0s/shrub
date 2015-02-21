@@ -130,14 +130,10 @@ Invoked every time an HTTP connection is established.
 
         httpMiddlewareDebug '- HTTP middleware loaded.'
 
-Ensure any subclass implements these methods.
+Ensure any subclass implements these "pure virtual" methods.
 
       this::[method] = (-> throw new ReferenceError(
         "HttpManager::#{method} is a pure virtual method!"
-
-"Pure virtual" methods.
-
       )) for method in [
-
         'addRoute', 'cluster', 'listener', 'server'
       ]
