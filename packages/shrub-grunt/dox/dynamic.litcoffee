@@ -88,6 +88,8 @@ Generate an HTML ID from a hook name.
 
     _idFromHook = (hook) -> hook.replace(
       /[^0-9A-Za-z-]+/g, '-'
+    ).replace(
+      /\-+/g, '-'
     ).toLowerCase()
 
 Get the source path from a filename. This removes the extension and any /index
@@ -235,7 +237,7 @@ Render the hooks page.
 
               file = _sourcePath file
 
-              types = types.map (type) -> "[#{type}](source/#{file}##{wordingFor[key]}-hook-#{hook.toLowerCase()})"
+              types = types.map (type) -> "[#{type}](source/#{file}##{wordingFor[key]}-hook-#{_idFromHook hook})"
 
               render += "* #{file} (#{types.join ','})\n"
 
