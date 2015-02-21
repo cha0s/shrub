@@ -48,9 +48,6 @@ exports.pkgmanRegister = (registrar) ->
   # ## Implements hook `packageSettings`
   registrar.registerHook 'packageSettings', ->
 
-    # Session store instance.
-    sessionStore: 'orm'
-
     # Key within the cookie where the session is stored.
     key: 'connect.sid'
 
