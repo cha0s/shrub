@@ -1,4 +1,4 @@
-# Form - Select
+# Form - Submit
 
     exports.pkgmanRegister = (registrar) ->
 

@@ -18,23 +18,29 @@ up later.*
 
           link: (scope, element, attrs) ->
 
-            formScope = null
+Keep a reference to the form scope, if the form attribute value changes, it'll
+need to be rebuilt.
 
+###### TODO: It shouldn't be trashed as it is now, it should be moved over to a new scope non-destructively.
+
+            formScope = null
             scope.$watch attrs.form, (form) ->
               return unless form?
 
               form.key ?= attrs.form
 
+Build a submit function which will be bound to ngSubmit.
+
               (scope['$shrubSubmit'] ?= {})[form.key] = ($event) ->
 
+Gather all the field values.
+
                 values = {}
-                for name, field of form.fields
-                  values[field.name] = field.value
+                values[field.name] = field.value for name, field of form.fields
 
-                promises = for submit in form.submits
-                  submit values, form, $event
+Call all the form submission handlers.
 
-                $q.all promises
+                $q.all (submit values, form, $event for submit in form.submits)
 
 Create the form element.
 
@@ -49,8 +55,9 @@ Default method to POST.
 Build the form fields.
 
               for name, field of form.fields
-
                 field.name ?= name
+
+Look up the widget definition and warn if it doesn't exist.
 
                 unless (widget = formService.widgets[field.type])?
 
@@ -87,11 +94,13 @@ Remove any old stuff.
                 formScope.$destroy()
                 element.find('form').remove()
 
-              # Insert and compile the form element.
+Insert and compile the form element.
+
               element.append $form
               $compile($form) formScope = scope.$new()
 
-              # Register the form in the system.
+Register the form in the system.
+
               formService.cache form.key, formScope, $form
 
       ]

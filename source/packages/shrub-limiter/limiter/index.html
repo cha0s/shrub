@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>packages/shrub-limiter/limiter.litcoffee - Shrub</title>
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../css/highlight.css">
+  <link href="../../../../css/extra.css" rel="stylesheet">
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="../../../../js/highlight.pack.js"></script>
+  <script src="../../../../js/theme.js"></script>
+
+  <style>
+    body {font-size: 90%;}
+    pre, code {font-size: 100%;}
+    h3, h4, h5, h6 {color: #2980b9; font-weight: 300}
+  </style> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../../../.." class="icon icon-home"> Shrub</a>
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+      <ul class="current">
+    
+        
+        <span>Reference</span>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../../hooks">Hooks</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../../packages">Packages</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../../todos">TODO list</a>
+                    
+                </li>
+            
+        
+
+    
+        
+        <span>Source code</span>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../Gruntfile">Gruntfile.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../client/app">client/app.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../client/modules/angular">client/modules/angular.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../client/modules/config">client/modules/config.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../client/modules/errors">client/modules/errors.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../client/modules/logging">client/modules/logging.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../client/modules/middleware">client/modules/middleware.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../client/modules/pkgman">client/modules/pkgman.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../client/packages">client/packages.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../client/require">client/require.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-angular">packages/shrub-angular/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-assets/angular">packages/shrub-assets/angular.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-assets">packages/shrub-assets/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-assets/jquery">packages/shrub-assets/jquery.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-audit/fingerprint">packages/shrub-audit/fingerprint.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-audit">packages/shrub-audit/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-config">packages/shrub-config/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-core/client">packages/shrub-core/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-core">packages/shrub-core/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-example/about">packages/shrub-example/about.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-example/client/about">packages/shrub-example/client/about.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-example/client/home">packages/shrub-example/client/home.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-example/client">packages/shrub-example/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-example">packages/shrub-example/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-form/client">packages/shrub-form/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-form/client/widget/checkbox">packages/shrub-form/client/widget/checkbox.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-form/client/widget/checkboxes">packages/shrub-form/client/widget/checkboxes.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-form/client/widget/hidden">packages/shrub-form/client/widget/hidden.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-form/client/widget/radio">packages/shrub-form/client/widget/radio.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-form/client/widget/radios">packages/shrub-form/client/widget/radios.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-form/client/widget/select">packages/shrub-form/client/widget/select.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-form/client/widget/submit">packages/shrub-form/client/widget/submit.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-form/client/widget/text">packages/shrub-form/client/widget/text.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-form">packages/shrub-form/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-grunt/angular">packages/shrub-grunt/angular.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-grunt/dox/dynamic">packages/shrub-grunt/dox/dynamic.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-grunt/dox">packages/shrub-grunt/dox/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-grunt">packages/shrub-grunt/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-grunt/lint">packages/shrub-grunt/lint.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-grunt/modules">packages/shrub-grunt/modules.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-grunt/tests/build">packages/shrub-grunt/tests/build.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-grunt/tests">packages/shrub-grunt/tests/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-grunt/tests/run">packages/shrub-grunt/tests/run.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-html5-local-storage/client">packages/shrub-html5-local-storage/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-html5-local-storage">packages/shrub-html5-local-storage/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-html5-notification/client">packages/shrub-html5-notification/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-html5-notification">packages/shrub-html5-notification/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-http-express/errors">packages/shrub-http-express/errors.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-http-express">packages/shrub-http-express/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-http-express/logger">packages/shrub-http-express/logger.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-http-express/routes">packages/shrub-http-express/routes.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-http-express/session">packages/shrub-http-express/session.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-http-express/static">packages/shrub-http-express/static.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-http">packages/shrub-http/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-http/manager">packages/shrub-http/manager.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-install">packages/shrub-install/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../client">packages/shrub-limiter/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="..">packages/shrub-limiter/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 current">
+                    <a class="current" href=".">packages/shrub-limiter/limiter.litcoffee</a>
+                    
+                        <ul>
+                        
+                            <li class="toctree-l2"><a href="#limiter">Limiter</a></li>
+                            
+                                <li><a class="toctree-l3" href="#limiter_1">Limiter</a></li>
+                            
+                                <li><a class="toctree-l3" href="#limiterthreshold">Limiter.threshold</a></li>
+                            
+                                <li><a class="toctree-l3" href="#constructor">constructor</a></li>
+                            
+                                <li><a class="toctree-l3" href="#limiteradd">Limiter#add</a></li>
+                            
+                                <li><a class="toctree-l3" href="#limiteraccrueandcheckthreshold">Limiter#accrueAndCheckThreshold</a></li>
+                            
+                                <li><a class="toctree-l3" href="#limiterscore">Limiter#score</a></li>
+                            
+                                <li><a class="toctree-l3" href="#limiterttl">Limiter#ttl</a></li>
+                            
+                                <li><a class="toctree-l3" href="#limitercheckthreshold">Limiter#checkThreshold</a></li>
+                            
+                                <li><a class="toctree-l3" href="#limiter_largest">Limiter#_largest</a></li>
+                            
+                                <li><a class="toctree-l3" href="#constructor_1">constructor</a></li>
+                            
+                                <li><a class="toctree-l3" href="#limitermanageradd">LimiterManager#add</a></li>
+                            
+                                <li><a class="toctree-l3" href="#limitermanagerscore">LimiterManager#score</a></li>
+                            
+                                <li><a class="toctree-l3" href="#limitermanagerttl">LimiterManager#ttl</a></li>
+                            
+                                <li><a class="toctree-l3" href="#thresholdbase">ThresholdBase</a></li>
+                            
+                                <li><a class="toctree-l3" href="#constructor_2">constructor</a></li>
+                            
+                                <li><a class="toctree-l3" href="#thresholdbaseevery">ThresholdBase#every</a></li>
+                            
+                                <li><a class="toctree-l3" href="#thresholdmultiplier">ThresholdMultiplier</a></li>
+                            
+                                <li><a class="toctree-l3" href="#constructor_3">constructor</a></li>
+                            
+                                <li><a class="toctree-l3" href="#thresholdmultipliermilliseconds">ThresholdMultiplier#milliseconds</a></li>
+                            
+                                <li><a class="toctree-l3" href="#thresholdmultiplierseconds">ThresholdMultiplier#seconds</a></li>
+                            
+                                <li><a class="toctree-l3" href="#thresholdmultiplierminutes">ThresholdMultiplier#minutes</a></li>
+                            
+                                <li><a class="toctree-l3" href="#thresholdfinal">ThresholdFinal</a></li>
+                            
+                                <li><a class="toctree-l3" href="#constructor_4">constructor</a></li>
+                            
+                        
+                        </ul>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-nodemailer">packages/shrub-nodemailer/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-orm/client">packages/shrub-orm/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-orm">packages/shrub-orm/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-repl">packages/shrub-repl/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-rpc/client">packages/shrub-rpc/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-rpc">packages/shrub-rpc/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../server">server.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../server/bootstrap">server/bootstrap.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../server/config">server/config.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../server/crypto">server/crypto.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../server/logging">server/logging.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../server/sandboxes">server/sandboxes.litcoffee</a>
+                    
+                </li>
+            
+        
+
+    
+</ul>
+
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
+        <a href="../../../.."></a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../..">Docs</a> &raquo;</li>
+    <li>packages/shrub-limiter/limiter.litcoffee</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="https://github.com/cha0s/shrub" class="icon icon-github"> Edit on GitHub</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              <h1 id="limiter">Limiter</h1>
+<p><em>ORM-backed limit handling. Accrue and check scores, and check Time-to-live
+across multiple <a href="../../../../source/packages/shrub-audit/fingerprint">fingerprint keys</a>.</em></p>
+<pre><code>Promise = null
+
+orm = null
+</code></pre>
+<h2 id="limiter_1">Limiter</h2>
+<p>Provides methods to tally scores, and compare them against a threshold of
+time.</p>
+<p>The <a href="../../../../source/packages/shrub-limiter">limiter</a> package implements hook
+<code>endpointAlter</code> to allow RPC endpoints to limit consumers to a specified
+number of requests per time period. For instance, by default the
+<a href="../../../../source/packages/user/login">user login</a> endpoint limits the number of logins
+a user may attempt to 3 every 30 seconds.</p>
+<pre><code>module.exports = class Limiter
+</code></pre>
+<h2 id="limiterthreshold">Limiter.threshold</h2>
+<p>Expose a factory method for constructing Threshold instances. A Threshold is
+defined like:</p>
+<pre><code>var Limiter = require('shrub-limiter').Limiter;
+Limiter.threshold(4).every(20).minutes();
+</code></pre>
+
+<p>Which means that the threshold represents the allowance of a score of 4 to
+accumulate over the period of 20 minutes. If more score is accrued during that
+window, then the threshold is said to be crossed.</p>
+<pre><code>  @threshold: (score) -&gt; new ThresholdBase score
+</code></pre>
+<h2 id="constructor"><em>constructor</em></h2>
+<ul>
+<li>(string) <code>key</code> - A unique key for this limiter, e.g.
+  "rpc://user.login:limiter"</li>
+<li>(Threshold) <code>threshold</code> - A threshold, see below for details.</li>
+</ul>
+<p><em>Create a limiter.</em></p>
+<pre><code>  constructor: (key, @threshold, @excluded = []) -&gt;
+</code></pre>
+<p>Ensure it's a threshold.</p>
+<pre><code>    throw new TypeError(
+      "Limiter(#{key}) must be constructed with a valid threshold!"
+    ) unless @threshold instanceof ThresholdFinal
+
+    Promise ?= require 'bluebird'
+
+    orm ?= require 'shrub-orm'
+</code></pre>
+<p>Create the low-level limiter.</p>
+<pre><code>    @limiter = new LimiterManager key, @threshold.calculateSeconds()
+</code></pre>
+<h2 id="limiteradd">Limiter#add</h2>
+<ul>
+<li>(array) <code>keys</code> - An array of keys, e.g. a flattened array of keys from
+  <a href="../../../../source/packages/shrub-audit/fingerprint#fingerprintinlinekeys"><code>Fingerprint.inlineKeys</code></a></li>
+<li>(Number) <code>score</code> - The score to add. Defaults to 1.</li>
+</ul>
+<p><em>Accrue score for a limiter.</em></p>
+<pre><code>  accrue: (keys, score = 1) -&gt;
+    Promise.all (@limiter.accrue key, score for key in keys)
+</code></pre>
+<h2 id="limiteraccrueandcheckthreshold">Limiter#accrueAndCheckThreshold</h2>
+<ul>
+<li>(array) <code>keys</code> - An array of keys, e.g. a flattened array of keys from
+  <a href="../../../../source/packages/shrub-audit/fingerprint#fingerprintinlinekeys"><code>Fingerprint.inlineKeys</code></a></li>
+<li>(integer) <code>score</code> - The score to add. Defaults to 1.</li>
+</ul>
+<p><em>Add score to a limiter, and check it against the threshold.</em></p>
+<pre><code>  accrueAndCheckThreshold: (keys, score = 1) -&gt;
+    @accrue(keys, score).then =&gt; @checkThreshold keys
+</code></pre>
+<h2 id="limiterscore">Limiter#score</h2>
+<ul>
+<li>(array) <code>keys</code> - An array of keys, e.g. a flattened array of keys from
+  <a href="../../../../source/packages/shrub-audit/fingerprint#fingerprintinlinekeys"><code>Fingerprint.inlineKeys</code></a></li>
+</ul>
+<p><em>Check score for a limiter.</em></p>
+<pre><code>  score: (keys) -&gt; @_largest keys, 'score'
+</code></pre>
+<h2 id="limiterttl">Limiter#ttl</h2>
+<ul>
+<li>(array) <code>keys</code> - An array of keys, e.g. a flattened array of keys from
+  <a href="../../../../source/packages/shrub-audit/fingerprint#fingerprintinlinekeys"><code>Fingerprint.inlineKeys</code></a></li>
+</ul>
+<p><em>Time-to-live for a limiter.</em></p>
+<pre><code>  ttl: (keys) -&gt; @_largest keys, 'ttl'
+</code></pre>
+<h2 id="limitercheckthreshold">Limiter#checkThreshold</h2>
+<ul>
+<li>(array) <code>keys</code> - An array of keys, e.g. a flattened array of keys from
+  <a href="../../../../source/packages/shrub-audit/fingerprint#fingerprintinlinekeys"><code>Fingerprint.inlineKeys</code></a></li>
+</ul>
+<p><em>Check the current limiter score against the threshold.</em></p>
+<pre><code>  checkThreshold: (keys) -&gt;
+    @score(keys).then (score) =&gt; score &gt; @threshold.score()
+</code></pre>
+<h2 id="limiter_largest">Limiter#_largest</h2>
+<p><em>Find the largest result from a group of results.</em></p>
+<pre><code>  _largest: (keys, index) -&gt;
+    Promise.all(
+      @limiter[index] key for key in keys
+
+    ).then (reduction) -&gt;
+      reduction.reduce ((l, r) -&gt; if l &gt; r then l else r), -Infinity
+
+class LimiterManager
+</code></pre>
+<h2 id="constructor_1"><em>constructor</em></h2>
+<ul>
+<li>(string) <code>key</code> - A unique key for this limiter, e.g.
+  "rpc://user.login:limiter"</li>
+<li>(Threshold) <code>threshold</code> - A threshold, see below for details.</li>
+</ul>
+<p><em>...</em></p>
+<pre><code>  constructor: (@key, @threshold) -&gt;
+</code></pre>
+<h2 id="limitermanageradd">LimiterManager#add</h2>
+<ul>
+<li>(string) <code>id</code> - The ID of the limiter.</li>
+<li>(Number) <code>score</code> - The score to add. Defaults to 1.</li>
+</ul>
+<p><em>Add score to a limiter.</em></p>
+<pre><code>  accrue: (id, score = 1) -&gt;
+    key = "#{@key}:#{id}"
+
+    Limit = orm.collection 'shrub-limit'
+    Limit.findOrCreate(
+      key: key
+    ,
+      key: key
+    ).populateAll().then((limit) =&gt;
+</code></pre>
+<p>Reset if it's expired.</p>
+<pre><code>      limit.reset() if 0 &gt;= limit.ttl @threshold
+
+      return limit
+
+    ).then (limit) -&gt; limit.accrue(parseInt score).save()
+</code></pre>
+<h2 id="limitermanagerscore">LimiterManager#score</h2>
+<ul>
+<li>(string) <code>id</code> - The ID of the limiter.</li>
+</ul>
+<p><em>Check score for a limiter.</em></p>
+<pre><code>  score: (id) -&gt;
+</code></pre>
+<p>Get all scores for this limiter.</p>
+<pre><code>    Limit = orm.collection 'shrub-limit'
+    Limit.findOne(key: "#{@key}:#{id}").populateAll().then (limit) =&gt;
+      return 0 unless limit?
+      return limit.score() if 0 &lt; limit.ttl @threshold
+</code></pre>
+<p>Reset if it's expired.</p>
+<pre><code>      limit.reset().save().then -&gt; 0
+</code></pre>
+<h2 id="limitermanagerttl">LimiterManager#ttl</h2>
+<ul>
+<li>(string) <code>id</code> - The ID of the limiter.</li>
+</ul>
+<p><em>Time-to-live for a limiter.</em></p>
+<pre><code>  ttl: (id) -&gt;
+
+    Limit = orm.collection 'shrub-limit'
+    Limit.findOne(key: "#{@key}:#{id}").then (limit) =&gt;
+      return 0 unless limit?
+      return ttl if 0 &lt; ttl = limit.ttl @threshold
+</code></pre>
+<p>Reset if it's expired.</p>
+<pre><code>      limit.reset().save().then -&gt; 0
+</code></pre>
+<h2 id="thresholdbase">ThresholdBase</h2>
+<p><em>The base class used to define a threshold.</em></p>
+<pre><code>class ThresholdBase
+</code></pre>
+<h2 id="constructor_2"><em>constructor</em></h2>
+<ul>
+<li>(Number) <code>score</code> - The maximum score allowed to accrue.</li>
+</ul>
+<p><em>Create a threshold base object.</em></p>
+<pre><code>  constructor: (@_score) -&gt;
+</code></pre>
+<h2 id="thresholdbaseevery">ThresholdBase#every</h2>
+<ul>
+<li>(Number) <code>amount</code> - The quantity of time units this threshold concerns e.g,
+  if the threshold is every 5 minutes, this will be <code>5</code>.</li>
+</ul>
+<p><em>Define the quantity of time this threshold concerns.</em></p>
+<pre><code>  every: (amount) -&gt; new ThresholdMultiplier @_score, amount
+</code></pre>
+<h2 id="thresholdmultiplier">ThresholdMultiplier</h2>
+<p><em>A threshold class to collect the multiplier.</em></p>
+<pre><code>class ThresholdMultiplier
+</code></pre>
+<h2 id="constructor_3"><em>constructor</em></h2>
+<ul>
+<li>(Number) <code>score</code> - Passed along from ThresholdBase.</li>
+<li>(Number) <code>amount</code> - Passed along from ThresholdBase.</li>
+</ul>
+<p><em>Create a threshold.</em></p>
+<pre><code>  constructor: (@_score, @_amount) -&gt;
+
+    @_multiplier = 1
+</code></pre>
+<h2 id="thresholdmultipliermilliseconds">ThresholdMultiplier#milliseconds</h2>
+<h2 id="thresholdmultiplierseconds">ThresholdMultiplier#seconds</h2>
+<h2 id="thresholdmultiplierminutes">ThresholdMultiplier#minutes</h2>
+<p><em>Add a method for each multipler. This is this way just to DRY things up.</em></p>
+<pre><code>  multipliers =
+    milliseconds: 1 / 1000
+    seconds: 1
+    minutes: 60
+
+  for key, multiplier of multipliers
+    do (key, multiplier) -&gt;
+      ThresholdMultiplier::[key] = -&gt;
+        @_multiplier = multiplier
+</code></pre>
+<p>Return a finalized threshold.</p>
+<pre><code>        new ThresholdFinal @_score, @_amount, @_multiplier
+</code></pre>
+<h2 id="thresholdfinal">ThresholdFinal</h2>
+<p>A finalized threshold definition.</p>
+<pre><code>class ThresholdFinal
+</code></pre>
+<h2 id="constructor_4"><em>constructor</em></h2>
+<ul>
+<li>(Number) <code>score</code> - Passed along from ThresholdMultiplier.</li>
+<li>(Number) <code>amount</code> - Passed along from ThresholdMultiplier.</li>
+<li>(Number) <code>multiplier</code> - Passed along from ThresholdMultiplier.</li>
+</ul>
+<p><em>Create a threshold.</em></p>
+<pre><code>  constructor: (score, amount, multiplier) -&gt;
+
+    @calculateSeconds = -&gt; amount * multiplier
+    @score = -&gt; score
+</code></pre>
+
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../shrub-nodemailer" class="btn btn-neutral float-right" title="packages/shrub-nodemailer/index.litcoffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href=".." class="btn btn-neutral" title="packages/shrub-limiter/index.litcoffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+    <!-- Copyright etc -->
+    </p>
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+        
+            <a class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+        
+      <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      <span style="margin-left: 15px"><a href="../../shrub-nodemailer" style="color: #fcfcfc">Next &raquo;</a></span>
+    </span>
+</div>
+</body>
+</html>

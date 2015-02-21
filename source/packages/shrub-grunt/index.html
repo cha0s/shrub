@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>packages/shrub-grunt/index.litcoffee - Shrub</title>
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../../css/highlight.css">
+  <link href="../../../css/extra.css" rel="stylesheet">
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  <script type="text/javascript" src="../../../js/highlight.pack.js"></script>
+  <script src="../../../js/theme.js"></script>
+
+  <style>
+    body {font-size: 90%;}
+    pre, code {font-size: 100%;}
+    h3, h4, h5, h6 {color: #2980b9; font-weight: 300}
+  </style> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../../.." class="icon icon-home"> Shrub</a>
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+      <ul class="current">
+    
+        
+        <span>Reference</span>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../hooks">Hooks</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../packages">Packages</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../todos">TODO list</a>
+                    
+                </li>
+            
+        
+
+    
+        
+        <span>Source code</span>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../Gruntfile">Gruntfile.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../client/app">client/app.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../client/modules/angular">client/modules/angular.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../client/modules/config">client/modules/config.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../client/modules/errors">client/modules/errors.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../client/modules/logging">client/modules/logging.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../client/modules/middleware">client/modules/middleware.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../client/modules/pkgman">client/modules/pkgman.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../client/packages">client/packages.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../client/require">client/require.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-angular">packages/shrub-angular/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-assets/angular">packages/shrub-assets/angular.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-assets">packages/shrub-assets/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-assets/jquery">packages/shrub-assets/jquery.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-audit/fingerprint">packages/shrub-audit/fingerprint.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-audit">packages/shrub-audit/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-config">packages/shrub-config/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-core/client">packages/shrub-core/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-core">packages/shrub-core/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-example/about">packages/shrub-example/about.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-example/client/about">packages/shrub-example/client/about.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-example/client/home">packages/shrub-example/client/home.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-example/client">packages/shrub-example/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-example">packages/shrub-example/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-form/client">packages/shrub-form/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-form/client/widget/checkbox">packages/shrub-form/client/widget/checkbox.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-form/client/widget/checkboxes">packages/shrub-form/client/widget/checkboxes.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-form/client/widget/hidden">packages/shrub-form/client/widget/hidden.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-form/client/widget/radio">packages/shrub-form/client/widget/radio.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-form/client/widget/radios">packages/shrub-form/client/widget/radios.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-form/client/widget/select">packages/shrub-form/client/widget/select.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-form/client/widget/submit">packages/shrub-form/client/widget/submit.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-form/client/widget/text">packages/shrub-form/client/widget/text.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-form">packages/shrub-form/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="angular">packages/shrub-grunt/angular.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="dox/dynamic">packages/shrub-grunt/dox/dynamic.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="dox">packages/shrub-grunt/dox/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 current">
+                    <a class="current" href=".">packages/shrub-grunt/index.litcoffee</a>
+                    
+                        <ul>
+                        
+                            <li class="toctree-l2"><a href="#grunt-build-process">Grunt build process</a></li>
+                            
+                                <li><a class="toctree-l3" href="#implements-hook-assetmiddleware">Implements hook assetMiddleware.</a></li>
+                            
+                                <li><a class="toctree-l3" href="#implements-hook-configalter">Implements hook configAlter.</a></li>
+                            
+                                <li><a class="toctree-l3" href="#implements-hook-gruntconfig">Implements hook gruntConfig.</a></li>
+                            
+                                <li><a class="toctree-l3" href="#implements-hook-gruntconfigalter">Implements hook gruntConfigAlter.</a></li>
+                            
+                        
+                        </ul>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="lint">packages/shrub-grunt/lint.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="modules">packages/shrub-grunt/modules.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="tests/build">packages/shrub-grunt/tests/build.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="tests">packages/shrub-grunt/tests/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="tests/run">packages/shrub-grunt/tests/run.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-html5-local-storage/client">packages/shrub-html5-local-storage/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-html5-local-storage">packages/shrub-html5-local-storage/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-html5-notification/client">packages/shrub-html5-notification/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-html5-notification">packages/shrub-html5-notification/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-http-express/errors">packages/shrub-http-express/errors.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-http-express">packages/shrub-http-express/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-http-express/logger">packages/shrub-http-express/logger.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-http-express/routes">packages/shrub-http-express/routes.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-http-express/session">packages/shrub-http-express/session.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-http-express/static">packages/shrub-http-express/static.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-http">packages/shrub-http/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-http/manager">packages/shrub-http/manager.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-install">packages/shrub-install/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-limiter/client">packages/shrub-limiter/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-limiter">packages/shrub-limiter/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-limiter/limiter">packages/shrub-limiter/limiter.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-nodemailer">packages/shrub-nodemailer/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-orm/client">packages/shrub-orm/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-orm">packages/shrub-orm/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-repl">packages/shrub-repl/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-rpc/client">packages/shrub-rpc/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-rpc">packages/shrub-rpc/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../server">server.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../server/bootstrap">server/bootstrap.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../server/config">server/config.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../server/crypto">server/crypto.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../server/logging">server/logging.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../server/sandboxes">server/sandboxes.litcoffee</a>
+                    
+                </li>
+            
+        
+
+    
+</ul>
+
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
+        <a href="../../.."></a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../..">Docs</a> &raquo;</li>
+    <li>packages/shrub-grunt/index.litcoffee</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="https://github.com/cha0s/shrub" class="icon icon-github"> Edit on GitHub</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              <h1 id="grunt-build-process">Grunt build process</h1>
+<pre><code>config = require 'config'
+
+exports.pkgmanRegister = (registrar) -&gt;
+</code></pre>
+<h4 id="implements-hook-assetmiddleware">Implements hook <code>assetMiddleware</code>.</h4>
+<pre><code>  registrar.registerHook 'assetMiddleware', -&gt;
+
+    label: 'Livereload'
+    middleware: [
+
+      (assets, next) -&gt;
+
+        return if 'production' is config.get 'NODE_ENV'
+
+        assets.scripts.push 'http://localhost:35729/livereload.js'
+
+        next()
+
+    ]
+</code></pre>
+<h4 id="implements-hook-configalter">Implements hook <code>configAlter</code>.</h4>
+<pre><code>  registrar.registerHook 'configAlter', (req, config_) -&gt;
+    return unless req.grunt?
+
+    config_.set 'packageConfig:shrub-socket', manager: module: 'shrub-socket/dummy'
+    config_.set 'packageConfig:shrub-user', name: 'Anonymous'
+</code></pre>
+<h4 id="implements-hook-gruntconfig">Implements hook <code>gruntConfig</code>.</h4>
+<pre><code>  registrar.registerHook 'gruntConfig', (gruntConfig, grunt) -&gt;
+
+    gruntConfig.configureTask 'clean', 'shrub', [
+      'app'
+      'build'
+    ]
+
+    gruntConfig.configureTask 'concat', 'shrub', files: [
+      src: [
+        'build/js/app/{app-bundled,modules}.js'
+      ]
+      dest: 'app/lib/shrub/shrub.js'
+    ]
+
+    gruntConfig.configureTask 'uglify', 'shrub', files: [
+      src: [
+        'app/lib/shrub/shrub.js'
+      ]
+      dest: 'app/lib/shrub/shrub.min.js'
+    ]
+
+    gruntConfig.registerTask 'executeFunction:shrub', -&gt;
+      done = @async()
+</code></pre>
+<p>Pass arguments to the child process.</p>
+<pre><code>      args = process.argv.slice 2
+</code></pre>
+<p>Pass the environment to the child process.</p>
+<pre><code>      options = env: process.env
+</code></pre>
+<p>Fork it.</p>
+<pre><code>      {fork} = require 'child_process'
+      child = fork "#{__dirname}/../../server.litcoffee", args, options
+      child.on 'close', (code) -&gt;
+        return done() if code is 0
+
+        grunt.fail.fatal 'Server process failed', code
+
+    gruntConfig.registerTask 'build:shrub', [
+      'concat:shrub'
+    ]
+
+    gruntConfig.registerTask 'production:shrub', [
+      'newer:uglify:shrub'
+    ]
+
+    gruntConfig.registerTask 'execute', [
+      'buildOnce'
+      'executeFunction:shrub'
+    ]
+
+    gruntConfig.loadNpmTasks [
+      'grunt-contrib-clean'
+      'grunt-contrib-coffee'
+      'grunt-contrib-concat'
+      'grunt-contrib-copy'
+      'grunt-contrib-uglify'
+      'grunt-contrib-watch'
+      'grunt-newer'
+      'grunt-wrap'
+    ]
+</code></pre>
+<h4 id="implements-hook-gruntconfigalter">Implements hook <code>gruntConfigAlter</code>.</h4>
+<pre><code>  registrar.registerHook 'gruntConfigAlter', (gruntConfig) -&gt;
+
+    gruntConfig.registerTask 'build', [
+      'build:shrub'
+    ]
+
+    gruntConfig.registerTask 'production', [
+      'production:shrub'
+    ]
+
+  registrar.recur [
+    'angular', 'dox', 'lint', 'modules', 'tests'
+  ]
+</code></pre>
+
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="lint" class="btn btn-neutral float-right" title="packages/shrub-grunt/lint.litcoffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="dox" class="btn btn-neutral" title="packages/shrub-grunt/dox/index.litcoffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+    <!-- Copyright etc -->
+    </p>
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+        
+            <a class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+        
+      <span><a href="dox" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      <span style="margin-left: 15px"><a href="lint" style="color: #fcfcfc">Next &raquo;</a></span>
+    </span>
+</div>
+</body>
+</html>

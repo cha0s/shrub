@@ -72,6 +72,7 @@
           'shrub-html5-notification'
           'shrub-html5-local-storage'
           'shrub-config'
+          'shrub-grunt'
         ]
 
       registrar.recur [
