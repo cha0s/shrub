@@ -7,16 +7,12 @@ exports.pkgmanRegister = (registrar) ->
     {fork} = require 'child_process'
 
     gruntConfig.registerTask 'dox:prepareDirectory', ->
-
       grunt.file.mkdir 'gh-pages'
 
     gruntConfig.registerTask 'dox:dynamic', ->
       done = @async()
 
-      child = fork "#{__dirname}/dynamic.litcoffee"
-
-      child.on 'close', (code) ->
-
+      fork("#{__dirname}/dynamic.litcoffee").on 'close', (code) ->
         return done() if code is 0
 
         grunt.fail.fatal 'Dynamic documentation generation failed', code
