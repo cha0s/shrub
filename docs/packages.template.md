@@ -1,4 +1,4 @@
-# Package overview
+# Package reference
 
 Packages are how Shrub organizes functionality. Packages may be provided for
 the server or the client (or both).
