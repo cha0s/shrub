@@ -423,6 +423,8 @@ italicized in markdown.
           ).join ', '
           render += '\n\n'
 
+###### TODO: We should do some preprocessing hre with a transform, namely linking the hook headers to their respective documentation.
+
       fs.writeFileSync 'docs/packages.md', render
 
     )
