@@ -176,21 +176,27 @@ Massage the statistics to help rendering the hooks page.
 
       for fileStats in fileStatsList
 
+        parts = fileStats.file.split '/'
+        for remove in ['client', 'packages']
+          if ~(index = parts.indexOf remove)
+            parts.splice index, 1
+        mergeFile = parts.join '/'
+
         for key in keys
           indexes[key] ?= {}
 
-###### TODO: Need to merge these here so there won't be client/server dupes on hooks page.
-
           for hook in fileStats[key]
             indexes[key][hook] ?= {}
-            (indexes[key][hook][fileStats.file] ?= []).push fileStats.type
+
+            indexes[key][hook][mergeFile] ?= fullName: fileStats.file
+            (indexes[key][hook][mergeFile].types ?= []).push fileStats.type
 
             hooksIndex[hook] = true
 
       for key in keys
         for hook, stats of indexes[key]
           for file of stats
-            stats[file] = _.unique stats[file] ? []
+            stats[file].types = _.unique stats[file].types ? []
 
       hooks = (hook for hook of hooksIndex).sort()
 
@@ -235,13 +241,9 @@ Render the hooks page.
             count = Object.keys(O[key][hook]).length
             render += "### #{count} #{key}(s)\n\n"
 
-            for file, types of O[key][hook]
-
-              file = _sourcePath file
-
-              types = types.map (type) -> "[#{type}](source/#{file}##{wordingFor[key]}-hook-#{_idFromHook hook})"
-
-              render += "* #{file} (#{types.join ','})\n"
+            for file, {fullName, types} of O[key][hook]
+              types = types.map (type) -> "[#{type}](source/#{_sourcePath fullName}##{wordingFor[key]}-hook-#{_idFromHook hook})"
+              render += "* #{_sourcePath file} (#{types.join ', '})\n"
 
             render += '\n'
 

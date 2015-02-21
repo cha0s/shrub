@@ -43,6 +43,17 @@
       <ul class="current">
     
         
+        <span>Guide</span>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../../../guide/getting-started">Getting Started</a>
+                    
+                </li>
+            
+        
+
+    
+        
         <span>Reference</span>
             
                 <li class="toctree-l1 ">
@@ -252,8 +263,6 @@
                         <ul>
                         
                             <li class="toctree-l2"><a href="#grunt-build-process-dynamic-documentation">Grunt build process - Dynamic documentation</a></li>
-                            
-                                <li><a class="toctree-l3" href="#todo-need-to-merge-these-here-so-there-wont-be-clientserver-dupes-on-hooks-page">TODO: Need to merge these here so there won't be client/server dupes on hooks page.</a></li>
                             
                                 <li><a class="toctree-l3" href="#todo-this-chunk-parsing-should-be-done-with-a-transform-like-the-others">TODO: This 'chunk' parsing should be done with a Transform like the others.</a></li>
                             
@@ -866,20 +875,27 @@ portion from the end of the filename.</p>
 
   for fileStats in fileStatsList
 
+    parts = fileStats.file.split '/'
+    for remove in ['client', 'packages']
+      if ~(index = parts.indexOf remove)
+        parts.splice index, 1
+    mergeFile = parts.join '/'
+
     for key in keys
       indexes[key] ?= {}
-</code></pre>
-<h6 id="todo-need-to-merge-these-here-so-there-wont-be-clientserver-dupes-on-hooks-page">TODO: Need to merge these here so there won't be client/server dupes on hooks page.</h6>
-<pre><code>      for hook in fileStats[key]
+
+      for hook in fileStats[key]
         indexes[key][hook] ?= {}
-        (indexes[key][hook][fileStats.file] ?= []).push fileStats.type
+
+        indexes[key][hook][mergeFile] ?= fullName: fileStats.file
+        (indexes[key][hook][mergeFile].types ?= []).push fileStats.type
 
         hooksIndex[hook] = true
 
   for key in keys
     for hook, stats of indexes[key]
       for file of stats
-        stats[file] = _.unique stats[file] ? []
+        stats[file].types = _.unique stats[file].types ? []
 
   hooks = (hook for hook of hooksIndex).sort()
 
@@ -923,13 +939,9 @@ portion from the end of the filename.</p>
         count = Object.keys(O[key][hook]).length
         render += "### #{count} #{key}(s)\n\n"
 
-        for file, types of O[key][hook]
-
-          file = _sourcePath file
-
-          types = types.map (type) -&gt; "[#{type}](source/#{file}##{wordingFor[key]}-hook-#{_idFromHook hook})"
-
-          render += "* #{file} (#{types.join ','})\n"
+        for file, {fullName, types} of O[key][hook]
+          types = types.map (type) -&gt; "[#{type}](source/#{_sourcePath fullName}##{wordingFor[key]}-hook-#{_idFromHook hook})"
+          render += "* #{_sourcePath file} (#{types.join ', '})\n"
 
         render += '\n'
 
