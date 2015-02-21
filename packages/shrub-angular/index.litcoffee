@@ -59,7 +59,8 @@ Thrown when a request is complete.
             class ResponseComplete extends Error
               constructor: (@message) ->
 
-            # } After the template is rendered, lookup or create the sandbox.
+After the template is rendered, lookup or create the sandbox.
+
             Promise.resolve(req.delivery).bind({}).then((html) ->
 
               sandboxManager.lookupOrCreate(
@@ -90,8 +91,7 @@ Check for any new redirection and handle it.
                 res.redirect redirectionPath
                 throw new ResponseComplete()
 
-              {path} = url.parse req.url
-              @sandbox.navigate path, req.body
+              @sandbox.navigate req
 
             ).then(->
 
@@ -325,26 +325,25 @@ location path. If it is, redirect Angular.*
 
 ## Sandbox#navigate
 
-* (string) `path` - URL path.
-* (string) `body` - Request body.
+* (http.IncomingMessage) `req` - The HTTP request object.
 
 *Navigate angular to a path, and dispatch navigation middleware.*
 
-      sandbox.navigate = (path, body) ->
+      sandbox.navigate = (req) ->
         self = this
+
+        {path} = url.parse req.url
 
         @checkPathChanges(path).then ->
 
           new Promise (resolve, reject) ->
 
-            req =
-              body: body
-              path: path
-              sandbox: sandbox
+            navigationReq = Object.create req
+            navigationReq.sandbox = sandbox
 
 ###### TODO: Remove unused `res` parameter.
 
-            navigationMiddleware.dispatch req, null, (error) =>
+            navigationMiddleware.dispatch navigationReq, null, (error) =>
               return reject error if error?
 
               self.catchAngularRedirection path
