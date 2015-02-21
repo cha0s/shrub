@@ -13,7 +13,7 @@ exports.pkgmanRegister = (registrar) ->
     gruntConfig.registerTask 'dox:dynamic', ->
       done = @async()
 
-      child = fork "#{__dirname}/dynamic.coffee"
+      child = fork "#{__dirname}/dynamic.litcoffee"
 
       child.on 'close', (code) ->
 
@@ -21,19 +21,7 @@ exports.pkgmanRegister = (registrar) ->
 
         grunt.fail.fatal 'Dynamic documentation generation failed', code
 
-    gruntConfig.registerTask 'dox:groc', ->
-      done = @async()
-
-      child = fork "#{__dirname}/../../../node_modules/groc/bin/groc"
-
-      child.on 'close', (code) ->
-
-        return done() if code is 0
-
-        grunt.fail.fatal 'Groc failed', code
-
     gruntConfig.registerTask 'dox', [
        'dox:prepareDirectory'
        'dox:dynamic'
-       'dox:groc'
     ]
