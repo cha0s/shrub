@@ -179,6 +179,8 @@ Massage the statistics to help rendering the hooks page.
         for key in keys
           indexes[key] ?= {}
 
+###### TODO: Need to merge these here so there won't be client/server dupes on hooks page.
+
           for hook in fileStats[key]
             indexes[key][hook] ?= {}
             (indexes[key][hook][fileStats.file] ?= []).push fileStats.type
