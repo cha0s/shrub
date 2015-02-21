@@ -215,8 +215,6 @@ Strip out most of the unnecessary whitespace.
 Assets currently default to .js/.css for default and .min.js and .min.css for
 production.
 
-###### TODO: Skins should be able to exactly customize their asset locations, with sane defaults.
-
       skinAssets =
 
         templates: templates
@@ -240,6 +238,8 @@ production.
           production: glob cwd: "#{skinPath}/app", [
             'css/**/*.min.css'
           ]
+
+#### Invoke hook `skinAssets`.
 
       pkgman.invokePackage skinKey, 'skinAssets', skinAssets
 
