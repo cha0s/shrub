@@ -22,3 +22,7 @@ h1:target, h2:target, h3:target, h4:target, h5:target, h6:target {
   font-size: 150%;
   font-weight: 700;
 }
+
+.admonition.note > ul {
+  margin-bottom: 0;
+}

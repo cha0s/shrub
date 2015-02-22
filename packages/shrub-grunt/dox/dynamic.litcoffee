@@ -221,11 +221,11 @@ Render the hooks page.
 
       {hookFiles, hooks} = O
 
-      keys = ['implementations', 'invocations']
+      keys = ['implementation', 'invocation']
 
       wordingFor =
-        implementations: 'implements'
-        invocations: 'invoke'
+        implementation: 'implements'
+        invocation: 'invoke'
 
       render = fs.readFileSync 'docs/hooks.template.md', 'utf8'
 
@@ -235,17 +235,23 @@ Render the hooks page.
         render += hookFiles[hook] + '\n\n' if hookFiles[hook]
 
         for key in keys
+          pluralKey = "#{key}s"
 
-          if O[key][hook]?
+          if O[pluralKey][hook]?
 
-            count = Object.keys(O[key][hook]).length
-            render += "### #{count} #{key}(s)\n\n"
+            count = Object.keys(O[pluralKey][hook]).length
 
-            for file, {fullName, types} of O[key][hook]
+            render += "!!! note \"#{count} #{key}"
+            render += 's' if count > 1
+            render += '"\n'
+
+            instances = for file, {fullName, types} of O[pluralKey][hook]
               types = types.map (type) -> "[#{type}](source/#{_sourcePath fullName}##{wordingFor[key]}-hook-#{_idFromHook hook})"
-              render += "* #{_sourcePath file} (#{types.join ', '})\n"
+              "    * #{_sourcePath file} (#{types.join ', '})\n"
 
-            render += '\n'
+            render += instances.join('')
+
+            render += '\n\n'
 
       new Promise (resolve, reject) ->
         fs.writeFile 'docs/hooks.md', render, (error) ->
