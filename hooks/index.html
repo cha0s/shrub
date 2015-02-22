@@ -894,7 +894,7 @@ like:</p>
 
 <p>This ensures our application has the <code>notification</code> module marked as a
 dependency. You will still need to use the
-<a href="../hooks#gruntconfig"><code>gruntConfig</code></a> hook to provide the actual JavaScript
+<a href="../hooks/#gruntconfig"><code>gruntConfig</code></a> hook to provide the actual JavaScript
 assets to the client.</p>
 <h3 id="answer-with_2">Answer with</h3>
 <p>An array of strings naming the modules you want to include.</p>
@@ -951,11 +951,13 @@ on <strong>Run blocks</strong> for more explanation.</p>
 can provide them to the client application.</p>
 <p>Asset middleware takes <code>assets</code> as its first argument. This is an object with
 the following properties:</p>
-<p>(String Array) <code>scripts</code> - A list of script assets.
-(String Array) <code>stylesheets</code> - A list of sylesheet assets.</p>
+<ul>
+<li>(String Array) <code>scripts</code> - A list of script assets.</li>
+<li>(String Array) <code>stylesheets</code> - A list of sylesheet assets.</li>
+</ul>
 <p><strong>NOTE</strong>: This hook lets you serve assets, but will not automatically copy
 them from your package to the <code>app</code> directory where they will be served.
-You'll need to implement hook <a href="../hooks/#gruntconfig"><code>gruntConfig</code></a> for that.</p>
+You'll need to implement the <a href="../hooks/#gruntconfig"><code>gruntConfig</code></a> hook for that.</p>
 <h3 id="answer-with_5">Answer with</h3>
 <p>A
 <a href="../guide/concepts#middleware-hook-specification">middleware hook specification</a>.</p>
