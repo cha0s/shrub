@@ -50,6 +50,11 @@
                     
                 </li>
             
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../../guide/concepts">Concepts and conventions</a>
+                    
+                </li>
+            
         
 
     
@@ -178,7 +183,7 @@
                             
                                 <li><a class="toctree-l3" href="#implements-hook-appconfig">Implements hook appConfig.</a></li>
                             
-                                <li><a class="toctree-l3" href="#invoke-hook-ahrefsanitizationwhilelist">Invoke hook aHrefSanitizationWhilelist.</a></li>
+                                <li><a class="toctree-l3" href="#invoke-hook-ahrefsanitizationwhitelist">Invoke hook aHrefSanitizationWhitelist.</a></li>
                             
                                 <li><a class="toctree-l3" href="#promisedefer">Promise.defer</a></li>
                             
@@ -738,9 +743,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     '$compileProvider', '$injector', '$provide', '$routeProvider', '$locationProvider', 'shrub-pkgmanProvider'
     ($compileProvider, $injector, $provide, $routeProvider, $locationProvider, pkgmanProvider) -&gt;
 </code></pre>
-<h4 id="invoke-hook-ahrefsanitizationwhilelist">Invoke hook <code>aHrefSanitizationWhilelist</code>.</h4>
-<p>Allow packages to define whitelisted patterns for ngHref
-attributes.</p>
+<h4 id="invoke-hook-ahrefsanitizationwhitelist">Invoke hook <code>aHrefSanitizationWhitelist</code>.</h4>
 <pre><code>      regexes = []
       for regexes_ in pkgmanProvider.invokeFlat(
         'aHrefSanitizationWhitelist'

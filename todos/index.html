@@ -50,6 +50,11 @@
                     
                 </li>
             
+                <li class="toctree-l1 ">
+                    <a class="" href="../guide/concepts">Concepts and conventions</a>
+                    
+                </li>
+            
         
 
     
@@ -89,7 +94,7 @@
                             
                                 <li><a class="toctree-l3" href="#the-above-found-in-clientmodulespkgmanlitcoffee71">the above found in client/modules/pkgman.litcoffee:71</a></li>
                             
-                                <li><a class="toctree-l3" href="#the-above-found-in-packagesshrub-coreclientindexlitcoffee46">the above found in packages/shrub-core/client/index.litcoffee:46</a></li>
+                                <li><a class="toctree-l3" href="#the-above-found-in-packagesshrub-coreclientindexlitcoffee43">the above found in packages/shrub-core/client/index.litcoffee:43</a></li>
                             
                                 <li><a class="toctree-l3" href="#the-above-found-in-packagesshrub-formclientindexlitcoffee23">the above found in packages/shrub-form/client/index.litcoffee:23</a></li>
                             
@@ -117,11 +122,11 @@
                             
                                 <li><a class="toctree-l3" href="#the-above-found-in-packagesshrub-angularindexlitcoffee31">the above found in packages/shrub-angular/index.litcoffee:31</a></li>
                             
-                                <li><a class="toctree-l3" href="#the-above-found-in-packagesshrub-angularindexlitcoffee69">the above found in packages/shrub-angular/index.litcoffee:69</a></li>
+                                <li><a class="toctree-l3" href="#the-above-found-in-packagesshrub-angularindexlitcoffee70">the above found in packages/shrub-angular/index.litcoffee:70</a></li>
                             
-                                <li><a class="toctree-l3" href="#the-above-found-in-packagesshrub-angularindexlitcoffee344">the above found in packages/shrub-angular/index.litcoffee:344</a></li>
+                                <li><a class="toctree-l3" href="#the-above-found-in-packagesshrub-angularindexlitcoffee343">the above found in packages/shrub-angular/index.litcoffee:343</a></li>
                             
-                                <li><a class="toctree-l3" href="#the-above-found-in-packagesshrub-angularindexlitcoffee384">the above found in packages/shrub-angular/index.litcoffee:384</a></li>
+                                <li><a class="toctree-l3" href="#the-above-found-in-packagesshrub-angularindexlitcoffee383">the above found in packages/shrub-angular/index.litcoffee:383</a></li>
                             
                                 <li><a class="toctree-l3" href="#the-above-found-in-packagesshrub-configindexlitcoffee92">the above found in packages/shrub-config/index.litcoffee:92</a></li>
                             
@@ -129,7 +134,7 @@
                             
                                 <li><a class="toctree-l3" href="#the-above-found-in-packagesshrub-gruntdoxdynamiclitcoffee399">the above found in packages/shrub-grunt/dox/dynamic.litcoffee:399</a></li>
                             
-                                <li><a class="toctree-l3" href="#the-above-found-in-packagesshrub-gruntdoxdynamiclitcoffee431">the above found in packages/shrub-grunt/dox/dynamic.litcoffee:431</a></li>
+                                <li><a class="toctree-l3" href="#the-above-found-in-packagesshrub-gruntdoxdynamiclitcoffee433">the above found in packages/shrub-grunt/dox/dynamic.litcoffee:433</a></li>
                             
                                 <li><a class="toctree-l3" href="#the-above-found-in-packagesshrub-httpmanagerlitcoffee4">the above found in packages/shrub-http/manager.litcoffee:4</a></li>
                             
@@ -991,7 +996,7 @@ Packages implement the hook <code>angularPackageDependencies</code> to specify t
         '$rootScope', '$exceptionHandler'
 </code></pre>
 </blockquote>
-<h6 id="the-above-found-in-packagesshrub-coreclientindexlitcoffee46">the above found in <a href="../source/packages/shrub-core/client#todo-angular-also-implements-a-private-service-called-q-used-for-animation-we-should-override-that-one-too">packages/shrub-core/client/index.litcoffee:46</a></h6>
+<h6 id="the-above-found-in-packagesshrub-coreclientindexlitcoffee43">the above found in <a href="../source/packages/shrub-core/client#todo-angular-also-implements-a-private-service-called-q-used-for-animation-we-should-override-that-one-too">packages/shrub-core/client/index.litcoffee:43</a></h6>
 <blockquote>
 <p>Keep a reference to the form scope, if the form attribute value changes, it'll
 need to be rebuilt.</p>
@@ -1123,18 +1128,17 @@ Promise = require 'bluebird'
           ,
 </code></pre>
 </blockquote>
-<h6 id="the-above-found-in-packagesshrub-angularindexlitcoffee69">the above found in <a href="../source/packages/shrub-angular#todo-multiline">packages/shrub-angular/index.litcoffee:69</a></h6>
+<h6 id="the-above-found-in-packagesshrub-angularindexlitcoffee70">the above found in <a href="../source/packages/shrub-angular#todo-multiline">packages/shrub-angular/index.litcoffee:70</a></h6>
 <blockquote>
-<pre><code>          body: body
-          path: path
-          sandbox: sandbox
+<pre><code>        navigationReq = Object.create req
+        navigationReq.sandbox = sandbox
 </code></pre>
 <h2 id="todo-remove-unused-res-parameter">TODO: Remove unused <code>res</code> parameter.</h2>
-<pre><code>        navigationMiddleware.dispatch req, null, (error) =&gt;
+<pre><code>        navigationMiddleware.dispatch navigationReq, null, (error) =&gt;
           return reject error if error?
 </code></pre>
 </blockquote>
-<h6 id="the-above-found-in-packagesshrub-angularindexlitcoffee344">the above found in <a href="../source/packages/shrub-angular#todo-remove-unused-res-parameter">packages/shrub-angular/index.litcoffee:344</a></h6>
+<h6 id="the-above-found-in-packagesshrub-angularindexlitcoffee343">the above found in <a href="../source/packages/shrub-angular#todo-remove-unused-res-parameter">packages/shrub-angular/index.litcoffee:343</a></h6>
 <blockquote>
 <pre><code>      for key, route of routes
         if route.regexp?.test path
@@ -1143,7 +1147,7 @@ Promise = require 'bluebird'
 <pre><code>          return
 </code></pre>
 </blockquote>
-<h6 id="the-above-found-in-packagesshrub-angularindexlitcoffee384">the above found in <a href="../source/packages/shrub-angular#todo-need-to-extract-params-to-build-redirectto-it-s-a-small-enough-mismatch-to-ignore-for-now">packages/shrub-angular/index.litcoffee:384</a></h6>
+<h6 id="the-above-found-in-packagesshrub-angularindexlitcoffee383">the above found in <a href="../source/packages/shrub-angular#todo-need-to-extract-params-to-build-redirectto-it-s-a-small-enough-mismatch-to-ignore-for-now">packages/shrub-angular/index.litcoffee:383</a></h6>
 <blockquote>
 <pre><code>      subconfig = fulfilledSubconfigs[index++]
       for key, value of subconfig
@@ -1181,7 +1185,7 @@ italicized in markdown.</p>
 <pre><code>  fs.writeFileSync 'docs/packages.md', render
 </code></pre>
 </blockquote>
-<h6 id="the-above-found-in-packagesshrub-gruntdoxdynamiclitcoffee431">the above found in <a href="../source/packages/shrub-grunt/dox/dynamic#todo-we-should-do-some-preprocessing-hre-with-a-transform-namely-linking-the-hook-headers-to-their-respective-documentation">packages/shrub-grunt/dox/dynamic.litcoffee:431</a></h6>
+<h6 id="the-above-found-in-packagesshrub-gruntdoxdynamiclitcoffee433">the above found in <a href="../source/packages/shrub-grunt/dox/dynamic#todo-we-should-do-some-preprocessing-hre-with-a-transform-namely-linking-the-hook-headers-to-their-respective-documentation">packages/shrub-grunt/dox/dynamic.litcoffee:433</a></h6>
 <blockquote>
 <h1 id="http-manager">HTTP Manager</h1>
 <p><em>Manage an HTTP server instance.</em></p>

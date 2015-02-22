@@ -404,7 +404,9 @@ italicized in markdown.
 
         title = chunks[0]
         if 35 is title.charCodeAt 0
-          render += " &mdash; #{title.substr 2}"
+          render += '\n\n'
+          render += '> ' if isSubpackage
+          render += "<span class=\"package-title\">#{title.substr 2}</span>"
 
         render += '\n\n'
 

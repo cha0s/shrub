@@ -27,10 +27,7 @@ Allow javascript:void(0).
         '$compileProvider', '$injector', '$provide', '$routeProvider', '$locationProvider', 'shrub-pkgmanProvider'
         ($compileProvider, $injector, $provide, $routeProvider, $locationProvider, pkgmanProvider) ->
 
-#### Invoke hook `aHrefSanitizationWhilelist`.
-
-Allow packages to define whitelisted patterns for ngHref
-attributes.
+#### Invoke hook `aHrefSanitizationWhitelist`.
 
           regexes = []
           for regexes_ in pkgmanProvider.invokeFlat(

@@ -50,6 +50,11 @@
                     
                 </li>
             
+                <li class="toctree-l1 ">
+                    <a class="" href="../guide/concepts">Concepts and conventions</a>
+                    
+                </li>
+            
         
 
     
@@ -62,8 +67,6 @@
                         <ul>
                         
                             <li class="toctree-l2"><a href="#hook-reference">Hook reference</a></li>
-                            
-                                <li><a class="toctree-l3" href="#ahrefsanitizationwhilelist">aHrefSanitizationWhilelist</a></li>
                             
                                 <li><a class="toctree-l3" href="#ahrefsanitizationwhitelist">aHrefSanitizationWhitelist</a></li>
                             
@@ -812,17 +815,55 @@
           <div role="main">
             <div class="section">
               <h1 id="hook-reference">Hook reference</h1>
-<h2 id="ahrefsanitizationwhilelist">aHrefSanitizationWhilelist</h2>
-<h3 id="1-invocationss">1 invocations(s)</h3>
-<ul>
-<li>shrub-core (<a href="../source/packages/shrub-core/client#invoke-hook-ahrefsanitizationwhilelist">client</a>)</li>
-</ul>
 <h2 id="ahrefsanitizationwhitelist">aHrefSanitizationWhitelist</h2>
+<p><em>Allow packages to define whitelisted patterns for ngHref attributes.</em></p>
+<p>By default, Angular filters 'unsafe' URLs passed to the ngHref attribute. This
+behavior is normally configured through
+<a href="https://docs.angularjs.org/api/ng/provider/$compileProvider#aHrefSanitizationWhitelist">$compileProvider.aHrefSanitizationWhitelist</a>
+so Shrub provides this hook to make it easy to add your own whitelisted
+patterns.</p>
+<p>Implementations of this hook should return an array of strings. The strings
+are compiled into a regular expression which determines whether the href is
+allowed or not. For instance, <code>shrub-core</code> provides two patterns by default:</p>
+<p><code>'(?:https?|ftp|mailto|tel|file):'</code></p>
+<p>which allows the usage of http, https, ftp mailto, tel, and file
+protocols, and</p>
+<p><code>'javascript:void(?:%20)*\\((?:%20)*0(?:%20)*\\)'</code></p>
+<p>which allows the usage of <code>javascript:void(0)</code> as an href.</p>
+<p>Shrub combines all patterns into a regular expression and automatically
+enforces that the pattern will occur at the beginning of the string. For
+example, if we have two patterns, like:</p>
+<p><code>['foo', 'bar']</code></p>
+<p>the resulting regular expression will be equivalent to:</p>
+<p><code>/^\s*(?:foo|bar)/</code></p>
+<p>This hook should be used sparingly, as the reason there is a whitelist in the
+first place is because there are security implications to allowing just any
+href in a dynamic directive. <strong>Use caution</strong>.</p>
+<h3 id="answer-with">Answer with</h3>
+<p>An array of strings to be compiled into a regular expression.</p>
 <h3 id="1-implementationss">1 implementations(s)</h3>
 <ul>
 <li>shrub-core (<a href="../source/packages/shrub-core/client#implements-hook-ahrefsanitizationwhitelist">client</a>)</li>
 </ul>
+<h3 id="1-invocationss">1 invocations(s)</h3>
+<ul>
+<li>shrub-core (<a href="../source/packages/shrub-core/client#invoke-hook-ahrefsanitizationwhitelist">client</a>)</li>
+</ul>
 <h2 id="angularnavigationmiddleware">angularNavigationMiddleware</h2>
+<p><em>Define middleware to run when Angular is navigated in its sandbox.</em></p>
+<p>Angular sandboxes retain navigation (and other) state for a client without
+JavaScript capability. When a user hits another page on the server, the
+sandbox navigates the Angular application to the new path. If the path
+changed, the middleware collected by this hook are dispatched, allowing
+packages to react to the navigation change.</p>
+<p>The <code>req</code> parameter to the middleware is the original HTTP request object,
+along with the following extra properties:</p>
+<ul>
+<li>(Sandbox) <code>sandbox</code> - The sandbox instance.</li>
+</ul>
+<h3 id="answer-with_1">Answer with</h3>
+<p>A
+<a href="../guide/concepts#middleware-hook-specification">middleware hook specification</a>.</p>
 <h3 id="1-implementationss_1">1 implementations(s)</h3>
 <ul>
 <li>shrub-form (<a href="../source/packages/shrub-form#implements-hook-angularnavigationmiddleware">server</a>)</li>
@@ -832,6 +873,31 @@
 <li>shrub-angular (<a href="../source/packages/shrub-angular#invoke-hook-angularnavigationmiddleware">server</a>)</li>
 </ul>
 <h2 id="angularpackagedependencies">angularPackageDependencies</h2>
+<p><em>Define third-party Angular modules to include as application dependencies.</em></p>
+<p>Angular modules are defined as a dependency tree. Since we would have to edit
+the application file to include those dependencies when defining the <code>shrub</code>
+top-level application module (And we don't want to do that), we need a better
+solution. <code>angularPackageDependencies</code> is that solution.</p>
+<p>Shrub provides the
+<a href="../packages#shrub-html5-notification"><code>shrub-html5-notification</code></a> package, which
+uses the
+<a href="https://github.com/neoziro/angular-notification">angular-notification</a> module.
+The name of the module is <code>notification</code>, so the hook implementation looks
+like:</p>
+<pre><code class="javascript">registrar.registerHook('angularPackageDependencies', function() {
+
+  return [
+    'notification'
+  ];
+});
+</code></pre>
+
+<p>This ensures our application has the <code>notification</code> module marked as a
+dependency. You will still need to use the
+<a href="../hooks#gruntconfig"><code>gruntConfig</code></a> hook to provide the actual JavaScript
+assets to the client.</p>
+<h3 id="answer-with_2">Answer with</h3>
+<p>An array of strings naming the modules you want to include.</p>
 <h3 id="2-implementationss">2 implementations(s)</h3>
 <ul>
 <li>shrub-html5-local-storage (<a href="../source/packages/shrub-html5-local-storage#implements-hook-angularpackagedependencies">server</a>)</li>
@@ -842,6 +908,14 @@
 <li>shrub-grunt/angular (<a href="../source/packages/shrub-grunt/angular#invoke-hook-angularpackagedependencies">server</a>)</li>
 </ul>
 <h2 id="appconfig">appConfig</h2>
+<p><em>Allow packages to hook into the configuration phase of the Angular
+application.</em></p>
+<p>Packages should implement this hook when they need to run code during the
+Angular module configuration phase. See the
+<a href="https://docs.angularjs.org/guide/module#module-loading-dependencies">Angular documentation</a>
+on <strong>Configuration blocks</strong> for more explanation.</p>
+<h3 id="answer-with_3">Answer with</h3>
+<p>An <a href="../guide/concepts#annotated-functions">annotated function</a>.</p>
 <h3 id="4-implementationss">4 implementations(s)</h3>
 <ul>
 <li>shrub-core (<a href="../source/packages/shrub-core/client#implements-hook-appconfig">client</a>)</li>
@@ -854,6 +928,13 @@
 <li>app (<a href="../source/client/app#invoke-hook-appconfig">client</a>)</li>
 </ul>
 <h2 id="apprun">appRun</h2>
+<p><em>Allow packages to hook into the run phase of the Angular application.</em></p>
+<p>Packages should implement this hook when they need to run code during the
+Angular module run phase. See the
+<a href="https://docs.angularjs.org/guide/module#module-loading-dependencies">Angular documentation</a>
+on <strong>Run blocks</strong> for more explanation.</p>
+<h3 id="answer-with_4">Answer with</h3>
+<p>An <a href="../guide/concepts#annotated-functions">annotated function</a>.</p>
 <h3 id="3-implementationss">3 implementations(s)</h3>
 <ul>
 <li>shrub-angular (<a href="../source/packages/shrub-angular/client#implements-hook-apprun">client</a>)</li>
@@ -865,6 +946,19 @@
 <li>app (<a href="../source/client/app#invoke-hook-apprun">client</a>)</li>
 </ul>
 <h2 id="assetmiddleware">assetMiddleware</h2>
+<p><em>Define assets to serve to the client application.</em></p>
+<p>Packages may come bundled with JavaScript or CSS assets. This hook is how you
+can provide them to the client application.</p>
+<p>Asset middleware takes <code>assets</code> as its first argument. This is an object with
+the following properties:</p>
+<p>(String Array) <code>scripts</code> - A list of script assets.
+(String Array) <code>stylesheets</code> - A list of sylesheet assets.</p>
+<p><strong>NOTE</strong>: This hook lets you serve assets, but will not automatically copy
+them from your package to the <code>app</code> directory where they will be served.
+You'll need to implement hook <a href="../hooks/#gruntconfig"><code>gruntConfig</code></a> for that.</p>
+<h3 id="answer-with_5">Answer with</h3>
+<p>A
+<a href="../guide/concepts#middleware-hook-specification">middleware hook specification</a>.</p>
 <h3 id="8-implementationss">8 implementations(s)</h3>
 <ul>
 <li>shrub-assets/angular (<a href="../source/packages/shrub-assets/angular#implements-hook-assetmiddleware">server</a>)</li>
@@ -1413,7 +1507,7 @@ invoked.</p>
         <a href="../packages" class="btn btn-neutral float-right" title="Packages"/>Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../guide/getting-started" class="btn btn-neutral" title="Getting Started"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../guide/concepts" class="btn btn-neutral" title="Concepts and conventions"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -1441,7 +1535,7 @@ invoked.</p>
         
             <a class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
         
-      <span><a href="../guide/getting-started" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      <span><a href="../guide/concepts" style="color: #fcfcfc;">&laquo; Previous</a></span>
       <span style="margin-left: 15px"><a href="../packages" style="color: #fcfcfc">Next &raquo;</a></span>
     </span>
 </div>

@@ -50,6 +50,11 @@
                     
                 </li>
             
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../../../guide/concepts">Concepts and conventions</a>
+                    
+                </li>
+            
         
 
     
@@ -1091,7 +1096,9 @@ italicized in markdown.</p>
 
     title = chunks[0]
     if 35 is title.charCodeAt 0
-      render += " &amp;mdash; #{title.substr 2}"
+      render += '\n\n'
+      render += '&gt; ' if isSubpackage
+      render += "&lt;span class=\"package-title\"&gt;#{title.substr 2}&lt;/span&gt;"
 
     render += '\n\n'
 

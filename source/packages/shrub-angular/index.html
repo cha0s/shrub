@@ -50,6 +50,11 @@
                     
                 </li>
             
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../guide/concepts">Concepts and conventions</a>
+                    
+                </li>
+            
         
 
     
@@ -792,9 +797,9 @@ sandbox.</p>
 <p>Thrown when a request is complete.</p>
 <pre><code>        class ResponseComplete extends Error
           constructor: (@message) -&gt;
-
-        # } After the template is rendered, lookup or create the sandbox.
-        Promise.resolve(req.delivery).bind({}).then((html) -&gt;
+</code></pre>
+<p>After the template is rendered, lookup or create the sandbox.</p>
+<pre><code>        Promise.resolve(req.delivery).bind({}).then((html) -&gt;
 
           sandboxManager.lookupOrCreate(
             html
@@ -821,8 +826,7 @@ sandbox.</p>
             res.redirect redirectionPath
             throw new ResponseComplete()
 
-          {path} = url.parse req.url
-          @sandbox.navigate path, req.body
+          @sandbox.navigate req
 
         ).then(-&gt;
 
@@ -1029,24 +1033,23 @@ location path. If it is, redirect Angular.</em></p>
 </code></pre>
 <h2 id="sandboxnavigate">Sandbox#navigate</h2>
 <ul>
-<li>(string) <code>path</code> - URL path.</li>
-<li>(string) <code>body</code> - Request body.</li>
+<li>(http.IncomingMessage) <code>req</code> - The HTTP request object.</li>
 </ul>
 <p><em>Navigate angular to a path, and dispatch navigation middleware.</em></p>
-<pre><code>  sandbox.navigate = (path, body) -&gt;
+<pre><code>  sandbox.navigate = (req) -&gt;
     self = this
+
+    {path} = url.parse req.url
 
     @checkPathChanges(path).then -&gt;
 
       new Promise (resolve, reject) -&gt;
 
-        req =
-          body: body
-          path: path
-          sandbox: sandbox
+        navigationReq = Object.create req
+        navigationReq.sandbox = sandbox
 </code></pre>
 <h6 id="todo-remove-unused-res-parameter">TODO: Remove unused <code>res</code> parameter.</h6>
-<pre><code>        navigationMiddleware.dispatch req, null, (error) =&gt;
+<pre><code>        navigationMiddleware.dispatch navigationReq, null, (error) =&gt;
           return reject error if error?
 
           self.catchAngularRedirection path
