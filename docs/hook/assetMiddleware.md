@@ -6,8 +6,8 @@ can provide them to the client application.
 Asset middleware takes `assets` as its first argument. This is an object with
 the following properties:
 
-(String Array) `scripts` - A list of script assets.
-(String Array) `stylesheets` - A list of sylesheet assets.
+* (String Array) `scripts` - A list of script assets.
+* (String Array) `stylesheets` - A list of sylesheet assets.
 
 **NOTE**: This hook lets you serve assets, but will not automatically copy
 them from your package to the `app` directory where they will be served.
