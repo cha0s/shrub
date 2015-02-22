@@ -343,7 +343,7 @@ location path. If it is, redirect Angular.*
 
 ###### TODO: Remove unused `res` parameter.
 
-            navigationMiddleware.dispatch navigationReq, null, (error) =>
+            navigationMiddleware.dispatch navigationReq, (error) =>
               return reject error if error?
 
               self.catchAngularRedirection path

@@ -15,7 +15,7 @@ sandbox and let it do its thing.
         label: 'Handle form submission'
         middleware: [
 
-          (req, res, next) ->
+          (req, next) ->
 
             {body, sandbox} = req
 
