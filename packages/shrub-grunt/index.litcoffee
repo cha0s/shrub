@@ -13,7 +13,7 @@
 
           (assets, next) ->
 
-            return if 'production' is config.get 'NODE_ENV'
+            return next() if 'production' is config.get 'NODE_ENV'
 
             assets.scripts.push 'http://localhost:35729/livereload.js'
 
