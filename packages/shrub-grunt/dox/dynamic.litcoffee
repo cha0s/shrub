@@ -241,7 +241,9 @@ Render the hooks page.
 
           if O[pluralKey][hook]?
 
-            count = Object.keys(O[pluralKey][hook]).length
+            count = 0
+            for file, {types} of O[pluralKey][hook]
+              count += types.length
 
             render += "!!! note \"#{count} #{key}"
             render += 's' if count > 1
@@ -368,7 +370,6 @@ Sort by package name first.
         sourcePath = _sourcePath fileStats.file
 
         parts = sourcePath.split '/'
-        # parts.pop() if parts[parts.length - 1] is 'client'
         pkg = parts.join '/'
         fileStats.pkg = pkg.split('/').slice(1).join '/'
 
