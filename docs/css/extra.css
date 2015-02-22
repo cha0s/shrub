@@ -16,3 +16,9 @@ h1:target, h2:target, h3:target, h4:target, h5:target, h6:target {
 .rst-content blockquote h3 small {
   color: #aaa;
 }
+
+.package-title {
+  font-family: "Roboto Slab","ff-tisa-web-pro","Georgia",Arial,sans-serif;
+  font-size: 150%;
+  font-weight: 700;
+}
