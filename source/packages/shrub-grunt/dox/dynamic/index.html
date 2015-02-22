@@ -795,8 +795,10 @@ caches lines to be able to build context around each TODO item.</p>
         resolve files
     )
 </code></pre>
-<p>Generate an HTML ID from a hook name.</p>
-<pre><code>_idFromHook = (hook) -&gt; hook.replace(
+<p>Generate an HTML ID from a string.</p>
+<pre><code>_idFromString = (string) -&gt; string.replace(
+  /\//g, ''
+).replace(
   /[^0-9A-Za-z-]+/g, '-'
 ).replace(
   /\-+/g, '-'
@@ -949,10 +951,20 @@ portion from the end of the filename.</p>
         render += '"\n'
 
         instances = for file, {fullName, types} of O[pluralKey][hook]
-          types = types.map (type) -&gt; "[#{type}](source/#{_sourcePath fullName}##{wordingFor[key]}-hook-#{_idFromHook hook})"
-          "    * #{_sourcePath file} (#{types.join ', '})\n"
+</code></pre>
+<p>Remove packages and file part.</p>
+<pre><code>          parts = fullName.split '/'
+          parts.shift()
+          parts.pop()
+          packageName = parts.join '/'
 
-        render += instances.join('')
+          types = types.map (type) -&gt;
+            packageNameParts = packageName.split '/'
+            packageNameParts.pop() if packageNameParts[packageNameParts.length - 1] isnt type
+            "    * [#{_sourcePath file} (#{type})](packages/##{_idFromString packageNameParts.join '/'}) &amp;mdash; [#{key}](source/#{_sourcePath fullName}##{wordingFor[key]}-hook-#{_idFromString hook}) \n"
+          types.join ''
+
+        render += instances.join ''
 
         render += '\n\n'
 
@@ -985,7 +997,7 @@ hash in the case of multiple TODO items with the same wording.</p>
 <p>If this is the line with the TODO, parse the ID from the TODO item text, and
 render it as h2 (TODO are h6) to increase visibility.</p>
 <pre><code>        if index is Todos.context
-          id = _idFromHook(line).slice 1, -1
+          id = _idFromString(line).slice 1, -1
 
           render += line.slice 4
         else
@@ -1050,7 +1062,7 @@ render it as h2 (TODO are h6) to increase visibility.</p>
     sourcePath = _sourcePath fileStats.file
 
     parts = sourcePath.split '/'
-    parts.pop() if parts[parts.length - 1] is 'client'
+    # parts.pop() if parts[parts.length - 1] is 'client'
     pkg = parts.join '/'
     fileStats.pkg = pkg.split('/').slice(1).join '/'
 
@@ -1080,7 +1092,8 @@ render it as h2 (TODO are h6) to increase visibility.</p>
 
       render += '\n\n'
 
-    isSubpackage = fileStats.pkg.split('/').length isnt 1
+    pkgParts = fileStats.pkg.split '/'
+    isSubpackage = pkgParts.length isnt 1 and pkgParts.pop() isnt 'client'
 </code></pre>
 <p>Link to the package.</p>
 <pre><code>    sourcePath = _sourcePath fileStats.file
@@ -1115,18 +1128,18 @@ italicized in markdown.</p>
 
     if fileStats.implementations.length &gt; 0
       render += '&gt; ' if isSubpackage
-      render += '!!! note "Implements hooks"\n    '
+      render += '!!! note "Implements hooks"\n'
       render += fileStats.implementations.map((hook) -&gt;
-        "[#{hook}](source/#{sourcePath}#implements-hook-#{hook.toLowerCase()})"
-      ).join ', '
+        "    * [#{hook}](hooks/##{_idFromString hook}) &amp;mdash; [implementation](source/#{sourcePath}#implements-hook-#{hook.toLowerCase()})\n"
+      ).join ''
       render += '\n\n'
 
     if fileStats.invocations.length &gt; 0
       render += '&gt; ' if isSubpackage
-      render += '!!! note "Invokes hooks"\n    '
+      render += '!!! note "Invokes hooks"\n'
       render += fileStats.invocations.map((hook) -&gt;
-        "[#{hook}](source/#{sourcePath}#invoke-hook-#{hook.toLowerCase()})"
-      ).join ', '
+        "    * [#{hook}](hooks/##{_idFromString hook}) &amp;mdash; [invocation](source/#{sourcePath}#invoke-hook-#{hook.toLowerCase()})\n"
+      ).join ''
       render += '\n\n'
 </code></pre>
 <h6 id="todo-we-should-do-some-preprocessing-hre-with-a-transform-namely-linking-the-hook-headers-to-their-respective-documentation">TODO: We should do some preprocessing hre with a transform, namely linking the hook headers to their respective documentation.</h6>
