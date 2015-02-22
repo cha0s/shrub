@@ -84,9 +84,11 @@ Gather all source files.
             resolve files
         )
 
-Generate an HTML ID from a hook name.
+Generate an HTML ID from a string.
 
-    _idFromHook = (hook) -> hook.replace(
+    _idFromString = (string) -> string.replace(
+      /\//g, ''
+    ).replace(
       /[^0-9A-Za-z-]+/g, '-'
     ).replace(
       /\-+/g, '-'
@@ -246,10 +248,21 @@ Render the hooks page.
             render += '"\n'
 
             instances = for file, {fullName, types} of O[pluralKey][hook]
-              types = types.map (type) -> "[#{type}](source/#{_sourcePath fullName}##{wordingFor[key]}-hook-#{_idFromHook hook})"
-              "    * #{_sourcePath file} (#{types.join ', '})\n"
 
-            render += instances.join('')
+Remove packages and file part.
+
+              parts = fullName.split '/'
+              parts.shift()
+              parts.pop()
+              packageName = parts.join '/'
+
+              types = types.map (type) ->
+                packageNameParts = packageName.split '/'
+                packageNameParts.pop() if packageNameParts[packageNameParts.length - 1] isnt type
+                "    * [#{_sourcePath file} (#{type})](packages/##{_idFromString packageNameParts.join '/'}) &mdash; [#{key}](source/#{_sourcePath fullName}##{wordingFor[key]}-hook-#{_idFromString hook}) \n"
+              types.join ''
+
+            render += instances.join ''
 
             render += '\n\n'
 
@@ -285,7 +298,7 @@ If this is the line with the TODO, parse the ID from the TODO item text, and
 render it as h2 (TODO are h6) to increase visibility.
 
             if index is Todos.context
-              id = _idFromHook(line).slice 1, -1
+              id = _idFromString(line).slice 1, -1
 
               render += line.slice 4
             else
@@ -355,7 +368,7 @@ Sort by package name first.
         sourcePath = _sourcePath fileStats.file
 
         parts = sourcePath.split '/'
-        parts.pop() if parts[parts.length - 1] is 'client'
+        # parts.pop() if parts[parts.length - 1] is 'client'
         pkg = parts.join '/'
         fileStats.pkg = pkg.split('/').slice(1).join '/'
 
@@ -385,7 +398,8 @@ Sort by package name first.
 
           render += '\n\n'
 
-        isSubpackage = fileStats.pkg.split('/').length isnt 1
+        pkgParts = fileStats.pkg.split '/'
+        isSubpackage = pkgParts.length isnt 1 and pkgParts.pop() isnt 'client'
 
 Link to the package.
 
@@ -423,18 +437,18 @@ italicized in markdown.
 
         if fileStats.implementations.length > 0
           render += '> ' if isSubpackage
-          render += '!!! note "Implements hooks"\n    '
+          render += '!!! note "Implements hooks"\n'
           render += fileStats.implementations.map((hook) ->
-            "[#{hook}](source/#{sourcePath}#implements-hook-#{hook.toLowerCase()})"
-          ).join ', '
+            "    * [#{hook}](hooks/##{_idFromString hook}) &mdash; [implementation](source/#{sourcePath}#implements-hook-#{hook.toLowerCase()})\n"
+          ).join ''
           render += '\n\n'
 
         if fileStats.invocations.length > 0
           render += '> ' if isSubpackage
-          render += '!!! note "Invokes hooks"\n    '
+          render += '!!! note "Invokes hooks"\n'
           render += fileStats.invocations.map((hook) ->
-            "[#{hook}](source/#{sourcePath}#invoke-hook-#{hook.toLowerCase()})"
-          ).join ', '
+            "    * [#{hook}](hooks/##{_idFromString hook}) &mdash; [invocation](source/#{sourcePath}#invoke-hook-#{hook.toLowerCase()})\n"
+          ).join ''
           render += '\n\n'
 
 ###### TODO: We should do some preprocessing hre with a transform, namely linking the hook headers to their respective documentation.
