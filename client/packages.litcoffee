@@ -22,11 +22,6 @@ are gathered and registered into Angular.*
           config = require 'config'
           debug = require('debug') 'shrub:angular'
 
-Set an injector so that Angular injection can occur out of band.
-
-          angular_ = require 'angular'
-          angular_.setInjector $injector
-
 #### Invoke hook `controller`.
 
 Allows packages to define Angular controllers. Implementations should return an
@@ -47,7 +42,7 @@ Normalize, augment, and register a directive.
 
           prepareDirective = (name, path, injected) -> ($injector) ->
 
-Normalize the directive to object form.
+Normalize the directive to Directive Definition Object form.
 
             directive = $injector.invoke injected
             directive = link: directive if angular.isFunction directive
@@ -201,6 +196,17 @@ Allows packages to define Angular services. Implementations should return an
 
       ])
 
+      .run([
+        '$injector', 'shrub-require'
+        ($injector, require) ->
+
+Set an injector so that Angular injection can occur out of band.
+
+          angular_ = require 'angular'
+          angular_.setInjector $injector
+
+      ])
+
 The module that provides Angular with access to Shrub's package manager.
 
     angular.module('shrub.pkgman', [
@@ -229,3 +235,5 @@ Simply pass along pkgman as the 'service'.
 
           return pkgman
       ]
+
+

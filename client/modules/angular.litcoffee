@@ -2,13 +2,10 @@
 
 *Provides functionality related to Angular for client packages.*
 
-Allow shrub to set the injector. This can only be called once, so packages
-won't be able to corrupt it.
+Allow shrub to set the injector.
 
     _$injector = null
-    exports.setInjector = ($injector) ->
-      _$injector = $injector
-      exports.setInjector = undefined
+    exports.setInjector = ($injector) -> _$injector = $injector
 
 Inject dependencies into an
 [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
