@@ -19,23 +19,29 @@ The middleware dispatched every time sandboxed angular is navigated.
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `endpoint`.
+#### Implements hook `rpcRoutes`.
 
 Allow a JSful client to call us back and inform us that we don't need to
 hold their sandbox.
 
-      registrar.registerHook 'endpoint', ->
+      registrar.registerHook 'rpcRoutes', ->
 
-        route: 'shrub.hangup'
-        receiver: (req, fn) ->
+        routes = []
+
+        routes.push
+
+          path: 'shrub-angular/hangup'
+          receiver: (req, fn) ->
 
 ###### TODO: Cookie-less clients won't have a valid session ID to call with. This should be some other token, perhaps CSRF.
 
-          id = req.session?.id
-          if (sandbox = sandboxManager.lookup id)?
-            sandbox.close().finally -> fn()
-          else
-            fn()
+            id = req.session?.id
+            if (sandbox = sandboxManager.lookup id)?
+              sandbox.close().finally -> fn()
+            else
+              fn()
+
+        return routes
 
 #### Implements hook `httpMiddleware`.
 

@@ -42,9 +42,9 @@ Session ID.
 
         session: if req?.session? then req.session.id
 
-#### Implements hook `endpointFinished`.
+#### Implements hook `rpcRouteFinished`.
 
-      registrar.registerHook 'endpointFinished', (routeReq, result, req) ->
+      registrar.registerHook 'rpcRouteFinished', (routeReq, result, req) ->
         return unless routeReq.session?
 
         Promise = require 'bluebird'

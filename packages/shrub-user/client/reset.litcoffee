@@ -21,7 +21,7 @@
 
               submits: [
 
-                rpc.formSubmitHandler (error, result) ->
+                rpc.formSubmitHandler 'shrub-user/reset', (error, result) ->
                   return if error?
 
                   messages.add(

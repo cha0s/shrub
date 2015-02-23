@@ -47,7 +47,7 @@ describe 'messages', ->
       ($timeout, socket) ->
 
         socket.stimulateOn(
-          'shrub.ui.messages'
+          'shrub-ui/messages'
           messages: [
             text: 'Testing'
           ,

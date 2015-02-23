@@ -4,7 +4,7 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-      if 'e2e' is config.get 'testMode'
+      if 'e2e' is config.get 'packageConfig:shrub-core:testMode'
 
 #### Implements hook `route`.
 
@@ -40,6 +40,8 @@
             $scope.form =
 
               key: 'shrub-user-login'
+
+###### TODO: Use rpc submission with a hidden 'method' field.
 
               submits: [
 

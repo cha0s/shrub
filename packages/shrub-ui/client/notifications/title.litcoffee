@@ -37,7 +37,7 @@ Mark notifications as read, and tell the server.
               )
 
               rpc.call(
-                'shrub.ui.notifications.markAsRead'
+                'shrub-ui/notifications/markAsRead'
                 ids: ids
                 markedAsRead: true
 

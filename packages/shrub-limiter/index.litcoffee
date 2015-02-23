@@ -1,7 +1,7 @@
 # Rate limiter
 
 *Limits the rate at which clients can do certain operations, like call RPC
-endpoints.*
+routes.*
 
     exports.SKIP = SKIP = {}
 
@@ -90,11 +90,11 @@ endpoints.*
         'shrub-limit': Limit
         'shrub-limit-score': LimitScore
 
-#### Implements hook `endpointAlter`.
+#### Implements hook `rpcRoutesAlter`.
 
-Allow RPC endpoint definitions to specify rate limiters.
+Allow RPC routes definitions to specify rate limiters.
 
-      registrar.registerHook 'endpointAlter', (endpoints) ->
+      registrar.registerHook 'rpcRoutesAlter', (routes) ->
 
         moment = require 'moment'
 
@@ -111,35 +111,35 @@ A limiter on a route is defined like:
   determining the total limit. In this example, the IP address and session ID
   would be ignored.
 
-        Object.keys(endpoints).forEach (route) ->
-          endpoint = endpoints[route]
+        Object.keys(routes).forEach (path) ->
+          route = routes[path]
 
 No limiter? Nevermind...
 
-          return unless endpoint.limiter?
+          return unless route.limiter?
 
 Create a limiter based on the threshold defined.
 
-          endpoint.limiter.instance = new Limiter(
-            "rpc://#{route}", endpoint.limiter.threshold
+          route.limiter.instance = new Limiter(
+            "rpc://#{route}", route.limiter.threshold
           )
 
 Set defaults.
 
-          endpoint.limiter.excludedKeys ?= []
-          endpoint.limiter.message ?= 'You are doing that too much.'
-          endpoint.limiter.villianyScore ?= 20
+          route.limiter.excludedKeys ?= []
+          route.limiter.message ?= 'You are doing that too much.'
+          route.limiter.villianyScore ?= 20
 
 Add a validator, where we'll check the threshold.
 
-          endpoint.validators.push (req, res, next) ->
+          route.validators.push (req, res, next) ->
 
             {
               excludedKeys
               instance
               message
               villianyScore
-            } = endpoint.limiter
+            } = route.limiter
 
 Allow packages to check and optionally skip the limiter.
 

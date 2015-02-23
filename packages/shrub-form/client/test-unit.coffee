@@ -155,7 +155,7 @@ describe 'form', ->
         rpcSubmission = ''
         submissionCleared = false
 
-        socket.catchEmit 'rpc://test.rpc', (data, fn) ->
+        socket.catchEmit 'rpc://test/rpc', (data, fn) ->
           rpcSubmission = data.text
 
           fn result: 420
@@ -166,6 +166,8 @@ describe 'form', ->
 
         scope = $rootScope.$new()
         scope['testRpc'] =
+
+          key: 'test/rpc'
 
           fields:
 
