@@ -634,7 +634,7 @@
                         
                             <li class="toctree-l2"><a href="#user-password-reset">User - Password reset</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-endpoint">Implements hook endpoint.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-rpcroutes">Implements hook rpcRoutes.</a></li>
                             
                         
                         </ul>
@@ -715,8 +715,8 @@
               <h1 id="user-password-reset">User - Password reset</h1>
 <pre><code>exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h4 id="implements-hook-endpoint">Implements hook <code>endpoint</code>.</h4>
-<pre><code>  registrar.registerHook 'endpoint', -&gt;
+<h4 id="implements-hook-rpcroutes">Implements hook <code>rpcRoutes</code>.</h4>
+<pre><code>  registrar.registerHook 'rpcRoutes', -&gt;
 
     crypto = require 'server/crypto'
 
@@ -725,35 +725,41 @@
     {Limiter} = require 'shrub-limiter'
     orm = require 'shrub-orm'
 
-    limiter: threshold: Limiter.threshold(1).every(5).minutes()
-    route: 'shrub.user.reset'
+    routes = []
 
-    receiver: (req, fn) -&gt;
+    routes.push
 
-      User = orm.collection 'shrub-user'
+      limiter: threshold: Limiter.threshold(1).every(5).minutes()
+      path: 'shrub-user/reset'
+
+      receiver: (req, fn) -&gt;
+
+        User = orm.collection 'shrub-user'
 </code></pre>
 <p>Cancel promise flow if the user doesn't exist.</p>
-<pre><code>      class NoSuchUser extends Error
-        constructor: (@message) -&gt;
+<pre><code>        class NoSuchUser extends Error
+          constructor: (@message) -&gt;
 </code></pre>
 <p>Look up the user.</p>
-<pre><code>      Promise.cast(
-        User.findOne resetPasswordToken: req.body.token
-      ).bind({}).then((@user) -&gt;
-        throw new NoSuchUser unless @user?
+<pre><code>        Promise.cast(
+          User.findOne resetPasswordToken: req.body.token
+        ).bind({}).then((@user) -&gt;
+          throw new NoSuchUser unless @user?
 </code></pre>
 <p>Recalculate the password hashing details.</p>
-<pre><code>        crypto.hasher plaintext: req.body.password
+<pre><code>          crypto.hasher plaintext: req.body.password
 
-      ).then((hashed) -&gt;
+        ).then((hashed) -&gt;
 
-        @user.passwordHash = hashed.key.toString 'hex'
-        @user.salt = hashed.salt.toString 'hex'
-        @user.resetPasswordToken = null
+          @user.passwordHash = hashed.key.toString 'hex'
+          @user.salt = hashed.salt.toString 'hex'
+          @user.resetPasswordToken = null
 
-        @user.save()
+          @user.save()
 
-      ).then(-&gt; fn()).catch(NoSuchUser, -&gt; fn()).catch fn
+        ).then(-&gt; fn()).catch(NoSuchUser, -&gt; fn()).catch fn
+
+    return routes
 </code></pre>
 
             </div>

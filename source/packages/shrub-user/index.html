@@ -618,7 +618,7 @@
                             
                                 <li><a class="toctree-l3" href="#implements-hook-config">Implements hook config.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-endpointfinished">Implements hook endpointFinished.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-rpcroutefinished">Implements hook rpcRouteFinished.</a></li>
                             
                                 <li><a class="toctree-l3" href="#implements-hook-fingerprint">Implements hook fingerprint.</a></li>
                             
@@ -751,8 +751,8 @@ exports.pkgmanRegister = (registrar) -&gt;
 <p>Send a redacted version of the request user.</p>
 <pre><code>    req.user.redactFor req.user if req.user?
 </code></pre>
-<h4 id="implements-hook-endpointfinished">Implements hook <code>endpointFinished</code>.</h4>
-<pre><code>  registrar.registerHook 'endpointFinished', (routeReq, result, req) -&gt;
+<h4 id="implements-hook-rpcroutefinished">Implements hook <code>rpcRouteFinished</code>.</h4>
+<pre><code>  registrar.registerHook 'rpcRouteFinished', (routeReq, result, req) -&gt;
     return unless routeReq.user.id?
 </code></pre>
 <p>Touch and save the session after every RPC call finishes.</p>
@@ -1063,7 +1063,7 @@ exports.pkgmanRegister = (registrar) -&gt;
         return next() unless req.socket?
 </code></pre>
 <p>Tell client to log out.</p>
-<pre><code>        req.socket.emit 'shrub.user.logout'
+<pre><code>        req.socket.emit 'shrub-user/logout'
 </code></pre>
 <p>Leave the user channel.</p>
 <pre><code>        if req.user.id?

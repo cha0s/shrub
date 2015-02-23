@@ -98,12 +98,6 @@
                             
                                 <li><a class="toctree-l3" href="#directive">directive</a></li>
                             
-                                <li><a class="toctree-l3" href="#endpoint">endpoint</a></li>
-                            
-                                <li><a class="toctree-l3" href="#endpointalter">endpointAlter</a></li>
-                            
-                                <li><a class="toctree-l3" href="#endpointfinished">endpointFinished</a></li>
-                            
                                 <li><a class="toctree-l3" href="#filter">filter</a></li>
                             
                                 <li><a class="toctree-l3" href="#fingerprint">fingerprint</a></li>
@@ -143,6 +137,12 @@
                                 <li><a class="toctree-l3" href="#routecontrollerstart">routeControllerStart</a></li>
                             
                                 <li><a class="toctree-l3" href="#rpccall">rpcCall</a></li>
+                            
+                                <li><a class="toctree-l3" href="#rpcroutefinished">rpcRouteFinished</a></li>
+                            
+                                <li><a class="toctree-l3" href="#rpcroutes">rpcRoutes</a></li>
+                            
+                                <li><a class="toctree-l3" href="#rpcroutesalter">rpcRoutesAlter</a></li>
                             
                                 <li><a class="toctree-l3" href="#service">service</a></li>
                             
@@ -867,7 +867,13 @@ along with the following extra properties:</p>
 </ul>
 <h3 id="answer-with_1">Answer with</h3>
 <p>A
-<a href="../guide/concepts#middleware-hook-specification">middleware hook specification</a>.</p>
+<a href="../guide/concepts#middleware-hook-specification">middleware hook specification</a>.
+The middleware have the following signature:</p>
+<pre><code class="javascript">function(req, next) {
+  ...
+}
+</code></pre>
+
 <div class="admonition note">
 <p class="admonition-title">1 implementation</p>
 <ul>
@@ -980,7 +986,13 @@ them from your package to the <code>app</code> directory where they will be serv
 You'll need to implement the <a href="../hooks/#gruntconfig"><code>gruntConfig</code></a> hook for that.</p>
 <h3 id="answer-with_5">Answer with</h3>
 <p>A
-<a href="../guide/concepts#middleware-hook-specification">middleware hook specification</a>.</p>
+<a href="../guide/concepts#middleware-hook-specification">middleware hook specification</a>.
+The middleware have the following signature:</p>
+<pre><code class="javascript">function(assets, next) {
+  ...
+}
+</code></pre>
+
 <div class="admonition note">
 <p class="admonition-title">8 implementations</p>
 <ul>
@@ -1001,6 +1013,13 @@ You'll need to implement the <a href="../hooks/#gruntconfig"><code>gruntConfig</
 </ul>
 </div>
 <h2 id="augmentdirective">augmentDirective</h2>
+<p><em>Augment or modify directive definition objects.</em></p>
+<p>This hook allows packages to make changes to
+<a href="https://docs.angularjs.org/api/ng/service/$compile#comprehensive-directive-api">directive definition objects</a>
+provided by packages' implementations of the <a href="../hooks/#directive"><code>directive</code></a>
+hook.</p>
+<p><a href="../packages/#shrub-skinclient"><code>shrub-skin</code></a> uses this hook to provide the
+dynamic directive recompilation necessary to implement on-the-fly skin changes.</p>
 <div class="admonition note">
 <p class="admonition-title">1 implementation</p>
 <ul>
@@ -1014,6 +1033,19 @@ You'll need to implement the <a href="../hooks/#gruntconfig"><code>gruntConfig</
 </ul>
 </div>
 <h2 id="bootstrapmiddleware">bootstrapMiddleware</h2>
+<p><em>Define middleware to run when the server application is bootstrapping.</em></p>
+<p>This hook is where most of the major initialization work happens on the
+Shrub server. <a href="../packages/#shrub-http"><code>shrub-http</code></a> spins up an HTTP server,
+<a href="../packages/#shrub-orm"><code>shrub-orm</code></a> spins up Waterline, and more.</p>
+<h3 id="answer-with_6">Answer with</h3>
+<p>A
+<a href="../guide/concepts/#middleware-hook-specification">middleware hook specification</a>.
+The middleware have the following signature:</p>
+<pre><code class="javascript">function(next) {
+  ...
+}
+</code></pre>
+
 <div class="admonition note">
 <p class="admonition-title">11 implementations</p>
 <ul>
@@ -1037,6 +1069,14 @@ You'll need to implement the <a href="../hooks/#gruntconfig"><code>gruntConfig</
 </ul>
 </div>
 <h2 id="clearcaches">clearCaches</h2>
+<p><em>Clear out cached data.</em></p>
+<p>Shrub provides a primitive way to clear caches held by packages. You might
+define a variable at the module scope to hold the result of some expensive
+calculation and skip the calculation in the future. Implementing this hook
+provides a consistent way to clear that cache at runtime.</p>
+<p><strong>NOTE:</strong> This hook is admittedly under-utilized in shrub's core packages, and
+probably isn't very useful for the time being. It's never even invoked by any
+packages by default.</p>
 <div class="admonition note">
 <p class="admonition-title">1 implementation</p>
 <ul>
@@ -1044,8 +1084,37 @@ You'll need to implement the <a href="../hooks/#gruntconfig"><code>gruntConfig</
 </ul>
 </div>
 <h2 id="collections">collections</h2>
+<p><em>Define collections of models.</em></p>
+<p>Packages can implement this hook to define collections of models for use
+throughout the server (and to a limited extent, the client) application.</p>
+<p>Shrub uses Waterline as an ORM, so you can follow the
+<a href="https://github.com/balderdashy/waterline-docs/blob/master/models.md">Waterline documentation for how to define model collections</a>.
+Shrub handles calling <code>Waterline.Collection.extend</code>, so you only have to return
+the raw object.</p>
+<h3 id="answer-with_7">Answer with</h3>
+<p>A keyed object whose values are raw model collection objects. e.g.</p>
+<pre><code class="javascript">exports.pkgmanRegister = function(registrar) {
+
+  registrar.registerHook('collections', function() {
+
+    return {
+      'some-model': {
+        attributes: {
+          foo: 'string'
+        }
+      },
+      'some-other-model': {
+        attributes: {
+          bar: 'string'
+        }
+      }
+    };
+  });
+};
+</code></pre>
+
 <div class="admonition note">
-<p class="admonition-title">5 implementations</p>
+<p class="admonition-title">6 implementations</p>
 <ul>
 <li><a href="../packages/#shrub-userclient">shrub-user (client)</a> &mdash; <a href="../source/packages/shrub-user/client#implements-hook-collections">implementation</a> </li>
 <li><a href="../packages/#shrub-user">shrub-user (server)</a> &mdash; <a href="../source/packages/shrub-user/client#implements-hook-collections">implementation</a> </li>
@@ -1056,28 +1125,41 @@ You'll need to implement the <a href="../hooks/#gruntconfig"><code>gruntConfig</
 </ul>
 </div>
 <div class="admonition note">
-<p class="admonition-title">1 invocation</p>
+<p class="admonition-title">2 invocations</p>
 <ul>
 <li><a href="../packages/#shrub-ormclient">shrub-orm (client)</a> &mdash; <a href="../source/packages/shrub-orm/client#invoke-hook-collections">invocation</a> </li>
 <li><a href="../packages/#shrub-orm">shrub-orm (server)</a> &mdash; <a href="../source/packages/shrub-orm/client#invoke-hook-collections">invocation</a> </li>
 </ul>
 </div>
 <h2 id="collectionsalter">collectionsAlter</h2>
+<p><em>Alter collections defined by packages.</em></p>
+<p>Packages can implement this hook to alter collections defined by any other (or
+even the same) package.</p>
+<p>Implementations are passed a keyed object containing all of the collections
+defined by all modules.</p>
+<p>See: <a href="../hooks/#collections"><code>collections</code></a>.</p>
 <div class="admonition note">
-<p class="admonition-title">1 implementation</p>
+<p class="admonition-title">2 implementations</p>
 <ul>
 <li><a href="../packages/#shrub-userclient">shrub-user (client)</a> &mdash; <a href="../source/packages/shrub-user/client#implements-hook-collectionsalter">implementation</a> </li>
 <li><a href="../packages/#shrub-user">shrub-user (server)</a> &mdash; <a href="../source/packages/shrub-user/client#implements-hook-collectionsalter">implementation</a> </li>
 </ul>
 </div>
 <div class="admonition note">
-<p class="admonition-title">1 invocation</p>
+<p class="admonition-title">2 invocations</p>
 <ul>
 <li><a href="../packages/#shrub-ormclient">shrub-orm (client)</a> &mdash; <a href="../source/packages/shrub-orm/client#invoke-hook-collectionsalter">invocation</a> </li>
 <li><a href="../packages/#shrub-orm">shrub-orm (server)</a> &mdash; <a href="../source/packages/shrub-orm/client#invoke-hook-collectionsalter">invocation</a> </li>
 </ul>
 </div>
 <h2 id="config">config</h2>
+<p><em>Define configuration variables to be sent to the client.</em></p>
+<p>Packages can implement this hook to pass configuration variables to the client.
+Configuration is keyed by the name of the package.</p>
+<p>Variables with <code>null</code> or <code>undefined</code> values will be filtered out and not sent
+to the client.</p>
+<h3 id="answer-with_8">Answer with</h3>
+<p>A keyed object.</p>
 <div class="admonition note">
 <p class="admonition-title">5 implementations</p>
 <ul>
@@ -1095,13 +1177,30 @@ You'll need to implement the <a href="../hooks/#gruntconfig"><code>gruntConfig</
 </ul>
 </div>
 <h2 id="configalter">configAlter</h2>
+<p><em>Alter configuration variables defined by packages.</em></p>
+<p>Packages can implement this hook to alter configuration variables defined by
+any other (or even the same) package.</p>
+<p>Implementations are passed a <a href="../source/client/modules/config/"><code>Config</code></a> object.</p>
+<p>See: <a href="../hooks/#config"><code>config</code></a>.</p>
 <div class="admonition note">
 <p class="admonition-title">1 implementation</p>
 <ul>
 <li><a href="../packages/">shrub-grunt (server)</a> &mdash; <a href="../source/packages/shrub-grunt#implements-hook-configalter">implementation</a> </li>
 </ul>
 </div>
+<div class="admonition note">
+<p class="admonition-title">1 invocation</p>
+<ul>
+<li><a href="../packages/">shrub-config (server)</a> &mdash; <a href="../source/packages/shrub-config#invoke-hook-configalter">invocation</a> </li>
+</ul>
+</div>
 <h2 id="controller">controller</h2>
+<p><em>Define Angular controllers.</em></p>
+<p>Use this hook to define Angular controllers for your application.</p>
+<p>See <a href="https://docs.angularjs.org/guide/controller">the Angular documentation</a>
+for more information about how to define a controller.</p>
+<h3 id="answer-with_9">Answer with</h3>
+<p>An <a href="../guide/concepts#annotated-functions">annotated function</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">4 implementations</p>
 <ul>
@@ -1118,6 +1217,23 @@ You'll need to implement the <a href="../hooks/#gruntconfig"><code>gruntConfig</
 </ul>
 </div>
 <h2 id="directive">directive</h2>
+<p><em>Define Angular directives.</em></p>
+<p>Use this hook to define Angular directives for your application.</p>
+<p>Shrub augments Angular directives to automate some functionality:</p>
+<ul>
+<li>directive.link is proxied to automatically attempt to invoke the <code>link</code>
+  method of any controllers attached to the directive. Controllers' <code>link</code>
+  method is invoked <strong>before</strong> the directive link function.</li>
+<li>If <code>bindToController</code> is set on the Directive Definition Object, the
+  directive defaults to including a controller of the same name. This means if
+  you define a controller and a directive in the same package (which will have
+  the same name), and you specify <code>bindToController</code> on the directive, that
+  controller will be automatically attached.</li>
+</ul>
+<p>See <a href="https://docs.angularjs.org/api/ng/service/$compile#directive-definition-object">the Angular documentation</a>
+for more information about how to define a directive.</p>
+<h3 id="answer-with_10">Answer with</h3>
+<p>An <a href="../guide/concepts#annotated-functions">annotated function</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">21 implementations</p>
 <ul>
@@ -1148,53 +1264,6 @@ You'll need to implement the <a href="../hooks/#gruntconfig"><code>gruntConfig</
 <p class="admonition-title">1 invocation</p>
 <ul>
 <li><a href="../packages/">packages (client)</a> &mdash; <a href="../source/client/packages#invoke-hook-directive">invocation</a> </li>
-</ul>
-</div>
-<h2 id="endpoint">endpoint</h2>
-<div class="admonition note">
-<p class="admonition-title">7 implementations</p>
-<ul>
-<li><a href="../packages/">shrub-angular (server)</a> &mdash; <a href="../source/packages/shrub-angular#implements-hook-endpoint">implementation</a> </li>
-<li><a href="../packages/">shrub-ui/notifications (server)</a> &mdash; <a href="../source/packages/shrub-ui/notifications#implements-hook-endpoint">implementation</a> </li>
-<li><a href="../packages/">shrub-user/forgot (server)</a> &mdash; <a href="../source/packages/shrub-user/forgot#implements-hook-endpoint">implementation</a> </li>
-<li><a href="../packages/">shrub-user/login (server)</a> &mdash; <a href="../source/packages/shrub-user/login#implements-hook-endpoint">implementation</a> </li>
-<li><a href="../packages/">shrub-user/logout (server)</a> &mdash; <a href="../source/packages/shrub-user/logout#implements-hook-endpoint">implementation</a> </li>
-<li><a href="../packages/">shrub-user/register (server)</a> &mdash; <a href="../source/packages/shrub-user/register#implements-hook-endpoint">implementation</a> </li>
-<li><a href="../packages/">shrub-user/reset (server)</a> &mdash; <a href="../source/packages/shrub-user/reset#implements-hook-endpoint">implementation</a> </li>
-</ul>
-</div>
-<div class="admonition note">
-<p class="admonition-title">1 invocation</p>
-<ul>
-<li><a href="../packages/">shrub-rpc (server)</a> &mdash; <a href="../source/packages/shrub-rpc#invoke-hook-endpoint">invocation</a> </li>
-</ul>
-</div>
-<h2 id="endpointalter">endpointAlter</h2>
-<div class="admonition note">
-<p class="admonition-title">2 implementations</p>
-<ul>
-<li><a href="../packages/">shrub-limiter (server)</a> &mdash; <a href="../source/packages/shrub-limiter#implements-hook-endpointalter">implementation</a> </li>
-<li><a href="../packages/">shrub-villiany (server)</a> &mdash; <a href="../source/packages/shrub-villiany#implements-hook-endpointalter">implementation</a> </li>
-</ul>
-</div>
-<div class="admonition note">
-<p class="admonition-title">1 invocation</p>
-<ul>
-<li><a href="../packages/">shrub-rpc (server)</a> &mdash; <a href="../source/packages/shrub-rpc#invoke-hook-endpointalter">invocation</a> </li>
-</ul>
-</div>
-<h2 id="endpointfinished">endpointFinished</h2>
-<div class="admonition note">
-<p class="admonition-title">2 implementations</p>
-<ul>
-<li><a href="../packages/">shrub-session (server)</a> &mdash; <a href="../source/packages/shrub-session#implements-hook-endpointfinished">implementation</a> </li>
-<li><a href="../packages/">shrub-user (server)</a> &mdash; <a href="../source/packages/shrub-user#implements-hook-endpointfinished">implementation</a> </li>
-</ul>
-</div>
-<div class="admonition note">
-<p class="admonition-title">1 invocation</p>
-<ul>
-<li><a href="../packages/">shrub-rpc (server)</a> &mdash; <a href="../source/packages/shrub-rpc#invoke-hook-endpointfinished">invocation</a> </li>
 </ul>
 </div>
 <h2 id="filter">filter</h2>
@@ -1399,9 +1468,8 @@ exports.pkgmanRegister = function(registrar) {
 
   registrar.registerHook('someHook', function() {
     someHeavyModule.doSomething();
-  }
+  });
 };
-
 </code></pre>
 
 <p>This will slow the build process down, since <code>some-heavy-module</code> must be
@@ -1412,13 +1480,12 @@ exports.pkgmanRegister = function(registrar) {
 
   registrar.registerHook('preBootstrap', function() {
     someHeavyModule = require('some-heavy-module');
-  }
+  });
 
   registrar.registerHook('someHook', function() {
     someHeavyModule.doSomething();
-  }
+  });
 };
-
 </code></pre>
 
 <p>So that the heavy module will not be <code>require</code>d until hook <code>preBootstrap</code> is
@@ -1521,6 +1588,52 @@ invoked.</p>
 <p class="admonition-title">1 implementation</p>
 <ul>
 <li><a href="../packages/#shrub-uiclient">shrub-ui/messages (client)</a> &mdash; <a href="../source/packages/shrub-ui/client/messages#implements-hook-rpccall">implementation</a> </li>
+</ul>
+</div>
+<h2 id="rpcroutefinished">rpcRouteFinished</h2>
+<div class="admonition note">
+<p class="admonition-title">2 implementations</p>
+<ul>
+<li><a href="../packages/">shrub-session (server)</a> &mdash; <a href="../source/packages/shrub-session#implements-hook-rpcroutefinished">implementation</a> </li>
+<li><a href="../packages/">shrub-user (server)</a> &mdash; <a href="../source/packages/shrub-user#implements-hook-rpcroutefinished">implementation</a> </li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">1 invocation</p>
+<ul>
+<li><a href="../packages/">shrub-rpc (server)</a> &mdash; <a href="../source/packages/shrub-rpc#invoke-hook-rpcroutefinished">invocation</a> </li>
+</ul>
+</div>
+<h2 id="rpcroutes">rpcRoutes</h2>
+<div class="admonition note">
+<p class="admonition-title">7 implementations</p>
+<ul>
+<li><a href="../packages/">shrub-angular (server)</a> &mdash; <a href="../source/packages/shrub-angular#implements-hook-rpcroutes">implementation</a> </li>
+<li><a href="../packages/">shrub-ui/notifications (server)</a> &mdash; <a href="../source/packages/shrub-ui/notifications#implements-hook-rpcroutes">implementation</a> </li>
+<li><a href="../packages/">shrub-user/forgot (server)</a> &mdash; <a href="../source/packages/shrub-user/forgot#implements-hook-rpcroutes">implementation</a> </li>
+<li><a href="../packages/">shrub-user/login (server)</a> &mdash; <a href="../source/packages/shrub-user/login#implements-hook-rpcroutes">implementation</a> </li>
+<li><a href="../packages/">shrub-user/logout (server)</a> &mdash; <a href="../source/packages/shrub-user/logout#implements-hook-rpcroutes">implementation</a> </li>
+<li><a href="../packages/">shrub-user/register (server)</a> &mdash; <a href="../source/packages/shrub-user/register#implements-hook-rpcroutes">implementation</a> </li>
+<li><a href="../packages/">shrub-user/reset (server)</a> &mdash; <a href="../source/packages/shrub-user/reset#implements-hook-rpcroutes">implementation</a> </li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">1 invocation</p>
+<ul>
+<li><a href="../packages/">shrub-rpc (server)</a> &mdash; <a href="../source/packages/shrub-rpc#invoke-hook-rpcroutes">invocation</a> </li>
+</ul>
+</div>
+<h2 id="rpcroutesalter">rpcRoutesAlter</h2>
+<div class="admonition note">
+<p class="admonition-title">1 implementation</p>
+<ul>
+<li><a href="../packages/">shrub-limiter (server)</a> &mdash; <a href="../source/packages/shrub-limiter#implements-hook-rpcroutesalter">implementation</a> </li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">1 invocation</p>
+<ul>
+<li><a href="../packages/">shrub-rpc (server)</a> &mdash; <a href="../source/packages/shrub-rpc#invoke-hook-rpcroutesalter">invocation</a> </li>
 </ul>
 </div>
 <h2 id="service">service</h2>
@@ -1631,7 +1744,7 @@ invoked.</p>
 </div>
 <h2 id="transmittableerror">transmittableError</h2>
 <div class="admonition note">
-<p class="admonition-title">2 implementations</p>
+<p class="admonition-title">4 implementations</p>
 <ul>
 <li><a href="../packages/#shrub-limiterclient">shrub-limiter (client)</a> &mdash; <a href="../source/packages/shrub-limiter/client#implements-hook-transmittableerror">implementation</a> </li>
 <li><a href="../packages/#shrub-limiter">shrub-limiter (server)</a> &mdash; <a href="../source/packages/shrub-limiter/client#implements-hook-transmittableerror">implementation</a> </li>

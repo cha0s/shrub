@@ -919,7 +919,7 @@ If it's not a promise, this will be in the next tick.</p>
 </code></pre>
 <h4 id="implements-hook-route">Implements hook <code>route</code>.</h4>
 <p>A simple path definition to make sure we're running in e2e testing mode.</p>
-<pre><code>  if 'e2e' is config.get 'testMode'
+<pre><code>  if 'e2e' is config.get 'packageConfig:shrub-core:testMode'
     registrar.registerHook 'e2e', 'route', -&gt; path: 'e2e/sanity-check'
 </code></pre>
 

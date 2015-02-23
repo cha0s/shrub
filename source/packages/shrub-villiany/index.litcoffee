@@ -32,12 +32,6 @@
           'villiany', Limiter.threshold(1000).every(10).minutes()
         )
 
-#### Implements hook `endpointAlter`.
-
-      registrar.registerHook 'endpointAlter', (endpoints) ->
-        for route, endpoint of endpoints
-          endpoint.villianyScore ?= 20
-
 #### Implements hook `collections`.
 
       registrar.registerHook 'collections', ->

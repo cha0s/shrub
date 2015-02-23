@@ -728,7 +728,7 @@
             <div class="section">
               <h1 id="rate-limiter">Rate limiter</h1>
 <p><em>Limits the rate at which clients can do certain operations, like call RPC
-endpoints.</em></p>
+routes.</em></p>
 <pre><code>exports.SKIP = SKIP = {}
 
 exports.pkgmanRegister = (registrar) -&gt;
@@ -804,9 +804,9 @@ exports.pkgmanRegister = (registrar) -&gt;
     'shrub-limit': Limit
     'shrub-limit-score': LimitScore
 </code></pre>
-<h4 id="implements-hook-endpointalter">Implements hook <code>endpointAlter</code>.</h4>
-<p>Allow RPC endpoint definitions to specify rate limiters.</p>
-<pre><code>  registrar.registerHook 'endpointAlter', (endpoints) -&gt;
+<h4 id="implements-hook-rpcroutesalter">Implements hook <code>rpcRoutesAlter</code>.</h4>
+<p>Allow RPC routes definitions to specify rate limiters.</p>
+<pre><code>  registrar.registerHook 'rpcRoutesAlter', (routes) -&gt;
 
     moment = require 'moment'
 
@@ -821,33 +821,33 @@ exports.pkgmanRegister = (registrar) -&gt;
 <li><code>ignoreKeys</code>: The
   <a href="../../../source/packages/shrub-audit/fingerprint">fingerprint keys</a> to ignore when
   determining the total limit. In this example, the IP address and session ID
-  would be ignored.<pre><code>Object.keys(endpoints).forEach (route) -&gt;
-  endpoint = endpoints[route]
+  would be ignored.<pre><code>Object.keys(routes).forEach (path) -&gt;
+  route = routes[path]
 </code></pre>
 </li>
 </ul>
 <p>No limiter? Nevermind...</p>
-<pre><code>      return unless endpoint.limiter?
+<pre><code>      return unless route.limiter?
 </code></pre>
 <p>Create a limiter based on the threshold defined.</p>
-<pre><code>      endpoint.limiter.instance = new Limiter(
-        "rpc://#{route}", endpoint.limiter.threshold
+<pre><code>      route.limiter.instance = new Limiter(
+        "rpc://#{route}", route.limiter.threshold
       )
 </code></pre>
 <p>Set defaults.</p>
-<pre><code>      endpoint.limiter.excludedKeys ?= []
-      endpoint.limiter.message ?= 'You are doing that too much.'
-      endpoint.limiter.villianyScore ?= 20
+<pre><code>      route.limiter.excludedKeys ?= []
+      route.limiter.message ?= 'You are doing that too much.'
+      route.limiter.villianyScore ?= 20
 </code></pre>
 <p>Add a validator, where we'll check the threshold.</p>
-<pre><code>      endpoint.validators.push (req, res, next) -&gt;
+<pre><code>      route.validators.push (req, res, next) -&gt;
 
         {
           excludedKeys
           instance
           message
           villianyScore
-        } = endpoint.limiter
+        } = route.limiter
 </code></pre>
 <p>Allow packages to check and optionally skip the limiter.</p>
 <pre><code>        for rule in pkgman.invokeFlat 'limiterCheck', req

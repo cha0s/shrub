@@ -415,8 +415,6 @@
                             
                                 <li><a class="toctree-l3" href="#rpcformsubmithandler">rpc.formSubmitHandler</a></li>
                             
-                                <li><a class="toctree-l3" href="#rpcnormalizeroutename">rpc.normalizeRouteName</a></li>
-                            
                         
                         </ul>
                     
@@ -733,17 +731,17 @@
 </code></pre>
 <h2 id="rpccall">rpc.call</h2>
 <ul>
-<li>(String) <code>route</code> - The RPC endpoint route, e.g. <code>user.login</code>.</li>
+<li>(String) <code>path</code> - The RPC route path, e.g. <code>shrub-user/login</code>.</li>
 <li>(Object) <code>data</code> - The data to send to the server.</li>
 </ul>
 <p><em>Call the server with some data.</em></p>
 <p>Returns a promise, either resolved with the result of the response
 from the server, or rejected with the error from the server.</p>
-<pre><code>      service.call = (route, data) -&gt;
+<pre><code>      service.call = (path, data) -&gt;
 
         deferred = defer()
 
-        socket.emit "rpc://#{route}", data, ({error, result}) -&gt;
+        socket.emit "rpc://#{path}", data, ({error, result}) -&gt;
           if error?
             deferred.reject errors.unserialize error
           else
@@ -752,7 +750,7 @@ from the server, or rejected with the error from the server.</p>
         invoke(
           injectable, null
 
-          route: route
+          route: path
           data: data
           result: deferred.promise
 
@@ -762,45 +760,25 @@ from the server, or rejected with the error from the server.</p>
 </code></pre>
 <h2 id="rpcformsubmithandler">rpc.formSubmitHandler</h2>
 <ul>
-<li>(String) <code>route</code> - The RPC endpoint route, e.g. <code>user.login</code>.</li>
+<li>(String) <code>path</code> - The RPC route path, e.g. <code>shrub-user/login</code>.</li>
 <li>(Function) <code>fn</code> - Nodeback called with the RPC response.</li>
 </ul>
 <p><em>Helper function to call an RPC route with the result of a form submission.</em></p>
-<h6 id="todo-shouldnt-this-just-return-the-promise">TODO: Shouldn't this just return the promise?</h6>
-<pre><code>      service.formSubmitHandler = (route, fn) -&gt;
+<pre><code>      service.formSubmitHandler = (path, fn) -&gt;
 
         unless fn?
-          fn = route
-          route = null
+          fn = path
+          path = null
 
         (values, form) -&gt;
 
-          service.call(
-            exports.normalizeRouteName route ? form.key
-            values
-          ).then(
+          service.call(path ? form.key, values).then(
             (result) -&gt; fn null, result
-            (error) -&gt; fn error
-          )
+          ).catch (error) -&gt; fn error
 
       service
 
   ]
-</code></pre>
-<h2 id="rpcnormalizeroutename">rpc.normalizeRouteName</h2>
-<ul>
-<li>(String) <code>name</code> - Route name to normalize.</li>
-</ul>
-<p><em>Convert a route name to a dotted name. e.g. <code>some-package/path</code> -&gt;
-<code>some.package.path</code>.</em></p>
-<pre><code>exports.normalizeRouteName = (name) -&gt;
-
-  i8n = require 'inflection'
-
-  name = i8n.underscore name
-  name = i8n.dasherize name.toLowerCase()
-  name = i8n.underscore name
-  name.replace /[-\/]/g, '.'
 </code></pre>
 
             </div>

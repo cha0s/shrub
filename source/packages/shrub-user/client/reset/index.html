@@ -733,7 +733,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 
           submits: [
 
-            rpc.formSubmitHandler (error, result) -&gt;
+            rpc.formSubmitHandler 'shrub-user/reset', (error, result) -&gt;
               return if error?
 
               messages.add(

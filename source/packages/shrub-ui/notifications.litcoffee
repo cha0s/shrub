@@ -143,7 +143,7 @@ Broadcast to others.
                 broadcastNotificationsEvent(
                   req
                   data: notifications: [notification]
-                  event: 'shrub.ui.notifications'
+                  event: 'shrub-ui/notifications'
                   includeSelf: true
                   notifications: [notification]
                 )
@@ -231,42 +231,6 @@ not append.
         req.queue = queue
         next()
 
-#### Implements hook `endpoint`.
-
-      registrar.registerHook 'acknowledged', 'endpoint', ->
-
-        route: 'shrub.ui.notifications.acknowledged'
-
-        validators: [
-          ensureQueueExists
-        ]
-
-        receiver: (req, fn) ->
-
-Mark all notifications in a queue owned by the request as acknowledged.
-
-          Notification = orm.collection 'shrub-ui-notification'
-          query = Notification.find()
-          query = query.where(channel: req.queue.channelFromRequest req)
-          query = query.where(queue: req.body.queue)
-          query.then((notifications) ->
-
-Broadcast to others.
-
-            broadcastNotificationsEvent(
-              req
-              event: 'shrub.ui.notifications.acknowledged'
-              notifications: notifications
-            )
-
-            Promise.all(
-              for notification in notifications
-                notification.acknowledged = true
-                notification.save()
-            )
-
-          ).then(-> fn()).catch fn
-
 Ensure that the requested notification is owned by the request.
 
       ensureNotificationsOwnedByRequest = (req, res, next) ->
@@ -288,83 +252,119 @@ Ensure that the requested notification is owned by the request.
 
         ).catch next
 
-#### Implements hook `endpoint`.
+#### Implements hook `rpcRoutes`.
 
-      registrar.registerHook 'markAsRead', 'endpoint', ->
+      registrar.registerHook 'rpcRoutes', ->
 
-        route: 'shrub.ui.notifications.markAsRead'
+        routes = []
 
-        validators: [
-          ensureNotificationsOwnedByRequest
-        ]
+        routes.push
 
-        receiver: (req, fn) ->
+          path: 'shrub-ui/notifications/acknowledged'
+
+          validators: [
+            ensureQueueExists
+          ]
+
+          receiver: (req, fn) ->
+
+Mark all notifications in a queue owned by the request as acknowledged.
+
+            Notification = orm.collection 'shrub-ui-notification'
+            query = Notification.find()
+            query = query.where(channel: req.queue.channelFromRequest req)
+            query = query.where(queue: req.body.queue)
+            query.then((notifications) ->
 
 Broadcast to others.
 
-          broadcastNotificationsEvent(
-            req
-            data: markedAsRead: req.body.markedAsRead
-            event: 'shrub.ui.notifications.markAsRead'
-            notifications: req.notifications
-          )
+              broadcastNotificationsEvent(
+                req
+                event: 'shrub-ui/notifications/acknowledged'
+                notifications: notifications
+              )
 
-          Promise.all(
-            for notification in req.notifications
-              notification.markedAsRead = req.body.markedAsRead
-              notification.save()
+              Promise.all(
+                for notification in notifications
+                  notification.acknowledged = true
+                  notification.save()
+              )
 
-          ).then(-> fn()).catch fn
+            ).then(-> fn()).catch fn
 
-#### Implements hook `endpoint`.
+        routes.push
 
-      registrar.registerHook 'remove', 'endpoint', ->
+          path: 'shrub-ui/notifications/markAsRead'
 
-        route: 'shrub.ui.notifications.remove'
+          validators: [
+            ensureNotificationsOwnedByRequest
+          ]
 
-        validators: [
-          ensureNotificationsOwnedByRequest
+          receiver: (req, fn) ->
+
+Broadcast to others.
+
+            broadcastNotificationsEvent(
+              req
+              data: markedAsRead: req.body.markedAsRead
+              event: 'shrub-ui/notifications/markAsRead'
+              notifications: req.notifications
+            )
+
+            Promise.all(
+              for notification in req.notifications
+                notification.markedAsRead = req.body.markedAsRead
+                notification.save()
+
+            ).then(-> fn()).catch fn
+
+        routes.push
+
+          path: 'shrub-ui/notifications/remove'
+
+          validators: [
+            ensureNotificationsOwnedByRequest
 
 Ensure that the requested notifications may be removed.
 
-          (req, res, next) ->
+            (req, res, next) ->
 
-            for notification in req.notifications
-              return next new Error(
-                'Those notifications may not be removed.'
-              ) unless notification.mayRemove
+              for notification in req.notifications
+                return next new Error(
+                  'Those notifications may not be removed.'
+                ) unless notification.mayRemove
 
-            next()
+              next()
 
-        ]
+          ]
 
-        receiver: (req, fn) ->
+          receiver: (req, fn) ->
 
 Broadcast to others.
 
-          broadcastNotificationsEvent(
-            req
-            event: 'shrub.ui.notifications.remove'
-            notifications: req.notifications
-          )
+            broadcastNotificationsEvent(
+              req
+              event: 'shrub-ui/notifications/remove'
+              notifications: req.notifications
+            )
 
-          Promise.all(
-            for notification in req.notifications
-              notification.destroy()
+            Promise.all(
+              for notification in req.notifications
+                notification.destroy()
 
-          ).then(-> fn()).catch fn
+            ).then(-> fn()).catch fn
 
-#### Implements hook `endpoint`.
+        routes.push
 
-      registrar.registerHook 'endpoint', ->
+          path: 'shrub-ui/notifications'
 
-        route: 'shrub.ui.notifications'
+          receiver: (req, fn) ->
 
-        receiver: (req, fn) ->
+            Notification = orm.collection 'shrub-ui-notification'
+            Notification.queueFromRequest(req).then((notifications) ->
 
-          Notification = orm.collection 'shrub-ui-notification'
-          Notification.queueFromRequest(req).then((notifications) ->
+              fn null, notifications
 
-            fn null, notifications
+            ).catch fn
 
-          ).catch fn
+        return routes

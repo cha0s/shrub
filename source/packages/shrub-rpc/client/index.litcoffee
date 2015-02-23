@@ -16,7 +16,7 @@ Define an Angular service to issue [remote procedure calls](http://en.wikipedia.
 
 ## rpc.call
 
-* (String) `route` - The RPC endpoint route, e.g. `user.login`.
+* (String) `path` - The RPC route path, e.g. `shrub-user/login`.
 * (Object) `data` - The data to send to the server.
 
 *Call the server with some data.*
@@ -24,11 +24,11 @@ Define an Angular service to issue [remote procedure calls](http://en.wikipedia.
 Returns a promise, either resolved with the result of the response
 from the server, or rejected with the error from the server.
 
-          service.call = (route, data) ->
+          service.call = (path, data) ->
 
             deferred = defer()
 
-            socket.emit "rpc://#{route}", data, ({error, result}) ->
+            socket.emit "rpc://#{path}", data, ({error, result}) ->
               if error?
                 deferred.reject errors.unserialize error
               else
@@ -37,7 +37,7 @@ from the server, or rejected with the error from the server.
             invoke(
               injectable, null
 
-              route: route
+              route: path
               data: data
               result: deferred.promise
 
@@ -47,45 +47,23 @@ from the server, or rejected with the error from the server.
 
 ## rpc.formSubmitHandler
 
-* (String) `route` - The RPC endpoint route, e.g. `user.login`.
+* (String) `path` - The RPC route path, e.g. `shrub-user/login`.
 * (Function) `fn` - Nodeback called with the RPC response.
 
 *Helper function to call an RPC route with the result of a form submission.*
 
-###### TODO: Shouldn't this just return the promise?
-
-          service.formSubmitHandler = (route, fn) ->
+          service.formSubmitHandler = (path, fn) ->
 
             unless fn?
-              fn = route
-              route = null
+              fn = path
+              path = null
 
             (values, form) ->
 
-              service.call(
-                exports.normalizeRouteName route ? form.key
-                values
-              ).then(
+              service.call(path ? form.key, values).then(
                 (result) -> fn null, result
-                (error) -> fn error
-              )
+              ).catch (error) -> fn error
 
           service
 
       ]
-
-## rpc.normalizeRouteName
-
-* (String) `name` - Route name to normalize.
-
-*Convert a route name to a dotted name. e.g. `some-package/path` ->
-`some.package.path`.*
-
-    exports.normalizeRouteName = (name) ->
-
-      i8n = require 'inflection'
-
-      name = i8n.underscore name
-      name = i8n.dasherize name.toLowerCase()
-      name = i8n.underscore name
-      name.replace /[-\/]/g, '.'

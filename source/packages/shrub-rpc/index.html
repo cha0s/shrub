@@ -418,13 +418,13 @@
                             
                                 <li><a class="toctree-l3" href="#implements-hook-bootstrapmiddleware">Implements hook bootstrapMiddleware.</a></li>
                             
-                                <li><a class="toctree-l3" href="#invoke-hook-endpoint">Invoke hook endpoint.</a></li>
+                                <li><a class="toctree-l3" href="#invoke-hook-rpcroutes">Invoke hook rpcRoutes.</a></li>
                             
-                                <li><a class="toctree-l3" href="#invoke-hook-endpointalter">Invoke hook endpointAlter.</a></li>
+                                <li><a class="toctree-l3" href="#invoke-hook-rpcroutesalter">Invoke hook rpcRoutesAlter.</a></li>
                             
                                 <li><a class="toctree-l3" href="#implements-hook-socketconnectionmiddleware">Implements hook socketConnectionMiddleware.</a></li>
                             
-                                <li><a class="toctree-l3" href="#invoke-hook-endpointfinished">Invoke hook endpointFinished.</a></li>
+                                <li><a class="toctree-l3" href="#invoke-hook-rpcroutefinished">Invoke hook rpcRouteFinished.</a></li>
                             
                         
                         </ul>
@@ -727,8 +727,8 @@
 <a href="http://en.wikipedia.org/wiki/Remote_procedure_call#Message_passing">RPC</a></p>
 <pre><code>pkgman = null
 </code></pre>
-<p>RPC endpoint information.</p>
-<pre><code>endpoints = {}
+<p>RPC route information.</p>
+<pre><code>routes = {}
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
@@ -752,30 +752,27 @@ exports.pkgmanRegister = (registrar) -&gt;
 
       (next) -&gt;
 </code></pre>
-<h4 id="invoke-hook-endpoint">Invoke hook <code>endpoint</code>.</h4>
-<pre><code>        debug '- Registering RPC endpoints...'
-        for path, endpoint of pkgman.invoke 'endpoint'
-
-          endpoint = receiver: endpoint if _.isFunction endpoint
+<h4 id="invoke-hook-rpcroutes">Invoke hook <code>rpcRoutes</code>.</h4>
+<pre><code>        debug '- Registering RPC routess...'
+        for route in _.flatten pkgman.invokeFlat 'rpcRoutes'
 </code></pre>
 <p>Default the RPC route to the package path, replacing slashes with dots.</p>
-<pre><code>          endpoint.route ?= clientModule.normalizeRouteName path
-          debug "- - rpc://#{endpoint.route}"
+<pre><code>          debug "- - rpc://#{route.path}"
 
-          endpoint.validators ?= []
+          route.validators ?= []
 
-          endpoints[endpoint.route] = endpoint
-        debug '- RPC endpoints registered.'
+          routes[route.path] = route
+        debug '- RPC routes registered.'
 </code></pre>
-<h4 id="invoke-hook-endpointalter">Invoke hook <code>endpointAlter</code>.</h4>
-<pre><code>        pkgman.invoke 'endpointAlter', endpoints
+<h4 id="invoke-hook-rpcroutesalter">Invoke hook <code>rpcRoutesAlter</code>.</h4>
+<pre><code>        pkgman.invoke 'rpcRoutesAlter', routes
 </code></pre>
 <p>Set up the validators as middleware.</p>
-<pre><code>        for route, endpoint of endpoints
+<pre><code>        for path, route of routes
           validators = new Middleware()
-          for validator in endpoint.validators
+          for validator in route.validators
             validators.use validator
-          endpoint.validators = validators
+          route.validators = validators
 
         next()
 
@@ -798,16 +795,15 @@ exports.pkgmanRegister = (registrar) -&gt;
 
       (req, res, next) -&gt;
 
-        Object.keys(endpoints).forEach (route) -&gt;
-          endpoint = endpoints[route]
+        Object.keys(routes).forEach (path) -&gt;
+          route = routes[path]
 
-          req.socket.on "rpc://#{route}", (data, fn) -&gt;
+          req.socket.on "rpc://#{path}", (data, fn) -&gt;
 </code></pre>
 <p>Don't pass req directly, since it can be mutated by routes, and violate other
 routes' expectations.</p>
 <pre><code>            routeReq = Object.create req
             routeReq.body = data
-            routeReq.endpoint = endpoint
             routeReq.route = route
 </code></pre>
 <p>Send an error to the client.</p>
@@ -839,17 +835,17 @@ issue.</p>
                   return true
 </code></pre>
 <p>Validate.</p>
-<pre><code>            endpoint.validators.dispatch routeReq, null, (error) -&gt;
+<pre><code>            route.validators.dispatch routeReq, null, (error) -&gt;
               return sendErrorToClient error if error?
 </code></pre>
 <p>Receive.</p>
-<pre><code>              endpoint.receiver routeReq, (error, result) -&gt;
+<pre><code>              route.receiver routeReq, (error, result) -&gt;
                 return sendErrorToClient error if error?
 </code></pre>
-<h4 id="invoke-hook-endpointfinished">Invoke hook <code>endpointFinished</code>.</h4>
+<h4 id="invoke-hook-rpcroutefinished">Invoke hook <code>rpcRouteFinished</code>.</h4>
 <pre><code>                Promise.all(
                   pkgman.invokeFlat(
-                    'endpointFinished', routeReq, result, req
+                    'rpcRouteFinished', routeReq, result, req
                   )
 
                 ).then(

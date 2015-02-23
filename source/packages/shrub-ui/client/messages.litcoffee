@@ -126,7 +126,7 @@ Add a notification with the error text.
 
 Accept messages from the server.
 
-          socket.on 'shrub.ui.messages', (data) ->
+          socket.on 'shrub-ui/messages', (data) ->
             service.add message for message in data.messages
 
           service

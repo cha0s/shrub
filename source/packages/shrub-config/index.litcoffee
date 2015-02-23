@@ -94,6 +94,8 @@ Merge in the subconfigs.
 
             config_.set "packageConfig:#{path.replace /\//g, ':'}:#{key.replace /\//g, ':'}", value
 
+#### Invoke hook `configAlter`.
+
         pkgman.invoke 'configAlter', req, config_
 
 Format the configuration to look nice.

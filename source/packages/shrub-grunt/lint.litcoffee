@@ -11,8 +11,8 @@
 
           files: [
             src: [
-              '**/*.coffee'
-              '!node_modules/**/*.coffee'
+              '**/*.{coffee,litcoffee}'
+              '!node_modules/**/*.{coffee,litcoffee}'
             ]
           ]
           options:

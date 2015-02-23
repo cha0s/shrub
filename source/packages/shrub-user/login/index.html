@@ -620,7 +620,7 @@
                             <li class="toctree-l2"><a href="#implements-hook-prebootstrap">Implements hook preBootstrap.</a></li>
                             
                         
-                            <li class="toctree-l2"><a href="#implements-hook-endpoint">Implements hook endpoint.</a></li>
+                            <li class="toctree-l2"><a href="#implements-hook-rpcroutes">Implements hook rpcRoutes.</a></li>
                             
                         
                             <li class="toctree-l2"><a href="#implements-hook-bootstrapmiddleware">Implements hook bootstrapMiddleware.</a></li>
@@ -741,52 +741,58 @@ exports.pkgmanRegister = (registrar) -&gt;
     passport = require 'passport'
     Promise = require 'bluebird'
 </code></pre>
-<h4 id="implements-hook-endpoint">Implements hook <code>endpoint</code>.</h4>
-<pre><code>  registrar.registerHook 'endpoint', -&gt;
+<h4 id="implements-hook-rpcroutes">Implements hook <code>rpcRoutes</code>.</h4>
+<pre><code>  registrar.registerHook 'rpcRoutes', -&gt;
 
     {Limiter} = require 'shrub-limiter'
 
-    limiter:
-      message: 'You are logging in too much.'
-      threshold: Limiter.threshold(3).every(30).seconds()
+    routes = []
 
-    route: 'shrub.user.login'
+    routes.push
 
-    receiver: (req, fn) -&gt;
+      limiter:
+        message: 'You are logging in too much.'
+        threshold: Limiter.threshold(3).every(30).seconds()
 
-      errors = require 'errors'
+      path: 'shrub-user/login'
 
-      passport = req._passport.instance
+      receiver: (req, fn) -&gt;
 
-      loginPromise = switch req.body.method
+        errors = require 'errors'
 
-        when 'local'
+        passport = req._passport.instance
 
-          res = {}
-          deferred = Promise.defer()
-          passport.authenticate('local', deferred.callback) req, res, fn
+        loginPromise = switch req.body.method
+
+          when 'local'
+
+            res = {}
+            deferred = Promise.defer()
+            passport.authenticate('local', deferred.callback) req, res, fn
 </code></pre>
 <p>Log the user in (if it exists), and redact it for the response.</p>
-<pre><code>          deferred.promise.bind({}).spread((@user, info) -&gt;
-            throw errors.instantiate 'login' unless @user
+<pre><code>            deferred.promise.bind({}).spread((@user, info) -&gt;
+              throw errors.instantiate 'login' unless @user
 
-            req.logIn @user
+              req.logIn @user
 
-          ).then(-&gt;
+            ).then(-&gt;
 
-            new Promise (resolve, reject) =&gt;
+              new Promise (resolve, reject) =&gt;
 </code></pre>
 <p>Join a channel for the username.</p>
-<pre><code>              req.socket.join @user.name, (error) -&gt;
-                return reject error if error?
+<pre><code>                req.socket.join @user.name, (error) -&gt;
+                  return reject error if error?
 
-                resolve()
+                  resolve()
 
-          ).then -&gt;
+            ).then -&gt;
 
-            @user.redactFor @user
+              @user.redactFor @user
 
-      loginPromise.then((user) -&gt; fn null, user).catch fn
+        loginPromise.then((user) -&gt; fn null, user).catch fn
+
+    return routes
 </code></pre>
 <h4 id="implements-hook-bootstrapmiddleware">Implements hook <code>bootstrapMiddleware</code>.</h4>
 <pre><code>  registrar.registerHook 'bootstrapMiddleware', -&gt;

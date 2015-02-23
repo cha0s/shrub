@@ -423,7 +423,7 @@
                             
                                 <li><a class="toctree-l3" href="#implements-hook-fingerprint">Implements hook fingerprint.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-endpointfinished">Implements hook endpointFinished.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-rpcroutefinished">Implements hook rpcRouteFinished.</a></li>
                             
                                 <li><a class="toctree-l3" href="#implements-hook-packagesettings">Implements hook packageSettings.</a></li>
                             
@@ -755,8 +755,8 @@ exports.pkgmanRegister = (registrar) -&gt;
 <p>Session ID.</p>
 <pre><code>    session: if req?.session? then req.session.id
 </code></pre>
-<h4 id="implements-hook-endpointfinished">Implements hook <code>endpointFinished</code>.</h4>
-<pre><code>  registrar.registerHook 'endpointFinished', (routeReq, result, req) -&gt;
+<h4 id="implements-hook-rpcroutefinished">Implements hook <code>rpcRouteFinished</code>.</h4>
+<pre><code>  registrar.registerHook 'rpcRouteFinished', (routeReq, result, req) -&gt;
     return unless routeReq.session?
 
     Promise = require 'bluebird'

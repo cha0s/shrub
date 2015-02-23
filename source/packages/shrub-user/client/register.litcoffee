@@ -20,7 +20,7 @@
 
               submits: [
 
-                rpc.formSubmitHandler (error, result) ->
+                rpc.formSubmitHandler 'shrub-user/register', (error, result) ->
                   return if error?
 
                   messages.add(

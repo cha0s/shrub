@@ -5,9 +5,9 @@ Framework for communication between client and server through
 
     pkgman = null
 
-RPC endpoint information.
+RPC route information.
 
-    endpoints = {}
+    routes = {}
 
     exports.pkgmanRegister = (registrar) ->
 
@@ -33,34 +33,31 @@ RPC endpoint information.
 
           (next) ->
 
-#### Invoke hook `endpoint`.
+#### Invoke hook `rpcRoutes`.
 
-            debug '- Registering RPC endpoints...'
-            for path, endpoint of pkgman.invoke 'endpoint'
-
-              endpoint = receiver: endpoint if _.isFunction endpoint
+            debug '- Registering RPC routess...'
+            for route in _.flatten pkgman.invokeFlat 'rpcRoutes'
 
 Default the RPC route to the package path, replacing slashes with dots.
 
-              endpoint.route ?= clientModule.normalizeRouteName path
-              debug "- - rpc://#{endpoint.route}"
+              debug "- - rpc://#{route.path}"
 
-              endpoint.validators ?= []
+              route.validators ?= []
 
-              endpoints[endpoint.route] = endpoint
-            debug '- RPC endpoints registered.'
+              routes[route.path] = route
+            debug '- RPC routes registered.'
 
-#### Invoke hook `endpointAlter`.
+#### Invoke hook `rpcRoutesAlter`.
 
-            pkgman.invoke 'endpointAlter', endpoints
+            pkgman.invoke 'rpcRoutesAlter', routes
 
 Set up the validators as middleware.
 
-            for route, endpoint of endpoints
+            for path, route of routes
               validators = new Middleware()
-              for validator in endpoint.validators
+              for validator in route.validators
                 validators.use validator
-              endpoint.validators = validators
+              route.validators = validators
 
             next()
 
@@ -84,17 +81,16 @@ Set up the validators as middleware.
 
           (req, res, next) ->
 
-            Object.keys(endpoints).forEach (route) ->
-              endpoint = endpoints[route]
+            Object.keys(routes).forEach (path) ->
+              route = routes[path]
 
-              req.socket.on "rpc://#{route}", (data, fn) ->
+              req.socket.on "rpc://#{path}", (data, fn) ->
 
 Don't pass req directly, since it can be mutated by routes, and violate other
 routes' expectations.
 
                 routeReq = Object.create req
                 routeReq.body = data
-                routeReq.endpoint = endpoint
                 routeReq.route = route
 
 Send an error to the client.
@@ -134,19 +130,19 @@ If we're not running in production.
 
 Validate.
 
-                endpoint.validators.dispatch routeReq, null, (error) ->
+                route.validators.dispatch routeReq, null, (error) ->
                   return sendErrorToClient error if error?
 
 Receive.
 
-                  endpoint.receiver routeReq, (error, result) ->
+                  route.receiver routeReq, (error, result) ->
                     return sendErrorToClient error if error?
 
-#### Invoke hook `endpointFinished`.
+#### Invoke hook `rpcRouteFinished`.
 
                     Promise.all(
                       pkgman.invokeFlat(
-                        'endpointFinished', routeReq, result, req
+                        'rpcRouteFinished', routeReq, result, req
                       )
 
                     ).then(

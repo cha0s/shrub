@@ -14,55 +14,61 @@
         passport = require 'passport'
         Promise = require 'bluebird'
 
-#### Implements hook `endpoint`.
+#### Implements hook `rpcRoutes`.
 
-      registrar.registerHook 'endpoint', ->
+      registrar.registerHook 'rpcRoutes', ->
 
         {Limiter} = require 'shrub-limiter'
 
-        limiter:
-          message: 'You are logging in too much.'
-          threshold: Limiter.threshold(3).every(30).seconds()
+        routes = []
 
-        route: 'shrub.user.login'
+        routes.push
 
-        receiver: (req, fn) ->
+          limiter:
+            message: 'You are logging in too much.'
+            threshold: Limiter.threshold(3).every(30).seconds()
 
-          errors = require 'errors'
+          path: 'shrub-user/login'
 
-          passport = req._passport.instance
+          receiver: (req, fn) ->
 
-          loginPromise = switch req.body.method
+            errors = require 'errors'
 
-            when 'local'
+            passport = req._passport.instance
 
-              res = {}
-              deferred = Promise.defer()
-              passport.authenticate('local', deferred.callback) req, res, fn
+            loginPromise = switch req.body.method
+
+              when 'local'
+
+                res = {}
+                deferred = Promise.defer()
+                passport.authenticate('local', deferred.callback) req, res, fn
 
 Log the user in (if it exists), and redact it for the response.
 
-              deferred.promise.bind({}).spread((@user, info) ->
-                throw errors.instantiate 'login' unless @user
+                deferred.promise.bind({}).spread((@user, info) ->
+                  throw errors.instantiate 'login' unless @user
 
-                req.logIn @user
+                  req.logIn @user
 
-              ).then(->
+                ).then(->
 
-                new Promise (resolve, reject) =>
+                  new Promise (resolve, reject) =>
 
 Join a channel for the username.
 
-                  req.socket.join @user.name, (error) ->
-                    return reject error if error?
+                    req.socket.join @user.name, (error) ->
+                      return reject error if error?
 
-                    resolve()
+                      resolve()
 
-              ).then ->
+                ).then ->
 
-                @user.redactFor @user
+                  @user.redactFor @user
 
-          loginPromise.then((user) -> fn null, user).catch fn
+            loginPromise.then((user) -> fn null, user).catch fn
+
+        return routes
 
 #### Implements hook `bootstrapMiddleware`.
 

@@ -146,7 +146,7 @@
                             
                                 <li><a class="toctree-l3" href="#todo-sandbox-pool-might-be-better-handled-by-sandboxes">TODO: Sandbox pool, might be better handled by sandboxes.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-endpoint">Implements hook endpoint.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-rpcroutes">Implements hook rpcRoutes.</a></li>
                             
                                 <li><a class="toctree-l3" href="#implements-hook-httpmiddleware">Implements hook httpMiddleware.</a></li>
                             
@@ -765,20 +765,26 @@ middleware = require 'middleware'
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h4 id="implements-hook-endpoint">Implements hook <code>endpoint</code>.</h4>
+<h4 id="implements-hook-rpcroutes">Implements hook <code>rpcRoutes</code>.</h4>
 <p>Allow a JSful client to call us back and inform us that we don't need to
 hold their sandbox.</p>
-<pre><code>  registrar.registerHook 'endpoint', -&gt;
+<pre><code>  registrar.registerHook 'rpcRoutes', -&gt;
 
-    route: 'shrub.hangup'
-    receiver: (req, fn) -&gt;
+    routes = []
+
+    routes.push
+
+      path: 'shrub-angular/hangup'
+      receiver: (req, fn) -&gt;
 </code></pre>
 <h6 id="todo-cookie-less-clients-wont-have-a-valid-session-id-to-call-with-this-should-be-some-other-token-perhaps-csrf">TODO: Cookie-less clients won't have a valid session ID to call with. This should be some other token, perhaps CSRF.</h6>
-<pre><code>      id = req.session?.id
-      if (sandbox = sandboxManager.lookup id)?
-        sandbox.close().finally -&gt; fn()
-      else
-        fn()
+<pre><code>        id = req.session?.id
+        if (sandbox = sandboxManager.lookup id)?
+          sandbox.close().finally -&gt; fn()
+        else
+          fn()
+
+    return routes
 </code></pre>
 <h4 id="implements-hook-httpmiddleware">Implements hook <code>httpMiddleware</code>.</h4>
 <p>If configuration dictates, render the client-side Angular application in a
@@ -1049,7 +1055,7 @@ location path. If it is, redirect Angular.</em></p>
         navigationReq.sandbox = sandbox
 </code></pre>
 <h6 id="todo-remove-unused-res-parameter">TODO: Remove unused <code>res</code> parameter.</h6>
-<pre><code>        navigationMiddleware.dispatch navigationReq, null, (error) =&gt;
+<pre><code>        navigationMiddleware.dispatch navigationReq, (error) =&gt;
           return reject error if error?
 
           self.catchAngularRedirection path

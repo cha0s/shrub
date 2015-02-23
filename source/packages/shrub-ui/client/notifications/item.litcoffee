@@ -25,7 +25,7 @@ Remove the notification from the queue.
 
               ids = [scope.notification.id]
               rpc.call(
-                'shrub.ui.notifications.remove'
+                'shrub-ui/notifications/remove'
                 ids: ids
               )
               index = scope.queue.remove ids

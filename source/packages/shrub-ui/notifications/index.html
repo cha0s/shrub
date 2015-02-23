@@ -567,13 +567,7 @@
                             
                                 <li><a class="toctree-l3" href="#implements-hook-config">Implements hook config.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-endpoint">Implements hook endpoint.</a></li>
-                            
-                                <li><a class="toctree-l3" href="#implements-hook-endpoint_1">Implements hook endpoint.</a></li>
-                            
-                                <li><a class="toctree-l3" href="#implements-hook-endpoint_2">Implements hook endpoint.</a></li>
-                            
-                                <li><a class="toctree-l3" href="#implements-hook-endpoint_3">Implements hook endpoint.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-rpcroutes">Implements hook rpcRoutes.</a></li>
                             
                         
                         </ul>
@@ -853,7 +847,7 @@ exports.pkgmanRegister = (registrar) -&gt;
             broadcastNotificationsEvent(
               req
               data: notifications: [notification]
-              event: 'shrub.ui.notifications'
+              event: 'shrub-ui/notifications'
               includeSelf: true
               notifications: [notification]
             )
@@ -931,39 +925,6 @@ not append.</p>
     req.queue = queue
     next()
 </code></pre>
-<h4 id="implements-hook-endpoint">Implements hook <code>endpoint</code>.</h4>
-<pre><code>  registrar.registerHook 'acknowledged', 'endpoint', -&gt;
-
-    route: 'shrub.ui.notifications.acknowledged'
-
-    validators: [
-      ensureQueueExists
-    ]
-
-    receiver: (req, fn) -&gt;
-</code></pre>
-<p>Mark all notifications in a queue owned by the request as acknowledged.</p>
-<pre><code>      Notification = orm.collection 'shrub-ui-notification'
-      query = Notification.find()
-      query = query.where(channel: req.queue.channelFromRequest req)
-      query = query.where(queue: req.body.queue)
-      query.then((notifications) -&gt;
-</code></pre>
-<p>Broadcast to others.</p>
-<pre><code>        broadcastNotificationsEvent(
-          req
-          event: 'shrub.ui.notifications.acknowledged'
-          notifications: notifications
-        )
-
-        Promise.all(
-          for notification in notifications
-            notification.acknowledged = true
-            notification.save()
-        )
-
-      ).then(-&gt; fn()).catch fn
-</code></pre>
 <p>Ensure that the requested notification is owned by the request.</p>
 <pre><code>  ensureNotificationsOwnedByRequest = (req, res, next) -&gt;
 
@@ -984,80 +945,116 @@ not append.</p>
 
     ).catch next
 </code></pre>
-<h4 id="implements-hook-endpoint_1">Implements hook <code>endpoint</code>.</h4>
-<pre><code>  registrar.registerHook 'markAsRead', 'endpoint', -&gt;
+<h4 id="implements-hook-rpcroutes">Implements hook <code>rpcRoutes</code>.</h4>
+<pre><code>  registrar.registerHook 'rpcRoutes', -&gt;
 
-    route: 'shrub.ui.notifications.markAsRead'
+    routes = []
 
-    validators: [
-      ensureNotificationsOwnedByRequest
-    ]
+    routes.push
 
-    receiver: (req, fn) -&gt;
+      path: 'shrub-ui/notifications/acknowledged'
+
+      validators: [
+        ensureQueueExists
+      ]
+
+      receiver: (req, fn) -&gt;
+</code></pre>
+<p>Mark all notifications in a queue owned by the request as acknowledged.</p>
+<pre><code>        Notification = orm.collection 'shrub-ui-notification'
+        query = Notification.find()
+        query = query.where(channel: req.queue.channelFromRequest req)
+        query = query.where(queue: req.body.queue)
+        query.then((notifications) -&gt;
 </code></pre>
 <p>Broadcast to others.</p>
-<pre><code>      broadcastNotificationsEvent(
-        req
-        data: markedAsRead: req.body.markedAsRead
-        event: 'shrub.ui.notifications.markAsRead'
-        notifications: req.notifications
-      )
+<pre><code>          broadcastNotificationsEvent(
+            req
+            event: 'shrub-ui/notifications/acknowledged'
+            notifications: notifications
+          )
 
-      Promise.all(
-        for notification in req.notifications
-          notification.markedAsRead = req.body.markedAsRead
-          notification.save()
+          Promise.all(
+            for notification in notifications
+              notification.acknowledged = true
+              notification.save()
+          )
 
-      ).then(-&gt; fn()).catch fn
+        ).then(-&gt; fn()).catch fn
+
+    routes.push
+
+      path: 'shrub-ui/notifications/markAsRead'
+
+      validators: [
+        ensureNotificationsOwnedByRequest
+      ]
+
+      receiver: (req, fn) -&gt;
 </code></pre>
-<h4 id="implements-hook-endpoint_2">Implements hook <code>endpoint</code>.</h4>
-<pre><code>  registrar.registerHook 'remove', 'endpoint', -&gt;
+<p>Broadcast to others.</p>
+<pre><code>        broadcastNotificationsEvent(
+          req
+          data: markedAsRead: req.body.markedAsRead
+          event: 'shrub-ui/notifications/markAsRead'
+          notifications: req.notifications
+        )
 
-    route: 'shrub.ui.notifications.remove'
+        Promise.all(
+          for notification in req.notifications
+            notification.markedAsRead = req.body.markedAsRead
+            notification.save()
 
-    validators: [
-      ensureNotificationsOwnedByRequest
+        ).then(-&gt; fn()).catch fn
+
+    routes.push
+
+      path: 'shrub-ui/notifications/remove'
+
+      validators: [
+        ensureNotificationsOwnedByRequest
 </code></pre>
 <p>Ensure that the requested notifications may be removed.</p>
-<pre><code>      (req, res, next) -&gt;
+<pre><code>        (req, res, next) -&gt;
 
-        for notification in req.notifications
-          return next new Error(
-            'Those notifications may not be removed.'
-          ) unless notification.mayRemove
+          for notification in req.notifications
+            return next new Error(
+              'Those notifications may not be removed.'
+            ) unless notification.mayRemove
 
-        next()
+          next()
 
-    ]
+      ]
 
-    receiver: (req, fn) -&gt;
+      receiver: (req, fn) -&gt;
 </code></pre>
 <p>Broadcast to others.</p>
-<pre><code>      broadcastNotificationsEvent(
-        req
-        event: 'shrub.ui.notifications.remove'
-        notifications: req.notifications
-      )
+<pre><code>        broadcastNotificationsEvent(
+          req
+          event: 'shrub-ui/notifications/remove'
+          notifications: req.notifications
+        )
 
-      Promise.all(
-        for notification in req.notifications
-          notification.destroy()
+        Promise.all(
+          for notification in req.notifications
+            notification.destroy()
 
-      ).then(-&gt; fn()).catch fn
-</code></pre>
-<h4 id="implements-hook-endpoint_3">Implements hook <code>endpoint</code>.</h4>
-<pre><code>  registrar.registerHook 'endpoint', -&gt;
+        ).then(-&gt; fn()).catch fn
 
-    route: 'shrub.ui.notifications'
+    routes.push
 
-    receiver: (req, fn) -&gt;
+      path: 'shrub-ui/notifications'
 
-      Notification = orm.collection 'shrub-ui-notification'
-      Notification.queueFromRequest(req).then((notifications) -&gt;
+      receiver: (req, fn) -&gt;
 
-        fn null, notifications
+        Notification = orm.collection 'shrub-ui-notification'
+        Notification.queueFromRequest(req).then((notifications) -&gt;
 
-      ).catch fn
+          fn null, notifications
+
+        ).catch fn
+
+    return routes
 </code></pre>
 
             </div>

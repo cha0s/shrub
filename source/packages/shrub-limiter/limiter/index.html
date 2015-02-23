@@ -767,10 +767,10 @@ orm = null
 <p>Provides methods to tally scores, and compare them against a threshold of
 time.</p>
 <p>The <a href="../../../../source/packages/shrub-limiter">limiter</a> package implements hook
-<code>endpointAlter</code> to allow RPC endpoints to limit consumers to a specified
-number of requests per time period. For instance, by default the
-<a href="../../../../source/packages/user/login">user login</a> endpoint limits the number of logins
-a user may attempt to 3 every 30 seconds.</p>
+<a href="../../../../hooks/#rpcroutesalter"><code>rpcRoutesAlter</code></a> to allow RPC routes to limit
+consumers to a specified number of requests per time period. For instance, by
+default the <a href="../../../../source/packages/user/login">user login</a> route limits the number
+of logins a user may attempt to 3 every 30 seconds.</p>
 <pre><code>module.exports = class Limiter
 </code></pre>
 <h2 id="limiterthreshold">Limiter.threshold</h2>

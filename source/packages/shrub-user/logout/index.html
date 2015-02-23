@@ -624,7 +624,7 @@
                         
                             <li class="toctree-l2"><a href="#user-logout">User logout</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-endpoint">Implements hook endpoint.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-rpcroutes">Implements hook rpcRoutes.</a></li>
                             
                                 <li><a class="toctree-l3" href="#implements-hook-bootstrapmiddleware">Implements hook bootstrapMiddleware.</a></li>
                             
@@ -721,15 +721,19 @@
               <h1 id="user-logout">User logout</h1>
 <pre><code>exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h4 id="implements-hook-endpoint">Implements hook <code>endpoint</code>.</h4>
-<pre><code>  registrar.registerHook 'endpoint', -&gt;
+<h4 id="implements-hook-rpcroutes">Implements hook <code>rpcRoutes</code>.</h4>
+<pre><code>  registrar.registerHook 'rpcRoutes', -&gt;
 
-    route: 'shrub.user.logout'
+    routes = []
 
-    receiver: (req, fn) -&gt;
+    routes.push
+
+      path: 'shrub-user/logout'
 </code></pre>
 <p>Log out.</p>
-<pre><code>      req.logOut().nodeify fn
+<pre><code>      receiver: (req, fn) -&gt; req.logOut().nodeify fn
+
+    return routes
 </code></pre>
 <h4 id="implements-hook-bootstrapmiddleware">Implements hook <code>bootstrapMiddleware</code>.</h4>
 <pre><code>  registrar.registerHook 'bootstrapMiddleware', -&gt;
@@ -761,15 +765,16 @@
 
         logout = req.passportLogOut = req.logout
         req.logout = req.logOut = -&gt;
+          self = this
 
-          new Promise (resolve, reject) =&gt;
+          new Promise (resolve, reject) -&gt;
 
-            userBeforeLogoutMiddleware.dispatch req, (error) =&gt;
+            userBeforeLogoutMiddleware.dispatch self, (error) -&gt;
               return reject error if error?
 
-              logout.call this
+              logout.call self
 
-              userAfterLogoutMiddleware.dispatch req, (error) -&gt;
+              userAfterLogoutMiddleware.dispatch self, (error) -&gt;
                 return reject error if error?
 
                 resolve()

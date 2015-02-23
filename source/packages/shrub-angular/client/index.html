@@ -723,7 +723,7 @@
 </code></pre>
 <p>Hang up the socket unless it's the local (Node.js) client.</p>
 <pre><code>      unless $window.navigator.userAgent.match /^Node\.js .*$/
-        rpc.call 'shrub.hangup'
+        rpc.call 'shrub-angular/hangup'
 
   ]
 </code></pre>

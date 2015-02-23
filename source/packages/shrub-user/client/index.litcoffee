@@ -39,7 +39,7 @@ Log a user out if we get a socket call.
 
             return
 
-          socket.on 'shrub.user.logout', logout
+          socket.on 'shrub-user/logout', logout
 
 ## user.isLoggedIn
 
@@ -56,7 +56,7 @@ Log a user out if we get a socket call.
           service.login = (method, username, password) ->
 
             rpc.call(
-              'shrub.user.login'
+              'shrub-user/login'
               method: method
               username: username
               password: password
@@ -72,7 +72,7 @@ Log a user out if we get a socket call.
           service.logout = ->
 
             rpc.call(
-              'shrub.user.logout'
+              'shrub-user/logout'
 
             ).then logout
 
@@ -94,7 +94,7 @@ Log a user out if we get a socket call.
               password ?= 'password'
               id ?= 1
 
-              socket.catchEmit 'rpc://shrub.user.login', (data, fn) ->
+              socket.catchEmit 'rpc://shrub-user/login', (data, fn) ->
                 fn result: id: id, name: username
 
               service.login 'local', username, password

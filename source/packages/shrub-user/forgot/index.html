@@ -609,7 +609,7 @@
                         
                             <li class="toctree-l2"><a href="#user-forgot-password">User - Forgot password</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-endpoint">Implements hook endpoint.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-rpcroutes">Implements hook rpcRoutes.</a></li>
                             
                         
                         </ul>
@@ -715,8 +715,8 @@
               <h1 id="user-forgot-password">User - Forgot password</h1>
 <pre><code>exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h4 id="implements-hook-endpoint">Implements hook <code>endpoint</code>.</h4>
-<pre><code>  registrar.registerHook 'endpoint', -&gt;
+<h4 id="implements-hook-rpcroutes">Implements hook <code>rpcRoutes</code>.</h4>
+<pre><code>  registrar.registerHook 'rpcRoutes', -&gt;
 
     Promise = require 'bluebird'
 
@@ -731,78 +731,84 @@
 
     limiter: threshold: Limiter.threshold(1).every(30).seconds()
 
-    route: 'shrub.user.forgot'
+    routes = []
 
-    receiver: (req, fn) -&gt;
+    routes.push
 
-      User = orm.collection 'shrub-user'
+      path: 'shrub-user/forgot'
+
+      receiver: (req, fn) -&gt;
+
+        User = orm.collection 'shrub-user'
 </code></pre>
 <p>Cancel promise flow if the user doesn't exist.</p>
-<pre><code>      class NoSuchUser extends Error
-        constructor: (@message) -&gt;
+<pre><code>        class NoSuchUser extends Error
+          constructor: (@message) -&gt;
 </code></pre>
 <p>Look up the user.</p>
-<pre><code>      Promise.resolve().then(-&gt;
+<pre><code>        Promise.resolve().then(-&gt;
 </code></pre>
 <p>Search for username or encrypted email.</p>
-<pre><code>        if -1 is req.body.usernameOrEmail.indexOf '@'
+<pre><code>          if -1 is req.body.usernameOrEmail.indexOf '@'
 
-          iname: req.body.usernameOrEmail.toLowerCase()
+            iname: req.body.usernameOrEmail.toLowerCase()
 
-        else
+          else
 
-          crypto.encrypt(
-            req.body.usernameOrEmail.toLowerCase()
+            crypto.encrypt(
+              req.body.usernameOrEmail.toLowerCase()
 
-          ).then (encryptedEmail) -&gt; email: encryptedEmail
+            ).then (encryptedEmail) -&gt; email: encryptedEmail
 
-      ).then((filter) -&gt;
+        ).then((filter) -&gt;
 </code></pre>
 <p>Find the user.</p>
-<pre><code>        User.findOne filter
+<pre><code>          User.findOne filter
 
-      ).then((@user) -&gt;
-        throw new NoSuchUser unless @user?
+        ).then((@user) -&gt;
+          throw new NoSuchUser unless @user?
 </code></pre>
 <p>Generate a one-time login token.</p>
-<pre><code>        crypto.randomBytes 24
+<pre><code>          crypto.randomBytes 24
 
-      ).then((token) -&gt;
+        ).then((token) -&gt;
 
-        @user.resetPasswordToken = token.toString 'hex'
+          @user.resetPasswordToken = token.toString 'hex'
 </code></pre>
 <p>Decrypt the user's email address.</p>
-<pre><code>        crypto.decrypt @user.email
+<pre><code>          crypto.decrypt @user.email
 
-      ).then((email) -&gt;
+        ).then((email) -&gt;
 </code></pre>
 <p>Send an email to the user's email with a one-time login link.</p>
-<pre><code>        siteHostname = config.get 'packageSettings:shrub-core:siteHostname'
-        siteUrl = "http://#{siteHostname}"
+<pre><code>          siteHostname = config.get 'packageSettings:shrub-core:siteHostname'
+          siteUrl = "http://#{siteHostname}"
 
-        scope =
+          scope =
 
-          email: email
+            email: email
 </code></pre>
 <h6 id="todo-https">TODO: HTTPS</h6>
-<pre><code>          loginUrl: "#{siteUrl}/user/reset/#{user.resetPasswordToken}"
+<pre><code>            loginUrl: "#{siteUrl}/user/reset/#{user.resetPasswordToken}"
 
-          siteUrl: siteUrl
+            siteUrl: siteUrl
 
-          user: @user
+            user: @user
 
-        nodemailer.sendMail(
-          'shrub-user-email-forgot'
-        ,
-          to: email
-          subject: 'Password recovery request'
-        ,
-          scope
-        )
+          nodemailer.sendMail(
+            'shrub-user-email-forgot'
+          ,
+            to: email
+            subject: 'Password recovery request'
+          ,
+            scope
+          )
 
-        @user.save()
+          @user.save()
 
-      ).then(-&gt; fn()).catch(NoSuchUser, -&gt; fn()).catch fn
+        ).then(-&gt; fn()).catch(NoSuchUser, -&gt; fn()).catch fn
+
+    return routes
 </code></pre>
 
             </div>

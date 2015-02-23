@@ -746,7 +746,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 <p>Tell the server.</p>
 <pre><code>          rpc.call(
-            'shrub.ui.notifications.acknowledged'
+            'shrub-ui/notifications/acknowledged'
             queue: attr.queueName
           )
 </code></pre>
@@ -761,7 +761,7 @@ exports.pkgmanRegister = (registrar) -&gt;
           notification.markedAsRead = markedAsRead
 
           rpc.call(
-            'shrub.ui.notifications.markAsRead'
+            'shrub-ui/notifications/markAsRead'
             ids: [notification.id]
             markedAsRead: markedAsRead
           )
@@ -876,7 +876,7 @@ function to any skinLink consumers.</p>
 <pre><code>      service.loadMore = (queue, skip) -&gt;
 
         rpc.call(
-          'shrub.ui.notifications'
+          'shrub-ui/notifications'
           queue: queue
           skip: skip
 
@@ -893,28 +893,28 @@ function to any skinLink consumers.</p>
         _queues[queue].add notifications
 </code></pre>
 <p>Accept notifications from the server.</p>
-<pre><code>      socket.on 'shrub.ui.notifications', (data) -&gt;
+<pre><code>      socket.on 'shrub-ui/notifications', (data) -&gt;
         {queue, notifications} = data
 
         _queues[queue] ?= new NotificationQueue()
         _queues[queue].add notifications
 </code></pre>
 <p>Remove notifications.</p>
-<pre><code>      socket.on 'shrub.ui.notifications.remove', (data) -&gt;
+<pre><code>      socket.on 'shrub-ui/notifications/remove', (data) -&gt;
         {queue, ids} = data
 
         _queues[queue] ?= new NotificationQueue()
         _queues[queue].remove ids
 </code></pre>
 <p>Mark notifications as read.</p>
-<pre><code>      socket.on 'shrub.ui.notifications.markAsRead', (data) -&gt;
+<pre><code>      socket.on 'shrub-ui/notifications/markAsRead', (data) -&gt;
         {queue, ids, markedAsRead} = data
 
         _queues[queue] ?= new NotificationQueue()
         _queues[queue].markAsRead ids, markedAsRead
 </code></pre>
 <p>Mark notifications as acknowledged.</p>
-<pre><code>      socket.on 'shrub.ui.notifications.acknowledged', (data) -&gt;
+<pre><code>      socket.on 'shrub-ui/notifications/acknowledged', (data) -&gt;
         {queue, ids} = data
 
         _queues[queue] ?= new NotificationQueue()

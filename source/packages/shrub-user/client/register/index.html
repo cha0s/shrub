@@ -732,7 +732,7 @@
 
           submits: [
 
-            rpc.formSubmitHandler (error, result) -&gt;
+            rpc.formSubmitHandler 'shrub-user/register', (error, result) -&gt;
               return if error?
 
               messages.add(

@@ -28,9 +28,9 @@ Send a redacted version of the request user.
 
         req.user.redactFor req.user if req.user?
 
-#### Implements hook `endpointFinished`.
+#### Implements hook `rpcRouteFinished`.
 
-      registrar.registerHook 'endpointFinished', (routeReq, result, req) ->
+      registrar.registerHook 'rpcRouteFinished', (routeReq, result, req) ->
         return unless routeReq.user.id?
 
 Touch and save the session after every RPC call finishes.
@@ -373,7 +373,7 @@ Join a channel for the username.
 
 Tell client to log out.
 
-            req.socket.emit 'shrub.user.logout'
+            req.socket.emit 'shrub-user/logout'
 
 Leave the user channel.
 

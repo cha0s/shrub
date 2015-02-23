@@ -2,17 +2,21 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `endpoint`.
+#### Implements hook `rpcRoutes`.
 
-      registrar.registerHook 'endpoint', ->
+      registrar.registerHook 'rpcRoutes', ->
 
-        route: 'shrub.user.logout'
+        routes = []
 
-        receiver: (req, fn) ->
+        routes.push
+
+          path: 'shrub-user/logout'
 
 Log out.
 
-          req.logOut().nodeify fn
+          receiver: (req, fn) -> req.logOut().nodeify fn
+
+        return routes
 
 #### Implements hook `bootstrapMiddleware`.
 
@@ -47,15 +51,16 @@ Log out.
 
             logout = req.passportLogOut = req.logout
             req.logout = req.logOut = ->
+              self = this
 
-              new Promise (resolve, reject) =>
+              new Promise (resolve, reject) ->
 
-                userBeforeLogoutMiddleware.dispatch req, (error) =>
+                userBeforeLogoutMiddleware.dispatch self, (error) ->
                   return reject error if error?
 
-                  logout.call this
+                  logout.call self
 
-                  userAfterLogoutMiddleware.dispatch req, (error) ->
+                  userAfterLogoutMiddleware.dispatch self, (error) ->
                     return reject error if error?
 
                     resolve()

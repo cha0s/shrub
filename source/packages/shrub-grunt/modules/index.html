@@ -723,14 +723,14 @@
       src: [
         'packages.litcoffee'
         'require.litcoffee'
-        'modules/**/*.coffee'
+        'modules/**/*.{coffee,litcoffee}'
       ]
       dest: 'build/js/app'
       expand: true
       ext: '.js'
     ,
       src: [
-        '{custom,packages}/*/client/**/*.coffee'
+        '{custom,packages}/*/client/**/*.{coffee,litcoffee}'
       ]
       dest: 'build/js/app'
       expand: true
@@ -760,8 +760,8 @@
 
       files: [
         'client/{packages,require}.litcoffee'
-        'client/modules/**/*.coffee'
-        '{custom,packages}/*/client/**/*.coffee'
+        'client/modules/**/*.{coffee,litcoffee}'
+        '{custom,packages}/*/client/**/*.{coffee,litcoffee}'
       ]
       tasks: [
         'build:modules', 'build:shrub'

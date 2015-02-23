@@ -761,7 +761,7 @@
 
         return
 
-      socket.on 'shrub.user.logout', logout
+      socket.on 'shrub-user/logout', logout
 </code></pre>
 <h2 id="userisloggedin">user.isLoggedIn</h2>
 <p><em>Whether the current application user is logged in.</em></p>
@@ -773,7 +773,7 @@
 <pre><code>      service.login = (method, username, password) -&gt;
 
         rpc.call(
-          'shrub.user.login'
+          'shrub-user/login'
           method: method
           username: username
           password: password
@@ -787,7 +787,7 @@
 <pre><code>      service.logout = -&gt;
 
         rpc.call(
-          'shrub.user.logout'
+          'shrub-user/logout'
 
         ).then logout
 </code></pre>
@@ -804,7 +804,7 @@
           password ?= 'password'
           id ?= 1
 
-          socket.catchEmit 'rpc://shrub.user.login', (data, fn) -&gt;
+          socket.catchEmit 'rpc://shrub-user/login', (data, fn) -&gt;
             fn result: id: id, name: username
 
           service.login 'local', username, password

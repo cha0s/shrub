@@ -1237,7 +1237,7 @@ page load.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#endpoint">endpoint</a> &mdash; <a href="../source/packages/shrub-angular#implements-hook-endpoint">implementation</a></li>
+<li><a href="../hooks/#rpcroutes">rpcRoutes</a> &mdash; <a href="../source/packages/shrub-angular#implements-hook-rpcroutes">implementation</a></li>
 <li><a href="../hooks/#httpmiddleware">httpMiddleware</a> &mdash; <a href="../source/packages/shrub-angular#implements-hook-httpmiddleware">implementation</a></li>
 <li><a href="../hooks/#bootstrapmiddleware">bootstrapMiddleware</a> &mdash; <a href="../source/packages/shrub-angular#implements-hook-bootstrapmiddleware">implementation</a></li>
 <li><a href="../hooks/#packagesettings">packageSettings</a> &mdash; <a href="../source/packages/shrub-angular#implements-hook-packagesettings">implementation</a></li>
@@ -1320,6 +1320,7 @@ for analytics, or anything else.</em></p>
 <p class="admonition-title">Invokes hooks</p>
 <ul>
 <li><a href="../hooks/#config">config</a> &mdash; <a href="../source/packages/shrub-config#invoke-hook-config">invocation</a></li>
+<li><a href="../hooks/#configalter">configAlter</a> &mdash; <a href="../source/packages/shrub-config#invoke-hook-configalter">invocation</a></li>
 </ul>
 </div>
 <h2 id="shrub-core"><a href="../source/packages/shrub-core">shrub-core</a></h2>
@@ -1552,12 +1553,12 @@ now, but will be fleshed out as we go.</em></p>
 <h2 id="shrub-limiter"><a href="../source/packages/shrub-limiter">shrub-limiter</a></h2>
 <p><span class="package-title">Rate limiter</span></p>
 <p><em>Limits the rate at which clients can do certain operations, like call RPC
-endpoints.</em></p>
+routes.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
 <li><a href="../hooks/#collections">collections</a> &mdash; <a href="../source/packages/shrub-limiter#implements-hook-collections">implementation</a></li>
-<li><a href="../hooks/#endpointalter">endpointAlter</a> &mdash; <a href="../source/packages/shrub-limiter#implements-hook-endpointalter">implementation</a></li>
+<li><a href="../hooks/#rpcroutesalter">rpcRoutesAlter</a> &mdash; <a href="../source/packages/shrub-limiter#implements-hook-rpcroutesalter">implementation</a></li>
 <li><a href="../hooks/#transmittableerror">transmittableError</a> &mdash; <a href="../source/packages/shrub-limiter#implements-hook-transmittableerror">implementation</a></li>
 </ul>
 </div>
@@ -1628,9 +1629,9 @@ across multiple <a href="../source/packages/shrub-audit/fingerprint">fingerprint
 <div class="admonition note">
 <p class="admonition-title">Invokes hooks</p>
 <ul>
-<li><a href="../hooks/#endpoint">endpoint</a> &mdash; <a href="../source/packages/shrub-rpc#invoke-hook-endpoint">invocation</a></li>
-<li><a href="../hooks/#endpointalter">endpointAlter</a> &mdash; <a href="../source/packages/shrub-rpc#invoke-hook-endpointalter">invocation</a></li>
-<li><a href="../hooks/#endpointfinished">endpointFinished</a> &mdash; <a href="../source/packages/shrub-rpc#invoke-hook-endpointfinished">invocation</a></li>
+<li><a href="../hooks/#rpcroutes">rpcRoutes</a> &mdash; <a href="../source/packages/shrub-rpc#invoke-hook-rpcroutes">invocation</a></li>
+<li><a href="../hooks/#rpcroutesalter">rpcRoutesAlter</a> &mdash; <a href="../source/packages/shrub-rpc#invoke-hook-rpcroutesalter">invocation</a></li>
+<li><a href="../hooks/#rpcroutefinished">rpcRouteFinished</a> &mdash; <a href="../source/packages/shrub-rpc#invoke-hook-rpcroutefinished">invocation</a></li>
 </ul>
 </div>
 <h2 id="shrub-session"><a href="../source/packages/shrub-session">shrub-session</a></h2>
@@ -1641,7 +1642,7 @@ across multiple <a href="../source/packages/shrub-audit/fingerprint">fingerprint
 <ul>
 <li><a href="../hooks/#collections">collections</a> &mdash; <a href="../source/packages/shrub-session#implements-hook-collections">implementation</a></li>
 <li><a href="../hooks/#fingerprint">fingerprint</a> &mdash; <a href="../source/packages/shrub-session#implements-hook-fingerprint">implementation</a></li>
-<li><a href="../hooks/#endpointfinished">endpointFinished</a> &mdash; <a href="../source/packages/shrub-session#implements-hook-endpointfinished">implementation</a></li>
+<li><a href="../hooks/#rpcroutefinished">rpcRouteFinished</a> &mdash; <a href="../source/packages/shrub-session#implements-hook-rpcroutefinished">implementation</a></li>
 <li><a href="../hooks/#packagesettings">packageSettings</a> &mdash; <a href="../source/packages/shrub-session#implements-hook-packagesettings">implementation</a></li>
 <li><a href="../hooks/#socketconnectionmiddleware">socketConnectionMiddleware</a> &mdash; <a href="../source/packages/shrub-session#implements-hook-socketconnectionmiddleware">implementation</a></li>
 </ul>
@@ -1730,10 +1731,7 @@ across multiple <a href="../source/packages/shrub-audit/fingerprint">fingerprint
 <li><a href="../hooks/#bootstrapmiddleware">bootstrapMiddleware</a> &mdash; <a href="../source/packages/shrub-ui/notifications#implements-hook-bootstrapmiddleware">implementation</a></li>
 <li><a href="../hooks/#collections">collections</a> &mdash; <a href="../source/packages/shrub-ui/notifications#implements-hook-collections">implementation</a></li>
 <li><a href="../hooks/#config">config</a> &mdash; <a href="../source/packages/shrub-ui/notifications#implements-hook-config">implementation</a></li>
-<li><a href="../hooks/#endpoint">endpoint</a> &mdash; <a href="../source/packages/shrub-ui/notifications#implements-hook-endpoint">implementation</a></li>
-<li><a href="../hooks/#endpoint">endpoint</a> &mdash; <a href="../source/packages/shrub-ui/notifications#implements-hook-endpoint">implementation</a></li>
-<li><a href="../hooks/#endpoint">endpoint</a> &mdash; <a href="../source/packages/shrub-ui/notifications#implements-hook-endpoint">implementation</a></li>
-<li><a href="../hooks/#endpoint">endpoint</a> &mdash; <a href="../source/packages/shrub-ui/notifications#implements-hook-endpoint">implementation</a></li>
+<li><a href="../hooks/#rpcroutes">rpcRoutes</a> &mdash; <a href="../source/packages/shrub-ui/notifications#implements-hook-rpcroutes">implementation</a></li>
 </ul>
 </div>
 </blockquote>
@@ -1745,7 +1743,7 @@ across multiple <a href="../source/packages/shrub-audit/fingerprint">fingerprint
 <ul>
 <li><a href="../hooks/#prebootstrap">preBootstrap</a> &mdash; <a href="../source/packages/shrub-user#implements-hook-prebootstrap">implementation</a></li>
 <li><a href="../hooks/#config">config</a> &mdash; <a href="../source/packages/shrub-user#implements-hook-config">implementation</a></li>
-<li><a href="../hooks/#endpointfinished">endpointFinished</a> &mdash; <a href="../source/packages/shrub-user#implements-hook-endpointfinished">implementation</a></li>
+<li><a href="../hooks/#rpcroutefinished">rpcRouteFinished</a> &mdash; <a href="../source/packages/shrub-user#implements-hook-rpcroutefinished">implementation</a></li>
 <li><a href="../hooks/#fingerprint">fingerprint</a> &mdash; <a href="../source/packages/shrub-user#implements-hook-fingerprint">implementation</a></li>
 <li><a href="../hooks/#httpmiddleware">httpMiddleware</a> &mdash; <a href="../source/packages/shrub-user#implements-hook-httpmiddleware">implementation</a></li>
 <li><a href="../hooks/#collections">collections</a> &mdash; <a href="../source/packages/shrub-user#implements-hook-collections">implementation</a></li>
@@ -1763,7 +1761,7 @@ across multiple <a href="../source/packages/shrub-audit/fingerprint">fingerprint
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#endpoint">endpoint</a> &mdash; <a href="../source/packages/shrub-user/forgot#implements-hook-endpoint">implementation</a></li>
+<li><a href="../hooks/#rpcroutes">rpcRoutes</a> &mdash; <a href="../source/packages/shrub-user/forgot#implements-hook-rpcroutes">implementation</a></li>
 </ul>
 </div>
 <h2 id="shrub-userlogin"><a href="../source/packages/shrub-user/login"><small>shrub-user/</small>login</a></h2>
@@ -1771,7 +1769,7 @@ across multiple <a href="../source/packages/shrub-audit/fingerprint">fingerprint
 <p class="admonition-title">Implements hooks</p>
 <ul>
 <li><a href="../hooks/#prebootstrap">preBootstrap</a> &mdash; <a href="../source/packages/shrub-user/login#implements-hook-prebootstrap">implementation</a></li>
-<li><a href="../hooks/#endpoint">endpoint</a> &mdash; <a href="../source/packages/shrub-user/login#implements-hook-endpoint">implementation</a></li>
+<li><a href="../hooks/#rpcroutes">rpcRoutes</a> &mdash; <a href="../source/packages/shrub-user/login#implements-hook-rpcroutes">implementation</a></li>
 <li><a href="../hooks/#bootstrapmiddleware">bootstrapMiddleware</a> &mdash; <a href="../source/packages/shrub-user/login#implements-hook-bootstrapmiddleware">implementation</a></li>
 <li><a href="../hooks/#transmittableerror">transmittableError</a> &mdash; <a href="../source/packages/shrub-user/login#implements-hook-transmittableerror">implementation</a></li>
 </ul>
@@ -1788,7 +1786,7 @@ across multiple <a href="../source/packages/shrub-audit/fingerprint">fingerprint
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#endpoint">endpoint</a> &mdash; <a href="../source/packages/shrub-user/logout#implements-hook-endpoint">implementation</a></li>
+<li><a href="../hooks/#rpcroutes">rpcRoutes</a> &mdash; <a href="../source/packages/shrub-user/logout#implements-hook-rpcroutes">implementation</a></li>
 <li><a href="../hooks/#bootstrapmiddleware">bootstrapMiddleware</a> &mdash; <a href="../source/packages/shrub-user/logout#implements-hook-bootstrapmiddleware">implementation</a></li>
 </ul>
 </div>
@@ -1805,7 +1803,7 @@ across multiple <a href="../source/packages/shrub-audit/fingerprint">fingerprint
 <p class="admonition-title">Implements hooks</p>
 <ul>
 <li><a href="../hooks/#prebootstrap">preBootstrap</a> &mdash; <a href="../source/packages/shrub-user/register#implements-hook-prebootstrap">implementation</a></li>
-<li><a href="../hooks/#endpoint">endpoint</a> &mdash; <a href="../source/packages/shrub-user/register#implements-hook-endpoint">implementation</a></li>
+<li><a href="../hooks/#rpcroutes">rpcRoutes</a> &mdash; <a href="../source/packages/shrub-user/register#implements-hook-rpcroutes">implementation</a></li>
 <li><a href="../hooks/#replcontext">replContext</a> &mdash; <a href="../source/packages/shrub-user/register#implements-hook-replcontext">implementation</a></li>
 </ul>
 </div>
@@ -1814,7 +1812,7 @@ across multiple <a href="../source/packages/shrub-audit/fingerprint">fingerprint
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#endpoint">endpoint</a> &mdash; <a href="../source/packages/shrub-user/reset#implements-hook-endpoint">implementation</a></li>
+<li><a href="../hooks/#rpcroutes">rpcRoutes</a> &mdash; <a href="../source/packages/shrub-user/reset#implements-hook-rpcroutes">implementation</a></li>
 </ul>
 </div>
 </blockquote>
@@ -1825,7 +1823,6 @@ across multiple <a href="../source/packages/shrub-audit/fingerprint">fingerprint
 <p class="admonition-title">Implements hooks</p>
 <ul>
 <li><a href="../hooks/#prebootstrap">preBootstrap</a> &mdash; <a href="../source/packages/shrub-villiany#implements-hook-prebootstrap">implementation</a></li>
-<li><a href="../hooks/#endpointalter">endpointAlter</a> &mdash; <a href="../source/packages/shrub-villiany#implements-hook-endpointalter">implementation</a></li>
 <li><a href="../hooks/#collections">collections</a> &mdash; <a href="../source/packages/shrub-villiany#implements-hook-collections">implementation</a></li>
 <li><a href="../hooks/#httpmiddleware">httpMiddleware</a> &mdash; <a href="../source/packages/shrub-villiany#implements-hook-httpmiddleware">implementation</a></li>
 <li><a href="../hooks/#settings">settings</a> &mdash; <a href="../source/packages/shrub-villiany#implements-hook-settings">implementation</a></li>

@@ -835,7 +835,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 <pre><code>      service.count = -&gt; _messages.length
 </code></pre>
 <p>Accept messages from the server.</p>
-<pre><code>      socket.on 'shrub.ui.messages', (data) -&gt;
+<pre><code>      socket.on 'shrub-ui/messages', (data) -&gt;
         service.add message for message in data.messages
 
       service

@@ -944,7 +944,9 @@ portion from the end of the filename.</p>
 
       if O[pluralKey][hook]?
 
-        count = Object.keys(O[pluralKey][hook]).length
+        count = 0
+        for file, {types} of O[pluralKey][hook]
+          count += types.length
 
         render += "!!! note \"#{count} #{key}"
         render += 's' if count &gt; 1
@@ -1062,7 +1064,6 @@ render it as h2 (TODO are h6) to increase visibility.</p>
     sourcePath = _sourcePath fileStats.file
 
     parts = sourcePath.split '/'
-    # parts.pop() if parts[parts.length - 1] is 'client'
     pkg = parts.join '/'
     fileStats.pkg = pkg.split('/').slice(1).join '/'
 

@@ -712,12 +712,9 @@
             <div class="section">
               <h1 id="angular-augmentation-module">Angular augmentation module</h1>
 <p><em>Provides functionality related to Angular for client packages.</em></p>
-<p>Allow shrub to set the injector. This can only be called once, so packages
-won't be able to corrupt it.</p>
+<p>Allow shrub to set the injector.</p>
 <pre><code>_$injector = null
-exports.setInjector = ($injector) -&gt;
-  _$injector = $injector
-  exports.setInjector = undefined
+exports.setInjector = ($injector) -&gt; _$injector = $injector
 </code></pre>
 <p>Inject dependencies into an
 <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>.

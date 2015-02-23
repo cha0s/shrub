@@ -641,8 +641,6 @@
                             
                                 <li><a class="toctree-l3" href="#implements-hook-prebootstrap">Implements hook preBootstrap.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-endpointalter">Implements hook endpointAlter.</a></li>
-                            
                                 <li><a class="toctree-l3" href="#implements-hook-collections">Implements hook collections.</a></li>
                             
                                 <li><a class="toctree-l3" href="#implements-hook-httpmiddleware">Implements hook httpMiddleware.</a></li>
@@ -752,11 +750,6 @@ exports.pkgmanRegister = (registrar) -&gt;
     villianyLimiter = new Limiter(
       'villiany', Limiter.threshold(1000).every(10).minutes()
     )
-</code></pre>
-<h4 id="implements-hook-endpointalter">Implements hook <code>endpointAlter</code>.</h4>
-<pre><code>  registrar.registerHook 'endpointAlter', (endpoints) -&gt;
-    for route, endpoint of endpoints
-      endpoint.villianyScore ?= 20
 </code></pre>
 <h4 id="implements-hook-collections">Implements hook <code>collections</code>.</h4>
 <pre><code>  registrar.registerHook 'collections', -&gt;

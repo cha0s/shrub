@@ -743,10 +743,6 @@ are gathered and registered into Angular.</em></p>
       config = require 'config'
       debug = require('debug') 'shrub:angular'
 </code></pre>
-<p>Set an injector so that Angular injection can occur out of band.</p>
-<pre><code>      angular_ = require 'angular'
-      angular_.setInjector $injector
-</code></pre>
 <h4 id="invoke-hook-controller">Invoke hook <code>controller</code>.</h4>
 <p>Allows packages to define Angular controllers. Implementations should return an
 <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>.</p>
@@ -764,7 +760,7 @@ are gathered and registered into Angular.</em></p>
 <p>Normalize, augment, and register a directive.</p>
 <pre><code>      prepareDirective = (name, path, injected) -&gt; ($injector) -&gt;
 </code></pre>
-<p>Normalize the directive to object form.</p>
+<p>Normalize the directive to Directive Definition Object form.</p>
 <pre><code>        directive = $injector.invoke injected
         directive = link: directive if angular.isFunction directive
 </code></pre>
@@ -895,6 +891,16 @@ function.</p>
         $provide.service path, injected
 
       debug 'Services registered.'
+
+  ])
+
+  .run([
+    '$injector', 'shrub-require'
+    ($injector, require) -&gt;
+</code></pre>
+<p>Set an injector so that Angular injection can occur out of band.</p>
+<pre><code>      angular_ = require 'angular'
+      angular_.setInjector $injector
 
   ])
 </code></pre>

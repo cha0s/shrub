@@ -31,7 +31,7 @@ When notifications are akcnowledged.
 Tell the server.
 
               rpc.call(
-                'shrub.ui.notifications.acknowledged'
+                'shrub-ui/notifications/acknowledged'
                 queue: attr.queueName
               )
 
@@ -48,7 +48,7 @@ Mark the notification as read.
               notification.markedAsRead = markedAsRead
 
               rpc.call(
-                'shrub.ui.notifications.markAsRead'
+                'shrub-ui/notifications/markAsRead'
                 ids: [notification.id]
                 markedAsRead: markedAsRead
               )
@@ -172,7 +172,7 @@ Load more notifications
           service.loadMore = (queue, skip) ->
 
             rpc.call(
-              'shrub.ui.notifications'
+              'shrub-ui/notifications'
               queue: queue
               skip: skip
 
@@ -191,7 +191,7 @@ Add in initial notifications from config.
 
 Accept notifications from the server.
 
-          socket.on 'shrub.ui.notifications', (data) ->
+          socket.on 'shrub-ui/notifications', (data) ->
             {queue, notifications} = data
 
             _queues[queue] ?= new NotificationQueue()
@@ -199,7 +199,7 @@ Accept notifications from the server.
 
 Remove notifications.
 
-          socket.on 'shrub.ui.notifications.remove', (data) ->
+          socket.on 'shrub-ui/notifications/remove', (data) ->
             {queue, ids} = data
 
             _queues[queue] ?= new NotificationQueue()
@@ -207,7 +207,7 @@ Remove notifications.
 
 Mark notifications as read.
 
-          socket.on 'shrub.ui.notifications.markAsRead', (data) ->
+          socket.on 'shrub-ui/notifications/markAsRead', (data) ->
             {queue, ids, markedAsRead} = data
 
             _queues[queue] ?= new NotificationQueue()
@@ -215,7 +215,7 @@ Mark notifications as read.
 
 Mark notifications as acknowledged.
 
-          socket.on 'shrub.ui.notifications.acknowledged', (data) ->
+          socket.on 'shrub-ui/notifications/acknowledged', (data) ->
             {queue, ids} = data
 
             _queues[queue] ?= new NotificationQueue()

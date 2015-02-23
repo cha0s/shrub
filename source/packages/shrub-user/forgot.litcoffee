@@ -2,9 +2,9 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `endpoint`.
+#### Implements hook `rpcRoutes`.
 
-      registrar.registerHook 'endpoint', ->
+      registrar.registerHook 'rpcRoutes', ->
 
         Promise = require 'bluebird'
 
@@ -19,83 +19,89 @@
 
         limiter: threshold: Limiter.threshold(1).every(30).seconds()
 
-        route: 'shrub.user.forgot'
+        routes = []
 
-        receiver: (req, fn) ->
+        routes.push
 
-          User = orm.collection 'shrub-user'
+          path: 'shrub-user/forgot'
+
+          receiver: (req, fn) ->
+
+            User = orm.collection 'shrub-user'
 
 Cancel promise flow if the user doesn't exist.
 
-          class NoSuchUser extends Error
-            constructor: (@message) ->
+            class NoSuchUser extends Error
+              constructor: (@message) ->
 
 Look up the user.
 
-          Promise.resolve().then(->
+            Promise.resolve().then(->
 
 Search for username or encrypted email.
 
-            if -1 is req.body.usernameOrEmail.indexOf '@'
+              if -1 is req.body.usernameOrEmail.indexOf '@'
 
-              iname: req.body.usernameOrEmail.toLowerCase()
+                iname: req.body.usernameOrEmail.toLowerCase()
 
-            else
+              else
 
-              crypto.encrypt(
-                req.body.usernameOrEmail.toLowerCase()
+                crypto.encrypt(
+                  req.body.usernameOrEmail.toLowerCase()
 
-              ).then (encryptedEmail) -> email: encryptedEmail
+                ).then (encryptedEmail) -> email: encryptedEmail
 
-          ).then((filter) ->
+            ).then((filter) ->
 
 Find the user.
 
-            User.findOne filter
+              User.findOne filter
 
-          ).then((@user) ->
-            throw new NoSuchUser unless @user?
+            ).then((@user) ->
+              throw new NoSuchUser unless @user?
 
 Generate a one-time login token.
 
-            crypto.randomBytes 24
+              crypto.randomBytes 24
 
-          ).then((token) ->
+            ).then((token) ->
 
-            @user.resetPasswordToken = token.toString 'hex'
+              @user.resetPasswordToken = token.toString 'hex'
 
 Decrypt the user's email address.
 
-            crypto.decrypt @user.email
+              crypto.decrypt @user.email
 
-          ).then((email) ->
+            ).then((email) ->
 
 Send an email to the user's email with a one-time login link.
 
-            siteHostname = config.get 'packageSettings:shrub-core:siteHostname'
-            siteUrl = "http://#{siteHostname}"
+              siteHostname = config.get 'packageSettings:shrub-core:siteHostname'
+              siteUrl = "http://#{siteHostname}"
 
-            scope =
+              scope =
 
-              email: email
+                email: email
 
 ###### TODO: HTTPS
 
-              loginUrl: "#{siteUrl}/user/reset/#{user.resetPasswordToken}"
+                loginUrl: "#{siteUrl}/user/reset/#{user.resetPasswordToken}"
 
-              siteUrl: siteUrl
+                siteUrl: siteUrl
 
-              user: @user
+                user: @user
 
-            nodemailer.sendMail(
-              'shrub-user-email-forgot'
-            ,
-              to: email
-              subject: 'Password recovery request'
-            ,
-              scope
-            )
+              nodemailer.sendMail(
+                'shrub-user-email-forgot'
+              ,
+                to: email
+                subject: 'Password recovery request'
+              ,
+                scope
+              )
 
-            @user.save()
+              @user.save()
 
-          ).then(-> fn()).catch(NoSuchUser, -> fn()).catch fn
+            ).then(-> fn()).catch(NoSuchUser, -> fn()).catch fn
+
+        return routes

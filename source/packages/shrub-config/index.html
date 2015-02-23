@@ -798,8 +798,9 @@ Implementations may return an object, or a promise that resolves to an object.</
 </code></pre>
 <h6 id="todo-multiline">TODO: Multiline</h6>
 <pre><code>        config_.set "packageConfig:#{path.replace /\//g, ':'}:#{key.replace /\//g, ':'}", value
-
-    pkgman.invoke 'configAlter', req, config_
+</code></pre>
+<h4 id="invoke-hook-configalter">Invoke hook <code>configAlter</code>.</h4>
+<pre><code>    pkgman.invoke 'configAlter', req, config_
 </code></pre>
 <p>Format the configuration to look nice.</p>
 <pre><code>    prettyPrintConfig = -&gt;
