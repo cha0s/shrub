@@ -1221,7 +1221,7 @@ for more information about how to define a controller.</p>
 <p>Use this hook to define Angular directives for your application.</p>
 <p>Shrub augments Angular directives to automate some functionality:</p>
 <ul>
-<li>directive.link is proxied to automatically attempt to invoke the <code>link</code>
+<li><code>directive.link</code> is proxied to automatically attempt to invoke the <code>link</code>
   method of any controllers attached to the directive. Controllers' <code>link</code>
   method is invoked <strong>before</strong> the directive link function.</li>
 <li>If <code>bindToController</code> is set on the Directive Definition Object, the
@@ -1267,6 +1267,14 @@ for more information about how to define a directive.</p>
 </ul>
 </div>
 <h2 id="filter">filter</h2>
+<p><em>Define Angular filters.</em></p>
+<p>Filters allow you to format the value of expressions.</p>
+<p>See
+<a href="https://docs.angularjs.org/guide/filter#creating-custom-filters">the Angular documentation</a>
+for more information about how to define and use filters.</p>
+<h3 id="answer-with_11">Answer with</h3>
+<p>A pure function taking the (string) input as the first parameter, followed by
+any optional configuration parameters.</p>
 <div class="admonition note">
 <p class="admonition-title">1 implementation</p>
 <ul>
@@ -1280,6 +1288,12 @@ for more information about how to define a directive.</p>
 </ul>
 </div>
 <h2 id="fingerprint">fingerprint</h2>
+<p><em>Create a fingerprint for a connection</em>.</p>
+<p>Each request has a fingerprint generated which allows bad behavior to be
+tracked (like exceeding API limits).</p>
+<h3 id="answer-with_12">Answer with</h3>
+<p>A keyed object of fingerprint values. <code>null</code> or <code>undefined</code> values will be
+filtered out when doing most checks.</p>
 <div class="admonition note">
 <p class="admonition-title">3 implementations</p>
 <ul>

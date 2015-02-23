@@ -108,8 +108,10 @@ A limiter on a route is defined like:
 * `threshold`: The [threshold](./limiter#threshold) for this limiter.
 * `ignoreKeys`: The
   [fingerprint keys](source/packages/shrub-audit/fingerprint) to ignore when
-  determining the total limit. In this example, the IP address and session ID
-  would be ignored.
+  determining the total limit.
+* `villianyScore`: The score accumulated when this limit is crossed.
+
+Check all routes for limiter definitions.
 
         Object.keys(routes).forEach (path) ->
           route = routes[path]

@@ -820,12 +820,13 @@ exports.pkgmanRegister = (registrar) -&gt;
 <li><code>threshold</code>: The <a href="../../.././limiter#threshold">threshold</a> for this limiter.</li>
 <li><code>ignoreKeys</code>: The
   <a href="../../../source/packages/shrub-audit/fingerprint">fingerprint keys</a> to ignore when
-  determining the total limit. In this example, the IP address and session ID
-  would be ignored.<pre><code>Object.keys(routes).forEach (path) -&gt;
-  route = routes[path]
-</code></pre>
-</li>
+  determining the total limit.</li>
+<li><code>villianyScore</code>: The score accumulated when this limit is crossed.</li>
 </ul>
+<p>Check all routes for limiter definitions.</p>
+<pre><code>    Object.keys(routes).forEach (path) -&gt;
+      route = routes[path]
+</code></pre>
 <p>No limiter? Nevermind...</p>
 <pre><code>      return unless route.limiter?
 </code></pre>
