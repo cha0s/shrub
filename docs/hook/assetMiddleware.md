@@ -17,3 +17,10 @@ You'll need to implement the [`gruntConfig`](hooks/#gruntconfig) hook for that.
 
 A
 [middleware hook specification](guide/concepts#middleware-hook-specification).
+The middleware have the following signature:
+
+```javascript
+function(assets, next) {
+  ...
+}
+```

@@ -13,9 +13,8 @@ exports.pkgmanRegister = function(registrar) {
 
   registrar.registerHook('someHook', function() {
     someHeavyModule.doSomething();
-  }
+  });
 };
-
 ```
 
 This will slow the build process down, since `some-heavy-module` must be
@@ -28,13 +27,12 @@ exports.pkgmanRegister = function(registrar) {
 
   registrar.registerHook('preBootstrap', function() {
     someHeavyModule = require('some-heavy-module');
-  }
+  });
 
   registrar.registerHook('someHook', function() {
     someHeavyModule.doSomething();
-  }
+  });
 };
-
 ```
 
 So that the heavy module will not be `require`d until hook `preBootstrap` is

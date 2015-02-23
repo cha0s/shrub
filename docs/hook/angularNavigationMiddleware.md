@@ -15,3 +15,10 @@ along with the following extra properties:
 
 A
 [middleware hook specification](guide/concepts#middleware-hook-specification).
+The middleware have the following signature:
+
+```javascript
+function(req, next) {
+  ...
+}
+```
