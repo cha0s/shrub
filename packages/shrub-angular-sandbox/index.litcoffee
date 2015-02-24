@@ -1,4 +1,4 @@
-# Angular on the server
+# Angular sandbox
 
 *A sandboxed version of Angular, for clients lacking JS.*
 
@@ -30,7 +30,7 @@ hold their sandbox.
 
         routes.push
 
-          path: 'shrub-angular/hangup'
+          path: 'shrub-angular-sandbox/hangup'
           receiver: (req, fn) ->
 
 ###### TODO: Cookie-less clients won't have a valid session ID to call with. This should be some other token, perhaps CSRF.
@@ -76,7 +76,7 @@ After the template is rendered, lookup or create the sandbox.
 
 ###### TODO: Multiline.
 
-                url: "http://localhost:#{config.get 'packageSettings:shrub-http:port'}/shrub-entry-point"
+                url: "http://localhost:#{config.get 'packageSettings:shrub-http:port'}/shrub-angular-entry-point"
               ,
                 req.session.id
               )

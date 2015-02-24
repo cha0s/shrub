@@ -1,5 +1,6 @@
 {
   "packageList": [
+    "shrub-angular",
     "shrub-assets",
     "shrub-audit",
     "shrub-config",

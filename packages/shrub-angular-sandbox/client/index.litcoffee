@@ -1,4 +1,4 @@
-# Communicate with Angular on the server
+# Angular sandbox
 
     exports.pkgmanRegister = (registrar) ->
 
@@ -13,6 +13,6 @@ Hang up any sandbox if we don't need it anymore.
 Hang up the socket unless it's the local (Node.js) client.
 
           unless $window.navigator.userAgent.match /^Node\.js .*$/
-            rpc.call 'shrub-angular/hangup'
+            rpc.call 'shrub-angular-sandbox/hangup'
 
       ]
