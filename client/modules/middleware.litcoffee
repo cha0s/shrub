@@ -142,6 +142,19 @@ Invoke the hook and `use` the middleware in the paths configuration order.
 
       middleware
 
+## middleware.fromConfig
+
+*Create a middleware stack from a configuration path.*
+
+    exports.fromConfig = (path, args...) ->
+
+      configKey = if global? then 'packageSettings' else 'packageConfig'
+
+      exports.fromHook(
+        pkgman.normalizePath path
+        config.get "#{configKey}:#{path}"
+      )
+
 ## middleware.fromShortName
 
 *Create a middleware stack from a short name. e.g. "example thing hook".*
@@ -180,9 +193,9 @@ debug "User before login middleware loaded."
       middleware = exports.fromHook(
         "#{firstPart}#{i8n.camelize key}Middleware"
 
-        config.get "#{configKey}:#{packageName}:#{
-          i8n.camelize key, true
-        }Middleware"
+###### TODO: Multiline
+
+        config.get "#{configKey}:#{packageName}:#{i8n.camelize key, true}Middleware"
       )
 
       debugSilly "- #{i8n.capitalize shortName} middleware loaded."
