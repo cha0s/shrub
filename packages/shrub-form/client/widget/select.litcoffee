@@ -25,7 +25,7 @@
 
         data-ng-model="field.value"
         data-ng-required="field.required"
-        data-ng-options="{{field.options}}"
+        data-ng-options="field.options"
       ></select>
 
     </div>
