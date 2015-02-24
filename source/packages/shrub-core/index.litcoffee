@@ -75,6 +75,7 @@ Middleware for server bootstrap phase.
           'shrub-install'
           'shrub-http-express/session'
           'shrub-http'
+          'shrub-socket'
           'shrub-rpc'
           'shrub-user/login'
           'shrub-user/logout'

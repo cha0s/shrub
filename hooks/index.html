@@ -51,6 +51,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../guide/forms">Form handling</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../guide/concepts">Concepts and conventions</a>
                     
                 </li>
@@ -104,7 +109,7 @@
                             
                                 <li><a class="toctree-l3" href="#formalter">formAlter</a></li>
                             
-                                <li><a class="toctree-l3" href="#formformidalter">formFormIdAlter</a></li>
+                                <li><a class="toctree-l3" href="#formformkeyalter">formFormKeyAlter</a></li>
                             
                                 <li><a class="toctree-l3" href="#formwidgets">formWidgets</a></li>
                             
@@ -112,15 +117,13 @@
                             
                                 <li><a class="toctree-l3" href="#gruntconfigalter">gruntConfigAlter</a></li>
                             
-                                <li><a class="toctree-l3" href="#httpinitializing">httpInitializing</a></li>
-                            
                                 <li><a class="toctree-l3" href="#httpmiddleware">httpMiddleware</a></li>
                             
                                 <li><a class="toctree-l3" href="#httproutes">httpRoutes</a></li>
                             
                                 <li><a class="toctree-l3" href="#mailhtml">mailHtml</a></li>
                             
-                                <li><a class="toctree-l3" href="#notificationqueue">notificationQueue</a></li>
+                                <li><a class="toctree-l3" href="#notificationqueues">notificationQueues</a></li>
                             
                                 <li><a class="toctree-l3" href="#packagesettings">packageSettings</a></li>
                             
@@ -860,8 +863,9 @@ JavaScript capability. When a user hits another page on the server, the
 sandbox navigates the Angular application to the new path. If the path
 changed, the middleware collected by this hook are dispatched, allowing
 packages to react to the navigation change.</p>
-<p>The <code>req</code> parameter to the middleware is the original HTTP request object,
-along with the following extra properties:</p>
+<p>The <code>req</code> parameter to the middleware is an instance of
+<a href="http://nodejs.org/api/http.html#http_http_incomingmessage">http.IncomingMessage</a>
+from the original HTTP request, along with the following extra properties:</p>
 <ul>
 <li>(Sandbox) <code>sandbox</code> - The sandbox instance.</li>
 </ul>
@@ -1047,7 +1051,7 @@ The middleware have the following signature:</p>
 </code></pre>
 
 <div class="admonition note">
-<p class="admonition-title">11 implementations</p>
+<p class="admonition-title">12 implementations</p>
 <ul>
 <li><a href="../packages/">shrub-angular (server)</a> &mdash; <a href="../source/packages/shrub-angular#implements-hook-bootstrapmiddleware">implementation</a> </li>
 <li><a href="../packages/">shrub-http-express/session (server)</a> &mdash; <a href="../source/packages/shrub-http-express/session#implements-hook-bootstrapmiddleware">implementation</a> </li>
@@ -1057,6 +1061,7 @@ The middleware have the following signature:</p>
 <li><a href="../packages/">shrub-orm (server)</a> &mdash; <a href="../source/packages/shrub-orm#implements-hook-bootstrapmiddleware">implementation</a> </li>
 <li><a href="../packages/">shrub-repl (server)</a> &mdash; <a href="../source/packages/shrub-repl#implements-hook-bootstrapmiddleware">implementation</a> </li>
 <li><a href="../packages/">shrub-rpc (server)</a> &mdash; <a href="../source/packages/shrub-rpc#implements-hook-bootstrapmiddleware">implementation</a> </li>
+<li><a href="../packages/">shrub-socket (server)</a> &mdash; <a href="../source/packages/shrub-socket#implements-hook-bootstrapmiddleware">implementation</a> </li>
 <li><a href="../packages/">shrub-ui/notifications (server)</a> &mdash; <a href="../source/packages/shrub-ui/notifications#implements-hook-bootstrapmiddleware">implementation</a> </li>
 <li><a href="../packages/">shrub-user/login (server)</a> &mdash; <a href="../source/packages/shrub-user/login#implements-hook-bootstrapmiddleware">implementation</a> </li>
 <li><a href="../packages/">shrub-user/logout (server)</a> &mdash; <a href="../source/packages/shrub-user/logout#implements-hook-bootstrapmiddleware">implementation</a> </li>
@@ -1309,17 +1314,21 @@ filtered out when doing most checks.</p>
 </ul>
 </div>
 <h2 id="formalter">formAlter</h2>
+<p><em>Alter any <a href="../guide/forms/#form-definition-objects">form definition object</a>
+before it's rendered.</em></p>
+<p>Packages may implement this hook to modify the form definition object in any
+way.</p>
 <div class="admonition note">
 <p class="admonition-title">1 invocation</p>
 <ul>
 <li><a href="../packages/#shrub-formclient">shrub-form (client)</a> &mdash; <a href="../source/packages/shrub-form/client#invoke-hook-formalter">invocation</a> </li>
 </ul>
 </div>
-<h2 id="formformidalter">formFormIdAlter</h2>
+<h2 id="formformkeyalter">formFormKeyAlter</h2>
 <div class="admonition note">
 <p class="admonition-title">1 invocation</p>
 <ul>
-<li><a href="../packages/#shrub-formclient">shrub-form (client)</a> &mdash; <a href="../source/packages/shrub-form/client#invoke-hook-formformidalter">invocation</a> </li>
+<li><a href="../packages/#shrub-formclient">shrub-form (client)</a> &mdash; <a href="../source/packages/shrub-form/client#invoke-hook-formformkeyalter">invocation</a> </li>
 </ul>
 </div>
 <h2 id="formwidgets">formWidgets</h2>
@@ -1343,6 +1352,15 @@ filtered out when doing most checks.</p>
 </ul>
 </div>
 <h2 id="gruntconfig">gruntConfig</h2>
+<p><em>Hook into the Grunt build process.</em></p>
+<p>This hook allows packages to define Grunt tasks, configure existing tasks, and
+load NPM tasks. This is achieved through the first implementation parameter
+which is an instance of the class
+<a href="../source/Gruntfile/#gruntconfiguration"><code>GruntConfiguration</code></a>. The
+<code>grunt</code> object is passed in through the second parameter in case it's needed.</p>
+<p>One of the most common uses of this hook is to copy any asset files your
+package may include to the <code>app</code> directory, where they can be served to
+clients.</p>
 <div class="admonition note">
 <p class="admonition-title">13 implementations</p>
 <ul>
@@ -1368,6 +1386,12 @@ filtered out when doing most checks.</p>
 </ul>
 </div>
 <h2 id="gruntconfigalter">gruntConfigAlter</h2>
+<p><em>Alter the Grunt build process.</em></p>
+<p>This hook allows packages to alter Grunt configuration specified through
+<a href="../hooks/#gruntconfig"><code>gruntConfig</code></a>.</p>
+<p>The first implementation parameter is an instance of the class
+<a href="../source/Gruntfile/#gruntconfiguration"><code>GruntConfiguration</code></a>. The <code>grunt</code>
+object is passed in through the second parameter in case it's needed.</p>
 <div class="admonition note">
 <p class="admonition-title">2 implementations</p>
 <ul>
@@ -1381,20 +1405,23 @@ filtered out when doing most checks.</p>
 <li><a href="../packages/">Gruntfile (server)</a> &mdash; <a href="../source/Gruntfile#invoke-hook-gruntconfigalter">invocation</a> </li>
 </ul>
 </div>
-<h2 id="httpinitializing">httpInitializing</h2>
-<div class="admonition note">
-<p class="admonition-title">1 implementation</p>
-<ul>
-<li><a href="../packages/">shrub-socket (server)</a> &mdash; <a href="../source/packages/shrub-socket#implements-hook-httpinitializing">implementation</a> </li>
-</ul>
-</div>
-<div class="admonition note">
-<p class="admonition-title">1 invocation</p>
-<ul>
-<li><a href="../packages/">shrub-http/manager (server)</a> &mdash; <a href="../source/packages/shrub-http/manager#invoke-hook-httpinitializing">invocation</a> </li>
-</ul>
-</div>
 <h2 id="httpmiddleware">httpMiddleware</h2>
+<p><em>Define middleware to run for every HTTP request.</em></p>
+<p>The <code>req</code> parameter to the middleware is an instance of
+<a href="http://nodejs.org/api/http.html#http_http_incomingmessage">http.IncomingMessage</a>
+from the HTTP request.</p>
+<p>The <code>res</code> parameter to the middleware is an instance of
+<a href="http://nodejs.org/api/http.html#http_class_http_serverresponse">http.ServerResponse</a>
+from the HTTP request.</p>
+<h3 id="answer-with_13">Answer with</h3>
+<p>A
+<a href="../guide/concepts#middleware-hook-specification">middleware hook specification</a>.
+The middleware have the following signature:</p>
+<pre><code class="javascript">function(req, res, next) {
+  ...
+}
+</code></pre>
+
 <div class="admonition note">
 <p class="admonition-title">14 implementations</p>
 <ul>
@@ -1421,6 +1448,21 @@ filtered out when doing most checks.</p>
 </ul>
 </div>
 <h2 id="httproutes">httpRoutes</h2>
+<p><em>Define HTTP routes.</em></p>
+<p>Packages use this hook to define HTTP routes.</p>
+<h3 id="answer-with_14">Answer with</h3>
+<p>An array of objects structured like:</p>
+<ul>
+<li>(String) <code>path</code> - The HTTP path of the route. Include the leading slash.</li>
+<li>(String) <code>verb</code> - The HTTP verb to associate with this route. Defaults to
+  <code>'get'</code>.</li>
+<li>(Function) <code>receiver</code> - The function invoked when the route is hit. Takes two
+  parameters:<ul>
+<li>(http.IncomingMessage) <code>req</code> - The request object.</li>
+<li>(http.ServerResponse) <code>res</code> - The response object.</li>
+</ul>
+</li>
+</ul>
 <div class="admonition note">
 <p class="admonition-title">1 implementation</p>
 <ul>
@@ -1434,20 +1476,78 @@ filtered out when doing most checks.</p>
 </ul>
 </div>
 <h2 id="mailhtml">mailHtml</h2>
+<p><em>Compose outgoing email.</em></p>
+<p>This hook is implemented by skins. Only the active skin's implementation is
+called for any email.</p>
+<p>Implementations accept the following parameters:</p>
+<ul>
+<li>(cheerio element) <code>$body</code> - The body tag of the rendered app HTML, wrapped
+  with <a href="https://github.com/cheeriojs/cheerio">cheerio</a>, a lightweight
+  server-side implementation of a lot of jQuery's functionality.</li>
+<li>(String) <code>html</code> - The mail HTML, generated from the directive.</li>
+<li>(cheerio) <code>$</code> - The cheerio instance.</li>
+</ul>
+<p>It is the skin's responsibility to inject the email HTML from the second
+parameter to where it belongs in the app HTML. The skin should also remove any
+trace of dynamic JavaScript-driven functionality as that will surely break
+in email where such things are not allowed.</p>
 <div class="admonition note">
 <p class="admonition-title">1 implementation</p>
 <ul>
 <li><a href="../packages/">shrub-skin-strapped (server)</a> &mdash; <a href="../source/packages/shrub-skin-strapped#implements-hook-mailhtml">implementation</a> </li>
 </ul>
 </div>
-<h2 id="notificationqueue">notificationQueue</h2>
+<div class="admonition note">
+<p class="admonition-title">1 invocation</p>
+<ul>
+<li><a href="../packages/">shrub-nodemailer (server)</a> &mdash; <a href="../source/packages/shrub-nodemailer#invoke-hook-mailhtml">invocation</a> </li>
+</ul>
+</div>
+<h2 id="notificationqueues">notificationQueues</h2>
+<p><em>Define persistent notification queues.</em></p>
+<p>Packages may implement this hook to define queues of notifications.</p>
+<h3 id="answer-with_15">Answer with</h3>
+<p>An object whose keys are queue names and whose values are structured like:</p>
+<ul>
+<li>(Function) <code>channelFromRequest</code> - An idempotent function which returns the
+  channel of the queue. The channel is represented as a string value.
+  Typically the channel maps to the concept of ownership -- a queue which
+  stores some notifications for a user will likely belong to a channel
+  which is identical to the user ID. This function takes the following
+  parameters:<ul>
+<li>(http.IncomingMessage) <code>req</code> - The request object.</li>
+</ul>
+</li>
+</ul>
 <div class="admonition note">
 <p class="admonition-title">1 implementation</p>
 <ul>
-<li><a href="../packages/">shrub-example (server)</a> &mdash; <a href="../source/packages/shrub-example#implements-hook-notificationqueue">implementation</a> </li>
+<li><a href="../packages/">shrub-example (server)</a> &mdash; <a href="../source/packages/shrub-example#implements-hook-notificationqueues">implementation</a> </li>
 </ul>
 </div>
 <h2 id="packagesettings">packageSettings</h2>
+<p><em>Define server-side configuration settings.</em></p>
+<p>Packages may use this hook to define default configuration for server-side
+functionality. These settings can be overridden in the settings file.</p>
+<h3 id="answer-with_16">Answer with</h3>
+<p>A recursive object which will be folded into the server configuration under
+the package name key. For instance, say we have a package <code>my-package</code> which
+defines the hook like:</p>
+<pre><code class="javascript">registrar.registerHook('packageSettings', function() {
+  return {
+    one: 68,
+    two: {
+      three: 419
+    }
+  };
+});
+</code></pre>
+
+<p>You would then find those values in the configuration at:</p>
+<pre><code class="javascript">config.get('packageSettings:my-package:one');
+config.get('packageSettings:my-package:two:three');
+</code></pre>
+
 <div class="admonition note">
 <p class="admonition-title">11 implementations</p>
 <ul>

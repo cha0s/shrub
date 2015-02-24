@@ -51,6 +51,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../../guide/forms">Form handling</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../../guide/concepts">Concepts and conventions</a>
                     
                 </li>
@@ -565,9 +570,25 @@
                             
                                 <li><a class="toctree-l3" href="#implements-hook-collections">Implements hook collections.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-config">Implements hook config.</a></li>
+                                <li><a class="toctree-l3" href="#notification">Notification</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-rpcroutes">Implements hook rpcRoutes.</a></li>
+                                <li><a class="toctree-l3" href="#notificationacknowledged">Notification#acknowledged</a></li>
+                            
+                                <li><a class="toctree-l3" href="#notificationmarkedasread">Notification#markedAsRead</a></li>
+                            
+                                <li><a class="toctree-l3" href="#notificationmayremove">Notification#mayRemove</a></li>
+                            
+                                <li><a class="toctree-l3" href="#notificationchannel">Notification#channel</a></li>
+                            
+                                <li><a class="toctree-l3" href="#notificationpath">Notification#path</a></li>
+                            
+                                <li><a class="toctree-l3" href="#notificationqueue">Notification#queue</a></li>
+                            
+                                <li><a class="toctree-l3" href="#notificationvariables">Notification#variables</a></li>
+                            
+                                <li><a class="toctree-l3" href="#notificationcreatefromrequest">Notification#createFromRequest</a></li>
+                            
+                                <li><a class="toctree-l3" href="#notificationqueuefromrequest">Notification#queueFromRequest</a></li>
                             
                         
                         </ul>
@@ -746,8 +767,9 @@ exports.pkgmanRegister = (registrar) -&gt;
 
       (next) -&gt;
 
-        for path, queue of pkgman.invoke 'notificationQueue'
-          notificationQueues[pkgman.normalizePath path] = queue
+        for path, queues of pkgman.invoke 'notificationQueues'
+          for name, queue of queues
+            notificationQueues[pkgman.normalizePath name] = queue
 
         next()
 
@@ -781,41 +803,60 @@ exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 <h4 id="implements-hook-collections">Implements hook <code>collections</code>.</h4>
 <pre><code>  registrar.registerHook 'collections', -&gt;
-
-    Notification =
+</code></pre>
+<h2 id="notification">Notification</h2>
+<pre><code>    Notification =
 
       attributes:
 </code></pre>
-<p>Has the notification been acknowledged?</p>
+<h2 id="notificationacknowledged">Notification#acknowledged</h2>
+<p><em>Has the notification been acknowledged?</em></p>
 <pre><code>        acknowledged:
           type: 'boolean'
           defaultsTo: false
 </code></pre>
-<p>Has the notification been read?</p>
+<h2 id="notificationmarkedasread">Notification#markedAsRead</h2>
+<p><em>Has the notification been read?</em></p>
 <pre><code>        markedAsRead:
           type: 'boolean'
           defaultsTo: false
 </code></pre>
-<p>May this notification be removed?</p>
+<h2 id="notificationmayremove">Notification#mayRemove</h2>
+<p><em>May this notification be removed?</em></p>
 <pre><code>        mayRemove:
           type: 'boolean'
           defaultsTo: true
 </code></pre>
-<p>Which channel owns this notification? Built by the queue.</p>
+<h2 id="notificationchannel">Notification#channel</h2>
+<p><em>Which channel owns this notification? Built by the queue.</em></p>
 <pre><code>        channel: 'string'
 </code></pre>
-<p>To where does this notification link?</p>
+<h2 id="notificationpath">Notification#path</h2>
+<p><em>To where does this notification link?</em></p>
 <pre><code>        path: 'string'
 </code></pre>
-<p>To which queue does this notification belong?</p>
+<h2 id="notificationqueue">Notification#queue</h2>
+<p><em>To which queue does this notification belong?</em></p>
 <pre><code>        queue:
           type: 'string'
           notEmpty: true
 </code></pre>
-<p>Variables, can be any type.</p>
+<h2 id="notificationvariables">Notification#variables</h2>
+<p><em>Variables, can be any type.</em></p>
 <pre><code>        variables: 'json'
-
-      createFromRequest: (req, queueName, variables, path, mayRemove) -&gt;
+</code></pre>
+<h2 id="notificationcreatefromrequest">Notification#createFromRequest</h2>
+<ul>
+<li>(http.IncomingMessage) <code>req</code> - The request object.</li>
+<li>(String) <code>queueName</code> - The name of the queue.</li>
+<li>(Object) <code>variables</code> - Arbitrary data. Defaults to <code>{}</code>.</li>
+<li>(String) <code>path</code> - Path this notification links to. Defaults to
+  <code>'javascript:void(0)'</code>.</li>
+<li>(Boolean) <code>mayRemove</code> - May this notification be removed from the queue by
+  the user? Defaults to <code>true</code>.</li>
+</ul>
+<p><em>Create a notification from a request object.</em></p>
+<pre><code>      createFromRequest: (req, queueName, variables, path, mayRemove) -&gt;
 </code></pre>
 <p>Check that the queue is valid.</p>
 <pre><code>        unless queue = notificationQueues[queueName]
@@ -852,7 +893,11 @@ exports.pkgmanRegister = (registrar) -&gt;
               notifications: [notification]
             )
 </code></pre>
-<p>Get a queue's notifications from a request.</p>
+<h2 id="notificationqueuefromrequest">Notification#queueFromRequest</h2>
+<ul>
+<li>(http.IncomingMessage) <code>req</code> - The request object.</li>
+</ul>
+<p><em>Get a queue's notifications from a request.</em></p>
 <pre><code>      queueFromRequest: (req) -&gt;
 </code></pre>
 <p>Empty queue if none was defined.</p>

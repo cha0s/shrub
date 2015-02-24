@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Getting Started - Shrub</title>
+  <title>Form handling - Shrub</title>
   
 
   
@@ -45,30 +45,20 @@
         
         <span>Guide</span>
             
-                <li class="toctree-l1 current">
-                    <a class="current" href=".">Getting Started</a>
-                    
-                        <ul>
-                        
-                            <li class="toctree-l2"><a href="#installing-shrub">Installing Shrub</a></li>
-                            
-                        
-                            <li class="toctree-l2"><a href="#creating-your-first-package">Creating your first package</a></li>
-                            
-                                <li><a class="toctree-l3" href="#create-the-package">Create the package</a></li>
-                            
-                                <li><a class="toctree-l3" href="#add-the-package-to-the-settings-file">Add the package to the settings file</a></li>
-                            
-                        
-                            <li class="toctree-l2"><a href="#go-go-go">Go go go</a></li>
-                            
-                        
-                        </ul>
+                <li class="toctree-l1 ">
+                    <a class="" href="../getting-started">Getting Started</a>
                     
                 </li>
             
-                <li class="toctree-l1 ">
-                    <a class="" href="../forms">Form handling</a>
+                <li class="toctree-l1 current">
+                    <a class="current" href=".">Form handling</a>
+                    
+                        <ul>
+                        
+                            <li class="toctree-l2"><a href="#form-definition-objects">Form definition objects</a></li>
+                            
+                        
+                        </ul>
                     
                 </li>
             
@@ -712,7 +702,7 @@
           <div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../..">Docs</a> &raquo;</li>
-    <li>Getting Started</li>
+    <li>Form handling</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -725,74 +715,78 @@
 </div>
           <div role="main">
             <div class="section">
-              <p>Welcome to Shrub, an opinionated full stack JavaScript web application
-framework. In this guide, we'll go over how to set up a working Shrub instance
-and outline some of the steps forward to build your application.</p>
-<p><strong>NOTE:</strong> Shrub uses a database abstraction layer and presently it defaults
-to using Redis as the backend. This is completely configurable, but if you
-just punch in the defaults as this guide suggests, you will run into issues if
-you don't have a redis server installed on the machine.</p>
-<h2 id="installing-shrub">Installing Shrub</h2>
-<p>First off, you'll need to clone Shrub itself. Fire up your trusty terminal:</p>
-<p><code>git clone git://github.com/cha0s/shrub.git</code></p>
-<p>(obviously you can use a git management tool if you fancy that sort of thing,
-not that there's anything wrong with that...)</p>
-<p>Head into the directory you just cloned and issue:</p>
-<p><code>npm install</code></p>
-<p>The next step is to create a configuration file. Look in the <code>config</code> directory
-and you will see a file called <code>default.settings.json</code>. Create a copy of that
-file called <code>settings.json</code>. Shrub <strong>requires</strong> a configuration file at this
-time, so this is not an optional step.</p>
-<p>Finally, to build and run the code you can do this:</p>
-<p><code>DEBUG=shrub:* grunt execute</code></p>
-<p>You don't strictly need the <code>DEBUG=shrub:*</code> part, but we do that so it's easy
-to see when the server is up and ready for connections (and preserving the
-ability to skip using that and have the server output be silent for
-production).</p>
-<p>When you see <code>shrub:http Shrub HTTP server up and running on port 4201!</code>, that
-means you can visit your site in the browser. Go ahead and visit
-http://localhost:4201 and see your Shrub instance chugging along!</p>
-<h2 id="creating-your-first-package">Creating your first package</h2>
-<p>So great, we have Shrub running, but we want to build our own application!</p>
-<p>Developing for Shrub means creating packages that implement hooks. Let's create
-a simple package to get our hands dirty. You'll see that there is a <code>custom</code>
-directory in your Shrub installation. This is where we'll put all of the
-packages we create.</p>
-<h3 id="create-the-package">Create the package</h3>
-<p>Head into that directory and create a directory called <code>my-package</code>. Head into
-that directory and create a file called <code>index.js</code>. <strong>NOTE:</strong> you can create
-<code>index.coffee</code> if you prefer CoffeeScript (as the author does). Open that file
-and put in the following code:</p>
-<pre><code class="javascript">exports.pkgmanRegister = function(registrar) {
-
-  registrar.registerHook('preBootstrap', function() {
-    console.log('I hooked into shrub!');
-  });
-};
+              <h1 id="form-definition-objects">Form definition objects</h1>
+<p>Forms are created by passing a form definition object to the
+<a href="http://doc.shrub.com.dev/source/packages/shrub-form/client#implements-hook-directive"><code>shrub-form</code> directive</a>.</p>
+<p>A form definition object is defined like:</p>
+<ul>
+<li>(Optional String) <code>key</code> - The form hey included on the form as a hidden
+  value, also used to generate an HTML class. Defaults to the scope key (See
+  below).</li>
+<li>(Function Array) <code>submits</code> - An array of functions to be invoked when the
+  form is submitted. The functions take a single <code>values</code> parameter containing
+  a keyed object of all field values in the form.</li>
+<li>(Object) <code>fields</code> - A keyed object of all form fields. Each field is defined
+  like:<ul>
+<li>(String) <code>type</code> - The <a href="../../hooks/#formwidgets">widget</a> type.</li>
+<li>(Optional String) <code>label</code> - The human-readable label. Defaults to no
+  label.</li>
+<li>(Optional Boolean) <code>required</code> - Whether this field is required for
+  submission. Defaults to <code>false</code>.</li>
+<li>(Optional Any) <code>value</code> - The default value of this field.</li>
+<li>Widgets can define arbitrary parameters, see the documentation for the
+  specific widget to learn any extra parameters.</li>
+</ul>
+</li>
+</ul>
+<p>The following builtin widgets and their extra parameters are:</p>
+<p><code>checkboxes</code>:</p>
+<ul>
+<li>(Array) <code>checkboxes</code> - An array of checkbox field definitions.</li>
+</ul>
+<p><code>radio</code>:</p>
+<ul>
+<li>(Any) <code>selectedValue</code> - What <code>value</code> will be populated with when this
+    radio is selected.</li>
+</ul>
+<p><code>radios</code>:</p>
+<ul>
+<li>(Array) <code>radios</code> - An array of radio field definitions.</li>
+</ul>
+<p><code>select</code>:</p>
+<ul>
+<li>(String) <code>options</code> - An options expression. See
+    <a href="https://docs.angularjs.org/api/ng/directive/ngOptions">the Angular documentation</a>
+    for more information.</li>
+</ul>
+<p><code>text</code>:</p>
+<ul>
+<li>(Number) <code>minlength</code> - The minimum length of the text field.</li>
+<li>(Number) <code>maxlength</code> - The maximum length of the text field.</li>
+<li>(String) <code>pattern</code> - An expression that evaluates to a RegExp to test
+    for validity. See
+    <a href="https://docs.angularjs.org/api/ng/input/input[text]#example">the Angular documentation</a>
+    for more information.</li>
+<li>(Boolean) <code>trim</code> - Whether to trim the input.</li>
+</ul>
+<p>If you define a form definition object like:</p>
+<pre><code class="javascript">  $scope.someFormThing =
+    submits: [
+      -&gt;
+    ]
+    fields:
+      foo:
+        type: 'text'
 </code></pre>
 
-<p>(Obviously you will use the equivalent in CoffeeScript if using it, however I
-will stick to JavaScript for the examples so we don't scare anyone)</p>
-<h3 id="add-the-package-to-the-settings-file">Add the package to the settings file</h3>
-<p>Currently to enable a package for shrub, you must add it by hand to the
-settings file. We'll open up the <code>config/settings.json</code> file we created earlier
-and add our package to the <code>packageList</code> array:</p>
-<pre><code class="json">{
-  &quot;packageList&quot;: [
-    &quot;my-package&quot;,
-    &quot;shrub-assets&quot;,
-    &quot;shrub-audit&quot;,
-    &quot;shrub-config&quot;,
-...
+<p>You can include it into a directive under the scope like:</p>
+<pre><code class="html">&lt;div
+  data-shrub-form
+  data-form=&quot;someFormThing&quot;
+&gt;&lt;/div&gt;
 </code></pre>
 
-<h2 id="go-go-go">Go go go</h2>
-<p>If your Shrub server is still running, kill it and run the following:</p>
-<p><code>DEBUG=shrub:* grunt execute</code></p>
-<p>You'll see a bunch of stuff fly by, but you should also notice this:</p>
-<p><code>I hooked into shrub!</code></p>
-<p>This means that our package was hooked into Shrub and the <code>preBootstrap</code> hook
-was invoked! Hurray, we have our first Shrub package.</p>
+<p>In this case, the form key will default to <code>someFormThing</code>.</p>
 
             </div>
           </div>
@@ -800,10 +794,10 @@ was invoked! Hurray, we have our first Shrub package.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../forms" class="btn btn-neutral float-right" title="Form handling"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../concepts" class="btn btn-neutral float-right" title="Concepts and conventions"/>Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../.." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../getting-started" class="btn btn-neutral" title="Getting Started"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -831,8 +825,8 @@ was invoked! Hurray, we have our first Shrub package.</p>
         
             <a class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
         
-      <span><a href="../.." style="color: #fcfcfc;">&laquo; Previous</a></span>
-      <span style="margin-left: 15px"><a href="../forms" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../getting-started" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      <span style="margin-left: 15px"><a href="../concepts" style="color: #fcfcfc">Next &raquo;</a></span>
     </span>
 </div>
 </body>

@@ -35,7 +35,11 @@ Load configuration.
       config.load()
       config.loadPackageSettings()
 
+## GruntConfiguration
+
       class GruntConfiguration
+
+## *constructor*
 
         constructor: ->
 
@@ -45,11 +49,25 @@ Load configuration.
 
           @pkg = grunt.file.readJSON 'package.json'
 
+## GruntConfiguration#configureTask
+
+* (String) `task` - The name of the task to configure.
+* (String) `key` - The name of the key in the task configuration to set. This
+  is generally the name of the package, but can be anything.
+* (Object) `config_` - The configuration to set. See the documentation for the
+  particular grunt task being configured to learn how to configure it.
+
+*Configure a Grunt task.*
+
         configureTask: (task, key, config_) ->
 
           (@_taskConfig[task] ?= {})[key] = config_
 
           return
+
+## GruntConfiguration#build
+
+*Register and configure all tasks.*
 
         build: ->
 
@@ -71,13 +89,36 @@ Register custom tasks.
 
           return
 
+## GruntConfiguration#taskConfiguration
+
+* (String) `task` - The name of the task to configure.
+* (String) `key` - The name of the key in the task configuration to set. This
+  is generally the name of the package, but can be anything.
+
+*Get the configuration for a Grunt task.*
+
         taskConfiguration: (task, key) -> @_taskConfig[task]?[key]
+
+## GruntConfiguration#loadNpmTasks
+
+* (String Array) `tasks` - The list of NPM tasks to load.
+
+*Load NPM tasks.*
 
         loadNpmTasks: (tasks) ->
 
           @_npmTasks.push task for task in tasks
 
           return
+
+## GruntConfiguration#registerTask
+
+* (String) `task` - The name of the task to configure.
+* (String Array or Function) `subtasksOrFunction` - Either an array of strings
+  which define the dependencies for the task, or a function which will be
+  executed for the task.
+
+*Register a Grunt task.*
 
         registerTask: (task, subtasksOrFunction) ->
 
@@ -88,7 +129,7 @@ Register custom tasks.
 
           return
 
-      gruntConfig = new GruntConfiguration grunt
+      gruntConfig = new GruntConfiguration()
 
       gruntConfig.registerTask 'production', ['build']
       gruntConfig.registerTask 'default', ['buildOnce']

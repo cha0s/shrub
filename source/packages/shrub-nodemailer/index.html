@@ -51,6 +51,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../guide/forms">Form handling</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../guide/concepts">Concepts and conventions</a>
                     
                 </li>
@@ -957,6 +962,7 @@ the output.</em></p>
 <p>Clone the body and insert the HTML into the main application area.</p>
 <pre><code>    $body = $('body').clone()
 </code></pre>
+<h4 id="invoke-hook-mailhtml">Invoke hook <code>mailHtml</code>.</h4>
 <p>Let the skin manage the mail HTML.</p>
 <pre><code>    pkgman = require 'pkgman'
     pkgman.invokePackage skin.activeKey(), 'mailHtml', $body, html, $

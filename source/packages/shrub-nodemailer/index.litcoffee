@@ -265,6 +265,8 @@ Clone the body and insert the HTML into the main application area.
 
         $body = $('body').clone()
 
+#### Invoke hook `mailHtml`.
+
 Let the skin manage the mail HTML.
 
         pkgman = require 'pkgman'

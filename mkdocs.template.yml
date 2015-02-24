@@ -15,6 +15,7 @@ site_dir: 'gh-pages'
 pages:
 - [index.md, 'Home']
 - ['guide/getting-started.md', 'Guide', 'Getting Started']
+- ['guide/forms.md', 'Guide', 'Form handling']
 - ['guide/concepts.md', 'Guide', 'Concepts and conventions']
 - [hooks.md, 'Reference', 'Hooks']
 - [packages.md, 'Reference', 'Packages']

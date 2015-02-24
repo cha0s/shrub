@@ -51,6 +51,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../../guide/forms">Form handling</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../../guide/concepts">Concepts and conventions</a>
                     
                 </li>
@@ -370,7 +375,7 @@
                             
                                 <li><a class="toctree-l3" href="#constructor">constructor</a></li>
                             
-                                <li><a class="toctree-l3" href="#initialize">.initialize</a></li>
+                                <li><a class="toctree-l3" href="#httpmanagerinitialize">HttpManager#initialize</a></li>
                             
                                 <li><a class="toctree-l3" href="#httpmanagerlisten">HttpManager#listen</a></li>
                             
@@ -755,15 +760,11 @@ httpMiddlewareDebug = require('debug') 'shrub-silly:http:middleware'
 
     @_middleware = null
 </code></pre>
-<h2 id="initialize">.initialize</h2>
+<h2 id="httpmanagerinitialize">HttpManager#initialize</h2>
 <p><em>Initialize the server.</em></p>
 <pre><code>  initialize: -&gt;
 </code></pre>
 <h4 id="invoke-hook-httproutes">Invoke hook <code>httpRoutes</code>.</h4>
-<p>Allows packages to specify HTTP routes. Implementations should return an array
-of route specifications. See
-[shrub-example's implementation]
-(/packages/shrub-example/index.coffee#implementshookhttproutes) as an example.</p>
 <pre><code>    httpDebugSilly '- Registering routes...'
     for routeList in pkgman.invokeFlat 'httpRoutes', this
 
@@ -774,11 +775,6 @@ of route specifications. See
 
         @addRoute route
     httpDebugSilly '- Routes registered.'
-</code></pre>
-<h4 id="invoke-hook-httpinitializing">Invoke hook <code>httpInitializing</code>.</h4>
-<p>Invoked before the server is bound on the listening port.</p>
-<h6 id="todo-this-goes-away-after-confirming-socket-can-bind-after-server-is-listening">TODO: This goes away after confirming socket can bind after server is listening.</h6>
-<pre><code>    pkgman.invoke 'httpInitializing', this
 </code></pre>
 <p>Start listening.</p>
 <pre><code>    @listen()

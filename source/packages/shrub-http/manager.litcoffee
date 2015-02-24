@@ -35,18 +35,13 @@ An abstract interface to be implemented by an HTTP server (e.g.
 
         @_middleware = null
 
-## .initialize
+## HttpManager#initialize
 
 *Initialize the server.*
 
       initialize: ->
 
 #### Invoke hook `httpRoutes`.
-
-Allows packages to specify HTTP routes. Implementations should return an array
-of route specifications. See
-[shrub-example's implementation]
-(/packages/shrub-example/index.coffee#implementshookhttproutes) as an example.
 
         httpDebugSilly '- Registering routes...'
         for routeList in pkgman.invokeFlat 'httpRoutes', this
@@ -58,14 +53,6 @@ of route specifications. See
 
             @addRoute route
         httpDebugSilly '- Routes registered.'
-
-#### Invoke hook `httpInitializing`.
-
-Invoked before the server is bound on the listening port.
-
-###### TODO: This goes away after confirming socket can bind after server is listening.
-
-        pkgman.invoke 'httpInitializing', this
 
 Start listening.
 

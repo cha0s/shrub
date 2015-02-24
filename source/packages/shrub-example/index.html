@@ -51,6 +51,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../guide/forms">Form handling</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../guide/concepts">Concepts and conventions</a>
                     
                 </li>
@@ -209,7 +214,7 @@
                         
                             <li class="toctree-l2"><a href="#example-package">Example package</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-notificationqueue">Implements hook notificationQueue.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-notificationqueues">Implements hook notificationQueues.</a></li>
                             
                         
                         </ul>
@@ -715,11 +720,13 @@
               <h1 id="example-package">Example package</h1>
 <pre><code>exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h4 id="implements-hook-notificationqueue">Implements hook <code>notificationQueue</code>.</h4>
+<h4 id="implements-hook-notificationqueues">Implements hook <code>notificationQueues</code>.</h4>
 <p>Implement the <code>general</code> queue, used to show some notifications.</p>
-<pre><code>  registrar.registerHook 'general', 'notificationQueue', -&gt;
+<pre><code>  registrar.registerHook 'notificationQueues', -&gt;
 
-    channelFromRequest: (req) -&gt; req.session?.id
+    general:
+
+      channelFromRequest: (req) -&gt; req.session?.id
 
   registrar.recur [
     'about'

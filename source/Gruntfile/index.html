@@ -51,6 +51,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../guide/forms">Form handling</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../guide/concepts">Concepts and conventions</a>
                     
                 </li>
@@ -89,9 +94,19 @@
                         
                             <li class="toctree-l2"><a href="#gruntfile">Gruntfile</a></li>
                             
-                                <li><a class="toctree-l3" href="#invoke-hook-gruntconfig">Invoke hook gruntConfig.</a></li>
+                                <li><a class="toctree-l3" href="#gruntconfiguration">GruntConfiguration</a></li>
                             
-                                <li><a class="toctree-l3" href="#invoke-hook-gruntconfigalter">Invoke hook gruntConfigAlter.</a></li>
+                                <li><a class="toctree-l3" href="#constructor">constructor</a></li>
+                            
+                                <li><a class="toctree-l3" href="#gruntconfigurationconfiguretask">GruntConfiguration#configureTask</a></li>
+                            
+                                <li><a class="toctree-l3" href="#gruntconfigurationbuild">GruntConfiguration#build</a></li>
+                            
+                                <li><a class="toctree-l3" href="#gruntconfigurationtaskconfiguration">GruntConfiguration#taskConfiguration</a></li>
+                            
+                                <li><a class="toctree-l3" href="#gruntconfigurationloadnpmtasks">GruntConfiguration#loadNpmTasks</a></li>
+                            
+                                <li><a class="toctree-l3" href="#gruntconfigurationregistertask">GruntConfiguration#registerTask</a></li>
                             
                         
                         </ul>
@@ -745,24 +760,37 @@ module.exports = (grunt) -&gt;
 <p>Load configuration.</p>
 <pre><code>  config.load()
   config.loadPackageSettings()
-
-  class GruntConfiguration
-
-    constructor: -&gt;
+</code></pre>
+<h2 id="gruntconfiguration">GruntConfiguration</h2>
+<pre><code>  class GruntConfiguration
+</code></pre>
+<h2 id="constructor"><em>constructor</em></h2>
+<pre><code>    constructor: -&gt;
 
       @_npmTasks = []
       @_taskConfig = {}
       @_tasks = {}
 
       @pkg = grunt.file.readJSON 'package.json'
-
-    configureTask: (task, key, config_) -&gt;
+</code></pre>
+<h2 id="gruntconfigurationconfiguretask">GruntConfiguration#configureTask</h2>
+<ul>
+<li>(String) <code>task</code> - The name of the task to configure.</li>
+<li>(String) <code>key</code> - The name of the key in the task configuration to set. This
+  is generally the name of the package, but can be anything.</li>
+<li>(Object) <code>config_</code> - The configuration to set. See the documentation for the
+  particular grunt task being configured to learn how to configure it.</li>
+</ul>
+<p><em>Configure a Grunt task.</em></p>
+<pre><code>    configureTask: (task, key, config_) -&gt;
 
       (@_taskConfig[task] ?= {})[key] = config_
 
       return
-
-    build: -&gt;
+</code></pre>
+<h2 id="gruntconfigurationbuild">GruntConfiguration#build</h2>
+<p><em>Register and configure all tasks.</em></p>
+<pre><code>    build: -&gt;
 </code></pre>
 <p>Initialize configuration.</p>
 <pre><code>      grunt.initConfig @_taskConfig
@@ -778,16 +806,36 @@ module.exports = (grunt) -&gt;
 <pre><code>      grunt.registerTask task, actions for task, actions of @_tasks
 
       return
-
-    taskConfiguration: (task, key) -&gt; @_taskConfig[task]?[key]
-
-    loadNpmTasks: (tasks) -&gt;
+</code></pre>
+<h2 id="gruntconfigurationtaskconfiguration">GruntConfiguration#taskConfiguration</h2>
+<ul>
+<li>(String) <code>task</code> - The name of the task to configure.</li>
+<li>(String) <code>key</code> - The name of the key in the task configuration to set. This
+  is generally the name of the package, but can be anything.</li>
+</ul>
+<p><em>Get the configuration for a Grunt task.</em></p>
+<pre><code>    taskConfiguration: (task, key) -&gt; @_taskConfig[task]?[key]
+</code></pre>
+<h2 id="gruntconfigurationloadnpmtasks">GruntConfiguration#loadNpmTasks</h2>
+<ul>
+<li>(String Array) <code>tasks</code> - The list of NPM tasks to load.</li>
+</ul>
+<p><em>Load NPM tasks.</em></p>
+<pre><code>    loadNpmTasks: (tasks) -&gt;
 
       @_npmTasks.push task for task in tasks
 
       return
-
-    registerTask: (task, subtasksOrFunction) -&gt;
+</code></pre>
+<h2 id="gruntconfigurationregistertask">GruntConfiguration#registerTask</h2>
+<ul>
+<li>(String) <code>task</code> - The name of the task to configure.</li>
+<li>(String Array or Function) <code>subtasksOrFunction</code> - Either an array of strings
+  which define the dependencies for the task, or a function which will be
+  executed for the task.</li>
+</ul>
+<p><em>Register a Grunt task.</em></p>
+<pre><code>    registerTask: (task, subtasksOrFunction) -&gt;
 
       if 'function' is typeof subtasksOrFunction
         @_tasks[task] = subtasksOrFunction
@@ -796,7 +844,7 @@ module.exports = (grunt) -&gt;
 
       return
 
-  gruntConfig = new GruntConfiguration grunt
+  gruntConfig = new GruntConfiguration()
 
   gruntConfig.registerTask 'production', ['build']
   gruntConfig.registerTask 'default', ['buildOnce']

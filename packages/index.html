@@ -51,6 +51,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../guide/forms">Form handling</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../guide/concepts">Concepts and conventions</a>
                     
                 </li>
@@ -868,7 +873,7 @@ up later.</em></p>
 <p class="admonition-title">Invokes hooks</p>
 <ul>
 <li><a href="../hooks/#formalter">formAlter</a> &mdash; <a href="../source/packages/shrub-form/client#invoke-hook-formalter">invocation</a></li>
-<li><a href="../hooks/#formformidalter">formFormIdAlter</a> &mdash; <a href="../source/packages/shrub-form/client#invoke-hook-formformidalter">invocation</a></li>
+<li><a href="../hooks/#formformkeyalter">formFormKeyAlter</a> &mdash; <a href="../source/packages/shrub-form/client#invoke-hook-formformkeyalter">invocation</a></li>
 <li><a href="../hooks/#formwidgets">formWidgets</a> &mdash; <a href="../source/packages/shrub-form/client#invoke-hook-formwidgets">invocation</a></li>
 </ul>
 </div>
@@ -1342,7 +1347,7 @@ for analytics, or anything else.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#notificationqueue">notificationQueue</a> &mdash; <a href="../source/packages/shrub-example#implements-hook-notificationqueue">implementation</a></li>
+<li><a href="../hooks/#notificationqueues">notificationQueues</a> &mdash; <a href="../source/packages/shrub-example#implements-hook-notificationqueues">implementation</a></li>
 </ul>
 </div>
 <blockquote>
@@ -1534,7 +1539,6 @@ middleware for sessions, routing, logging, etc.</em></p>
 <p class="admonition-title">Invokes hooks</p>
 <ul>
 <li><a href="../hooks/#httproutes">httpRoutes</a> &mdash; <a href="../source/packages/shrub-http/manager#invoke-hook-httproutes">invocation</a></li>
-<li><a href="../hooks/#httpinitializing">httpInitializing</a> &mdash; <a href="../source/packages/shrub-http/manager#invoke-hook-httpinitializing">invocation</a></li>
 <li><a href="../hooks/#httpmiddleware">httpMiddleware</a> &mdash; <a href="../source/packages/shrub-http/manager#invoke-hook-httpmiddleware">invocation</a></li>
 </ul>
 </div>
@@ -1577,6 +1581,12 @@ across multiple <a href="../source/packages/shrub-audit/fingerprint">fingerprint
 <li><a href="../hooks/#prebootstrap">preBootstrap</a> &mdash; <a href="../source/packages/shrub-nodemailer#implements-hook-prebootstrap">implementation</a></li>
 <li><a href="../hooks/#bootstrapmiddleware">bootstrapMiddleware</a> &mdash; <a href="../source/packages/shrub-nodemailer#implements-hook-bootstrapmiddleware">implementation</a></li>
 <li><a href="../hooks/#packagesettings">packageSettings</a> &mdash; <a href="../source/packages/shrub-nodemailer#implements-hook-packagesettings">implementation</a></li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Invokes hooks</p>
+<ul>
+<li><a href="../hooks/#mailhtml">mailHtml</a> &mdash; <a href="../source/packages/shrub-nodemailer#invoke-hook-mailhtml">invocation</a></li>
 </ul>
 </div>
 <h2 id="shrub-orm"><a href="../source/packages/shrub-orm">shrub-orm</a></h2>
@@ -1689,7 +1699,7 @@ across multiple <a href="../source/packages/shrub-audit/fingerprint">fingerprint
 <p class="admonition-title">Implements hooks</p>
 <ul>
 <li><a href="../hooks/#config">config</a> &mdash; <a href="../source/packages/shrub-socket#implements-hook-config">implementation</a></li>
-<li><a href="../hooks/#httpinitializing">httpInitializing</a> &mdash; <a href="../source/packages/shrub-socket#implements-hook-httpinitializing">implementation</a></li>
+<li><a href="../hooks/#bootstrapmiddleware">bootstrapMiddleware</a> &mdash; <a href="../source/packages/shrub-socket#implements-hook-bootstrapmiddleware">implementation</a></li>
 <li><a href="../hooks/#packagesettings">packageSettings</a> &mdash; <a href="../source/packages/shrub-socket#implements-hook-packagesettings">implementation</a></li>
 <li><a href="../hooks/#replcontext">replContext</a> &mdash; <a href="../source/packages/shrub-socket#implements-hook-replcontext">implementation</a></li>
 </ul>

@@ -51,6 +51,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../guide/forms">Form handling</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../guide/concepts">Concepts and conventions</a>
                     
                 </li>
@@ -491,7 +496,7 @@
                             
                                 <li><a class="toctree-l3" href="#implements-hook-config">Implements hook config.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-httpinitializing">Implements hook httpInitializing.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-bootstrapmiddleware">Implements hook bootstrapMiddleware.</a></li>
                             
                                 <li><a class="toctree-l3" href="#implements-hook-packagesettings">Implements hook packageSettings.</a></li>
                             
@@ -743,15 +748,26 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     manager: module: socketModule
 </code></pre>
-<h4 id="implements-hook-httpinitializing">Implements hook <code>httpInitializing</code>.</h4>
-<pre><code>  registrar.registerHook 'httpInitializing', (http) -&gt;
+<h4 id="implements-hook-bootstrapmiddleware">Implements hook <code>bootstrapMiddleware</code>.</h4>
+<pre><code>  registrar.registerHook 'bootstrapMiddleware', -&gt;
 
-    {Manager} = require config.get 'packageSettings:shrub-socket:manager:module'
+    label: 'Socket server'
+    middleware: [
+
+      (next) -&gt;
+
+        {manager: httpManager} = require 'shrub-http'
+
+        {Manager} = require config.get 'packageSettings:shrub-socket:manager:module'
 </code></pre>
 <p>Spin up the socket server, and have it listen on the HTTP server.</p>
-<pre><code>    socketManager = new Manager()
-    socketManager.loadMiddleware()
-    socketManager.listen http
+<pre><code>        socketManager = new Manager()
+        socketManager.loadMiddleware()
+        socketManager.listen httpManager()
+
+        next()
+
+    ]
 </code></pre>
 <h4 id="implements-hook-packagesettings">Implements hook <code>packageSettings</code>.</h4>
 <pre><code>  registrar.registerHook 'packageSettings', -&gt;

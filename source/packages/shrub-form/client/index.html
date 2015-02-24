@@ -51,6 +51,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../../guide/forms">Form handling</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../../guide/concepts">Concepts and conventions</a>
                     
                 </li>
@@ -218,7 +223,7 @@
                             
                                 <li><a class="toctree-l3" href="#invoke-hook-formalter">Invoke hook formAlter.</a></li>
                             
-                                <li><a class="toctree-l3" href="#invoke-hook-formformidalter">Invoke hook formFormIdAlter.</a></li>
+                                <li><a class="toctree-l3" href="#invoke-hook-formformkeyalter">Invoke hook formFormKeyAlter.</a></li>
                             
                                 <li><a class="toctree-l3" href="#implements-hook-service">Implements hook service.</a></li>
                             
@@ -756,6 +761,13 @@ need to be rebuilt.</p>
 <p>Call all the form submission handlers.</p>
 <pre><code>            $q.all (submit values, form, $event for submit in form.submits)
 </code></pre>
+<h4 id="invoke-hook-formalter">Invoke hook <code>formAlter</code>.</h4>
+<pre><code>          pkgman.invokeFlat 'formAlter', form
+</code></pre>
+<h4 id="invoke-hook-formformkeyalter">Invoke hook <code>formFormKeyAlter</code>.</h4>
+<h6 id="todo-multiline">TODO: Multiline</h6>
+<pre><code>          pkgman.invokeFlat "form#{pkgman.normalizePath form.key, true}Alter", form
+</code></pre>
 <p>Create the form element.</p>
 <pre><code>          $form = angular.element '&lt;form /&gt;'
           $form.addClass form.key
@@ -770,8 +782,9 @@ need to be rebuilt.</p>
 </code></pre>
 <p>Look up the widget definition and warn if it doesn't exist.</p>
 <pre><code>            unless (widget = formService.widgets[field.type])?
-
-              $log.warn "Form `#{form.key}` contains non-existent field type `#{field.type}`!"
+</code></pre>
+<h6 id="todo-multiline_1">TODO: Multiline</h6>
+<pre><code>              $log.warn "Form `#{form.key}` contains non-existent field type `#{field.type}`!"
               continue
 
             $form.append """
@@ -787,13 +800,6 @@ need to be rebuilt.</p>
 <pre><code>          $formKeyElement = angular.element '&lt;input type="hidden" /&gt;'
           $formKeyElement.attr name: 'formKey', value: form.key
           $form.append $formKeyElement
-</code></pre>
-<h4 id="invoke-hook-formalter">Invoke hook <code>formAlter</code>.</h4>
-<pre><code>          pkgman.invokeFlat 'formAlter', form, $form
-</code></pre>
-<h4 id="invoke-hook-formformidalter">Invoke hook <code>formFormIdAlter</code>.</h4>
-<pre><code>          hookName = "form#{i8n.camelize i8n.underscore form.key}Alter"
-          pkgman.invokeFlat hookName, form, $form
 </code></pre>
 <p>Remove any old stuff.</p>
 <pre><code>          if formScope
@@ -818,15 +824,9 @@ need to be rebuilt.</p>
 </code></pre>
 <h2 id="formcache">form.cache</h2>
 <ul>
-<li>
-<p>(string) <code>key</code> - The form key.</p>
-</li>
-<li>
-<p>(Scope) <code>scope</code> - The form's Angular scope.</p>
-</li>
-<li>
-<p>(Element) <code>element</code> - The form's jqLite element.</p>
-</li>
+<li>(string) <code>key</code> - The form key.</li>
+<li>(Scope) <code>scope</code> - The form's Angular scope.</li>
+<li>(Element) <code>element</code> - The form's jqLite element.</li>
 </ul>
 <p><em>Cache a form for later lookup.</em></p>
 <pre><code>      service.cache = (key, scope, element) -&gt;

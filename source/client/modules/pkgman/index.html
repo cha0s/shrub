@@ -51,6 +51,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../../guide/forms">Form handling</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../../guide/concepts">Concepts and conventions</a>
                     
                 </li>
@@ -925,10 +930,11 @@ result.</em></p>
 <h2 id="pkgmannormalizepath">pkgman.normalizePath</h2>
 <ul>
 <li>(string) <code>path</code> - The path to normalize.</li>
+<li>(Boolean) <code>capitalize</code> - Whether to capitalize the first letter.</li>
 </ul>
 <p><em>Converts a package path (e.g. <code>shrub-user/login</code>) to a normalized path (e.g.
 <code>shrubUserLogin</code>).</em></p>
-<pre><code>exports.normalizePath = (path) -&gt;
+<pre><code>exports.normalizePath = (path, capitalize = false) -&gt;
 
   i8n = require 'inflection'
 
@@ -938,7 +944,7 @@ result.</em></p>
       0 is i
     )
 
-  i8n.camelize (i8n.underscore parts.join ''), true
+  i8n.camelize (i8n.underscore parts.join ''), not capitalize
 </code></pre>
 
             </div>
