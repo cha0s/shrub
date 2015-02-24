@@ -1325,6 +1325,13 @@ way.</p>
 </ul>
 </div>
 <h2 id="formformkeyalter">formFormKeyAlter</h2>
+<p><em>Alter any <a href="../guide/forms/#form-definition-objects">form definition object</a> whose
+key matches before it's rendered.</em></p>
+<p>This hook targets a specific form key. The form key is automatically
+camelized, e.g. form key <code>shrub-user-login</code> will match
+<code>formShrubUserLoginAlter</code>.</p>
+<p>Packages may implement this hook to modify the form definition object in any
+way (although altering the key would probably be confusing at this point).</p>
 <div class="admonition note">
 <p class="admonition-title">1 invocation</p>
 <ul>
@@ -1332,6 +1339,21 @@ way.</p>
 </ul>
 </div>
 <h2 id="formwidgets">formWidgets</h2>
+<p><em>Define form widgets for use when defining
+<a href="../guide/forms/#form-definition-objects">form definition objects</a>.</em></p>
+<h3 id="answer-with_13">Answer with</h3>
+<p>An array of objects structured like:</p>
+<ul>
+<li>(String) <code>type</code> - The widget type, used in form definition objects.</li>
+<li>(String) <code>directive</code> - The directive used to render the widget.</li>
+<li>(Function) <code>assignToElement</code> - A function which can be used to apply
+  complex widget values to the widget element. The function takes two
+  parameters:<ul>
+<li>(jqLite/jQuery object) <code>element</code> - The widget's wrapped DOM element.</li>
+<li>(Any) <code>value</code> - The value to apply to the element.</li>
+</ul>
+</li>
+</ul>
 <div class="admonition note">
 <p class="admonition-title">8 implementations</p>
 <ul>
@@ -1413,7 +1435,7 @@ from the HTTP request.</p>
 <p>The <code>res</code> parameter to the middleware is an instance of
 <a href="http://nodejs.org/api/http.html#http_class_http_serverresponse">http.ServerResponse</a>
 from the HTTP request.</p>
-<h3 id="answer-with_13">Answer with</h3>
+<h3 id="answer-with_14">Answer with</h3>
 <p>A
 <a href="../guide/concepts#middleware-hook-specification">middleware hook specification</a>.
 The middleware have the following signature:</p>
@@ -1450,7 +1472,7 @@ The middleware have the following signature:</p>
 <h2 id="httproutes">httpRoutes</h2>
 <p><em>Define HTTP routes.</em></p>
 <p>Packages use this hook to define HTTP routes.</p>
-<h3 id="answer-with_14">Answer with</h3>
+<h3 id="answer-with_15">Answer with</h3>
 <p>An array of objects structured like:</p>
 <ul>
 <li>(String) <code>path</code> - The HTTP path of the route. Include the leading slash.</li>
@@ -1506,7 +1528,7 @@ in email where such things are not allowed.</p>
 <h2 id="notificationqueues">notificationQueues</h2>
 <p><em>Define persistent notification queues.</em></p>
 <p>Packages may implement this hook to define queues of notifications.</p>
-<h3 id="answer-with_15">Answer with</h3>
+<h3 id="answer-with_16">Answer with</h3>
 <p>An object whose keys are queue names and whose values are structured like:</p>
 <ul>
 <li>(Function) <code>channelFromRequest</code> - An idempotent function which returns the
@@ -1529,7 +1551,7 @@ in email where such things are not allowed.</p>
 <p><em>Define server-side configuration settings.</em></p>
 <p>Packages may use this hook to define default configuration for server-side
 functionality. These settings can be overridden in the settings file.</p>
-<h3 id="answer-with_16">Answer with</h3>
+<h3 id="answer-with_17">Answer with</h3>
 <p>A recursive object which will be folded into the server configuration under
 the package name key. For instance, say we have a package <code>my-package</code> which
 defines the hook like:</p>
