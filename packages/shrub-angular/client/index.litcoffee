@@ -6,9 +6,9 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `aHrefSanitizationWhitelist`.
+#### Implements hook `shrubAngularAHrefSanitizationWhitelist`.
 
-      registrar.registerHook 'aHrefSanitizationWhitelist', -> [
+      registrar.registerHook 'shrubAngularAHrefSanitizationWhitelist', -> [
 
 Allow more protocols.
 
@@ -25,11 +25,11 @@ Allow javascript:void(0).
         '$compileProvider', '$injector', '$provide', '$routeProvider', '$locationProvider', 'shrub-pkgmanProvider'
         ($compileProvider, $injector, $provide, $routeProvider, $locationProvider, pkgmanProvider) ->
 
-#### Invoke hook `aHrefSanitizationWhitelist`.
+#### Invoke hook `shrubAngularAHrefSanitizationWhitelist`.
 
           regexes = []
           for regexes_ in pkgmanProvider.invokeFlat(
-            'aHrefSanitizationWhitelist'
+            'shrubAngularAHrefSanitizationWhitelist'
           )
             regexes.push regex for regex in regexes_
 

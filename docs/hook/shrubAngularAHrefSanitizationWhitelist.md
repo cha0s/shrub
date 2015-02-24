@@ -8,7 +8,7 @@ patterns.
 
 Implementations of this hook should return an array of strings. The strings
 are compiled into a regular expression which determines whether the href is
-allowed or not. For instance, `shrub-core` provides two patterns by default:
+allowed or not. For instance, `shrub-angular` provides two patterns by default:
 
 `'(?:https?|ftp|mailto|tel|file):'`
 
