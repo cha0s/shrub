@@ -59,14 +59,6 @@ of route specifications. See
             @addRoute route
         httpDebugSilly '- Routes registered.'
 
-#### Invoke hook `httpInitializing`.
-
-Invoked before the server is bound on the listening port.
-
-###### TODO: This goes away after confirming socket can bind after server is listening.
-
-        pkgman.invoke 'httpInitializing', this
-
 Start listening.
 
         @listen()

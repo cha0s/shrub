@@ -26,17 +26,28 @@ If we're doing end-to-end testing, mock out the socket manager.
 
         manager: module: socketModule
 
-#### Implements hook `httpInitializing`.
+#### Implements hook `bootstrapMiddleware`.
 
-      registrar.registerHook 'httpInitializing', (http) ->
+      registrar.registerHook 'bootstrapMiddleware', ->
 
-        {Manager} = require config.get 'packageSettings:shrub-socket:manager:module'
+        label: 'Socket server'
+        middleware: [
+
+          (next) ->
+
+            {manager: httpManager} = require 'shrub-http'
+
+            {Manager} = require config.get 'packageSettings:shrub-socket:manager:module'
 
 Spin up the socket server, and have it listen on the HTTP server.
 
-        socketManager = new Manager()
-        socketManager.loadMiddleware()
-        socketManager.listen http
+            socketManager = new Manager()
+            socketManager.loadMiddleware()
+            socketManager.listen httpManager()
+
+            next()
+
+        ]
 
 #### Implements hook `packageSettings`.
 
