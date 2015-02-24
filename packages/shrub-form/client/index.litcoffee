@@ -42,6 +42,16 @@ Call all the form submission handlers.
 
                 $q.all (submit values, form, $event for submit in form.submits)
 
+#### Invoke hook `formAlter`.
+
+              pkgman.invokeFlat 'formAlter', form
+
+#### Invoke hook `formFormKeyAlter`.
+
+###### TODO: Multiline
+
+              pkgman.invokeFlat "form#{pkgman.normalizePath form.key, true}Alter", form
+
 Create the form element.
 
               $form = angular.element '<form />'
@@ -61,6 +71,8 @@ Look up the widget definition and warn if it doesn't exist.
 
                 unless (widget = formService.widgets[field.type])?
 
+###### TODO: Multiline
+
                   $log.warn "Form `#{form.key}` contains non-existent field type `#{field.type}`!"
                   continue
 
@@ -78,15 +90,6 @@ Add hidden form key to allow server-side interception/processing.
               $formKeyElement = angular.element '<input type="hidden" />'
               $formKeyElement.attr name: 'formKey', value: form.key
               $form.append $formKeyElement
-
-#### Invoke hook `formAlter`.
-
-              pkgman.invokeFlat 'formAlter', form, $form
-
-#### Invoke hook `formFormIdAlter`.
-
-              hookName = "form#{i8n.camelize i8n.underscore form.key}Alter"
-              pkgman.invokeFlat hookName, form, $form
 
 Remove any old stuff.
 
@@ -116,9 +119,7 @@ Register the form in the system.
 ## form.cache
 
 * (string) `key` - The form key.
-
 * (Scope) `scope` - The form's Angular scope.
-
 * (Element) `element` - The form's jqLite element.
 
 *Cache a form for later lookup.*

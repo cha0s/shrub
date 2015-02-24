@@ -211,11 +211,12 @@ result.*
 ## pkgman.normalizePath
 
 * (string) `path` - The path to normalize.
+* (Boolean) `capitalize` - Whether to capitalize the first letter.
 
 *Converts a package path (e.g. `shrub-user/login`) to a normalized path (e.g.
 `shrubUserLogin`).*
 
-    exports.normalizePath = (path) ->
+    exports.normalizePath = (path, capitalize = false) ->
 
       i8n = require 'inflection'
 
@@ -225,4 +226,4 @@ result.*
           0 is i
         )
 
-      i8n.camelize (i8n.underscore parts.join ''), true
+      i8n.camelize (i8n.underscore parts.join ''), not capitalize
