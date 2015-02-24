@@ -2,13 +2,15 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `notificationQueue`.
+#### Implements hook `notificationQueues`.
 
 Implement the `general` queue, used to show some notifications.
 
-      registrar.registerHook 'general', 'notificationQueue', ->
+      registrar.registerHook 'notificationQueues', ->
 
-        channelFromRequest: (req) -> req.session?.id
+        general:
+
+          channelFromRequest: (req) -> req.session?.id
 
       registrar.recur [
         'about'

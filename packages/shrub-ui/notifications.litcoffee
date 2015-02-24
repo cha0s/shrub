@@ -27,8 +27,9 @@
 
           (next) ->
 
-            for path, queue of pkgman.invoke 'notificationQueue'
-              notificationQueues[pkgman.normalizePath path] = queue
+            for path, queues of pkgman.invoke 'notificationQueues'
+              for name, queue of queues
+                notificationQueues[pkgman.normalizePath name] = queue
 
             next()
 
@@ -66,45 +67,73 @@ Broadcast for each queue.
 
       registrar.registerHook 'collections', ->
 
+## Notification
+
         Notification =
 
           attributes:
 
-Has the notification been acknowledged?
+## Notification#acknowledged
+
+*Has the notification been acknowledged?*
 
             acknowledged:
               type: 'boolean'
               defaultsTo: false
 
-Has the notification been read?
+## Notification#markedAsRead
+
+*Has the notification been read?*
 
             markedAsRead:
               type: 'boolean'
               defaultsTo: false
 
-May this notification be removed?
+## Notification#mayRemove
+
+*May this notification be removed?*
 
             mayRemove:
               type: 'boolean'
               defaultsTo: true
 
-Which channel owns this notification? Built by the queue.
+## Notification#channel
+
+*Which channel owns this notification? Built by the queue.*
 
             channel: 'string'
 
-To where does this notification link?
+## Notification#path
+
+*To where does this notification link?*
 
             path: 'string'
 
-To which queue does this notification belong?
+## Notification#queue
+
+*To which queue does this notification belong?*
 
             queue:
               type: 'string'
               notEmpty: true
 
-Variables, can be any type.
+## Notification#variables
+
+*Variables, can be any type.*
 
             variables: 'json'
+
+## Notification#createFromRequest
+
+* (http.IncomingMessage) `req` - The request object.
+* (String) `queueName` - The name of the queue.
+* (Object) `variables` - Arbitrary data. Defaults to `{}`.
+* (String) `path` - Path this notification links to. Defaults to
+  `'javascript:void(0)'`.
+* (Boolean) `mayRemove` - May this notification be removed from the queue by
+  the user? Defaults to `true`.
+
+*Create a notification from a request object.*
 
           createFromRequest: (req, queueName, variables, path, mayRemove) ->
 
@@ -148,7 +177,11 @@ Broadcast to others.
                   notifications: [notification]
                 )
 
-Get a queue's notifications from a request.
+## Notification#queueFromRequest
+
+* (http.IncomingMessage) `req` - The request object.
+
+*Get a queue's notifications from a request.*
 
           queueFromRequest: (req) ->
 
