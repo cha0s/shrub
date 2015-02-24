@@ -17,4 +17,4 @@ describe 'about', ->
 
   it 'should render about when user navigates to /about', ->
 
-    expect(shrub.text 'h1').toBe 'Shrub'
+    expect(shrub.text 'h2').toBe 'Shrub'
