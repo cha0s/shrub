@@ -5,12 +5,12 @@ Angular sandbox.*
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `angularNavigationMiddleware`.
+#### Implements hook `shrubAngularSandboxNavigationMiddleware`.
 
 If the client made a POST request, inject that request into the Angular
 sandbox and let it do its thing.
 
-      registrar.registerHook 'angularNavigationMiddleware', ->
+      registrar.registerHook 'shrubAngularSandboxNavigationMiddleware', ->
 
         label: 'Handle form submission'
         middleware: [

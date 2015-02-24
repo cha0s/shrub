@@ -140,12 +140,12 @@ Always disable sandbox rendering in end-to-end testing mode.
             if config.get 'E2E'
               config.set 'packageSettings:shrub-angular:render', false
 
-#### Invoke hook `angularNavigationMiddleware`.
+#### Invoke hook `shrubAngularSandboxNavigationMiddleware`.
 
 Load the navigation middleware.
 
-            navigationMiddleware = middleware.fromShortName(
-              'angular navigation', 'shrub-angular'
+            navigationMiddleware = middleware.fromConfig(
+              'shrub-angular-sandbox:navigationMiddleware'
             )
 
             next()
