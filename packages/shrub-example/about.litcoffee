@@ -6,9 +6,9 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `httpRoutes`.
+#### Implements hook `shrubHttpRoutes`.
 
-      registrar.registerHook 'httpRoutes', (http) ->
+      registrar.registerHook 'shrubHttpRoutes', (http) ->
         routes = []
 
 Provide the README file.

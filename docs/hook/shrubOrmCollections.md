@@ -15,7 +15,7 @@ A keyed object whose values are raw model collection objects. e.g.
 ```javascript
 exports.pkgmanRegister = function(registrar) {
 
-  registrar.registerHook('collections', function() {
+  registrar.registerHook('shrubOrmCollections', function() {
 
     return {
       'some-model': {

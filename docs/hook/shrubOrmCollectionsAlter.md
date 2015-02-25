@@ -6,4 +6,4 @@ even the same) package.
 Implementations are passed a keyed object containing all of the collections
 defined by all modules.
 
-See: [`collections`](hooks/#collections).
+See: [`shrubOrmcollections`](hooks/#shrubormcollections).

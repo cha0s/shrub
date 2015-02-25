@@ -59,11 +59,11 @@ Submit the form into Angular.
 
         ]
 
-#### Implements hook `httpMiddleware`.
+#### Implements hook `shrubHttpMiddleware`.
 
 Parse POST submissions, and allow arbitrary method form attribute.
 
-      registrar.registerHook 'httpMiddleware', (http) ->
+      registrar.registerHook 'shrubHttpMiddleware', (http) ->
 
         express = require 'express'
 

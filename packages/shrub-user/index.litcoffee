@@ -11,18 +11,18 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `preBootstrap`.
+#### Implements hook `shrubCorePreBootstrap`.
 
-      registrar.registerHook 'preBootstrap', ->
+      registrar.registerHook 'shrubCorePreBootstrap', ->
 
         passport = require 'passport'
         Promise = require 'bluebird'
 
         orm = require 'shrub-orm'
 
-#### Implements hook `config`.
+#### Implements hook `shrubConfigClient`.
 
-      registrar.registerHook 'config', (req) ->
+      registrar.registerHook 'shrubConfigClient', (req) ->
 
 Send a redacted version of the request user.
 
@@ -41,9 +41,9 @@ Propagate changes back up to the original request.
 
           req.user = routeReq.user
 
-#### Implements hook `fingerprint`.
+#### Implements hook `shrubAuditFingerprint`.
 
-      registrar.registerHook 'fingerprint', (req) ->
+      registrar.registerHook 'shrubAuditFingerprint', (req) ->
 
 User (ID).
 
@@ -61,9 +61,9 @@ Add to anonymous group.
 
         @user.populateAll()
 
-#### Implements hook `httpMiddleware`.
+#### Implements hook `shrubHttpMiddleware`.
 
-      registrar.registerHook 'httpMiddleware', ->
+      registrar.registerHook 'shrubHttpMiddleware', ->
 
         label: 'Load user using passport'
         middleware: [
@@ -90,9 +90,9 @@ Set the user into the request.
 
         ]
 
-#### Implements hook `collections`.
+#### Implements hook `shrubOrmCollections`.
 
-      registrar.registerHook 'collections', ->
+      registrar.registerHook 'shrubOrmCollections', ->
 
         crypto = require 'server/crypto'
 
@@ -102,7 +102,7 @@ Set the user into the request.
 
 Invoke the client hook implementation.
 
-        collections = clientModule.collections()
+        collections = clientModule.shrubOrmCollections()
 
         {
           'shrub-group': Group
@@ -280,10 +280,10 @@ Decrypt the e-mail if redacting for the same user.
 
         collections
 
-#### Implements hook `collectionsAlter`.
+#### Implements hook `shrubOrmCollectionsAlter`.
 
-      registrar.registerHook 'collectionsAlter', (collections) ->
-        clientModule.collectionsAlter collections
+      registrar.registerHook 'shrubOrmCollectionsAlter', (collections) ->
+        clientModule.shrubOrmCollectionsAlter collections
 
         for identity, collection of collections
           do (identity, collection) ->
@@ -298,9 +298,9 @@ Decrypt the e-mail if redacting for the same user.
                   redactor.call redacted, user
               ).then -> redacted
 
-#### Implements hook `packageSettings`.
+#### Implements hook `shrubConfigServer`.
 
-      registrar.registerHook 'packageSettings', ->
+      registrar.registerHook 'shrubConfigServer', ->
 
         beforeLoginMiddleware: []
 

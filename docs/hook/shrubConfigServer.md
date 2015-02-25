@@ -10,7 +10,7 @@ the package name key. For instance, say we have a package `my-package` which
 defines the hook like:
 
 ```javascript
-registrar.registerHook('packageSettings', function() {
+registrar.registerHook('shrubConfigServer', function() {
   return {
     one: 68,
     two: {

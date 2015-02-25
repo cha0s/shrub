@@ -2,9 +2,11 @@ This page explains various concepts and conventions used in Shrub.
 
 # Middleware hook specification
 
-Shrub invokes various hooks ([`httpMiddleware`](hooks#httpmiddleware),
-[`bootstrapMiddleware`](hooks#bootstrapmiddleware), and more...) which allow
-packages to define middleware to be dispatched during various processes.
+Shrub invokes various hooks
+([`shrubHttpMiddleware`](hooks#shrubhttpmiddleware),
+[`shrubbootstrapMiddleware`](hooks#shrubbootstrapmiddleware), and more...)
+which allow packages to define middleware to be dispatched during various
+processes.
 
 Middleware hooks return a specification that looks like:
 

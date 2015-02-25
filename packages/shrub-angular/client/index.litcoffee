@@ -19,9 +19,9 @@ Allow javascript:void(0).
         'javascript:void(?:%20)*\\((?:%20)*0(?:%20)*\\)'
       ]
 
-#### Implements hook `appConfig`.
+#### Implements hook `shrubAngularAppConfig`.
 
-      registrar.registerHook 'appConfig', -> [
+      registrar.registerHook 'shrubAngularAppConfig', -> [
         '$compileProvider', '$injector', '$provide', '$routeProvider', '$locationProvider', 'shrub-pkgmanProvider'
         ($compileProvider, $injector, $provide, $routeProvider, $locationProvider, pkgmanProvider) ->
 

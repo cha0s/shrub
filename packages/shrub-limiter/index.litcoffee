@@ -7,9 +7,9 @@ routes.*
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `collections`.
+#### Implements hook `shrubOrmCollections`.
 
-      registrar.registerHook 'collections', ->
+      registrar.registerHook 'shrubOrmCollections', ->
 
         _ = require 'lodash'
 

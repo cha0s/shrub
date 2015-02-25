@@ -2,11 +2,11 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `notificationQueues`.
+#### Implements hook `shrubUiNotificationQueues`.
 
 Implement the `general` queue, used to show some notifications.
 
-      registrar.registerHook 'notificationQueues', ->
+      registrar.registerHook 'shrubUiNotificationQueues', ->
 
         general:
 

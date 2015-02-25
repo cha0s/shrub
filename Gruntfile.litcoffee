@@ -142,13 +142,13 @@ Register custom tasks.
 
         grunt.task.run 'build'
 
-#### Invoke hook `gruntConfig`.
+#### Invoke hook `shrubGruntConfig`.
 
-      pkgman.invoke 'gruntConfig', gruntConfig, grunt
+      pkgman.invoke 'shrubGruntConfig', gruntConfig, grunt
 
-#### Invoke hook `gruntConfigAlter`.
+#### Invoke hook `shrubGruntConfigAlter`.
 
-      pkgman.invoke 'gruntConfigAlter', gruntConfig, grunt
+      pkgman.invoke 'shrubGruntConfigAlter', gruntConfig, grunt
 
 Kick off the build process.
 

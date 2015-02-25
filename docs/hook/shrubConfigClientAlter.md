@@ -5,4 +5,4 @@ any other (or even the same) package.
 
 Implementations are passed a [`Config`](source/client/modules/config/) object.
 
-See: [`config`](hooks/#config).
+See: [`shrubConfig`](hooks/#shrubconfig).

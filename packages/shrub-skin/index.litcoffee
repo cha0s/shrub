@@ -10,9 +10,9 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `config`.
+#### Implements hook `shrubConfigClient`.
 
-      registrar.registerHook 'config', ->
+      registrar.registerHook 'shrubConfigClient', ->
 
         skinAssets = {}
         for packagePath in pkgman.packagesImplementing 'skinAssets'
@@ -21,9 +21,9 @@
         default: config.get 'packageSettings:shrub-skin:default'
         assets: skinAssets
 
-#### Implements hook `httpMiddleware`.
+#### Implements hook `shrubHttpMiddleware`.
 
-      registrar.registerHook 'path', 'httpMiddleware', (http) ->
+      registrar.registerHook 'path', 'shrubHttpMiddleware', (http) ->
 
         label: 'Skin path handling'
         middleware: [
@@ -38,9 +38,9 @@ would have picked it up already.
             next()
         ]
 
-#### Implements hook `httpMiddleware`.
+#### Implements hook `shrubHttpMiddleware`.
 
-      registrar.registerHook 'render', 'httpMiddleware', (http) ->
+      registrar.registerHook 'render', 'shrubHttpMiddleware', (http) ->
 
         label: 'Render skinned page HTML'
         middleware: [
@@ -54,9 +54,9 @@ would have picked it up already.
 
       ]
 
-#### Implements hook `packageSettings`.
+#### Implements hook `shrubConfigServer`.
 
-      registrar.registerHook 'packageSettings', ->
+      registrar.registerHook 'shrubConfigServer', ->
 
 Default skin.
 

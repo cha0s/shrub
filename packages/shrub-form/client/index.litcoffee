@@ -10,9 +10,9 @@ up later.*
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `directive`.
+#### Implements hook `shrubAngularDirective`.
 
-      registrar.registerHook 'directive', -> [
+      registrar.registerHook 'shrubAngularDirective', -> [
         '$compile', '$injector', '$log', '$q', 'shrub-form', 'shrub-require'
         ($compile, $injector, $log, $q, formService, require) ->
 
@@ -42,15 +42,15 @@ Call all the form submission handlers.
 
                 $q.all (submit values, form, $event for submit in form.submits)
 
-#### Invoke hook `formAlter`.
+#### Invoke hook `shrubFormAlter`.
 
-              pkgman.invokeFlat 'formAlter', form
+              pkgman.invokeFlat 'shrubFormAlter', form
 
-#### Invoke hook `formFormKeyAlter`.
+#### Invoke hook `shrubFormFormKeyAlter`.
 
 ###### TODO: Multiline
 
-              pkgman.invokeFlat "form#{pkgman.normalizePath form.key, true}Alter", form
+              pkgman.invokeFlat "shrubForm#{pkgman.normalizePath form.key, true}Alter", form
 
 Create the form element.
 
@@ -127,9 +127,9 @@ Register the form in the system.
           service.cache = (key, scope, element) ->
             service.forms[key] = scope: scope, element: element
 
-#### Invoke hook `formWidgets`.
+#### Invoke hook `shrubFormWidgets`.
 
-          for formWidgets in pkgman.invokeFlat 'formWidgets'
+          for formWidgets in pkgman.invokeFlat 'shrubFormWidgets'
             formWidgets = [formWidgets] unless _.isArray formWidgets
 
             for formWidget in formWidgets

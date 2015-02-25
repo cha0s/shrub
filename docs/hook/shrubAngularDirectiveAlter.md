@@ -2,8 +2,8 @@
 
 This hook allows packages to make changes to
 [directive definition objects](https://docs.angularjs.org/api/ng/service/$compile#comprehensive-directive-api)
-provided by packages' implementations of the [`directive`](hooks/#directive)
-hook.
+provided by packages' implementations of the
+[`shrubAngularDirective`](hooks/#shrubangulardirective) hook.
 
 [`shrub-skin`](packages/#shrub-skinclient) uses this hook to provide the
 dynamic directive recompilation necessary to implement on-the-fly skin changes.

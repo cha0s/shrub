@@ -9,15 +9,15 @@ config = require 'config'
 
 exports.pkgmanRegister = (registrar) ->
 
-  # ## Implements hook `config`
-  registrar.registerHook 'config', ->
+  # ## Implements hook `shrubConfigClient`
+  registrar.registerHook 'shrubConfigClient', ->
 
     apiRoot: config.get 'packageSettings:shrub-schema:apiRoot'
 
-  # ## Implements hook `httpRoutes`
+  # ## Implements hook `shrubHttpRoutes`
   #
   # Serve the database schema as an authenticated REST API.
-  registrar.registerHook 'httpRoutes', (http) ->
+  registrar.registerHook 'shrubHttpRoutes', (http) ->
     routes = []
 
     # } DRY.
@@ -157,8 +157,8 @@ exports.pkgmanRegister = (registrar) ->
 
     routes
 
-  # ## Implements hook `packageSettings`
-  registrar.registerHook 'packageSettings', ->
+  # ## Implements hook `shrubConfigServer`
+  registrar.registerHook 'shrubConfigServer', ->
 
     # } The URL root where the schema REST API is served.
     apiRoot: '/api'

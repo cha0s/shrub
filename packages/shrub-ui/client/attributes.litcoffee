@@ -4,9 +4,9 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `directive`.
+#### Implements hook `shrubAngularDirective`.
 
-      registrar.registerHook 'directive', -> [
+      registrar.registerHook 'shrubAngularDirective', -> [
         '$compile'
         ($compile) ->
 

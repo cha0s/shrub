@@ -4,9 +4,9 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `gruntConfig`.
+#### Implements hook `shrubGruntConfig`.
 
-      registrar.registerHook 'gruntConfig', (gruntConfig) ->
+      registrar.registerHook 'shrubGruntConfig', (gruntConfig) ->
 
         gruntConfig.configureTask 'copy', 'shrub-html5-local-storage', files: [
           src: '**/*'
@@ -30,9 +30,9 @@
 
         gruntConfig.registerTask 'build', ['build:shrub-html5-local-storage']
 
-#### Implements hook `assetMiddleware`.
+#### Implements hook `shrubAssetsMiddleware`.
 
-      registrar.registerHook 'assetMiddleware', ->
+      registrar.registerHook 'shrubAssetsMiddleware', ->
 
         config = require 'config'
 
@@ -50,8 +50,8 @@
 
         ]
 
-#### Implements hook `angularPackageDependencies`.
+#### Implements hook `shrubAngularPackageDependencies`.
 
-      registrar.registerHook 'angularPackageDependencies', -> [
+      registrar.registerHook 'shrubAngularPackageDependencies', -> [
         'LocalStorageModule'
       ]

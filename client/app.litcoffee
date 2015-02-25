@@ -15,8 +15,9 @@ Include core Angular dependencies.
     coreDependencies.push 'ngSanitize'
 
 `packageDependencies` will be automatically generated and populated by Grunt.
-Packages implement the hook `angularPackageDependencies` to specify their
-3rd-party module dependencies.
+
+See the documentation for
+[`shrubAngularPackageDependencies`](hooks/#shrubAngularPackageDependencies).
 
 ###### TODO: Link this to where this happens in Grunt for illustration.
 
@@ -36,13 +37,15 @@ Define the core Shrub module.
         '$injector', 'shrub-pkgmanProvider'
         ({invoke}, {invokeFlat}) ->
 
-#### Invoke hook `appConfig`.
+#### Invoke hook `shrubAngularAppConfig`.
 
 Invoked when the Angular application is in the configuration phase.
 Implementations should return an
 [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
 
-          invoke injectable for injectable in invokeFlat 'appConfig'
+          invoke injectable for injectable in invokeFlat 'shrubAngularAppConfig'
+
+          return
 
       ])
 
@@ -51,12 +54,14 @@ Implementations should return an
         '$injector', 'shrub-pkgman'
         ({invoke}, {invokeFlat}) ->
 
-#### Invoke hook `appRun`.
+#### Invoke hook `shrubAngularAppRun`.
 
 Invoked when the Angular application is the run phase. Implementations should
 return an
 [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
 
-          invoke injectable for injectable in invokeFlat 'appRun'
+          invoke injectable for injectable in invokeFlat 'shrubAngularAppRun'
+
+          return
 
       ])

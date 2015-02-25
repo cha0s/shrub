@@ -4,9 +4,9 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `controller`.
+#### Implements hook `shrubAngularController`.
 
-      registrar.registerHook 'controller', -> [
+      registrar.registerHook 'shrubAngularController', -> [
         '$compile', '$location', '$scope'
         class MenuController
 
@@ -109,9 +109,9 @@ Recur.
 
       ]
 
-#### Implements hook `directive`.
+#### Implements hook `shrubAngularDirective`.
 
-      registrar.registerHook 'directive', -> [
+      registrar.registerHook 'shrubAngularDirective', -> [
 
         '$compile', '$timeout'
         ($compile, $timeout) ->

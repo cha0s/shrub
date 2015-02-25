@@ -2,11 +2,11 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `httpMiddleware`.
+#### Implements hook `shrubHttpMiddleware`.
 
 Log requests, differentiating between client and sandbox requests.
 
-      registrar.registerHook 'httpMiddleware', (http) ->
+      registrar.registerHook 'shrubHttpMiddleware', (http) ->
 
         express = require 'express'
 

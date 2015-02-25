@@ -43,12 +43,12 @@ hold their sandbox.
 
         return routes
 
-#### Implements hook `httpMiddleware`.
+#### Implements hook `shrubHttpMiddleware`.
 
 If configuration dictates, render the client-side Angular application in a
 sandbox.
 
-      registrar.registerHook 'httpMiddleware', (http) ->
+      registrar.registerHook 'shrubHttpMiddleware', (http) ->
 
         label: 'Render page with Angular'
         middleware: [
@@ -126,9 +126,9 @@ The request was completed early.
 
       ]
 
-#### Implements hook `bootstrapMiddleware`.
+#### Implements hook `shrubCoreBootstrapMiddleware`.
 
-      registrar.registerHook 'bootstrapMiddleware', ->
+      registrar.registerHook 'shrubCoreBootstrapMiddleware', ->
 
         label: 'Bootstrap Angular'
         middleware: [
@@ -152,9 +152,9 @@ Load the navigation middleware.
 
         ]
 
-#### Implements hook `packageSettings`.
+#### Implements hook `shrubConfigServer`.
 
-      registrar.registerHook 'packageSettings', ->
+      registrar.registerHook 'shrubConfigServer', ->
 
 Default navigation middleware.
 

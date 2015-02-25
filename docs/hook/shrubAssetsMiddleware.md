@@ -11,7 +11,8 @@ the following properties:
 
 **NOTE**: This hook lets you serve assets, but will not automatically copy
 them from your package to the `app` directory where they will be served.
-You'll need to implement the [`gruntConfig`](hooks/#gruntconfig) hook for that.
+You'll need to implement the [`shrubGruntConfig`](hooks/#shrubgruntconfig)
+hook for that.
 
 ### Answer with
 

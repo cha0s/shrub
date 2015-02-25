@@ -3,8 +3,8 @@
 ### Mitigate slow build times
 
 If your package `require`s heavy modules, you should require them in an
-implementation of hook `preBootstrap`. For instance, say you have a package
-like:
+implementation of hook `shrubCorePeBootstrap`. For instance, say you have a
+package like:
 
 ```javascript
 var someHeavyModule = require('some-heavy-module');
@@ -25,7 +25,7 @@ var someHeavyModule = null;
 
 exports.pkgmanRegister = function(registrar) {
 
-  registrar.registerHook('preBootstrap', function() {
+  registrar.registerHook('shrubCorePeBootstrap', function() {
     someHeavyModule = require('some-heavy-module');
   });
 
@@ -35,5 +35,5 @@ exports.pkgmanRegister = function(registrar) {
 };
 ```
 
-So that the heavy module will not be `require`d until hook `preBootstrap` is
-invoked.
+So that the heavy module will not be `require`d until hook
+`shrubCorePeBootstrap` is invoked.

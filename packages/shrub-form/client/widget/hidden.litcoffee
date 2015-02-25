@@ -2,9 +2,9 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `directive`.
+#### Implements hook `shrubAngularDirective`.
 
-      registrar.registerHook 'directive', -> [
+      registrar.registerHook 'shrubAngularDirective', -> [
         ->
 
           scope: field: '=?'
@@ -23,9 +23,9 @@
 
       assignToElement = (element, value) -> element.attr 'value', value
 
-#### Implements hook `formWidgets`.
+#### Implements hook `shrubFormWidgets`.
 
-      registrar.registerHook 'formWidgets', ->
+      registrar.registerHook 'shrubFormWidgets', ->
 
         widgets = []
 

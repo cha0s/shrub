@@ -22,14 +22,11 @@ are gathered and registered into Angular.*
           config = require 'config'
           debug = require('debug') 'shrub:angular'
 
-#### Invoke hook `controller`.
-
-Allows packages to define Angular controllers. Implementations should return an
-[annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
+#### Invoke hook `shrubAngularController`.
 
           debug 'Registering controllers...'
 
-          for path, injected of pkgman.invoke 'controller'
+          for path, injected of pkgman.invoke 'shrubAngularController'
             controllerName = pkgman.normalizePath path
             debug controllerName
             $controllerProvider.register controllerName, injected
@@ -85,14 +82,10 @@ Handle a bunch of internal Angular normalization.
             if angular.isObject directive.scope
               directive.$$isolateBindings = isolateBindingsFor directive
 
-#### Invoke hook `augmentDirective`.
-
-Allows packages to augment the directives defined by packages. One example is
-the automatic relinking functionality implemented by
-[shrub-skin](../packages/shrub-skin/client/index.coffee#L12).
+#### Invoke hook `shrubAngularDirectiveAlter`.
 
             for injectedDirective in pkgman.invokeFlat(
-              'augmentDirective', directive, path
+              'shrubAngularDirectiveAlter', directive, path
             )
               $injector.invoke injectedDirective
 
@@ -130,12 +123,9 @@ Internal Angular state that we have to reset.
 
             return bindings
 
-#### Invoke hook `directive`.
+#### Invoke hook `shrubAngularDirective`.
 
-Allows packages to define Angular directives. Implementations should return an
-[annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
-
-          for path, injected of pkgman.invoke 'directive'
+          for path, injected of pkgman.invoke 'shrubAngularDirective'
             do (path, injected) ->
               directiveName = pkgman.normalizePath path
               debug directiveName
@@ -156,12 +146,9 @@ It will run over the previous definition, ensuring everything works nicely.
 
           debug 'Registering filters...'
 
-#### Invoke hook `filter`.
+#### Invoke hook `shrubAngularFilter`.
 
-Allows packages to define Angular filters. Implementations should return a
-function.
-
-          for path, injected of pkgman.invoke 'filter'
+          for path, injected of pkgman.invoke 'shrubAngularFilter'
             filterName = pkgman.normalizePath path
             debug filterName
             $filterProvider.register filterName, injected
@@ -169,9 +156,6 @@ function.
           debug 'Filters registered.'
 
 #### Invoke hook `provider`.
-
-Allows packages to define Angular providers. Implementations should return an
-[annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
 
           debug 'Registering providers...'
 
@@ -182,9 +166,6 @@ Allows packages to define Angular providers. Implementations should return an
           debug 'Providers registered.'
 
 #### Invoke hook `service`.
-
-Allows packages to define Angular services. Implementations should return an
-[annotated function](http://docs.angularjs.org/guide/di#dependency-annotation).
 
           debug 'Registering services...'
 

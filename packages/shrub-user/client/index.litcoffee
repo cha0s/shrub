@@ -4,13 +4,13 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `collections`.
+#### Implements hook `shrubOrmCollections`.
 
-      registrar.registerHook 'collections', exports.collections
+      registrar.registerHook 'shrubOrmCollections', exports.shrubOrmCollections
 
-#### Implements hook `collectionsAlter`.
+#### Implements hook `shrubOrmCollectionsAlter`.
 
-      registrar.registerHook 'collectionsAlter', exports.collectionsAlter
+      registrar.registerHook 'shrubOrmCollectionsAlter', exports.shrubOrmCollectionsAlter
 
 #### Implements hook `service`.
 
@@ -107,7 +107,7 @@ Log a user out if we get a socket call.
         'email', 'forgot', 'login', 'logout', 'register', 'reset'
       ]
 
-    exports.collections = ->
+    exports.shrubOrmCollections = ->
 
       Group =
 
@@ -207,7 +207,7 @@ Check inline permissions.
       'shrub-user-group': UserGroup
       'shrub-user-permission': UserPermission
 
-    exports.collectionsAlter = (collections) ->
+    exports.shrubOrmCollectionsAlter = (collections) ->
 
       Promise = require 'bluebird'
 

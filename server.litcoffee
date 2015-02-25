@@ -29,36 +29,25 @@ Load the configuration.
 
       debug 'Config loaded.'
 
-#### Invoke hook `preBootstrap`.
-
-Invoked before the application bootstrap phase.
-
-[See the `preBootstrap` hook documentation](hooks#prebootstrap)
-
-###### TODO: Link to an instance of this in shrub core.
+#### Invoke hook `shrubCorePreBootstrap`.
 
       debugSilly 'Pre bootstrap phase...'
-      pkgman.invoke 'preBootstrap'
+      pkgman.invoke 'shrubCorePreBootstrap'
       debugSilly 'Pre bootstrap phase completed.'
 
-#### Invoke hook `bootstrapMiddleware`.
-
-Invoked during the application bootstrap phase. Packages implementing this hook
-should return an instance of `MiddlewareGroup`.
-
-###### TODO: Link to an instance of this in shrub core.
-
-###### TODO: Currently middleware hook implementations return an ad-hoc structure, but MiddlewareGroup will be the preferred mechanism in the future.
-
-This is where the real heavy-lifting instantiation occurs. For instance, this
-is where the HTTP server is constructed by `shrub-http` and made to listen on
-a port, where `shrub-nodemailer` instantiates its sandbox, etc.
+#### Invoke hook `shrubCoreBootstrapMiddleware`.
 
       debugSilly 'Loading bootstrap middleware...'
-      bootstrapMiddleware = middleware.fromHook(
-        'bootstrapMiddleware'
-        config.get 'packageSettings:shrub-core:bootstrapMiddleware'
+
+      bootstrapMiddleware = middleware.fromConfig(
+        'shrub-core:bootstrapMiddleware'
       )
+
+      middleware.fromHook(
+        'shrubCoreBootstrapMiddleware'
+        config.get 'packageSettings:shrub-core:shrubCoreBootstrapMiddleware'
+      )
+
       debugSilly 'Bootstrap middleware loaded.'
 
 Dispatch the bootstrap middleware stack and log if everything is okay.
@@ -73,11 +62,6 @@ listener below.
         throw error
 
 #### Invoke hook `processExit`.
-
-We do our best to guarantee that hook `processExit` will always be invoked,
-even when an exception or signal arises.
-
-###### TODO: Link to an instance of this in shrub core.
 
       process.on 'exit', -> pkgman.invoke 'processExit'
 

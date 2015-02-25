@@ -2,9 +2,9 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `appConfig`.
+#### Implements hook `shrubAngularAppConfig`.
 
-      registrar.registerHook 'appConfig', -> [
+      registrar.registerHook 'shrubAngularAppConfig', -> [
         'shrub-html5-notificationProvider'
         (notificationProvider) ->
 

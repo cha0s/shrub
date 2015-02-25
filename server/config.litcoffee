@@ -59,16 +59,15 @@ Register packages.
 
       debug 'Packages registered.'
 
+###### TODO: Unify config key on `'packages'`.
+
       packageSettings = new Config()
-      for key, value of pkgman.invoke 'packageSettings'
+      for key, value of pkgman.invoke 'shrubConfigServer'
         packageSettings.set key.replace(/\//g, ':'), value
 
       nconf.defaults
 
-#### Invoke hook `packageSettings`.
-
-Invoked when the server application is loading configuration. Allows
-packages to define their own default settings.
+#### Invoke hook `shrubConfigServer`.
 
         packageSettings: packageSettings.toJSON()
 

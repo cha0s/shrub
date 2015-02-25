@@ -11,9 +11,9 @@ Manage HTTP connections.
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `bootstrapMiddleware`.
+#### Implements hook `shrubCoreBootstrapMiddleware`.
 
-      registrar.registerHook 'bootstrapMiddleware', ->
+      registrar.registerHook 'shrubCoreBootstrapMiddleware', ->
 
         label: 'Bootstrap HTTP server'
         middleware: [
@@ -41,9 +41,9 @@ Spawn workers into a cluster.
 
         ]
 
-#### Implements hook `httpMiddleware`.
+#### Implements hook `shrubHttpMiddleware`.
 
-      registrar.registerHook 'httpMiddleware', (http) ->
+      registrar.registerHook 'shrubHttpMiddleware', (http) ->
 
         label: 'Finalize HTTP request'
         middleware: [
@@ -61,9 +61,9 @@ Spawn workers into a cluster.
 
         ]
 
-#### Implements hook `packageSettings`.
+#### Implements hook `shrubConfigServer`.
 
-      registrar.registerHook 'packageSettings', ->
+      registrar.registerHook 'shrubConfigServer', ->
 
         manager:
 

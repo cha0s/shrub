@@ -5,9 +5,9 @@ now, but will be fleshed out as we go.*
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `bootstrapMiddleware`.
+#### Implements hook `shrubCoreBootstrapMiddleware`.
 
-      registrar.registerHook 'bootstrapMiddleware', (context) ->
+      registrar.registerHook 'shrubCoreBootstrapMiddleware', (context) ->
 
         orm = require 'shrub-orm'
 

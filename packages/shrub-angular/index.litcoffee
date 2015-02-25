@@ -2,9 +2,9 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `gruntConfig`.
+#### Implements hook `shrubGruntConfig`.
 
-      registrar.registerHook 'gruntConfig', (gruntConfig, grunt) ->
+      registrar.registerHook 'shrubGruntConfig', (gruntConfig, grunt) ->
 
         gruntConfig.configureTask(
           'coffee', 'angular'
@@ -47,15 +47,15 @@
           options: livereload: true
         )
 
-        gruntConfig.registerTask 'angularPackageDependencies:angular', ->
+        gruntConfig.registerTask 'shrubAngularPackageDependencies:angular', ->
 
           pkgman = require 'pkgman'
 
           dependencies = []
 
-#### Invoke hook `angularPackageDependencies`.
+#### Invoke hook `shrubAngularPackageDependencies`.
 
-          for dependenciesList in pkgman.invokeFlat 'angularPackageDependencies'
+          for dependenciesList in pkgman.invokeFlat 'shrubAngularPackageDependencies'
             dependencies.push.apply dependencies, dependenciesList
 
           js = '\nvar packageDependencies = [];\n\n\n'
@@ -65,7 +65,7 @@
 
         gruntConfig.registerTask 'build:angular', [
           'newer:coffee:angular'
-          'angularPackageDependencies:angular'
+          'shrubAngularPackageDependencies:angular'
           'concat:angular'
         ]
 

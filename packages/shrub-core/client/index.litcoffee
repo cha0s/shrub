@@ -6,9 +6,9 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `appRun`.
+#### Implements hook `shrubAngularAppRun`.
 
-      registrar.registerHook 'appRun', -> [
+      registrar.registerHook 'shrubAngularAppRun', -> [
         '$rootScope', '$location', '$window', 'shrub-socket'
         ($rootScope, $location, $window, socket) ->
 

@@ -57,7 +57,7 @@ and put in the following code:
 ```javascript
 exports.pkgmanRegister = function(registrar) {
 
-  registrar.registerHook('preBootstrap', function() {
+  registrar.registerHook('shrubCorePreBootstrap', function() {
     console.log('I hooked into shrub!');
   });
 };
@@ -76,9 +76,9 @@ and add our package to the `packageList` array:
 {
   "packageList": [
     "my-package",
+    "shrub-angular",
     "shrub-assets",
     "shrub-audit",
-    "shrub-config",
 ...
 ```
 
@@ -92,5 +92,6 @@ You'll see a bunch of stuff fly by, but you should also notice this:
 
 `I hooked into shrub!`
 
-This means that our package was hooked into Shrub and the `preBootstrap` hook
-was invoked! Hurray, we have our first Shrub package.
+This means that our package was hooked into Shrub and the
+`shrubCorePreBootstrap` hook was invoked! Hurray, we have our first Shrub
+package.

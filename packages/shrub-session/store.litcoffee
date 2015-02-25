@@ -14,7 +14,7 @@
 ## *constructor*
 
 *Lazy-load ORM so as not to bog down the build process (and we have no way to
-implement hook `preBootstrap` at this point).
+implement hook `shrubCorePreBootstrap` at this point).
 
         constructor: ->
 

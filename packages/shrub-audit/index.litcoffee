@@ -5,9 +5,9 @@ for analytics, or anything else.*
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `httpMiddleware`.
+#### Implements hook `shrubHttpMiddleware`.
 
-      registrar.registerHook 'httpMiddleware', (http) ->
+      registrar.registerHook 'shrubHttpMiddleware', (http) ->
 
         label: 'Store fingerprint'
         middleware: [

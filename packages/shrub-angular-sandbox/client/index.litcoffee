@@ -2,11 +2,11 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `appRun`.
+#### Implements hook `shrubAngularAppRun`.
 
 Hang up any sandbox if we don't need it anymore.
 
-      registrar.registerHook 'appRun', -> [
+      registrar.registerHook 'shrubAngularAppRun', -> [
         '$window', 'shrub-rpc'
         ($window, rpc) ->
 

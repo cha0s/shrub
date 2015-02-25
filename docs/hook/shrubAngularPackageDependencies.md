@@ -13,7 +13,7 @@ The name of the module is `notification`, so the hook implementation looks
 like:
 
 ```javascript
-registrar.registerHook('angularPackageDependencies', function() {
+registrar.registerHook('shrubAngularPackageDependencies', function() {
 
   return [
     'notification'
@@ -23,8 +23,8 @@ registrar.registerHook('angularPackageDependencies', function() {
 
 This ensures our application has the `notification` module marked as a
 dependency. You will still need to use the
-[`gruntConfig`](hooks/#gruntconfig) hook to provide the actual JavaScript
-assets to the client.
+[`shrubGruntConfig`](hooks/#shrubgruntconfig) hook to provide the actual
+JavaScript assets to the client.
 
 ### Answer with
 

@@ -8,9 +8,9 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `directive`.
+#### Implements hook `shrubAngularDirective`.
 
-      registrar.registerHook 'directive', -> [
+      registrar.registerHook 'shrubAngularDirective', -> [
         '$timeout', 'shrub-ui/messages'
         ($timeout, {count, removeTop, top}) ->
 
