@@ -467,7 +467,7 @@
                             
                                 <li><a class="toctree-l3" href="#invoke-hook-skinlink-directive-id">Invoke hook skinLink--DIRECTIVE--ID.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-provider">Implements hook provider.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubangularprovider">Implements hook shrubAngularProvider.</a></li>
                             
                                 <li><a class="toctree-l3" href="#skinaddstylesheet">skin.addStylesheet</a></li>
                             
@@ -887,8 +887,8 @@ descending specificity.</p>
 
   ]
 </code></pre>
-<h4 id="implements-hook-provider">Implements hook <code>provider</code>.</h4>
-<pre><code>  registrar.registerHook 'provider', -&gt; [
+<h4 id="implements-hook-shrubangularprovider">Implements hook <code>shrubAngularProvider</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubAngularProvider', -&gt; [
 
     '$injector', '$provide'
     ($injector, $provide) -&gt;

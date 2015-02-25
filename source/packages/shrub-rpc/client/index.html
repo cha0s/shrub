@@ -419,7 +419,7 @@
                         
                             <li class="toctree-l2"><a href="#rpc">RPC</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-service">Implements hook service.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubangularservice">Implements hook shrubAngularService.</a></li>
                             
                                 <li><a class="toctree-l3" href="#rpccall">rpc.call</a></li>
                             
@@ -727,11 +727,12 @@
           <div role="main">
             <div class="section">
               <h1 id="rpc">RPC</h1>
-<p>Define an Angular service to issue <a href="http://en.wikipedia.org/wiki/Remote_procedure_call#Message_passing">remote procedure calls</a>.</p>
+<p>Define an Angular service to issue
+<a href="http://en.wikipedia.org/wiki/Remote_procedure_call#Message_passing">remote procedure calls</a>.</p>
 <pre><code>exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h4 id="implements-hook-service">Implements hook <code>service</code>.</h4>
-<pre><code>  registrar.registerHook 'service', -&gt; [
+<h4 id="implements-hook-shrubangularservice">Implements hook <code>shrubAngularService</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubAngularService', -&gt; [
     '$injector', '$q', 'shrub-pkgman', 'shrub-socket'
     ({invoke}, {defer}, pkgman, socket) -&gt;
 
@@ -756,15 +757,16 @@ from the server, or rejected with the error from the server.</p>
             deferred.reject errors.unserialize error
           else
             deferred.resolve result
-
-        invoke(
+</code></pre>
+<h4 id="invoke-hook-shrubrpccall">Invoke hook <code>shrubRpcCall</code>.</h4>
+<pre><code>        invoke(
           injectable, null
 
           route: path
           data: data
           result: deferred.promise
 
-        ) for injectable in pkgman.invokeFlat 'rpcCall'
+        ) for injectable in pkgman.invokeFlat 'shrubRpcCall'
 
         deferred.promise
 </code></pre>

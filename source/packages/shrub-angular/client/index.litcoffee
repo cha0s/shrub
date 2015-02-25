@@ -2,6 +2,7 @@
 
 *Coordinate various core functionality.*
 
+    _ = require 'lodash'
     Promise = require 'bluebird'
 
     exports.pkgmanRegister = (registrar) ->
@@ -112,30 +113,22 @@ Track the keys so we can map the values.
 
           ]
 
-A route is defined like:
-
-* (AnnotatedFunction) `controller`: An
-  [annotated function](http://docs.angularjs.org/guide/di#dependency-annotation)
-  which will be injected.
-* (string) `template`: A template.
-* (string) `title`: The page title.
-
-#### Invoke hook `route`.
+#### Invoke hook `shrubAngularRoutes`.
 
 Allow packages to define routes in the Angular application.
 
           routes = {}
-          for path, route of pkgmanProvider.invoke 'route'
+          for route in _.flatten pkgmanProvider.invokeFlat 'shrubAngularRoutes'
             routes[route.path ? path] = route
 
-Invoke hook `routeAlter`.
+Invoke hook `shrubAngularRoutesAlter`.
 
 Allow packages to alter defined routes.
 
           $injector.invoke(
             injectable, null
             routes: routes
-          ) for injectable in pkgmanProvider.invokeFlat 'routeAlter'
+          ) for injectable in pkgmanProvider.invokeFlat 'shrubAngularRoutesAlter'
 
           for path, route of routes
             do (path, route) ->
@@ -146,19 +139,6 @@ Wrap the controller so we can provide some automatic behavior.
               route.controller = [
                 '$controller', '$injector', '$q', '$scope'
                 ($controller, $injector, $q, $scope) ->
-
-Invoke hook `routeControllerStart`.
-
-Allow packages to act before a new route
-controller is executed.
-
-                  $injector.invoke(
-                    injectable, null
-                    $scope: $scope
-                    route: route
-                  ) for injectable in pkgmanProvider.invokeFlat(
-                    'routeControllerStart'
-                  )
 
                   unless routeController?
                     return $scope.$emit 'shrub.core.routeRendered'

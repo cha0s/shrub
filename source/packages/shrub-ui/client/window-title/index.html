@@ -565,9 +565,7 @@
                             
                                 <li><a class="toctree-l3" href="#implements-hook-shrubangularapprun">Implements hook shrubAngularAppRun.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-routecontrollerstart">Implements hook routeControllerStart.</a></li>
-                            
-                                <li><a class="toctree-l3" href="#implements-hook-service">Implements hook service.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubangularservice">Implements hook shrubAngularService.</a></li>
                             
                                 <li><a class="toctree-l3" href="#windowtitlepage">windowTitle.page</a></li>
                             
@@ -798,22 +796,20 @@ exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 <h4 id="implements-hook-shrubangularapprun">Implements hook <code>shrubAngularAppRun</code>.</h4>
 <pre><code>  registrar.registerHook 'shrubAngularAppRun', -&gt; [
-    'shrub-ui/window-title'
-    (windowTitle) -&gt;
+    '$rootScope', 'shrub-ui/window-title'
+    ($rootScope, windowTitle) -&gt;
 </code></pre>
 <p>Set the site name into the window title.</p>
 <pre><code>      windowTitle.setSite config.get 'packageConfig:shrub-core:siteName'
 
+      $rootScope.$on '$routeChangeSuccess', (event, route) -&gt;
+
+        windowTitle.setPage route.$$route.title ? ''
+
   ]
 </code></pre>
-<h4 id="implements-hook-routecontrollerstart">Implements hook <code>routeControllerStart</code>.</h4>
-<pre><code>  registrar.registerHook 'routeControllerStart', -&gt; [
-    'route', 'shrub-ui/window-title'
-    (route, windowTitle) -&gt; windowTitle.setPage route.title ? ''
-  ]
-</code></pre>
-<h4 id="implements-hook-service">Implements hook <code>service</code>.</h4>
-<pre><code>  registrar.registerHook 'service', -&gt; [
+<h4 id="implements-hook-shrubangularservice">Implements hook <code>shrubAngularService</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubAngularService', -&gt; [
     '$interval'
     ($interval) -&gt;
 

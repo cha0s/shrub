@@ -19,12 +19,12 @@ The middleware dispatched every time sandboxed angular is navigated.
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `rpcRoutes`.
+#### Implements hook `shrubRpcRoutes`.
 
 Allow a JSful client to call us back and inform us that we don't need to
 hold their sandbox.
 
-      registrar.registerHook 'rpcRoutes', ->
+      registrar.registerHook 'shrubRpcRoutes', ->
 
         routes = []
 

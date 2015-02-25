@@ -43,25 +43,22 @@
 #### Implements hook `shrubAngularAppRun`.
 
       registrar.registerHook 'shrubAngularAppRun', -> [
-        'shrub-ui/window-title'
-        (windowTitle) ->
+        '$rootScope', 'shrub-ui/window-title'
+        ($rootScope, windowTitle) ->
 
 Set the site name into the window title.
 
           windowTitle.setSite config.get 'packageConfig:shrub-core:siteName'
 
+          $rootScope.$on '$routeChangeSuccess', (event, route) ->
+
+            windowTitle.setPage route.$$route.title ? ''
+
       ]
 
-#### Implements hook `routeControllerStart`.
+#### Implements hook `shrubAngularService`.
 
-      registrar.registerHook 'routeControllerStart', -> [
-        'route', 'shrub-ui/window-title'
-        (route, windowTitle) -> windowTitle.setPage route.title ? ''
-      ]
-
-#### Implements hook `service`.
-
-      registrar.registerHook 'service', -> [
+      registrar.registerHook 'shrubAngularService', -> [
         '$interval'
         ($interval) ->
 

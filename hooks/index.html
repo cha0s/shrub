@@ -73,30 +73,6 @@
                         
                             <li class="toctree-l2"><a href="#hook-reference">Hook reference</a></li>
                             
-                                <li><a class="toctree-l3" href="#gruntconfigalter">gruntConfigAlter</a></li>
-                            
-                                <li><a class="toctree-l3" href="#processexit">processExit</a></li>
-                            
-                                <li><a class="toctree-l3" href="#provider">provider</a></li>
-                            
-                                <li><a class="toctree-l3" href="#replcontext">replContext</a></li>
-                            
-                                <li><a class="toctree-l3" href="#route">route</a></li>
-                            
-                                <li><a class="toctree-l3" href="#routecontrollerstart">routeControllerStart</a></li>
-                            
-                                <li><a class="toctree-l3" href="#rpccall">rpcCall</a></li>
-                            
-                                <li><a class="toctree-l3" href="#rpcroutefinished">rpcRouteFinished</a></li>
-                            
-                                <li><a class="toctree-l3" href="#rpcroutes">rpcRoutes</a></li>
-                            
-                                <li><a class="toctree-l3" href="#rpcroutesalter">rpcRoutesAlter</a></li>
-                            
-                                <li><a class="toctree-l3" href="#service">service</a></li>
-                            
-                                <li><a class="toctree-l3" href="#settings">settings</a></li>
-                            
                                 <li><a class="toctree-l3" href="#shrubangularahrefsanitizationwhitelist">shrubAngularAHrefSanitizationWhitelist</a></li>
                             
                                 <li><a class="toctree-l3" href="#shrubangularappconfig">shrubAngularAppConfig</a></li>
@@ -113,7 +89,13 @@
                             
                                 <li><a class="toctree-l3" href="#shrubangularpackagedependencies">shrubAngularPackageDependencies</a></li>
                             
+                                <li><a class="toctree-l3" href="#shrubangularprovider">shrubAngularProvider</a></li>
+                            
+                                <li><a class="toctree-l3" href="#shrubangularroutes">shrubAngularRoutes</a></li>
+                            
                                 <li><a class="toctree-l3" href="#shrubangularsandboxnavigationmiddleware">shrubAngularSandboxNavigationMiddleware</a></li>
+                            
+                                <li><a class="toctree-l3" href="#shrubangularservice">shrubAngularService</a></li>
                             
                                 <li><a class="toctree-l3" href="#shrubassetsmiddleware">shrubAssetsMiddleware</a></li>
                             
@@ -128,6 +110,8 @@
                                 <li><a class="toctree-l3" href="#shrubcorebootstrapmiddleware">shrubCoreBootstrapMiddleware</a></li>
                             
                                 <li><a class="toctree-l3" href="#shrubcoreprebootstrap">shrubCorePreBootstrap</a></li>
+                            
+                                <li><a class="toctree-l3" href="#shrubcoreprocessexit">shrubCoreProcessExit</a></li>
                             
                                 <li><a class="toctree-l3" href="#shrubformalter">shrubFormAlter</a></li>
                             
@@ -148,6 +132,16 @@
                                 <li><a class="toctree-l3" href="#shrubormcollections">shrubOrmCollections</a></li>
                             
                                 <li><a class="toctree-l3" href="#shrubormcollectionsalter">shrubOrmCollectionsAlter</a></li>
+                            
+                                <li><a class="toctree-l3" href="#shrubreplcontext">shrubReplContext</a></li>
+                            
+                                <li><a class="toctree-l3" href="#shrubrpccall">shrubRpcCall</a></li>
+                            
+                                <li><a class="toctree-l3" href="#shrubrpcroutefinish">shrubRpcRouteFinish</a></li>
+                            
+                                <li><a class="toctree-l3" href="#shrubrpcroutes">shrubRpcRoutes</a></li>
+                            
+                                <li><a class="toctree-l3" href="#shrubrpcroutesalter">shrubRpcRoutesAlter</a></li>
                             
                                 <li><a class="toctree-l3" href="#shrubuinotificationqueues">shrubUiNotificationQueues</a></li>
                             
@@ -823,164 +817,6 @@
           <div role="main">
             <div class="section">
               <h1 id="hook-reference">Hook reference</h1>
-<h2 id="gruntconfigalter">gruntConfigAlter</h2>
-<div class="admonition note">
-<p class="admonition-title">1 implementation</p>
-<ul>
-<li><a href="../packages/">shrub-grunt (server)</a> &mdash; <a href="../source/packages/shrub-grunt#implements-hook-gruntconfigalter">implementation</a> </li>
-</ul>
-</div>
-<h2 id="processexit">processExit</h2>
-<div class="admonition note">
-<p class="admonition-title">1 implementation</p>
-<ul>
-<li><a href="../packages/">shrub-repl (server)</a> &mdash; <a href="../source/packages/shrub-repl#implements-hook-processexit">implementation</a> </li>
-</ul>
-</div>
-<div class="admonition note">
-<p class="admonition-title">1 invocation</p>
-<ul>
-<li><a href="../packages/">server (server)</a> &mdash; <a href="../source/server#invoke-hook-processexit">invocation</a> </li>
-</ul>
-</div>
-<h2 id="provider">provider</h2>
-<div class="admonition note">
-<p class="admonition-title">3 implementations</p>
-<ul>
-<li><a href="../packages/#shrub-html5-local-storageclient">shrub-html5-local-storage (client)</a> &mdash; <a href="../source/packages/shrub-html5-local-storage/client#implements-hook-provider">implementation</a> </li>
-<li><a href="../packages/#shrub-html5-notificationclient">shrub-html5-notification (client)</a> &mdash; <a href="../source/packages/shrub-html5-notification/client#implements-hook-provider">implementation</a> </li>
-<li><a href="../packages/#shrub-skinclient">shrub-skin (client)</a> &mdash; <a href="../source/packages/shrub-skin/client#implements-hook-provider">implementation</a> </li>
-</ul>
-</div>
-<div class="admonition note">
-<p class="admonition-title">1 invocation</p>
-<ul>
-<li><a href="../packages/">packages (client)</a> &mdash; <a href="../source/client/packages#invoke-hook-provider">invocation</a> </li>
-</ul>
-</div>
-<h2 id="replcontext">replContext</h2>
-<div class="admonition note">
-<p class="admonition-title">4 implementations</p>
-<ul>
-<li><a href="../packages/">shrub-install (server)</a> &mdash; <a href="../source/packages/shrub-install#implements-hook-replcontext">implementation</a> </li>
-<li><a href="../packages/">shrub-orm (server)</a> &mdash; <a href="../source/packages/shrub-orm#implements-hook-replcontext">implementation</a> </li>
-<li><a href="../packages/">shrub-socket (server)</a> &mdash; <a href="../source/packages/shrub-socket#implements-hook-replcontext">implementation</a> </li>
-<li><a href="../packages/">shrub-user/register (server)</a> &mdash; <a href="../source/packages/shrub-user/register#implements-hook-replcontext">implementation</a> </li>
-</ul>
-</div>
-<div class="admonition note">
-<p class="admonition-title">1 invocation</p>
-<ul>
-<li><a href="../packages/">shrub-repl (server)</a> &mdash; <a href="../source/packages/shrub-repl#invoke-hook-replcontext">invocation</a> </li>
-</ul>
-</div>
-<h2 id="route">route</h2>
-<div class="admonition note">
-<p class="admonition-title">8 implementations</p>
-<ul>
-<li><a href="../packages/#shrub-coreclient">shrub-core (client)</a> &mdash; <a href="../source/packages/shrub-core/client#implements-hook-route">implementation</a> </li>
-<li><a href="../packages/#shrub-exampleclient">shrub-example/about (client)</a> &mdash; <a href="../source/packages/shrub-example/client/about#implements-hook-route">implementation</a> </li>
-<li><a href="../packages/#shrub-exampleclient">shrub-example/home (client)</a> &mdash; <a href="../source/packages/shrub-example/client/home#implements-hook-route">implementation</a> </li>
-<li><a href="../packages/#shrub-userclient">shrub-user/forgot (client)</a> &mdash; <a href="../source/packages/shrub-user/client/forgot#implements-hook-route">implementation</a> </li>
-<li><a href="../packages/#shrub-userclient">shrub-user/login (client)</a> &mdash; <a href="../source/packages/shrub-user/client/login#implements-hook-route">implementation</a> </li>
-<li><a href="../packages/#shrub-userclient">shrub-user/logout (client)</a> &mdash; <a href="../source/packages/shrub-user/client/logout#implements-hook-route">implementation</a> </li>
-<li><a href="../packages/#shrub-userclient">shrub-user/register (client)</a> &mdash; <a href="../source/packages/shrub-user/client/register#implements-hook-route">implementation</a> </li>
-<li><a href="../packages/#shrub-userclient">shrub-user/reset (client)</a> &mdash; <a href="../source/packages/shrub-user/client/reset#implements-hook-route">implementation</a> </li>
-</ul>
-</div>
-<div class="admonition note">
-<p class="admonition-title">1 invocation</p>
-<ul>
-<li><a href="../packages/#shrub-angularclient">shrub-angular (client)</a> &mdash; <a href="../source/packages/shrub-angular/client#invoke-hook-route">invocation</a> </li>
-</ul>
-</div>
-<h2 id="routecontrollerstart">routeControllerStart</h2>
-<div class="admonition note">
-<p class="admonition-title">1 implementation</p>
-<ul>
-<li><a href="../packages/#shrub-uiclient">shrub-ui/window-title (client)</a> &mdash; <a href="../source/packages/shrub-ui/client/window-title#implements-hook-routecontrollerstart">implementation</a> </li>
-</ul>
-</div>
-<h2 id="rpccall">rpcCall</h2>
-<div class="admonition note">
-<p class="admonition-title">1 implementation</p>
-<ul>
-<li><a href="../packages/#shrub-uiclient">shrub-ui/messages (client)</a> &mdash; <a href="../source/packages/shrub-ui/client/messages#implements-hook-rpccall">implementation</a> </li>
-</ul>
-</div>
-<h2 id="rpcroutefinished">rpcRouteFinished</h2>
-<div class="admonition note">
-<p class="admonition-title">2 implementations</p>
-<ul>
-<li><a href="../packages/">shrub-session (server)</a> &mdash; <a href="../source/packages/shrub-session#implements-hook-rpcroutefinished">implementation</a> </li>
-<li><a href="../packages/">shrub-user (server)</a> &mdash; <a href="../source/packages/shrub-user#implements-hook-rpcroutefinished">implementation</a> </li>
-</ul>
-</div>
-<div class="admonition note">
-<p class="admonition-title">1 invocation</p>
-<ul>
-<li><a href="../packages/">shrub-rpc (server)</a> &mdash; <a href="../source/packages/shrub-rpc#invoke-hook-rpcroutefinished">invocation</a> </li>
-</ul>
-</div>
-<h2 id="rpcroutes">rpcRoutes</h2>
-<div class="admonition note">
-<p class="admonition-title">7 implementations</p>
-<ul>
-<li><a href="../packages/">shrub-angular-sandbox (server)</a> &mdash; <a href="../source/packages/shrub-angular-sandbox#implements-hook-rpcroutes">implementation</a> </li>
-<li><a href="../packages/">shrub-ui/notifications (server)</a> &mdash; <a href="../source/packages/shrub-ui/notifications#implements-hook-rpcroutes">implementation</a> </li>
-<li><a href="../packages/">shrub-user/forgot (server)</a> &mdash; <a href="../source/packages/shrub-user/forgot#implements-hook-rpcroutes">implementation</a> </li>
-<li><a href="../packages/">shrub-user/login (server)</a> &mdash; <a href="../source/packages/shrub-user/login#implements-hook-rpcroutes">implementation</a> </li>
-<li><a href="../packages/">shrub-user/logout (server)</a> &mdash; <a href="../source/packages/shrub-user/logout#implements-hook-rpcroutes">implementation</a> </li>
-<li><a href="../packages/">shrub-user/register (server)</a> &mdash; <a href="../source/packages/shrub-user/register#implements-hook-rpcroutes">implementation</a> </li>
-<li><a href="../packages/">shrub-user/reset (server)</a> &mdash; <a href="../source/packages/shrub-user/reset#implements-hook-rpcroutes">implementation</a> </li>
-</ul>
-</div>
-<div class="admonition note">
-<p class="admonition-title">1 invocation</p>
-<ul>
-<li><a href="../packages/">shrub-rpc (server)</a> &mdash; <a href="../source/packages/shrub-rpc#invoke-hook-rpcroutes">invocation</a> </li>
-</ul>
-</div>
-<h2 id="rpcroutesalter">rpcRoutesAlter</h2>
-<div class="admonition note">
-<p class="admonition-title">1 implementation</p>
-<ul>
-<li><a href="../packages/">shrub-limiter (server)</a> &mdash; <a href="../source/packages/shrub-limiter#implements-hook-rpcroutesalter">implementation</a> </li>
-</ul>
-</div>
-<div class="admonition note">
-<p class="admonition-title">1 invocation</p>
-<ul>
-<li><a href="../packages/">shrub-rpc (server)</a> &mdash; <a href="../source/packages/shrub-rpc#invoke-hook-rpcroutesalter">invocation</a> </li>
-</ul>
-</div>
-<h2 id="service">service</h2>
-<div class="admonition note">
-<p class="admonition-title">8 implementations</p>
-<ul>
-<li><a href="../packages/#shrub-formclient">shrub-form (client)</a> &mdash; <a href="../source/packages/shrub-form/client#implements-hook-service">implementation</a> </li>
-<li><a href="../packages/#shrub-ormclient">shrub-orm (client)</a> &mdash; <a href="../source/packages/shrub-orm/client#implements-hook-service">implementation</a> </li>
-<li><a href="../packages/#shrub-rpcclient">shrub-rpc (client)</a> &mdash; <a href="../source/packages/shrub-rpc/client#implements-hook-service">implementation</a> </li>
-<li><a href="../packages/#shrub-socketclient">shrub-socket (client)</a> &mdash; <a href="../source/packages/shrub-socket/client#implements-hook-service">implementation</a> </li>
-<li><a href="../packages/#shrub-uiclient">shrub-ui/messages (client)</a> &mdash; <a href="../source/packages/shrub-ui/client/messages#implements-hook-service">implementation</a> </li>
-<li><a href="../packages/#shrub-uiclient">shrub-ui/notifications (client)</a> &mdash; <a href="../source/packages/shrub-ui/client/notifications#implements-hook-service">implementation</a> </li>
-<li><a href="../packages/#shrub-uiclient">shrub-ui/window-title (client)</a> &mdash; <a href="../source/packages/shrub-ui/client/window-title#implements-hook-service">implementation</a> </li>
-<li><a href="../packages/#shrub-userclient">shrub-user (client)</a> &mdash; <a href="../source/packages/shrub-user/client#implements-hook-service">implementation</a> </li>
-</ul>
-</div>
-<div class="admonition note">
-<p class="admonition-title">1 invocation</p>
-<ul>
-<li><a href="../packages/">packages (client)</a> &mdash; <a href="../source/client/packages#invoke-hook-service">invocation</a> </li>
-</ul>
-</div>
-<h2 id="settings">settings</h2>
-<div class="admonition note">
-<p class="admonition-title">1 implementation</p>
-<ul>
-<li><a href="../packages/">shrub-villiany (server)</a> &mdash; <a href="../source/packages/shrub-villiany#implements-hook-settings">implementation</a> </li>
-</ul>
-</div>
 <h2 id="shrubangularahrefsanitizationwhitelist">shrubAngularAHrefSanitizationWhitelist</h2>
 <p><em>Allow packages to define whitelisted patterns for ngHref attributes.</em></p>
 <p>By default, Angular filters 'unsafe' URLs passed to the ngHref attribute. This
@@ -1067,7 +903,6 @@ on <strong>Run blocks</strong> for more explanation.</p>
 </div>
 <h2 id="shrubangularcontroller">shrubAngularController</h2>
 <p><em>Define Angular controllers.</em></p>
-<p>Use this hook to define Angular controllers for your application.</p>
 <p>See <a href="https://docs.angularjs.org/guide/controller">the Angular documentation</a>
 for more information about how to define a controller.</p>
 <h3 id="answer-with_3">Answer with</h3>
@@ -1159,7 +994,6 @@ dynamic directive recompilation necessary to implement on-the-fly skin changes.<
 </div>
 <h2 id="shrubangularfilter">shrubAngularFilter</h2>
 <p><em>Define Angular filters.</em></p>
-<p>Filters allow you to format the value of expressions.</p>
 <p>See
 <a href="https://docs.angularjs.org/guide/filter#creating-custom-filters">the Angular documentation</a>
 for more information about how to define and use filters.</p>
@@ -1217,6 +1051,55 @@ JavaScript assets to the client.</p>
 <li><a href="../packages/">shrub-angular (server)</a> &mdash; <a href="../source/packages/shrub-angular#invoke-hook-shrubangularpackagedependencies">invocation</a> </li>
 </ul>
 </div>
+<h2 id="shrubangularprovider">shrubAngularProvider</h2>
+<p><em>Define Angular providers.</em></p>
+<p>See
+<a href="https://docs.angularjs.org/api/auto/service/$provide#provider">the Angular documentation</a>
+for more information about how to define and use providers.</p>
+<h3 id="answer-with_7">Answer with</h3>
+<p>A provider constructor function.</p>
+<div class="admonition note">
+<p class="admonition-title">3 implementations</p>
+<ul>
+<li><a href="../packages/#shrub-html5-local-storageclient">shrub-html5-local-storage (client)</a> &mdash; <a href="../source/packages/shrub-html5-local-storage/client#implements-hook-shrubangularprovider">implementation</a> </li>
+<li><a href="../packages/#shrub-html5-notificationclient">shrub-html5-notification (client)</a> &mdash; <a href="../source/packages/shrub-html5-notification/client#implements-hook-shrubangularprovider">implementation</a> </li>
+<li><a href="../packages/#shrub-skinclient">shrub-skin (client)</a> &mdash; <a href="../source/packages/shrub-skin/client#implements-hook-shrubangularprovider">implementation</a> </li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">1 invocation</p>
+<ul>
+<li><a href="../packages/">packages (client)</a> &mdash; <a href="../source/client/packages#invoke-hook-shrubangularprovider">invocation</a> </li>
+</ul>
+</div>
+<h2 id="shrubangularroutes">shrubAngularRoutes</h2>
+<p><em>Define Angular routes.</em></p>
+<p>Packages use this hook to define Angular routes.</p>
+<h3 id="answer-with_8">Answer with</h3>
+<p>A route object.</p>
+<p>See
+<a href="https://docs.angularjs.org/api/ngRoute/provider/$routeProvider#when">the Angular documentation</a>
+(specifically the <code>route</code> parameter) for information on defining a route object.</p>
+<p>Also note that the <code>path</code> parameter is defined in the route object itself.</p>
+<div class="admonition note">
+<p class="admonition-title">8 implementations</p>
+<ul>
+<li><a href="../packages/#shrub-coreclient">shrub-core (client)</a> &mdash; <a href="../source/packages/shrub-core/client#implements-hook-shrubangularroutes">implementation</a> </li>
+<li><a href="../packages/#shrub-exampleclient">shrub-example/about (client)</a> &mdash; <a href="../source/packages/shrub-example/client/about#implements-hook-shrubangularroutes">implementation</a> </li>
+<li><a href="../packages/#shrub-exampleclient">shrub-example/home (client)</a> &mdash; <a href="../source/packages/shrub-example/client/home#implements-hook-shrubangularroutes">implementation</a> </li>
+<li><a href="../packages/#shrub-userclient">shrub-user/forgot (client)</a> &mdash; <a href="../source/packages/shrub-user/client/forgot#implements-hook-shrubangularroutes">implementation</a> </li>
+<li><a href="../packages/#shrub-userclient">shrub-user/login (client)</a> &mdash; <a href="../source/packages/shrub-user/client/login#implements-hook-shrubangularroutes">implementation</a> </li>
+<li><a href="../packages/#shrub-userclient">shrub-user/logout (client)</a> &mdash; <a href="../source/packages/shrub-user/client/logout#implements-hook-shrubangularroutes">implementation</a> </li>
+<li><a href="../packages/#shrub-userclient">shrub-user/register (client)</a> &mdash; <a href="../source/packages/shrub-user/client/register#implements-hook-shrubangularroutes">implementation</a> </li>
+<li><a href="../packages/#shrub-userclient">shrub-user/reset (client)</a> &mdash; <a href="../source/packages/shrub-user/client/reset#implements-hook-shrubangularroutes">implementation</a> </li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">1 invocation</p>
+<ul>
+<li><a href="../packages/#shrub-angularclient">shrub-angular (client)</a> &mdash; <a href="../source/packages/shrub-angular/client#invoke-hook-shrubangularroutes">invocation</a> </li>
+</ul>
+</div>
 <h2 id="shrubangularsandboxnavigationmiddleware">shrubAngularSandboxNavigationMiddleware</h2>
 <p><em>Define middleware to run when Angular is navigated in its sandbox.</em></p>
 <p>Angular sandboxes retain navigation (and other) state for a client without
@@ -1230,7 +1113,7 @@ from the original HTTP request, along with the following extra properties:</p>
 <ul>
 <li>(Sandbox) <code>sandbox</code> - The sandbox instance.</li>
 </ul>
-<h3 id="answer-with_7">Answer with</h3>
+<h3 id="answer-with_9">Answer with</h3>
 <p>A
 <a href="../guide/concepts#middleware-hook-specification">middleware hook specification</a>.
 The middleware have the following signature:</p>
@@ -1251,6 +1134,33 @@ The middleware have the following signature:</p>
 <li><a href="../packages/">shrub-angular-sandbox (server)</a> &mdash; <a href="../source/packages/shrub-angular-sandbox#invoke-hook-shrubangularsandboxnavigationmiddleware">invocation</a> </li>
 </ul>
 </div>
+<h2 id="shrubangularservice">shrubAngularService</h2>
+<p><em>Define Angular services.</em></p>
+<p>Use this hook to define Angular services for your application.</p>
+<p>See <a href="https://docs.angularjs.org/api/auto/service/$provide#service">the Angular documentation</a>
+for more information about how to define a service.</p>
+<h3 id="answer-with_10">Answer with</h3>
+<p>An <a href="../guide/concepts#annotated-functions">annotated function</a> which returns a
+service class/constructor function.</p>
+<div class="admonition note">
+<p class="admonition-title">8 implementations</p>
+<ul>
+<li><a href="../packages/#shrub-formclient">shrub-form (client)</a> &mdash; <a href="../source/packages/shrub-form/client#implements-hook-shrubangularservice">implementation</a> </li>
+<li><a href="../packages/#shrub-ormclient">shrub-orm (client)</a> &mdash; <a href="../source/packages/shrub-orm/client#implements-hook-shrubangularservice">implementation</a> </li>
+<li><a href="../packages/#shrub-rpcclient">shrub-rpc (client)</a> &mdash; <a href="../source/packages/shrub-rpc/client#implements-hook-shrubangularservice">implementation</a> </li>
+<li><a href="../packages/#shrub-socketclient">shrub-socket (client)</a> &mdash; <a href="../source/packages/shrub-socket/client#implements-hook-shrubangularservice">implementation</a> </li>
+<li><a href="../packages/#shrub-uiclient">shrub-ui/messages (client)</a> &mdash; <a href="../source/packages/shrub-ui/client/messages#implements-hook-shrubangularservice">implementation</a> </li>
+<li><a href="../packages/#shrub-uiclient">shrub-ui/notifications (client)</a> &mdash; <a href="../source/packages/shrub-ui/client/notifications#implements-hook-shrubangularservice">implementation</a> </li>
+<li><a href="../packages/#shrub-uiclient">shrub-ui/window-title (client)</a> &mdash; <a href="../source/packages/shrub-ui/client/window-title#implements-hook-shrubangularservice">implementation</a> </li>
+<li><a href="../packages/#shrub-userclient">shrub-user (client)</a> &mdash; <a href="../source/packages/shrub-user/client#implements-hook-shrubangularservice">implementation</a> </li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">1 invocation</p>
+<ul>
+<li><a href="../packages/">packages (client)</a> &mdash; <a href="../source/client/packages#invoke-hook-shrubangularservice">invocation</a> </li>
+</ul>
+</div>
 <h2 id="shrubassetsmiddleware">shrubAssetsMiddleware</h2>
 <p><em>Define assets to serve to the client application.</em></p>
 <p>Packages may come bundled with JavaScript or CSS assets. This hook is how you
@@ -1265,7 +1175,7 @@ the following properties:</p>
 them from your package to the <code>app</code> directory where they will be served.
 You'll need to implement the <a href="../hooks/#shrubgruntconfig"><code>shrubGruntConfig</code></a>
 hook for that.</p>
-<h3 id="answer-with_8">Answer with</h3>
+<h3 id="answer-with_11">Answer with</h3>
 <p>A
 <a href="../guide/concepts#middleware-hook-specification">middleware hook specification</a>.
 The middleware have the following signature:</p>
@@ -1297,7 +1207,7 @@ The middleware have the following signature:</p>
 <p><em>Create a fingerprint for a connection</em>.</p>
 <p>Each request has a fingerprint generated which allows bad behavior to be
 tracked (like exceeding API limits).</p>
-<h3 id="answer-with_9">Answer with</h3>
+<h3 id="answer-with_12">Answer with</h3>
 <p>A keyed object of fingerprint values. <code>null</code> or <code>undefined</code> values will be
 filtered out when doing most checks.</p>
 <div class="admonition note">
@@ -1320,7 +1230,7 @@ filtered out when doing most checks.</p>
 Configuration is keyed by the name of the package.</p>
 <p>Variables with <code>null</code> or <code>undefined</code> values will be filtered out and not sent
 to the client.</p>
-<h3 id="answer-with_10">Answer with</h3>
+<h3 id="answer-with_13">Answer with</h3>
 <p>A keyed object.</p>
 <div class="admonition note">
 <p class="admonition-title">5 implementations</p>
@@ -1343,7 +1253,7 @@ to the client.</p>
 <p>Packages can implement this hook to alter configuration variables defined by
 any other (or even the same) package.</p>
 <p>Implementations are passed a <a href="../source/client/modules/config/"><code>Config</code></a> object.</p>
-<p>See: <a href="../hooks/#shrubconfig"><code>shrubConfig</code></a>.</p>
+<p>See: <a href="../hooks/#shrubconfigclient"><code>shrubConfigClient</code></a>.</p>
 <div class="admonition note">
 <p class="admonition-title">1 implementation</p>
 <ul>
@@ -1360,7 +1270,7 @@ any other (or even the same) package.</p>
 <p><em>Define server-side configuration settings.</em></p>
 <p>Packages may use this hook to define default configuration for server-side
 functionality. These settings can be overridden in the settings file.</p>
-<h3 id="answer-with_11">Answer with</h3>
+<h3 id="answer-with_14">Answer with</h3>
 <p>A recursive object which will be folded into the server configuration under
 the package name key. For instance, say we have a package <code>my-package</code> which
 defines the hook like:</p>
@@ -1380,7 +1290,7 @@ config.get('packageSettings:my-package:two:three');
 </code></pre>
 
 <div class="admonition note">
-<p class="admonition-title">11 implementations</p>
+<p class="admonition-title">12 implementations</p>
 <ul>
 <li><a href="../packages/">shrub-angular-sandbox (server)</a> &mdash; <a href="../source/packages/shrub-angular-sandbox#implements-hook-shrubconfigserver">implementation</a> </li>
 <li><a href="../packages/">shrub-assets (server)</a> &mdash; <a href="../source/packages/shrub-assets#implements-hook-shrubconfigserver">implementation</a> </li>
@@ -1393,6 +1303,7 @@ config.get('packageSettings:my-package:two:three');
 <li><a href="../packages/">shrub-skin (server)</a> &mdash; <a href="../source/packages/shrub-skin#implements-hook-shrubconfigserver">implementation</a> </li>
 <li><a href="../packages/">shrub-socket (server)</a> &mdash; <a href="../source/packages/shrub-socket#implements-hook-shrubconfigserver">implementation</a> </li>
 <li><a href="../packages/">shrub-user (server)</a> &mdash; <a href="../source/packages/shrub-user#implements-hook-shrubconfigserver">implementation</a> </li>
+<li><a href="../packages/">shrub-villiany (server)</a> &mdash; <a href="../source/packages/shrub-villiany#implements-hook-shrubconfigserver">implementation</a> </li>
 </ul>
 </div>
 <div class="admonition note">
@@ -1406,7 +1317,7 @@ config.get('packageSettings:my-package:two:three');
 <p>This hook is where most of the major initialization work happens on the
 Shrub server. <a href="../packages/#shrub-http"><code>shrub-http</code></a> spins up an HTTP server,
 <a href="../packages/#shrub-orm"><code>shrub-orm</code></a> spins up Waterline, and more.</p>
-<h3 id="answer-with_12">Answer with</h3>
+<h3 id="answer-with_15">Answer with</h3>
 <p>A
 <a href="../guide/concepts/#middleware-hook-specification">middleware hook specification</a>.
 The middleware have the following signature:</p>
@@ -1493,6 +1404,25 @@ exports.pkgmanRegister = function(registrar) {
 <li><a href="../packages/">server (server)</a> &mdash; <a href="../source/server#invoke-hook-shrubcoreprebootstrap">invocation</a> </li>
 </ul>
 </div>
+<h2 id="shrubcoreprocessexit">shrubCoreProcessExit</h2>
+<p><em>Final cleanups as the process is exiting.</em></p>
+<p>Shrub tries its hardest to always invoke this hook, even in the event of a
+raised signal or unhandled exception.</p>
+<p>You should not schedule asynchronous events, as they will not be dispatched.
+See <a href="http://nodejs.org/api/process.html#process_event_exit">the Node.js documentation</a>
+for more information.</p>
+<div class="admonition note">
+<p class="admonition-title">1 implementation</p>
+<ul>
+<li><a href="../packages/">shrub-repl (server)</a> &mdash; <a href="../source/packages/shrub-repl#implements-hook-shrubcoreprocessexit">implementation</a> </li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">1 invocation</p>
+<ul>
+<li><a href="../packages/">server (server)</a> &mdash; <a href="../source/server#invoke-hook-shrubcoreprocessexit">invocation</a> </li>
+</ul>
+</div>
 <h2 id="shrubformalter">shrubFormAlter</h2>
 <p><em>Alter any <a href="../guide/forms/#form-definition-objects">form definition object</a>
 before it's rendered.</em></p>
@@ -1521,7 +1451,7 @@ way (although altering the key would probably be confusing at this point).</p>
 <h2 id="shrubformwidgets">shrubFormWidgets</h2>
 <p><em>Define form widgets for use when defining
 <a href="../guide/forms/#form-definition-objects">form definition objects</a>.</em></p>
-<h3 id="answer-with_13">Answer with</h3>
+<h3 id="answer-with_16">Answer with</h3>
 <p>An array of objects structured like:</p>
 <ul>
 <li>(String) <code>type</code> - The widget type, used in form definition objects.</li>
@@ -1595,8 +1525,9 @@ clients.</p>
 <a href="../source/Gruntfile/#gruntconfiguration"><code>GruntConfiguration</code></a>. The <code>grunt</code>
 object is passed in through the second parameter in case it's needed.</p>
 <div class="admonition note">
-<p class="admonition-title">1 implementation</p>
+<p class="admonition-title">2 implementations</p>
 <ul>
+<li><a href="../packages/">shrub-grunt (server)</a> &mdash; <a href="../source/packages/shrub-grunt#implements-hook-shrubgruntconfigalter">implementation</a> </li>
 <li><a href="../packages/#shrub-grunt">shrub-grunt/tests/build (server)</a> &mdash; <a href="../source/packages/shrub-grunt/tests/build#implements-hook-shrubgruntconfigalter">implementation</a> </li>
 </ul>
 </div>
@@ -1614,7 +1545,7 @@ from the HTTP request.</p>
 <p>The <code>res</code> parameter to the middleware is an instance of
 <a href="http://nodejs.org/api/http.html#http_class_http_serverresponse">http.ServerResponse</a>
 from the HTTP request.</p>
-<h3 id="answer-with_14">Answer with</h3>
+<h3 id="answer-with_17">Answer with</h3>
 <p>A
 <a href="../guide/concepts#middleware-hook-specification">middleware hook specification</a>.
 The middleware have the following signature:</p>
@@ -1651,16 +1582,17 @@ The middleware have the following signature:</p>
 <h2 id="shrubhttproutes">shrubHttpRoutes</h2>
 <p><em>Define HTTP routes.</em></p>
 <p>Packages use this hook to define HTTP routes.</p>
-<h3 id="answer-with_15">Answer with</h3>
+<h3 id="answer-with_18">Answer with</h3>
 <p>An array of objects structured like:</p>
 <ul>
 <li>(String) <code>path</code> - The HTTP path of the route. Include the leading slash.</li>
 <li>(String) <code>verb</code> - The HTTP verb to associate with this route. Defaults to
   <code>'get'</code>.</li>
-<li>(Function) <code>receiver</code> - The function invoked when the route is hit. Takes two
-  parameters:<ul>
+<li>(Function) <code>receiver</code> - The function invoked when the route is hit. Takes
+  three parameters:<ul>
 <li>(http.IncomingMessage) <code>req</code> - The request object.</li>
 <li>(http.ServerResponse) <code>res</code> - The response object.</li>
+<li>(Function) <code>fn</code> - A nodeback called when the route is complete.</li>
 </ul>
 </li>
 </ul>
@@ -1712,7 +1644,7 @@ throughout the server (and to a limited extent, the client) application.</p>
 <a href="https://github.com/balderdashy/waterline-docs/blob/master/models.md">Waterline documentation for how to define model collections</a>.
 Shrub handles calling <code>Waterline.Collection.extend</code>, so you only have to return
 the raw object.</p>
-<h3 id="answer-with_16">Answer with</h3>
+<h3 id="answer-with_19">Answer with</h3>
 <p>A keyed object whose values are raw model collection objects. e.g.</p>
 <pre><code class="javascript">exports.pkgmanRegister = function(registrar) {
 
@@ -1773,10 +1705,129 @@ defined by all modules.</p>
 <li><a href="../packages/#shrub-orm">shrub-orm (server)</a> &mdash; <a href="../source/packages/shrub-orm/client#invoke-hook-shrubormcollectionsalter">invocation</a> </li>
 </ul>
 </div>
+<h2 id="shrubreplcontext">shrubReplContext</h2>
+<p><em>Add to the REPL context.</em></p>
+<p>Packages may use this hook to provide access to parts of their state to the
+REPL context.</p>
+<p>Implementations accept the following arguments:</p>
+<ul>
+<li>(Object) <code>context</code> - The context object.</li>
+</ul>
+<p>To set context variables, simply set them on the context object.</p>
+<div class="admonition note">
+<p class="admonition-title">4 implementations</p>
+<ul>
+<li><a href="../packages/">shrub-install (server)</a> &mdash; <a href="../source/packages/shrub-install#implements-hook-shrubreplcontext">implementation</a> </li>
+<li><a href="../packages/">shrub-orm (server)</a> &mdash; <a href="../source/packages/shrub-orm#implements-hook-shrubreplcontext">implementation</a> </li>
+<li><a href="../packages/">shrub-socket (server)</a> &mdash; <a href="../source/packages/shrub-socket#implements-hook-shrubreplcontext">implementation</a> </li>
+<li><a href="../packages/">shrub-user/register (server)</a> &mdash; <a href="../source/packages/shrub-user/register#implements-hook-shrubreplcontext">implementation</a> </li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">1 invocation</p>
+<ul>
+<li><a href="../packages/">shrub-repl (server)</a> &mdash; <a href="../source/packages/shrub-repl#invoke-hook-shrubreplcontext">invocation</a> </li>
+</ul>
+</div>
+<h2 id="shrubrpccall">shrubRpcCall</h2>
+<p><em>Notify packages when any RPC call is made.</em></p>
+<p>Packages can implement this hook to be notified when any RPC call is made.
+For instance, <a href="../packages/#shrub-uimessagesclient"><code>shrub-ui/messages</code></a> uses
+this hook to display an error message if any RPC call returned with an error.</p>
+<h3 id="answer-with_20">Answer with</h3>
+<p>An <a href="../guide/concepts#annotated-functions">annotated function</a>. The following
+locals are injected:</p>
+<ul>
+<li>(String) <code>route</code> - The RPC route path.</li>
+<li>(Any) <code>data</code> - The data sent to the server.</li>
+<li>(Promise) <code>result</code> - The result promise.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">1 implementation</p>
+<ul>
+<li><a href="../packages/#shrub-uiclient">shrub-ui/messages (client)</a> &mdash; <a href="../source/packages/shrub-ui/client/messages#implements-hook-shrubrpccall">implementation</a> </li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">1 invocation</p>
+<ul>
+<li><a href="../packages/#shrub-rpcclient">shrub-rpc (client)</a> &mdash; <a href="../source/packages/shrub-rpc/client#invoke-hook-shrubrpccall">invocation</a> </li>
+</ul>
+</div>
+<h2 id="shrubrpcroutefinish">shrubRpcRouteFinish</h2>
+<p><em>Finish up an RPC route call.</em></p>
+<p>This hook gives packages the chance to run some code after an RPC route
+finishes. For instance, <a href="../packages/#shrub-session"><code>shrub-session</code></a> and
+<a href="../packages/#shrub-user"><code>shrub-user</code></a> use this hook to update the session and
+user records (respectively) after each RPC call.</p>
+<h3 id="answer-with_21">Answer with</h3>
+<p>A promise which when fulfilled allows the RPC call to finish.</p>
+<div class="admonition note">
+<p class="admonition-title">2 implementations</p>
+<ul>
+<li><a href="../packages/">shrub-session (server)</a> &mdash; <a href="../source/packages/shrub-session#implements-hook-shrubrpcroutefinish">implementation</a> </li>
+<li><a href="../packages/">shrub-user (server)</a> &mdash; <a href="../source/packages/shrub-user#implements-hook-shrubrpcroutefinish">implementation</a> </li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">1 invocation</p>
+<ul>
+<li><a href="../packages/">shrub-rpc (server)</a> &mdash; <a href="../source/packages/shrub-rpc#invoke-hook-shrubrpcroutefinish">invocation</a> </li>
+</ul>
+</div>
+<h2 id="shrubrpcroutes">shrubRpcRoutes</h2>
+<p><em>Define RPC routes.</em></p>
+<p>Packages use this hook to define RPC routes.</p>
+<h3 id="answer-with_22">Answer with</h3>
+<p>An array of objects structured like:</p>
+<ul>
+<li>(String) <code>path</code> - The HTTP path of the route. Include the leading slash.</li>
+<li>(Function) <code>receiver</code> - The function invoked when the route is hit. Takes two
+  parameters:<ul>
+<li>(http.IncomingMessage) <code>req</code> - The request object.</li>
+<li>(Function) <code>fn</code> - A nodeback called when the route is complete.</li>
+</ul>
+</li>
+<li>(...) - Other packages may expect arbitrary parameters, for instance
+  <code>shrub-limiter</code> expects a key <code>limiter</code>. See
+  <a href="../source/packages/shrub-limiter/#implements-hook-shrubrpcroutesalter">the documentation</a>
+  for more information.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">7 implementations</p>
+<ul>
+<li><a href="../packages/">shrub-angular-sandbox (server)</a> &mdash; <a href="../source/packages/shrub-angular-sandbox#implements-hook-shrubrpcroutes">implementation</a> </li>
+<li><a href="../packages/">shrub-ui/notifications (server)</a> &mdash; <a href="../source/packages/shrub-ui/notifications#implements-hook-shrubrpcroutes">implementation</a> </li>
+<li><a href="../packages/">shrub-user/forgot (server)</a> &mdash; <a href="../source/packages/shrub-user/forgot#implements-hook-shrubrpcroutes">implementation</a> </li>
+<li><a href="../packages/">shrub-user/login (server)</a> &mdash; <a href="../source/packages/shrub-user/login#implements-hook-shrubrpcroutes">implementation</a> </li>
+<li><a href="../packages/">shrub-user/logout (server)</a> &mdash; <a href="../source/packages/shrub-user/logout#implements-hook-shrubrpcroutes">implementation</a> </li>
+<li><a href="../packages/">shrub-user/register (server)</a> &mdash; <a href="../source/packages/shrub-user/register#implements-hook-shrubrpcroutes">implementation</a> </li>
+<li><a href="../packages/">shrub-user/reset (server)</a> &mdash; <a href="../source/packages/shrub-user/reset#implements-hook-shrubrpcroutes">implementation</a> </li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">1 invocation</p>
+<ul>
+<li><a href="../packages/">shrub-rpc (server)</a> &mdash; <a href="../source/packages/shrub-rpc#invoke-hook-shrubrpcroutes">invocation</a> </li>
+</ul>
+</div>
+<h2 id="shrubrpcroutesalter">shrubRpcRoutesAlter</h2>
+<div class="admonition note">
+<p class="admonition-title">1 implementation</p>
+<ul>
+<li><a href="../packages/">shrub-limiter (server)</a> &mdash; <a href="../source/packages/shrub-limiter#implements-hook-shrubrpcroutesalter">implementation</a> </li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">1 invocation</p>
+<ul>
+<li><a href="../packages/">shrub-rpc (server)</a> &mdash; <a href="../source/packages/shrub-rpc#invoke-hook-shrubrpcroutesalter">invocation</a> </li>
+</ul>
+</div>
 <h2 id="shrubuinotificationqueues">shrubUiNotificationQueues</h2>
 <p><em>Define persistent notification queues.</em></p>
 <p>Packages may implement this hook to define queues of notifications.</p>
-<h3 id="answer-with_17">Answer with</h3>
+<h3 id="answer-with_23">Answer with</h3>
 <p>An object whose keys are queue names and whose values are structured like:</p>
 <ul>
 <li>(Function) <code>channelFromRequest</code> - An idempotent function which returns the

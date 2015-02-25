@@ -142,9 +142,9 @@
                             
                                 <li><a class="toctree-l3" href="#invoke-hook-shrubangularfilter">Invoke hook shrubAngularFilter.</a></li>
                             
-                                <li><a class="toctree-l3" href="#invoke-hook-provider">Invoke hook provider.</a></li>
+                                <li><a class="toctree-l3" href="#invoke-hook-shrubangularprovider">Invoke hook shrubAngularProvider.</a></li>
                             
-                                <li><a class="toctree-l3" href="#invoke-hook-service">Invoke hook service.</a></li>
+                                <li><a class="toctree-l3" href="#invoke-hook-shrubangularservice">Invoke hook shrubAngularService.</a></li>
                             
                         
                         </ul>
@@ -871,19 +871,19 @@ It will run over the previous definition, ensuring everything works nicely.</p>
 
       debug 'Filters registered.'
 </code></pre>
-<h4 id="invoke-hook-provider">Invoke hook <code>provider</code>.</h4>
+<h4 id="invoke-hook-shrubangularprovider">Invoke hook <code>shrubAngularProvider</code>.</h4>
 <pre><code>      debug 'Registering providers...'
 
-      for path, provider of pkgman.invoke 'provider'
+      for path, provider of pkgman.invoke 'shrubAngularProvider'
         debug path
         $provide.provider path, provider
 
       debug 'Providers registered.'
 </code></pre>
-<h4 id="invoke-hook-service">Invoke hook <code>service</code>.</h4>
+<h4 id="invoke-hook-shrubangularservice">Invoke hook <code>shrubAngularService</code>.</h4>
 <pre><code>      debug 'Registering services...'
 
-      for path, injected of pkgman.invoke 'service'
+      for path, injected of pkgman.invoke 'shrubAngularService'
         debug path
         $provide.service path, injected
 

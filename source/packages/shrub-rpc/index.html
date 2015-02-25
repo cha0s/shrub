@@ -428,13 +428,13 @@
                             
                                 <li><a class="toctree-l3" href="#implements-hook-shrubcorebootstrapmiddleware">Implements hook shrubCoreBootstrapMiddleware.</a></li>
                             
-                                <li><a class="toctree-l3" href="#invoke-hook-rpcroutes">Invoke hook rpcRoutes.</a></li>
+                                <li><a class="toctree-l3" href="#invoke-hook-shrubrpcroutes">Invoke hook shrubRpcRoutes.</a></li>
                             
-                                <li><a class="toctree-l3" href="#invoke-hook-rpcroutesalter">Invoke hook rpcRoutesAlter.</a></li>
+                                <li><a class="toctree-l3" href="#invoke-hook-shrubrpcroutesalter">Invoke hook shrubRpcRoutesAlter.</a></li>
                             
                                 <li><a class="toctree-l3" href="#implements-hook-socketconnectionmiddleware">Implements hook socketConnectionMiddleware.</a></li>
                             
-                                <li><a class="toctree-l3" href="#invoke-hook-rpcroutefinished">Invoke hook rpcRouteFinished.</a></li>
+                                <li><a class="toctree-l3" href="#invoke-hook-shrubrpcroutefinish">Invoke hook shrubRpcRouteFinish.</a></li>
                             
                         
                         </ul>
@@ -762,9 +762,9 @@ exports.pkgmanRegister = (registrar) -&gt;
 
       (next) -&gt;
 </code></pre>
-<h4 id="invoke-hook-rpcroutes">Invoke hook <code>rpcRoutes</code>.</h4>
+<h4 id="invoke-hook-shrubrpcroutes">Invoke hook <code>shrubRpcRoutes</code>.</h4>
 <pre><code>        debug '- Registering RPC routess...'
-        for route in _.flatten pkgman.invokeFlat 'rpcRoutes'
+        for route in _.flatten pkgman.invokeFlat 'shrubRpcRoutes'
 </code></pre>
 <p>Default the RPC route to the package path, replacing slashes with dots.</p>
 <pre><code>          debug "- - rpc://#{route.path}"
@@ -774,8 +774,8 @@ exports.pkgmanRegister = (registrar) -&gt;
           routes[route.path] = route
         debug '- RPC routes registered.'
 </code></pre>
-<h4 id="invoke-hook-rpcroutesalter">Invoke hook <code>rpcRoutesAlter</code>.</h4>
-<pre><code>        pkgman.invoke 'rpcRoutesAlter', routes
+<h4 id="invoke-hook-shrubrpcroutesalter">Invoke hook <code>shrubRpcRoutesAlter</code>.</h4>
+<pre><code>        pkgman.invoke 'shrubRpcRoutesAlter', routes
 </code></pre>
 <p>Set up the validators as middleware.</p>
 <pre><code>        for path, route of routes
@@ -852,10 +852,10 @@ issue.</p>
 <pre><code>              route.receiver routeReq, (error, result) -&gt;
                 return sendErrorToClient error if error?
 </code></pre>
-<h4 id="invoke-hook-rpcroutefinished">Invoke hook <code>rpcRouteFinished</code>.</h4>
+<h4 id="invoke-hook-shrubrpcroutefinish">Invoke hook <code>shrubRpcRouteFinish</code>.</h4>
 <pre><code>                Promise.all(
                   pkgman.invokeFlat(
-                    'rpcRouteFinished', routeReq, result, req
+                    'shrubRpcRouteFinish', routeReq, result, req
                   )
 
                 ).then(

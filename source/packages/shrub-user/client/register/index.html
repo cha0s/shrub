@@ -609,7 +609,7 @@
                         
                             <li class="toctree-l2"><a href="#user-register">User - Register</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-route">Implements hook route.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubangularroutes">Implements hook shrubAngularRoutes.</a></li>
                             
                         
                         </ul>
@@ -725,53 +725,57 @@
               <h1 id="user-register">User - Register</h1>
 <pre><code>exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h4 id="implements-hook-route">Implements hook <code>route</code>.</h4>
-<pre><code>  registrar.registerHook 'route', -&gt;
+<h4 id="implements-hook-shrubangularroutes">Implements hook <code>shrubAngularRoutes</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubAngularRoutes', -&gt;
 
-    path: 'user/register'
-    title: 'Sign up'
+    routes = []
 
-    controller: [
-      '$location', '$scope', 'shrub-ui/messages', 'shrub-rpc', 'shrub-user'
-      ($location, $scope, messages, rpc, user) -&gt;
-        return $location.path '/' if user.isLoggedIn()
+    routes.push
 
-        $scope.form =
+      path: 'user/register'
+      title: 'Sign up'
 
-          key: 'shrub-user-register'
+      controller: [
+        '$location', '$scope', 'shrub-ui/messages', 'shrub-rpc', 'shrub-user'
+        ($location, $scope, messages, rpc, user) -&gt;
+          return $location.path '/' if user.isLoggedIn()
 
-          submits: [
+          $scope.form =
 
-            rpc.formSubmitHandler 'shrub-user/register', (error, result) -&gt;
-              return if error?
+            key: 'shrub-user-register'
 
-              messages.add(
-                text: 'An email has been sent with account registration details. Please check your email.'
-              )
+            submits: [
 
-              $location.path '/'
+              rpc.formSubmitHandler 'shrub-user/register', (error, result) -&gt;
+                return if error?
 
-          ]
+                messages.add(
+                  text: 'An email has been sent with account registration details. Please check your email.'
+                )
 
-          fields:
+                $location.path '/'
 
-            username:
-              type: 'text'
-              label: 'Username'
-              required: true
+            ]
 
-            email:
-              type: 'email'
-              label: 'Email'
-              required: true
+            fields:
 
-            submit:
-              type: 'submit'
-              value: 'Sign up'
+              username:
+                type: 'text'
+                label: 'Username'
+                required: true
 
-    ]
+              email:
+                type: 'email'
+                label: 'Email'
+                required: true
 
-    template: '''
+              submit:
+                type: 'submit'
+                value: 'Sign up'
+
+      ]
+
+      template: '''
 
 &lt;div
   data-shrub-form
@@ -779,6 +783,8 @@
 &gt;&lt;/div&gt;
 
 '''
+
+    return routes
 </code></pre>
 
             </div>

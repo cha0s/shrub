@@ -543,9 +543,9 @@
                             
                                 <li><a class="toctree-l3" href="#implements-hook-shrubangulardirective">Implements hook shrubAngularDirective.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-rpccall">Implements hook rpcCall.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubrpccall">Implements hook shrubRpcCall.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-service">Implements hook service.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubangularservice">Implements hook shrubAngularService.</a></li>
                             
                                 <li><a class="toctree-l3" href="#messagesadd">messages.add</a></li>
                             
@@ -803,20 +803,20 @@ exports.pkgmanRegister = (registrar) -&gt;
 
   ]
 </code></pre>
-<h4 id="implements-hook-rpccall">Implements hook <code>rpcCall</code>.</h4>
-<pre><code>  registrar.registerHook 'rpcCall', -&gt; [
+<h4 id="implements-hook-shrubrpccall">Implements hook <code>shrubRpcCall</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubRpcCall', -&gt; [
     'shrub-ui/messages', 'result'
     (messages, result) -&gt;
 </code></pre>
-<p>Add a notification with the error text.</p>
+<p>Add a message with the error text, if any.</p>
 <pre><code>      result.catch (error) -&gt; messages.add(
         class: 'alert-danger', text: errors.message error
       )
 
   ]
 </code></pre>
-<h4 id="implements-hook-service">Implements hook <code>service</code>.</h4>
-<pre><code>  registrar.registerHook 'service', -&gt; [
+<h4 id="implements-hook-shrubangularservice">Implements hook <code>shrubAngularService</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubAngularService', -&gt; [
     'shrub-socket'
     (socket) -&gt;
 

@@ -133,9 +133,9 @@ Log the user out.
 
         ]
 
-#### Implements hook `settings`.
+#### Implements hook `shrubConfigServer`.
 
-      registrar.registerHook 'packageSettings', ->
+      registrar.registerHook 'shrubConfigServer', ->
 
         ban:
 

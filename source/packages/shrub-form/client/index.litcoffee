@@ -108,9 +108,9 @@ Register the form in the system.
 
       ]
 
-#### Implements hook `service`.
+#### Implements hook `shrubAngularService`.
 
-      registrar.registerHook 'service', -> [
+      registrar.registerHook 'shrubAngularService', -> [
 
         ->
 

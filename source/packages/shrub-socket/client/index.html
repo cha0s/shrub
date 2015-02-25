@@ -489,7 +489,7 @@
                         
                             <li class="toctree-l2"><a href="#socket">Socket</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-service">Implements hook service.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubangularservice">Implements hook shrubAngularService.</a></li>
                             
                         
                         </ul>
@@ -728,8 +728,8 @@
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h4 id="implements-hook-service">Implements hook <code>service</code>.</h4>
-<pre><code>  registrar.registerHook 'service', -&gt;
+<h4 id="implements-hook-shrubangularservice">Implements hook <code>shrubAngularService</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubAngularService', -&gt;
 </code></pre>
 <p>Load the manager module.</p>
 <pre><code>    {Manager} = require config.get 'packageConfig:shrub-socket:manager:module'

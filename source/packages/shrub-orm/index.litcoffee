@@ -85,11 +85,11 @@ connection by default, which uses the sails-redis adapter with defaults.
             password: null
             database: null
 
-#### Implements hook `replContext`.
+#### Implements hook `shrubReplContext`.
 
 Provide ORM to the REPL context.
 
-      registrar.registerHook 'replContext', (context) -> context.orm = exports
+      registrar.registerHook 'shrubReplContext', (context) -> context.orm = exports
 
 ## initialize
 

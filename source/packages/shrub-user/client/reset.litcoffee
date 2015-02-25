@@ -4,52 +4,56 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `route`.
+#### Implements hook `shrubAngularRoutes`.
 
-      registrar.registerHook 'route', ->
+      registrar.registerHook 'shrubAngularRoutes', ->
 
-        path: 'user/reset/:token'
-        title: 'Reset your password'
+        routes = []
 
-        controller: [
-          '$location', '$routeParams', '$scope', 'shrub-ui/messages', 'shrub-rpc'
-          ($location, $routeParams, $scope, messages, rpc) ->
+        routes.push
 
-            $scope.form =
+          path: 'user/reset/:token'
+          title: 'Reset your password'
 
-              key: 'shrub-user-reset'
+          controller: [
+            '$location', '$routeParams', '$scope', 'shrub-ui/messages', 'shrub-rpc'
+            ($location, $routeParams, $scope, messages, rpc) ->
 
-              submits: [
+              $scope.form =
 
-                rpc.formSubmitHandler 'shrub-user/reset', (error, result) ->
-                  return if error?
+                key: 'shrub-user-reset'
 
-                  messages.add(
-                    text: 'You may now log in with your new password.'
-                  )
+                submits: [
 
-                  $location.path '/user/login'
+                  rpc.formSubmitHandler 'shrub-user/reset', (error, result) ->
+                    return if error?
 
-              ]
+                    messages.add(
+                      text: 'You may now log in with your new password.'
+                    )
 
-              fields:
+                    $location.path '/user/login'
 
-                password:
-                  type: 'password'
-                  label: 'New password'
-                  required: true
+                ]
 
-                token:
-                  type: 'hidden'
-                  value: $routeParams.token
+                fields:
 
-                submit:
-                  type: 'submit'
-                  value: 'Reset password'
+                  password:
+                    type: 'password'
+                    label: 'New password'
+                    required: true
 
-        ]
+                  token:
+                    type: 'hidden'
+                    value: $routeParams.token
 
-        template: '''
+                  submit:
+                    type: 'submit'
+                    value: 'Reset password'
+
+          ]
+
+          template: '''
 
     <div
       data-shrub-form
@@ -57,3 +61,5 @@
     ></div>
 
     '''
+
+        return routes

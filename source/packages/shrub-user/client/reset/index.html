@@ -614,7 +614,7 @@
                         
                             <li class="toctree-l2"><a href="#user-reset-password">User - Reset password</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-route">Implements hook route.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubangularroutes">Implements hook shrubAngularRoutes.</a></li>
                             
                         
                         </ul>
@@ -727,51 +727,55 @@
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h4 id="implements-hook-route">Implements hook <code>route</code>.</h4>
-<pre><code>  registrar.registerHook 'route', -&gt;
+<h4 id="implements-hook-shrubangularroutes">Implements hook <code>shrubAngularRoutes</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubAngularRoutes', -&gt;
 
-    path: 'user/reset/:token'
-    title: 'Reset your password'
+    routes = []
 
-    controller: [
-      '$location', '$routeParams', '$scope', 'shrub-ui/messages', 'shrub-rpc'
-      ($location, $routeParams, $scope, messages, rpc) -&gt;
+    routes.push
 
-        $scope.form =
+      path: 'user/reset/:token'
+      title: 'Reset your password'
 
-          key: 'shrub-user-reset'
+      controller: [
+        '$location', '$routeParams', '$scope', 'shrub-ui/messages', 'shrub-rpc'
+        ($location, $routeParams, $scope, messages, rpc) -&gt;
 
-          submits: [
+          $scope.form =
 
-            rpc.formSubmitHandler 'shrub-user/reset', (error, result) -&gt;
-              return if error?
+            key: 'shrub-user-reset'
 
-              messages.add(
-                text: 'You may now log in with your new password.'
-              )
+            submits: [
 
-              $location.path '/user/login'
+              rpc.formSubmitHandler 'shrub-user/reset', (error, result) -&gt;
+                return if error?
 
-          ]
+                messages.add(
+                  text: 'You may now log in with your new password.'
+                )
 
-          fields:
+                $location.path '/user/login'
 
-            password:
-              type: 'password'
-              label: 'New password'
-              required: true
+            ]
 
-            token:
-              type: 'hidden'
-              value: $routeParams.token
+            fields:
 
-            submit:
-              type: 'submit'
-              value: 'Reset password'
+              password:
+                type: 'password'
+                label: 'New password'
+                required: true
 
-    ]
+              token:
+                type: 'hidden'
+                value: $routeParams.token
 
-    template: '''
+              submit:
+                type: 'submit'
+                value: 'Reset password'
+
+      ]
+
+      template: '''
 
 &lt;div
   data-shrub-form
@@ -779,6 +783,8 @@ exports.pkgmanRegister = (registrar) -&gt;
 &gt;&lt;/div&gt;
 
 '''
+
+    return routes
 </code></pre>
 
             </div>

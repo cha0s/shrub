@@ -404,7 +404,7 @@
                         
                             <li class="toctree-l2"><a href="#object-relational-mapping">Object-relational mapping</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-service">Implements hook service.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubangularservice">Implements hook shrubAngularService.</a></li>
                             
                                 <li><a class="toctree-l3" href="#ormcollection">orm.collection</a></li>
                             
@@ -737,8 +737,8 @@ collections = {}
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h4 id="implements-hook-service">Implements hook <code>service</code>.</h4>
-<pre><code>  registrar.registerHook 'service', -&gt; [
+<h4 id="implements-hook-shrubangularservice">Implements hook <code>shrubAngularService</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubAngularService', -&gt; [
     '$http'
     ($http) -&gt;
 

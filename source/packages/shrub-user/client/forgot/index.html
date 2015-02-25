@@ -589,7 +589,7 @@
                         
                             <li class="toctree-l2"><a href="#user-forgot-password">User - Forgot password</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-route">Implements hook route.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubangularroutes">Implements hook shrubAngularRoutes.</a></li>
                             
                         
                         </ul>
@@ -725,48 +725,52 @@
               <h1 id="user-forgot-password">User - Forgot password</h1>
 <pre><code>exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h4 id="implements-hook-route">Implements hook <code>route</code>.</h4>
-<pre><code>  registrar.registerHook 'route', -&gt;
+<h4 id="implements-hook-shrubangularroutes">Implements hook <code>shrubAngularRoutes</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubAngularRoutes', -&gt;
 
-    path: 'user/forgot'
-    title: 'Forgot password'
+    routes = []
 
-    controller: [
-      '$location', '$scope', 'shrub-ui/messages', 'shrub-rpc', 'shrub-user'
-      ($location, $scope, messages, rpc, user) -&gt;
-        return $location.path '/' if user.isLoggedIn()
+    routes.push
 
-        $scope.form =
+      path: 'user/forgot'
+      title: 'Forgot password'
 
-          key: 'shrub-user-forgot'
+      controller: [
+        '$location', '$scope', 'shrub-ui/messages', 'shrub-rpc', 'shrub-user'
+        ($location, $scope, messages, rpc, user) -&gt;
+          return $location.path '/' if user.isLoggedIn()
 
-          submits: [
+          $scope.form =
 
-            rpc.formSubmitHandler 'shrub-user/forgot', (error, result) -&gt;
-              return if error?
+            key: 'shrub-user-forgot'
 
-              messages.add(
-                text: 'A reset link will be emailed.'
-              )
+            submits: [
 
-              $location.path '/'
+              rpc.formSubmitHandler 'shrub-user/forgot', (error, result) -&gt;
+                return if error?
 
-          ]
+                messages.add(
+                  text: 'A reset link will be emailed.'
+                )
 
-          fields:
+                $location.path '/'
 
-            usernameOrEmail:
-              type: 'text'
-              label: 'Username or Email'
-              required: true
+            ]
 
-            submit:
-              type: 'submit'
-              value: 'Email reset link'
+            fields:
 
-    ]
+              usernameOrEmail:
+                type: 'text'
+                label: 'Username or Email'
+                required: true
 
-    template: '''
+              submit:
+                type: 'submit'
+                value: 'Email reset link'
+
+      ]
+
+      template: '''
 
 &lt;div
   data-shrub-form
@@ -774,6 +778,8 @@
 &gt;&lt;/div&gt;
 
 '''
+
+    return routes
 </code></pre>
 
             </div>

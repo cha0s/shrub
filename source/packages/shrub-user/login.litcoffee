@@ -14,9 +14,9 @@
         passport = require 'passport'
         Promise = require 'bluebird'
 
-#### Implements hook `rpcRoutes`.
+#### Implements hook `shrubRpcRoutes`.
 
-      registrar.registerHook 'rpcRoutes', ->
+      registrar.registerHook 'shrubRpcRoutes', ->
 
         {Limiter} = require 'shrub-limiter'
 

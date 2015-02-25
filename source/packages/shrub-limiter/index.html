@@ -814,9 +814,9 @@ exports.pkgmanRegister = (registrar) -&gt;
     'shrub-limit': Limit
     'shrub-limit-score': LimitScore
 </code></pre>
-<h4 id="implements-hook-rpcroutesalter">Implements hook <code>rpcRoutesAlter</code>.</h4>
+<h4 id="implements-hook-shrubrpcroutesalter">Implements hook <code>shrubRpcRoutesAlter</code>.</h4>
 <p>Allow RPC routes definitions to specify rate limiters.</p>
-<pre><code>  registrar.registerHook 'rpcRoutesAlter', (routes) -&gt;
+<pre><code>  registrar.registerHook 'shrubRpcRoutesAlter', (routes) -&gt;
 
     moment = require 'moment'
 

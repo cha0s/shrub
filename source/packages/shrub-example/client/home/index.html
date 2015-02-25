@@ -216,7 +216,7 @@
                             
                                 <li><a class="toctree-l3" href="#implements-hook-shrubangularappconfig">Implements hook shrubAngularAppConfig.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-route">Implements hook route.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubangularroutes">Implements hook shrubAngularRoutes.</a></li>
                             
                         
                         </ul>
@@ -736,13 +736,17 @@
 <pre><code>      $routeProvider.otherwise redirectTo: '/home'
   ]
 </code></pre>
-<h4 id="implements-hook-route">Implements hook <code>route</code>.</h4>
-<pre><code>  registrar.registerHook 'route', -&gt;
+<h4 id="implements-hook-shrubangularroutes">Implements hook <code>shrubAngularRoutes</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubAngularRoutes', -&gt;
 
-    path: 'home'
-    title: 'Home'
+    routes = []
 
-    template: '''
+    routes.push
+
+      path: 'home'
+      title: 'Home'
+
+      template: '''
 
 &lt;div class="jumbotron"&gt;
 
@@ -753,6 +757,8 @@
 &lt;/div&gt;
 
 '''
+
+    return routes
 </code></pre>
 
             </div>

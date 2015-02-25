@@ -72,13 +72,13 @@ Fade it in and keep it on the screen for 15 seconds.
 
       ]
 
-#### Implements hook `rpcCall`.
+#### Implements hook `shrubRpcCall`.
 
-      registrar.registerHook 'rpcCall', -> [
+      registrar.registerHook 'shrubRpcCall', -> [
         'shrub-ui/messages', 'result'
         (messages, result) ->
 
-Add a notification with the error text.
+Add a message with the error text, if any.
 
           result.catch (error) -> messages.add(
             class: 'alert-danger', text: errors.message error
@@ -86,9 +86,9 @@ Add a notification with the error text.
 
       ]
 
-#### Implements hook `service`.
+#### Implements hook `shrubAngularService`.
 
-      registrar.registerHook 'service', -> [
+      registrar.registerHook 'shrubAngularService', -> [
         'shrub-socket'
         (socket) ->
 

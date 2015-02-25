@@ -604,7 +604,7 @@
                         
                             <li class="toctree-l2"><a href="#user-logout">User logout</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-route">Implements hook route.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubangularroutes">Implements hook shrubAngularRoutes.</a></li>
                             
                         
                         </ul>
@@ -725,19 +725,25 @@
               <h1 id="user-logout">User logout</h1>
 <pre><code>exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h4 id="implements-hook-route">Implements hook <code>route</code>.</h4>
-<pre><code>  registrar.registerHook 'route', -&gt;
+<h4 id="implements-hook-shrubangularroutes">Implements hook <code>shrubAngularRoutes</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubAngularRoutes', -&gt;
 
-    path: 'user/logout'
+    routes = []
 
-    controller: [
-      '$location', 'shrub-user'
-      ($location, user) -&gt;
-        return $location.path '/' unless user.isLoggedIn()
+    routes.push
 
-        user.logout().then -&gt; $location.path '/'
+      path: 'user/logout'
 
-    ]
+      controller: [
+        '$location', 'shrub-user'
+        ($location, user) -&gt;
+          return $location.path '/' unless user.isLoggedIn()
+
+          user.logout().then -&gt; $location.path '/'
+
+      ]
+
+    return routes
 </code></pre>
 
             </div>

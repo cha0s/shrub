@@ -433,7 +433,7 @@
                             
                                 <li><a class="toctree-l3" href="#implements-hook-shrubauditfingerprint">Implements hook shrubAuditFingerprint.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-rpcroutefinished">Implements hook rpcRouteFinished.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubrpcroutefinish">Implements hook shrubRpcRouteFinish.</a></li>
                             
                                 <li><a class="toctree-l3" href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer.</a></li>
                             
@@ -765,8 +765,8 @@ exports.pkgmanRegister = (registrar) -&gt;
 <p>Session ID.</p>
 <pre><code>    session: if req?.session? then req.session.id
 </code></pre>
-<h4 id="implements-hook-rpcroutefinished">Implements hook <code>rpcRouteFinished</code>.</h4>
-<pre><code>  registrar.registerHook 'rpcRouteFinished', (routeReq, result, req) -&gt;
+<h4 id="implements-hook-shrubrpcroutefinish">Implements hook <code>shrubRpcRouteFinish</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubRpcRouteFinish', (routeReq, result, req) -&gt;
     return unless routeReq.session?
 
     Promise = require 'bluebird'

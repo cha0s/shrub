@@ -381,7 +381,7 @@
                             
                                 <li><a class="toctree-l3" href="#implements-hook-shrubcorebootstrapmiddleware">Implements hook shrubCoreBootstrapMiddleware.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-replcontext">Implements hook replContext.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubreplcontext">Implements hook shrubReplContext.</a></li>
                             
                         
                         </ul>
@@ -751,8 +751,8 @@ now, but will be fleshed out as we go.</em></p>
 
     ]
 </code></pre>
-<h4 id="implements-hook-replcontext">Implements hook <code>replContext</code>.</h4>
-<pre><code>  registrar.registerHook 'replContext', (context) -&gt;
+<h4 id="implements-hook-shrubreplcontext">Implements hook <code>shrubReplContext</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubReplContext', (context) -&gt;
 
     context.install = reinstall
 

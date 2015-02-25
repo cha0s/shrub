@@ -641,9 +641,9 @@
                             
                                 <li><a class="toctree-l3" href="#implements-hook-shrubcoreprebootstrap">Implements hook shrubCorePreBootstrap.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-rpcroutes">Implements hook rpcRoutes.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubrpcroutes">Implements hook shrubRpcRoutes.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-replcontext">Implements hook replContext.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubreplcontext">Implements hook shrubReplContext.</a></li>
                             
                         
                         </ul>
@@ -736,8 +736,8 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     orm = require 'shrub-orm'
 </code></pre>
-<h4 id="implements-hook-rpcroutes">Implements hook <code>rpcRoutes</code>.</h4>
-<pre><code>  registrar.registerHook 'rpcRoutes', -&gt;
+<h4 id="implements-hook-shrubrpcroutes">Implements hook <code>shrubRpcRoutes</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubRpcRoutes', -&gt;
 
     config = require 'config'
 
@@ -805,8 +805,8 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     return routes
 </code></pre>
-<h4 id="implements-hook-replcontext">Implements hook <code>replContext</code>.</h4>
-<pre><code>  registrar.registerHook 'replContext', (context) -&gt;
+<h4 id="implements-hook-shrubreplcontext">Implements hook <code>shrubReplContext</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubReplContext', (context) -&gt;
     orm = require 'shrub-orm'
     User = orm.collection 'shrub-user'
     context.registerUser = -&gt; User.register arguments...

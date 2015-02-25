@@ -90,11 +90,11 @@ routes.*
         'shrub-limit': Limit
         'shrub-limit-score': LimitScore
 
-#### Implements hook `rpcRoutesAlter`.
+#### Implements hook `shrubRpcRoutesAlter`.
 
 Allow RPC routes definitions to specify rate limiters.
 
-      registrar.registerHook 'rpcRoutesAlter', (routes) ->
+      registrar.registerHook 'shrubRpcRoutesAlter', (routes) ->
 
         moment = require 'moment'
 

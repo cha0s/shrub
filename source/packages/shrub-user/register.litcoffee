@@ -10,9 +10,9 @@
 
         orm = require 'shrub-orm'
 
-#### Implements hook `rpcRoutes`.
+#### Implements hook `shrubRpcRoutes`.
 
-      registrar.registerHook 'rpcRoutes', ->
+      registrar.registerHook 'shrubRpcRoutes', ->
 
         config = require 'config'
 
@@ -83,9 +83,9 @@ Send an email to the new user's email with a one-time login link.
 
         return routes
 
-#### Implements hook `replContext`.
+#### Implements hook `shrubReplContext`.
 
-      registrar.registerHook 'replContext', (context) ->
+      registrar.registerHook 'shrubReplContext', (context) ->
         orm = require 'shrub-orm'
         User = orm.collection 'shrub-user'
         context.registerUser = -> User.register arguments...

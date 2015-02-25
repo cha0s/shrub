@@ -2,28 +2,32 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `route`.
+#### Implements hook `shrubAngularRoutes`.
 
-      registrar.registerHook 'route', ->
+      registrar.registerHook 'shrubAngularRoutes', ->
 
-        path: 'about'
-        title: 'About'
+        routes = []
 
-        controller: [
-          '$http', '$scope'
-          ($http, $scope) ->
+        routes.push
 
-            $scope.about = ''
+          path: 'about'
+          title: 'About'
+
+          controller: [
+            '$http', '$scope'
+            ($http, $scope) ->
+
+              $scope.about = ''
 
 Hit the route we created in the server-side of this package.
 
-            $http.get('/shrub-example/about/README.md').success((data) ->
-              $scope.about = data
-            )
+              $http.get('/shrub-example/about/README.md').success((data) ->
+                $scope.about = data
+              )
 
-        ]
+          ]
 
-        template: '''
+          template: '''
 
     <span
       class="about"
@@ -32,3 +36,4 @@ Hit the route we created in the server-side of this package.
 
     '''
 
+        return routes

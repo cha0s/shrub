@@ -34,9 +34,9 @@ Use a CoffeeScript REPL?
 
         useCoffee: true
 
-#### Implements hook `processExit`.
+#### Implements hook `shrubCoreProcessExit`.
 
-      registrar.registerHook 'processExit', -> server?.close()
+      registrar.registerHook 'shrubCoreProcessExit', -> server?.close()
 
 #### Implements hook `shrubCoreBootstrapMiddleware`.
 
@@ -53,9 +53,9 @@ Use a CoffeeScript REPL?
 
             server = net.createServer (socket) ->
 
-#### Invoke hook `replContext`.
+#### Invoke hook `shrubReplContext`.
 
-              pkgman.invoke 'replContext', context = {}
+              pkgman.invoke 'shrubReplContext', context = {}
 
               opts =
                 prompt: settings.prompt
@@ -89,8 +89,8 @@ Handle blank lines correctly.
 
                     callback error
 
-Spin up the server, inject the values from `replContext`, and prepare for later
-cleanup.
+Spin up the server, inject the values from `shrubReplContext`, and prepare for
+later cleanup.
 
               repl = replServer.start opts
               repl.context[key] = value for key, value of context

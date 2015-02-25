@@ -155,21 +155,21 @@ It will run over the previous definition, ensuring everything works nicely.
 
           debug 'Filters registered.'
 
-#### Invoke hook `provider`.
+#### Invoke hook `shrubAngularProvider`.
 
           debug 'Registering providers...'
 
-          for path, provider of pkgman.invoke 'provider'
+          for path, provider of pkgman.invoke 'shrubAngularProvider'
             debug path
             $provide.provider path, provider
 
           debug 'Providers registered.'
 
-#### Invoke hook `service`.
+#### Invoke hook `shrubAngularService`.
 
           debug 'Registering services...'
 
-          for path, injected of pkgman.invoke 'service'
+          for path, injected of pkgman.invoke 'shrubAngularService'
             debug path
             $provide.service path, injected
 

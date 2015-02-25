@@ -11,9 +11,9 @@ library to the client, even though it would be awesome.*
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `service`.
+#### Implements hook `shrubAngularService`.
 
-      registrar.registerHook 'service', -> [
+      registrar.registerHook 'shrubAngularService', -> [
         '$http'
         ($http) ->
 

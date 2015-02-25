@@ -658,7 +658,7 @@
                             
                                 <li><a class="toctree-l3" href="#invoke-hook-shrubcorebootstrapmiddleware">Invoke hook shrubCoreBootstrapMiddleware.</a></li>
                             
-                                <li><a class="toctree-l3" href="#invoke-hook-processexit">Invoke hook processExit.</a></li>
+                                <li><a class="toctree-l3" href="#invoke-hook-shrubcoreprocessexit">Invoke hook shrubCoreProcessExit.</a></li>
                             
                         
                         </ul>
@@ -781,8 +781,8 @@ listener below.</p>
 <pre><code>    console.error errors.stack error
     throw error
 </code></pre>
-<h4 id="invoke-hook-processexit">Invoke hook <code>processExit</code>.</h4>
-<pre><code>  process.on 'exit', -&gt; pkgman.invoke 'processExit'
+<h4 id="invoke-hook-shrubcoreprocessexit">Invoke hook <code>shrubCoreProcessExit</code>.</h4>
+<pre><code>  process.on 'exit', -&gt; pkgman.invoke 'shrubCoreProcessExit'
 
   process.on 'SIGINT', -&gt; process.exit()
   process.on 'SIGTERM', -&gt; process.exit()

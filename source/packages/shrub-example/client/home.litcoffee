@@ -13,14 +13,18 @@ We'll gank the default route.
           $routeProvider.otherwise redirectTo: '/home'
       ]
 
-#### Implements hook `route`.
+#### Implements hook `shrubAngularRoutes`.
 
-      registrar.registerHook 'route', ->
+      registrar.registerHook 'shrubAngularRoutes', ->
 
-        path: 'home'
-        title: 'Home'
+        routes = []
 
-        template: '''
+        routes.push
+
+          path: 'home'
+          title: 'Home'
+
+          template: '''
 
     <div class="jumbotron">
 
@@ -31,3 +35,5 @@ We'll gank the default route.
     </div>
 
     '''
+
+        return routes

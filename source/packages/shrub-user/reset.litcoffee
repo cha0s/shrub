@@ -2,9 +2,9 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `rpcRoutes`.
+#### Implements hook `shrubRpcRoutes`.
 
-      registrar.registerHook 'rpcRoutes', ->
+      registrar.registerHook 'shrubRpcRoutes', ->
 
         crypto = require 'server/crypto'
 

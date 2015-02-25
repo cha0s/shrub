@@ -416,11 +416,11 @@
                             
                                 <li><a class="toctree-l3" href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-processexit">Implements hook processExit.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubcoreprocessexit">Implements hook shrubCoreProcessExit.</a></li>
                             
                                 <li><a class="toctree-l3" href="#implements-hook-shrubcorebootstrapmiddleware">Implements hook shrubCoreBootstrapMiddleware.</a></li>
                             
-                                <li><a class="toctree-l3" href="#invoke-hook-replcontext">Invoke hook replContext.</a></li>
+                                <li><a class="toctree-l3" href="#invoke-hook-shrubreplcontext">Invoke hook shrubReplContext.</a></li>
                             
                         
                         </ul>
@@ -757,8 +757,8 @@ exports.pkgmanRegister = (registrar) -&gt;
 <p>Use a CoffeeScript REPL?</p>
 <pre><code>    useCoffee: true
 </code></pre>
-<h4 id="implements-hook-processexit">Implements hook <code>processExit</code>.</h4>
-<pre><code>  registrar.registerHook 'processExit', -&gt; server?.close()
+<h4 id="implements-hook-shrubcoreprocessexit">Implements hook <code>shrubCoreProcessExit</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubCoreProcessExit', -&gt; server?.close()
 </code></pre>
 <h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <code>shrubCoreBootstrapMiddleware</code>.</h4>
 <pre><code>  registrar.registerHook 'shrubCoreBootstrapMiddleware', -&gt;
@@ -774,8 +774,8 @@ exports.pkgmanRegister = (registrar) -&gt;
 
         server = net.createServer (socket) -&gt;
 </code></pre>
-<h4 id="invoke-hook-replcontext">Invoke hook <code>replContext</code>.</h4>
-<pre><code>          pkgman.invoke 'replContext', context = {}
+<h4 id="invoke-hook-shrubreplcontext">Invoke hook <code>shrubReplContext</code>.</h4>
+<pre><code>          pkgman.invoke 'shrubReplContext', context = {}
 
           opts =
             prompt: settings.prompt
@@ -806,8 +806,8 @@ exports.pkgmanRegister = (registrar) -&gt;
 
                 callback error
 </code></pre>
-<p>Spin up the server, inject the values from <code>replContext</code>, and prepare for later
-cleanup.</p>
+<p>Spin up the server, inject the values from <code>shrubReplContext</code>, and prepare for
+later cleanup.</p>
 <pre><code>          repl = replServer.start opts
           repl.context[key] = value for key, value of context
           repl.on 'exit', -&gt; socket.end()

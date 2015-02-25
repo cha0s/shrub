@@ -287,9 +287,9 @@ Ensure that the requested notification is owned by the request.
 
         ).catch next
 
-#### Implements hook `rpcRoutes`.
+#### Implements hook `shrubRpcRoutes`.
 
-      registrar.registerHook 'rpcRoutes', ->
+      registrar.registerHook 'shrubRpcRoutes', ->
 
         routes = []
 

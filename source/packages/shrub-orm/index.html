@@ -417,7 +417,7 @@
                             
                                 <li><a class="toctree-l3" href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-replcontext">Implements hook replContext.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubreplcontext">Implements hook shrubReplContext.</a></li>
                             
                                 <li><a class="toctree-l3" href="#initialize">initialize</a></li>
                             
@@ -823,9 +823,9 @@ connection by default, which uses the sails-redis adapter with defaults.</p>
         password: null
         database: null
 </code></pre>
-<h4 id="implements-hook-replcontext">Implements hook <code>replContext</code>.</h4>
+<h4 id="implements-hook-shrubreplcontext">Implements hook <code>shrubReplContext</code>.</h4>
 <p>Provide ORM to the REPL context.</p>
-<pre><code>  registrar.registerHook 'replContext', (context) -&gt; context.orm = exports
+<pre><code>  registrar.registerHook 'shrubReplContext', (context) -&gt; context.orm = exports
 </code></pre>
 <h2 id="initialize">initialize</h2>
 <ul>

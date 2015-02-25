@@ -209,7 +209,7 @@
                         
                             <li class="toctree-l2"><a href="#example-about-page">Example - About page</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-route">Implements hook route.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubangularroutes">Implements hook shrubAngularRoutes.</a></li>
                             
                         
                         </ul>
@@ -725,26 +725,30 @@
               <h1 id="example-about-page">Example - About page</h1>
 <pre><code>exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h4 id="implements-hook-route">Implements hook <code>route</code>.</h4>
-<pre><code>  registrar.registerHook 'route', -&gt;
+<h4 id="implements-hook-shrubangularroutes">Implements hook <code>shrubAngularRoutes</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubAngularRoutes', -&gt;
 
-    path: 'about'
-    title: 'About'
+    routes = []
 
-    controller: [
-      '$http', '$scope'
-      ($http, $scope) -&gt;
+    routes.push
 
-        $scope.about = ''
+      path: 'about'
+      title: 'About'
+
+      controller: [
+        '$http', '$scope'
+        ($http, $scope) -&gt;
+
+          $scope.about = ''
 </code></pre>
 <p>Hit the route we created in the server-side of this package.</p>
-<pre><code>        $http.get('/shrub-example/about/README.md').success((data) -&gt;
-          $scope.about = data
-        )
+<pre><code>          $http.get('/shrub-example/about/README.md').success((data) -&gt;
+            $scope.about = data
+          )
 
-    ]
+      ]
 
-    template: '''
+      template: '''
 
 &lt;span
   class="about"
@@ -752,6 +756,8 @@
 &gt;&lt;/span&gt;
 
 '''
+
+    return routes
 </code></pre>
 
             </div>

@@ -546,7 +546,7 @@
                             
                                 <li><a class="toctree-l3" href="#implements-hook-shrubangulardirective">Implements hook shrubAngularDirective.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-service">Implements hook service.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubangularservice">Implements hook shrubAngularService.</a></li>
                             
                                 <li><a class="toctree-l3" href="#notificationslist">notifications.list</a></li>
                             
@@ -867,8 +867,8 @@ function to any skinLink consumers.</p>
 
   ]
 </code></pre>
-<h4 id="implements-hook-service">Implements hook <code>service</code>.</h4>
-<pre><code>  registrar.registerHook 'service', -&gt; [
+<h4 id="implements-hook-shrubangularservice">Implements hook <code>shrubAngularService</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubAngularService', -&gt; [
     '$q', 'shrub-rpc', 'shrub-socket'
     ($q, rpc, socket) -&gt;
 

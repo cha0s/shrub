@@ -644,7 +644,7 @@
                         
                             <li class="toctree-l2"><a href="#user-password-reset">User - Password reset</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-rpcroutes">Implements hook rpcRoutes.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubrpcroutes">Implements hook shrubRpcRoutes.</a></li>
                             
                         
                         </ul>
@@ -725,8 +725,8 @@
               <h1 id="user-password-reset">User - Password reset</h1>
 <pre><code>exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h4 id="implements-hook-rpcroutes">Implements hook <code>rpcRoutes</code>.</h4>
-<pre><code>  registrar.registerHook 'rpcRoutes', -&gt;
+<h4 id="implements-hook-shrubrpcroutes">Implements hook <code>shrubRpcRoutes</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubRpcRoutes', -&gt;
 
     crypto = require 'server/crypto'
 

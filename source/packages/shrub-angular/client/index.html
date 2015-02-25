@@ -732,7 +732,8 @@
             <div class="section">
               <h1 id="core-client-functionality">Core client functionality.</h1>
 <p><em>Coordinate various core functionality.</em></p>
-<pre><code>Promise = require 'bluebird'
+<pre><code>_ = require 'lodash'
+Promise = require 'bluebird'
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
@@ -826,26 +827,18 @@ values from the promise.</p>
 
       ]
 </code></pre>
-<p>A route is defined like:</p>
-<ul>
-<li>(AnnotatedFunction) <code>controller</code>: An
-  <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>
-  which will be injected.</li>
-<li>(string) <code>template</code>: A template.</li>
-<li>(string) <code>title</code>: The page title.</li>
-</ul>
-<h4 id="invoke-hook-route">Invoke hook <code>route</code>.</h4>
+<h4 id="invoke-hook-shrubangularroutes">Invoke hook <code>shrubAngularRoutes</code>.</h4>
 <p>Allow packages to define routes in the Angular application.</p>
 <pre><code>      routes = {}
-      for path, route of pkgmanProvider.invoke 'route'
+      for route in _.flatten pkgmanProvider.invokeFlat 'shrubAngularRoutes'
         routes[route.path ? path] = route
 </code></pre>
-<p>Invoke hook <code>routeAlter</code>.</p>
+<p>Invoke hook <code>shrubAngularRoutesAlter</code>.</p>
 <p>Allow packages to alter defined routes.</p>
 <pre><code>      $injector.invoke(
         injectable, null
         routes: routes
-      ) for injectable in pkgmanProvider.invokeFlat 'routeAlter'
+      ) for injectable in pkgmanProvider.invokeFlat 'shrubAngularRoutesAlter'
 
       for path, route of routes
         do (path, route) -&gt;
@@ -855,17 +848,6 @@ values from the promise.</p>
           route.controller = [
             '$controller', '$injector', '$q', '$scope'
             ($controller, $injector, $q, $scope) -&gt;
-</code></pre>
-<p>Invoke hook <code>routeControllerStart</code>.</p>
-<p>Allow packages to act before a new route
-controller is executed.</p>
-<pre><code>              $injector.invoke(
-                injectable, null
-                $scope: $scope
-                route: route
-              ) for injectable in pkgmanProvider.invokeFlat(
-                'routeControllerStart'
-              )
 
               unless routeController?
                 return $scope.$emit 'shrub.core.routeRendered'

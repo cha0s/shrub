@@ -655,7 +655,7 @@
                             
                                 <li><a class="toctree-l3" href="#implements-hook-shrubhttpmiddleware">Implements hook shrubHttpMiddleware.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-settings">Implements hook settings.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer.</a></li>
                             
                                 <li><a class="toctree-l3" href="#implements-hook-socketauthorizationmiddleware">Implements hook socketAuthorizationMiddleware.</a></li>
                             
@@ -850,8 +850,8 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     ]
 </code></pre>
-<h4 id="implements-hook-settings">Implements hook <code>settings</code>.</h4>
-<pre><code>  registrar.registerHook 'packageSettings', -&gt;
+<h4 id="implements-hook-shrubconfigserver">Implements hook <code>shrubConfigServer</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubConfigServer', -&gt;
 
     ban:
 </code></pre>

@@ -28,9 +28,9 @@ Send a redacted version of the request user.
 
         req.user.redactFor req.user if req.user?
 
-#### Implements hook `rpcRouteFinished`.
+#### Implements hook `shrubRpcRouteFinish`.
 
-      registrar.registerHook 'rpcRouteFinished', (routeReq, result, req) ->
+      registrar.registerHook 'shrubRpcRouteFinish', (routeReq, result, req) ->
         return unless routeReq.user.id?
 
 Touch and save the session after every RPC call finishes.

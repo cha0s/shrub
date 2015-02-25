@@ -295,7 +295,7 @@
                             
                                 <li><a class="toctree-l3" href="#implements-hook-shrubgruntconfig">Implements hook shrubGruntConfig.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-gruntconfigalter">Implements hook gruntConfigAlter.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubgruntconfigalter">Implements hook shrubGruntConfigAlter.</a></li>
                             
                         
                         </ul>
@@ -819,8 +819,8 @@ exports.pkgmanRegister = (registrar) -&gt;
       'grunt-wrap'
     ]
 </code></pre>
-<h4 id="implements-hook-gruntconfigalter">Implements hook <code>gruntConfigAlter</code>.</h4>
-<pre><code>  registrar.registerHook 'gruntConfigAlter', (gruntConfig) -&gt;
+<h4 id="implements-hook-shrubgruntconfigalter">Implements hook <code>shrubGruntConfigAlter</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubGruntConfigAlter', (gruntConfig) -&gt;
 
     gruntConfig.registerTask 'build', [
       'build:shrub'

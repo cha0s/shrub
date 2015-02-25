@@ -2,17 +2,23 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `route`.
+#### Implements hook `shrubAngularRoutes`.
 
-      registrar.registerHook 'route', ->
+      registrar.registerHook 'shrubAngularRoutes', ->
 
-        path: 'user/logout'
+        routes = []
 
-        controller: [
-          '$location', 'shrub-user'
-          ($location, user) ->
-            return $location.path '/' unless user.isLoggedIn()
+        routes.push
 
-            user.logout().then -> $location.path '/'
+          path: 'user/logout'
 
-        ]
+          controller: [
+            '$location', 'shrub-user'
+            ($location, user) ->
+              return $location.path '/' unless user.isLoggedIn()
+
+              user.logout().then -> $location.path '/'
+
+          ]
+
+        return routes

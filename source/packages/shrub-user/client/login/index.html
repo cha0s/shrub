@@ -599,11 +599,9 @@
                         
                             <li class="toctree-l2"><a href="#user-login">User login</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-route">Implements hook route.</a></li>
-                            
                                 <li><a class="toctree-l3" href="#implements-hook-transmittableerror">Implements hook transmittableError.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-route_1">Implements hook route.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubangularroutes">Implements hook shrubAngularRoutes.</a></li>
                             
                         
                         </ul>
@@ -730,80 +728,83 @@
 <pre><code>config = require 'config'
 
 exports.pkgmanRegister = (registrar) -&gt;
-
-  if 'e2e' is config.get 'packageConfig:shrub-core:testMode'
-</code></pre>
-<h4 id="implements-hook-route">Implements hook <code>route</code>.</h4>
-<pre><code>    registrar.registerHook 'e2e', 'route', -&gt;
-
-      path: 'e2e/user/login/:destination'
-
-      controller: [
-        '$location', '$routeParams', 'shrub-rpc', 'shrub-socket', 'shrub-user'
-        ($location, {destination}, rpc, socket, user) -&gt;
-
-          user.fakeLogin('cha0s').then -&gt;
-            $location.path "/user/#{destination}"
-
-      ]
 </code></pre>
 <h4 id="implements-hook-transmittableerror">Implements hook <code>transmittableError</code>.</h4>
 <pre><code>  registrar.registerHook 'transmittableError', exports.transmittableError
 </code></pre>
-<h4 id="implements-hook-route_1">Implements hook <code>route</code>.</h4>
-<pre><code>  registrar.registerHook 'route', -&gt;
+<h4 id="implements-hook-shrubangularroutes">Implements hook <code>shrubAngularRoutes</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubAngularRoutes', -&gt;
 
-    path: 'user/login'
-    title: 'Sign in'
+    routes = []
 
-    controller: [
-      '$location', '$scope', 'shrub-ui/messages', 'shrub-user'
-      ($location, $scope, messages, user) -&gt;
-        return $location.path '/' if user.isLoggedIn()
+    if 'e2e' is config.get 'packageConfig:shrub-core:testMode'
 
-        $scope.form =
+      routes.push
 
-          key: 'shrub-user-login'
+        path: 'e2e/user/login/:destination'
+
+        controller: [
+          '$location', '$routeParams', 'shrub-rpc', 'shrub-socket', 'shrub-user'
+          ($location, {destination}, rpc, socket, user) -&gt;
+
+            user.fakeLogin('cha0s').then -&gt;
+              $location.path "/user/#{destination}"
+
+        ]
+
+    routes.push
+
+      path: 'user/login'
+      title: 'Sign in'
+
+      controller: [
+        '$location', '$scope', 'shrub-ui/messages', 'shrub-user'
+        ($location, $scope, messages, user) -&gt;
+          return $location.path '/' if user.isLoggedIn()
+
+          $scope.form =
+
+            key: 'shrub-user-login'
 </code></pre>
 <h6 id="todo-use-rpc-submission-with-a-hidden-method-field">TODO: Use rpc submission with a hidden 'method' field.</h6>
-<pre><code>          submits: [
+<pre><code>            submits: [
 
-            (values) -&gt;
+              (values) -&gt;
 
-              user.login(
-                'local'
-                values.username
-                values.password
-              ).then -&gt;
+                user.login(
+                  'local'
+                  values.username
+                  values.password
+                ).then -&gt;
 
-                messages.add(
-                  class: 'alert-success'
-                  text: 'Logged in successfully.'
-                )
+                  messages.add(
+                    class: 'alert-success'
+                    text: 'Logged in successfully.'
+                  )
 
-                $location.path '/'
+                  $location.path '/'
 
-          ]
+            ]
 
-          fields:
+            fields:
 
-            username:
-              type: 'text'
-              label: 'Username'
-              required: true
+              username:
+                type: 'text'
+                label: 'Username'
+                required: true
 
-            password:
-              type: 'password'
-              label: 'Password'
-              required: true
+              password:
+                type: 'password'
+                label: 'Password'
+                required: true
 
-            submit:
-              type: 'submit'
-              value: 'Sign in'
+              submit:
+                type: 'submit'
+                value: 'Sign in'
 
-    ]
+      ]
 
-    template: '''
+      template: '''
 
 &lt;div
   data-shrub-form
@@ -813,6 +814,8 @@ exports.pkgmanRegister = (registrar) -&gt;
 &lt;a class="forgot" href="/user/forgot"&gt;Forgot your password?&lt;/a&gt;
 
 '''
+
+    return routes
 </code></pre>
 <p>Transmittable login error.</p>
 <pre><code>LoginError = null

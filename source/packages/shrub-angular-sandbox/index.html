@@ -151,7 +151,7 @@
                             
                                 <li><a class="toctree-l3" href="#todo-sandbox-pool-might-be-better-handled-by-sandboxes">TODO: Sandbox pool, might be better handled by sandboxes.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-rpcroutes">Implements hook rpcRoutes.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubrpcroutes">Implements hook shrubRpcRoutes.</a></li>
                             
                                 <li><a class="toctree-l3" href="#implements-hook-shrubhttpmiddleware">Implements hook shrubHttpMiddleware.</a></li>
                             
@@ -775,10 +775,10 @@ middleware = require 'middleware'
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h4 id="implements-hook-rpcroutes">Implements hook <code>rpcRoutes</code>.</h4>
+<h4 id="implements-hook-shrubrpcroutes">Implements hook <code>shrubRpcRoutes</code>.</h4>
 <p>Allow a JSful client to call us back and inform us that we don't need to
 hold their sandbox.</p>
-<pre><code>  registrar.registerHook 'rpcRoutes', -&gt;
+<pre><code>  registrar.registerHook 'shrubRpcRoutes', -&gt;
 
     routes = []
 
