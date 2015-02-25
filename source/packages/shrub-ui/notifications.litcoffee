@@ -8,17 +8,17 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `preBootstrap`.
+#### Implements hook `shrubCorePreBootstrap`.
 
-      registrar.registerHook 'preBootstrap', ->
+      registrar.registerHook 'shrubCorePreBootstrap', ->
 
         Promise = require 'bluebird'
 
         orm = require 'shrub-orm'
 
-#### Implements hook `bootstrapMiddleware`.
+#### Implements hook `shrubCoreBootstrapMiddleware`.
 
-      registrar.registerHook 'bootstrapMiddleware', ->
+      registrar.registerHook 'shrubCoreBootstrapMiddleware', ->
 
         pkgman = require 'pkgman'
 
@@ -27,7 +27,9 @@
 
           (next) ->
 
-            for path, queues of pkgman.invoke 'notificationQueues'
+#### Invoke hook `shrubUiNotificationQueues`.
+
+            for path, queues of pkgman.invoke 'shrubUiNotificationQueues'
               for name, queue of queues
                 notificationQueues[pkgman.normalizePath name] = queue
 
@@ -63,9 +65,9 @@ Broadcast for each queue.
           else
             req.socket.broadcast.to(channel).emit event, data
 
-#### Implements hook `collections`.
+#### Implements hook `shrubOrmCollections`.
 
-      registrar.registerHook 'collections', ->
+      registrar.registerHook 'shrubOrmCollections', ->
 
 ## Notification
 
@@ -223,9 +225,9 @@ Remove unnecessary details.
 
         'shrub-ui-notification': Notification
 
-#### Implements hook `config`.
+#### Implements hook `shrubConfigClient`.
 
-      registrar.registerHook 'config', (req) ->
+      registrar.registerHook 'shrubConfigClient', (req) ->
 
 Make sure ORM is up (it won't be when grunt is running).
 

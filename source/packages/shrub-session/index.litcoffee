@@ -6,9 +6,9 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `collections`.
+#### Implements hook `shrubOrmCollections`.
 
-      registrar.registerHook 'collections', ->
+      registrar.registerHook 'shrubOrmCollections', ->
 
         Session =
 
@@ -34,9 +34,9 @@ The session ID, used as the primary key.
 
         'shrub-session': Session
 
-#### Implements hook `fingerprint`.
+#### Implements hook `shrubAuditFingerprint`.
 
-      registrar.registerHook 'fingerprint', (req) ->
+      registrar.registerHook 'shrubAuditFingerprint', (req) ->
 
 Session ID.
 
@@ -58,9 +58,9 @@ Propagate changes back up to the original request.
 
         deferred.promise.then -> req.session = routeReq.session
 
-#### Implements hook `packageSettings`.
+#### Implements hook `shrubConfigServer`.
 
-      registrar.registerHook 'packageSettings', ->
+      registrar.registerHook 'shrubConfigServer', ->
 
 Key within the cookie where the session is stored.
 

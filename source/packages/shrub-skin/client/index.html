@@ -138,6 +138,16 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-angular-sandbox/client">packages/shrub-angular-sandbox/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-angular-sandbox">packages/shrub-angular-sandbox/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
                     
                 </li>
@@ -259,11 +269,6 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../shrub-form">packages/shrub-form/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../shrub-grunt/angular">packages/shrub-grunt/angular.litcoffee</a>
                     
                 </li>
             
@@ -454,7 +459,7 @@
                         
                             <li class="toctree-l2"><a href="#skinning">Skinning</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-augmentdirective">Implements hook augmentDirective.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubangulardirectivealter">Implements hook shrubAngularDirectiveAlter.</a></li>
                             
                                 <li><a class="toctree-l3" href="#invoke-hook-skinlink">Invoke hook skinLink.</a></li>
                             
@@ -740,8 +745,8 @@ pkgman = require 'pkgman'
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h4 id="implements-hook-augmentdirective">Implements hook <code>augmentDirective</code>.</h4>
-<pre><code>  registrar.registerHook 'augmentDirective', (directive, path) -&gt; [
+<h4 id="implements-hook-shrubangulardirectivealter">Implements hook <code>shrubAngularDirectiveAlter</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubAngularDirectiveAlter', (directive, path) -&gt; [
 
     '$cacheFactory', '$compile', '$http', '$injector', '$interpolate', '$q', '$rootScope'
     ($cacheFactory, $compile, $http, $injector, $interpolate, $q, $rootScope) -&gt;

@@ -11,15 +11,15 @@ RPC route information.
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `preBootstrap`.
+#### Implements hook `shrubCorePreBootstrap`.
 
-      registrar.registerHook 'preBootstrap', ->
+      registrar.registerHook 'shrubCorePreBootstrap', ->
 
         pkgman = require 'pkgman'
 
-#### Implements hook `bootstrapMiddleware`.
+#### Implements hook `shrubCoreBootstrapMiddleware`.
 
-      registrar.registerHook 'bootstrapMiddleware', ->
+      registrar.registerHook 'shrubCoreBootstrapMiddleware', ->
 
         _ = require 'lodash'
         debug = require('debug') 'shrub-silly:rpc'

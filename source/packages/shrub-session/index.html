@@ -138,6 +138,16 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../shrub-angular-sandbox/client">packages/shrub-angular-sandbox/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-angular-sandbox">packages/shrub-angular-sandbox/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
                     
                 </li>
@@ -259,11 +269,6 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../shrub-form">packages/shrub-form/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../shrub-grunt/angular">packages/shrub-grunt/angular.litcoffee</a>
                     
                 </li>
             
@@ -424,13 +429,13 @@
                         
                             <li class="toctree-l2"><a href="#session">Session</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-collections">Implements hook collections.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubormcollections">Implements hook shrubOrmCollections.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-fingerprint">Implements hook fingerprint.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubauditfingerprint">Implements hook shrubAuditFingerprint.</a></li>
                             
                                 <li><a class="toctree-l3" href="#implements-hook-rpcroutefinished">Implements hook rpcRouteFinished.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-packagesettings">Implements hook packageSettings.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer.</a></li>
                             
                                 <li><a class="toctree-l3" href="#implements-hook-socketconnectionmiddleware">Implements hook socketConnectionMiddleware.</a></li>
                             
@@ -731,8 +736,8 @@
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h4 id="implements-hook-collections">Implements hook <code>collections</code>.</h4>
-<pre><code>  registrar.registerHook 'collections', -&gt;
+<h4 id="implements-hook-shrubormcollections">Implements hook <code>shrubOrmCollections</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubOrmCollections', -&gt;
 
     Session =
 </code></pre>
@@ -754,8 +759,8 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     'shrub-session': Session
 </code></pre>
-<h4 id="implements-hook-fingerprint">Implements hook <code>fingerprint</code>.</h4>
-<pre><code>  registrar.registerHook 'fingerprint', (req) -&gt;
+<h4 id="implements-hook-shrubauditfingerprint">Implements hook <code>shrubAuditFingerprint</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubAuditFingerprint', (req) -&gt;
 </code></pre>
 <p>Session ID.</p>
 <pre><code>    session: if req?.session? then req.session.id
@@ -773,8 +778,8 @@ exports.pkgmanRegister = (registrar) -&gt;
 <p>Propagate changes back up to the original request.</p>
 <pre><code>    deferred.promise.then -&gt; req.session = routeReq.session
 </code></pre>
-<h4 id="implements-hook-packagesettings">Implements hook <code>packageSettings</code>.</h4>
-<pre><code>  registrar.registerHook 'packageSettings', -&gt;
+<h4 id="implements-hook-shrubconfigserver">Implements hook <code>shrubConfigServer</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubConfigServer', -&gt;
 </code></pre>
 <p>Key within the cookie where the session is stored.</p>
 <pre><code>    key: 'connect.sid'

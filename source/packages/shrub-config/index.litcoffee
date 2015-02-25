@@ -13,9 +13,9 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `assetMiddleware`.
+#### Implements hook `shrubAssetsMiddleware`.
 
-      registrar.registerHook 'assetMiddleware', ->
+      registrar.registerHook 'shrubAssetsMiddleware', ->
 
         label: 'Config'
         middleware: [
@@ -28,9 +28,9 @@
 
         ]
 
-#### Implements hook `httpMiddleware`.
+#### Implements hook `shrubHttpMiddleware`.
 
-      registrar.registerHook 'httpMiddleware', (http) ->
+      registrar.registerHook 'shrubHttpMiddleware', (http) ->
 
         label: 'Serve package configuration'
         middleware: [
@@ -62,12 +62,12 @@ USe a client's request object to render configuration.
 
     exports.renderPackageConfig = (req) ->
 
-#### Invoke hook `config`.
+#### Invoke hook `shrubConfigClient`.
 
 Allows packages to specify configuration that will be sent to the client.
 Implementations may return an object, or a promise that resolves to an object.
 
-      subconfigs = pkgman.invoke 'config', req
+      subconfigs = pkgman.invoke 'shrubConfigClient', req
 
       Promise.all(
 
@@ -94,9 +94,9 @@ Merge in the subconfigs.
 
             config_.set "packageConfig:#{path.replace /\//g, ':'}:#{key.replace /\//g, ':'}", value
 
-#### Invoke hook `configAlter`.
+#### Invoke hook `shrubConfigClientAlter`.
 
-        pkgman.invoke 'configAlter', req, config_
+        pkgman.invoke 'shrubConfigClientAlter', req, config_
 
 Format the configuration to look nice.
 

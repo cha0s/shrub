@@ -138,6 +138,16 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-angular-sandbox/client">packages/shrub-angular-sandbox/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-angular-sandbox">packages/shrub-angular-sandbox/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
                     
                 </li>
@@ -259,11 +269,6 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../shrub-form">packages/shrub-form/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../shrub-grunt/angular">packages/shrub-grunt/angular.litcoffee</a>
                     
                 </li>
             
@@ -589,9 +594,9 @@
                         
                             <li class="toctree-l2"><a href="#user">User</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-collections">Implements hook collections.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubormcollections">Implements hook shrubOrmCollections.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-collectionsalter">Implements hook collectionsAlter.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubormcollectionsalter">Implements hook shrubOrmCollectionsAlter.</a></li>
                             
                                 <li><a class="toctree-l3" href="#implements-hook-service">Implements hook service.</a></li>
                             
@@ -735,11 +740,11 @@
 <p><em>User operations, model, etc.</em></p>
 <pre><code>exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h4 id="implements-hook-collections">Implements hook <code>collections</code>.</h4>
-<pre><code>  registrar.registerHook 'collections', exports.collections
+<h4 id="implements-hook-shrubormcollections">Implements hook <code>shrubOrmCollections</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubOrmCollections', exports.shrubOrmCollections
 </code></pre>
-<h4 id="implements-hook-collectionsalter">Implements hook <code>collectionsAlter</code>.</h4>
-<pre><code>  registrar.registerHook 'collectionsAlter', exports.collectionsAlter
+<h4 id="implements-hook-shrubormcollectionsalter">Implements hook <code>shrubOrmCollectionsAlter</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubOrmCollectionsAlter', exports.shrubOrmCollectionsAlter
 </code></pre>
 <h4 id="implements-hook-service">Implements hook <code>service</code>.</h4>
 <pre><code>  registrar.registerHook 'service', -&gt; [
@@ -822,7 +827,7 @@
     'email', 'forgot', 'login', 'logout', 'register', 'reset'
   ]
 
-exports.collections = -&gt;
+exports.shrubOrmCollections = -&gt;
 
   Group =
 
@@ -912,7 +917,7 @@ exports.collections = -&gt;
   'shrub-user-group': UserGroup
   'shrub-user-permission': UserPermission
 
-exports.collectionsAlter = (collections) -&gt;
+exports.shrubOrmCollectionsAlter = (collections) -&gt;
 
   Promise = require 'bluebird'
 

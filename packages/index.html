@@ -82,6 +82,8 @@
                             
                                 <li><a class="toctree-l3" href="#client-side">Client-side</a></li>
                             
+                                <li><a class="toctree-l3" href="#shrub-angular-sandboxclient">shrub-angular-sandbox/client</a></li>
+                            
                                 <li><a class="toctree-l3" href="#shrub-angularclient">shrub-angular/client</a></li>
                             
                                 <li><a class="toctree-l3" href="#shrub-coreclient">shrub-core/client</a></li>
@@ -115,6 +117,8 @@
                                 <li><a class="toctree-l3" href="#server-side">Server-side</a></li>
                             
                                 <li><a class="toctree-l3" href="#shrub-angular">shrub-angular</a></li>
+                            
+                                <li><a class="toctree-l3" href="#shrub-angular-sandbox">shrub-angular-sandbox</a></li>
                             
                                 <li><a class="toctree-l3" href="#shrub-assets">shrub-assets</a></li>
                             
@@ -229,6 +233,16 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../source/client/require">client/require.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-angular-sandbox/client">packages/shrub-angular-sandbox/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-angular-sandbox">packages/shrub-angular-sandbox/index.litcoffee</a>
                     
                 </li>
             
@@ -354,11 +368,6 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../source/packages/shrub-form">packages/shrub-form/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../source/packages/shrub-grunt/angular">packages/shrub-grunt/angular.litcoffee</a>
                     
                 </li>
             
@@ -810,12 +819,29 @@ the server or the client (or both).</p>
 description of the functionality they provide.</p>
 <h6 id="todo-write-a-tutorial-where-we-create-a-package">TODO: Write a tutorial where we create a package.</h6>
 <h2 id="client-side">Client-side</h2>
-<h2 id="shrub-angularclient"><a href="../source/packages/shrub-angular/client">shrub-angular/client</a></h2>
-<p><span class="package-title">Communicate with Angular on the server</span></p>
+<h2 id="shrub-angular-sandboxclient"><a href="../source/packages/shrub-angular-sandbox/client">shrub-angular-sandbox/client</a></h2>
+<p><span class="package-title">Angular sandbox</span></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#apprun">appRun</a> &mdash; <a href="../source/packages/shrub-angular/client#implements-hook-apprun">implementation</a></li>
+<li><a href="../hooks/#shrubangularapprun">shrubAngularAppRun</a> &mdash; <a href="../source/packages/shrub-angular-sandbox/client#implements-hook-shrubangularapprun">implementation</a></li>
+</ul>
+</div>
+<h2 id="shrub-angularclient"><a href="../source/packages/shrub-angular/client">shrub-angular/client</a></h2>
+<p><span class="package-title">Core client functionality.</span></p>
+<p><em>Coordinate various core functionality.</em></p>
+<div class="admonition note">
+<p class="admonition-title">Implements hooks</p>
+<ul>
+<li><a href="../hooks/#shrubangularahrefsanitizationwhitelist">shrubAngularAHrefSanitizationWhitelist</a> &mdash; <a href="../source/packages/shrub-angular/client#implements-hook-shrubangularahrefsanitizationwhitelist">implementation</a></li>
+<li><a href="../hooks/#shrubangularappconfig">shrubAngularAppConfig</a> &mdash; <a href="../source/packages/shrub-angular/client#implements-hook-shrubangularappconfig">implementation</a></li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Invokes hooks</p>
+<ul>
+<li><a href="../hooks/#shrubangularahrefsanitizationwhitelist">shrubAngularAHrefSanitizationWhitelist</a> &mdash; <a href="../source/packages/shrub-angular/client#invoke-hook-shrubangularahrefsanitizationwhitelist">invocation</a></li>
+<li><a href="../hooks/#route">route</a> &mdash; <a href="../source/packages/shrub-angular/client#invoke-hook-route">invocation</a></li>
 </ul>
 </div>
 <h2 id="shrub-coreclient"><a href="../source/packages/shrub-core/client">shrub-core/client</a></h2>
@@ -824,17 +850,8 @@ description of the functionality they provide.</p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#ahrefsanitizationwhitelist">aHrefSanitizationWhitelist</a> &mdash; <a href="../source/packages/shrub-core/client#implements-hook-ahrefsanitizationwhitelist">implementation</a></li>
-<li><a href="../hooks/#appconfig">appConfig</a> &mdash; <a href="../source/packages/shrub-core/client#implements-hook-appconfig">implementation</a></li>
-<li><a href="../hooks/#apprun">appRun</a> &mdash; <a href="../source/packages/shrub-core/client#implements-hook-apprun">implementation</a></li>
+<li><a href="../hooks/#shrubangularapprun">shrubAngularAppRun</a> &mdash; <a href="../source/packages/shrub-core/client#implements-hook-shrubangularapprun">implementation</a></li>
 <li><a href="../hooks/#route">route</a> &mdash; <a href="../source/packages/shrub-core/client#implements-hook-route">implementation</a></li>
-</ul>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Invokes hooks</p>
-<ul>
-<li><a href="../hooks/#ahrefsanitizationwhitelist">aHrefSanitizationWhitelist</a> &mdash; <a href="../source/packages/shrub-core/client#invoke-hook-ahrefsanitizationwhitelist">invocation</a></li>
-<li><a href="../hooks/#route">route</a> &mdash; <a href="../source/packages/shrub-core/client#invoke-hook-route">invocation</a></li>
 </ul>
 </div>
 <h2 id="shrub-exampleclient"><a href="../source/packages/shrub-example/client">shrub-example/client</a></h2>
@@ -853,7 +870,7 @@ description of the functionality they provide.</p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#appconfig">appConfig</a> &mdash; <a href="../source/packages/shrub-example/client/home#implements-hook-appconfig">implementation</a></li>
+<li><a href="../hooks/#shrubangularappconfig">shrubAngularAppConfig</a> &mdash; <a href="../source/packages/shrub-example/client/home#implements-hook-shrubangularappconfig">implementation</a></li>
 <li><a href="../hooks/#route">route</a> &mdash; <a href="../source/packages/shrub-example/client/home#implements-hook-route">implementation</a></li>
 </ul>
 </div>
@@ -865,16 +882,16 @@ up later.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#directive">directive</a> &mdash; <a href="../source/packages/shrub-form/client#implements-hook-directive">implementation</a></li>
+<li><a href="../hooks/#shrubangulardirective">shrubAngularDirective</a> &mdash; <a href="../source/packages/shrub-form/client#implements-hook-shrubangulardirective">implementation</a></li>
 <li><a href="../hooks/#service">service</a> &mdash; <a href="../source/packages/shrub-form/client#implements-hook-service">implementation</a></li>
 </ul>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Invokes hooks</p>
 <ul>
-<li><a href="../hooks/#formalter">formAlter</a> &mdash; <a href="../source/packages/shrub-form/client#invoke-hook-formalter">invocation</a></li>
-<li><a href="../hooks/#formformkeyalter">formFormKeyAlter</a> &mdash; <a href="../source/packages/shrub-form/client#invoke-hook-formformkeyalter">invocation</a></li>
-<li><a href="../hooks/#formwidgets">formWidgets</a> &mdash; <a href="../source/packages/shrub-form/client#invoke-hook-formwidgets">invocation</a></li>
+<li><a href="../hooks/#shrubformalter">shrubFormAlter</a> &mdash; <a href="../source/packages/shrub-form/client#invoke-hook-shrubformalter">invocation</a></li>
+<li><a href="../hooks/#shrubformformkeyalter">shrubFormFormKeyAlter</a> &mdash; <a href="../source/packages/shrub-form/client#invoke-hook-shrubformformkeyalter">invocation</a></li>
+<li><a href="../hooks/#shrubformwidgets">shrubFormWidgets</a> &mdash; <a href="../source/packages/shrub-form/client#invoke-hook-shrubformwidgets">invocation</a></li>
 </ul>
 </div>
 <blockquote>
@@ -883,8 +900,8 @@ up later.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#directive">directive</a> &mdash; <a href="../source/packages/shrub-form/client/widget/checkbox#implements-hook-directive">implementation</a></li>
-<li><a href="../hooks/#formwidgets">formWidgets</a> &mdash; <a href="../source/packages/shrub-form/client/widget/checkbox#implements-hook-formwidgets">implementation</a></li>
+<li><a href="../hooks/#shrubangulardirective">shrubAngularDirective</a> &mdash; <a href="../source/packages/shrub-form/client/widget/checkbox#implements-hook-shrubangulardirective">implementation</a></li>
+<li><a href="../hooks/#shrubformwidgets">shrubFormWidgets</a> &mdash; <a href="../source/packages/shrub-form/client/widget/checkbox#implements-hook-shrubformwidgets">implementation</a></li>
 </ul>
 </div>
 <h2 id="shrub-formclientwidgetcheckboxes"><a href="../source/packages/shrub-form/client/widget/checkboxes"><small>shrub-form/</small>client/widget/checkboxes</a></h2>
@@ -892,8 +909,8 @@ up later.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#directive">directive</a> &mdash; <a href="../source/packages/shrub-form/client/widget/checkboxes#implements-hook-directive">implementation</a></li>
-<li><a href="../hooks/#formwidgets">formWidgets</a> &mdash; <a href="../source/packages/shrub-form/client/widget/checkboxes#implements-hook-formwidgets">implementation</a></li>
+<li><a href="../hooks/#shrubangulardirective">shrubAngularDirective</a> &mdash; <a href="../source/packages/shrub-form/client/widget/checkboxes#implements-hook-shrubangulardirective">implementation</a></li>
+<li><a href="../hooks/#shrubformwidgets">shrubFormWidgets</a> &mdash; <a href="../source/packages/shrub-form/client/widget/checkboxes#implements-hook-shrubformwidgets">implementation</a></li>
 </ul>
 </div>
 <h2 id="shrub-formclientwidgethidden"><a href="../source/packages/shrub-form/client/widget/hidden"><small>shrub-form/</small>client/widget/hidden</a></h2>
@@ -901,8 +918,8 @@ up later.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#directive">directive</a> &mdash; <a href="../source/packages/shrub-form/client/widget/hidden#implements-hook-directive">implementation</a></li>
-<li><a href="../hooks/#formwidgets">formWidgets</a> &mdash; <a href="../source/packages/shrub-form/client/widget/hidden#implements-hook-formwidgets">implementation</a></li>
+<li><a href="../hooks/#shrubangulardirective">shrubAngularDirective</a> &mdash; <a href="../source/packages/shrub-form/client/widget/hidden#implements-hook-shrubangulardirective">implementation</a></li>
+<li><a href="../hooks/#shrubformwidgets">shrubFormWidgets</a> &mdash; <a href="../source/packages/shrub-form/client/widget/hidden#implements-hook-shrubformwidgets">implementation</a></li>
 </ul>
 </div>
 <h2 id="shrub-formclientwidgetradio"><a href="../source/packages/shrub-form/client/widget/radio"><small>shrub-form/</small>client/widget/radio</a></h2>
@@ -910,8 +927,8 @@ up later.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#directive">directive</a> &mdash; <a href="../source/packages/shrub-form/client/widget/radio#implements-hook-directive">implementation</a></li>
-<li><a href="../hooks/#formwidgets">formWidgets</a> &mdash; <a href="../source/packages/shrub-form/client/widget/radio#implements-hook-formwidgets">implementation</a></li>
+<li><a href="../hooks/#shrubangulardirective">shrubAngularDirective</a> &mdash; <a href="../source/packages/shrub-form/client/widget/radio#implements-hook-shrubangulardirective">implementation</a></li>
+<li><a href="../hooks/#shrubformwidgets">shrubFormWidgets</a> &mdash; <a href="../source/packages/shrub-form/client/widget/radio#implements-hook-shrubformwidgets">implementation</a></li>
 </ul>
 </div>
 <h2 id="shrub-formclientwidgetradios"><a href="../source/packages/shrub-form/client/widget/radios"><small>shrub-form/</small>client/widget/radios</a></h2>
@@ -919,8 +936,8 @@ up later.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#directive">directive</a> &mdash; <a href="../source/packages/shrub-form/client/widget/radios#implements-hook-directive">implementation</a></li>
-<li><a href="../hooks/#formwidgets">formWidgets</a> &mdash; <a href="../source/packages/shrub-form/client/widget/radios#implements-hook-formwidgets">implementation</a></li>
+<li><a href="../hooks/#shrubangulardirective">shrubAngularDirective</a> &mdash; <a href="../source/packages/shrub-form/client/widget/radios#implements-hook-shrubangulardirective">implementation</a></li>
+<li><a href="../hooks/#shrubformwidgets">shrubFormWidgets</a> &mdash; <a href="../source/packages/shrub-form/client/widget/radios#implements-hook-shrubformwidgets">implementation</a></li>
 </ul>
 </div>
 <h2 id="shrub-formclientwidgetselect"><a href="../source/packages/shrub-form/client/widget/select"><small>shrub-form/</small>client/widget/select</a></h2>
@@ -928,8 +945,8 @@ up later.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#directive">directive</a> &mdash; <a href="../source/packages/shrub-form/client/widget/select#implements-hook-directive">implementation</a></li>
-<li><a href="../hooks/#formwidgets">formWidgets</a> &mdash; <a href="../source/packages/shrub-form/client/widget/select#implements-hook-formwidgets">implementation</a></li>
+<li><a href="../hooks/#shrubangulardirective">shrubAngularDirective</a> &mdash; <a href="../source/packages/shrub-form/client/widget/select#implements-hook-shrubangulardirective">implementation</a></li>
+<li><a href="../hooks/#shrubformwidgets">shrubFormWidgets</a> &mdash; <a href="../source/packages/shrub-form/client/widget/select#implements-hook-shrubformwidgets">implementation</a></li>
 </ul>
 </div>
 <h2 id="shrub-formclientwidgetsubmit"><a href="../source/packages/shrub-form/client/widget/submit"><small>shrub-form/</small>client/widget/submit</a></h2>
@@ -937,8 +954,8 @@ up later.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#directive">directive</a> &mdash; <a href="../source/packages/shrub-form/client/widget/submit#implements-hook-directive">implementation</a></li>
-<li><a href="../hooks/#formwidgets">formWidgets</a> &mdash; <a href="../source/packages/shrub-form/client/widget/submit#implements-hook-formwidgets">implementation</a></li>
+<li><a href="../hooks/#shrubangulardirective">shrubAngularDirective</a> &mdash; <a href="../source/packages/shrub-form/client/widget/submit#implements-hook-shrubangulardirective">implementation</a></li>
+<li><a href="../hooks/#shrubformwidgets">shrubFormWidgets</a> &mdash; <a href="../source/packages/shrub-form/client/widget/submit#implements-hook-shrubformwidgets">implementation</a></li>
 </ul>
 </div>
 <h2 id="shrub-formclientwidgettext"><a href="../source/packages/shrub-form/client/widget/text"><small>shrub-form/</small>client/widget/text</a></h2>
@@ -946,8 +963,8 @@ up later.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#directive">directive</a> &mdash; <a href="../source/packages/shrub-form/client/widget/text#implements-hook-directive">implementation</a></li>
-<li><a href="../hooks/#formwidgets">formWidgets</a> &mdash; <a href="../source/packages/shrub-form/client/widget/text#implements-hook-formwidgets">implementation</a></li>
+<li><a href="../hooks/#shrubangulardirective">shrubAngularDirective</a> &mdash; <a href="../source/packages/shrub-form/client/widget/text#implements-hook-shrubangulardirective">implementation</a></li>
+<li><a href="../hooks/#shrubformwidgets">shrubFormWidgets</a> &mdash; <a href="../source/packages/shrub-form/client/widget/text#implements-hook-shrubformwidgets">implementation</a></li>
 </ul>
 </div>
 </blockquote>
@@ -957,7 +974,7 @@ up later.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#appconfig">appConfig</a> &mdash; <a href="../source/packages/shrub-html5-local-storage/client#implements-hook-appconfig">implementation</a></li>
+<li><a href="../hooks/#shrubangularappconfig">shrubAngularAppConfig</a> &mdash; <a href="../source/packages/shrub-html5-local-storage/client#implements-hook-shrubangularappconfig">implementation</a></li>
 <li><a href="../hooks/#provider">provider</a> &mdash; <a href="../source/packages/shrub-html5-local-storage/client#implements-hook-provider">implementation</a></li>
 </ul>
 </div>
@@ -966,7 +983,7 @@ up later.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#appconfig">appConfig</a> &mdash; <a href="../source/packages/shrub-html5-notification/client#implements-hook-appconfig">implementation</a></li>
+<li><a href="../hooks/#shrubangularappconfig">shrubAngularAppConfig</a> &mdash; <a href="../source/packages/shrub-html5-notification/client#implements-hook-shrubangularappconfig">implementation</a></li>
 <li><a href="../hooks/#provider">provider</a> &mdash; <a href="../source/packages/shrub-html5-notification/client#implements-hook-provider">implementation</a></li>
 </ul>
 </div>
@@ -992,8 +1009,8 @@ library to the client, even though it would be awesome.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Invokes hooks</p>
 <ul>
-<li><a href="../hooks/#collections">collections</a> &mdash; <a href="../source/packages/shrub-orm/client#invoke-hook-collections">invocation</a></li>
-<li><a href="../hooks/#collectionsalter">collectionsAlter</a> &mdash; <a href="../source/packages/shrub-orm/client#invoke-hook-collectionsalter">invocation</a></li>
+<li><a href="../hooks/#shrubormcollections">shrubOrmCollections</a> &mdash; <a href="../source/packages/shrub-orm/client#invoke-hook-shrubormcollections">invocation</a></li>
+<li><a href="../hooks/#shrubormcollectionsalter">shrubOrmCollectionsAlter</a> &mdash; <a href="../source/packages/shrub-orm/client#invoke-hook-shrubormcollectionsalter">invocation</a></li>
 </ul>
 </div>
 <h2 id="shrub-rpcclient"><a href="../source/packages/shrub-rpc/client">shrub-rpc/client</a></h2>
@@ -1012,7 +1029,7 @@ library to the client, even though it would be awesome.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#directive">directive</a> &mdash; <a href="../source/packages/shrub-skin-strapped/client/main-nav#implements-hook-directive">implementation</a></li>
+<li><a href="../hooks/#shrubangulardirective">shrubAngularDirective</a> &mdash; <a href="../source/packages/shrub-skin-strapped/client/main-nav#implements-hook-shrubangulardirective">implementation</a></li>
 </ul>
 </div>
 <h2 id="shrub-skin-strappedclientnotifications"><a href="../source/packages/shrub-skin-strapped/client/notifications"><small>shrub-skin-strapped/</small>client/notifications</a></h2>
@@ -1032,7 +1049,7 @@ page load.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#augmentdirective">augmentDirective</a> &mdash; <a href="../source/packages/shrub-skin/client#implements-hook-augmentdirective">implementation</a></li>
+<li><a href="../hooks/#shrubangulardirectivealter">shrubAngularDirectiveAlter</a> &mdash; <a href="../source/packages/shrub-skin/client#implements-hook-shrubangulardirectivealter">implementation</a></li>
 <li><a href="../hooks/#provider">provider</a> &mdash; <a href="../source/packages/shrub-skin/client#implements-hook-provider">implementation</a></li>
 </ul>
 </div>
@@ -1073,7 +1090,7 @@ page load.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#directive">directive</a> &mdash; <a href="../source/packages/shrub-ui/client/attributes#implements-hook-directive">implementation</a></li>
+<li><a href="../hooks/#shrubangulardirective">shrubAngularDirective</a> &mdash; <a href="../source/packages/shrub-ui/client/attributes#implements-hook-shrubangulardirective">implementation</a></li>
 </ul>
 </div>
 <h2 id="shrub-uiclientlist"><a href="../source/packages/shrub-ui/client/list"><small>shrub-ui/</small>client/list</a></h2>
@@ -1081,8 +1098,8 @@ page load.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#controller">controller</a> &mdash; <a href="../source/packages/shrub-ui/client/list#implements-hook-controller">implementation</a></li>
-<li><a href="../hooks/#directive">directive</a> &mdash; <a href="../source/packages/shrub-ui/client/list#implements-hook-directive">implementation</a></li>
+<li><a href="../hooks/#shrubangularcontroller">shrubAngularController</a> &mdash; <a href="../source/packages/shrub-ui/client/list#implements-hook-shrubangularcontroller">implementation</a></li>
+<li><a href="../hooks/#shrubangulardirective">shrubAngularDirective</a> &mdash; <a href="../source/packages/shrub-ui/client/list#implements-hook-shrubangulardirective">implementation</a></li>
 </ul>
 </div>
 <h2 id="shrub-uiclientlistitem"><a href="../source/packages/shrub-ui/client/list/item"><small>shrub-ui/</small>client/list/item</a></h2>
@@ -1090,8 +1107,8 @@ page load.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#controller">controller</a> &mdash; <a href="../source/packages/shrub-ui/client/list/item#implements-hook-controller">implementation</a></li>
-<li><a href="../hooks/#directive">directive</a> &mdash; <a href="../source/packages/shrub-ui/client/list/item#implements-hook-directive">implementation</a></li>
+<li><a href="../hooks/#shrubangularcontroller">shrubAngularController</a> &mdash; <a href="../source/packages/shrub-ui/client/list/item#implements-hook-shrubangularcontroller">implementation</a></li>
+<li><a href="../hooks/#shrubangulardirective">shrubAngularDirective</a> &mdash; <a href="../source/packages/shrub-ui/client/list/item#implements-hook-shrubangulardirective">implementation</a></li>
 </ul>
 </div>
 <h2 id="shrub-uiclientmarkdown"><a href="../source/packages/shrub-ui/client/markdown"><small>shrub-ui/</small>client/markdown</a></h2>
@@ -1099,7 +1116,7 @@ page load.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#filter">filter</a> &mdash; <a href="../source/packages/shrub-ui/client/markdown#implements-hook-filter">implementation</a></li>
+<li><a href="../hooks/#shrubangularfilter">shrubAngularFilter</a> &mdash; <a href="../source/packages/shrub-ui/client/markdown#implements-hook-shrubangularfilter">implementation</a></li>
 </ul>
 </div>
 <h2 id="shrub-uiclientmenu"><a href="../source/packages/shrub-ui/client/menu"><small>shrub-ui/</small>client/menu</a></h2>
@@ -1108,8 +1125,8 @@ page load.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#controller">controller</a> &mdash; <a href="../source/packages/shrub-ui/client/menu#implements-hook-controller">implementation</a></li>
-<li><a href="../hooks/#directive">directive</a> &mdash; <a href="../source/packages/shrub-ui/client/menu#implements-hook-directive">implementation</a></li>
+<li><a href="../hooks/#shrubangularcontroller">shrubAngularController</a> &mdash; <a href="../source/packages/shrub-ui/client/menu#implements-hook-shrubangularcontroller">implementation</a></li>
+<li><a href="../hooks/#shrubangulardirective">shrubAngularDirective</a> &mdash; <a href="../source/packages/shrub-ui/client/menu#implements-hook-shrubangulardirective">implementation</a></li>
 </ul>
 </div>
 <h2 id="shrub-uiclientmessages"><a href="../source/packages/shrub-ui/client/messages"><small>shrub-ui/</small>client/messages</a></h2>
@@ -1118,7 +1135,7 @@ page load.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#directive">directive</a> &mdash; <a href="../source/packages/shrub-ui/client/messages#implements-hook-directive">implementation</a></li>
+<li><a href="../hooks/#shrubangulardirective">shrubAngularDirective</a> &mdash; <a href="../source/packages/shrub-ui/client/messages#implements-hook-shrubangulardirective">implementation</a></li>
 <li><a href="../hooks/#rpccall">rpcCall</a> &mdash; <a href="../source/packages/shrub-ui/client/messages#implements-hook-rpccall">implementation</a></li>
 <li><a href="../hooks/#service">service</a> &mdash; <a href="../source/packages/shrub-ui/client/messages#implements-hook-service">implementation</a></li>
 </ul>
@@ -1128,7 +1145,7 @@ page load.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#directive">directive</a> &mdash; <a href="../source/packages/shrub-ui/client/notifications#implements-hook-directive">implementation</a></li>
+<li><a href="../hooks/#shrubangulardirective">shrubAngularDirective</a> &mdash; <a href="../source/packages/shrub-ui/client/notifications#implements-hook-shrubangulardirective">implementation</a></li>
 <li><a href="../hooks/#service">service</a> &mdash; <a href="../source/packages/shrub-ui/client/notifications#implements-hook-service">implementation</a></li>
 </ul>
 </div>
@@ -1137,7 +1154,7 @@ page load.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#directive">directive</a> &mdash; <a href="../source/packages/shrub-ui/client/notifications/item#implements-hook-directive">implementation</a></li>
+<li><a href="../hooks/#shrubangulardirective">shrubAngularDirective</a> &mdash; <a href="../source/packages/shrub-ui/client/notifications/item#implements-hook-shrubangulardirective">implementation</a></li>
 </ul>
 </div>
 <h2 id="shrub-uiclientnotificationstitle"><a href="../source/packages/shrub-ui/client/notifications/title"><small>shrub-ui/</small>client/notifications/title</a></h2>
@@ -1145,7 +1162,7 @@ page load.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#directive">directive</a> &mdash; <a href="../source/packages/shrub-ui/client/notifications/title#implements-hook-directive">implementation</a></li>
+<li><a href="../hooks/#shrubangulardirective">shrubAngularDirective</a> &mdash; <a href="../source/packages/shrub-ui/client/notifications/title#implements-hook-shrubangulardirective">implementation</a></li>
 </ul>
 </div>
 <h2 id="shrub-uiclientwindow-title"><a href="../source/packages/shrub-ui/client/window-title"><small>shrub-ui/</small>client/window-title</a></h2>
@@ -1154,9 +1171,9 @@ page load.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#controller">controller</a> &mdash; <a href="../source/packages/shrub-ui/client/window-title#implements-hook-controller">implementation</a></li>
-<li><a href="../hooks/#directive">directive</a> &mdash; <a href="../source/packages/shrub-ui/client/window-title#implements-hook-directive">implementation</a></li>
-<li><a href="../hooks/#apprun">appRun</a> &mdash; <a href="../source/packages/shrub-ui/client/window-title#implements-hook-apprun">implementation</a></li>
+<li><a href="../hooks/#shrubangularcontroller">shrubAngularController</a> &mdash; <a href="../source/packages/shrub-ui/client/window-title#implements-hook-shrubangularcontroller">implementation</a></li>
+<li><a href="../hooks/#shrubangulardirective">shrubAngularDirective</a> &mdash; <a href="../source/packages/shrub-ui/client/window-title#implements-hook-shrubangulardirective">implementation</a></li>
+<li><a href="../hooks/#shrubangularapprun">shrubAngularAppRun</a> &mdash; <a href="../source/packages/shrub-ui/client/window-title#implements-hook-shrubangularapprun">implementation</a></li>
 <li><a href="../hooks/#routecontrollerstart">routeControllerStart</a> &mdash; <a href="../source/packages/shrub-ui/client/window-title#implements-hook-routecontrollerstart">implementation</a></li>
 <li><a href="../hooks/#service">service</a> &mdash; <a href="../source/packages/shrub-ui/client/window-title#implements-hook-service">implementation</a></li>
 </ul>
@@ -1168,8 +1185,8 @@ page load.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#collections">collections</a> &mdash; <a href="../source/packages/shrub-user/client#implements-hook-collections">implementation</a></li>
-<li><a href="../hooks/#collectionsalter">collectionsAlter</a> &mdash; <a href="../source/packages/shrub-user/client#implements-hook-collectionsalter">implementation</a></li>
+<li><a href="../hooks/#shrubormcollections">shrubOrmCollections</a> &mdash; <a href="../source/packages/shrub-user/client#implements-hook-shrubormcollections">implementation</a></li>
+<li><a href="../hooks/#shrubormcollectionsalter">shrubOrmCollectionsAlter</a> &mdash; <a href="../source/packages/shrub-user/client#implements-hook-shrubormcollectionsalter">implementation</a></li>
 <li><a href="../hooks/#service">service</a> &mdash; <a href="../source/packages/shrub-user/client#implements-hook-service">implementation</a></li>
 </ul>
 </div>
@@ -1181,7 +1198,7 @@ page load.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#directive">directive</a> &mdash; <a href="../source/packages/shrub-user/client/email/forgot#implements-hook-directive">implementation</a></li>
+<li><a href="../hooks/#shrubangulardirective">shrubAngularDirective</a> &mdash; <a href="../source/packages/shrub-user/client/email/forgot#implements-hook-shrubangulardirective">implementation</a></li>
 </ul>
 </div>
 <h2 id="shrub-userclientemailregister"><a href="../source/packages/shrub-user/client/email/register"><small>shrub-user/</small>client/email/register</a></h2>
@@ -1189,7 +1206,7 @@ page load.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#directive">directive</a> &mdash; <a href="../source/packages/shrub-user/client/email/register#implements-hook-directive">implementation</a></li>
+<li><a href="../hooks/#shrubangulardirective">shrubAngularDirective</a> &mdash; <a href="../source/packages/shrub-user/client/email/register#implements-hook-shrubangulardirective">implementation</a></li>
 </ul>
 </div>
 <h2 id="shrub-userclientforgot"><a href="../source/packages/shrub-user/client/forgot"><small>shrub-user/</small>client/forgot</a></h2>
@@ -1237,21 +1254,35 @@ page load.</em></p>
 </blockquote>
 <h2 id="server-side">Server-side</h2>
 <h2 id="shrub-angular"><a href="../source/packages/shrub-angular">shrub-angular</a></h2>
-<p><span class="package-title">Angular on the server</span></p>
-<p><em>A sandboxed version of Angular, for clients lacking JS.</em></p>
+<p><span class="package-title">Angular</span></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#rpcroutes">rpcRoutes</a> &mdash; <a href="../source/packages/shrub-angular#implements-hook-rpcroutes">implementation</a></li>
-<li><a href="../hooks/#httpmiddleware">httpMiddleware</a> &mdash; <a href="../source/packages/shrub-angular#implements-hook-httpmiddleware">implementation</a></li>
-<li><a href="../hooks/#bootstrapmiddleware">bootstrapMiddleware</a> &mdash; <a href="../source/packages/shrub-angular#implements-hook-bootstrapmiddleware">implementation</a></li>
-<li><a href="../hooks/#packagesettings">packageSettings</a> &mdash; <a href="../source/packages/shrub-angular#implements-hook-packagesettings">implementation</a></li>
+<li><a href="../hooks/#shrubgruntconfig">shrubGruntConfig</a> &mdash; <a href="../source/packages/shrub-angular#implements-hook-shrubgruntconfig">implementation</a></li>
 </ul>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Invokes hooks</p>
 <ul>
-<li><a href="../hooks/#angularnavigationmiddleware">angularNavigationMiddleware</a> &mdash; <a href="../source/packages/shrub-angular#invoke-hook-angularnavigationmiddleware">invocation</a></li>
+<li><a href="../hooks/#shrubangularpackagedependencies">shrubAngularPackageDependencies</a> &mdash; <a href="../source/packages/shrub-angular#invoke-hook-shrubangularpackagedependencies">invocation</a></li>
+</ul>
+</div>
+<h2 id="shrub-angular-sandbox"><a href="../source/packages/shrub-angular-sandbox">shrub-angular-sandbox</a></h2>
+<p><span class="package-title">Angular sandbox</span></p>
+<p><em>A sandboxed version of Angular, for clients lacking JS.</em></p>
+<div class="admonition note">
+<p class="admonition-title">Implements hooks</p>
+<ul>
+<li><a href="../hooks/#rpcroutes">rpcRoutes</a> &mdash; <a href="../source/packages/shrub-angular-sandbox#implements-hook-rpcroutes">implementation</a></li>
+<li><a href="../hooks/#shrubhttpmiddleware">shrubHttpMiddleware</a> &mdash; <a href="../source/packages/shrub-angular-sandbox#implements-hook-shrubhttpmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubcorebootstrapmiddleware">shrubCoreBootstrapMiddleware</a> &mdash; <a href="../source/packages/shrub-angular-sandbox#implements-hook-shrubcorebootstrapmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubconfigserver">shrubConfigServer</a> &mdash; <a href="../source/packages/shrub-angular-sandbox#implements-hook-shrubconfigserver">implementation</a></li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Invokes hooks</p>
+<ul>
+<li><a href="../hooks/#shrubangularsandboxnavigationmiddleware">shrubAngularSandboxNavigationMiddleware</a> &mdash; <a href="../source/packages/shrub-angular-sandbox#invoke-hook-shrubangularsandboxnavigationmiddleware">invocation</a></li>
 </ul>
 </div>
 <h2 id="shrub-assets"><a href="../source/packages/shrub-assets">shrub-assets</a></h2>
@@ -1260,16 +1291,15 @@ page load.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#clearcaches">clearCaches</a> &mdash; <a href="../source/packages/shrub-assets#implements-hook-clearcaches">implementation</a></li>
-<li><a href="../hooks/#assetmiddleware">assetMiddleware</a> &mdash; <a href="../source/packages/shrub-assets#implements-hook-assetmiddleware">implementation</a></li>
-<li><a href="../hooks/#gruntconfig">gruntConfig</a> &mdash; <a href="../source/packages/shrub-assets#implements-hook-gruntconfig">implementation</a></li>
-<li><a href="../hooks/#packagesettings">packageSettings</a> &mdash; <a href="../source/packages/shrub-assets#implements-hook-packagesettings">implementation</a></li>
+<li><a href="../hooks/#shrubassetsmiddleware">shrubAssetsMiddleware</a> &mdash; <a href="../source/packages/shrub-assets#implements-hook-shrubassetsmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubgruntconfig">shrubGruntConfig</a> &mdash; <a href="../source/packages/shrub-assets#implements-hook-shrubgruntconfig">implementation</a></li>
+<li><a href="../hooks/#shrubconfigserver">shrubConfigServer</a> &mdash; <a href="../source/packages/shrub-assets#implements-hook-shrubconfigserver">implementation</a></li>
 </ul>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Invokes hooks</p>
 <ul>
-<li><a href="../hooks/#assetmiddleware">assetMiddleware</a> &mdash; <a href="../source/packages/shrub-assets#invoke-hook-assetmiddleware">invocation</a></li>
+<li><a href="../hooks/#shrubassetsmiddleware">shrubAssetsMiddleware</a> &mdash; <a href="../source/packages/shrub-assets#invoke-hook-shrubassetsmiddleware">invocation</a></li>
 </ul>
 </div>
 <blockquote>
@@ -1278,7 +1308,7 @@ page load.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#assetmiddleware">assetMiddleware</a> &mdash; <a href="../source/packages/shrub-assets/angular#implements-hook-assetmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubassetsmiddleware">shrubAssetsMiddleware</a> &mdash; <a href="../source/packages/shrub-assets/angular#implements-hook-shrubassetsmiddleware">implementation</a></li>
 </ul>
 </div>
 <h2 id="shrub-assetsjquery"><a href="../source/packages/shrub-assets/jquery"><small>shrub-assets/</small>jquery</a></h2>
@@ -1286,7 +1316,7 @@ page load.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#assetmiddleware">assetMiddleware</a> &mdash; <a href="../source/packages/shrub-assets/jquery#implements-hook-assetmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubassetsmiddleware">shrubAssetsMiddleware</a> &mdash; <a href="../source/packages/shrub-assets/jquery#implements-hook-shrubassetsmiddleware">implementation</a></li>
 </ul>
 </div>
 </blockquote>
@@ -1297,7 +1327,7 @@ for analytics, or anything else.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#httpmiddleware">httpMiddleware</a> &mdash; <a href="../source/packages/shrub-audit#implements-hook-httpmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubhttpmiddleware">shrubHttpMiddleware</a> &mdash; <a href="../source/packages/shrub-audit#implements-hook-shrubhttpmiddleware">implementation</a></li>
 <li><a href="../hooks/#socketauthorizationmiddleware">socketAuthorizationMiddleware</a> &mdash; <a href="../source/packages/shrub-audit#implements-hook-socketauthorizationmiddleware">implementation</a></li>
 </ul>
 </div>
@@ -1307,7 +1337,7 @@ for analytics, or anything else.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Invokes hooks</p>
 <ul>
-<li><a href="../hooks/#fingerprint">fingerprint</a> &mdash; <a href="../source/packages/shrub-audit/fingerprint#invoke-hook-fingerprint">invocation</a></li>
+<li><a href="../hooks/#shrubauditfingerprint">shrubAuditFingerprint</a> &mdash; <a href="../source/packages/shrub-audit/fingerprint#invoke-hook-shrubauditfingerprint">invocation</a></li>
 </ul>
 </div>
 </blockquote>
@@ -1317,15 +1347,15 @@ for analytics, or anything else.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#assetmiddleware">assetMiddleware</a> &mdash; <a href="../source/packages/shrub-config#implements-hook-assetmiddleware">implementation</a></li>
-<li><a href="../hooks/#httpmiddleware">httpMiddleware</a> &mdash; <a href="../source/packages/shrub-config#implements-hook-httpmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubassetsmiddleware">shrubAssetsMiddleware</a> &mdash; <a href="../source/packages/shrub-config#implements-hook-shrubassetsmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubhttpmiddleware">shrubHttpMiddleware</a> &mdash; <a href="../source/packages/shrub-config#implements-hook-shrubhttpmiddleware">implementation</a></li>
 </ul>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Invokes hooks</p>
 <ul>
-<li><a href="../hooks/#config">config</a> &mdash; <a href="../source/packages/shrub-config#invoke-hook-config">invocation</a></li>
-<li><a href="../hooks/#configalter">configAlter</a> &mdash; <a href="../source/packages/shrub-config#invoke-hook-configalter">invocation</a></li>
+<li><a href="../hooks/#shrubconfigclient">shrubConfigClient</a> &mdash; <a href="../source/packages/shrub-config#invoke-hook-shrubconfigclient">invocation</a></li>
+<li><a href="../hooks/#shrubconfigclientalter">shrubConfigClientAlter</a> &mdash; <a href="../source/packages/shrub-config#invoke-hook-shrubconfigclientalter">invocation</a></li>
 </ul>
 </div>
 <h2 id="shrub-core"><a href="../source/packages/shrub-core">shrub-core</a></h2>
@@ -1334,11 +1364,10 @@ for analytics, or anything else.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#config">config</a> &mdash; <a href="../source/packages/shrub-core#implements-hook-config">implementation</a></li>
-<li><a href="../hooks/#fingerprint">fingerprint</a> &mdash; <a href="../source/packages/shrub-core#implements-hook-fingerprint">implementation</a></li>
-<li><a href="../hooks/#httpmiddleware">httpMiddleware</a> &mdash; <a href="../source/packages/shrub-core#implements-hook-httpmiddleware">implementation</a></li>
-<li><a href="../hooks/#packagesettings">packageSettings</a> &mdash; <a href="../source/packages/shrub-core#implements-hook-packagesettings">implementation</a></li>
-<li><a href="../hooks/#replcontext">replContext</a> &mdash; <a href="../source/packages/shrub-core#implements-hook-replcontext">implementation</a></li>
+<li><a href="../hooks/#shrubconfigclient">shrubConfigClient</a> &mdash; <a href="../source/packages/shrub-core#implements-hook-shrubconfigclient">implementation</a></li>
+<li><a href="../hooks/#shrubauditfingerprint">shrubAuditFingerprint</a> &mdash; <a href="../source/packages/shrub-core#implements-hook-shrubauditfingerprint">implementation</a></li>
+<li><a href="../hooks/#shrubhttpmiddleware">shrubHttpMiddleware</a> &mdash; <a href="../source/packages/shrub-core#implements-hook-shrubhttpmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubconfigserver">shrubConfigServer</a> &mdash; <a href="../source/packages/shrub-core#implements-hook-shrubconfigserver">implementation</a></li>
 <li><a href="../hooks/#socketauthorizationmiddleware">socketAuthorizationMiddleware</a> &mdash; <a href="../source/packages/shrub-core#implements-hook-socketauthorizationmiddleware">implementation</a></li>
 </ul>
 </div>
@@ -1347,7 +1376,7 @@ for analytics, or anything else.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#notificationqueues">notificationQueues</a> &mdash; <a href="../source/packages/shrub-example#implements-hook-notificationqueues">implementation</a></li>
+<li><a href="../hooks/#shrubuinotificationqueues">shrubUiNotificationQueues</a> &mdash; <a href="../source/packages/shrub-example#implements-hook-shrubuinotificationqueues">implementation</a></li>
 </ul>
 </div>
 <blockquote>
@@ -1357,7 +1386,7 @@ for analytics, or anything else.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#httproutes">httpRoutes</a> &mdash; <a href="../source/packages/shrub-example/about#implements-hook-httproutes">implementation</a></li>
+<li><a href="../hooks/#shrubhttproutes">shrubHttpRoutes</a> &mdash; <a href="../source/packages/shrub-example/about#implements-hook-shrubhttproutes">implementation</a></li>
 </ul>
 </div>
 </blockquote>
@@ -1368,8 +1397,8 @@ Angular sandbox.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#angularnavigationmiddleware">angularNavigationMiddleware</a> &mdash; <a href="../source/packages/shrub-form#implements-hook-angularnavigationmiddleware">implementation</a></li>
-<li><a href="../hooks/#httpmiddleware">httpMiddleware</a> &mdash; <a href="../source/packages/shrub-form#implements-hook-httpmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubangularsandboxnavigationmiddleware">shrubAngularSandboxNavigationMiddleware</a> &mdash; <a href="../source/packages/shrub-form#implements-hook-shrubangularsandboxnavigationmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubhttpmiddleware">shrubHttpMiddleware</a> &mdash; <a href="../source/packages/shrub-form#implements-hook-shrubhttpmiddleware">implementation</a></li>
 </ul>
 </div>
 <h2 id="shrub-grunt"><a href="../source/packages/shrub-grunt">shrub-grunt</a></h2>
@@ -1377,34 +1406,20 @@ Angular sandbox.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#assetmiddleware">assetMiddleware</a> &mdash; <a href="../source/packages/shrub-grunt#implements-hook-assetmiddleware">implementation</a></li>
-<li><a href="../hooks/#configalter">configAlter</a> &mdash; <a href="../source/packages/shrub-grunt#implements-hook-configalter">implementation</a></li>
-<li><a href="../hooks/#gruntconfig">gruntConfig</a> &mdash; <a href="../source/packages/shrub-grunt#implements-hook-gruntconfig">implementation</a></li>
+<li><a href="../hooks/#shrubassetsmiddleware">shrubAssetsMiddleware</a> &mdash; <a href="../source/packages/shrub-grunt#implements-hook-shrubassetsmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubconfigclientalter">shrubConfigClientAlter</a> &mdash; <a href="../source/packages/shrub-grunt#implements-hook-shrubconfigclientalter">implementation</a></li>
+<li><a href="../hooks/#shrubgruntconfig">shrubGruntConfig</a> &mdash; <a href="../source/packages/shrub-grunt#implements-hook-shrubgruntconfig">implementation</a></li>
 <li><a href="../hooks/#gruntconfigalter">gruntConfigAlter</a> &mdash; <a href="../source/packages/shrub-grunt#implements-hook-gruntconfigalter">implementation</a></li>
 </ul>
 </div>
 <blockquote>
-<h2 id="shrub-gruntangular"><a href="../source/packages/shrub-grunt/angular"><small>shrub-grunt/</small>angular</a></h2>
-<p><span class="package-title">Grunt build process - Angular</span></p>
-<div class="admonition note">
-<p class="admonition-title">Implements hooks</p>
-<ul>
-<li><a href="../hooks/#gruntconfig">gruntConfig</a> &mdash; <a href="../source/packages/shrub-grunt/angular#implements-hook-gruntconfig">implementation</a></li>
-</ul>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Invokes hooks</p>
-<ul>
-<li><a href="../hooks/#angularpackagedependencies">angularPackageDependencies</a> &mdash; <a href="../source/packages/shrub-grunt/angular#invoke-hook-angularpackagedependencies">invocation</a></li>
-</ul>
-</div>
 <h2 id="shrub-gruntdox"><a href="../source/packages/shrub-grunt/dox"><small>shrub-grunt/</small>dox</a></h2>
 <p><span class="package-title">Grunt build process - Documentation</span></p>
 <p><em>Build the documentation in <code>gh-pages</code>.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#gruntconfig">gruntConfig</a> &mdash; <a href="../source/packages/shrub-grunt/dox#implements-hook-gruntconfig">implementation</a></li>
+<li><a href="../hooks/#shrubgruntconfig">shrubGruntConfig</a> &mdash; <a href="../source/packages/shrub-grunt/dox#implements-hook-shrubgruntconfig">implementation</a></li>
 </ul>
 </div>
 <h2 id="shrub-gruntdoxdynamic"><a href="../source/packages/shrub-grunt/dox/dynamic"><small>shrub-grunt/</small>dox/dynamic</a></h2>
@@ -1414,7 +1429,7 @@ Angular sandbox.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#gruntconfig">gruntConfig</a> &mdash; <a href="../source/packages/shrub-grunt/lint#implements-hook-gruntconfig">implementation</a></li>
+<li><a href="../hooks/#shrubgruntconfig">shrubGruntConfig</a> &mdash; <a href="../source/packages/shrub-grunt/lint#implements-hook-shrubgruntconfig">implementation</a></li>
 </ul>
 </div>
 <h2 id="shrub-gruntmodules"><a href="../source/packages/shrub-grunt/modules"><small>shrub-grunt/</small>modules</a></h2>
@@ -1422,7 +1437,7 @@ Angular sandbox.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#gruntconfig">gruntConfig</a> &mdash; <a href="../source/packages/shrub-grunt/modules#implements-hook-gruntconfig">implementation</a></li>
+<li><a href="../hooks/#shrubgruntconfig">shrubGruntConfig</a> &mdash; <a href="../source/packages/shrub-grunt/modules#implements-hook-shrubgruntconfig">implementation</a></li>
 </ul>
 </div>
 <h2 id="shrub-grunttests"><a href="../source/packages/shrub-grunt/tests"><small>shrub-grunt/</small>tests</a></h2>
@@ -1433,8 +1448,8 @@ Angular sandbox.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#gruntconfig">gruntConfig</a> &mdash; <a href="../source/packages/shrub-grunt/tests/build#implements-hook-gruntconfig">implementation</a></li>
-<li><a href="../hooks/#gruntconfigalter">gruntConfigAlter</a> &mdash; <a href="../source/packages/shrub-grunt/tests/build#implements-hook-gruntconfigalter">implementation</a></li>
+<li><a href="../hooks/#shrubgruntconfig">shrubGruntConfig</a> &mdash; <a href="../source/packages/shrub-grunt/tests/build#implements-hook-shrubgruntconfig">implementation</a></li>
+<li><a href="../hooks/#shrubgruntconfigalter">shrubGruntConfigAlter</a> &mdash; <a href="../source/packages/shrub-grunt/tests/build#implements-hook-shrubgruntconfigalter">implementation</a></li>
 </ul>
 </div>
 <h2 id="shrub-grunttestsrun"><a href="../source/packages/shrub-grunt/tests/run"><small>shrub-grunt/</small>tests/run</a></h2>
@@ -1442,7 +1457,7 @@ Angular sandbox.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#gruntconfig">gruntConfig</a> &mdash; <a href="../source/packages/shrub-grunt/tests/run#implements-hook-gruntconfig">implementation</a></li>
+<li><a href="../hooks/#shrubgruntconfig">shrubGruntConfig</a> &mdash; <a href="../source/packages/shrub-grunt/tests/run#implements-hook-shrubgruntconfig">implementation</a></li>
 </ul>
 </div>
 </blockquote>
@@ -1452,9 +1467,9 @@ Angular sandbox.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#gruntconfig">gruntConfig</a> &mdash; <a href="../source/packages/shrub-html5-local-storage#implements-hook-gruntconfig">implementation</a></li>
-<li><a href="../hooks/#assetmiddleware">assetMiddleware</a> &mdash; <a href="../source/packages/shrub-html5-local-storage#implements-hook-assetmiddleware">implementation</a></li>
-<li><a href="../hooks/#angularpackagedependencies">angularPackageDependencies</a> &mdash; <a href="../source/packages/shrub-html5-local-storage#implements-hook-angularpackagedependencies">implementation</a></li>
+<li><a href="../hooks/#shrubgruntconfig">shrubGruntConfig</a> &mdash; <a href="../source/packages/shrub-html5-local-storage#implements-hook-shrubgruntconfig">implementation</a></li>
+<li><a href="../hooks/#shrubassetsmiddleware">shrubAssetsMiddleware</a> &mdash; <a href="../source/packages/shrub-html5-local-storage#implements-hook-shrubassetsmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubangularpackagedependencies">shrubAngularPackageDependencies</a> &mdash; <a href="../source/packages/shrub-html5-local-storage#implements-hook-shrubangularpackagedependencies">implementation</a></li>
 </ul>
 </div>
 <h2 id="shrub-html5-notification"><a href="../source/packages/shrub-html5-notification">shrub-html5-notification</a></h2>
@@ -1463,9 +1478,9 @@ Angular sandbox.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#gruntconfig">gruntConfig</a> &mdash; <a href="../source/packages/shrub-html5-notification#implements-hook-gruntconfig">implementation</a></li>
-<li><a href="../hooks/#assetmiddleware">assetMiddleware</a> &mdash; <a href="../source/packages/shrub-html5-notification#implements-hook-assetmiddleware">implementation</a></li>
-<li><a href="../hooks/#angularpackagedependencies">angularPackageDependencies</a> &mdash; <a href="../source/packages/shrub-html5-notification#implements-hook-angularpackagedependencies">implementation</a></li>
+<li><a href="../hooks/#shrubgruntconfig">shrubGruntConfig</a> &mdash; <a href="../source/packages/shrub-html5-notification#implements-hook-shrubgruntconfig">implementation</a></li>
+<li><a href="../hooks/#shrubassetsmiddleware">shrubAssetsMiddleware</a> &mdash; <a href="../source/packages/shrub-html5-notification#implements-hook-shrubassetsmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubangularpackagedependencies">shrubAngularPackageDependencies</a> &mdash; <a href="../source/packages/shrub-html5-notification#implements-hook-shrubangularpackagedependencies">implementation</a></li>
 </ul>
 </div>
 <h2 id="shrub-http"><a href="../source/packages/shrub-http">shrub-http</a></h2>
@@ -1473,9 +1488,9 @@ Angular sandbox.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#bootstrapmiddleware">bootstrapMiddleware</a> &mdash; <a href="../source/packages/shrub-http#implements-hook-bootstrapmiddleware">implementation</a></li>
-<li><a href="../hooks/#httpmiddleware">httpMiddleware</a> &mdash; <a href="../source/packages/shrub-http#implements-hook-httpmiddleware">implementation</a></li>
-<li><a href="../hooks/#packagesettings">packageSettings</a> &mdash; <a href="../source/packages/shrub-http#implements-hook-packagesettings">implementation</a></li>
+<li><a href="../hooks/#shrubcorebootstrapmiddleware">shrubCoreBootstrapMiddleware</a> &mdash; <a href="../source/packages/shrub-http#implements-hook-shrubcorebootstrapmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubhttpmiddleware">shrubHttpMiddleware</a> &mdash; <a href="../source/packages/shrub-http#implements-hook-shrubhttpmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubconfigserver">shrubConfigServer</a> &mdash; <a href="../source/packages/shrub-http#implements-hook-shrubconfigserver">implementation</a></li>
 </ul>
 </div>
 <h2 id="shrub-http-express"><a href="../source/packages/shrub-http-express">shrub-http-express</a></h2>
@@ -1485,7 +1500,7 @@ middleware for sessions, routing, logging, etc.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#prebootstrap">preBootstrap</a> &mdash; <a href="../source/packages/shrub-http-express#implements-hook-prebootstrap">implementation</a></li>
+<li><a href="../hooks/#shrubcoreprebootstrap">shrubCorePreBootstrap</a> &mdash; <a href="../source/packages/shrub-http-express#implements-hook-shrubcoreprebootstrap">implementation</a></li>
 </ul>
 </div>
 <blockquote>
@@ -1494,7 +1509,7 @@ middleware for sessions, routing, logging, etc.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#httpmiddleware">httpMiddleware</a> &mdash; <a href="../source/packages/shrub-http-express/errors#implements-hook-httpmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubhttpmiddleware">shrubHttpMiddleware</a> &mdash; <a href="../source/packages/shrub-http-express/errors#implements-hook-shrubhttpmiddleware">implementation</a></li>
 </ul>
 </div>
 <h2 id="shrub-http-expresslogger"><a href="../source/packages/shrub-http-express/logger"><small>shrub-http-express/</small>logger</a></h2>
@@ -1502,7 +1517,7 @@ middleware for sessions, routing, logging, etc.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#httpmiddleware">httpMiddleware</a> &mdash; <a href="../source/packages/shrub-http-express/logger#implements-hook-httpmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubhttpmiddleware">shrubHttpMiddleware</a> &mdash; <a href="../source/packages/shrub-http-express/logger#implements-hook-shrubhttpmiddleware">implementation</a></li>
 </ul>
 </div>
 <h2 id="shrub-http-expressroutes"><a href="../source/packages/shrub-http-express/routes"><small>shrub-http-express/</small>routes</a></h2>
@@ -1510,7 +1525,7 @@ middleware for sessions, routing, logging, etc.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#httpmiddleware">httpMiddleware</a> &mdash; <a href="../source/packages/shrub-http-express/routes#implements-hook-httpmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubhttpmiddleware">shrubHttpMiddleware</a> &mdash; <a href="../source/packages/shrub-http-express/routes#implements-hook-shrubhttpmiddleware">implementation</a></li>
 </ul>
 </div>
 <h2 id="shrub-http-expresssession"><a href="../source/packages/shrub-http-express/session"><small>shrub-http-express/</small>session</a></h2>
@@ -1518,9 +1533,9 @@ middleware for sessions, routing, logging, etc.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#prebootstrap">preBootstrap</a> &mdash; <a href="../source/packages/shrub-http-express/session#implements-hook-prebootstrap">implementation</a></li>
-<li><a href="../hooks/#bootstrapmiddleware">bootstrapMiddleware</a> &mdash; <a href="../source/packages/shrub-http-express/session#implements-hook-bootstrapmiddleware">implementation</a></li>
-<li><a href="../hooks/#httpmiddleware">httpMiddleware</a> &mdash; <a href="../source/packages/shrub-http-express/session#implements-hook-httpmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubcoreprebootstrap">shrubCorePreBootstrap</a> &mdash; <a href="../source/packages/shrub-http-express/session#implements-hook-shrubcoreprebootstrap">implementation</a></li>
+<li><a href="../hooks/#shrubcorebootstrapmiddleware">shrubCoreBootstrapMiddleware</a> &mdash; <a href="../source/packages/shrub-http-express/session#implements-hook-shrubcorebootstrapmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubhttpmiddleware">shrubHttpMiddleware</a> &mdash; <a href="../source/packages/shrub-http-express/session#implements-hook-shrubhttpmiddleware">implementation</a></li>
 <li><a href="../hooks/#socketauthorizationmiddleware">socketAuthorizationMiddleware</a> &mdash; <a href="../source/packages/shrub-http-express/session#implements-hook-socketauthorizationmiddleware">implementation</a></li>
 </ul>
 </div>
@@ -1529,7 +1544,7 @@ middleware for sessions, routing, logging, etc.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#httpmiddleware">httpMiddleware</a> &mdash; <a href="../source/packages/shrub-http-express/static#implements-hook-httpmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubhttpmiddleware">shrubHttpMiddleware</a> &mdash; <a href="../source/packages/shrub-http-express/static#implements-hook-shrubhttpmiddleware">implementation</a></li>
 </ul>
 </div>
 <h2 id="shrub-httpmanager"><a href="../source/packages/shrub-http/manager"><small>shrub-http/</small>manager</a></h2>
@@ -1538,8 +1553,8 @@ middleware for sessions, routing, logging, etc.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Invokes hooks</p>
 <ul>
-<li><a href="../hooks/#httproutes">httpRoutes</a> &mdash; <a href="../source/packages/shrub-http/manager#invoke-hook-httproutes">invocation</a></li>
-<li><a href="../hooks/#httpmiddleware">httpMiddleware</a> &mdash; <a href="../source/packages/shrub-http/manager#invoke-hook-httpmiddleware">invocation</a></li>
+<li><a href="../hooks/#shrubhttproutes">shrubHttpRoutes</a> &mdash; <a href="../source/packages/shrub-http/manager#invoke-hook-shrubhttproutes">invocation</a></li>
+<li><a href="../hooks/#shrubhttpmiddleware">shrubHttpMiddleware</a> &mdash; <a href="../source/packages/shrub-http/manager#invoke-hook-shrubhttpmiddleware">invocation</a></li>
 </ul>
 </div>
 </blockquote>
@@ -1550,7 +1565,7 @@ now, but will be fleshed out as we go.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#bootstrapmiddleware">bootstrapMiddleware</a> &mdash; <a href="../source/packages/shrub-install#implements-hook-bootstrapmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubcorebootstrapmiddleware">shrubCoreBootstrapMiddleware</a> &mdash; <a href="../source/packages/shrub-install#implements-hook-shrubcorebootstrapmiddleware">implementation</a></li>
 <li><a href="../hooks/#replcontext">replContext</a> &mdash; <a href="../source/packages/shrub-install#implements-hook-replcontext">implementation</a></li>
 </ul>
 </div>
@@ -1561,7 +1576,7 @@ routes.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#collections">collections</a> &mdash; <a href="../source/packages/shrub-limiter#implements-hook-collections">implementation</a></li>
+<li><a href="../hooks/#shrubormcollections">shrubOrmCollections</a> &mdash; <a href="../source/packages/shrub-limiter#implements-hook-shrubormcollections">implementation</a></li>
 <li><a href="../hooks/#rpcroutesalter">rpcRoutesAlter</a> &mdash; <a href="../source/packages/shrub-limiter#implements-hook-rpcroutesalter">implementation</a></li>
 <li><a href="../hooks/#transmittableerror">transmittableError</a> &mdash; <a href="../source/packages/shrub-limiter#implements-hook-transmittableerror">implementation</a></li>
 </ul>
@@ -1578,15 +1593,15 @@ across multiple <a href="../source/packages/shrub-audit/fingerprint">fingerprint
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#prebootstrap">preBootstrap</a> &mdash; <a href="../source/packages/shrub-nodemailer#implements-hook-prebootstrap">implementation</a></li>
-<li><a href="../hooks/#bootstrapmiddleware">bootstrapMiddleware</a> &mdash; <a href="../source/packages/shrub-nodemailer#implements-hook-bootstrapmiddleware">implementation</a></li>
-<li><a href="../hooks/#packagesettings">packageSettings</a> &mdash; <a href="../source/packages/shrub-nodemailer#implements-hook-packagesettings">implementation</a></li>
+<li><a href="../hooks/#shrubcoreprebootstrap">shrubCorePreBootstrap</a> &mdash; <a href="../source/packages/shrub-nodemailer#implements-hook-shrubcoreprebootstrap">implementation</a></li>
+<li><a href="../hooks/#shrubcorebootstrapmiddleware">shrubCoreBootstrapMiddleware</a> &mdash; <a href="../source/packages/shrub-nodemailer#implements-hook-shrubcorebootstrapmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubconfigserver">shrubConfigServer</a> &mdash; <a href="../source/packages/shrub-nodemailer#implements-hook-shrubconfigserver">implementation</a></li>
 </ul>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Invokes hooks</p>
 <ul>
-<li><a href="../hooks/#mailhtml">mailHtml</a> &mdash; <a href="../source/packages/shrub-nodemailer#invoke-hook-mailhtml">invocation</a></li>
+<li><a href="../hooks/#shrubnodemailerhtml">shrubNodemailerHtml</a> &mdash; <a href="../source/packages/shrub-nodemailer#invoke-hook-shrubnodemailerhtml">invocation</a></li>
 </ul>
 </div>
 <h2 id="shrub-orm"><a href="../source/packages/shrub-orm">shrub-orm</a></h2>
@@ -1595,18 +1610,18 @@ across multiple <a href="../source/packages/shrub-audit/fingerprint">fingerprint
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#prebootstrap">preBootstrap</a> &mdash; <a href="../source/packages/shrub-orm#implements-hook-prebootstrap">implementation</a></li>
-<li><a href="../hooks/#bootstrapmiddleware">bootstrapMiddleware</a> &mdash; <a href="../source/packages/shrub-orm#implements-hook-bootstrapmiddleware">implementation</a></li>
-<li><a href="../hooks/#gruntconfig">gruntConfig</a> &mdash; <a href="../source/packages/shrub-orm#implements-hook-gruntconfig">implementation</a></li>
-<li><a href="../hooks/#packagesettings">packageSettings</a> &mdash; <a href="../source/packages/shrub-orm#implements-hook-packagesettings">implementation</a></li>
+<li><a href="../hooks/#shrubcoreprebootstrap">shrubCorePreBootstrap</a> &mdash; <a href="../source/packages/shrub-orm#implements-hook-shrubcoreprebootstrap">implementation</a></li>
+<li><a href="../hooks/#shrubcorebootstrapmiddleware">shrubCoreBootstrapMiddleware</a> &mdash; <a href="../source/packages/shrub-orm#implements-hook-shrubcorebootstrapmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubgruntconfig">shrubGruntConfig</a> &mdash; <a href="../source/packages/shrub-orm#implements-hook-shrubgruntconfig">implementation</a></li>
+<li><a href="../hooks/#shrubconfigserver">shrubConfigServer</a> &mdash; <a href="../source/packages/shrub-orm#implements-hook-shrubconfigserver">implementation</a></li>
 <li><a href="../hooks/#replcontext">replContext</a> &mdash; <a href="../source/packages/shrub-orm#implements-hook-replcontext">implementation</a></li>
 </ul>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Invokes hooks</p>
 <ul>
-<li><a href="../hooks/#collections">collections</a> &mdash; <a href="../source/packages/shrub-orm#invoke-hook-collections">invocation</a></li>
-<li><a href="../hooks/#collectionsalter">collectionsAlter</a> &mdash; <a href="../source/packages/shrub-orm#invoke-hook-collectionsalter">invocation</a></li>
+<li><a href="../hooks/#shrubormcollections">shrubOrmCollections</a> &mdash; <a href="../source/packages/shrub-orm#invoke-hook-shrubormcollections">invocation</a></li>
+<li><a href="../hooks/#shrubormcollectionsalter">shrubOrmCollectionsAlter</a> &mdash; <a href="../source/packages/shrub-orm#invoke-hook-shrubormcollectionsalter">invocation</a></li>
 </ul>
 </div>
 <h2 id="shrub-repl"><a href="../source/packages/shrub-repl">shrub-repl</a></h2>
@@ -1615,9 +1630,9 @@ across multiple <a href="../source/packages/shrub-audit/fingerprint">fingerprint
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#packagesettings">packageSettings</a> &mdash; <a href="../source/packages/shrub-repl#implements-hook-packagesettings">implementation</a></li>
+<li><a href="../hooks/#shrubconfigserver">shrubConfigServer</a> &mdash; <a href="../source/packages/shrub-repl#implements-hook-shrubconfigserver">implementation</a></li>
 <li><a href="../hooks/#processexit">processExit</a> &mdash; <a href="../source/packages/shrub-repl#implements-hook-processexit">implementation</a></li>
-<li><a href="../hooks/#bootstrapmiddleware">bootstrapMiddleware</a> &mdash; <a href="../source/packages/shrub-repl#implements-hook-bootstrapmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubcorebootstrapmiddleware">shrubCoreBootstrapMiddleware</a> &mdash; <a href="../source/packages/shrub-repl#implements-hook-shrubcorebootstrapmiddleware">implementation</a></li>
 </ul>
 </div>
 <div class="admonition note">
@@ -1631,8 +1646,8 @@ across multiple <a href="../source/packages/shrub-audit/fingerprint">fingerprint
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#prebootstrap">preBootstrap</a> &mdash; <a href="../source/packages/shrub-rpc#implements-hook-prebootstrap">implementation</a></li>
-<li><a href="../hooks/#bootstrapmiddleware">bootstrapMiddleware</a> &mdash; <a href="../source/packages/shrub-rpc#implements-hook-bootstrapmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubcoreprebootstrap">shrubCorePreBootstrap</a> &mdash; <a href="../source/packages/shrub-rpc#implements-hook-shrubcoreprebootstrap">implementation</a></li>
+<li><a href="../hooks/#shrubcorebootstrapmiddleware">shrubCoreBootstrapMiddleware</a> &mdash; <a href="../source/packages/shrub-rpc#implements-hook-shrubcorebootstrapmiddleware">implementation</a></li>
 <li><a href="../hooks/#socketconnectionmiddleware">socketConnectionMiddleware</a> &mdash; <a href="../source/packages/shrub-rpc#implements-hook-socketconnectionmiddleware">implementation</a></li>
 </ul>
 </div>
@@ -1650,10 +1665,10 @@ across multiple <a href="../source/packages/shrub-audit/fingerprint">fingerprint
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#collections">collections</a> &mdash; <a href="../source/packages/shrub-session#implements-hook-collections">implementation</a></li>
-<li><a href="../hooks/#fingerprint">fingerprint</a> &mdash; <a href="../source/packages/shrub-session#implements-hook-fingerprint">implementation</a></li>
+<li><a href="../hooks/#shrubormcollections">shrubOrmCollections</a> &mdash; <a href="../source/packages/shrub-session#implements-hook-shrubormcollections">implementation</a></li>
+<li><a href="../hooks/#shrubauditfingerprint">shrubAuditFingerprint</a> &mdash; <a href="../source/packages/shrub-session#implements-hook-shrubauditfingerprint">implementation</a></li>
 <li><a href="../hooks/#rpcroutefinished">rpcRouteFinished</a> &mdash; <a href="../source/packages/shrub-session#implements-hook-rpcroutefinished">implementation</a></li>
-<li><a href="../hooks/#packagesettings">packageSettings</a> &mdash; <a href="../source/packages/shrub-session#implements-hook-packagesettings">implementation</a></li>
+<li><a href="../hooks/#shrubconfigserver">shrubConfigServer</a> &mdash; <a href="../source/packages/shrub-session#implements-hook-shrubconfigserver">implementation</a></li>
 <li><a href="../hooks/#socketconnectionmiddleware">socketConnectionMiddleware</a> &mdash; <a href="../source/packages/shrub-session#implements-hook-socketconnectionmiddleware">implementation</a></li>
 </ul>
 </div>
@@ -1669,10 +1684,10 @@ across multiple <a href="../source/packages/shrub-audit/fingerprint">fingerprint
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#config">config</a> &mdash; <a href="../source/packages/shrub-skin#implements-hook-config">implementation</a></li>
-<li><a href="../hooks/#httpmiddleware">httpMiddleware</a> &mdash; <a href="../source/packages/shrub-skin#implements-hook-httpmiddleware">implementation</a></li>
-<li><a href="../hooks/#httpmiddleware">httpMiddleware</a> &mdash; <a href="../source/packages/shrub-skin#implements-hook-httpmiddleware">implementation</a></li>
-<li><a href="../hooks/#packagesettings">packageSettings</a> &mdash; <a href="../source/packages/shrub-skin#implements-hook-packagesettings">implementation</a></li>
+<li><a href="../hooks/#shrubconfigclient">shrubConfigClient</a> &mdash; <a href="../source/packages/shrub-skin#implements-hook-shrubconfigclient">implementation</a></li>
+<li><a href="../hooks/#shrubhttpmiddleware">shrubHttpMiddleware</a> &mdash; <a href="../source/packages/shrub-skin#implements-hook-shrubhttpmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubhttpmiddleware">shrubHttpMiddleware</a> &mdash; <a href="../source/packages/shrub-skin#implements-hook-shrubhttpmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubconfigserver">shrubConfigServer</a> &mdash; <a href="../source/packages/shrub-skin#implements-hook-shrubconfigserver">implementation</a></li>
 </ul>
 </div>
 <div class="admonition note">
@@ -1687,9 +1702,9 @@ across multiple <a href="../source/packages/shrub-audit/fingerprint">fingerprint
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#mailhtml">mailHtml</a> &mdash; <a href="../source/packages/shrub-skin-strapped#implements-hook-mailhtml">implementation</a></li>
+<li><a href="../hooks/#shrubnodemailerhtml">shrubNodemailerHtml</a> &mdash; <a href="../source/packages/shrub-skin-strapped#implements-hook-shrubnodemailerhtml">implementation</a></li>
 <li><a href="../hooks/#skinassets">skinAssets</a> &mdash; <a href="../source/packages/shrub-skin-strapped#implements-hook-skinassets">implementation</a></li>
-<li><a href="../hooks/#gruntconfig">gruntConfig</a> &mdash; <a href="../source/packages/shrub-skin-strapped#implements-hook-gruntconfig">implementation</a></li>
+<li><a href="../hooks/#shrubgruntconfig">shrubGruntConfig</a> &mdash; <a href="../source/packages/shrub-skin-strapped#implements-hook-shrubgruntconfig">implementation</a></li>
 </ul>
 </div>
 <h2 id="shrub-socket"><a href="../source/packages/shrub-socket">shrub-socket</a></h2>
@@ -1698,9 +1713,9 @@ across multiple <a href="../source/packages/shrub-audit/fingerprint">fingerprint
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#config">config</a> &mdash; <a href="../source/packages/shrub-socket#implements-hook-config">implementation</a></li>
-<li><a href="../hooks/#bootstrapmiddleware">bootstrapMiddleware</a> &mdash; <a href="../source/packages/shrub-socket#implements-hook-bootstrapmiddleware">implementation</a></li>
-<li><a href="../hooks/#packagesettings">packageSettings</a> &mdash; <a href="../source/packages/shrub-socket#implements-hook-packagesettings">implementation</a></li>
+<li><a href="../hooks/#shrubconfigclient">shrubConfigClient</a> &mdash; <a href="../source/packages/shrub-socket#implements-hook-shrubconfigclient">implementation</a></li>
+<li><a href="../hooks/#shrubcorebootstrapmiddleware">shrubCoreBootstrapMiddleware</a> &mdash; <a href="../source/packages/shrub-socket#implements-hook-shrubcorebootstrapmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubconfigserver">shrubConfigServer</a> &mdash; <a href="../source/packages/shrub-socket#implements-hook-shrubconfigserver">implementation</a></li>
 <li><a href="../hooks/#replcontext">replContext</a> &mdash; <a href="../source/packages/shrub-socket#implements-hook-replcontext">implementation</a></li>
 </ul>
 </div>
@@ -1710,8 +1725,8 @@ across multiple <a href="../source/packages/shrub-audit/fingerprint">fingerprint
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#assetmiddleware">assetMiddleware</a> &mdash; <a href="../source/packages/shrub-socket-socket.io#implements-hook-assetmiddleware">implementation</a></li>
-<li><a href="../hooks/#gruntconfig">gruntConfig</a> &mdash; <a href="../source/packages/shrub-socket-socket.io#implements-hook-gruntconfig">implementation</a></li>
+<li><a href="../hooks/#shrubassetsmiddleware">shrubAssetsMiddleware</a> &mdash; <a href="../source/packages/shrub-socket-socket.io#implements-hook-shrubassetsmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubgruntconfig">shrubGruntConfig</a> &mdash; <a href="../source/packages/shrub-socket-socket.io#implements-hook-shrubgruntconfig">implementation</a></li>
 </ul>
 </div>
 <blockquote>
@@ -1737,11 +1752,17 @@ across multiple <a href="../source/packages/shrub-audit/fingerprint">fingerprint
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#prebootstrap">preBootstrap</a> &mdash; <a href="../source/packages/shrub-ui/notifications#implements-hook-prebootstrap">implementation</a></li>
-<li><a href="../hooks/#bootstrapmiddleware">bootstrapMiddleware</a> &mdash; <a href="../source/packages/shrub-ui/notifications#implements-hook-bootstrapmiddleware">implementation</a></li>
-<li><a href="../hooks/#collections">collections</a> &mdash; <a href="../source/packages/shrub-ui/notifications#implements-hook-collections">implementation</a></li>
-<li><a href="../hooks/#config">config</a> &mdash; <a href="../source/packages/shrub-ui/notifications#implements-hook-config">implementation</a></li>
+<li><a href="../hooks/#shrubcoreprebootstrap">shrubCorePreBootstrap</a> &mdash; <a href="../source/packages/shrub-ui/notifications#implements-hook-shrubcoreprebootstrap">implementation</a></li>
+<li><a href="../hooks/#shrubcorebootstrapmiddleware">shrubCoreBootstrapMiddleware</a> &mdash; <a href="../source/packages/shrub-ui/notifications#implements-hook-shrubcorebootstrapmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubormcollections">shrubOrmCollections</a> &mdash; <a href="../source/packages/shrub-ui/notifications#implements-hook-shrubormcollections">implementation</a></li>
+<li><a href="../hooks/#shrubconfigclient">shrubConfigClient</a> &mdash; <a href="../source/packages/shrub-ui/notifications#implements-hook-shrubconfigclient">implementation</a></li>
 <li><a href="../hooks/#rpcroutes">rpcRoutes</a> &mdash; <a href="../source/packages/shrub-ui/notifications#implements-hook-rpcroutes">implementation</a></li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Invokes hooks</p>
+<ul>
+<li><a href="../hooks/#shrubuinotificationqueues">shrubUiNotificationQueues</a> &mdash; <a href="../source/packages/shrub-ui/notifications#invoke-hook-shrubuinotificationqueues">invocation</a></li>
 </ul>
 </div>
 </blockquote>
@@ -1751,14 +1772,14 @@ across multiple <a href="../source/packages/shrub-audit/fingerprint">fingerprint
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#prebootstrap">preBootstrap</a> &mdash; <a href="../source/packages/shrub-user#implements-hook-prebootstrap">implementation</a></li>
-<li><a href="../hooks/#config">config</a> &mdash; <a href="../source/packages/shrub-user#implements-hook-config">implementation</a></li>
+<li><a href="../hooks/#shrubcoreprebootstrap">shrubCorePreBootstrap</a> &mdash; <a href="../source/packages/shrub-user#implements-hook-shrubcoreprebootstrap">implementation</a></li>
+<li><a href="../hooks/#shrubconfigclient">shrubConfigClient</a> &mdash; <a href="../source/packages/shrub-user#implements-hook-shrubconfigclient">implementation</a></li>
 <li><a href="../hooks/#rpcroutefinished">rpcRouteFinished</a> &mdash; <a href="../source/packages/shrub-user#implements-hook-rpcroutefinished">implementation</a></li>
-<li><a href="../hooks/#fingerprint">fingerprint</a> &mdash; <a href="../source/packages/shrub-user#implements-hook-fingerprint">implementation</a></li>
-<li><a href="../hooks/#httpmiddleware">httpMiddleware</a> &mdash; <a href="../source/packages/shrub-user#implements-hook-httpmiddleware">implementation</a></li>
-<li><a href="../hooks/#collections">collections</a> &mdash; <a href="../source/packages/shrub-user#implements-hook-collections">implementation</a></li>
-<li><a href="../hooks/#collectionsalter">collectionsAlter</a> &mdash; <a href="../source/packages/shrub-user#implements-hook-collectionsalter">implementation</a></li>
-<li><a href="../hooks/#packagesettings">packageSettings</a> &mdash; <a href="../source/packages/shrub-user#implements-hook-packagesettings">implementation</a></li>
+<li><a href="../hooks/#shrubauditfingerprint">shrubAuditFingerprint</a> &mdash; <a href="../source/packages/shrub-user#implements-hook-shrubauditfingerprint">implementation</a></li>
+<li><a href="../hooks/#shrubhttpmiddleware">shrubHttpMiddleware</a> &mdash; <a href="../source/packages/shrub-user#implements-hook-shrubhttpmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubormcollections">shrubOrmCollections</a> &mdash; <a href="../source/packages/shrub-user#implements-hook-shrubormcollections">implementation</a></li>
+<li><a href="../hooks/#shrubormcollectionsalter">shrubOrmCollectionsAlter</a> &mdash; <a href="../source/packages/shrub-user#implements-hook-shrubormcollectionsalter">implementation</a></li>
+<li><a href="../hooks/#shrubconfigserver">shrubConfigServer</a> &mdash; <a href="../source/packages/shrub-user#implements-hook-shrubconfigserver">implementation</a></li>
 <li><a href="../hooks/#socketauthorizationmiddleware">socketAuthorizationMiddleware</a> &mdash; <a href="../source/packages/shrub-user#implements-hook-socketauthorizationmiddleware">implementation</a></li>
 <li><a href="../hooks/#socketconnectionmiddleware">socketConnectionMiddleware</a> &mdash; <a href="../source/packages/shrub-user#implements-hook-socketconnectionmiddleware">implementation</a></li>
 <li><a href="../hooks/#userbeforelogoutmiddleware">userBeforeLogoutMiddleware</a> &mdash; <a href="../source/packages/shrub-user#implements-hook-userbeforelogoutmiddleware">implementation</a></li>
@@ -1778,9 +1799,9 @@ across multiple <a href="../source/packages/shrub-audit/fingerprint">fingerprint
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#prebootstrap">preBootstrap</a> &mdash; <a href="../source/packages/shrub-user/login#implements-hook-prebootstrap">implementation</a></li>
+<li><a href="../hooks/#shrubcoreprebootstrap">shrubCorePreBootstrap</a> &mdash; <a href="../source/packages/shrub-user/login#implements-hook-shrubcoreprebootstrap">implementation</a></li>
 <li><a href="../hooks/#rpcroutes">rpcRoutes</a> &mdash; <a href="../source/packages/shrub-user/login#implements-hook-rpcroutes">implementation</a></li>
-<li><a href="../hooks/#bootstrapmiddleware">bootstrapMiddleware</a> &mdash; <a href="../source/packages/shrub-user/login#implements-hook-bootstrapmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubcorebootstrapmiddleware">shrubCoreBootstrapMiddleware</a> &mdash; <a href="../source/packages/shrub-user/login#implements-hook-shrubcorebootstrapmiddleware">implementation</a></li>
 <li><a href="../hooks/#transmittableerror">transmittableError</a> &mdash; <a href="../source/packages/shrub-user/login#implements-hook-transmittableerror">implementation</a></li>
 </ul>
 </div>
@@ -1797,7 +1818,7 @@ across multiple <a href="../source/packages/shrub-audit/fingerprint">fingerprint
 <p class="admonition-title">Implements hooks</p>
 <ul>
 <li><a href="../hooks/#rpcroutes">rpcRoutes</a> &mdash; <a href="../source/packages/shrub-user/logout#implements-hook-rpcroutes">implementation</a></li>
-<li><a href="../hooks/#bootstrapmiddleware">bootstrapMiddleware</a> &mdash; <a href="../source/packages/shrub-user/logout#implements-hook-bootstrapmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubcorebootstrapmiddleware">shrubCoreBootstrapMiddleware</a> &mdash; <a href="../source/packages/shrub-user/logout#implements-hook-shrubcorebootstrapmiddleware">implementation</a></li>
 </ul>
 </div>
 <div class="admonition note">
@@ -1812,7 +1833,7 @@ across multiple <a href="../source/packages/shrub-audit/fingerprint">fingerprint
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#prebootstrap">preBootstrap</a> &mdash; <a href="../source/packages/shrub-user/register#implements-hook-prebootstrap">implementation</a></li>
+<li><a href="../hooks/#shrubcoreprebootstrap">shrubCorePreBootstrap</a> &mdash; <a href="../source/packages/shrub-user/register#implements-hook-shrubcoreprebootstrap">implementation</a></li>
 <li><a href="../hooks/#rpcroutes">rpcRoutes</a> &mdash; <a href="../source/packages/shrub-user/register#implements-hook-rpcroutes">implementation</a></li>
 <li><a href="../hooks/#replcontext">replContext</a> &mdash; <a href="../source/packages/shrub-user/register#implements-hook-replcontext">implementation</a></li>
 </ul>
@@ -1832,9 +1853,9 @@ across multiple <a href="../source/packages/shrub-audit/fingerprint">fingerprint
 <div class="admonition note">
 <p class="admonition-title">Implements hooks</p>
 <ul>
-<li><a href="../hooks/#prebootstrap">preBootstrap</a> &mdash; <a href="../source/packages/shrub-villiany#implements-hook-prebootstrap">implementation</a></li>
-<li><a href="../hooks/#collections">collections</a> &mdash; <a href="../source/packages/shrub-villiany#implements-hook-collections">implementation</a></li>
-<li><a href="../hooks/#httpmiddleware">httpMiddleware</a> &mdash; <a href="../source/packages/shrub-villiany#implements-hook-httpmiddleware">implementation</a></li>
+<li><a href="../hooks/#shrubcoreprebootstrap">shrubCorePreBootstrap</a> &mdash; <a href="../source/packages/shrub-villiany#implements-hook-shrubcoreprebootstrap">implementation</a></li>
+<li><a href="../hooks/#shrubormcollections">shrubOrmCollections</a> &mdash; <a href="../source/packages/shrub-villiany#implements-hook-shrubormcollections">implementation</a></li>
+<li><a href="../hooks/#shrubhttpmiddleware">shrubHttpMiddleware</a> &mdash; <a href="../source/packages/shrub-villiany#implements-hook-shrubhttpmiddleware">implementation</a></li>
 <li><a href="../hooks/#settings">settings</a> &mdash; <a href="../source/packages/shrub-villiany#implements-hook-settings">implementation</a></li>
 <li><a href="../hooks/#socketauthorizationmiddleware">socketAuthorizationMiddleware</a> &mdash; <a href="../source/packages/shrub-villiany#implements-hook-socketauthorizationmiddleware">implementation</a></li>
 </ul>

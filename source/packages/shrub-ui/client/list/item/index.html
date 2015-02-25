@@ -138,6 +138,16 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../../shrub-angular-sandbox/client">packages/shrub-angular-sandbox/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../../shrub-angular-sandbox">packages/shrub-angular-sandbox/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../../shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
                     
                 </li>
@@ -259,11 +269,6 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../../../shrub-form">packages/shrub-form/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../../shrub-grunt/angular">packages/shrub-grunt/angular.litcoffee</a>
                     
                 </li>
             
@@ -519,9 +524,9 @@
                         
                             <li class="toctree-l2"><a href="#ui-list-item">UI - list item</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-controller">Implements hook controller.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubangularcontroller">Implements hook shrubAngularController.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-directive">Implements hook directive.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubangulardirective">Implements hook shrubAngularDirective.</a></li>
                             
                         
                         </ul>
@@ -722,8 +727,8 @@
               <h1 id="ui-list-item">UI - list item</h1>
 <pre><code>exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h4 id="implements-hook-controller">Implements hook <code>controller</code>.</h4>
-<pre><code>  registrar.registerHook 'controller', -&gt; [
+<h4 id="implements-hook-shrubangularcontroller">Implements hook <code>shrubAngularController</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubAngularController', -&gt; [
 
     class ListItemController
 
@@ -747,8 +752,8 @@
 
   ]
 </code></pre>
-<h4 id="implements-hook-directive">Implements hook <code>directive</code>.</h4>
-<pre><code>  registrar.registerHook 'directive', -&gt; [
+<h4 id="implements-hook-shrubangulardirective">Implements hook <code>shrubAngularDirective</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubAngularDirective', -&gt; [
 
     -&gt;
 

@@ -138,6 +138,16 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../shrub-angular-sandbox/client">packages/shrub-angular-sandbox/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-angular-sandbox">packages/shrub-angular-sandbox/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
                     
                 </li>
@@ -189,15 +199,13 @@
                         
                             <li class="toctree-l2"><a href="#core-server-functionality">Core server functionality</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-config">Implements hook config.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubconfigclient">Implements hook shrubConfigClient.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-fingerprint">Implements hook fingerprint.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubauditfingerprint">Implements hook shrubAuditFingerprint.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-httpmiddleware">Implements hook httpMiddleware.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubhttpmiddleware">Implements hook shrubHttpMiddleware.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-packagesettings">Implements hook packageSettings.</a></li>
-                            
-                                <li><a class="toctree-l3" href="#implements-hook-replcontext">Implements hook replContext.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer.</a></li>
                             
                                 <li><a class="toctree-l3" href="#implements-hook-socketauthorizationmiddleware">Implements hook socketAuthorizationMiddleware.</a></li>
                             
@@ -278,11 +286,6 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../shrub-form">packages/shrub-form/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../shrub-grunt/angular">packages/shrub-grunt/angular.litcoffee</a>
                     
                 </li>
             
@@ -735,8 +738,8 @@ pkgman = require 'pkgman'
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h4 id="implements-hook-config">Implements hook <code>config</code>.</h4>
-<pre><code>  registrar.registerHook 'config', (req) -&gt;
+<h4 id="implements-hook-shrubconfigclient">Implements hook <code>shrubConfigClient</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubConfigClient', (req) -&gt;
 </code></pre>
 <p>The URL that the site was accessed at.</p>
 <pre><code>    hostname: if req.headers?.host?
@@ -756,14 +759,14 @@ exports.pkgmanRegister = (registrar) -&gt;
 <p>The user-visible site name.</p>
 <pre><code>    siteName: config.get 'packageSettings:shrub-core:siteName'
 </code></pre>
-<h4 id="implements-hook-fingerprint">Implements hook <code>fingerprint</code>.</h4>
-<pre><code>  registrar.registerHook 'fingerprint', (req) -&gt;
+<h4 id="implements-hook-shrubauditfingerprint">Implements hook <code>shrubAuditFingerprint</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubAuditFingerprint', (req) -&gt;
 </code></pre>
 <p>The IP address.</p>
 <pre><code>    ip: req?.normalizedIp
 </code></pre>
-<h4 id="implements-hook-httpmiddleware">Implements hook <code>httpMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'httpMiddleware', (http) -&gt;
+<h4 id="implements-hook-shrubhttpmiddleware">Implements hook <code>shrubHttpMiddleware</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubHttpMiddleware', (http) -&gt;
 
     label: 'Normalize request variables'
     middleware: [
@@ -781,8 +784,8 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     ]
 </code></pre>
-<h4 id="implements-hook-packagesettings">Implements hook <code>packageSettings</code>.</h4>
-<pre><code>  registrar.registerHook 'packageSettings', -&gt;
+<h4 id="implements-hook-shrubconfigserver">Implements hook <code>shrubConfigServer</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubConfigServer', -&gt;
 </code></pre>
 <p>Middleware for server bootstrap phase.</p>
 <pre><code>    bootstrapMiddleware: [
@@ -815,14 +818,6 @@ exports.pkgmanRegister = (registrar) -&gt;
 <p>The amount of workers to create. Defaults to 0 meaning no workers, only the
 master.</p>
 <pre><code>    workers: 0
-</code></pre>
-<h4 id="implements-hook-replcontext">Implements hook <code>replContext</code>.</h4>
-<pre><code>  registrar.registerHook 'replContext', (context) -&gt;
-</code></pre>
-<p>Provide <code>clearCaches()</code> to the REPL.</p>
-<pre><code>    context.clearCaches = -&gt;
-
-      pkgman.invoke 'clearCaches'
 </code></pre>
 <h4 id="implements-hook-socketauthorizationmiddleware">Implements hook <code>socketAuthorizationMiddleware</code>.</h4>
 <pre><code>  registrar.registerHook 'socketAuthorizationMiddleware', -&gt;

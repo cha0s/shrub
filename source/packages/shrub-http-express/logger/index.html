@@ -138,6 +138,16 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-angular-sandbox/client">packages/shrub-angular-sandbox/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-angular-sandbox">packages/shrub-angular-sandbox/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
                     
                 </li>
@@ -263,11 +273,6 @@
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../../shrub-grunt/angular">packages/shrub-grunt/angular.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
                     <a class="" href="../../shrub-grunt/dox/dynamic">packages/shrub-grunt/dox/dynamic.litcoffee</a>
                     
                 </li>
@@ -344,7 +349,7 @@
                         
                             <li class="toctree-l2"><a href="#express-logger">Express - logger</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-httpmiddleware">Implements hook httpMiddleware.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubhttpmiddleware">Implements hook shrubHttpMiddleware.</a></li>
                             
                         
                         </ul>
@@ -720,9 +725,9 @@
               <h1 id="express-logger">Express - logger</h1>
 <pre><code>exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h4 id="implements-hook-httpmiddleware">Implements hook <code>httpMiddleware</code>.</h4>
+<h4 id="implements-hook-shrubhttpmiddleware">Implements hook <code>shrubHttpMiddleware</code>.</h4>
 <p>Log requests, differentiating between client and sandbox requests.</p>
-<pre><code>  registrar.registerHook 'httpMiddleware', (http) -&gt;
+<pre><code>  registrar.registerHook 'shrubHttpMiddleware', (http) -&gt;
 
     express = require 'express'
 

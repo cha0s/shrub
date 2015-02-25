@@ -132,6 +132,8 @@
                             
                                 <li><a class="toctree-l3" href="#middlewarefromhook">middleware.fromHook</a></li>
                             
+                                <li><a class="toctree-l3" href="#middlewarefromconfig">middleware.fromConfig</a></li>
+                            
                                 <li><a class="toctree-l3" href="#middlewarefromshortname">middleware.fromShortName</a></li>
                             
                         
@@ -151,6 +153,16 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../require">client/require.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../packages/shrub-angular-sandbox/client">packages/shrub-angular-sandbox/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../packages/shrub-angular-sandbox">packages/shrub-angular-sandbox/index.litcoffee</a>
                     
                 </li>
             
@@ -276,11 +288,6 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../../packages/shrub-form">packages/shrub-form/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-grunt/angular">packages/shrub-grunt/angular.litcoffee</a>
                     
                 </li>
             
@@ -848,6 +855,17 @@ debugSilly = require('debug') 'shrub-silly:middleware'
 
   middleware
 </code></pre>
+<h2 id="middlewarefromconfig">middleware.fromConfig</h2>
+<p><em>Create a middleware stack from a configuration path.</em></p>
+<pre><code>exports.fromConfig = (path, args...) -&gt;
+
+  configKey = if global? then 'packageSettings' else 'packageConfig'
+
+  exports.fromHook(
+    pkgman.normalizePath path
+    config.get "#{configKey}:#{path}"
+  )
+</code></pre>
 <h2 id="middlewarefromshortname">middleware.fromShortName</h2>
 <p><em>Create a middleware stack from a short name. e.g. "example thing hook".</em></p>
 <p>The short name is converted into log messages, a hook name, and configuration
@@ -879,10 +897,9 @@ debug &quot;User before login middleware loaded.&quot;
 
   middleware = exports.fromHook(
     "#{firstPart}#{i8n.camelize key}Middleware"
-
-    config.get "#{configKey}:#{packageName}:#{
-      i8n.camelize key, true
-    }Middleware"
+</code></pre>
+<h6 id="todo-multiline">TODO: Multiline</h6>
+<pre><code>    config.get "#{configKey}:#{packageName}:#{i8n.camelize key, true}Middleware"
   )
 
   debugSilly "- #{i8n.capitalize shortName} middleware loaded."

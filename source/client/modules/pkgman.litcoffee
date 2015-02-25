@@ -221,7 +221,7 @@ result.*
       i8n = require 'inflection'
 
       parts = for part, i in path.split '/'
-        i8n.camelize(
+        i8n.camelize i8n.underscore(
           part.replace /[^\w]/g, '_'
           0 is i
         )

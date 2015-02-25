@@ -9,9 +9,9 @@ page load.*
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `augmentDirective`.
+#### Implements hook `shrubAngularDirectiveAlter`.
 
-      registrar.registerHook 'augmentDirective', (directive, path) -> [
+      registrar.registerHook 'shrubAngularDirectiveAlter', (directive, path) -> [
 
         '$cacheFactory', '$compile', '$http', '$injector', '$interpolate', '$q', '$rootScope'
         ($cacheFactory, $compile, $http, $injector, $interpolate, $q, $rootScope) ->

@@ -138,6 +138,16 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../shrub-angular-sandbox/client">packages/shrub-angular-sandbox/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-angular-sandbox">packages/shrub-angular-sandbox/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
                     
                 </li>
@@ -259,11 +269,6 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../shrub-form">packages/shrub-form/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../shrub-grunt/angular">packages/shrub-grunt/angular.litcoffee</a>
                     
                 </li>
             
@@ -459,13 +464,13 @@
                         
                             <li class="toctree-l2"><a href="#skin">Skin</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-config">Implements hook config.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubconfigclient">Implements hook shrubConfigClient.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-httpmiddleware">Implements hook httpMiddleware.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubhttpmiddleware">Implements hook shrubHttpMiddleware.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-httpmiddleware_1">Implements hook httpMiddleware.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubhttpmiddleware_1">Implements hook shrubHttpMiddleware.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-packagesettings">Implements hook packageSettings.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer.</a></li>
                             
                                 <li><a class="toctree-l3" href="#activekey">activeKey</a></li>
                             
@@ -743,8 +748,8 @@ pkgman = require 'pkgman'
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h4 id="implements-hook-config">Implements hook <code>config</code>.</h4>
-<pre><code>  registrar.registerHook 'config', -&gt;
+<h4 id="implements-hook-shrubconfigclient">Implements hook <code>shrubConfigClient</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubConfigClient', -&gt;
 
     skinAssets = {}
     for packagePath in pkgman.packagesImplementing 'skinAssets'
@@ -753,8 +758,8 @@ exports.pkgmanRegister = (registrar) -&gt;
     default: config.get 'packageSettings:shrub-skin:default'
     assets: skinAssets
 </code></pre>
-<h4 id="implements-hook-httpmiddleware">Implements hook <code>httpMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'path', 'httpMiddleware', (http) -&gt;
+<h4 id="implements-hook-shrubhttpmiddleware">Implements hook <code>shrubHttpMiddleware</code>.</h4>
+<pre><code>  registrar.registerHook 'path', 'shrubHttpMiddleware', (http) -&gt;
 
     label: 'Skin path handling'
     middleware: [
@@ -768,8 +773,8 @@ would have picked it up already.</p>
         next()
     ]
 </code></pre>
-<h4 id="implements-hook-httpmiddleware_1">Implements hook <code>httpMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'render', 'httpMiddleware', (http) -&gt;
+<h4 id="implements-hook-shrubhttpmiddleware_1">Implements hook <code>shrubHttpMiddleware</code>.</h4>
+<pre><code>  registrar.registerHook 'render', 'shrubHttpMiddleware', (http) -&gt;
 
     label: 'Render skinned page HTML'
     middleware: [
@@ -783,8 +788,8 @@ would have picked it up already.</p>
 
   ]
 </code></pre>
-<h4 id="implements-hook-packagesettings">Implements hook <code>packageSettings</code>.</h4>
-<pre><code>  registrar.registerHook 'packageSettings', -&gt;
+<h4 id="implements-hook-shrubconfigserver">Implements hook <code>shrubConfigServer</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubConfigServer', -&gt;
 </code></pre>
 <p>Default skin.</p>
 <pre><code>    default: 'shrub-skin-strapped'

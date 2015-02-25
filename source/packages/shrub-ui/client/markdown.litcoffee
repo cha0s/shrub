@@ -4,8 +4,8 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `filter`
+#### Implements hook `shrubAngularFilter`
 
-      registrar.registerHook 'filter', -> ->
+      registrar.registerHook 'shrubAngularFilter', -> ->
 
         (input, sanitize = true) -> marked input, sanitize: sanitize

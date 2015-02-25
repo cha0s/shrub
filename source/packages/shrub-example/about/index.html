@@ -138,6 +138,16 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-angular-sandbox/client">packages/shrub-angular-sandbox/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-angular-sandbox">packages/shrub-angular-sandbox/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
                     
                 </li>
@@ -194,7 +204,7 @@
                         
                             <li class="toctree-l2"><a href="#example-about-page">Example - About page</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-httproutes">Implements hook httpRoutes.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubhttproutes">Implements hook shrubHttpRoutes.</a></li>
                             
                         
                         </ul>
@@ -268,11 +278,6 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../shrub-form">packages/shrub-form/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../shrub-grunt/angular">packages/shrub-grunt/angular.litcoffee</a>
                     
                 </li>
             
@@ -723,8 +728,8 @@
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h4 id="implements-hook-httproutes">Implements hook <code>httpRoutes</code>.</h4>
-<pre><code>  registrar.registerHook 'httpRoutes', (http) -&gt;
+<h4 id="implements-hook-shrubhttproutes">Implements hook <code>shrubHttpRoutes</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubHttpRoutes', (http) -&gt;
     routes = []
 </code></pre>
 <p>Provide the README file.</p>

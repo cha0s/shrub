@@ -137,14 +137,32 @@
                     
                 </li>
             
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-angular-sandbox/client">packages/shrub-angular-sandbox/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-angular-sandbox">packages/shrub-angular-sandbox/index.litcoffee</a>
+                    
+                </li>
+            
                 <li class="toctree-l1 current">
                     <a class="current" href=".">packages/shrub-angular/client/index.litcoffee</a>
                     
                         <ul>
                         
-                            <li class="toctree-l2"><a href="#communicate-with-angular-on-the-server">Communicate with Angular on the server</a></li>
+                            <li class="toctree-l2"><a href="#core-client-functionality">Core client functionality.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-apprun">Implements hook appRun.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubangularahrefsanitizationwhitelist">Implements hook shrubAngularAHrefSanitizationWhitelist.</a></li>
+                            
+                                <li><a class="toctree-l3" href="#implements-hook-shrubangularappconfig">Implements hook shrubAngularAppConfig.</a></li>
+                            
+                                <li><a class="toctree-l3" href="#invoke-hook-shrubangularahrefsanitizationwhitelist">Invoke hook shrubAngularAHrefSanitizationWhitelist.</a></li>
+                            
+                                <li><a class="toctree-l3" href="#promisedefer">Promise.defer</a></li>
+                            
+                                <li><a class="toctree-l3" href="#promisewhen">Promise.when</a></li>
                             
                         
                         </ul>
@@ -268,11 +286,6 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../shrub-form">packages/shrub-form/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../shrub-grunt/angular">packages/shrub-grunt/angular.litcoffee</a>
                     
                 </li>
             
@@ -717,19 +730,166 @@
 </div>
           <div role="main">
             <div class="section">
-              <h1 id="communicate-with-angular-on-the-server">Communicate with Angular on the server</h1>
-<pre><code>exports.pkgmanRegister = (registrar) -&gt;
-</code></pre>
-<h4 id="implements-hook-apprun">Implements hook <code>appRun</code>.</h4>
-<p>Hang up any sandbox if we don't need it anymore.</p>
-<pre><code>  registrar.registerHook 'appRun', -&gt; [
-    '$window', 'shrub-rpc'
-    ($window, rpc) -&gt;
-</code></pre>
-<p>Hang up the socket unless it's the local (Node.js) client.</p>
-<pre><code>      unless $window.navigator.userAgent.match /^Node\.js .*$/
-        rpc.call 'shrub-angular/hangup'
+              <h1 id="core-client-functionality">Core client functionality.</h1>
+<p><em>Coordinate various core functionality.</em></p>
+<pre><code>Promise = require 'bluebird'
 
+exports.pkgmanRegister = (registrar) -&gt;
+</code></pre>
+<h4 id="implements-hook-shrubangularahrefsanitizationwhitelist">Implements hook <code>shrubAngularAHrefSanitizationWhitelist</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubAngularAHrefSanitizationWhitelist', -&gt; [
+</code></pre>
+<p>Allow more protocols.</p>
+<pre><code>    '(?:https?|ftp|mailto|tel|file):'
+</code></pre>
+<p>Allow javascript:void(0).</p>
+<pre><code>    'javascript:void(?:%20)*\\((?:%20)*0(?:%20)*\\)'
+  ]
+</code></pre>
+<h4 id="implements-hook-shrubangularappconfig">Implements hook <code>shrubAngularAppConfig</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubAngularAppConfig', -&gt; [
+    '$compileProvider', '$injector', '$provide', '$routeProvider', '$locationProvider', 'shrub-pkgmanProvider'
+    ($compileProvider, $injector, $provide, $routeProvider, $locationProvider, pkgmanProvider) -&gt;
+</code></pre>
+<h4 id="invoke-hook-shrubangularahrefsanitizationwhitelist">Invoke hook <code>shrubAngularAHrefSanitizationWhitelist</code>.</h4>
+<pre><code>      regexes = []
+      for regexes_ in pkgmanProvider.invokeFlat(
+        'shrubAngularAHrefSanitizationWhitelist'
+      )
+        regexes.push regex for regex in regexes_
+
+      $compileProvider.aHrefSanitizationWhitelist new RegExp(
+        "^\s*(?:#{regexes.join '|'})"
+      )
+</code></pre>
+<p>Completely override $q with Bluebird, because it's awesome.</p>
+<h6 id="todo-angular-also-implements-a-private-service-called-q-used-for-animation-we-should-override-that-one-too">TODO: Angular also implements a private service called $$q used for animation. We should override that one, too.</h6>
+<pre><code>      $provide.decorator '$q', [
+        '$rootScope', '$exceptionHandler'
+        ($rootScope, $exceptionHandler) -&gt;
+
+          Promise.onPossiblyUnhandledRejection (error) -&gt;
+</code></pre>
+<p>$timeout and $interval will throw this for cancellation. It's non-notable.</p>
+<pre><code>            return if 'canceled' is error.message
+
+            $exceptionHandler error
+</code></pre>
+<p>Hook Bluebird's schedule up to Angular.</p>
+<pre><code>          Promise.setScheduler (fn) -&gt; $rootScope.$evalAsync fn
+</code></pre>
+<h2 id="promisedefer">Promise.defer</h2>
+<p>See: https://docs.angularjs.org/api/ng/service/$q#the-deferred-api</p>
+<pre><code>          Promise.defer = -&gt;
+            resolve = null
+            reject = null
+
+            promise = new Promise -&gt;
+              resolve = arguments[0]
+              reject = arguments[1]
+
+            promise: promise
+            resolve: resolve
+            reject: reject
+</code></pre>
+<h2 id="promisewhen">Promise.when</h2>
+<p>See: https://docs.angularjs.org/api/ng/service/$q#when</p>
+<pre><code>          Promise.when = (value, handlers...) -&gt;
+            Promise.cast(value).then handlers...
+</code></pre>
+<p>Proxy Promise.all because Angular supports passing in an object where the
+values are promises, and the result is an object keyed with the resolved
+values from the promise.</p>
+<pre><code>          originalAll = Promise.all
+          Promise.all = (promises) -&gt;
+</code></pre>
+<p>Defer to Bluebird unless it's an object.</p>
+<pre><code>            return originalAll promises unless angular.isObject(
+              promises
+            )
+</code></pre>
+<p>Track the keys so we can map the values.</p>
+<pre><code>            promiseKeys = []
+            promiseArray = for key, promise of promises
+              promiseKeys.push key
+              promise
+
+            originalAll(promiseArray).then (results) -&gt;
+              objectResult = {}
+
+              for result, index in results
+                objectResult[promiseKeys[index]] = result
+
+              objectResult
+
+          Promise
+
+      ]
+</code></pre>
+<p>A route is defined like:</p>
+<ul>
+<li>(AnnotatedFunction) <code>controller</code>: An
+  <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>
+  which will be injected.</li>
+<li>(string) <code>template</code>: A template.</li>
+<li>(string) <code>title</code>: The page title.</li>
+</ul>
+<h4 id="invoke-hook-route">Invoke hook <code>route</code>.</h4>
+<p>Allow packages to define routes in the Angular application.</p>
+<pre><code>      routes = {}
+      for path, route of pkgmanProvider.invoke 'route'
+        routes[route.path ? path] = route
+</code></pre>
+<p>Invoke hook <code>routeAlter</code>.</p>
+<p>Allow packages to alter defined routes.</p>
+<pre><code>      $injector.invoke(
+        injectable, null
+        routes: routes
+      ) for injectable in pkgmanProvider.invokeFlat 'routeAlter'
+
+      for path, route of routes
+        do (path, route) -&gt;
+</code></pre>
+<p>Wrap the controller so we can provide some automatic behavior.</p>
+<pre><code>          routeController = route.controller
+          route.controller = [
+            '$controller', '$injector', '$q', '$scope'
+            ($controller, $injector, $q, $scope) -&gt;
+</code></pre>
+<p>Invoke hook <code>routeControllerStart</code>.</p>
+<p>Allow packages to act before a new route
+controller is executed.</p>
+<pre><code>              $injector.invoke(
+                injectable, null
+                $scope: $scope
+                route: route
+              ) for injectable in pkgmanProvider.invokeFlat(
+                'routeControllerStart'
+              )
+
+              unless routeController?
+                return $scope.$emit 'shrub.core.routeRendered'
+</code></pre>
+<p>Controllers may return a promise, so wait until any returned value fulfills.
+If it's not a promise, this will be in the next tick.</p>
+<pre><code>              $q.when($injector.invoke(
+                routeController, null
+                $scope: $scope
+                route: route
+              )).then(-&gt; $scope.$emit 'shrub.core.routeRendered').done()
+
+          ]
+
+          route.template ?= ' '
+</code></pre>
+<p>Register the path into Angular.</p>
+<pre><code>          $routeProvider.when "/#{route.path ? path}", route
+</code></pre>
+<p>Create a unique entry point.</p>
+<pre><code>      $routeProvider.when '/shrub-angular-entry-point', {}
+</code></pre>
+<p>Turn on HTML5 mode: "Real" URLs.</p>
+<pre><code>      $locationProvider.html5Mode true
   ]
 </code></pre>
 
@@ -742,7 +902,7 @@
         <a href=".." class="btn btn-neutral float-right" title="packages/shrub-angular/index.litcoffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../../../client/require" class="btn btn-neutral" title="client/require.litcoffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../shrub-angular-sandbox" class="btn btn-neutral" title="packages/shrub-angular-sandbox/index.litcoffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -770,7 +930,7 @@
         
             <a class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
         
-      <span><a href="../../../client/require" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      <span><a href="../../shrub-angular-sandbox" style="color: #fcfcfc;">&laquo; Previous</a></span>
       <span style="margin-left: 15px"><a href=".." style="color: #fcfcfc">Next &raquo;</a></span>
     </span>
 </div>

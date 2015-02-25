@@ -138,6 +138,16 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-angular-sandbox/client">packages/shrub-angular-sandbox/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-angular-sandbox">packages/shrub-angular-sandbox/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
                     
                 </li>
@@ -259,11 +269,6 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../shrub-form">packages/shrub-form/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../shrub-grunt/angular">packages/shrub-grunt/angular.litcoffee</a>
                     
                 </li>
             
@@ -758,9 +763,9 @@ exports.pkgmanRegister = (registrar) -&gt;
 
 exports.initialize = -&gt;
 </code></pre>
-<h4 id="invoke-hook-collections">Invoke hook <code>collections</code>.</h4>
+<h4 id="invoke-hook-shrubormcollections">Invoke hook <code>shrubOrmCollections</code>.</h4>
 <pre><code>  collections_ = {}
-  for collectionList in pkgman.invokeFlat 'collections'
+  for collectionList in pkgman.invokeFlat 'shrubOrmCollections'
     for identity, collection of collectionList
 </code></pre>
 <p>Collection defaults.</p>
@@ -782,8 +787,8 @@ exports.initialize = -&gt;
 
         model
 </code></pre>
-<h4 id="invoke-hook-collectionsalter">Invoke hook <code>collectionsAlter</code>.</h4>
-<pre><code>  pkgman.invoke 'collectionsAlter', collections_
+<h4 id="invoke-hook-shrubormcollectionsalter">Invoke hook <code>shrubOrmCollectionsAlter</code>.</h4>
+<pre><code>  pkgman.invoke 'shrubOrmCollectionsAlter', collections_
 
   collections = collections_
 </code></pre>

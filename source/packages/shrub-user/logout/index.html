@@ -138,6 +138,16 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-angular-sandbox/client">packages/shrub-angular-sandbox/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-angular-sandbox">packages/shrub-angular-sandbox/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
                     
                 </li>
@@ -259,11 +269,6 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../shrub-form">packages/shrub-form/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../shrub-grunt/angular">packages/shrub-grunt/angular.litcoffee</a>
                     
                 </li>
             
@@ -631,7 +636,7 @@
                             
                                 <li><a class="toctree-l3" href="#implements-hook-rpcroutes">Implements hook rpcRoutes.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-bootstrapmiddleware">Implements hook bootstrapMiddleware.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubcorebootstrapmiddleware">Implements hook shrubCoreBootstrapMiddleware.</a></li>
                             
                                 <li><a class="toctree-l3" href="#invoke-hook-userbeforelogoutmiddleware">Invoke hook userBeforeLogoutMiddleware.</a></li>
                             
@@ -740,8 +745,8 @@
 
     return routes
 </code></pre>
-<h4 id="implements-hook-bootstrapmiddleware">Implements hook <code>bootstrapMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'bootstrapMiddleware', -&gt;
+<h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <code>shrubCoreBootstrapMiddleware</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubCoreBootstrapMiddleware', -&gt;
 
     Promise = require 'bluebird'
 

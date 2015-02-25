@@ -14,15 +14,15 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `preBootstrap`.
+#### Implements hook `shrubCorePreBootstrap`.
 
-      registrar.registerHook 'preBootstrap', ->
+      registrar.registerHook 'shrubCorePreBootstrap', ->
 
         Waterline = require 'waterline'
 
-#### Implements hook `bootstrapMiddleware`.
+#### Implements hook `shrubCoreBootstrapMiddleware`.
 
-      registrar.registerHook 'bootstrapMiddleware', ->
+      registrar.registerHook 'shrubCoreBootstrapMiddleware', ->
 
         waterline = new Waterline()
 
@@ -33,9 +33,9 @@
 
         ]
 
-#### Implements hook `gruntConfig`.
+#### Implements hook `shrubGruntConfig`.
 
-      registrar.registerHook 'gruntConfig', (gruntConfig) ->
+      registrar.registerHook 'shrubGruntConfig', (gruntConfig) ->
 
         gruntConfig.configureTask 'copy', 'shrub-orm', files: [
           src: '**/*'
@@ -59,9 +59,9 @@
 
         gruntConfig.registerTask 'build', ['build:shrub-orm']
 
-#### Implements hook `packageSettings`.
+#### Implements hook `shrubConfigServer`.
 
-      registrar.registerHook 'packageSettings', ->
+      registrar.registerHook 'shrubConfigServer', ->
 
 The available adapters. This is a list of module names. We provide sails-redis
 by default.
@@ -110,10 +110,10 @@ Provide ORM to the REPL context.
 
       waterlineConfig.connections = config_.connections
 
-#### Invoke hook `collections`.
+#### Invoke hook `shrubOrmCollections`.
 
       collections_ = {}
-      for collectionList in pkgman.invokeFlat 'collections', waterline
+      for collectionList in pkgman.invokeFlat 'shrubOrmCollections', waterline
         for identity, collection of collectionList
 
 Set collection defaults.
@@ -145,9 +145,9 @@ sane API for this.
 
             new @_model @_schema.cleanValues @_transformer.serialize values
 
-#### Invoke hook `collectionsAlter`.
+#### Invoke hook `shrubOrmCollectionsAlter`.
 
-      pkgman.invoke 'collectionsAlter', collections_, waterline
+      pkgman.invoke 'shrubOrmCollectionsAlter', collections_, waterline
 
 Load the collections into Waterline.
 

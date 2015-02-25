@@ -138,6 +138,16 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../shrub-angular-sandbox/client">packages/shrub-angular-sandbox/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-angular-sandbox">packages/shrub-angular-sandbox/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
                     
                 </li>
@@ -214,7 +224,7 @@
                         
                             <li class="toctree-l2"><a href="#example-package">Example package</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-notificationqueues">Implements hook notificationQueues.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubuinotificationqueues">Implements hook shrubUiNotificationQueues.</a></li>
                             
                         
                         </ul>
@@ -268,11 +278,6 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../shrub-form">packages/shrub-form/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../shrub-grunt/angular">packages/shrub-grunt/angular.litcoffee</a>
                     
                 </li>
             
@@ -720,9 +725,9 @@
               <h1 id="example-package">Example package</h1>
 <pre><code>exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h4 id="implements-hook-notificationqueues">Implements hook <code>notificationQueues</code>.</h4>
+<h4 id="implements-hook-shrubuinotificationqueues">Implements hook <code>shrubUiNotificationQueues</code>.</h4>
 <p>Implement the <code>general</code> queue, used to show some notifications.</p>
-<pre><code>  registrar.registerHook 'notificationQueues', -&gt;
+<pre><code>  registrar.registerHook 'shrubUiNotificationQueues', -&gt;
 
     general:
 

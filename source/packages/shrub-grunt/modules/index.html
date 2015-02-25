@@ -138,6 +138,16 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-angular-sandbox/client">packages/shrub-angular-sandbox/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-angular-sandbox">packages/shrub-angular-sandbox/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
                     
                 </li>
@@ -263,11 +273,6 @@
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../angular">packages/shrub-grunt/angular.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
                     <a class="" href="../dox/dynamic">packages/shrub-grunt/dox/dynamic.litcoffee</a>
                     
                 </li>
@@ -294,7 +299,7 @@
                         
                             <li class="toctree-l2"><a href="#grunt-build-process-modules">Grunt build process - Modules</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-gruntconfig">Implements hook gruntConfig.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubgruntconfig">Implements hook shrubGruntConfig.</a></li>
                             
                         
                         </ul>
@@ -720,8 +725,8 @@
               <h1 id="grunt-build-process-modules">Grunt build process - Modules</h1>
 <pre><code>exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h4 id="implements-hook-gruntconfig">Implements hook <code>gruntConfig</code>.</h4>
-<pre><code>  registrar.registerHook 'gruntConfig', (gruntConfig) -&gt;
+<h4 id="implements-hook-shrubgruntconfig">Implements hook <code>shrubGruntConfig</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubGruntConfig', (gruntConfig) -&gt;
 
     gruntConfig.configureTask 'coffee', 'modules', files: [
       cwd: 'client'

@@ -2,9 +2,9 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `gruntConfig`.
+#### Implements hook `shrubGruntConfig`.
 
-      registrar.registerHook 'gruntConfig', (gruntConfig, grunt) ->
+      registrar.registerHook 'shrubGruntConfig', (gruntConfig, grunt) ->
 
         {fork, spawn} = require 'child_process'
 

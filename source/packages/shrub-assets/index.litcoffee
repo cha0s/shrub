@@ -8,15 +8,9 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `clearCaches`.
+#### Implements hook `shrubAssetsMiddleware`.
 
-      registrar.registerHook 'clearCaches', ->
-
-        assets = null
-
-#### Implements hook `assetMiddleware`.
-
-      registrar.registerHook 'assetMiddleware', ->
+      registrar.registerHook 'shrubAssetsMiddleware', ->
 
         label: 'Shrub'
         middleware: [
@@ -34,9 +28,9 @@
 
         ]
 
-#### Implements hook `gruntConfig`.
+#### Implements hook `shrubGruntConfig`.
 
-      registrar.registerHook 'gruntConfig', (gruntConfig) ->
+      registrar.registerHook 'shrubGruntConfig', (gruntConfig) ->
 
         gruntConfig.configureTask 'copy', 'shrub-assets', files: [
           src: '**/*'
@@ -60,11 +54,11 @@
 
         gruntConfig.registerTask 'build', ['build:shrub-assets']
 
-#### Implements hook `packageSettings`.
+#### Implements hook `shrubConfigServer`.
 
-      registrar.registerHook 'packageSettings', ->
+      registrar.registerHook 'shrubConfigServer', ->
 
-        assetMiddleware: [
+        middleware: [
           'shrub-assets/jquery'
           'shrub-socket-socket.io'
           'shrub-assets/angular'
@@ -88,17 +82,16 @@
 
       assets = scripts: [], styleSheets: []
 
-#### Invoke hook `assetMiddleware`.
+#### Invoke hook `shrubAssetsMiddleware`.
 
 Invoked to gather script assets for requests.
 
       debug '- Loading asset middleware...'
-      assetMiddleware = middleware.fromHook(
-        'assetMiddleware'
-        config.get 'packageSettings:shrub-assets:assetMiddleware'
-      )
+
+      assetsMiddleware = middleware.fromConfig 'shrub-assets:middleware'
+
       debug '- Asset middleware loaded.'
 
-      assetMiddleware.dispatch assets, (error) -> throw error if error?
+      assetsMiddleware.dispatch assets, (error) -> throw error if error?
 
       assets

@@ -4,9 +4,9 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `assetMiddleware`.
+#### Implements hook `shrubAssetsMiddleware`.
 
-      registrar.registerHook 'assetMiddleware', ->
+      registrar.registerHook 'shrubAssetsMiddleware', ->
 
         label: 'Livereload'
         middleware: [
@@ -21,17 +21,17 @@
 
         ]
 
-#### Implements hook `configAlter`.
+#### Implements hook `shrubConfigClientAlter`.
 
-      registrar.registerHook 'configAlter', (req, config_) ->
+      registrar.registerHook 'shrubConfigClientAlter', (req, config_) ->
         return unless req.grunt?
 
         config_.set 'packageConfig:shrub-socket', manager: module: 'shrub-socket/dummy'
         config_.set 'packageConfig:shrub-user', name: 'Anonymous'
 
-#### Implements hook `gruntConfig`.
+#### Implements hook `shrubGruntConfig`.
 
-      registrar.registerHook 'gruntConfig', (gruntConfig, grunt) ->
+      registrar.registerHook 'shrubGruntConfig', (gruntConfig, grunt) ->
 
         gruntConfig.configureTask 'clean', 'shrub', [
           'app'
@@ -109,5 +109,5 @@ Fork it.
         ]
 
       registrar.recur [
-        'angular', 'dox', 'lint', 'modules', 'tests'
+        'dox', 'lint', 'modules', 'tests'
       ]

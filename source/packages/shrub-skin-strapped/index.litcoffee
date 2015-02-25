@@ -8,9 +8,9 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `mailHtml`.
+#### Implements hook `shrubNodemailerHtml`.
 
-      registrar.registerHook 'mailHtml', ($body, html, $) ->
+      registrar.registerHook 'shrubNodemailerHtml', ($body, html, $) ->
 
         $('.container > .main', $body).html html
 
@@ -30,9 +30,9 @@ Add our future-compiled LESS style sheets.
         assets.styleSheets.default.push 'css/style.css'
         assets.styleSheets.production.push 'css/style.css'
 
-#### Implements hook `gruntConfig`.
+#### Implements hook `shrubGruntConfig`.
 
-      registrar.registerHook 'gruntConfig', (gruntConfig) ->
+      registrar.registerHook 'shrubGruntConfig', (gruntConfig) ->
 
         gruntConfig.less ?= {}
 

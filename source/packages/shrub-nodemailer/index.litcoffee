@@ -18,9 +18,9 @@ nodemailer transport. Defaults to sendmail.
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `preBootstrap`.
+#### Implements hook `shrubCorePreBootstrap`.
 
-      registrar.registerHook 'preBootstrap', ->
+      registrar.registerHook 'shrubCorePreBootstrap', ->
 
         Promise = require 'bluebird'
 
@@ -28,9 +28,9 @@ nodemailer transport. Defaults to sendmail.
 
         skin = require 'shrub-skin'
 
-#### Implements hook `bootstrapMiddleware`.
+#### Implements hook `shrubCoreBootstrapMiddleware`.
 
-      registrar.registerHook 'bootstrapMiddleware', ->
+      registrar.registerHook 'shrubCoreBootstrapMiddleware', ->
 
         nodemailer = require 'nodemailer'
 
@@ -71,9 +71,9 @@ Augment it with functionality we'll find useful and convenient.
 
         ]
 
-#### Implements hook `packageSettings`.
+#### Implements hook `shrubConfigServer`.
 
-      registrar.registerHook 'packageSettings', ->
+      registrar.registerHook 'shrubConfigServer', ->
 
 Default site email information.
 
@@ -265,12 +265,12 @@ Clone the body and insert the HTML into the main application area.
 
         $body = $('body').clone()
 
-#### Invoke hook `mailHtml`.
+#### Invoke hook `shrubNodemailerHtml`.
 
 Let the skin manage the mail HTML.
 
         pkgman = require 'pkgman'
-        pkgman.invokePackage skin.activeKey(), 'mailHtml', $body, html, $
+        pkgman.invokePackage skin.activeKey(), 'shrubNodemailerHtml', $body, html, $
 
 Inject all the styles inline.
 

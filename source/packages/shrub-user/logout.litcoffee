@@ -18,9 +18,9 @@ Log out.
 
         return routes
 
-#### Implements hook `bootstrapMiddleware`.
+#### Implements hook `shrubCoreBootstrapMiddleware`.
 
-      registrar.registerHook 'bootstrapMiddleware', ->
+      registrar.registerHook 'shrubCoreBootstrapMiddleware', ->
 
         Promise = require 'bluebird'
 

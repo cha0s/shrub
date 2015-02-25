@@ -138,6 +138,16 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-angular-sandbox/client">packages/shrub-angular-sandbox/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-angular-sandbox">packages/shrub-angular-sandbox/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
                     
                 </li>
@@ -259,11 +269,6 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../shrub-form">packages/shrub-form/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../shrub-grunt/angular">packages/shrub-grunt/angular.litcoffee</a>
                     
                 </li>
             
@@ -634,7 +639,7 @@
                         
                             <li class="toctree-l2"><a href="#user-registration">User - Registration</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-prebootstrap">Implements hook preBootstrap.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubcoreprebootstrap">Implements hook shrubCorePreBootstrap.</a></li>
                             
                                 <li><a class="toctree-l3" href="#implements-hook-rpcroutes">Implements hook rpcRoutes.</a></li>
                             
@@ -726,8 +731,8 @@
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h4 id="implements-hook-prebootstrap">Implements hook <code>preBootstrap</code>.</h4>
-<pre><code>  registrar.registerHook 'preBootstrap', -&gt;
+<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <code>shrubCorePreBootstrap</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubCorePreBootstrap', -&gt;
 
     orm = require 'shrub-orm'
 </code></pre>

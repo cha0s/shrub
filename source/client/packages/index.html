@@ -134,13 +134,13 @@
                         
                             <li class="toctree-l2"><a href="#package-management-for-angular">Package management for Angular</a></li>
                             
-                                <li><a class="toctree-l3" href="#invoke-hook-controller">Invoke hook controller.</a></li>
+                                <li><a class="toctree-l3" href="#invoke-hook-shrubangularcontroller">Invoke hook shrubAngularController.</a></li>
                             
-                                <li><a class="toctree-l3" href="#invoke-hook-augmentdirective">Invoke hook augmentDirective.</a></li>
+                                <li><a class="toctree-l3" href="#invoke-hook-shrubangulardirectivealter">Invoke hook shrubAngularDirectiveAlter.</a></li>
                             
-                                <li><a class="toctree-l3" href="#invoke-hook-directive">Invoke hook directive.</a></li>
+                                <li><a class="toctree-l3" href="#invoke-hook-shrubangulardirective">Invoke hook shrubAngularDirective.</a></li>
                             
-                                <li><a class="toctree-l3" href="#invoke-hook-filter">Invoke hook filter.</a></li>
+                                <li><a class="toctree-l3" href="#invoke-hook-shrubangularfilter">Invoke hook shrubAngularFilter.</a></li>
                             
                                 <li><a class="toctree-l3" href="#invoke-hook-provider">Invoke hook provider.</a></li>
                             
@@ -153,6 +153,16 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../require">client/require.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../packages/shrub-angular-sandbox/client">packages/shrub-angular-sandbox/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../packages/shrub-angular-sandbox">packages/shrub-angular-sandbox/index.litcoffee</a>
                     
                 </li>
             
@@ -278,11 +288,6 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../packages/shrub-form">packages/shrub-form/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../packages/shrub-grunt/angular">packages/shrub-grunt/angular.litcoffee</a>
                     
                 </li>
             
@@ -748,12 +753,10 @@ are gathered and registered into Angular.</em></p>
       config = require 'config'
       debug = require('debug') 'shrub:angular'
 </code></pre>
-<h4 id="invoke-hook-controller">Invoke hook <code>controller</code>.</h4>
-<p>Allows packages to define Angular controllers. Implementations should return an
-<a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>.</p>
+<h4 id="invoke-hook-shrubangularcontroller">Invoke hook <code>shrubAngularController</code>.</h4>
 <pre><code>      debug 'Registering controllers...'
 
-      for path, injected of pkgman.invoke 'controller'
+      for path, injected of pkgman.invoke 'shrubAngularController'
         controllerName = pkgman.normalizePath path
         debug controllerName
         $controllerProvider.register controllerName, injected
@@ -802,12 +805,9 @@ include the controller automatically.</p>
         if angular.isObject directive.scope
           directive.$$isolateBindings = isolateBindingsFor directive
 </code></pre>
-<h4 id="invoke-hook-augmentdirective">Invoke hook <code>augmentDirective</code>.</h4>
-<p>Allows packages to augment the directives defined by packages. One example is
-the automatic relinking functionality implemented by
-<a href="../../../../packages/shrub-skin/client/index.coffee#L12">shrub-skin</a>.</p>
+<h4 id="invoke-hook-shrubangulardirectivealter">Invoke hook <code>shrubAngularDirectiveAlter</code>.</h4>
 <pre><code>        for injectedDirective in pkgman.invokeFlat(
-          'augmentDirective', directive, path
+          'shrubAngularDirectiveAlter', directive, path
         )
           $injector.invoke injectedDirective
 </code></pre>
@@ -843,10 +843,8 @@ does.</p>
 
         return bindings
 </code></pre>
-<h4 id="invoke-hook-directive">Invoke hook <code>directive</code>.</h4>
-<p>Allows packages to define Angular directives. Implementations should return an
-<a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>.</p>
-<pre><code>      for path, injected of pkgman.invoke 'directive'
+<h4 id="invoke-hook-shrubangulardirective">Invoke hook <code>shrubAngularDirective</code>.</h4>
+<pre><code>      for path, injected of pkgman.invoke 'shrubAngularDirective'
         do (path, injected) -&gt;
           directiveName = pkgman.normalizePath path
           debug directiveName
@@ -865,10 +863,8 @@ It will run over the previous definition, ensuring everything works nicely.</p>
 
       debug 'Registering filters...'
 </code></pre>
-<h4 id="invoke-hook-filter">Invoke hook <code>filter</code>.</h4>
-<p>Allows packages to define Angular filters. Implementations should return a
-function.</p>
-<pre><code>      for path, injected of pkgman.invoke 'filter'
+<h4 id="invoke-hook-shrubangularfilter">Invoke hook <code>shrubAngularFilter</code>.</h4>
+<pre><code>      for path, injected of pkgman.invoke 'shrubAngularFilter'
         filterName = pkgman.normalizePath path
         debug filterName
         $filterProvider.register filterName, injected
@@ -876,8 +872,6 @@ function.</p>
       debug 'Filters registered.'
 </code></pre>
 <h4 id="invoke-hook-provider">Invoke hook <code>provider</code>.</h4>
-<p>Allows packages to define Angular providers. Implementations should return an
-<a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>.</p>
 <pre><code>      debug 'Registering providers...'
 
       for path, provider of pkgman.invoke 'provider'
@@ -887,8 +881,6 @@ function.</p>
       debug 'Providers registered.'
 </code></pre>
 <h4 id="invoke-hook-service">Invoke hook <code>service</code>.</h4>
-<p>Allows packages to define Angular services. Implementations should return an
-<a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>.</p>
 <pre><code>      debug 'Registering services...'
 
       for path, injected of pkgman.invoke 'service'

@@ -7,9 +7,9 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `preBootstrap`.
+#### Implements hook `shrubCorePreBootstrap`.
 
-      registrar.registerHook 'preBootstrap', ->
+      registrar.registerHook 'shrubCorePreBootstrap', ->
 
         passport = require 'passport'
         Promise = require 'bluebird'
@@ -70,9 +70,9 @@ Join a channel for the username.
 
         return routes
 
-#### Implements hook `bootstrapMiddleware`.
+#### Implements hook `shrubCoreBootstrapMiddleware`.
 
-      registrar.registerHook 'bootstrapMiddleware', ->
+      registrar.registerHook 'shrubCoreBootstrapMiddleware', ->
 
         orm = require 'shrub-orm'
 

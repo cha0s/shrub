@@ -2,9 +2,9 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `controller`.
+#### Implements hook `shrubAngularController`.
 
-      registrar.registerHook 'controller', -> [
+      registrar.registerHook 'shrubAngularController', -> [
 
         class ListItemController
 
@@ -29,9 +29,9 @@ Child list?
 
       ]
 
-#### Implements hook `directive`.
+#### Implements hook `shrubAngularDirective`.
 
-      registrar.registerHook 'directive', -> [
+      registrar.registerHook 'shrubAngularDirective', -> [
 
         ->
 

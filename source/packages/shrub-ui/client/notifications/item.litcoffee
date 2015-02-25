@@ -2,9 +2,9 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `directive`.
+#### Implements hook `shrubAngularDirective`.
 
-      registrar.registerHook 'directive', -> [
+      registrar.registerHook 'shrubAngularDirective', -> [
         'shrub-ui/notifications', 'shrub-rpc'
         (notifications, rpc) ->
 

@@ -138,6 +138,16 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../shrub-angular-sandbox/client">packages/shrub-angular-sandbox/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-angular-sandbox">packages/shrub-angular-sandbox/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
                     
                 </li>
@@ -259,11 +269,6 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../shrub-form">packages/shrub-form/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../shrub-grunt/angular">packages/shrub-grunt/angular.litcoffee</a>
                     
                 </li>
             
@@ -619,17 +624,17 @@
                         
                             <li class="toctree-l2"><a href="#user">User</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-prebootstrap">Implements hook preBootstrap.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubcoreprebootstrap">Implements hook shrubCorePreBootstrap.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-config">Implements hook config.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubconfigclient">Implements hook shrubConfigClient.</a></li>
                             
                                 <li><a class="toctree-l3" href="#implements-hook-rpcroutefinished">Implements hook rpcRouteFinished.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-fingerprint">Implements hook fingerprint.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubauditfingerprint">Implements hook shrubAuditFingerprint.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-httpmiddleware">Implements hook httpMiddleware.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubhttpmiddleware">Implements hook shrubHttpMiddleware.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-collections">Implements hook collections.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubormcollections">Implements hook shrubOrmCollections.</a></li>
                             
                                 <li><a class="toctree-l3" href="#userregister">User#register</a></li>
                             
@@ -742,16 +747,16 @@ clientModule = require './client'
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h4 id="implements-hook-prebootstrap">Implements hook <code>preBootstrap</code>.</h4>
-<pre><code>  registrar.registerHook 'preBootstrap', -&gt;
+<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <code>shrubCorePreBootstrap</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubCorePreBootstrap', -&gt;
 
     passport = require 'passport'
     Promise = require 'bluebird'
 
     orm = require 'shrub-orm'
 </code></pre>
-<h4 id="implements-hook-config">Implements hook <code>config</code>.</h4>
-<pre><code>  registrar.registerHook 'config', (req) -&gt;
+<h4 id="implements-hook-shrubconfigclient">Implements hook <code>shrubConfigClient</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubConfigClient', (req) -&gt;
 </code></pre>
 <p>Send a redacted version of the request user.</p>
 <pre><code>    req.user.redactFor req.user if req.user?
@@ -766,8 +771,8 @@ exports.pkgmanRegister = (registrar) -&gt;
 <p>Propagate changes back up to the original request.</p>
 <pre><code>      req.user = routeReq.user
 </code></pre>
-<h4 id="implements-hook-fingerprint">Implements hook <code>fingerprint</code>.</h4>
-<pre><code>  registrar.registerHook 'fingerprint', (req) -&gt;
+<h4 id="implements-hook-shrubauditfingerprint">Implements hook <code>shrubAuditFingerprint</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubAuditFingerprint', (req) -&gt;
 </code></pre>
 <p>User (ID).</p>
 <pre><code>    user: if req?.user?.id? then req.user.id
@@ -783,8 +788,8 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     @user.populateAll()
 </code></pre>
-<h4 id="implements-hook-httpmiddleware">Implements hook <code>httpMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'httpMiddleware', -&gt;
+<h4 id="implements-hook-shrubhttpmiddleware">Implements hook <code>shrubHttpMiddleware</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubHttpMiddleware', -&gt;
 
     label: 'Load user using passport'
     middleware: [
@@ -809,8 +814,8 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     ]
 </code></pre>
-<h4 id="implements-hook-collections">Implements hook <code>collections</code>.</h4>
-<pre><code>  registrar.registerHook 'collections', -&gt;
+<h4 id="implements-hook-shrubormcollections">Implements hook <code>shrubOrmCollections</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubOrmCollections', -&gt;
 
     crypto = require 'server/crypto'
 
@@ -819,7 +824,7 @@ exports.pkgmanRegister = (registrar) -&gt;
       cb()
 </code></pre>
 <p>Invoke the client hook implementation.</p>
-<pre><code>    collections = clientModule.collections()
+<pre><code>    collections = clientModule.shrubOrmCollections()
 
     {
       'shrub-group': Group
@@ -984,9 +989,9 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     collections
 </code></pre>
-<h4 id="implements-hook-collectionsalter">Implements hook <code>collectionsAlter</code>.</h4>
-<pre><code>  registrar.registerHook 'collectionsAlter', (collections) -&gt;
-    clientModule.collectionsAlter collections
+<h4 id="implements-hook-shrubormcollectionsalter">Implements hook <code>shrubOrmCollectionsAlter</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubOrmCollectionsAlter', (collections) -&gt;
+    clientModule.shrubOrmCollectionsAlter collections
 
     for identity, collection of collections
       do (identity, collection) -&gt;
@@ -1001,8 +1006,8 @@ exports.pkgmanRegister = (registrar) -&gt;
               redactor.call redacted, user
           ).then -&gt; redacted
 </code></pre>
-<h4 id="implements-hook-packagesettings">Implements hook <code>packageSettings</code>.</h4>
-<pre><code>  registrar.registerHook 'packageSettings', -&gt;
+<h4 id="implements-hook-shrubconfigserver">Implements hook <code>shrubConfigServer</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubConfigServer', -&gt;
 
     beforeLoginMiddleware: []
 

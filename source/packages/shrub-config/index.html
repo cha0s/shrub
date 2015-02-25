@@ -138,6 +138,16 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../shrub-angular-sandbox/client">packages/shrub-angular-sandbox/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-angular-sandbox">packages/shrub-angular-sandbox/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
                     
                 </li>
@@ -179,9 +189,9 @@
                         
                             <li class="toctree-l2"><a href="#configuration">Configuration</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-assetmiddleware">Implements hook assetMiddleware.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubassetsmiddleware">Implements hook shrubAssetsMiddleware.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-httpmiddleware">Implements hook httpMiddleware.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubhttpmiddleware">Implements hook shrubHttpMiddleware.</a></li>
                             
                                 <li><a class="toctree-l3" href="#shrub-configrenderpackageconfig">shrub-config.renderPackageConfig</a></li>
                             
@@ -272,11 +282,6 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../shrub-form">packages/shrub-form/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../shrub-grunt/angular">packages/shrub-grunt/angular.litcoffee</a>
                     
                 </li>
             
@@ -734,8 +739,8 @@ pkgman = require 'pkgman'
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h4 id="implements-hook-assetmiddleware">Implements hook <code>assetMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'assetMiddleware', -&gt;
+<h4 id="implements-hook-shrubassetsmiddleware">Implements hook <code>shrubAssetsMiddleware</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubAssetsMiddleware', -&gt;
 
     label: 'Config'
     middleware: [
@@ -748,8 +753,8 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     ]
 </code></pre>
-<h4 id="implements-hook-httpmiddleware">Implements hook <code>httpMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'httpMiddleware', (http) -&gt;
+<h4 id="implements-hook-shrubhttpmiddleware">Implements hook <code>shrubHttpMiddleware</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubHttpMiddleware', (http) -&gt;
 
     label: 'Serve package configuration'
     middleware: [
@@ -777,10 +782,10 @@ exports.pkgmanRegister = (registrar) -&gt;
 <p>USe a client's request object to render configuration.</p>
 <pre><code>exports.renderPackageConfig = (req) -&gt;
 </code></pre>
-<h4 id="invoke-hook-config">Invoke hook <code>config</code>.</h4>
+<h4 id="invoke-hook-shrubconfigclient">Invoke hook <code>shrubConfigClient</code>.</h4>
 <p>Allows packages to specify configuration that will be sent to the client.
 Implementations may return an object, or a promise that resolves to an object.</p>
-<pre><code>  subconfigs = pkgman.invoke 'config', req
+<pre><code>  subconfigs = pkgman.invoke 'shrubConfigClient', req
 
   Promise.all(
 
@@ -804,8 +809,8 @@ Implementations may return an object, or a promise that resolves to an object.</
 <h6 id="todo-multiline">TODO: Multiline</h6>
 <pre><code>        config_.set "packageConfig:#{path.replace /\//g, ':'}:#{key.replace /\//g, ':'}", value
 </code></pre>
-<h4 id="invoke-hook-configalter">Invoke hook <code>configAlter</code>.</h4>
-<pre><code>    pkgman.invoke 'configAlter', req, config_
+<h4 id="invoke-hook-shrubconfigclientalter">Invoke hook <code>shrubConfigClientAlter</code>.</h4>
+<pre><code>    pkgman.invoke 'shrubConfigClientAlter', req, config_
 </code></pre>
 <p>Format the configuration to look nice.</p>
 <pre><code>    prettyPrintConfig = -&gt;

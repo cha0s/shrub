@@ -10,9 +10,9 @@ The socket manager.
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `config`.
+#### Implements hook `shrubConfigClient`.
 
-      registrar.registerHook 'config', ->
+      registrar.registerHook 'shrubConfigClient', ->
 
 If we're doing end-to-end testing, mock out the socket manager.
 
@@ -26,9 +26,9 @@ If we're doing end-to-end testing, mock out the socket manager.
 
         manager: module: socketModule
 
-#### Implements hook `bootstrapMiddleware`.
+#### Implements hook `shrubCoreBootstrapMiddleware`.
 
-      registrar.registerHook 'bootstrapMiddleware', ->
+      registrar.registerHook 'shrubCoreBootstrapMiddleware', ->
 
         label: 'Socket server'
         middleware: [
@@ -49,9 +49,9 @@ Spin up the socket server, and have it listen on the HTTP server.
 
         ]
 
-#### Implements hook `packageSettings`.
+#### Implements hook `shrubConfigServer`.
 
-      registrar.registerHook 'packageSettings', ->
+      registrar.registerHook 'shrubConfigServer', ->
 
 Middleware stack dispatched to authorize or reject a socket connection.
 

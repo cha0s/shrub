@@ -148,6 +148,16 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../source/packages/shrub-angular-sandbox/client">packages/shrub-angular-sandbox/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../source/packages/shrub-angular-sandbox">packages/shrub-angular-sandbox/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../source/packages/shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
                     
                 </li>
@@ -269,11 +279,6 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../source/packages/shrub-form">packages/shrub-form/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../source/packages/shrub-grunt/angular">packages/shrub-grunt/angular.litcoffee</a>
                     
                 </li>
             
@@ -720,9 +725,11 @@
             <div class="section">
               <p>This page explains various concepts and conventions used in Shrub.</p>
 <h1 id="middleware-hook-specification">Middleware hook specification</h1>
-<p>Shrub invokes various hooks (<a href="../../hooks#httpmiddleware"><code>httpMiddleware</code></a>,
-<a href="../../hooks#bootstrapmiddleware"><code>bootstrapMiddleware</code></a>, and more...) which allow
-packages to define middleware to be dispatched during various processes.</p>
+<p>Shrub invokes various hooks
+(<a href="../../hooks#shrubhttpmiddleware"><code>shrubHttpMiddleware</code></a>,
+<a href="../../hooks#shrubbootstrapmiddleware"><code>shrubbootstrapMiddleware</code></a>, and more...)
+which allow packages to define middleware to be dispatched during various
+processes.</p>
 <p>Middleware hooks return a specification that looks like:</p>
 <pre><code class="javascript">{
   label: 'What the middleware functions do',

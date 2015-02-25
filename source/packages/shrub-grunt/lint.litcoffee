@@ -2,9 +2,9 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `gruntConfig`.
+#### Implements hook `shrubGruntConfig`.
 
-      registrar.registerHook 'gruntConfig', (gruntConfig) ->
+      registrar.registerHook 'shrubGruntConfig', (gruntConfig) ->
 
         gruntConfig.configureTask(
           'coffeelint', 'shrub'

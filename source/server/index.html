@@ -138,6 +138,16 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../packages/shrub-angular-sandbox/client">packages/shrub-angular-sandbox/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../packages/shrub-angular-sandbox">packages/shrub-angular-sandbox/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../packages/shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
                     
                 </li>
@@ -259,11 +269,6 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../packages/shrub-form">packages/shrub-form/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../packages/shrub-grunt/angular">packages/shrub-grunt/angular.litcoffee</a>
                     
                 </li>
             
@@ -649,9 +654,9 @@
                         
                             <li class="toctree-l2"><a href="#server-application-entry-point">Server application entry point</a></li>
                             
-                                <li><a class="toctree-l3" href="#invoke-hook-prebootstrap">Invoke hook preBootstrap.</a></li>
+                                <li><a class="toctree-l3" href="#invoke-hook-shrubcoreprebootstrap">Invoke hook shrubCorePreBootstrap.</a></li>
                             
-                                <li><a class="toctree-l3" href="#invoke-hook-bootstrapmiddleware">Invoke hook bootstrapMiddleware.</a></li>
+                                <li><a class="toctree-l3" href="#invoke-hook-shrubcorebootstrapmiddleware">Invoke hook shrubCoreBootstrapMiddleware.</a></li>
                             
                                 <li><a class="toctree-l3" href="#invoke-hook-processexit">Invoke hook processExit.</a></li>
                             
@@ -748,27 +753,23 @@ unless fork()
 
   debug 'Config loaded.'
 </code></pre>
-<h4 id="invoke-hook-prebootstrap">Invoke hook <code>preBootstrap</code>.</h4>
-<p>Invoked before the application bootstrap phase.</p>
-<p><a href="../../hooks#prebootstrap">See the <code>preBootstrap</code> hook documentation</a></p>
-<h6 id="todo-link-to-an-instance-of-this-in-shrub-core">TODO: Link to an instance of this in shrub core.</h6>
+<h4 id="invoke-hook-shrubcoreprebootstrap">Invoke hook <code>shrubCorePreBootstrap</code>.</h4>
 <pre><code>  debugSilly 'Pre bootstrap phase...'
-  pkgman.invoke 'preBootstrap'
+  pkgman.invoke 'shrubCorePreBootstrap'
   debugSilly 'Pre bootstrap phase completed.'
 </code></pre>
-<h4 id="invoke-hook-bootstrapmiddleware">Invoke hook <code>bootstrapMiddleware</code>.</h4>
-<p>Invoked during the application bootstrap phase. Packages implementing this hook
-should return an instance of <code>MiddlewareGroup</code>.</p>
-<h6 id="todo-link-to-an-instance-of-this-in-shrub-core_1">TODO: Link to an instance of this in shrub core.</h6>
-<h6 id="todo-currently-middleware-hook-implementations-return-an-ad-hoc-structure-but-middlewaregroup-will-be-the-preferred-mechanism-in-the-future">TODO: Currently middleware hook implementations return an ad-hoc structure, but MiddlewareGroup will be the preferred mechanism in the future.</h6>
-<p>This is where the real heavy-lifting instantiation occurs. For instance, this
-is where the HTTP server is constructed by <code>shrub-http</code> and made to listen on
-a port, where <code>shrub-nodemailer</code> instantiates its sandbox, etc.</p>
+<h4 id="invoke-hook-shrubcorebootstrapmiddleware">Invoke hook <code>shrubCoreBootstrapMiddleware</code>.</h4>
 <pre><code>  debugSilly 'Loading bootstrap middleware...'
-  bootstrapMiddleware = middleware.fromHook(
-    'bootstrapMiddleware'
-    config.get 'packageSettings:shrub-core:bootstrapMiddleware'
+
+  bootstrapMiddleware = middleware.fromConfig(
+    'shrub-core:bootstrapMiddleware'
   )
+
+  middleware.fromHook(
+    'shrubCoreBootstrapMiddleware'
+    config.get 'packageSettings:shrub-core:shrubCoreBootstrapMiddleware'
+  )
+
   debugSilly 'Bootstrap middleware loaded.'
 </code></pre>
 <p>Dispatch the bootstrap middleware stack and log if everything is okay.</p>
@@ -781,9 +782,6 @@ listener below.</p>
     throw error
 </code></pre>
 <h4 id="invoke-hook-processexit">Invoke hook <code>processExit</code>.</h4>
-<p>We do our best to guarantee that hook <code>processExit</code> will always be invoked,
-even when an exception or signal arises.</p>
-<h6 id="todo-link-to-an-instance-of-this-in-shrub-core_2">TODO: Link to an instance of this in shrub core.</h6>
 <pre><code>  process.on 'exit', -&gt; pkgman.invoke 'processExit'
 
   process.on 'SIGINT', -&gt; process.exit()

@@ -13,9 +13,9 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `preBootstrap`.
+#### Implements hook `shrubCorePreBootstrap`.
 
-      registrar.registerHook 'preBootstrap', ->
+      registrar.registerHook 'shrubCorePreBootstrap', ->
 
         i8n = require 'inflection'
         Promise = require 'bluebird'
@@ -32,9 +32,9 @@
           'villiany', Limiter.threshold(1000).every(10).minutes()
         )
 
-#### Implements hook `collections`.
+#### Implements hook `shrubOrmCollections`.
 
-      registrar.registerHook 'collections', ->
+      registrar.registerHook 'shrubOrmCollections', ->
 
         audit = require 'shrub-audit'
 
@@ -103,9 +103,9 @@ Create a ban from a fingerprint.
 
         'shrub-ban': Ban
 
-#### Implements hook `httpMiddleware`.
+#### Implements hook `shrubHttpMiddleware`.
 
-      registrar.registerHook 'httpMiddleware', ->
+      registrar.registerHook 'shrubHttpMiddleware', ->
 
         label: 'Provide villiany management'
         middleware: [

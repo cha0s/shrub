@@ -18,9 +18,9 @@ The socket server.
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `packageSettings`.
+#### Implements hook `shrubConfigServer`.
 
-      registrar.registerHook 'packageSettings', ->
+      registrar.registerHook 'shrubConfigServer', ->
 
 The prompt display for REPL clients.
 
@@ -38,9 +38,9 @@ Use a CoffeeScript REPL?
 
       registrar.registerHook 'processExit', -> server?.close()
 
-#### Implements hook `bootstrapMiddleware`.
+#### Implements hook `shrubCoreBootstrapMiddleware`.
 
-      registrar.registerHook 'bootstrapMiddleware', ->
+      registrar.registerHook 'shrubCoreBootstrapMiddleware', ->
 
         orm = require 'shrub-orm'
 

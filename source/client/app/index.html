@@ -101,9 +101,9 @@
                             
                                 <li><a class="toctree-l3" href="#todo-link-this-to-where-this-happens-in-grunt-for-illustration">TODO: Link this to where this happens in Grunt for illustration.</a></li>
                             
-                                <li><a class="toctree-l3" href="#invoke-hook-appconfig">Invoke hook appConfig.</a></li>
+                                <li><a class="toctree-l3" href="#invoke-hook-shrubangularappconfig">Invoke hook shrubAngularAppConfig.</a></li>
                             
-                                <li><a class="toctree-l3" href="#invoke-hook-apprun">Invoke hook appRun.</a></li>
+                                <li><a class="toctree-l3" href="#invoke-hook-shrubangularapprun">Invoke hook shrubAngularAppRun.</a></li>
                             
                         
                         </ul>
@@ -147,6 +147,16 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../require">client/require.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../packages/shrub-angular-sandbox/client">packages/shrub-angular-sandbox/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../packages/shrub-angular-sandbox">packages/shrub-angular-sandbox/index.litcoffee</a>
                     
                 </li>
             
@@ -272,11 +282,6 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../packages/shrub-form">packages/shrub-form/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../packages/shrub-grunt/angular">packages/shrub-grunt/angular.litcoffee</a>
                     
                 </li>
             
@@ -732,9 +737,9 @@ and config/run hook invocation.</em></p>
 coreDependencies.push 'ngRoute'
 coreDependencies.push 'ngSanitize'
 </code></pre>
-<p><code>packageDependencies</code> will be automatically generated and populated by Grunt.
-Packages implement the hook <code>angularPackageDependencies</code> to specify their
-3rd-party module dependencies.</p>
+<p><code>packageDependencies</code> will be automatically generated and populated by Grunt.</p>
+<p>See the documentation for
+<a href="../../../hooks/#shrubAngularPackageDependencies"><code>shrubAngularPackageDependencies</code></a>.</p>
 <h6 id="todo-link-this-to-where-this-happens-in-grunt-for-illustration">TODO: Link this to where this happens in Grunt for illustration.</h6>
 <pre><code>coreDependencies.push packageDependencies...
 </code></pre>
@@ -750,11 +755,13 @@ coreDependencies.push 'shrub.require'
     '$injector', 'shrub-pkgmanProvider'
     ({invoke}, {invokeFlat}) -&gt;
 </code></pre>
-<h4 id="invoke-hook-appconfig">Invoke hook <code>appConfig</code>.</h4>
+<h4 id="invoke-hook-shrubangularappconfig">Invoke hook <code>shrubAngularAppConfig</code>.</h4>
 <p>Invoked when the Angular application is in the configuration phase.
 Implementations should return an
 <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>.</p>
-<pre><code>      invoke injectable for injectable in invokeFlat 'appConfig'
+<pre><code>      invoke injectable for injectable in invokeFlat 'shrubAngularAppConfig'
+
+      return
 
   ])
 
@@ -763,11 +770,13 @@ Implementations should return an
     '$injector', 'shrub-pkgman'
     ({invoke}, {invokeFlat}) -&gt;
 </code></pre>
-<h4 id="invoke-hook-apprun">Invoke hook <code>appRun</code>.</h4>
+<h4 id="invoke-hook-shrubangularapprun">Invoke hook <code>shrubAngularAppRun</code>.</h4>
 <p>Invoked when the Angular application is the run phase. Implementations should
 return an
 <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated function</a>.</p>
-<pre><code>      invoke injectable for injectable in invokeFlat 'appRun'
+<pre><code>      invoke injectable for injectable in invokeFlat 'shrubAngularAppRun'
+
+      return
 
   ])
 </code></pre>

@@ -138,6 +138,16 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-angular-sandbox/client">packages/shrub-angular-sandbox/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-angular-sandbox">packages/shrub-angular-sandbox/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
                     
                 </li>
@@ -259,11 +269,6 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../shrub-form">packages/shrub-form/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../shrub-grunt/angular">packages/shrub-grunt/angular.litcoffee</a>
                     
                 </li>
             
@@ -764,9 +769,9 @@ httpMiddlewareDebug = require('debug') 'shrub-silly:http:middleware'
 <p><em>Initialize the server.</em></p>
 <pre><code>  initialize: -&gt;
 </code></pre>
-<h4 id="invoke-hook-httproutes">Invoke hook <code>httpRoutes</code>.</h4>
+<h4 id="invoke-hook-shrubhttproutes">Invoke hook <code>shrubHttpRoutes</code>.</h4>
 <pre><code>    httpDebugSilly '- Registering routes...'
-    for routeList in pkgman.invokeFlat 'httpRoutes', this
+    for routeList in pkgman.invokeFlat 'shrubHttpRoutes', this
 
       for route in routeList
         route.verb ?= 'get'
@@ -816,12 +821,14 @@ httpMiddlewareDebug = require('debug') 'shrub-silly:http:middleware'
     httpMiddlewareDebug '- Loading HTTP middleware...'
 
     httpMiddleware = @_config.middleware.concat()
-    httpMiddleware.push 'shrub-http'
 </code></pre>
-<h4 id="invoke-hook-httpmiddleware">Invoke hook <code>httpMiddleware</code>.</h4>
+<p>Make absolutely sure the requests are finalized.</p>
+<pre><code>    httpMiddleware.push 'shrub-http'
+</code></pre>
+<h4 id="invoke-hook-shrubhttpmiddleware">Invoke hook <code>shrubHttpMiddleware</code>.</h4>
 <p>Invoked every time an HTTP connection is established.</p>
 <pre><code>    @_middleware = middleware.fromHook(
-      'httpMiddleware', httpMiddleware, this
+      'shrubHttpMiddleware', httpMiddleware, this
     )
 
     httpMiddlewareDebug '- HTTP middleware loaded.'

@@ -2,11 +2,11 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `httpMiddleware`.
+#### Implements hook `shrubHttpMiddleware`.
 
 Serve static files.
 
-      registrar.registerHook 'httpMiddleware', (http) ->
+      registrar.registerHook 'shrubHttpMiddleware', (http) ->
 
         express = require 'express'
 

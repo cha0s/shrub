@@ -169,6 +169,16 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../packages/shrub-angular-sandbox/client">packages/shrub-angular-sandbox/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../packages/shrub-angular-sandbox">packages/shrub-angular-sandbox/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../packages/shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
                     
                 </li>
@@ -290,11 +300,6 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../../packages/shrub-form">packages/shrub-form/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-grunt/angular">packages/shrub-grunt/angular.litcoffee</a>
                     
                 </li>
             
@@ -939,7 +944,7 @@ result.</em></p>
   i8n = require 'inflection'
 
   parts = for part, i in path.split '/'
-    i8n.camelize(
+    i8n.camelize i8n.underscore(
       part.replace /[^\w]/g, '_'
       0 is i
     )

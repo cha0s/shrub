@@ -155,6 +155,16 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../source/packages/shrub-angular-sandbox/client">packages/shrub-angular-sandbox/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../source/packages/shrub-angular-sandbox">packages/shrub-angular-sandbox/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../source/packages/shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
                     
                 </li>
@@ -276,11 +286,6 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../source/packages/shrub-form">packages/shrub-form/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../source/packages/shrub-grunt/angular">packages/shrub-grunt/angular.litcoffee</a>
                     
                 </li>
             
@@ -765,7 +770,7 @@ that directory and create a file called <code>index.js</code>. <strong>NOTE:</st
 and put in the following code:</p>
 <pre><code class="javascript">exports.pkgmanRegister = function(registrar) {
 
-  registrar.registerHook('preBootstrap', function() {
+  registrar.registerHook('shrubCorePreBootstrap', function() {
     console.log('I hooked into shrub!');
   });
 };
@@ -780,9 +785,9 @@ and add our package to the <code>packageList</code> array:</p>
 <pre><code class="json">{
   &quot;packageList&quot;: [
     &quot;my-package&quot;,
+    &quot;shrub-angular&quot;,
     &quot;shrub-assets&quot;,
     &quot;shrub-audit&quot;,
-    &quot;shrub-config&quot;,
 ...
 </code></pre>
 
@@ -791,8 +796,9 @@ and add our package to the <code>packageList</code> array:</p>
 <p><code>DEBUG=shrub:* grunt execute</code></p>
 <p>You'll see a bunch of stuff fly by, but you should also notice this:</p>
 <p><code>I hooked into shrub!</code></p>
-<p>This means that our package was hooked into Shrub and the <code>preBootstrap</code> hook
-was invoked! Hurray, we have our first Shrub package.</p>
+<p>This means that our package was hooked into Shrub and the
+<code>shrubCorePreBootstrap</code> hook was invoked! Hurray, we have our first Shrub
+package.</p>
 
             </div>
           </div>

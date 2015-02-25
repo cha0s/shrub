@@ -41,10 +41,10 @@ An abstract interface to be implemented by an HTTP server (e.g.
 
       initialize: ->
 
-#### Invoke hook `httpRoutes`.
+#### Invoke hook `shrubHttpRoutes`.
 
         httpDebugSilly '- Registering routes...'
-        for routeList in pkgman.invokeFlat 'httpRoutes', this
+        for routeList in pkgman.invokeFlat 'shrubHttpRoutes', this
 
           for route in routeList
             route.verb ?= 'get'
@@ -105,14 +105,17 @@ Start listening.
         httpMiddlewareDebug '- Loading HTTP middleware...'
 
         httpMiddleware = @_config.middleware.concat()
+
+Make absolutely sure the requests are finalized.
+
         httpMiddleware.push 'shrub-http'
 
-#### Invoke hook `httpMiddleware`.
+#### Invoke hook `shrubHttpMiddleware`.
 
 Invoked every time an HTTP connection is established.
 
         @_middleware = middleware.fromHook(
-          'httpMiddleware', httpMiddleware, this
+          'shrubHttpMiddleware', httpMiddleware, this
         )
 
         httpMiddlewareDebug '- HTTP middleware loaded.'

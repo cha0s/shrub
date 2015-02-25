@@ -2,9 +2,9 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `gruntConfig`.
+#### Implements hook `shrubGruntConfig`.
 
-      registrar.registerHook 'gruntConfig', (gruntConfig) ->
+      registrar.registerHook 'shrubGruntConfig', (gruntConfig) ->
 
         gruntConfig.configureTask 'coffee', 'testsE2e', files: [
           src: [
@@ -162,9 +162,9 @@
 
         gruntConfig.registerTask 'build', ['build:tests']
 
-#### Implements hook `gruntConfigAlter`.
+#### Implements hook `shrubGruntConfigAlter`.
 
-      registrar.registerHook 'gruntConfigAlter', (gruntConfig) ->
+      registrar.registerHook 'shrubGruntConfigAlter', (gruntConfig) ->
 
         ignoreFiles = (array, directory) ->
           array.push "!#{directory}/**/#{spec}" for spec in [

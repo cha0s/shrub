@@ -2,11 +2,11 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `httpMiddleware`.
+#### Implements hook `shrubHttpMiddleware`.
 
 Serve Express routes.
 
-      registrar.registerHook 'httpMiddleware', (http) ->
+      registrar.registerHook 'shrubHttpMiddleware', (http) ->
 
         label: 'Serve routes'
         middleware: [

@@ -4,9 +4,9 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `assetMiddleware`.
+#### Implements hook `shrubAssetsMiddleware`.
 
-      registrar.registerHook 'assetMiddleware', ->
+      registrar.registerHook 'shrubAssetsMiddleware', ->
 
         label: 'jQuery'
         middleware: [

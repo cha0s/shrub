@@ -41,10 +41,10 @@ library to the client, even though it would be awesome.*
 
     exports.initialize = ->
 
-#### Invoke hook `collections`.
+#### Invoke hook `shrubOrmCollections`.
 
       collections_ = {}
-      for collectionList in pkgman.invokeFlat 'collections'
+      for collectionList in pkgman.invokeFlat 'shrubOrmCollections'
         for identity, collection of collectionList
 
 Collection defaults.
@@ -69,8 +69,8 @@ Set any model defaults.
 
             model
 
-#### Invoke hook `collectionsAlter`.
+#### Invoke hook `shrubOrmCollectionsAlter`.
 
-      pkgman.invoke 'collectionsAlter', collections_
+      pkgman.invoke 'shrubOrmCollectionsAlter', collections_
 
       collections = collections_

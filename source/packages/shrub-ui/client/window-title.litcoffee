@@ -6,9 +6,9 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `controller`.
+#### Implements hook `shrubAngularController`.
 
-      registrar.registerHook 'controller', -> [
+      registrar.registerHook 'shrubAngularController', -> [
         'shrub-ui/window-title'
         class WindowTitleController
 
@@ -24,9 +24,9 @@
 
       ]
 
-#### Implements hook `directive`.
+#### Implements hook `shrubAngularDirective`.
 
-      registrar.registerHook 'directive', -> [
+      registrar.registerHook 'shrubAngularDirective', -> [
 
         ->
 
@@ -40,9 +40,9 @@
 
       ]
 
-#### Implements hook `appRun`.
+#### Implements hook `shrubAngularAppRun`.
 
-      registrar.registerHook 'appRun', -> [
+      registrar.registerHook 'shrubAngularAppRun', -> [
         'shrub-ui/window-title'
         (windowTitle) ->
 

@@ -8,9 +8,9 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `config`.
+#### Implements hook `shrubConfigClient`.
 
-      registrar.registerHook 'config', (req) ->
+      registrar.registerHook 'shrubConfigClient', (req) ->
 
 The URL that the site was accessed at.
 
@@ -35,17 +35,17 @@ The user-visible site name.
 
         siteName: config.get 'packageSettings:shrub-core:siteName'
 
-#### Implements hook `fingerprint`.
+#### Implements hook `shrubAuditFingerprint`.
 
-      registrar.registerHook 'fingerprint', (req) ->
+      registrar.registerHook 'shrubAuditFingerprint', (req) ->
 
 The IP address.
 
         ip: req?.normalizedIp
 
-#### Implements hook `httpMiddleware`.
+#### Implements hook `shrubHttpMiddleware`.
 
-      registrar.registerHook 'httpMiddleware', (http) ->
+      registrar.registerHook 'shrubHttpMiddleware', (http) ->
 
         label: 'Normalize request variables'
         middleware: [
@@ -64,9 +64,9 @@ Normalize IP address.
 
         ]
 
-#### Implements hook `packageSettings`.
+#### Implements hook `shrubConfigServer`.
 
-      registrar.registerHook 'packageSettings', ->
+      registrar.registerHook 'shrubConfigServer', ->
 
 Middleware for server bootstrap phase.
 
@@ -105,16 +105,6 @@ The amount of workers to create. Defaults to 0 meaning no workers, only the
 master.
 
         workers: 0
-
-#### Implements hook `replContext`.
-
-      registrar.registerHook 'replContext', (context) ->
-
-Provide `clearCaches()` to the REPL.
-
-        context.clearCaches = ->
-
-          pkgman.invoke 'clearCaches'
 
 #### Implements hook `socketAuthorizationMiddleware`.
 

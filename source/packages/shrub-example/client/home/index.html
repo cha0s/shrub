@@ -138,6 +138,16 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../shrub-angular-sandbox/client">packages/shrub-angular-sandbox/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../shrub-angular-sandbox">packages/shrub-angular-sandbox/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
                     
                 </li>
@@ -204,7 +214,7 @@
                         
                             <li class="toctree-l2"><a href="#example-home-page">Example - Home page</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-appconfig">Implements hook appConfig.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubangularappconfig">Implements hook shrubAngularAppConfig.</a></li>
                             
                                 <li><a class="toctree-l3" href="#implements-hook-route">Implements hook route.</a></li>
                             
@@ -270,11 +280,6 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../../shrub-form">packages/shrub-form/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../shrub-grunt/angular">packages/shrub-grunt/angular.litcoffee</a>
                     
                 </li>
             
@@ -722,8 +727,8 @@
               <h1 id="example-home-page">Example - Home page</h1>
 <pre><code>exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h4 id="implements-hook-appconfig">Implements hook <code>appConfig</code>.</h4>
-<pre><code>  registrar.registerHook 'appConfig', -&gt; [
+<h4 id="implements-hook-shrubangularappconfig">Implements hook <code>shrubAngularAppConfig</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubAngularAppConfig', -&gt; [
     '$routeProvider'
     ($routeProvider) -&gt;
 </code></pre>

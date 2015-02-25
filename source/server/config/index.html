@@ -138,6 +138,16 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../packages/shrub-angular-sandbox/client">packages/shrub-angular-sandbox/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../packages/shrub-angular-sandbox">packages/shrub-angular-sandbox/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../packages/shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
                     
                 </li>
@@ -259,11 +269,6 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../packages/shrub-form">packages/shrub-form/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../packages/shrub-grunt/angular">packages/shrub-grunt/angular.litcoffee</a>
                     
                 </li>
             
@@ -776,16 +781,15 @@ pkgman = require 'pkgman'
   pkgman.registerPackageList nconf.get 'packageList'
 
   debug 'Packages registered.'
-
-  packageSettings = new Config()
-  for key, value of pkgman.invoke 'packageSettings'
+</code></pre>
+<h6 id="todo-unify-config-key-on-packages">TODO: Unify config key on <code>'packages'</code>.</h6>
+<pre><code>  packageSettings = new Config()
+  for key, value of pkgman.invoke 'shrubConfigServer'
     packageSettings.set key.replace(/\//g, ':'), value
 
   nconf.defaults
 </code></pre>
-<h4 id="invoke-hook-packagesettings">Invoke hook <code>packageSettings</code>.</h4>
-<p>Invoked when the server application is loading configuration. Allows
-packages to define their own default settings.</p>
+<h4 id="invoke-hook-shrubconfigserver">Invoke hook <code>shrubConfigServer</code>.</h4>
 <pre><code>    packageSettings: packageSettings.toJSON()
 
     path: "#{__dirname}/.."

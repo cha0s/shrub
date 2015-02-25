@@ -138,6 +138,16 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../shrub-angular-sandbox/client">packages/shrub-angular-sandbox/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-angular-sandbox">packages/shrub-angular-sandbox/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
                     
                 </li>
@@ -263,11 +273,6 @@
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="angular">packages/shrub-grunt/angular.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
                     <a class="" href="dox/dynamic">packages/shrub-grunt/dox/dynamic.litcoffee</a>
                     
                 </li>
@@ -284,11 +289,11 @@
                         
                             <li class="toctree-l2"><a href="#grunt-build-process">Grunt build process</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-assetmiddleware">Implements hook assetMiddleware.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubassetsmiddleware">Implements hook shrubAssetsMiddleware.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-configalter">Implements hook configAlter.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubconfigclientalter">Implements hook shrubConfigClientAlter.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-gruntconfig">Implements hook gruntConfig.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubgruntconfig">Implements hook shrubGruntConfig.</a></li>
                             
                                 <li><a class="toctree-l3" href="#implements-hook-gruntconfigalter">Implements hook gruntConfigAlter.</a></li>
                             
@@ -728,8 +733,8 @@
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h4 id="implements-hook-assetmiddleware">Implements hook <code>assetMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'assetMiddleware', -&gt;
+<h4 id="implements-hook-shrubassetsmiddleware">Implements hook <code>shrubAssetsMiddleware</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubAssetsMiddleware', -&gt;
 
     label: 'Livereload'
     middleware: [
@@ -744,15 +749,15 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     ]
 </code></pre>
-<h4 id="implements-hook-configalter">Implements hook <code>configAlter</code>.</h4>
-<pre><code>  registrar.registerHook 'configAlter', (req, config_) -&gt;
+<h4 id="implements-hook-shrubconfigclientalter">Implements hook <code>shrubConfigClientAlter</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubConfigClientAlter', (req, config_) -&gt;
     return unless req.grunt?
 
     config_.set 'packageConfig:shrub-socket', manager: module: 'shrub-socket/dummy'
     config_.set 'packageConfig:shrub-user', name: 'Anonymous'
 </code></pre>
-<h4 id="implements-hook-gruntconfig">Implements hook <code>gruntConfig</code>.</h4>
-<pre><code>  registrar.registerHook 'gruntConfig', (gruntConfig, grunt) -&gt;
+<h4 id="implements-hook-shrubgruntconfig">Implements hook <code>shrubGruntConfig</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubGruntConfig', (gruntConfig, grunt) -&gt;
 
     gruntConfig.configureTask 'clean', 'shrub', [
       'app'
@@ -826,7 +831,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     ]
 
   registrar.recur [
-    'angular', 'dox', 'lint', 'modules', 'tests'
+    'dox', 'lint', 'modules', 'tests'
   ]
 </code></pre>
 
