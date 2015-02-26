@@ -1,12 +1,13 @@
 # RPC
 
-Define an Angular service to issue [remote procedure calls](http://en.wikipedia.org/wiki/Remote_procedure_call#Message_passing).
+Define an Angular service to issue
+[remote procedure calls](http://en.wikipedia.org/wiki/Remote_procedure_call#Message_passing).
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `service`.
+#### Implements hook `shrubAngularService`.
 
-      registrar.registerHook 'service', -> [
+      registrar.registerHook 'shrubAngularService', -> [
         '$injector', '$q', 'shrub-pkgman', 'shrub-socket'
         ({invoke}, {defer}, pkgman, socket) ->
 
@@ -34,6 +35,8 @@ from the server, or rejected with the error from the server.
               else
                 deferred.resolve result
 
+#### Invoke hook `shrubRpcCall`.
+
             invoke(
               injectable, null
 
@@ -41,7 +44,7 @@ from the server, or rejected with the error from the server.
               data: data
               result: deferred.promise
 
-            ) for injectable in pkgman.invokeFlat 'rpcCall'
+            ) for injectable in pkgman.invokeFlat 'shrubRpcCall'
 
             deferred.promise
 

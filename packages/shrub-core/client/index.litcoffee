@@ -45,9 +45,16 @@ Set up application close behavior.
 
       ]
 
-#### Implements hook `route`.
+#### Implements hook `shrubAngularRoutes`.
 
 A simple path definition to make sure we're running in e2e testing mode.
 
-      if 'e2e' is config.get 'packageConfig:shrub-core:testMode'
-        registrar.registerHook 'e2e', 'route', -> path: 'e2e/sanity-check'
+      registrar.registerHook 'shrubAngularRoutes', ->
+
+        routes = []
+
+        if 'e2e' is config.get 'packageConfig:shrub-core:testMode'
+          routes.push
+            path: 'e2e/sanity-check'
+
+        return routes

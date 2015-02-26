@@ -170,9 +170,9 @@ Set watches for all candidate-related values.
 
       ]
 
-#### Implements hook `provider`.
+#### Implements hook `shrubAngularProvider`.
 
-      registrar.registerHook 'provider', -> [
+      registrar.registerHook 'shrubAngularProvider', -> [
 
         '$injector', '$provide'
         ($injector, $provide) ->

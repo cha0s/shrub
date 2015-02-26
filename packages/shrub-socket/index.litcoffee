@@ -81,9 +81,9 @@ Module implementing the socket manager. Defaults to socket.io.
 
           module: 'shrub-socket-socket.io'
 
-#### Implements hook `replContext`.
+#### Implements hook `shrubReplContext`.
 
-      registrar.registerHook 'replContext', (context) ->
+      registrar.registerHook 'shrubReplContext', (context) ->
 
 Provide the socketManager to REPL.
 

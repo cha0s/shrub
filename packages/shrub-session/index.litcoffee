@@ -42,9 +42,9 @@ Session ID.
 
         session: if req?.session? then req.session.id
 
-#### Implements hook `rpcRouteFinished`.
+#### Implements hook `shrubRpcRouteFinish`.
 
-      registrar.registerHook 'rpcRouteFinished', (routeReq, result, req) ->
+      registrar.registerHook 'shrubRpcRouteFinish', (routeReq, result, req) ->
         return unless routeReq.session?
 
         Promise = require 'bluebird'

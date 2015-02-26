@@ -33,10 +33,10 @@ RPC route information.
 
           (next) ->
 
-#### Invoke hook `rpcRoutes`.
+#### Invoke hook `shrubRpcRoutes`.
 
             debug '- Registering RPC routess...'
-            for route in _.flatten pkgman.invokeFlat 'rpcRoutes'
+            for route in _.flatten pkgman.invokeFlat 'shrubRpcRoutes'
 
 Default the RPC route to the package path, replacing slashes with dots.
 
@@ -47,9 +47,9 @@ Default the RPC route to the package path, replacing slashes with dots.
               routes[route.path] = route
             debug '- RPC routes registered.'
 
-#### Invoke hook `rpcRoutesAlter`.
+#### Invoke hook `shrubRpcRoutesAlter`.
 
-            pkgman.invoke 'rpcRoutesAlter', routes
+            pkgman.invoke 'shrubRpcRoutesAlter', routes
 
 Set up the validators as middleware.
 
@@ -138,11 +138,11 @@ Receive.
                   route.receiver routeReq, (error, result) ->
                     return sendErrorToClient error if error?
 
-#### Invoke hook `rpcRouteFinished`.
+#### Invoke hook `shrubRpcRouteFinish`.
 
                     Promise.all(
                       pkgman.invokeFlat(
-                        'rpcRouteFinished', routeReq, result, req
+                        'shrubRpcRouteFinish', routeReq, result, req
                       )
 
                     ).then(

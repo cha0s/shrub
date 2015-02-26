@@ -65,30 +65,6 @@ Load configuration.
 
           return
 
-## GruntConfiguration#build
-
-*Register and configure all tasks.*
-
-        build: ->
-
-Initialize configuration.
-
-          grunt.initConfig @_taskConfig
-
-Load NPM tasks.
-
-          npmTasksLoaded = {}
-          for task in @_npmTasks
-            continue if npmTasksLoaded[task]?
-            npmTasksLoaded[task] = true
-            grunt.loadNpmTasks task
-
-Register custom tasks.
-
-          grunt.registerTask task, actions for task, actions of @_tasks
-
-          return
-
 ## GruntConfiguration#taskConfiguration
 
 * (String) `task` - The name of the task to configure.
@@ -129,6 +105,35 @@ Register custom tasks.
 
           return
 
+## GruntConfiguration#copyAppFiles
+
+* (String) `path` - The path of the files to copy.
+* (String) `key` - The name of the key in the task configuration to set. This
+* (Array) `watchTasks` - An array of tasks to run when any of the files in the
+  directory to move are added, updated or deleted.
+
+*Copy package files to `app`.*
+
+        copyAppFiles: (path, key, watchTasks) ->
+
+          watchTasks ?= ["build:#{key}"]
+
+          gruntConfig.configureTask 'copy', key, files: [
+            src: '**/*'
+            dest: 'app'
+            expand: true
+            cwd: path
+          ]
+
+          gruntConfig.configureTask(
+            'watch', key
+
+            files: [
+              "#{path}/**/*"
+            ]
+            tasks: watchTasks
+          )
+
       gruntConfig = new GruntConfiguration()
 
       gruntConfig.registerTask 'production', ['build']
@@ -150,6 +155,18 @@ Register custom tasks.
 
       pkgman.invoke 'shrubGruntConfigAlter', gruntConfig, grunt
 
-Kick off the build process.
+Initialize configuration.
 
-      gruntConfig.build()
+      grunt.initConfig gruntConfig._taskConfig
+
+Load NPM tasks.
+
+      npmTasksLoaded = {}
+      for task in gruntConfig._npmTasks
+        continue if npmTasksLoaded[task]?
+        npmTasksLoaded[task] = true
+        grunt.loadNpmTasks task
+
+Register custom tasks.
+
+      grunt.registerTask task, actions for task, actions of gruntConfig._tasks

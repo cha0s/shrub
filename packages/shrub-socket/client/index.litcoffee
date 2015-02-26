@@ -6,9 +6,9 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `service`.
+#### Implements hook `shrubAngularService`.
 
-      registrar.registerHook 'service', ->
+      registrar.registerHook 'shrubAngularService', ->
 
 Load the manager module.
 

@@ -61,9 +61,9 @@ listener below.
         console.error errors.stack error
         throw error
 
-#### Invoke hook `processExit`.
+#### Invoke hook `shrubCoreProcessExit`.
 
-      process.on 'exit', -> pkgman.invoke 'processExit'
+      process.on 'exit', -> pkgman.invoke 'shrubCoreProcessExit'
 
       process.on 'SIGINT', -> process.exit()
       process.on 'SIGTERM', -> process.exit()

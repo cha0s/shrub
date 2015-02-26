@@ -30,9 +30,9 @@ No superuser? Install...
 
         ]
 
-#### Implements hook `replContext`.
+#### Implements hook `shrubReplContext`.
 
-      registrar.registerHook 'replContext', (context) ->
+      registrar.registerHook 'shrubReplContext', (context) ->
 
         context.install = reinstall
 

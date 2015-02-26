@@ -2,54 +2,58 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `route`.
+#### Implements hook `shrubAngularRoutes`.
 
-      registrar.registerHook 'route', ->
+      registrar.registerHook 'shrubAngularRoutes', ->
 
-        path: 'user/register'
-        title: 'Sign up'
+        routes = []
 
-        controller: [
-          '$location', '$scope', 'shrub-ui/messages', 'shrub-rpc', 'shrub-user'
-          ($location, $scope, messages, rpc, user) ->
-            return $location.path '/' if user.isLoggedIn()
+        routes.push
 
-            $scope.form =
+          path: 'user/register'
+          title: 'Sign up'
 
-              key: 'shrub-user-register'
+          controller: [
+            '$location', '$scope', 'shrub-ui/messages', 'shrub-rpc', 'shrub-user'
+            ($location, $scope, messages, rpc, user) ->
+              return $location.path '/' if user.isLoggedIn()
 
-              submits: [
+              $scope.form =
 
-                rpc.formSubmitHandler 'shrub-user/register', (error, result) ->
-                  return if error?
+                key: 'shrub-user-register'
 
-                  messages.add(
-                    text: 'An email has been sent with account registration details. Please check your email.'
-                  )
+                submits: [
 
-                  $location.path '/'
+                  rpc.formSubmitHandler 'shrub-user/register', (error, result) ->
+                    return if error?
 
-              ]
+                    messages.add(
+                      text: 'An email has been sent with account registration details. Please check your email.'
+                    )
 
-              fields:
+                    $location.path '/'
 
-                username:
-                  type: 'text'
-                  label: 'Username'
-                  required: true
+                ]
 
-                email:
-                  type: 'email'
-                  label: 'Email'
-                  required: true
+                fields:
 
-                submit:
-                  type: 'submit'
-                  value: 'Sign up'
+                  username:
+                    type: 'text'
+                    label: 'Username'
+                    required: true
 
-        ]
+                  email:
+                    type: 'email'
+                    label: 'Email'
+                    required: true
 
-        template: '''
+                  submit:
+                    type: 'submit'
+                    value: 'Sign up'
+
+          ]
+
+          template: '''
 
     <div
       data-shrub-form
@@ -57,3 +61,5 @@
     ></div>
 
     '''
+
+        return routes

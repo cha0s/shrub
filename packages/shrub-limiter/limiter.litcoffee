@@ -13,10 +13,10 @@ Provides methods to tally scores, and compare them against a threshold of
 time.
 
 The [limiter](source/packages/shrub-limiter) package implements hook
-[`rpcRoutesAlter`](hooks/#rpcroutesalter) to allow RPC routes to limit
-consumers to a specified number of requests per time period. For instance, by
-default the [user login](source/packages/user/login) route limits the number
-of logins a user may attempt to 3 every 30 seconds.
+[`shrubRpcRoutesAlter`](hooks/#shrubrpcroutesalter) to allow RPC routes to
+limit consumers to a specified number of requests per time period. For
+instance, by default the [user login](source/packages/user/login) route limits
+the number of logins a user may attempt to 3 every 30 seconds.
 
     module.exports = class Limiter
 

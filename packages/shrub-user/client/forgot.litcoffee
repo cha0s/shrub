@@ -2,49 +2,53 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `route`.
+#### Implements hook `shrubAngularRoutes`.
 
-      registrar.registerHook 'route', ->
+      registrar.registerHook 'shrubAngularRoutes', ->
 
-        path: 'user/forgot'
-        title: 'Forgot password'
+        routes = []
 
-        controller: [
-          '$location', '$scope', 'shrub-ui/messages', 'shrub-rpc', 'shrub-user'
-          ($location, $scope, messages, rpc, user) ->
-            return $location.path '/' if user.isLoggedIn()
+        routes.push
 
-            $scope.form =
+          path: 'user/forgot'
+          title: 'Forgot password'
 
-              key: 'shrub-user-forgot'
+          controller: [
+            '$location', '$scope', 'shrub-ui/messages', 'shrub-rpc', 'shrub-user'
+            ($location, $scope, messages, rpc, user) ->
+              return $location.path '/' if user.isLoggedIn()
 
-              submits: [
+              $scope.form =
 
-                rpc.formSubmitHandler 'shrub-user/forgot', (error, result) ->
-                  return if error?
+                key: 'shrub-user-forgot'
 
-                  messages.add(
-                    text: 'A reset link will be emailed.'
-                  )
+                submits: [
 
-                  $location.path '/'
+                  rpc.formSubmitHandler 'shrub-user/forgot', (error, result) ->
+                    return if error?
 
-              ]
+                    messages.add(
+                      text: 'A reset link will be emailed.'
+                    )
 
-              fields:
+                    $location.path '/'
 
-                usernameOrEmail:
-                  type: 'text'
-                  label: 'Username or Email'
-                  required: true
+                ]
 
-                submit:
-                  type: 'submit'
-                  value: 'Email reset link'
+                fields:
 
-        ]
+                  usernameOrEmail:
+                    type: 'text'
+                    label: 'Username or Email'
+                    required: true
 
-        template: '''
+                  submit:
+                    type: 'submit'
+                    value: 'Email reset link'
+
+          ]
+
+          template: '''
 
     <div
       data-shrub-form
@@ -52,3 +56,5 @@
     ></div>
 
     '''
+
+        return routes

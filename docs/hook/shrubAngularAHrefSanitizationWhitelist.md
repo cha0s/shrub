@@ -15,7 +15,7 @@ allowed or not. For instance, `shrub-angular` provides two patterns by default:
 which allows the usage of http, https, ftp mailto, tel, and file
 protocols, and
 
-`'javascript:void(?:%20)*\\((?:%20)*0(?:%20)*\\)'`
+`'javascript:void\\(0\\)'`
 
 which allows the usage of `javascript:void(0)` as an href.
 

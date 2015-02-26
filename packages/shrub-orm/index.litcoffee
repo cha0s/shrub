@@ -37,21 +37,7 @@
 
       registrar.registerHook 'shrubGruntConfig', (gruntConfig) ->
 
-        gruntConfig.configureTask 'copy', 'shrub-orm', files: [
-          src: '**/*'
-          dest: 'app'
-          expand: true
-          cwd: "#{__dirname}/app"
-        ]
-
-        gruntConfig.configureTask(
-          'watch', 'shrub-orm'
-
-          files: [
-            "#{__dirname}/app/**/*"
-          ]
-          tasks: 'build:shrub-orm'
-        )
+        gruntConfig.copyAppFiles "#{__dirname}/app", 'shrub-orm'
 
         gruntConfig.registerTask 'build:shrub-orm', [
           'newer:copy:shrub-orm'
@@ -85,11 +71,11 @@ connection by default, which uses the sails-redis adapter with defaults.
             password: null
             database: null
 
-#### Implements hook `replContext`.
+#### Implements hook `shrubReplContext`.
 
 Provide ORM to the REPL context.
 
-      registrar.registerHook 'replContext', (context) -> context.orm = exports
+      registrar.registerHook 'shrubReplContext', (context) -> context.orm = exports
 
 ## initialize
 

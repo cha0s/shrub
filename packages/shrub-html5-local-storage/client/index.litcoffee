@@ -17,9 +17,9 @@ Set a default prefix and turn off all notification.
 
       ]
 
-#### Implements hook `provider`.
+#### Implements hook `shrubAngularProvider`.
 
-      registrar.registerHook 'provider', -> [
+      registrar.registerHook 'shrubAngularProvider', -> [
         'localStorageServiceProvider'
         (localStorageServiceProvider) ->
 

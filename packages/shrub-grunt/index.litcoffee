@@ -96,9 +96,9 @@ Fork it.
           'grunt-wrap'
         ]
 
-#### Implements hook `gruntConfigAlter`.
+#### Implements hook `shrubGruntConfigAlter`.
 
-      registrar.registerHook 'gruntConfigAlter', (gruntConfig) ->
+      registrar.registerHook 'shrubGruntConfigAlter', (gruntConfig) ->
 
         gruntConfig.registerTask 'build', [
           'build:shrub'

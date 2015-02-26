@@ -148,9 +148,9 @@ Keep track of unread items.
 
       ]
 
-#### Implements hook `service`.
+#### Implements hook `shrubAngularService`.
 
-      registrar.registerHook 'service', -> [
+      registrar.registerHook 'shrubAngularService', -> [
         '$q', 'shrub-rpc', 'shrub-socket'
         ($q, rpc, socket) ->
 

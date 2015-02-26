@@ -1,7 +1,5 @@
 *Define Angular filters.*
 
-Filters allow you to format the value of expressions.
-
 See
 [the Angular documentation](https://docs.angularjs.org/guide/filter#creating-custom-filters)
 for more information about how to define and use filters.

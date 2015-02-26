@@ -12,9 +12,9 @@
 
       registrar.registerHook 'shrubOrmCollectionsAlter', exports.shrubOrmCollectionsAlter
 
-#### Implements hook `service`.
+#### Implements hook `shrubAngularService`.
 
-      registrar.registerHook 'service', -> [
+      registrar.registerHook 'shrubAngularService', -> [
         'shrub-orm', 'shrub-rpc', 'shrub-socket'
         (orm, rpc, socket) ->
 

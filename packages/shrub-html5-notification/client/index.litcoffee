@@ -17,9 +17,9 @@ Shrub defaults.
 
       ]
 
-#### Implements hook `provider`.
+#### Implements hook `shrubAngularProvider`.
 
-      registrar.registerHook 'provider', -> [
+      registrar.registerHook 'shrubAngularProvider', -> [
         'NotificationProvider'
         (NotificationProvider) ->
 
