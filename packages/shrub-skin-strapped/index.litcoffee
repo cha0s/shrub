@@ -27,8 +27,8 @@
 
 Add our future-compiled LESS style sheets.
 
-        assets.styleSheets.default.push 'css/style.css'
-        assets.styleSheets.production.push 'css/style.css'
+        assets.styleSheets.default.push '/css/style.css'
+        assets.styleSheets.production.push '/css/style.css'
 
 #### Implements hook `shrubGruntConfig`.
 
