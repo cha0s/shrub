@@ -15,7 +15,7 @@
       registrar.registerHook 'shrubConfigClient', ->
 
         skinAssets = {}
-        for packagePath in pkgman.packagesImplementing 'skinAssets'
+        for packagePath in pkgman.packagesImplementing 'shrubSkinAssets'
           skinAssets[packagePath] = exports.assets packagePath
 
         default: config.get 'packageSettings:shrub-skin:default'
@@ -239,8 +239,8 @@ production.
             'css/**/*.min.css'
           ]
 
-#### Invoke hook `skinAssets`.
+#### Invoke hook `shrubSkinAssets`.
 
-      pkgman.invokePackage skinKey, 'skinAssets', skinAssets
+      pkgman.invokePackage skinKey, 'shrubSkinAssets', skinAssets
 
       skinAssets
