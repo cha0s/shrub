@@ -51,6 +51,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../../guide/errors">Errors</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../../guide/forms">Form handling</a>
                     
                 </li>
@@ -638,9 +643,9 @@
                             
                                 <li><a class="toctree-l3" href="#implements-hook-shrubcorebootstrapmiddleware">Implements hook shrubCoreBootstrapMiddleware.</a></li>
                             
-                                <li><a class="toctree-l3" href="#invoke-hook-userbeforelogoutmiddleware">Invoke hook userBeforeLogoutMiddleware.</a></li>
+                                <li><a class="toctree-l3" href="#invoke-hook-shrubuserbeforelogoutmiddleware">Invoke hook shrubUserBeforeLogoutMiddleware.</a></li>
                             
-                                <li><a class="toctree-l3" href="#invoke-hook-userafterlogoutmiddleware">Invoke hook userAfterLogoutMiddleware.</a></li>
+                                <li><a class="toctree-l3" href="#invoke-hook-shrubuserafterlogoutmiddleware">Invoke hook shrubUserAfterLogoutMiddleware.</a></li>
                             
                         
                         </ul>
@@ -761,16 +766,14 @@
 
         req = IncomingMessage.prototype
 </code></pre>
-<h4 id="invoke-hook-userbeforelogoutmiddleware">Invoke hook <code>userBeforeLogoutMiddleware</code>.</h4>
-<pre><code>        userBeforeLogoutMiddleware = middleware.fromShortName(
-          'user before logout'
-          'shrub-user'
+<h4 id="invoke-hook-shrubuserbeforelogoutmiddleware">Invoke hook <code>shrubUserBeforeLogoutMiddleware</code>.</h4>
+<pre><code>        beforeLogoutMiddleware = middleware.fromConfig(
+          'shrub-user:beforeLogoutMiddleware'
         )
 </code></pre>
-<h4 id="invoke-hook-userafterlogoutmiddleware">Invoke hook <code>userAfterLogoutMiddleware</code>.</h4>
-<pre><code>        userAfterLogoutMiddleware = middleware.fromShortName(
-          'user after logout'
-          'shrub-user'
+<h4 id="invoke-hook-shrubuserafterlogoutmiddleware">Invoke hook <code>shrubUserAfterLogoutMiddleware</code>.</h4>
+<pre><code>        afterLogoutMiddleware = middleware.fromConfig(
+          'shrub-user:afterLogoutMiddleware'
         )
 
         logout = req.passportLogOut = req.logout
@@ -779,12 +782,12 @@
 
           new Promise (resolve, reject) -&gt;
 
-            userBeforeLogoutMiddleware.dispatch self, (error) -&gt;
+            beforeLogoutMiddleware.dispatch self, (error) -&gt;
               return reject error if error?
 
               logout.call self
 
-              userAfterLogoutMiddleware.dispatch self, (error) -&gt;
+              afterLogoutMiddleware.dispatch self, (error) -&gt;
                 return reject error if error?
 
                 resolve()

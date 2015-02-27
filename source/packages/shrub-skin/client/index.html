@@ -51,6 +51,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../../guide/errors">Errors</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../../guide/forms">Form handling</a>
                     
                 </li>
@@ -461,11 +466,11 @@
                             
                                 <li><a class="toctree-l3" href="#implements-hook-shrubangulardirectivealter">Implements hook shrubAngularDirectiveAlter.</a></li>
                             
-                                <li><a class="toctree-l3" href="#invoke-hook-skinlink">Invoke hook skinLink.</a></li>
+                                <li><a class="toctree-l3" href="#invoke-hook-shrubskinlink">Invoke hook shrubSkinLink.</a></li>
                             
-                                <li><a class="toctree-l3" href="#invoke-hook-skinlink-directive">Invoke hook skinLink--DIRECTIVE.</a></li>
+                                <li><a class="toctree-l3" href="#invoke-hook-shrubskinlink-directive">Invoke hook shrubSkinLink--DIRECTIVE.</a></li>
                             
-                                <li><a class="toctree-l3" href="#invoke-hook-skinlink-directive-id">Invoke hook skinLink--DIRECTIVE--ID.</a></li>
+                                <li><a class="toctree-l3" href="#invoke-hook-shrubskinlink-directive-id">Invoke hook shrubSkinLink--DIRECTIVE--ID.</a></li>
                             
                                 <li><a class="toctree-l3" href="#implements-hook-shrubangularprovider">Implements hook shrubAngularProvider.</a></li>
                             
@@ -832,22 +837,22 @@ descending specificity.</p>
 </code></pre>
 <p>Invoke the candidate link hooks.</p>
 <pre><code>          invocations = [
-            'skinLink'
-            "skinLink--#{directive.name}"
+            'shrubSkinLink'
+            "shrubSkinLink--#{directive.name}"
           ]
 </code></pre>
 <p>Add the candidates in reverse order, so they ascend in specificity.</p>
 <pre><code>          invocations.push(
-            "skinLink--#{directive.name}--#{c}"
+            "shrubSkinLink--#{directive.name}--#{c}"
           ) for c in candidateList.reverse()
 
           for hook in invocations
             continue if candidateHooksInvoked[hook]
             candidateHooksInvoked[hook] = true
 </code></pre>
-<h4 id="invoke-hook-skinlink">Invoke hook <code>skinLink</code>.</h4>
-<h4 id="invoke-hook-skinlink-directive">Invoke hook <code>skinLink--DIRECTIVE</code>.</h4>
-<h4 id="invoke-hook-skinlink-directive-id">Invoke hook <code>skinLink--DIRECTIVE--ID</code>.</h4>
+<h4 id="invoke-hook-shrubskinlink">Invoke hook <code>shrubSkinLink</code>.</h4>
+<h4 id="invoke-hook-shrubskinlink-directive">Invoke hook <code>shrubSkinLink--DIRECTIVE</code>.</h4>
+<h4 id="invoke-hook-shrubskinlink-directive-id">Invoke hook <code>shrubSkinLink--DIRECTIVE--ID</code>.</h4>
 <pre><code>            for f in pkgman.invokeFlat hook
 
               $injector.invoke(

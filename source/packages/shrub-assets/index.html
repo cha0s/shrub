@@ -51,6 +51,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../guide/errors">Errors</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../guide/forms">Form handling</a>
                     
                 </li>
@@ -758,21 +763,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 <h4 id="implements-hook-shrubgruntconfig">Implements hook <code>shrubGruntConfig</code>.</h4>
 <pre><code>  registrar.registerHook 'shrubGruntConfig', (gruntConfig) -&gt;
 
-    gruntConfig.configureTask 'copy', 'shrub-assets', files: [
-      src: '**/*'
-      dest: 'app'
-      expand: true
-      cwd: "#{__dirname}/app"
-    ]
-
-    gruntConfig.configureTask(
-      'watch', 'shrub-assets'
-
-      files: [
-        "#{__dirname}/app/**/*"
-      ]
-      tasks: 'build:shrub-assets'
-    )
+    gruntConfig.copyAppFiles "#{__dirname}/app", 'shrub-assets'
 
     gruntConfig.registerTask 'build:shrub-assets', [
       'newer:copy:shrub-assets'

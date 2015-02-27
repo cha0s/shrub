@@ -21,14 +21,14 @@
 
         $('noscript', $body).remove()
 
-#### Implements hook `skinAssets`.
+#### Implements hook `shrubSkinAssets`.
 
-      registrar.registerHook 'skinAssets', (assets) ->
+      registrar.registerHook 'shrubSkinAssets', (assets) ->
 
 Add our future-compiled LESS style sheets.
 
-        assets.styleSheets.default.push 'css/style.css'
-        assets.styleSheets.production.push 'css/style.css'
+        assets.styleSheets.default.push '/css/style.css'
+        assets.styleSheets.production.push '/css/style.css'
 
 #### Implements hook `shrubGruntConfig`.
 

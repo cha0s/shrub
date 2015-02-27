@@ -51,6 +51,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../guide/errors">Errors</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../guide/forms">Form handling</a>
                     
                 </li>
@@ -752,7 +757,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 <pre><code>  registrar.registerHook 'shrubConfigClient', -&gt;
 
     skinAssets = {}
-    for packagePath in pkgman.packagesImplementing 'skinAssets'
+    for packagePath in pkgman.packagesImplementing 'shrubSkinAssets'
       skinAssets[packagePath] = exports.assets packagePath
 
     default: config.get 'packageSettings:shrub-skin:default'
@@ -956,8 +961,8 @@ production.</p>
         'css/**/*.min.css'
       ]
 </code></pre>
-<h4 id="invoke-hook-skinassets">Invoke hook <code>skinAssets</code>.</h4>
-<pre><code>  pkgman.invokePackage skinKey, 'skinAssets', skinAssets
+<h4 id="invoke-hook-shrubskinassets">Invoke hook <code>shrubSkinAssets</code>.</h4>
+<pre><code>  pkgman.invokePackage skinKey, 'shrubSkinAssets', skinAssets
 
   skinAssets
 </code></pre>

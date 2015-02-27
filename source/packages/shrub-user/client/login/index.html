@@ -51,6 +51,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../../../guide/errors">Errors</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../../../guide/forms">Form handling</a>
                     
                 </li>
@@ -599,7 +604,7 @@
                         
                             <li class="toctree-l2"><a href="#user-login">User login</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-transmittableerror">Implements hook transmittableError.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubtransmittableerrors">Implements hook shrubTransmittableErrors.</a></li>
                             
                                 <li><a class="toctree-l3" href="#implements-hook-shrubangularroutes">Implements hook shrubAngularRoutes.</a></li>
                             
@@ -727,10 +732,12 @@
               <h1 id="user-login">User login</h1>
 <pre><code>config = require 'config'
 
+{TransmittableError} = require 'errors'
+
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h4 id="implements-hook-transmittableerror">Implements hook <code>transmittableError</code>.</h4>
-<pre><code>  registrar.registerHook 'transmittableError', exports.transmittableError
+<h4 id="implements-hook-shrubtransmittableerrors">Implements hook <code>shrubTransmittableErrors</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubTransmittableErrors', exports.shrubTransmittableErrors
 </code></pre>
 <h4 id="implements-hook-shrubangularroutes">Implements hook <code>shrubAngularRoutes</code>.</h4>
 <pre><code>  registrar.registerHook 'shrubAngularRoutes', -&gt;
@@ -818,17 +825,14 @@ exports.pkgmanRegister = (registrar) -&gt;
     return routes
 </code></pre>
 <p>Transmittable login error.</p>
-<pre><code>LoginError = null
+<pre><code>class LoginError extends TransmittableError
 
-exports.transmittableError = -&gt;
-  return LoginError if LoginError?
+  key: 'login'
+  template: 'No such username/password.'
 
-  errors = require 'errors'
-
-  LoginError = class LoginError extends errors.TransmittableError
-
-    key: 'login'
-    template: 'No such username/password.'
+exports.shrubTransmittableErrors = -&gt; [
+  LoginError
+]
 </code></pre>
 
             </div>

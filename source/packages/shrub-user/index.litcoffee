@@ -314,9 +314,9 @@ Decrypt the e-mail if redacting for the same user.
           'shrub-user'
         ]
 
-#### Implements hook `socketAuthorizationMiddleware`.
+#### Implements hook `shrubSocketAuthorizationMiddleware`.
 
-      registrar.registerHook 'socketAuthorizationMiddleware', ->
+      registrar.registerHook 'shrubSocketAuthorizationMiddleware', ->
 
         label: 'Load user using passport'
         middleware: [
@@ -343,9 +343,9 @@ Set the user into the request.
 
         ]
 
-#### Implements hook `socketConnectionMiddleware`.
+#### Implements hook `shrubSocketConnectionMiddleware`.
 
-      registrar.registerHook 'socketConnectionMiddleware', ->
+      registrar.registerHook 'shrubSocketConnectionMiddleware', ->
 
         label: 'Join channel for user'
         middleware: [
@@ -360,9 +360,9 @@ Join a channel for the username.
 
         ]
 
-#### Implements hook `userBeforeLogoutMiddleware`.
+#### Implements hook `shrubUserBeforeLogoutMiddleware`.
 
-      registrar.registerHook 'userBeforeLogoutMiddleware', ->
+      registrar.registerHook 'shrubUserBeforeLogoutMiddleware', ->
 
         label: 'Tell client to log out, and leave the user channel'
         middleware: [
@@ -384,9 +384,9 @@ Leave the user channel.
 
         ]
 
-#### Implements hook `userAfterLogoutMiddleware`.
+#### Implements hook `shrubUserAfterLogoutMiddleware`.
 
-      registrar.registerHook 'userAfterLogoutMiddleware', ->
+      registrar.registerHook 'shrubUserAfterLogoutMiddleware', ->
 
         label: 'Instantiate anonymous user'
         middleware: [

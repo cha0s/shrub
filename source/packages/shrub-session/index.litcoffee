@@ -78,9 +78,9 @@ The max age of this session. Defaults to two weeks.
 
           maxAge: 1000 * 60 * 60 * 24 * 14
 
-#### Implements hook `socketConnectionMiddleware`.
+#### Implements hook `shrubSocketConnectionMiddleware`.
 
-      registrar.registerHook 'socketConnectionMiddleware', ->
+      registrar.registerHook 'shrubSocketConnectionMiddleware', ->
 
         label: 'Join channel for session'
         middleware: [

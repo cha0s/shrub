@@ -51,6 +51,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../../guide/errors">Errors</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../../guide/forms">Form handling</a>
                     
                 </li>
@@ -365,7 +370,7 @@
                             
                                 <li><a class="toctree-l3" href="#implements-hook-shrubhttpmiddleware">Implements hook shrubHttpMiddleware.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-socketauthorizationmiddleware">Implements hook socketAuthorizationMiddleware.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubsocketauthorizationmiddleware">Implements hook shrubSocketAuthorizationMiddleware.</a></li>
                             
                         
                         </ul>
@@ -824,8 +829,8 @@ be pointing at anything yet.</p>
 
     ]
 </code></pre>
-<h4 id="implements-hook-socketauthorizationmiddleware">Implements hook <code>socketAuthorizationMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'socketAuthorizationMiddleware', -&gt;
+<h4 id="implements-hook-shrubsocketauthorizationmiddleware">Implements hook <code>shrubSocketAuthorizationMiddleware</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubSocketAuthorizationMiddleware', -&gt;
 
     {key} = config.get 'packageSettings:shrub-session'
 

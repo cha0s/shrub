@@ -5,6 +5,10 @@
     Promise = null
 
     config = null
+    errors = null
+    logging = null
+
+    socketLogger = null
 
     SocketManager = require '../shrub-socket/manager'
 
@@ -15,9 +19,13 @@
       constructor: ->
         super
 
-        Promise = require 'bluebird'
+        Promise ?= require 'bluebird'
 
         config ?= require 'config'
+        errors ?= require 'errors'
+        logging ?= require 'logging'
+
+        socketLogger ?= logging.create 'logs/socket.io.log'
 
         options = config.get 'packageSettings:shrub-socket:manager:options'
 
@@ -123,18 +131,18 @@ Run the disconnection middleware on socket close.
           oncloseProxy = socket.onclose
           socket.onclose = =>
             @_disconnectionMiddleware.dispatch socket.request, null, (error) ->
-              return logger.error errors.stack error if error?
+              return socketLogger.error errors.stack error if error?
 
             oncloseProxy.call socket
 
 Join a '$global' channel.
 
           socket.join '$global', (error) =>
-            return logger.error errors.stack error if error?
+            return socketLogger.error errors.stack error if error?
 
 Dispatch the connection middleware.
 
             @_connectionMiddleware.dispatch socket.request, null, (error) ->
-              return logger.error errors.stack error if error?
+              return socketLogger.error errors.stack error if error?
 
               socket.emit 'initialized'

@@ -51,6 +51,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../guide/errors">Errors</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../guide/forms">Form handling</a>
                     
                 </li>
@@ -100,13 +105,13 @@
                             
                                 <li><a class="toctree-l3" href="#gruntconfigurationconfiguretask">GruntConfiguration#configureTask</a></li>
                             
-                                <li><a class="toctree-l3" href="#gruntconfigurationbuild">GruntConfiguration#build</a></li>
-                            
                                 <li><a class="toctree-l3" href="#gruntconfigurationtaskconfiguration">GruntConfiguration#taskConfiguration</a></li>
                             
                                 <li><a class="toctree-l3" href="#gruntconfigurationloadnpmtasks">GruntConfiguration#loadNpmTasks</a></li>
                             
                                 <li><a class="toctree-l3" href="#gruntconfigurationregistertask">GruntConfiguration#registerTask</a></li>
+                            
+                                <li><a class="toctree-l3" href="#gruntconfigurationcopyappfiles">GruntConfiguration#copyAppFiles</a></li>
                             
                         
                         </ul>
@@ -793,25 +798,6 @@ module.exports = (grunt) -&gt;
 
       return
 </code></pre>
-<h2 id="gruntconfigurationbuild">GruntConfiguration#build</h2>
-<p><em>Register and configure all tasks.</em></p>
-<pre><code>    build: -&gt;
-</code></pre>
-<p>Initialize configuration.</p>
-<pre><code>      grunt.initConfig @_taskConfig
-</code></pre>
-<p>Load NPM tasks.</p>
-<pre><code>      npmTasksLoaded = {}
-      for task in @_npmTasks
-        continue if npmTasksLoaded[task]?
-        npmTasksLoaded[task] = true
-        grunt.loadNpmTasks task
-</code></pre>
-<p>Register custom tasks.</p>
-<pre><code>      grunt.registerTask task, actions for task, actions of @_tasks
-
-      return
-</code></pre>
 <h2 id="gruntconfigurationtaskconfiguration">GruntConfiguration#taskConfiguration</h2>
 <ul>
 <li>(String) <code>task</code> - The name of the task to configure.</li>
@@ -848,6 +834,34 @@ module.exports = (grunt) -&gt;
         (@_tasks[task] ?= []).push subtasksOrFunction...
 
       return
+</code></pre>
+<h2 id="gruntconfigurationcopyappfiles">GruntConfiguration#copyAppFiles</h2>
+<ul>
+<li>(String) <code>path</code> - The path of the files to copy.</li>
+<li>(String) <code>key</code> - The name of the key in the task configuration to set. This</li>
+<li>(Array) <code>watchTasks</code> - An array of tasks to run when any of the files in the
+  directory to move are added, updated or deleted.</li>
+</ul>
+<p><em>Copy package files to <code>app</code>.</em></p>
+<pre><code>    copyAppFiles: (path, key, watchTasks) -&gt;
+
+      watchTasks ?= ["build:#{key}"]
+
+      gruntConfig.configureTask 'copy', key, files: [
+        src: '**/*'
+        dest: 'app'
+        expand: true
+        cwd: path
+      ]
+
+      gruntConfig.configureTask(
+        'watch', key
+
+        files: [
+          "#{path}/**/*"
+        ]
+        tasks: watchTasks
+      )
 
   gruntConfig = new GruntConfiguration()
 
@@ -868,8 +882,18 @@ module.exports = (grunt) -&gt;
 <h4 id="invoke-hook-shrubgruntconfigalter">Invoke hook <code>shrubGruntConfigAlter</code>.</h4>
 <pre><code>  pkgman.invoke 'shrubGruntConfigAlter', gruntConfig, grunt
 </code></pre>
-<p>Kick off the build process.</p>
-<pre><code>  gruntConfig.build()
+<p>Initialize configuration.</p>
+<pre><code>  grunt.initConfig gruntConfig._taskConfig
+</code></pre>
+<p>Load NPM tasks.</p>
+<pre><code>  npmTasksLoaded = {}
+  for task in gruntConfig._npmTasks
+    continue if npmTasksLoaded[task]?
+    npmTasksLoaded[task] = true
+    grunt.loadNpmTasks task
+</code></pre>
+<p>Register custom tasks.</p>
+<pre><code>  grunt.registerTask task, actions for task, actions of gruntConfig._tasks
 </code></pre>
 
             </div>

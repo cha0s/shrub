@@ -51,6 +51,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../../guide/errors">Errors</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../../guide/forms">Form handling</a>
                     
                 </li>
@@ -737,6 +742,10 @@
 <pre><code>Promise = null
 
 config = null
+errors = null
+logging = null
+
+socketLogger = null
 
 SocketManager = require '../shrub-socket/manager'
 
@@ -746,9 +755,13 @@ module.exports = class SocketIoManager extends SocketManager
 <pre><code>  constructor: -&gt;
     super
 
-    Promise = require 'bluebird'
+    Promise ?= require 'bluebird'
 
     config ?= require 'config'
+    errors ?= require 'errors'
+    logging ?= require 'logging'
+
+    socketLogger ?= logging.create 'logs/socket.io.log'
 
     options = config.get 'packageSettings:shrub-socket:manager:options'
 </code></pre>
@@ -841,17 +854,17 @@ module.exports = class SocketIoManager extends SocketManager
 <pre><code>      oncloseProxy = socket.onclose
       socket.onclose = =&gt;
         @_disconnectionMiddleware.dispatch socket.request, null, (error) -&gt;
-          return logger.error errors.stack error if error?
+          return socketLogger.error errors.stack error if error?
 
         oncloseProxy.call socket
 </code></pre>
 <p>Join a '$global' channel.</p>
 <pre><code>      socket.join '$global', (error) =&gt;
-        return logger.error errors.stack error if error?
+        return socketLogger.error errors.stack error if error?
 </code></pre>
 <p>Dispatch the connection middleware.</p>
 <pre><code>        @_connectionMiddleware.dispatch socket.request, null, (error) -&gt;
-          return logger.error errors.stack error if error?
+          return socketLogger.error errors.stack error if error?
 
           socket.emit 'initialized'
 </code></pre>

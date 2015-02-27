@@ -51,6 +51,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../guide/errors">Errors</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../guide/forms">Form handling</a>
                     
                 </li>
@@ -657,7 +662,7 @@
                             
                                 <li><a class="toctree-l3" href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-socketauthorizationmiddleware">Implements hook socketAuthorizationMiddleware.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubsocketauthorizationmiddleware">Implements hook shrubSocketAuthorizationMiddleware.</a></li>
                             
                         
                         </ul>
@@ -858,8 +863,8 @@ exports.pkgmanRegister = (registrar) -&gt;
 <p>10 minute ban time by default.</p>
 <pre><code>      defaultExpiration: 1000 * 60 * 10
 </code></pre>
-<h4 id="implements-hook-socketauthorizationmiddleware">Implements hook <code>socketAuthorizationMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'socketAuthorizationMiddleware', -&gt;
+<h4 id="implements-hook-shrubsocketauthorizationmiddleware">Implements hook <code>shrubSocketAuthorizationMiddleware</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubSocketAuthorizationMiddleware', -&gt;
 
     {AuthorizationFailure} = require 'shrub-socket/manager'
 

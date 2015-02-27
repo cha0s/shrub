@@ -51,6 +51,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../guide/errors">Errors</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../guide/forms">Form handling</a>
                     
                 </li>
@@ -456,7 +461,7 @@
                             
                                 <li><a class="toctree-l3" href="#implements-hook-shrubnodemailerhtml">Implements hook shrubNodemailerHtml.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-skinassets">Implements hook skinAssets.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubskinassets">Implements hook shrubSkinAssets.</a></li>
                             
                                 <li><a class="toctree-l3" href="#implements-hook-shrubgruntconfig">Implements hook shrubGruntConfig.</a></li>
                             
@@ -746,12 +751,12 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     $('noscript', $body).remove()
 </code></pre>
-<h4 id="implements-hook-skinassets">Implements hook <code>skinAssets</code>.</h4>
-<pre><code>  registrar.registerHook 'skinAssets', (assets) -&gt;
+<h4 id="implements-hook-shrubskinassets">Implements hook <code>shrubSkinAssets</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubSkinAssets', (assets) -&gt;
 </code></pre>
 <p>Add our future-compiled LESS style sheets.</p>
-<pre><code>    assets.styleSheets.default.push 'css/style.css'
-    assets.styleSheets.production.push 'css/style.css'
+<pre><code>    assets.styleSheets.default.push '/css/style.css'
+    assets.styleSheets.production.push '/css/style.css'
 </code></pre>
 <h4 id="implements-hook-shrubgruntconfig">Implements hook <code>shrubGruntConfig</code>.</h4>
 <pre><code>  registrar.registerHook 'shrubGruntConfig', (gruntConfig) -&gt;

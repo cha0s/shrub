@@ -51,6 +51,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../../../guide/errors">Errors</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../../../guide/forms">Form handling</a>
                     
                 </li>
@@ -971,9 +976,7 @@ portion from the end of the filename.</p>
           packageName = parts.join '/'
 
           types = types.map (type) -&gt;
-            packageNameParts = packageName.split '/'
-            packageNameParts.pop() if packageNameParts[packageNameParts.length - 1] isnt type
-            "    * [#{_sourcePath file} (#{type})](packages/##{_idFromString packageNameParts.join '/'}) &amp;mdash; [#{key}](source/#{_sourcePath fullName}##{wordingFor[key]}-hook-#{_idFromString hook}) \n"
+            "    * [#{_sourcePath file} (#{type})](source/#{_sourcePath fullName}) &amp;mdash; [#{key}](source/#{_sourcePath fullName}##{wordingFor[key]}-hook-#{_idFromString hook}) \n"
           types.join ''
 
         render += instances.join ''
@@ -1027,7 +1030,7 @@ render it as h2 (TODO are h6) to increase visibility.</p>
       else
         idMap[id] = 0
 
-      render += "###### the above found in [#{fileStats.file}:#{todo.index}](source/#{filename}##{id})\n"
+      render += "[the above found in #{fileStats.file}:#{todo.index}](source/#{filename}##{id})\n"
 
   new Promise (resolve, reject) -&gt;
     fs.writeFile 'docs/todos.md', render, (error) -&gt;

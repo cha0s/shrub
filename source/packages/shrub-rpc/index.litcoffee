@@ -63,9 +63,9 @@ Set up the validators as middleware.
 
         ]
 
-#### Implements hook `socketConnectionMiddleware`.
+#### Implements hook `shrubSocketConnectionMiddleware`.
 
-      registrar.registerHook 'socketConnectionMiddleware', ->
+      registrar.registerHook 'shrubSocketConnectionMiddleware', ->
 
         Promise = require 'bluebird'
 

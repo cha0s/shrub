@@ -16,8 +16,10 @@ Implement a TransmittableError to inform the user of limiter threshold passing.
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `transmittableError`.
+#### Implements hook `shrubTransmittableErrors`.
 
-      registrar.registerHook 'transmittableError', exports.transmittableError
+      registrar.registerHook 'shrubTransmittableErrors', exports.shrubTransmittableErrors
 
-    exports.transmittableError = -> LimiterThresholdError
+    exports.shrubTransmittableErrors = -> [
+      LimiterThresholdError
+    ]

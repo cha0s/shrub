@@ -35,25 +35,22 @@ real error occurred, but authorization failed.
 
         middleware = require 'middleware'
 
-#### Invoke hook `socketAuthorizationMiddleware`.
+#### Invoke hook `shrubSocketAuthorizationMiddleware`.
 
-        @_authorizationMiddleware = middleware.fromShortName(
-          'socket authorization'
-          'shrub-socket'
+        @_authorizationMiddleware = middleware.fromConfig(
+          'shrub-socket:authorizationMiddleware'
         )
 
-#### Invoke hook `socketConnectionMiddleware`.
+#### Invoke hook `shrubSocketConnectionMiddleware`.
 
-        @_connectionMiddleware = middleware.fromShortName(
-          'socket connection'
-          'shrub-socket'
+        @_connectionMiddleware = middleware.fromConfig(
+          'shrub-socket:connectionMiddleware'
         )
 
-#### Invoke hook `socketDisconnectionMiddleware`.
+#### Invoke hook `shrubSocketDisconnectionMiddleware`.
 
-        @_disconnectionMiddleware = middleware.fromShortName(
-          'socket disconnection'
-          'shrub-socket'
+        @_disconnectionMiddleware = middleware.fromConfig(
+          'shrub-socket:disconnectionMiddleware'
         )
 
 Ensure any subclass implements these "pure virtual" methods.

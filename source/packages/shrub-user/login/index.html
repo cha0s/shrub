@@ -51,6 +51,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../../guide/errors">Errors</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../../guide/forms">Form handling</a>
                     
                 </li>
@@ -638,13 +643,13 @@
                                 <li><a class="toctree-l3" href="#todo-strategies-should-be-dynamically-defined-through-a-hook">TODO: Strategies should be dynamically defined through a hook.</a></li>
                             
                         
-                            <li class="toctree-l2"><a href="#implements-hook-transmittableerror">Implements hook transmittableError.</a></li>
+                            <li class="toctree-l2"><a href="#implements-hook-shrubtransmittableerrors">Implements hook shrubTransmittableErrors.</a></li>
                             
                         
-                            <li class="toctree-l2"><a href="#invoke-hook-userbeforeloginmiddleware">Invoke hook userBeforeLoginMiddleware.</a></li>
+                            <li class="toctree-l2"><a href="#invoke-hook-shrubuserbeforeloginmiddleware">Invoke hook shrubUserBeforeLoginMiddleware.</a></li>
                             
                         
-                            <li class="toctree-l2"><a href="#invoke-hook-userafterloginmiddleware">Invoke hook userAfterLoginMiddleware.</a></li>
+                            <li class="toctree-l2"><a href="#invoke-hook-shrubuserafterloginmiddleware">Invoke hook shrubUserAfterLoginMiddleware.</a></li>
                             
                         
                         </ul>
@@ -856,8 +861,8 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     ]
 </code></pre>
-<h4 id="implements-hook-transmittableerror">Implements hook <code>transmittableError</code>.</h4>
-<pre><code>  registrar.registerHook 'transmittableError', clientModule.transmittableError
+<h4 id="implements-hook-shrubtransmittableerrors">Implements hook <code>shrubTransmittableErrors</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubTransmittableErrors', clientModule.shrubTransmittableErrors
 </code></pre>
 <p>Monkey patch http.IncomingMessage.prototype.login to run our middleware, and
 return a promise.</p>
@@ -869,16 +874,14 @@ return a promise.</p>
 
   req = IncomingMessage.prototype
 </code></pre>
-<h4 id="invoke-hook-userbeforeloginmiddleware">Invoke hook <code>userBeforeLoginMiddleware</code>.</h4>
-<pre><code>  userBeforeLoginMiddleware = middleware.fromShortName(
-    'user before login'
-    'shrub-user'
+<h4 id="invoke-hook-shrubuserbeforeloginmiddleware">Invoke hook <code>shrubUserBeforeLoginMiddleware</code>.</h4>
+<pre><code>  beforeLoginMiddleware = middleware.fromConfig(
+    'shrub-user:beforeLoginMiddleware'
   )
 </code></pre>
-<h4 id="invoke-hook-userafterloginmiddleware">Invoke hook <code>userAfterLoginMiddleware</code>.</h4>
-<pre><code>  userAfterLoginMiddleware = middleware.fromShortName(
-    'user after login'
-    'shrub-user'
+<h4 id="invoke-hook-shrubuserafterloginmiddleware">Invoke hook <code>shrubUserAfterLoginMiddleware</code>.</h4>
+<pre><code>  afterLoginMiddleware = middleware.fromConfig(
+    'shrub-user:afterLoginMiddleware'
   )
 
   login = req.passportLogIn = req.login
@@ -888,13 +891,13 @@ return a promise.</p>
 
       loginReq = req: this, user: user
 
-      userBeforeLoginMiddleware.dispatch loginReq, null, (error) =&gt;
+      beforeLoginMiddleware.dispatch loginReq, null, (error) =&gt;
         return reject error if error?
 
         login.call this, loginReq.user, (error) -&gt;
           return reject error if error?
 
-          userAfterLoginMiddleware.dispatch loginReq, null, (error) -&gt;
+          afterLoginMiddleware.dispatch loginReq, null, (error) -&gt;
             return reject error if error?
 
             resolve()

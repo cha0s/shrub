@@ -2,6 +2,8 @@
 
     pkgman = require 'pkgman'
 
+## TransmittableError
+
     exports.TransmittableError = class TransmittableError extends Error
 
 Extend this class if you'd like to implement an error
@@ -154,7 +156,9 @@ Prepend our pretty formatted message before the stack trace.
 
     exports.transmittableErrors = ->
 
-#### Invoke hook `transmittableError`.
+      _ = require 'lodash'
+
+#### Invoke hook `shrubTransmittableErrors`.
 
 Allows packages to specify transmittable errors. Implementations should return
 a subclass of `TransmittableError`.
@@ -162,7 +166,7 @@ a subclass of `TransmittableError`.
       Types = {}
 
       Types[Type::key] = Type for Type in [TransmittableError].concat(
-        pkgman.invokeFlat 'transmittableError'
+        _.flatten pkgman.invokeFlat 'shrubTransmittableErrors'
       )
 
       Types

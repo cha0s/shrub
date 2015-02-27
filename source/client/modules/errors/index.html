@@ -51,6 +51,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../../guide/errors">Errors</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../../guide/forms">Form handling</a>
                     
                 </li>
@@ -113,6 +118,8 @@
                         <ul>
                         
                             <li class="toctree-l2"><a href="#error-handling">Error handling</a></li>
+                            
+                                <li><a class="toctree-l3" href="#transmittableerror">TransmittableError</a></li>
                             
                                 <li><a class="toctree-l3" href="#constructor">constructor</a></li>
                             
@@ -742,8 +749,9 @@
             <div class="section">
               <h1 id="error-handling">Error handling</h1>
 <pre><code>pkgman = require 'pkgman'
-
-exports.TransmittableError = class TransmittableError extends Error
+</code></pre>
+<h2 id="transmittableerror">TransmittableError</h2>
+<pre><code>exports.TransmittableError = class TransmittableError extends Error
 </code></pre>
 <p>Extend this class if you'd like to implement an error</p>
 <h2 id="constructor"><em>constructor</em></h2>
@@ -864,14 +872,16 @@ anyway.</p>
 <h2 id="errorstransmittableerrors">errors.transmittableErrors</h2>
 <p><em>Collect the error types implemented by packages.</em></p>
 <pre><code>exports.transmittableErrors = -&gt;
+
+  _ = require 'lodash'
 </code></pre>
-<h4 id="invoke-hook-transmittableerror">Invoke hook <code>transmittableError</code>.</h4>
+<h4 id="invoke-hook-shrubtransmittableerrors">Invoke hook <code>shrubTransmittableErrors</code>.</h4>
 <p>Allows packages to specify transmittable errors. Implementations should return
 a subclass of <code>TransmittableError</code>.</p>
 <pre><code>  Types = {}
 
   Types[Type::key] = Type for Type in [TransmittableError].concat(
-    pkgman.invokeFlat 'transmittableError'
+    _.flatten pkgman.invokeFlat 'shrubTransmittableErrors'
   )
 
   Types

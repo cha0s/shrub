@@ -111,23 +111,23 @@ Call directive link function.
 Invoke the candidate link hooks.
 
               invocations = [
-                'skinLink'
-                "skinLink--#{directive.name}"
+                'shrubSkinLink'
+                "shrubSkinLink--#{directive.name}"
               ]
 
 Add the candidates in reverse order, so they ascend in specificity.
 
               invocations.push(
-                "skinLink--#{directive.name}--#{c}"
+                "shrubSkinLink--#{directive.name}--#{c}"
               ) for c in candidateList.reverse()
 
               for hook in invocations
                 continue if candidateHooksInvoked[hook]
                 candidateHooksInvoked[hook] = true
 
-#### Invoke hook `skinLink`.
-#### Invoke hook `skinLink--DIRECTIVE`.
-#### Invoke hook `skinLink--DIRECTIVE--ID`.
+#### Invoke hook `shrubSkinLink`.
+#### Invoke hook `shrubSkinLink--DIRECTIVE`.
+#### Invoke hook `shrubSkinLink--DIRECTIVE--ID`.
 
                 for f in pkgman.invokeFlat hook
 

@@ -51,6 +51,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../guide/errors">Errors</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../guide/forms">Form handling</a>
                     
                 </li>
@@ -432,7 +437,7 @@
                             
                                 <li><a class="toctree-l3" href="#invoke-hook-shrubrpcroutesalter">Invoke hook shrubRpcRoutesAlter.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-socketconnectionmiddleware">Implements hook socketConnectionMiddleware.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubsocketconnectionmiddleware">Implements hook shrubSocketConnectionMiddleware.</a></li>
                             
                                 <li><a class="toctree-l3" href="#invoke-hook-shrubrpcroutefinish">Invoke hook shrubRpcRouteFinish.</a></li>
                             
@@ -788,8 +793,8 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     ]
 </code></pre>
-<h4 id="implements-hook-socketconnectionmiddleware">Implements hook <code>socketConnectionMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'socketConnectionMiddleware', -&gt;
+<h4 id="implements-hook-shrubsocketconnectionmiddleware">Implements hook <code>shrubSocketConnectionMiddleware</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubSocketConnectionMiddleware', -&gt;
 
     Promise = require 'bluebird'
 

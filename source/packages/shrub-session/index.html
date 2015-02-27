@@ -51,6 +51,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../guide/errors">Errors</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../guide/forms">Form handling</a>
                     
                 </li>
@@ -437,7 +442,7 @@
                             
                                 <li><a class="toctree-l3" href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-socketconnectionmiddleware">Implements hook socketConnectionMiddleware.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubsocketconnectionmiddleware">Implements hook shrubSocketConnectionMiddleware.</a></li>
                             
                         
                         </ul>
@@ -793,8 +798,8 @@ exports.pkgmanRegister = (registrar) -&gt;
 <p>The max age of this session. Defaults to two weeks.</p>
 <pre><code>      maxAge: 1000 * 60 * 60 * 24 * 14
 </code></pre>
-<h4 id="implements-hook-socketconnectionmiddleware">Implements hook <code>socketConnectionMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'socketConnectionMiddleware', -&gt;
+<h4 id="implements-hook-shrubsocketconnectionmiddleware">Implements hook <code>shrubSocketConnectionMiddleware</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubSocketConnectionMiddleware', -&gt;
 
     label: 'Join channel for session'
     middleware: [

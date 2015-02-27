@@ -51,6 +51,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../../guide/errors">Errors</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../../guide/forms">Form handling</a>
                     
                 </li>
@@ -469,6 +474,8 @@
                         
                             <li class="toctree-l2"><a href="#socketio-socket">Socket.IO socket</a></li>
                             
+                                <li><a class="toctree-l3" href="#todo-need-to-handle-connection-errors">TODO: Need to handle connection errors.</a></li>
+                            
                                 <li><a class="toctree-l3" href="#constructor">constructor*</a></li>
                             
                                 <li><a class="toctree-l3" href="#socketiosocketdisconnect">SocketIoSocket#disconnect</a></li>
@@ -730,6 +737,7 @@
             <div class="section">
               <h1 id="socketio-socket">Socket.IO socket</h1>
 <p><em>Provide an Angular service wrapping Socket.IO.</em></p>
+<h6 id="todo-need-to-handle-connection-errors">TODO: Need to handle connection errors.</h6>
 <pre><code>config = require 'config'
 debug = require('debug') 'shrub:socket.io'
 

@@ -51,6 +51,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../../guide/errors">Errors</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../../guide/forms">Form handling</a>
                     
                 </li>
@@ -133,8 +138,6 @@
                                 <li><a class="toctree-l3" href="#middlewarefromhook">middleware.fromHook</a></li>
                             
                                 <li><a class="toctree-l3" href="#middlewarefromconfig">middleware.fromConfig</a></li>
-                            
-                                <li><a class="toctree-l3" href="#middlewarefromshortname">middleware.fromShortName</a></li>
                             
                         
                         </ul>
@@ -858,53 +861,14 @@ debugSilly = require('debug') 'shrub-silly:middleware'
 <h2 id="middlewarefromconfig">middleware.fromConfig</h2>
 <p><em>Create a middleware stack from a configuration path.</em></p>
 <pre><code>exports.fromConfig = (path, args...) -&gt;
-
-  configKey = if global? then 'packageSettings' else 'packageConfig'
+</code></pre>
+<h6 id="todo-unify-on-packages">TODO: Unify on <code>'packages'</code>.</h6>
+<pre><code>  configKey = if global? then 'packageSettings' else 'packageConfig'
 
   exports.fromHook(
     pkgman.normalizePath path
     config.get "#{configKey}:#{path}"
   )
-</code></pre>
-<h2 id="middlewarefromshortname">middleware.fromShortName</h2>
-<p><em>Create a middleware stack from a short name. e.g. "example thing hook".</em></p>
-<p>The short name is converted into log messages, a hook name, and configuration
-key. In the case where we passed in "user before login", this would look
-like:</p>
-<pre><code class="coffeescript">debug &quot;Loading user before login middleware...&quot;
-
-middleware = exports.fromHook(
-    &quot;userBeforeLoginMiddleware&quot;
-    config.get &quot;packageSettings:user:beforeLoginMiddleware&quot;
-)
-
-debug &quot;User before login middleware loaded.&quot;
-</code></pre>
-
-<h6 id="todo-this-is-bad-and-it-should-go-away">TODO: This is bad and it should go away.</h6>
-<pre><code>exports.fromShortName = (shortName, packageName) -&gt;
-
-  i8n = require 'inflection'
-
-  debugSilly "- Loading #{shortName} middleware..."
-
-  [firstPart, keyParts...] = shortName.split ' '
-  packageName ?= firstPart
-  key = keyParts.join '_'
-</code></pre>
-<h6 id="todo-this-really-should-be-unified-making-this-unnecessary">TODO: this really should be unified, making this unnecessary.</h6>
-<pre><code>  configKey = if global? then 'packageSettings' else 'packageConfig'
-
-  middleware = exports.fromHook(
-    "#{firstPart}#{i8n.camelize key}Middleware"
-</code></pre>
-<h6 id="todo-multiline">TODO: Multiline</h6>
-<pre><code>    config.get "#{configKey}:#{packageName}:#{i8n.camelize key, true}Middleware"
-  )
-
-  debugSilly "- #{i8n.capitalize shortName} middleware loaded."
-
-  middleware
 </code></pre>
 
             </div>

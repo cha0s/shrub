@@ -8,21 +8,7 @@
 
       registrar.registerHook 'shrubGruntConfig', (gruntConfig) ->
 
-        gruntConfig.configureTask 'copy', 'shrub-html5-local-storage', files: [
-          src: '**/*'
-          dest: 'app'
-          expand: true
-          cwd: "#{__dirname}/app"
-        ]
-
-        gruntConfig.configureTask(
-          'watch', 'shrub-html5-local-storage'
-
-          files: [
-            "#{__dirname}/app/**/*"
-          ]
-          tasks: 'build:shrub-html5-local-storage'
-        )
+        gruntConfig.copyAppFiles "#{__dirname}/app", 'shrub-html5-local-storage'
 
         gruntConfig.registerTask 'build:shrub-html5-local-storage', [
           'newer:copy:shrub-html5-local-storage'

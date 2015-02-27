@@ -51,6 +51,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../../guide/errors">Errors</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../../guide/forms">Form handling</a>
                     
                 </li>
@@ -152,7 +157,7 @@
                     
                         <ul>
                         
-                            <li class="toctree-l2"><a href="#core-client-functionality">Core client functionality.</a></li>
+                            <li class="toctree-l2"><a href="#angular">Angular</a></li>
                             
                                 <li><a class="toctree-l3" href="#implements-hook-shrubangularahrefsanitizationwhitelist">Implements hook shrubAngularAHrefSanitizationWhitelist.</a></li>
                             
@@ -730,7 +735,7 @@
 </div>
           <div role="main">
             <div class="section">
-              <h1 id="core-client-functionality">Core client functionality.</h1>
+              <h1 id="angular">Angular</h1>
 <p><em>Coordinate various core functionality.</em></p>
 <pre><code>_ = require 'lodash'
 Promise = require 'bluebird'
@@ -744,7 +749,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 <pre><code>    '(?:https?|ftp|mailto|tel|file):'
 </code></pre>
 <p>Allow javascript:void(0).</p>
-<pre><code>    'javascript:void(?:%20)*\\((?:%20)*0(?:%20)*\\)'
+<pre><code>    'javascript:void\\(0\\)'
   ]
 </code></pre>
 <h4 id="implements-hook-shrubangularappconfig">Implements hook <code>shrubAngularAppConfig</code>.</h4>

@@ -51,6 +51,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../../../guide/errors">Errors</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../../../guide/forms">Form handling</a>
                     
                 </li>
@@ -777,7 +782,7 @@ exports.pkgmanRegister = (registrar) -&gt;
           )
 </code></pre>
 <p>Hide the popover when any notification is clicked. Feel free to catch the
-<code>shrub.ui.notification.clicked</code> event in your skinLink implementation.</p>
+<code>shrub.ui.notification.clicked</code> event in your shrubSkinLink implementation.</p>
 <pre><code>        scope.notificationClicked = ($event, notification) -&gt;
 
           scope.$emit(
@@ -786,7 +791,7 @@ exports.pkgmanRegister = (registrar) -&gt;
           )
 </code></pre>
 <p>Set up default behavior on a click event, and provide the deregistration
-function to any skinLink consumers.</p>
+function to any shrubSkinLink consumers.</p>
 <pre><code>        scope.$deregisterDefaultClickHandler = scope.$on(
           'shrub.ui.notification.clicked'
           ($event, $clickEvent, notification) -&gt;

@@ -31,24 +31,7 @@
 
       registrar.registerHook 'shrubGruntConfig', (gruntConfig) ->
 
-        gruntConfig.copy ?= {}
-        gruntConfig.watch ?= {}
-
-        gruntConfig.configureTask 'copy', 'shrub-socket.io', files: [
-          src: '**/*'
-          dest: 'app'
-          expand: true
-          cwd: "#{__dirname}/app"
-        ]
-
-        gruntConfig.configureTask(
-          'watch', 'shrub-socket.io'
-
-          files: [
-            "#{__dirname}/app/**/*"
-          ]
-          tasks: 'build:shrub-socket.io'
-        )
+        gruntConfig.copyAppFiles "#{__dirname}/app", 'shrub-socket.io'
 
         gruntConfig.registerTask 'build:shrub-socket.io', [
           'newer:copy:shrub-socket.io'

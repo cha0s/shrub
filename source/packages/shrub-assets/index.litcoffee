@@ -32,21 +32,7 @@
 
       registrar.registerHook 'shrubGruntConfig', (gruntConfig) ->
 
-        gruntConfig.configureTask 'copy', 'shrub-assets', files: [
-          src: '**/*'
-          dest: 'app'
-          expand: true
-          cwd: "#{__dirname}/app"
-        ]
-
-        gruntConfig.configureTask(
-          'watch', 'shrub-assets'
-
-          files: [
-            "#{__dirname}/app/**/*"
-          ]
-          tasks: 'build:shrub-assets'
-        )
+        gruntConfig.copyAppFiles "#{__dirname}/app", 'shrub-assets'
 
         gruntConfig.registerTask 'build:shrub-assets', [
           'newer:copy:shrub-assets'

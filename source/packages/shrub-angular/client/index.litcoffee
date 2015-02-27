@@ -1,4 +1,4 @@
-# Core client functionality.
+# Angular
 
 *Coordinate various core functionality.*
 
@@ -17,7 +17,7 @@ Allow more protocols.
 
 Allow javascript:void(0).
 
-        'javascript:void(?:%20)*\\((?:%20)*0(?:%20)*\\)'
+        'javascript:void\\(0\\)'
       ]
 
 #### Implements hook `shrubAngularAppConfig`.

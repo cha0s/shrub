@@ -51,6 +51,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../guide/errors">Errors</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../guide/forms">Form handling</a>
                     
                 </li>
@@ -1021,8 +1026,8 @@ exports.pkgmanRegister = (registrar) -&gt;
       'shrub-user'
     ]
 </code></pre>
-<h4 id="implements-hook-socketauthorizationmiddleware">Implements hook <code>socketAuthorizationMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'socketAuthorizationMiddleware', -&gt;
+<h4 id="implements-hook-shrubsocketauthorizationmiddleware">Implements hook <code>shrubSocketAuthorizationMiddleware</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubSocketAuthorizationMiddleware', -&gt;
 
     label: 'Load user using passport'
     middleware: [
@@ -1047,8 +1052,8 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     ]
 </code></pre>
-<h4 id="implements-hook-socketconnectionmiddleware">Implements hook <code>socketConnectionMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'socketConnectionMiddleware', -&gt;
+<h4 id="implements-hook-shrubsocketconnectionmiddleware">Implements hook <code>shrubSocketConnectionMiddleware</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubSocketConnectionMiddleware', -&gt;
 
     label: 'Join channel for user'
     middleware: [
@@ -1062,8 +1067,8 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     ]
 </code></pre>
-<h4 id="implements-hook-userbeforelogoutmiddleware">Implements hook <code>userBeforeLogoutMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'userBeforeLogoutMiddleware', -&gt;
+<h4 id="implements-hook-shrubuserbeforelogoutmiddleware">Implements hook <code>shrubUserBeforeLogoutMiddleware</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubUserBeforeLogoutMiddleware', -&gt;
 
     label: 'Tell client to log out, and leave the user channel'
     middleware: [
@@ -1083,8 +1088,8 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     ]
 </code></pre>
-<h4 id="implements-hook-userafterlogoutmiddleware">Implements hook <code>userAfterLogoutMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'userAfterLogoutMiddleware', -&gt;
+<h4 id="implements-hook-shrubuserafterlogoutmiddleware">Implements hook <code>shrubUserAfterLogoutMiddleware</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubUserAfterLogoutMiddleware', -&gt;
 
     label: 'Instantiate anonymous user'
     middleware: [

@@ -51,6 +51,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../guide/errors">Errors</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../guide/forms">Form handling</a>
                     
                 </li>
@@ -898,9 +903,9 @@ that.</p>
 
         ).catch next
 </code></pre>
-<h4 id="implements-hook-transmittableerror">Implements hook <code>transmittableError</code>.</h4>
+<h4 id="implements-hook-shrubtransmittableerrors">Implements hook <code>shrubTransmittableErrors</code>.</h4>
 <p>Just defer to client, where the error is defined.</p>
-<pre><code>  registrar.registerHook 'transmittableError', require('./client').transmittableError
+<pre><code>  registrar.registerHook 'shrubTransmittableErrors', require('./client').shrubTransmittableErrors
 
 exports.Limiter = Limiter = require './limiter'
 </code></pre>

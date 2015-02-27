@@ -51,6 +51,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../../guide/errors">Errors</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../../guide/forms">Form handling</a>
                     
                 </li>
@@ -755,22 +760,19 @@ real error occurred, but authorization failed.</p>
 
     middleware = require 'middleware'
 </code></pre>
-<h4 id="invoke-hook-socketauthorizationmiddleware">Invoke hook <code>socketAuthorizationMiddleware</code>.</h4>
-<pre><code>    @_authorizationMiddleware = middleware.fromShortName(
-      'socket authorization'
-      'shrub-socket'
+<h4 id="invoke-hook-shrubsocketauthorizationmiddleware">Invoke hook <code>shrubSocketAuthorizationMiddleware</code>.</h4>
+<pre><code>    @_authorizationMiddleware = middleware.fromConfig(
+      'shrub-socket:authorizationMiddleware'
     )
 </code></pre>
-<h4 id="invoke-hook-socketconnectionmiddleware">Invoke hook <code>socketConnectionMiddleware</code>.</h4>
-<pre><code>    @_connectionMiddleware = middleware.fromShortName(
-      'socket connection'
-      'shrub-socket'
+<h4 id="invoke-hook-shrubsocketconnectionmiddleware">Invoke hook <code>shrubSocketConnectionMiddleware</code>.</h4>
+<pre><code>    @_connectionMiddleware = middleware.fromConfig(
+      'shrub-socket:connectionMiddleware'
     )
 </code></pre>
-<h4 id="invoke-hook-socketdisconnectionmiddleware">Invoke hook <code>socketDisconnectionMiddleware</code>.</h4>
-<pre><code>    @_disconnectionMiddleware = middleware.fromShortName(
-      'socket disconnection'
-      'shrub-socket'
+<h4 id="invoke-hook-shrubsocketdisconnectionmiddleware">Invoke hook <code>shrubSocketDisconnectionMiddleware</code>.</h4>
+<pre><code>    @_disconnectionMiddleware = middleware.fromConfig(
+      'shrub-socket:disconnectionMiddleware'
     )
 </code></pre>
 <p>Ensure any subclass implements these "pure virtual" methods.</p>

@@ -51,6 +51,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../../../guide/errors">Errors</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../../../guide/forms">Form handling</a>
                     
                 </li>
@@ -449,7 +454,7 @@
                         
                             <li class="toctree-l2"><a href="#strapped-notifications">Strapped - Notifications</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-skinlink-directive">Implements hook skinLink--DIRECTIVE.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubskinlink-directive">Implements hook shrubSkinLink--DIRECTIVE.</a></li>
                             
                         
                         </ul>
@@ -725,8 +730,8 @@
               <h1 id="strapped-notifications">Strapped - Notifications</h1>
 <pre><code>exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h4 id="implements-hook-skinlink-directive">Implements hook <code>skinLink--DIRECTIVE</code>.</h4>
-<pre><code>  registrar.registerHook 'skinLink--shrubUiNotifications', -&gt; [
+<h4 id="implements-hook-shrubskinlink-directive">Implements hook <code>shrubSkinLink--DIRECTIVE</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubSkinLink--shrubUiNotifications', -&gt; [
     '$compile', '$scope', '$element', '$attr'
     ($compile, scope, element, attr) -&gt;
 </code></pre>
