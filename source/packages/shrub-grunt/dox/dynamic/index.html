@@ -812,7 +812,9 @@ caches lines to be able to build context around each TODO item.</p>
 </code></pre>
 <p>Generate an HTML ID from a string.</p>
 <pre><code>_idFromString = (string) -&gt; string.replace(
-  /\//g, ''
+  /[/'']/g, ''
+).replace(
+  /\[(.*)\]\(.*\)/g, '$1'
 ).replace(
   /[^0-9A-Za-z-]+/g, '-'
 ).replace(
@@ -1007,7 +1009,6 @@ hash in the case of multiple TODO items with the same wording.</p>
 
       id = ''
       for line, index in todo.lines
-        render += '&gt;'
 </code></pre>
 <p>If this is the line with the TODO, parse the ID from the TODO item text, and
 render it as h2 (TODO are h6) to increase visibility.</p>
@@ -1016,6 +1017,7 @@ render it as h2 (TODO are h6) to increase visibility.</p>
 
           render += line.slice 4
         else
+          render += '    '
           render += " #{line}"
         render += '\n'
 
