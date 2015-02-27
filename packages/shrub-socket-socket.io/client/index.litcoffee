@@ -2,6 +2,8 @@
 
 *Provide an Angular service wrapping Socket.IO.*
 
+###### TODO: Need to handle connection errors.
+
     config = require 'config'
     debug = require('debug') 'shrub:socket.io'
 

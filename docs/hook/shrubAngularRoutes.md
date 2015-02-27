@@ -4,7 +4,7 @@ Packages use this hook to define Angular routes.
 
 
 
-### Answer with
+<h3>Implementations must return</h3>
 
 A route object.
 

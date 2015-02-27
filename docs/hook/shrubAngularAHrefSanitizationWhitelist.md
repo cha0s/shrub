@@ -33,6 +33,6 @@ This hook should be used sparingly, as the reason there is a whitelist in the
 first place is because there are security implications to allowing just any
 href in a dynamic directive. **Use caution**.
 
-### Answer with
+<h3>Implementations must return</h3>
 
 An array of strings to be compiled into a regular expression.

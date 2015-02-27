@@ -1,4 +1,6 @@
-*Define middleware to run for every HTTP request.*
+*Act after a socket connection.*
+
+Packages may implement this hook to take action after a socket is connected.
 
 The `req` parameter to the middleware is an instance of
 [http.IncomingMessage](http://nodejs.org/api/http.html#http_http_incomingmessage)

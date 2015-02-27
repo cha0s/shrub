@@ -26,6 +26,6 @@ dependency. You will still need to use the
 [`shrubGruntConfig`](hooks/#shrubgruntconfig) hook to provide the actual
 JavaScript assets to the client.
 
-### Answer with
+<h3>Implementations must return</h3>
 
 An array of strings naming the modules you want to include.

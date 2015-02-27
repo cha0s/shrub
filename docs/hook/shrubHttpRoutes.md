@@ -2,7 +2,7 @@
 
 Packages use this hook to define HTTP routes.
 
-### Answer with
+<h3>Implementations must return</h3>
 
 An array of objects structured like:
 

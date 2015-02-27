@@ -1,1 +1,1 @@
-# Hook reference
+<h1>Hook reference</h1>

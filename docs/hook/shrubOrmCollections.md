@@ -8,7 +8,7 @@ Shrub uses Waterline as an ORM, so you can follow the
 Shrub handles calling `Waterline.Collection.extend`, so you only have to return
 the raw object.
 
-### Answer with
+<h3>Implementations must return</h3>
 
 A keyed object whose values are raw model collection objects. e.g.
 

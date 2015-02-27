@@ -126,9 +126,9 @@ Load a user and compare the hashed password.
 
         ]
 
-#### Implements hook `transmittableError`.
+#### Implements hook `shrubTransmittableErrors`.
 
-      registrar.registerHook 'transmittableError', clientModule.transmittableError
+      registrar.registerHook 'shrubTransmittableErrors', clientModule.shrubTransmittableErrors
 
 Monkey patch http.IncomingMessage.prototype.login to run our middleware, and
 return a promise.
@@ -141,18 +141,16 @@ return a promise.
 
       req = IncomingMessage.prototype
 
-#### Invoke hook `userBeforeLoginMiddleware`.
+#### Invoke hook `shrubUserBeforeLoginMiddleware`.
 
-      userBeforeLoginMiddleware = middleware.fromShortName(
-        'user before login'
-        'shrub-user'
+      beforeLoginMiddleware = middleware.fromConfig(
+        'shrub-user:beforeLoginMiddleware'
       )
 
-#### Invoke hook `userAfterLoginMiddleware`.
+#### Invoke hook `shrubUserAfterLoginMiddleware`.
 
-      userAfterLoginMiddleware = middleware.fromShortName(
-        'user after login'
-        'shrub-user'
+      afterLoginMiddleware = middleware.fromConfig(
+        'shrub-user:afterLoginMiddleware'
       )
 
       login = req.passportLogIn = req.login
@@ -162,13 +160,13 @@ return a promise.
 
           loginReq = req: this, user: user
 
-          userBeforeLoginMiddleware.dispatch loginReq, null, (error) =>
+          beforeLoginMiddleware.dispatch loginReq, null, (error) =>
             return reject error if error?
 
             login.call this, loginReq.user, (error) ->
               return reject error if error?
 
-              userAfterLoginMiddleware.dispatch loginReq, null, (error) ->
+              afterLoginMiddleware.dispatch loginReq, null, (error) ->
                 return reject error if error?
 
                 resolve()

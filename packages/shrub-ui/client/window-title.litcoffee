@@ -52,7 +52,7 @@ Set the site name into the window title.
 
           $rootScope.$on '$routeChangeSuccess', (event, route) ->
 
-            windowTitle.setPage route.$$route.title ? ''
+            windowTitle.setPage route.$$route?.title ? ''
 
       ]
 

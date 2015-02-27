@@ -185,10 +185,10 @@ Zero score skips the villiany check.
 
             ).catch next
 
-#### Implements hook `transmittableError`.
+#### Implements hook `shrubTransmittableErrors`.
 
 Just defer to client, where the error is defined.
 
-      registrar.registerHook 'transmittableError', require('./client').transmittableError
+      registrar.registerHook 'shrubTransmittableErrors', require('./client').shrubTransmittableErrors
 
     exports.Limiter = Limiter = require './limiter'

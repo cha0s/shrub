@@ -1,4 +1,4 @@
-# Core client functionality.
+# Angular
 
 *Coordinate various core functionality.*
 

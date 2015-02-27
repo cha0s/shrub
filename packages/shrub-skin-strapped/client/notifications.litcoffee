@@ -2,9 +2,9 @@
 
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `skinLink--DIRECTIVE`.
+#### Implements hook `shrubSkinLink--DIRECTIVE`.
 
-      registrar.registerHook 'skinLink--shrubUiNotifications', -> [
+      registrar.registerHook 'shrubSkinLink--shrubUiNotifications', -> [
         '$compile', '$scope', '$element', '$attr'
         ($compile, scope, element, attr) ->
 

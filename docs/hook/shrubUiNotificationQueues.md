@@ -2,7 +2,7 @@
 
 Packages may implement this hook to define queues of notifications.
 
-### Answer with
+<h3>Implementations must return</h3>
 
 An object whose keys are queue names and whose values are structured like:
 

@@ -5,6 +5,6 @@ finishes. For instance, [`shrub-session`](packages/#shrub-session) and
 [`shrub-user`](packages/#shrub-user) use this hook to update the session and
 user records (respectively) after each RPC call.
 
-### Answer with
+<h3>Implementations must return</h3>
 
 A promise which when fulfilled allows the RPC call to finish.

@@ -6,6 +6,6 @@ Angular module configuration phase. See the
 [Angular documentation](https://docs.angularjs.org/guide/module#module-loading-dependencies)
 on **Configuration blocks** for more explanation.
 
-### Answer with
+<h3>Implementations must return</h3>
 
 An [annotated function](guide/concepts#annotated-functions).

@@ -54,7 +54,7 @@ Mark the notification as read.
               )
 
 Hide the popover when any notification is clicked. Feel free to catch the
-`shrub.ui.notification.clicked` event in your skinLink implementation.
+`shrub.ui.notification.clicked` event in your shrubSkinLink implementation.
 
             scope.notificationClicked = ($event, notification) ->
 
@@ -64,7 +64,7 @@ Hide the popover when any notification is clicked. Feel free to catch the
               )
 
 Set up default behavior on a click event, and provide the deregistration
-function to any skinLink consumers.
+function to any shrubSkinLink consumers.
 
             scope.$deregisterDefaultClickHandler = scope.$on(
               'shrub.ui.notification.clicked'

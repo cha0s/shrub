@@ -2,11 +2,13 @@
 
     config = require 'config'
 
+    {TransmittableError} = require 'errors'
+
     exports.pkgmanRegister = (registrar) ->
 
-#### Implements hook `transmittableError`.
+#### Implements hook `shrubTransmittableErrors`.
 
-      registrar.registerHook 'transmittableError', exports.transmittableError
+      registrar.registerHook 'shrubTransmittableErrors', exports.shrubTransmittableErrors
 
 #### Implements hook `shrubAngularRoutes`.
 
@@ -97,14 +99,11 @@
 
 Transmittable login error.
 
-    LoginError = null
+    class LoginError extends TransmittableError
 
-    exports.transmittableError = ->
-      return LoginError if LoginError?
+      key: 'login'
+      template: 'No such username/password.'
 
-      errors = require 'errors'
-
-      LoginError = class LoginError extends errors.TransmittableError
-
-        key: 'login'
-        template: 'No such username/password.'
+    exports.shrubTransmittableErrors = -> [
+      LoginError
+    ]

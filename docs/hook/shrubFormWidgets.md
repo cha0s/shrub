@@ -1,7 +1,7 @@
 *Define form widgets for use when defining
 [form definition objects](guide/forms/#form-definition-objects).*
 
-### Answer with
+<h3>Implementations must return</h3>
 
 An array of objects structured like:
 

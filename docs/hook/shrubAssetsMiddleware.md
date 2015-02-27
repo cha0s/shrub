@@ -14,7 +14,7 @@ them from your package to the `app` directory where they will be served.
 You'll need to implement the [`shrubGruntConfig`](hooks/#shrubgruntconfig)
 hook for that.
 
-### Answer with
+<h3>Implementations must return</h3>
 
 A
 [middleware hook specification](guide/concepts#middleware-hook-specification).

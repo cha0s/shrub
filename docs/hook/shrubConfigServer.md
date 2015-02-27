@@ -3,7 +3,7 @@
 Packages may use this hook to define default configuration for server-side
 functionality. These settings can be overridden in the settings file.
 
-### Answer with
+<h3>Implementations must return</h3>
 
 A recursive object which will be folded into the server configuration under
 the package name key. For instance, say we have a package `my-package` which

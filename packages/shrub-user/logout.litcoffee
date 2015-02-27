@@ -35,18 +35,16 @@ Log out.
 
             req = IncomingMessage.prototype
 
-#### Invoke hook `userBeforeLogoutMiddleware`.
+#### Invoke hook `shrubUserBeforeLogoutMiddleware`.
 
-            userBeforeLogoutMiddleware = middleware.fromShortName(
-              'user before logout'
-              'shrub-user'
+            beforeLogoutMiddleware = middleware.fromConfig(
+              'shrub-user:beforeLogoutMiddleware'
             )
 
-#### Invoke hook `userAfterLogoutMiddleware`.
+#### Invoke hook `shrubUserAfterLogoutMiddleware`.
 
-            userAfterLogoutMiddleware = middleware.fromShortName(
-              'user after logout'
-              'shrub-user'
+            afterLogoutMiddleware = middleware.fromConfig(
+              'shrub-user:afterLogoutMiddleware'
             )
 
             logout = req.passportLogOut = req.logout
@@ -55,12 +53,12 @@ Log out.
 
               new Promise (resolve, reject) ->
 
-                userBeforeLogoutMiddleware.dispatch self, (error) ->
+                beforeLogoutMiddleware.dispatch self, (error) ->
                   return reject error if error?
 
                   logout.call self
 
-                  userAfterLogoutMiddleware.dispatch self, (error) ->
+                  afterLogoutMiddleware.dispatch self, (error) ->
                     return reject error if error?
 
                     resolve()

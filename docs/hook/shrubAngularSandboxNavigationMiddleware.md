@@ -12,7 +12,7 @@ from the original HTTP request, along with the following extra properties:
 
 * (Sandbox) `sandbox` - The sandbox instance.
 
-### Answer with
+<h3>Implementations must return</h3>
 
 A
 [middleware hook specification](guide/concepts#middleware-hook-specification).

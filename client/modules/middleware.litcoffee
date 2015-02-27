@@ -148,56 +148,11 @@ Invoke the hook and `use` the middleware in the paths configuration order.
 
     exports.fromConfig = (path, args...) ->
 
+###### TODO: Unify on `'packages'`.
+
       configKey = if global? then 'packageSettings' else 'packageConfig'
 
       exports.fromHook(
         pkgman.normalizePath path
         config.get "#{configKey}:#{path}"
       )
-
-## middleware.fromShortName
-
-*Create a middleware stack from a short name. e.g. "example thing hook".*
-
-The short name is converted into log messages, a hook name, and configuration
-key. In the case where we passed in "user before login", this would look
-like:
-
-```coffeescript
-debug "Loading user before login middleware..."
-
-middleware = exports.fromHook(
-	"userBeforeLoginMiddleware"
-	config.get "packageSettings:user:beforeLoginMiddleware"
-)
-
-debug "User before login middleware loaded."
-```
-
-###### TODO: This is bad and it should go away.
-
-    exports.fromShortName = (shortName, packageName) ->
-
-      i8n = require 'inflection'
-
-      debugSilly "- Loading #{shortName} middleware..."
-
-      [firstPart, keyParts...] = shortName.split ' '
-      packageName ?= firstPart
-      key = keyParts.join '_'
-
-###### TODO: this really should be unified, making this unnecessary.
-
-      configKey = if global? then 'packageSettings' else 'packageConfig'
-
-      middleware = exports.fromHook(
-        "#{firstPart}#{i8n.camelize key}Middleware"
-
-###### TODO: Multiline
-
-        config.get "#{configKey}:#{packageName}:#{i8n.camelize key, true}Middleware"
-      )
-
-      debugSilly "- #{i8n.capitalize shortName} middleware loaded."
-
-      middleware

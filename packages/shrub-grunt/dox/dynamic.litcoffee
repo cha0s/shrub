@@ -259,9 +259,7 @@ Remove packages and file part.
               packageName = parts.join '/'
 
               types = types.map (type) ->
-                packageNameParts = packageName.split '/'
-                packageNameParts.pop() if packageNameParts[packageNameParts.length - 1] isnt type
-                "    * [#{_sourcePath file} (#{type})](packages/##{_idFromString packageNameParts.join '/'}) &mdash; [#{key}](source/#{_sourcePath fullName}##{wordingFor[key]}-hook-#{_idFromString hook}) \n"
+                "    * [#{_sourcePath file} (#{type})](source/#{_sourcePath fullName}) &mdash; [#{key}](source/#{_sourcePath fullName}##{wordingFor[key]}-hook-#{_idFromString hook}) \n"
               types.join ''
 
             render += instances.join ''
@@ -319,7 +317,7 @@ Keep track of ID usage and modify the location hash for subsequent uses.
           else
             idMap[id] = 0
 
-          render += "###### the above found in [#{fileStats.file}:#{todo.index}](source/#{filename}##{id})\n"
+          render += "[the above found in #{fileStats.file}:#{todo.index}](source/#{filename}##{id})\n"
 
       new Promise (resolve, reject) ->
         fs.writeFile 'docs/todos.md', render, (error) ->
