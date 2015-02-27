@@ -7,6 +7,10 @@ h1:target, h2:target, h3:target, h4:target, h5:target, h6:target {
   margin-bottom: 2em;
 }
 
+.rst-content .section a {
+  text-decoration: underline;
+}
+
 .rst-content blockquote {
   border-left: 3px solid #ddd;
   margin-left: 0;

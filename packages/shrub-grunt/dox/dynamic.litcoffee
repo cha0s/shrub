@@ -87,7 +87,9 @@ Gather all source files.
 Generate an HTML ID from a string.
 
     _idFromString = (string) -> string.replace(
-      /\//g, ''
+      /[/'']/g, ''
+    ).replace(
+      /\[(.*)\]\(.*\)/g, '$1'
     ).replace(
       /[^0-9A-Za-z-]+/g, '-'
     ).replace(
@@ -292,7 +294,6 @@ hash in the case of multiple TODO items with the same wording.
 
           id = ''
           for line, index in todo.lines
-            render += '>'
 
 If this is the line with the TODO, parse the ID from the TODO item text, and
 render it as h2 (TODO are h6) to increase visibility.
@@ -302,6 +303,7 @@ render it as h2 (TODO are h6) to increase visibility.
 
               render += line.slice 4
             else
+              render += '    '
               render += " #{line}"
             render += '\n'
 
