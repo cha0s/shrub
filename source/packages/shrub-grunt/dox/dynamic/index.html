@@ -965,10 +965,17 @@ portion from the end of the filename.</p>
         for file, {types} of O[pluralKey][hook]
           count += types.length
 
-        render += "!!! note \"#{count} #{key}"
+        render += '&lt;div class="admonition note"&gt;'
+        render += "&lt;p class=\"admonition-title\"&gt;#{count} #{key}"
         render += 's' if count &gt; 1
-        render += '"\n'
+        render += '&lt;/p&gt;\n'
+        render += '  &lt;table&gt;\n'
 
+        # render += "!!! note \"#{count} #{key}"
+        # render += 's' if count &gt; 1
+        # render += '"\n'
+
+        stripe = 0
         instances = for file, {fullName, types} of O[pluralKey][hook]
 </code></pre>
 <p>Remove packages and file part.</p>
@@ -978,10 +985,15 @@ portion from the end of the filename.</p>
           packageName = parts.join '/'
 
           types = types.map (type) -&gt;
-            "    * [#{_sourcePath file} (#{type})](source/#{_sourcePath fullName}) &amp;mdash; [#{key}](source/#{_sourcePath fullName}##{wordingFor[key]}-hook-#{_idFromString hook}) \n"
+            "    &lt;tr class=\"#{if stripe++ % 2 then 'odd' else 'even'}\"&gt;&lt;td&gt;&lt;a href=\"source/#{_sourcePath fullName}\"&gt;#{_sourcePath file} (#{type})&lt;/a&gt;&lt;/td&gt;&lt;td align=\"right\"&gt;&lt;a href=\"source/#{_sourcePath fullName}##{wordingFor[key]}-hook-#{_idFromString hook}\"&gt;#{key}&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;"
           types.join ''
 
         render += instances.join ''
+
+        render += '  &lt;/table&gt;\n'
+        render += '&lt;/div&gt;'
+        render += '\n\n'
+
 
         render += '\n\n'
 
@@ -1144,18 +1156,26 @@ italicized in markdown.</p>
 
     if fileStats.implementations.length &gt; 0
       render += '&gt; ' if isSubpackage
-      render += '!!! note "Implements hooks"\n'
-      render += fileStats.implementations.map((hook) -&gt;
-        "    * [#{hook}](hooks/##{_idFromString hook}) &amp;mdash; [implementation](source/#{sourcePath}#implements-hook-#{hook.toLowerCase()})\n"
+      render += '&lt;div class="admonition note"&gt;'
+      render += '&lt;p class="admonition-title"&gt;Implements hooks&lt;/p&gt;'
+      render += '  &lt;table&gt;\n'
+      render += fileStats.implementations.map((hook, index) -&gt;
+        "    &lt;tr class=\"#{if index % 2 then 'odd' else 'even'}\"&gt;&lt;td&gt;&lt;a href=\"hooks/##{_idFromString hook}\"&gt;#{hook}&lt;/a&gt;&lt;/td&gt;&lt;td align=\"right\"&gt;&lt;a href=\"source/#{sourcePath}#implements-hook-#{hook.toLowerCase()}\"&gt;implementation&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;\n"
       ).join ''
+      render += '  &lt;/table&gt;\n'
+      render += '&lt;/div&gt;'
       render += '\n\n'
 
     if fileStats.invocations.length &gt; 0
       render += '&gt; ' if isSubpackage
-      render += '!!! note "Invokes hooks"\n'
-      render += fileStats.invocations.map((hook) -&gt;
-        "    * [#{hook}](hooks/##{_idFromString hook}) &amp;mdash; [invocation](source/#{sourcePath}#invoke-hook-#{hook.toLowerCase()})\n"
+      render += '&lt;div class="admonition note"&gt;'
+      render += '&lt;p class="admonition-title"&gt;Implements hooks&lt;/p&gt;'
+      render += '  &lt;table&gt;\n'
+      render += fileStats.implementations.map((hook, index) -&gt;
+        "    &lt;tr class=\"#{if index % 2 then 'odd' else 'even'}\"&gt;&lt;td&gt;&lt;a href=\"hooks/##{_idFromString hook}\"&gt;#{hook}&lt;/a&gt;&lt;/td&gt;&lt;td align=\"right\"&gt;&lt;a href=\"source/#{sourcePath}#invoke-hook-#{hook.toLowerCase()}\"&gt;invocation&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;\n"
       ).join ''
+      render += '  &lt;/table&gt;\n'
+      render += '&lt;/div&gt;'
       render += '\n\n'
 </code></pre>
 <h6 id="todo-we-should-do-some-preprocessing-hre-with-a-transform-namely-linking-the-hook-headers-to-their-respective-documentation">TODO: We should do some preprocessing hre with a transform, namely linking the hook headers to their respective documentation.</h6>

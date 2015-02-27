@@ -21,6 +21,18 @@ h1:target, h2:target, h3:target, h4:target, h5:target, h6:target {
   color: #aaa;
 }
 
+.rst-content table {
+  width: 100%;
+}
+
+.rst-content tr.odd {
+  background: none repeat scroll 0 0 #f0fbfe;
+}
+
+.rst-content td {
+  padding: .25em;
+}
+
 .package-title {
   font-family: "Roboto Slab","ff-tisa-web-pro","Georgia",Arial,sans-serif;
   font-size: 150%;
