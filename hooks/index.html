@@ -132,8 +132,6 @@
                         
                             <li class="toctree-l2"><a href="#shrubcoreprebootstrap">shrubCorePreBootstrap</a></li>
                             
-                                <li><a class="toctree-l3" href="#mitigate-slow-build-times">Mitigate slow build times</a></li>
-                            
                         
                             <li class="toctree-l2"><a href="#shrubcoreprocessexit">shrubCoreProcessExit</a></li>
                             
@@ -1420,7 +1418,8 @@ The middleware have the following signature:</p>
 </div>
 <h2 id="shrubcoreprebootstrap">shrubCorePreBootstrap</h2>
 <p><em>Invoked before the application bootstrap phase.</em></p>
-<h3 id="mitigate-slow-build-times">Mitigate slow build times</h3>
+<h3>Mitigate slow build times</h3>
+
 <p>If your package <code>require</code>s heavy modules, you should require them in an
 implementation of hook <code>shrubCorePeBootstrap</code>. For instance, say you have a
 package like:</p>
