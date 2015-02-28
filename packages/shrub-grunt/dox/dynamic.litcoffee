@@ -253,10 +253,6 @@ Render the hooks page.
             render += '</p>\n'
             render += '  <table>\n'
 
-            # render += "!!! note \"#{count} #{key}"
-            # render += 's' if count > 1
-            # render += '"\n'
-
             stripe = 0
             instances = for file, {fullName, types} of O[pluralKey][hook]
 
@@ -275,9 +271,6 @@ Remove packages and file part.
 
             render += '  </table>\n'
             render += '</div>'
-            render += '\n\n'
-
-
             render += '\n\n'
 
       new Promise (resolve, reject) ->
