@@ -109,18 +109,18 @@ Load configuration.
 
 * (String) `path` - The path of the files to copy.
 * (String) `key` - The name of the key in the task configuration to set. This
-* (Array) `watchTasks` - An array of tasks to run when any of the files in the
-  directory to move are added, updated or deleted.
+* (String) `dest` - The destination where the files will be copied. Defaults to
+  `'app'`.
 
 *Copy package files to `app`.*
 
-        copyAppFiles: (path, key, watchTasks) ->
+        copyAppFiles: (path, key, dest = 'app') ->
 
-          watchTasks ?= ["build:#{key}"]
+          dest ?= 'app'
 
           gruntConfig.configureTask 'copy', key, files: [
             src: '**/*'
-            dest: 'app'
+            dest: dest
             expand: true
             cwd: path
           ]
@@ -131,7 +131,7 @@ Load configuration.
             files: [
               "#{path}/**/*"
             ]
-            tasks: watchTasks
+            tasks: ["build:#{key}"]
           )
 
       gruntConfig = new GruntConfiguration()
