@@ -114,7 +114,7 @@ Authorization.
 
 Dispatch the authorization middleware.
 
-          @_authorizationMiddleware.dispatch socket.request, null, (error) ->
+          @_connectionMiddleware.dispatch socket.request, null, (error) ->
 
 If any kind of error was thrown, propagate it.
 
@@ -131,7 +131,7 @@ Run the disconnection middleware on socket close.
           oncloseProxy = socket.onclose
           socket.onclose = =>
             @_disconnectionMiddleware.dispatch socket.request, null, (error) ->
-              return socketLogger.error errors.stack error if error?
+              socketLogger.error errors.stack error if error?
 
             oncloseProxy.call socket
 
@@ -142,7 +142,4 @@ Join a '$global' channel.
 
 Dispatch the connection middleware.
 
-            @_connectionMiddleware.dispatch socket.request, null, (error) ->
-              return socketLogger.error errors.stack error if error?
-
-              socket.emit 'initialized'
+            socket.emit 'initialized'

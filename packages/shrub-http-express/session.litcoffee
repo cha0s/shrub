@@ -107,9 +107,9 @@ be pointing at anything yet.
 
         ]
 
-#### Implements hook `shrubSocketAuthorizationMiddleware`.
+#### Implements hook `shrubSocketConnectionMiddleware`.
 
-      registrar.registerHook 'shrubSocketAuthorizationMiddleware', ->
+      registrar.registerHook 'shrubSocketConnectionMiddleware', ->
 
         {key} = config.get 'packageSettings:shrub-session'
 

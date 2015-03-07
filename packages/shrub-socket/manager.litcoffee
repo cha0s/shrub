@@ -15,7 +15,6 @@ server (e.g. [Socket.io](source/packages/shrub-socket-socket.io)).
 
         super
 
-        @_authorizationMiddleware = null
         @_connectionMiddleware = null
         @_disconnectionMiddleware = null
 
@@ -34,12 +33,6 @@ real error occurred, but authorization failed.
       loadMiddleware: ->
 
         middleware = require 'middleware'
-
-#### Invoke hook `shrubSocketAuthorizationMiddleware`.
-
-        @_authorizationMiddleware = middleware.fromConfig(
-          'shrub-socket:authorizationMiddleware'
-        )
 
 #### Invoke hook `shrubSocketConnectionMiddleware`.
 

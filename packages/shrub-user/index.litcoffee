@@ -314,9 +314,9 @@ Decrypt the e-mail if redacting for the same user.
           'shrub-user'
         ]
 
-#### Implements hook `shrubSocketAuthorizationMiddleware`.
+#### Implements hook `shrubSocketConnectionMiddleware`.
 
-      registrar.registerHook 'shrubSocketAuthorizationMiddleware', ->
+      registrar.registerHook 'shrubSocketConnectionMiddleware', ->
 
         label: 'Load user using passport'
         middleware: [
@@ -341,22 +341,14 @@ Set the user into the request.
 
             promise.then(-> next()).catch next
 
-        ]
-
-#### Implements hook `shrubSocketConnectionMiddleware`.
-
-      registrar.registerHook 'shrubSocketConnectionMiddleware', ->
-
-        label: 'Join channel for user'
-        middleware: [
+Join a channel for the username.
 
           (req, res, next) ->
-
-Join a channel for the username.
 
             return req.socket.join req.user.name, next if req.user.id?
 
             next()
+
 
         ]
 

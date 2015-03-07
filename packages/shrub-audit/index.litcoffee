@@ -20,9 +20,9 @@ for analytics, or anything else.*
 
         ]
 
-#### Implements hook `shrubSocketAuthorizationMiddleware`.
+#### Implements hook `shrubSocketConnectionMiddleware`.
 
-      registrar.registerHook 'shrubSocketAuthorizationMiddleware', (http) ->
+      registrar.registerHook 'shrubSocketConnectionMiddleware', (http) ->
 
         label: 'Store fingerprint'
         middleware: [

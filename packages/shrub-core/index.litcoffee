@@ -106,9 +106,9 @@ master.
 
         workers: 0
 
-#### Implements hook `shrubSocketAuthorizationMiddleware`.
+#### Implements hook `shrubSocketConnectionMiddleware`.
 
-      registrar.registerHook 'shrubSocketAuthorizationMiddleware', ->
+      registrar.registerHook 'shrubSocketConnectionMiddleware', ->
 
         label: 'Normalize request variables'
         middleware: [

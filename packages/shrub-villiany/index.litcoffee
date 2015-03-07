@@ -143,9 +143,9 @@ Log the user out.
 
           defaultExpiration: 1000 * 60 * 10
 
-#### Implements hook `shrubSocketAuthorizationMiddleware`.
+#### Implements hook `shrubSocketConnectionMiddleware`.
 
-      registrar.registerHook 'shrubSocketAuthorizationMiddleware', ->
+      registrar.registerHook 'shrubSocketConnectionMiddleware', ->
 
         {AuthorizationFailure} = require 'shrub-socket/manager'
 
