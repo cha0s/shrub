@@ -40,7 +40,7 @@ RPC route information.
 
 Default the RPC route to the package path, replacing slashes with dots.
 
-              debug "- - rpc://#{route.path}"
+              debug route.path
 
               route.validators ?= []
 
@@ -81,74 +81,72 @@ Set up the validators as middleware.
 
           (req, res, next) ->
 
-            Object.keys(routes).forEach (path) ->
-              route = routes[path]
+Log an error without transmitting it.
 
-              req.socket.on "rpc://#{path}", (data, fn) ->
+            logError = (error) -> logger.error errors.stack error
+
+Hub for RPC calls. Dispatch routes.
+
+            req.socket.on 'shrub-rpc', ({path, data}, fn) ->
+              unless (route = routes[path])?
+                return logError new Error "Unknown route called: #{path}"
 
 Don't pass req directly, since it can be mutated by routes, and violate other
 routes' expectations.
 
-                routeReq = Object.create req
-                routeReq.body = data
-                routeReq.route = route
+              routeReq = Object.create req
+              routeReq.body = data
+              routeReq.route = route
 
 Send an error to the client.
 
-                emitError = (error) -> fn error: errors.serialize error
-
-Log an error without transmitting it.
-
-                logError = (error) -> logger.error errors.stack error
+              emitError = (error) -> fn error: errors.serialize error
 
 Send an error to the client, but don't notify them of the real underlying
 issue.
 
-                concealErrorFromClient = (error) ->
+              concealErrorFromClient = (error) ->
 
-                  emitError new Error 'Please try again later.'
-                  logError error
+                emitError new Error 'Please try again later.'
+                logError error
 
 Transmit the error as it is directly to the client.
 
-                sendErrorToClient = (error) ->
-                  emitError error
+              sendErrorToClient = (error) ->
+                emitError error
 
 Log the full error stack, because it might help track down any problem.
 
-                  logError error if do ->
+                logError error if do ->
 
 Unknown errors.
 
-                    unless error instanceof TransmittableError
-                      return true
+                  unless error instanceof TransmittableError
+                    return true
 
 If we're not running in production.
 
-                    if 'production' isnt config.get 'NODE_ENV'
-                      return true
+                  if 'production' isnt config.get 'NODE_ENV'
+                    return true
 
 Validate.
 
-                route.validators.dispatch routeReq, null, (error) ->
-                  return sendErrorToClient error if error?
+              route.validators.dispatch routeReq, null, (error) ->
+                return sendErrorToClient error if error?
 
 Receive.
 
-                  route.receiver routeReq, (error, result) ->
-                    return sendErrorToClient error if error?
+                route.receiver routeReq, (error, result) ->
+                  return sendErrorToClient error if error?
 
 #### Invoke hook `shrubRpcRouteFinish`.
 
-                    Promise.all(
-                      pkgman.invokeFlat(
-                        'shrubRpcRouteFinish', routeReq, result, req
-                      )
-
-                    ).then(
-                      -> fn result: result
-                      concealErrorFromClient
+                  Promise.all(
+                    pkgman.invokeFlat(
+                      'shrubRpcRouteFinish', routeReq, result, req
                     )
+
+                  ).then(-> fn result: result).catch concealErrorFromClient
 
             next()
 

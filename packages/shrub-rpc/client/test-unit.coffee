@@ -16,12 +16,15 @@ describe 'rpc', ->
       '$rootScope', '$timeout', 'shrub-socket'
       ($rootScope, $timeout, socket) ->
 
-        socket.catchEmit 'rpc://test', (data, fn) -> fn result: 420
+        socket.catchEmit 'shrub-rpc', ({path, data}, fn) ->
+          expect(path).toBe 'test'
+
+          fn result: data.foo
 
         result = null
         error = 'invalid'
 
-        promise = rpc.call 'test'
+        promise = rpc.call 'test', foo: 420
         promise.then (_) -> result = _
         promise.catch (_) -> error = _
 
@@ -38,7 +41,7 @@ describe 'rpc', ->
       '$rootScope', 'shrub-socket'
       ($rootScope, socket) ->
 
-        socket.catchEmit 'rpc://test', (data, fn) ->
+        socket.catchEmit 'shrub-rpc', ({data}, fn) ->
           fn error: new Error()
 
         result = 'invalid'
