@@ -258,14 +258,6 @@ not append.
 
           queuesConfig
 
-      ensureQueueExists = (req, res, next) ->
-        return next new Error(
-          "Notification queue `#{req.body.queue}' doesn't exist."
-        ) unless queue = notificationQueues[req.body.queue]
-
-        req.queue = queue
-        next()
-
 Ensure that the requested notification is owned by the request.
 
       ensureNotificationsOwnedByRequest = (req, res, next) ->
@@ -297,67 +289,80 @@ Ensure that the requested notification is owned by the request.
 
           path: 'shrub-ui/notifications/acknowledged'
 
-          validators: [
-            ensureQueueExists
-          ]
+          middleware: [
 
-          receiver: (req, fn) ->
+Ensure that the queue exists.
+
+            (req, res, next) ->
+              return next new Error(
+                "Notification queue `#{req.body.queue}' doesn't exist."
+              ) unless queue = notificationQueues[req.body.queue]
+
+              req.queue = queue
+              next()
+
+            (req, res, next) ->
 
 Mark all notifications in a queue owned by the request as acknowledged.
 
-            Notification = orm.collection 'shrub-ui-notification'
-            query = Notification.find()
-            query = query.where(channel: req.queue.channelFromRequest req)
-            query = query.where(queue: req.body.queue)
-            query.then((notifications) ->
+              Notification = orm.collection 'shrub-ui-notification'
+              query = Notification.find()
+              query = query.where(channel: req.queue.channelFromRequest req)
+              query = query.where(queue: req.body.queue)
+              query.then((notifications) ->
 
 Broadcast to others.
 
-              broadcastNotificationsEvent(
-                req
-                event: 'shrub-ui/notifications/acknowledged'
-                notifications: notifications
-              )
+                broadcastNotificationsEvent(
+                  req
+                  event: 'shrub-ui/notifications/acknowledged'
+                  notifications: notifications
+                )
 
-              Promise.all(
-                for notification in notifications
-                  notification.acknowledged = true
-                  notification.save()
-              )
+                Promise.all(
+                  for notification in notifications
+                    notification.acknowledged = true
+                    notification.save()
+                )
 
-            ).then(-> fn()).catch fn
+              ).then(-> res.end()).catch next
+
+          ]
 
         routes.push
 
           path: 'shrub-ui/notifications/markAsRead'
 
-          validators: [
-            ensureNotificationsOwnedByRequest
-          ]
+          middleware: [
 
-          receiver: (req, fn) ->
+            ensureNotificationsOwnedByRequest
+
+            (req, res, next) ->
 
 Broadcast to others.
 
-            broadcastNotificationsEvent(
-              req
-              data: markedAsRead: req.body.markedAsRead
-              event: 'shrub-ui/notifications/markAsRead'
-              notifications: req.notifications
-            )
+              broadcastNotificationsEvent(
+                req
+                data: markedAsRead: req.body.markedAsRead
+                event: 'shrub-ui/notifications/markAsRead'
+                notifications: req.notifications
+              )
 
-            Promise.all(
-              for notification in req.notifications
-                notification.markedAsRead = req.body.markedAsRead
-                notification.save()
+              Promise.all(
+                for notification in req.notifications
+                  notification.markedAsRead = req.body.markedAsRead
+                  notification.save()
 
-            ).then(-> fn()).catch fn
+              ).then(-> res.end()).catch next
+
+          ]
 
         routes.push
 
           path: 'shrub-ui/notifications/remove'
 
-          validators: [
+          middleware: [
+
             ensureNotificationsOwnedByRequest
 
 Ensure that the requested notifications may be removed.
@@ -371,35 +376,35 @@ Ensure that the requested notifications may be removed.
 
               next()
 
-          ]
-
-          receiver: (req, fn) ->
+            (req, res, next) ->
 
 Broadcast to others.
 
-            broadcastNotificationsEvent(
-              req
-              event: 'shrub-ui/notifications/remove'
-              notifications: req.notifications
-            )
+              broadcastNotificationsEvent(
+                req
+                event: 'shrub-ui/notifications/remove'
+                notifications: req.notifications
+              )
 
-            Promise.all(
-              for notification in req.notifications
-                notification.destroy()
+              Promise.all(
+                for notification in req.notifications
+                  notification.destroy()
 
-            ).then(-> fn()).catch fn
+              ).then(-> res.end()).catch next
+
+          ]
 
         routes.push
 
           path: 'shrub-ui/notifications'
 
-          receiver: (req, fn) ->
+          middleware: (req, res, next) ->
 
             Notification = orm.collection 'shrub-ui-notification'
             Notification.queueFromRequest(req).then((notifications) ->
 
-              fn null, notifications
+              res.end notifications
 
-            ).catch fn
+            ).catch next
 
         return routes

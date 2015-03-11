@@ -3,7 +3,66 @@
 *Limits the rate at which clients can do certain operations, like call RPC
 routes.*
 
+    pkgman = require 'pkgman'
+
     exports.SKIP = SKIP = {}
+
+A limiter on a route is defined like:
+
+```javascript
+
+registrar.registerHook('shrubRpcRoutes', function() {
+
+  var shrubLimiter = require 'shrub-limiter'
+  var Limiter = shrubLimiter.Limiter;
+  var LimiterMiddleware = shrubLimiter.LimiterMiddleware;
+
+  var routes = []
+
+  routes.push({
+
+.    path: 'my-package/route',
+
+.    middleware: [
+
+.      ...
+
+.      'shrub-villiany' // Include if limit infractions lead to eventual ban
+
+.      new LimiterMiddleware(
+.        limiterDefinitionObject
+.      )
+
+.      ...
+
+.    ]
+
+  });
+
+  return routes;
+});
+
+```
+
+<small>***NOTE:*** *Ignore the leading dots, they are a result of literate coffee
+limitations.*</small>
+
+Where `limiterDefinitionObject` above is defined as an object with the
+following properties:
+
+* `threshold`: The [threshold](./limiter#threshold) for this limiter.
+* `message`: The message returned to the client when the threshold is
+  passed.
+* `ignoreKeys`: The
+  [fingerprint keys](source/server/fingerprint) to ignore when
+  determining the total limit.
+* `villianyScore`: The score accumulated when this limit is crossed.
+
+### LimiterMiddleware
+
+    exports.LimiterMiddleware = class LimiterMiddleware
+
+      constructor: (@config) ->
 
     exports.pkgmanRegister = (registrar) ->
 
@@ -15,6 +74,8 @@ routes.*
 
         Limit =
 
+          autoPK: false
+
           attributes:
 
 ## Limit#key
@@ -23,7 +84,7 @@ routes.*
 
             key:
               type: 'string'
-              index: true
+              primaryKey: true
 
 ## Limit#scores
 
@@ -96,94 +157,93 @@ Allow RPC routes definitions to specify rate limiters.
 
       registrar.registerHook 'shrubRpcRoutesAlter', (routes) ->
 
+        Promise = require 'bluebird'
         moment = require 'moment'
 
         errors = require 'errors'
-        pkgman = require 'pkgman'
 
-A limiter on a route is defined like:
-
-* `message`: The message returned to the client when the threshold is
-  passed.
-* `threshold`: The [threshold](./limiter#threshold) for this limiter.
-* `ignoreKeys`: The
-  [fingerprint keys](source/packages/shrub-audit/fingerprint) to ignore when
-  determining the total limit.
-* `villianyScore`: The score accumulated when this limit is crossed.
-
-Check all routes for limiter definitions.
+Check all routes' middleware for limiter definitions.
 
         Object.keys(routes).forEach (path) ->
           route = routes[path]
 
-No limiter? Nevermind...
+          Fingerprint = require 'fingerprint'
 
-          return unless route.limiter?
+          for fn, index in route.middleware
+            continue unless fn instanceof exports.LimiterMiddleware
+
+            route.limiter = fn.config
 
 Create a limiter based on the threshold defined.
 
-          route.limiter.instance = new Limiter(
-            "rpc://#{route}", route.limiter.threshold
-          )
+            route.limiter.instance = new Limiter(
+              "rpc://#{path}", route.limiter.threshold
+            )
 
 Set defaults.
 
-          route.limiter.excludedKeys ?= []
-          route.limiter.message ?= 'You are doing that too much.'
-          route.limiter.villianyScore ?= 20
+            route.limiter.excludedKeys ?= []
+            route.limiter.message ?= 'You are doing that too much.'
+            route.limiter.villianyScore ?= 20
 
 Add a validator, where we'll check the threshold.
 
-          route.validators.push (req, res, next) ->
+            route.middleware[index] = (req, res, next) ->
 
-            {
-              excludedKeys
-              instance
-              message
-              villianyScore
-            } = route.limiter
+              {
+                excludedKeys
+                instance
+                message
+                villianyScore
+              } = route.limiter
 
 Allow packages to check and optionally skip the limiter.
 
-            for rule in pkgman.invokeFlat 'limiterCheck', req
-              continue unless rule?
-              return next() if SKIP is rule
+#### Invoke hook `shrubLimiterCheck`.
 
-            inlineKeys = req.fingerprint.inlineKeys excludedKeys
+              for rule in pkgman.invokeFlat 'shrubLimiterCheck', req
+                continue unless rule?
+                return next() if SKIP is rule
+
+              fingerprint = new Fingerprint req
+
+              inlineKeys = fingerprint.inlineKeys excludedKeys
 
 Build a nice error message for the client, so they hopefully will stop doing
 that.
 
-            sendLimiterError = ->
-              instance.ttl(inlineKeys).then (ttl) ->
-                next errors.instantiate(
-                  'limiterThreshold'
-                  message
-                  moment().add('seconds', ttl).fromNow()
-                )
+              sendLimiterError = ->
+                instance.ttl(inlineKeys).then (ttl) ->
+                  next errors.instantiate(
+                    'limiterThreshold'
+                    message
+                    moment().add('seconds', ttl).fromNow()
+                  )
 
 Accrue a hit and check the threshold.
 
-            instance.accrueAndCheckThreshold(inlineKeys).then((isLimited) ->
-              return next() unless isLimited
+              instance.accrueAndCheckThreshold(inlineKeys).then((isLimited) ->
+                return next() unless isLimited
 
-Zero score skips the villiany check.
+#### Invoke hook `shrubVillianyReport`.
 
-              return sendLimiterError() if villianyScore is 0
-              unless pkgman.packageExists 'shrub-villiany'
-                return sendLimiterError()
+                Promise.all(
+                  pkgman.invokeFlat(
+                    'shrubVillianyReport'
+                    req
+                    villianyScore
+                    "rpc://#{path}:limiter"
+                    excludedKeys
+                  )
 
-              req.reportVilliany(
-                villianyScore
-                "rpc://#{req.route}:limiter"
-                excludedKeys
+                ).then (reports) ->
 
-              ).then (isVillian) ->
-                return next() if isVillian
+Only send an error if the user wasn't banned for this.
 
-                sendLimiterError()
+                  if reports.filter((isBanned) -> !!isBanned).length is 0
+                    sendLimiterError()
 
-            ).catch next
+              ).catch next
 
 #### Implements hook `shrubTransmittableErrors`.
 

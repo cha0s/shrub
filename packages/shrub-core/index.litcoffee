@@ -106,6 +106,30 @@ master.
 
         workers: 0
 
+#### Implements hook `shrubRpcRoutesAlter`.
+
+Patch in express-specific variables that will be required by middleware.
+
+      registrar.registerHook 'shrubRpcRoutesAlter', (routes) ->
+
+        coreMiddleware = (req, res, next) ->
+
+          req.headers = req.socket.request.headers
+
+          req.normalizedIp = resolvedAddress(
+            config.get 'packageSettings:shrub-core:trustedProxies'
+            req.socket.client.conn.remoteAddress
+            req.headers['x-forwarded-for']
+          )
+
+          next()
+
+        coreMiddleware.weight = -10000
+
+        route.middleware.unshift coreMiddleware for path, route of routes
+
+        return
+
 #### Implements hook `shrubSocketConnectionMiddleware`.
 
       registrar.registerHook 'shrubSocketConnectionMiddleware', ->

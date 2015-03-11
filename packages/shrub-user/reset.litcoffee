@@ -10,44 +10,53 @@
 
         Promise = require 'bluebird'
 
-        {Limiter} = require 'shrub-limiter'
+        {Limiter, LimiterMiddleware} = require 'shrub-limiter'
         orm = require 'shrub-orm'
 
         routes = []
 
         routes.push
 
-          limiter: threshold: Limiter.threshold(1).every(5).minutes()
           path: 'shrub-user/reset'
 
-          receiver: (req, fn) ->
+          middleware: [
 
-            User = orm.collection 'shrub-user'
+            'shrub-http-express/session'
+            'shrub-villiany'
+
+            new LimiterMiddleware(
+              threshold: Limiter.threshold(1).every(5).minutes()
+            )
+
+            (req, res, next) ->
+
+              User = orm.collection 'shrub-user'
 
 Cancel promise flow if the user doesn't exist.
 
-            class NoSuchUser extends Error
-              constructor: (@message) ->
+              class NoSuchUser extends Error
+                constructor: (@message) ->
 
 Look up the user.
 
-            Promise.cast(
-              User.findOne resetPasswordToken: req.body.token
-            ).bind({}).then((@user) ->
-              throw new NoSuchUser unless @user?
+              Promise.cast(
+                User.findOne resetPasswordToken: req.body.token
+              ).bind({}).then((@user) ->
+                throw new NoSuchUser unless @user?
 
 Recalculate the password hashing details.
 
-              crypto.hasher plaintext: req.body.password
+                crypto.hasher plaintext: req.body.password
 
-            ).then((hashed) ->
+              ).then((hashed) ->
 
-              @user.passwordHash = hashed.key.toString 'hex'
-              @user.salt = hashed.salt.toString 'hex'
-              @user.resetPasswordToken = null
+                @user.passwordHash = hashed.key.toString 'hex'
+                @user.salt = hashed.salt.toString 'hex'
+                @user.resetPasswordToken = null
 
-              @user.save()
+                @user.save()
 
-            ).then(-> fn()).catch(NoSuchUser, -> fn()).catch fn
+              ).then(-> res.end()).catch(NoSuchUser, -> res.end()).catch next
+          ]
 
         return routes

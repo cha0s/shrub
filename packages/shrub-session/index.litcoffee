@@ -42,22 +42,6 @@ Session ID.
 
         session: if req?.session? then req.session.id
 
-#### Implements hook `shrubRpcRouteFinish`.
-
-      registrar.registerHook 'shrubRpcRouteFinish', (routeReq, result, req) ->
-        return unless routeReq.session?
-
-        Promise = require 'bluebird'
-
-Touch and save the session after every RPC call finishes.
-
-        deferred = Promise.defer()
-        routeReq.session.touch().save deferred.callback
-
-Propagate changes back up to the original request.
-
-        deferred.promise.then -> req.session = routeReq.session
-
 #### Implements hook `shrubConfigServer`.
 
       registrar.registerHook 'shrubConfigServer', ->

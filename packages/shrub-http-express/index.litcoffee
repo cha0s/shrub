@@ -25,6 +25,27 @@ middleware for sessions, routing, logging, etc.*
 
         Promise = require 'bluebird'
 
+#### Implements hook `shrubRpcRoutesAlter`.
+
+Patch in express-specific variables that will be required by middleware.
+
+      registrar.registerHook 'shrubRpcRoutesAlter', (routes) ->
+
+        expressMiddleware = (req, res, next) ->
+
+          req.headers = req.socket.request.headers
+          req.originalUrl = req.socket.request.originalUrl
+
+          next()
+
+        expressMiddleware.weight = -9999
+
+        for path, route of routes
+
+          route.middleware.unshift expressMiddleware
+
+        return
+
       registrar.recur [
         'errors', 'logger', 'routes', 'session', 'static'
       ]

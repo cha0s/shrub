@@ -5,10 +5,12 @@
     i8n = null
     Promise = null
 
-    logger = null
+    config = require 'config'
 
     orm = null
 
+    Fingerprint = require 'fingerprint'
+    logger = null
     villianyLimiter = null
 
     exports.pkgmanRegister = (registrar) ->
@@ -28,15 +30,21 @@
 
         {Limiter} = require 'shrub-limiter'
 
+        {
+          thresholdScore
+          thresholdMs
+        } = config.get 'packageSettings:shrub-villiany:ban'
+
         villianyLimiter = new Limiter(
-          'villiany', Limiter.threshold(1000).every(10).minutes()
+          'villiany'
+          Limiter.threshold(thresholdScore).every(thresholdMs).milliseconds()
         )
 
 #### Implements hook `shrubOrmCollections`.
 
       registrar.registerHook 'shrubOrmCollections', ->
 
-        audit = require 'shrub-audit'
+        Fingerprint = require 'fingerprint'
 
 Bans.
 
@@ -44,7 +52,7 @@ Bans.
 
 The structure of a ban is dictated by the fingerprint structure.
 
-        audit.Fingerprint.keys().forEach (key) ->
+        Fingerprint.keys().forEach (key) ->
           Ban.attributes[key] =
             index: true
             type: 'string'
@@ -91,11 +99,9 @@ Create a ban from a fingerprint.
 
         Ban.createFromFingerprint = (fingerprint, expires) ->
 
-          config = require 'config'
-
           unless expires?
             settings = config.get 'packageSettings:shrub-villiany:ban'
-            expires = parseInt settings.defaultExpiration
+            expires = parseInt settings.thresholdMs
 
           data = expires: new Date Date.now() + expires
           data[key] = value for key, value of fingerprint
@@ -112,22 +118,12 @@ Create a ban from a fingerprint.
 
           (req, res, next) ->
 
-            req.villianyKick = (subject, ttl) ->
+            req.on 'shrubVillianyKick', (subject, ttl) ->
 
-Destroy any session.
-
-              req.session?.destroy()
-
-Log the user out.
-
-              req.logOut().then ->
-
-                res.status 401
-                res.end buildBanMessage subject, ttl
+              res.status 401
+              res.end buildBanMessage subject, ttl
 
             next()
-
-          reporterMiddleware
 
           enforcementMiddleware
 
@@ -139,9 +135,13 @@ Log the user out.
 
         ban:
 
-10 minute ban time by default.
+Villiany threshold score.
 
-          defaultExpiration: 1000 * 60 * 10
+          thresholdScore: 1000
+
+10 minute villiany threshold window by default.
+
+          thresholdMs: 1000 * 60 * 10
 
 #### Implements hook `shrubSocketConnectionMiddleware`.
 
@@ -150,49 +150,34 @@ Log the user out.
         {AuthorizationFailure} = require 'shrub-socket/manager'
 
         label: 'Provide villiany management'
-        middleware: [
+        middleware: socketMiddleware()
 
-          (req, res, next) ->
+#### Implements hook `shrubRpcRoutesAlter`.
 
-            req.villianyKick = (subject, ttl) ->
+      registrar.registerHook 'shrubRpcRoutesAlter', (routes) ->
 
-Destroy any session.
+        {spliceRouteMiddleware} = require 'shrub-rpc'
 
-              req.session?.destroy()
+        for path, route of routes
+          spliceRouteMiddleware route, 'shrub-villiany', socketMiddleware()
 
-Log the user out.
+        return
 
-              req.logOut().then ->
+#### Implements hook `shrubVillianyReport`.
 
-Not already authorized?
+Catch villiany reports.
 
-                throw new AuthorizationFailure unless req.socket?
+      registrar.registerHook 'shrubVillianyReport', (req, score, type, excluded = []) ->
 
-                req.socket.emit 'core.reload'
-
-
-            next()
-
-          reporterMiddleware
-
-          enforcementMiddleware
-
-        ]
-
-Define `req.reportVilliany()`.
-
-    reporterMiddleware = (req, res, next) ->
-
-      Ban = orm.collection 'shrub-ban'
-
-      req.reportVilliany = (score, type, excluded = []) ->
+        Ban = orm.collection 'shrub-ban'
 
 Terminate the chain if not a villian.
 
         class NotAVillian extends Error
           constructor: (@message) ->
 
-        inlineKeys = req.fingerprint.inlineKeys excluded
+        fingerprint = new Fingerprint req
+        inlineKeys = fingerprint.inlineKeys excluded
 
         villianyLimiter.accrueAndCheckThreshold(
           inlineKeys, score
@@ -201,11 +186,11 @@ Terminate the chain if not a villian.
 
 Log this transgression.
 
-          fingerprint = req.fingerprint.get excluded
+          fingerprint = fingerprint.get excluded
 
 ###### TODO: Multiline
 
-          message = "Logged villiany score #{score} for #{type}, audit keys: #{JSON.stringify fingerprint}"
+          message = "Logged villiany score #{score} for #{type}, fingerprint: #{JSON.stringify fingerprint}"
           message += ', which resulted in a ban.' if isVillian
           logger[if isVillian then 'error' else 'warn'] message
 
@@ -219,11 +204,9 @@ Ban.
 
 Kick.
 
-          req.villianyKick villianyLimiter.ttl inlineKeys
+          req.emit 'shrubVillianyKick', villianyLimiter.ttl inlineKeys
 
         ).then(-> true).catch NotAVillian, -> false
-
-      next()
 
 Enforce bans.
 
@@ -234,20 +217,20 @@ Enforce bans.
 Terminate the request if a ban is enforced.
 
       class RequestBanned extends Error
-        constructor: (@message) ->
+        constructor: (@message, @key, @ttl) ->
 
-      banPromises = for key, value of req.fingerprint.get()
+      fingerprint = new Fingerprint req
+      banPromises = for key, value of fingerprint.get()
         do (key, value) ->
           method = i8n.camelize "is_#{key}_banned", true
           Ban[method](value).then ({isBanned, ttl}) ->
-            return unless isBanned
-            req.villianyKick(key, ttl).then -> throw new RequestBanned()
+            throw new RequestBanned '', key, ttl if isBanned
 
       Promise.all(banPromises).then(-> next()).catch(
 
-Ignore the error when it's only signifying a ban.
+RequestBanned error just means we should emit.
 
-        RequestBanned, ->
+        RequestBanned, ({key, ttl}) -> req.emit 'shrubVillianyKick', key, ttl
       ).catch (error) -> next error
 
 Build a nice message for the villian.
@@ -261,8 +244,26 @@ Build a nice message for the villian.
       else
         'You are banned.'
 
-      message += " The ban will be lifted #{
-        moment().add('seconds', ttl).fromNow()
-      }." if ttl?
+###### TODO: Multiline.
+
+      message += " The ban will be lifted #{moment().add('seconds', ttl).fromNow()}." if ttl?
 
       message
+
+Middleware for sockets.
+
+    socketMiddleware = -> [
+
+      (req, res, next) ->
+
+        req.on 'shrubVillianyKick', (subject, ttl) ->
+
+          throw new AuthorizationFailure unless req.socket?
+
+          req.socket.emit 'core.reload'
+
+        next()
+
+      enforcementMiddleware
+
+    ]

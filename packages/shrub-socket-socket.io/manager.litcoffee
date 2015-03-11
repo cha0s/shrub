@@ -2,6 +2,8 @@
 
 *A [Socket.IO](http://socket.io/) implementation of SocketManager.*
 
+    {EventEmitter} = require 'events'
+
     Promise = null
 
     config = null
@@ -112,9 +114,21 @@ Authorization.
           socket.request.http = http
           socket.request.socket = socket
 
+Connect provides this, it will make middleware (like session) not choke and
+die.
+
+          socket.request.originalUrl = socket.request.url
+
+Build a fake response which extends EventEmitter because some connect
+middleware (like session) listenes for errors with `on`. Even though they're
+never actually emitted, this will make sure nothing breaks.
+
+          res = new class SocketConnectionResponse extends EventEmitter
+            constructor: -> super
+
 Dispatch the authorization middleware.
 
-          @_connectionMiddleware.dispatch socket.request, null, (error) ->
+          @_connectionMiddleware.dispatch socket.request, res, (error) ->
 
 If any kind of error was thrown, propagate it.
 

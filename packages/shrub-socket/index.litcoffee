@@ -60,7 +60,6 @@ Middleware stack dispatched for a socket connection.
           'shrub-http-express/session'
           'shrub-session'
           'shrub-user'
-          'shrub-audit'
           'shrub-villiany'
           'shrub-rpc'
         ]

@@ -5,6 +5,8 @@
     passport = null
     Promise = null
 
+    {Middleware} = require 'middleware'
+
     orm = null
 
     clientModule = require './client'
@@ -28,19 +30,6 @@ Send a redacted version of the request user.
 
         req.user.redactFor req.user if req.user?
 
-#### Implements hook `shrubRpcRouteFinish`.
-
-      registrar.registerHook 'shrubRpcRouteFinish', (routeReq, result, req) ->
-        return unless routeReq.user.id?
-
-Touch and save the session after every RPC call finishes.
-
-        routeReq.user.touch().save().then (user) ->
-
-Propagate changes back up to the original request.
-
-          req.user = routeReq.user
-
 #### Implements hook `shrubAuditFingerprint`.
 
       registrar.registerHook 'shrubAuditFingerprint', (req) ->
@@ -49,46 +38,12 @@ User (ID).
 
         user: if req?.user?.id? then req.user.id
 
-      instantiateAnonymous = ->
-
-        @user = orm.collection('shrub-user').instantiate()
-
-Add to anonymous group.
-
-        @user.groups = [
-          orm.collection('shrub-user-group').instantiate group: 2
-        ]
-
-        @user.populateAll()
-
 #### Implements hook `shrubHttpMiddleware`.
 
       registrar.registerHook 'shrubHttpMiddleware', ->
 
         label: 'Load user using passport'
-        middleware: [
-
-          (req, res, next) ->
-
-            req.instantiateAnonymous = instantiateAnonymous
-            next()
-
-Passport middleware.
-
-          passport.initialize()
-          passport.session()
-
-Set the user into the request.
-
-          (req, res, next) ->
-            promise = if req.user?
-              Promise.resolve()
-            else
-              req.instantiateAnonymous()
-
-            promise.then(-> next()).catch next
-
-        ]
+        middleware: userMiddleware()
 
 #### Implements hook `shrubOrmCollections`.
 
@@ -314,43 +269,47 @@ Decrypt the e-mail if redacting for the same user.
           'shrub-user'
         ]
 
+#### Implements hook `shrubRpcRoutesAlter`.
+
+      registrar.registerHook 'shrubRpcRoutesAlter', (routes) ->
+
+        {spliceRouteMiddleware} = require 'shrub-rpc'
+
+        loadUserMiddleware = (req, res, next) ->
+
+          req.loadUser = (done) -> req.loadSession ->
+
+            userMiddleware_ = new Middleware()
+            for fn in userMiddleware()
+              userMiddleware_.use fn
+
+            userMiddleware_.dispatch req, res, (error) ->
+              return next error if error?
+              done()
+
+          next()
+
+        loadUserMiddleware.weight = -4999
+
+        for path, route of routes
+          route.middleware.unshift loadUserMiddleware
+          spliceRouteMiddleware route, 'shrub-user', userMiddleware()
+
+        return
+
 #### Implements hook `shrubSocketConnectionMiddleware`.
 
       registrar.registerHook 'shrubSocketConnectionMiddleware', ->
 
         label: 'Load user using passport'
-        middleware: [
-
-          (req, res, next) ->
-
-            req.instantiateAnonymous = instantiateAnonymous
-            next()
-
-Passport middleware.
-
-          passport.initialize()
-          passport.session()
-
-Set the user into the request.
-
-          (req, res, next) ->
-            promise = if req.user?
-              Promise.resolve()
-            else
-              req.instantiateAnonymous()
-
-            promise.then(-> next()).catch next
 
 Join a channel for the username.
 
-          (req, res, next) ->
+        middleware: userMiddleware().concat (req, res, next) ->
 
-            return req.socket.join req.user.name, next if req.user.id?
+          return req.socket.join req.user.name, next if req.user.id?
 
-            next()
-
-
-        ]
+          next()
 
 #### Implements hook `shrubUserBeforeLogoutMiddleware`.
 
@@ -402,3 +361,52 @@ Leave the user channel.
 
       User = orm.collection 'shrub-user'
       User.findOne(iname: name.toLowerCase()).populateAll()
+
+    userMiddleware = -> [
+
+      (req, res, next) ->
+
+        req.instantiateAnonymous = ->
+
+          @user = orm.collection('shrub-user').instantiate()
+
+Add to anonymous group.
+
+          @user.groups = [
+            orm.collection('shrub-user-group').instantiate group: 2
+          ]
+
+          @user.populateAll()
+
+        next()
+
+Passport middleware.
+
+      passport.initialize()
+      passport.session()
+
+Set the user into the request.
+
+      (req, res, next) ->
+        promise = if req.user?
+          Promise.resolve()
+        else
+          req.instantiateAnonymous()
+
+        promise.then(-> next()).catch next
+
+Save the user at the end of the request.
+
+      (req, res, next) ->
+
+        end = res.end
+        res.end = (data, encoding) ->
+          res.end = end
+
+          return res.end data, encoding unless req.user.id
+
+          req.user.save().finally -> res.end data, encoding
+
+        next()
+
+    ]

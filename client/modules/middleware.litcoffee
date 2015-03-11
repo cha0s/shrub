@@ -113,14 +113,13 @@ Kick things off.
 
         invoke()
 
-    debug = require('debug') 'shrub:middleware'
-    debugSilly = require('debug') 'shrub-silly:middleware'
-
 ## middleware.fromHook
 
 *Create a middleware stack from the results of a hook and path configuration.*
 
     exports.fromHook = (hook, paths, args...) ->
+
+      debugSilly = require('debug') 'shrub-silly:middleware'
 
       middleware = new Middleware()
 
@@ -137,8 +136,8 @@ Invoke the hook and `use` the middleware in the paths configuration order.
           fn.label = spec.label
           middleware.use fn, spec.label
 
-      middleware.on 'invoking', (fn) -> debugSilly "Invoking #{fn.label}"
-      middleware.on 'invoked', (fn) -> debugSilly "Invoked #{fn.label}"
+      # middleware.on 'invoking', (fn) -> debugSilly "Invoking #{fn.label}"
+      # middleware.on 'invoked', (fn) -> debugSilly "Invoked #{fn.label}"
 
       middleware
 

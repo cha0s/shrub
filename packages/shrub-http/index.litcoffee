@@ -72,16 +72,15 @@ Module implementing the socket manager.
           module: 'shrub-http-express'
 
         middleware: [
+          'shrub-http-express/static'
           'shrub-core'
           'shrub-socket/factory'
           'shrub-http-express/session'
           'shrub-user'
-          'shrub-audit'
           'shrub-http-express/logger'
           'shrub-villiany'
           'shrub-form'
           'shrub-http-express/routes'
-          'shrub-http-express/static'
           'shrub-config'
           'shrub-skin/path'
           'shrub-assets'

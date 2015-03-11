@@ -18,55 +18,60 @@
 
       registrar.registerHook 'shrubRpcRoutes', ->
 
-        {Limiter} = require 'shrub-limiter'
+        {Limiter, LimiterMiddleware} = require 'shrub-limiter'
 
         routes = []
 
         routes.push
 
-          limiter:
-            message: 'You are logging in too much.'
-            threshold: Limiter.threshold(3).every(30).seconds()
-
           path: 'shrub-user/login'
 
-          receiver: (req, fn) ->
+          middleware: [
 
-            errors = require 'errors'
+            'shrub-http-express/session'
+            'shrub-villiany'
 
-            passport = req._passport.instance
+            'shrub-user'
 
-            loginPromise = switch req.body.method
+            new LimiterMiddleware(
+              message: 'You are logging in too much.'
+              threshold: Limiter.threshold(3).every(30).seconds()
+            )
 
-              when 'local'
+            (req, res, next) ->
 
-                res = {}
-                deferred = Promise.defer()
-                passport.authenticate('local', deferred.callback) req, res, fn
+              errors = require 'errors'
+
+              deferred = Promise.defer()
+              req._passport.instance.authenticate(
+                req.body.method, deferred.callback
+              ) req
 
 Log the user in (if it exists), and redact it for the response.
 
-                deferred.promise.bind({}).spread((@user, info) ->
-                  throw errors.instantiate 'login' unless @user
+              deferred.promise.bind({}).spread((@user, info) ->
+                throw errors.instantiate 'login' unless @user
 
-                  req.logIn @user
+                req.logIn @user
 
-                ).then(->
+              ).then(->
 
-                  new Promise (resolve, reject) =>
+                new Promise (resolve, reject) =>
 
 Join a channel for the username.
 
-                    req.socket.join @user.name, (error) ->
-                      return reject error if error?
+                  req.socket.join @user.name, (error) ->
+                    return reject error if error?
 
-                      resolve()
+                    resolve()
 
-                ).then ->
+              ).then(->
 
-                  @user.redactFor @user
+                @user.redactFor @user
 
-            loginPromise.then((user) -> fn null, user).catch fn
+              ).then((user) -> res.end user).catch next
+
+          ]
 
         return routes
 

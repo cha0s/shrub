@@ -1,19 +1,15 @@
 # Express - routes
 
-    config = require 'config'
-
     express = null
+
+    config = require 'config'
+    {Middleware} = require 'middleware'
 
     cookieParser = null
     sessionStore = null
+    signature = null
 
     exports.pkgmanRegister = (registrar) ->
-
-#### Implements hook `shrubCorePreBootstrap`.
-
-      registrar.registerHook 'shrubCorePreBootstrap', ->
-
-        express = require 'express'
 
 #### Implements hook `shrubCoreBootstrapMiddleware`.
 
@@ -24,7 +20,10 @@
 
           (next) ->
 
-            {cookie, sessionStore: sessionStoreConfig} = config.get(
+            express = require 'express'
+            signature = require 'cookie-signature'
+
+            {cookie} = config.get(
               'packageSettings:shrub-session'
             )
 
@@ -43,100 +42,89 @@ Parse cookies and load any session.
 
       registrar.registerHook 'shrubHttpMiddleware', (http) ->
 
-        {cookie, key} = config.get 'packageSettings:shrub-session'
+        label: 'Load session from cookie'
+        middleware: sessionMiddleware()
 
-        signature = require 'cookie-signature'
+#### Implements hook `shrubRpcRoutesAlter`.
+
+      registrar.registerHook 'shrubRpcRoutesAlter', (routes) ->
+
+        {spliceRouteMiddleware} = require 'shrub-rpc'
+
+        loadSessionMiddleware = (req, res, next) ->
+
+          req.loadSession = (done) ->
+
+            sessionMiddleware_ = new Middleware()
+            for fn in sessionMiddleware()
+              sessionMiddleware_.use fn
+
+            sessionMiddleware_.dispatch req, res, (error) ->
+              return next error if error?
+              done()
+
+          next()
+
+        loadSessionMiddleware.weight = -5000
+
+        for path, route of routes
+          route.middleware.unshift loadSessionMiddleware
+          spliceRouteMiddleware(
+            route, 'shrub-http-express/session', sessionMiddleware()
+          )
+
+        return
+
+#### Implements hook `shrubSocketConnectionMiddleware`.
+
+      registrar.registerHook 'shrubSocketConnectionMiddleware', ->
 
         label: 'Load session from cookie'
-        middleware: [
+        middleware: sessionMiddleware()
+
+    sessionMiddleware = ->
+
+      {cookie, key} = config.get 'packageSettings:shrub-session'
+
+      return [
 
 Express cookie parser.
 
-          -> cookieParser arguments...
+        cookieParser
 
 Session reification.
 
-          express.session(
-            key: key
-            store: sessionStore
-            cookie: cookie
-          )
+        express.session(
+          cookie: cookie
+          key: key
+          secret: cookie.cryptoKey
+          store: sessionStore
+        )
 
 If this is the first request made by a client, the cookie won't exist in
 req.headers.cookie. We normalize that inconsistency, so all consumers of the
 cookie will have a consistent interface on the first as well as subsequent
 requests.
 
-          (req, res, next) ->
+        (req, res, next) ->
 
 If the client is already in sync, awesome!
 
-            return next() if req.signedCookies[key] is req.sessionID
+          return next() if req.signedCookies[key] is req.sessionID
 
 Generate the cookie
 
-            val = 's:' + signature.sign req.sessionID, cookie.cryptoKey
-            cookieText = req.session.cookie.serialize key, val
-
-            cookieObject = {}
-            for kv in cookieText.split ';'
-              [k, v] = kv.split '='
-              cookieObject[k.trim()] = v
-
-Pull out junk that only makes sense en route to client.
-
-            delete cookieObject['Path']
-            delete cookieObject['HttpOnly']
-
-Rebuild the cookie string.
-
-            cookieText = ''
-            for k, v of cookieObject
-              cookieText += '; ' if cookieText
-              cookieText += k + '=' + v
+          val = 's:' + signature.sign req.sessionID, cookie.cryptoKey
+          cookieText = req.session.cookie.serialize key, val
 
 Commit the session before offering the cookie, otherwise it wouldn't actually
 be pointing at anything yet.
 
-            req.session.save (error) ->
-              next error if error?
+          req.session.save (error) ->
+            next error if error?
 
-              req.signedCookies[key] = req.sessionID
-              req.headers.cookie = cookieText
-              next()
+            req.signedCookies[key] = req.sessionID
+            req.headers.cookie = cookieText
+            next()
 
-        ]
-
-#### Implements hook `shrubSocketConnectionMiddleware`.
-
-      registrar.registerHook 'shrubSocketConnectionMiddleware', ->
-
-        {key} = config.get 'packageSettings:shrub-session'
-
-        label: 'Load session'
-        middleware: [
-
-          (req, res, next) ->
-
-Make sure there's a possibility we will find a session.
-
-            return next() unless req and req.headers and req.headers.cookie
-
-            cookieParser req, null, (error) ->
-              return next error if error?
-
-Tricky: Assign req.sessionStore, because Express session functionality will be
-broken unless it exists.
-
-              req.sessionStore = sessionStore
-              sessionStore.load req.signedCookies[key], (error, session) ->
-                return next error if error?
-                return next() unless session?
-
-                session.req = req
-                req.session = session
-                req.sessionID = session.id
-
-                next()
-
-        ]
+      ]
