@@ -2002,20 +2002,11 @@ The middleware have the following signature:</p>
 </div>
 
 <h2 id="shrubvillianyreport">shrubVillianyReport</h2>
-<p><em>Report villianous actions.</em></p>
-<p>You may bypass limit checks by returning <code>SKIP</code> (<code>shrub-limiter</code> package) from
-implementations of this hook, e.g.</p>
-<pre><code class="javascript">
-registrar.registerHook('shrubLimiterCheck', function(req) {
-
-  if (req.somethingWeWantToCheck) {
-    return require('shrub-limiter').SKIP;
-  }
-})
-
-</code></pre>
-
-<p>Returning any other value besides <code>SKIP</code> will have no effect.</p>
+<p><em>Act on reported villianous actions.</em></p>
+<p>Packages can invoke this hook to notify other packages that villianous behavior
+has occurred. This is an abstract concept that is application-specific: one
+application in core shrub is exceeding RPC call limits, however you could use
+the system for things like user flagging, abusive behavior, etc.</p>
 <h3>Implementation arguments</h3>
 
 <ul>
