@@ -1,5 +1,7 @@
 ## Shrub
 
+**See the full documentation at http://cha0s.github.io/shrub**
+
 Shrub is a JavaScript (or CoffeeScript if you prefer) application
 framework. [AngularJS](http://angularjs.org/) is used on the client-side, as
 well as [Socket.IO](http://socket.io/), enabling real-time communication right
@@ -62,4 +64,4 @@ http://localhost:4201 and see your Shrub instance chugging along!
 
 ### TODO
 
-See the [generated TODO list](http://cha0s.github.io/shrub/todos/).
+See the [TODO list](http://cha0s.github.io/shrub/todos/).

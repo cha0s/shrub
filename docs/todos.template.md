@@ -10,3 +10,5 @@ This is a dynamically generated list of TODO items, each with context.
 ###### TODO: Cluster refactoring, with master/worker hooks
 
 ###### TODO: shrub-passport split off from shrub-user
+
+###### TODO: Config will become yaml
