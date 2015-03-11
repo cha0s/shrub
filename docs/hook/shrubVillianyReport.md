@@ -1,20 +1,9 @@
-*Report villianous actions.*
+*Act on reported villianous actions.*
 
-You may bypass limit checks by returning `SKIP` (`shrub-limiter` package) from
-implementations of this hook, e.g.
-
-```javascript
-
-registrar.registerHook('shrubLimiterCheck', function(req) {
-
-  if (req.somethingWeWantToCheck) {
-    return require('shrub-limiter').SKIP;
-  }
-})
-
-```
-
-Returning any other value besides `SKIP` will have no effect.
+Packages can invoke this hook to notify other packages that villianous behavior
+has occurred. This is an abstract concept that is application-specific: one
+application in core shrub is exceeding RPC call limits, however you could use
+the system for things like user flagging, abusive behavior, etc.
 
 <h3>Implementation arguments</h3>
 
