@@ -1511,6 +1511,28 @@ The middleware have the following signature:</p>
 </div>
 
 <h2 id="shrublimitercheck">shrubLimiterCheck</h2>
+<p><em>Specifiy criteria which will skip limiter checks.</em></p>
+<p>You may bypass limit checks by returning <code>SKIP</code> (<code>shrub-limiter</code> package) from
+implementations of this hook, e.g.</p>
+<pre><code class="javascript">
+registrar.registerHook('shrubLimiterCheck', function(req) {
+
+  if (req.somethingWeWantToCheck) {
+    return require('shrub-limiter').SKIP;
+  }
+})
+
+</code></pre>
+
+<p>Returning any other value besides <code>SKIP</code> will have no effect.</p>
+<h3>Implementation arguments</h3>
+
+<ul>
+<li>(http.IncomingMessage) <code>req</code>: The route request object.</li>
+</ul>
+<h3>Implementations must return</h3>
+
+<p><code>SKIP</code> to skip the limiter check, or anything else otherwise.</p>
 <div class="admonition note"><p class="admonition-title">1 invocation</p>
   <table>
     <tr class="even"><td><a href="../source/packages/shrub-limiter">shrub-limiter (server)</a></td><td align="right"><a href="../source/packages/shrub-limiter#invoke-hook-shrublimitercheck">invocation</a></td></tr>  </table>
@@ -1651,16 +1673,23 @@ locals are injected:</p>
 <p>An array of objects structured like:</p>
 <ul>
 <li>(String) <code>path</code> - The HTTP path of the route. Include the leading slash.</li>
-<li>(Function) <code>receiver</code> - The function invoked when the route is hit. Takes two
-  parameters:<ul>
-<li>(http.IncomingMessage) <code>req</code> - The request object.</li>
-<li>(Function) <code>fn</code> - A nodeback called when the route is complete.</li>
+<li>(Function Array) <code>middleware</code> - A middleware stack which is dispatched when
+  the route is hit. The middleware have the following signature:</li>
 </ul>
-</li>
-<li>(...) - Other packages may expect arbitrary parameters, for instance
-  <code>shrub-limiter</code> expects a key <code>limiter</code>. See
-  <a href="../source/packages/shrub-limiter/#implements-hook-shrubrpcroutesalter">the documentation</a>
-  for more information.</li>
+<pre><code class="javascript">function(req, res, next) {
+  ...
+}
+</code></pre>
+
+<p><code>req</code> has the following properties set by default:</p>
+<ul>
+<li>(Any) <code>body</code>: The data passed in from the RPC call.</li>
+<li>(Object) <code>route</code>: the route definition object specified above.</li>
+<li>(Socket) <code>socket</code>: The raw socket object.</li>
+</ul>
+<p><code>res</code> has the following properties set by default:</p>
+<ul>
+<li>(Function) <code>end</code>: Called with the data to respond to the RPC call.</li>
 </ul>
 <div class="admonition note"><p class="admonition-title">7 implementations</p>
   <table>
@@ -1673,6 +1702,10 @@ locals are injected:</p>
 </div>
 
 <h2 id="shrubrpcroutesalter">shrubRpcRoutesAlter</h2>
+<p><em>Alter RPC routes defined by packages.</em></p>
+<p>Packages can implement this hook to alter RPC routes defined by any other (or
+even the same) package.</p>
+<p>See: <a href="../hooks/#shrubrpcroutes"><code>shrubRpcRoutes</code></a>.</p>
 <div class="admonition note"><p class="admonition-title">7 implementations</p>
   <table>
     <tr class="even"><td><a href="../source/packages/shrub-core">shrub-core (server)</a></td><td align="right"><a href="../source/packages/shrub-core#implements-hook-shrubrpcroutesalter">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-example">shrub-example (server)</a></td><td align="right"><a href="../source/packages/shrub-example#implements-hook-shrubrpcroutesalter">implementation</a></td></tr>    <tr class="even"><td><a href="../source/packages/shrub-http-express">shrub-http-express (server)</a></td><td align="right"><a href="../source/packages/shrub-http-express#implements-hook-shrubrpcroutesalter">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-http-express/session">shrub-http-express/session (server)</a></td><td align="right"><a href="../source/packages/shrub-http-express/session#implements-hook-shrubrpcroutesalter">implementation</a></td></tr>    <tr class="even"><td><a href="../source/packages/shrub-limiter">shrub-limiter (server)</a></td><td align="right"><a href="../source/packages/shrub-limiter#implements-hook-shrubrpcroutesalter">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-user">shrub-user (server)</a></td><td align="right"><a href="../source/packages/shrub-user#implements-hook-shrubrpcroutesalter">implementation</a></td></tr>    <tr class="even"><td><a href="../source/packages/shrub-villiany">shrub-villiany (server)</a></td><td align="right"><a href="../source/packages/shrub-villiany#implements-hook-shrubrpcroutesalter">implementation</a></td></tr>  </table>
@@ -1969,6 +2002,32 @@ The middleware have the following signature:</p>
 </div>
 
 <h2 id="shrubvillianyreport">shrubVillianyReport</h2>
+<p><em>Report villianous actions.</em></p>
+<p>You may bypass limit checks by returning <code>SKIP</code> (<code>shrub-limiter</code> package) from
+implementations of this hook, e.g.</p>
+<pre><code class="javascript">
+registrar.registerHook('shrubLimiterCheck', function(req) {
+
+  if (req.somethingWeWantToCheck) {
+    return require('shrub-limiter').SKIP;
+  }
+})
+
+</code></pre>
+
+<p>Returning any other value besides <code>SKIP</code> will have no effect.</p>
+<h3>Implementation arguments</h3>
+
+<ul>
+<li>(http.IncomingMessage) <code>req</code>: The route request object.</li>
+<li>(Number) <code>score</code>: The numeric score this action contributes towards a ban.</li>
+<li>(String) <code>key</code>: A unique key for this villianous action.</li>
+<li>(String Array) <code>excludedKeys</code>: Fingerprint keys to exclude from ban.</li>
+</ul>
+<h3>Implementations must return</h3>
+
+<p>A boolean or a promise that resolves to boolean indicating whether or not the
+villianous action results in a ban.</p>
 <div class="admonition note"><p class="admonition-title">1 implementation</p>
   <table>
     <tr class="even"><td><a href="../source/packages/shrub-villiany">shrub-villiany (server)</a></td><td align="right"><a href="../source/packages/shrub-villiany#implements-hook-shrubvillianyreport">implementation</a></td></tr>  </table>

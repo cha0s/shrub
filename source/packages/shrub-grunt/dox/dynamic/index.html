@@ -933,6 +933,7 @@ portion from the end of the filename.</p>
     hookFiles[hook] = try
       fs.readFileSync "docs/hook/#{hook}.md", 'utf8'
     catch error
+      console.error "Missing hook template for #{hook}"
       ''
 
   O =

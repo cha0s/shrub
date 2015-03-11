@@ -209,6 +209,7 @@ Massage the statistics to help rendering the hooks page.
         hookFiles[hook] = try
           fs.readFileSync "docs/hook/#{hook}.md", 'utf8'
         catch error
+          console.error "Missing hook template for #{hook}"
           ''
 
       O =
