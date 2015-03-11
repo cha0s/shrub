@@ -178,16 +178,6 @@
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../shrub-audit/fingerprint">packages/shrub-audit/fingerprint.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../shrub-audit">packages/shrub-audit/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
                     <a class="" href="../shrub-config">packages/shrub-config/index.litcoffee</a>
                     
                 </li>
@@ -212,7 +202,9 @@
                             
                                 <li><a class="toctree-l3" href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-shrubsocketauthorizationmiddleware">Implements hook shrubSocketAuthorizationMiddleware.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubrpcroutesalter">Implements hook shrubRpcRoutesAlter.</a></li>
+                            
+                                <li><a class="toctree-l3" href="#implements-hook-shrubsocketconnectionmiddleware">Implements hook shrubSocketConnectionMiddleware.</a></li>
                             
                         
                         </ul>
@@ -331,6 +323,16 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../shrub-grunt/tests/run">packages/shrub-grunt/tests/run.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-html5-audio/client">packages/shrub-html5-audio/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-html5-audio">packages/shrub-html5-audio/index.litcoffee</a>
                     
                 </li>
             
@@ -690,6 +692,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../server/fingerprint">server/fingerprint.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../server/logging">server/logging.litcoffee</a>
                     
                 </li>
@@ -824,8 +831,30 @@ exports.pkgmanRegister = (registrar) -&gt;
 master.</p>
 <pre><code>    workers: 0
 </code></pre>
-<h4 id="implements-hook-shrubsocketauthorizationmiddleware">Implements hook <code>shrubSocketAuthorizationMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubSocketAuthorizationMiddleware', -&gt;
+<h4 id="implements-hook-shrubrpcroutesalter">Implements hook <code>shrubRpcRoutesAlter</code>.</h4>
+<p>Patch in express-specific variables that will be required by middleware.</p>
+<pre><code>  registrar.registerHook 'shrubRpcRoutesAlter', (routes) -&gt;
+
+    coreMiddleware = (req, res, next) -&gt;
+
+      req.headers = req.socket.request.headers
+
+      req.normalizedIp = resolvedAddress(
+        config.get 'packageSettings:shrub-core:trustedProxies'
+        req.socket.client.conn.remoteAddress
+        req.headers['x-forwarded-for']
+      )
+
+      next()
+
+    coreMiddleware.weight = -10000
+
+    route.middleware.unshift coreMiddleware for path, route of routes
+
+    return
+</code></pre>
+<h4 id="implements-hook-shrubsocketconnectionmiddleware">Implements hook <code>shrubSocketConnectionMiddleware</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubSocketConnectionMiddleware', -&gt;
 
     label: 'Normalize request variables'
     middleware: [

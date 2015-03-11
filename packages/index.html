@@ -99,6 +99,9 @@
                             <li class="toctree-l2"><a href="#shrub-formclient">shrub-form/client</a></li>
                             
                         
+                            <li class="toctree-l2"><a href="#shrub-html5-audioclient">shrub-html5-audio/client</a></li>
+                            
+                        
                             <li class="toctree-l2"><a href="#shrub-html5-local-storageclient">shrub-html5-local-storage/client</a></li>
                             
                         
@@ -144,9 +147,6 @@
                             <li class="toctree-l2"><a href="#shrub-assets">shrub-assets</a></li>
                             
                         
-                            <li class="toctree-l2"><a href="#shrub-audit">shrub-audit</a></li>
-                            
-                        
                             <li class="toctree-l2"><a href="#shrub-config">shrub-config</a></li>
                             
                         
@@ -160,6 +160,9 @@
                             
                         
                             <li class="toctree-l2"><a href="#shrub-grunt">shrub-grunt</a></li>
+                            
+                        
+                            <li class="toctree-l2"><a href="#shrub-html5-audio">shrub-html5-audio</a></li>
                             
                         
                             <li class="toctree-l2"><a href="#shrub-html5-local-storage">shrub-html5-local-storage</a></li>
@@ -317,16 +320,6 @@
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../source/packages/shrub-audit/fingerprint">packages/shrub-audit/fingerprint.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../source/packages/shrub-audit">packages/shrub-audit/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
                     <a class="" href="../source/packages/shrub-config">packages/shrub-config/index.litcoffee</a>
                     
                 </li>
@@ -453,6 +446,16 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../source/packages/shrub-grunt/tests/run">packages/shrub-grunt/tests/run.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-html5-audio/client">packages/shrub-html5-audio/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-html5-audio">packages/shrub-html5-audio/index.litcoffee</a>
                     
                 </li>
             
@@ -812,6 +815,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../source/server/fingerprint">server/fingerprint.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../source/server/logging">server/logging.litcoffee</a>
                     
                 </li>
@@ -986,6 +994,8 @@ up later.</em></p>
   </table>
 </div></p>
 </blockquote>
+<h2 id="shrub-html5-audioclient"><a href="../source/packages/shrub-html5-audio/client">shrub-html5-audio/client</a></h2>
+<p><span class="package-title">HTML5 audio</span></p>
 <h2 id="shrub-html5-local-storageclient"><a href="../source/packages/shrub-html5-local-storage/client">shrub-html5-local-storage/client</a></h2>
 <p><span class="package-title">HTML5 local storage</span></p>
 <p><em>Provide an Angular service to consume the HTML5 localStorage API.</em></p>
@@ -1286,23 +1296,6 @@ page load.</em></p>
   </table>
 </div></p>
 </blockquote>
-<h2 id="shrub-audit"><a href="../source/packages/shrub-audit">shrub-audit</a></h2>
-<p><span class="package-title">Auditing</span></p>
-<p><em>Track users through the request. This can be used to weed out bad behavior,
-for analytics, or anything else.</em></p>
-<div class="admonition note"><p class="admonition-title">Implements hooks</p>  <table>
-    <tr class="even"><td><a href="../hooks/#shrubhttpmiddleware">shrubHttpMiddleware</a></td><td align="right"><a href="../source/packages/shrub-audit#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>
-    <tr class="odd"><td><a href="../hooks/#shrubsocketauthorizationmiddleware">shrubSocketAuthorizationMiddleware</a></td><td align="right"><a href="../source/packages/shrub-audit#implements-hook-shrubsocketauthorizationmiddleware">implementation</a></td></tr>
-  </table>
-</div>
-
-<blockquote>
-<h2 id="shrub-auditfingerprint"><a href="../source/packages/shrub-audit/fingerprint"><small>shrub-audit/</small>fingerprint</a></h2>
-<p><span class="package-title">Fingerprint class</span></p>
-<p><div class="admonition note"><p class="admonition-title">Implements hooks</p>  <table>
-  </table>
-</div></p>
-</blockquote>
 <h2 id="shrub-config"><a href="../source/packages/shrub-config">shrub-config</a></h2>
 <p><span class="package-title">Configuration</span></p>
 <p><em>Gathers configuration and serves it as an Angular module for clients.</em></p>
@@ -1326,14 +1319,16 @@ for analytics, or anything else.</em></p>
     <tr class="odd"><td><a href="../hooks/#shrubauditfingerprint">shrubAuditFingerprint</a></td><td align="right"><a href="../source/packages/shrub-core#implements-hook-shrubauditfingerprint">implementation</a></td></tr>
     <tr class="even"><td><a href="../hooks/#shrubhttpmiddleware">shrubHttpMiddleware</a></td><td align="right"><a href="../source/packages/shrub-core#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>
     <tr class="odd"><td><a href="../hooks/#shrubconfigserver">shrubConfigServer</a></td><td align="right"><a href="../source/packages/shrub-core#implements-hook-shrubconfigserver">implementation</a></td></tr>
-    <tr class="even"><td><a href="../hooks/#shrubsocketauthorizationmiddleware">shrubSocketAuthorizationMiddleware</a></td><td align="right"><a href="../source/packages/shrub-core#implements-hook-shrubsocketauthorizationmiddleware">implementation</a></td></tr>
+    <tr class="even"><td><a href="../hooks/#shrubrpcroutesalter">shrubRpcRoutesAlter</a></td><td align="right"><a href="../source/packages/shrub-core#implements-hook-shrubrpcroutesalter">implementation</a></td></tr>
+    <tr class="odd"><td><a href="../hooks/#shrubsocketconnectionmiddleware">shrubSocketConnectionMiddleware</a></td><td align="right"><a href="../source/packages/shrub-core#implements-hook-shrubsocketconnectionmiddleware">implementation</a></td></tr>
   </table>
 </div>
 
 <h2 id="shrub-example"><a href="../source/packages/shrub-example">shrub-example</a></h2>
 <p><span class="package-title">Example package</span></p>
 <div class="admonition note"><p class="admonition-title">Implements hooks</p>  <table>
-    <tr class="even"><td><a href="../hooks/#shrubuinotificationqueues">shrubUiNotificationQueues</a></td><td align="right"><a href="../source/packages/shrub-example#implements-hook-shrubuinotificationqueues">implementation</a></td></tr>
+    <tr class="even"><td><a href="../hooks/#shrubrpcroutesalter">shrubRpcRoutesAlter</a></td><td align="right"><a href="../source/packages/shrub-example#implements-hook-shrubrpcroutesalter">implementation</a></td></tr>
+    <tr class="odd"><td><a href="../hooks/#shrubuinotificationqueues">shrubUiNotificationQueues</a></td><td align="right"><a href="../source/packages/shrub-example#implements-hook-shrubuinotificationqueues">implementation</a></td></tr>
   </table>
 </div>
 
@@ -1405,6 +1400,8 @@ Angular sandbox.</em></p>
   </table>
 </div></p>
 </blockquote>
+<h2 id="shrub-html5-audio"><a href="../source/packages/shrub-html5-audio">shrub-html5-audio</a></h2>
+<p><span class="package-title">HTML5 audio</span></p>
 <h2 id="shrub-html5-local-storage"><a href="../source/packages/shrub-html5-local-storage">shrub-html5-local-storage</a></h2>
 <p><span class="package-title">HTML5 local storage</span></p>
 <p><em>Build and serve the HTML5 localStorage support.</em></p>
@@ -1440,6 +1437,7 @@ Angular sandbox.</em></p>
 middleware for sessions, routing, logging, etc.</em></p>
 <div class="admonition note"><p class="admonition-title">Implements hooks</p>  <table>
     <tr class="even"><td><a href="../hooks/#shrubcoreprebootstrap">shrubCorePreBootstrap</a></td><td align="right"><a href="../source/packages/shrub-http-express#implements-hook-shrubcoreprebootstrap">implementation</a></td></tr>
+    <tr class="odd"><td><a href="../hooks/#shrubrpcroutesalter">shrubRpcRoutesAlter</a></td><td align="right"><a href="../source/packages/shrub-http-express#implements-hook-shrubrpcroutesalter">implementation</a></td></tr>
   </table>
 </div>
 
@@ -1465,10 +1463,10 @@ middleware for sessions, routing, logging, etc.</em></p>
 <h2 id="shrub-http-expresssession"><a href="../source/packages/shrub-http-express/session"><small>shrub-http-express/</small>session</a></h2>
 <p><span class="package-title">Express - routes</span></p>
 <p><div class="admonition note"><p class="admonition-title">Implements hooks</p>  <table>
-    <tr class="even"><td><a href="../hooks/#shrubcoreprebootstrap">shrubCorePreBootstrap</a></td><td align="right"><a href="../source/packages/shrub-http-express/session#implements-hook-shrubcoreprebootstrap">implementation</a></td></tr>
-    <tr class="odd"><td><a href="../hooks/#shrubcorebootstrapmiddleware">shrubCoreBootstrapMiddleware</a></td><td align="right"><a href="../source/packages/shrub-http-express/session#implements-hook-shrubcorebootstrapmiddleware">implementation</a></td></tr>
-    <tr class="even"><td><a href="../hooks/#shrubhttpmiddleware">shrubHttpMiddleware</a></td><td align="right"><a href="../source/packages/shrub-http-express/session#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>
-    <tr class="odd"><td><a href="../hooks/#shrubsocketauthorizationmiddleware">shrubSocketAuthorizationMiddleware</a></td><td align="right"><a href="../source/packages/shrub-http-express/session#implements-hook-shrubsocketauthorizationmiddleware">implementation</a></td></tr>
+    <tr class="even"><td><a href="../hooks/#shrubcorebootstrapmiddleware">shrubCoreBootstrapMiddleware</a></td><td align="right"><a href="../source/packages/shrub-http-express/session#implements-hook-shrubcorebootstrapmiddleware">implementation</a></td></tr>
+    <tr class="odd"><td><a href="../hooks/#shrubhttpmiddleware">shrubHttpMiddleware</a></td><td align="right"><a href="../source/packages/shrub-http-express/session#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>
+    <tr class="even"><td><a href="../hooks/#shrubrpcroutesalter">shrubRpcRoutesAlter</a></td><td align="right"><a href="../source/packages/shrub-http-express/session#implements-hook-shrubrpcroutesalter">implementation</a></td></tr>
+    <tr class="odd"><td><a href="../hooks/#shrubsocketconnectionmiddleware">shrubSocketConnectionMiddleware</a></td><td align="right"><a href="../source/packages/shrub-http-express/session#implements-hook-shrubsocketconnectionmiddleware">implementation</a></td></tr>
   </table>
 </div></p>
 <h2 id="shrub-http-expressstatic"><a href="../source/packages/shrub-http-express/static"><small>shrub-http-express/</small>static</a></h2>
@@ -1505,11 +1503,18 @@ routes.</em></p>
   </table>
 </div>
 
+<div class="admonition note"><p class="admonition-title">Implements hooks</p>  <table>
+    <tr class="even"><td><a href="../hooks/#shrubormcollections">shrubOrmCollections</a></td><td align="right"><a href="../source/packages/shrub-limiter#invoke-hook-shrubormcollections">invocation</a></td></tr>
+    <tr class="odd"><td><a href="../hooks/#shrubrpcroutesalter">shrubRpcRoutesAlter</a></td><td align="right"><a href="../source/packages/shrub-limiter#invoke-hook-shrubrpcroutesalter">invocation</a></td></tr>
+    <tr class="even"><td><a href="../hooks/#shrubtransmittableerrors">shrubTransmittableErrors</a></td><td align="right"><a href="../source/packages/shrub-limiter#invoke-hook-shrubtransmittableerrors">invocation</a></td></tr>
+  </table>
+</div>
+
 <blockquote>
 <h2 id="shrub-limiterlimiter"><a href="../source/packages/shrub-limiter/limiter"><small>shrub-limiter/</small>limiter</a></h2>
 <p><span class="package-title">Limiter</span></p>
 <p><em>ORM-backed limit handling. Accrue and check scores, and check Time-to-live
-across multiple <a href="../source/packages/shrub-audit/fingerprint">fingerprint keys</a>.</em></p>
+across multiple <a href="../source/server/fingerprint">fingerprint keys</a>.</em></p>
 </blockquote>
 <h2 id="shrub-nodemailer"><a href="../source/packages/shrub-nodemailer">shrub-nodemailer</a></h2>
 <p><span class="package-title">nodemailer</span></p>
@@ -1588,9 +1593,8 @@ across multiple <a href="../source/packages/shrub-audit/fingerprint">fingerprint
 <div class="admonition note"><p class="admonition-title">Implements hooks</p>  <table>
     <tr class="even"><td><a href="../hooks/#shrubormcollections">shrubOrmCollections</a></td><td align="right"><a href="../source/packages/shrub-session#implements-hook-shrubormcollections">implementation</a></td></tr>
     <tr class="odd"><td><a href="../hooks/#shrubauditfingerprint">shrubAuditFingerprint</a></td><td align="right"><a href="../source/packages/shrub-session#implements-hook-shrubauditfingerprint">implementation</a></td></tr>
-    <tr class="even"><td><a href="../hooks/#shrubrpcroutefinish">shrubRpcRouteFinish</a></td><td align="right"><a href="../source/packages/shrub-session#implements-hook-shrubrpcroutefinish">implementation</a></td></tr>
-    <tr class="odd"><td><a href="../hooks/#shrubconfigserver">shrubConfigServer</a></td><td align="right"><a href="../source/packages/shrub-session#implements-hook-shrubconfigserver">implementation</a></td></tr>
-    <tr class="even"><td><a href="../hooks/#shrubsocketconnectionmiddleware">shrubSocketConnectionMiddleware</a></td><td align="right"><a href="../source/packages/shrub-session#implements-hook-shrubsocketconnectionmiddleware">implementation</a></td></tr>
+    <tr class="even"><td><a href="../hooks/#shrubconfigserver">shrubConfigServer</a></td><td align="right"><a href="../source/packages/shrub-session#implements-hook-shrubconfigserver">implementation</a></td></tr>
+    <tr class="odd"><td><a href="../hooks/#shrubsocketconnectionmiddleware">shrubSocketConnectionMiddleware</a></td><td align="right"><a href="../source/packages/shrub-session#implements-hook-shrubsocketconnectionmiddleware">implementation</a></td></tr>
   </table>
 </div>
 
@@ -1687,16 +1691,15 @@ across multiple <a href="../source/packages/shrub-audit/fingerprint">fingerprint
 <div class="admonition note"><p class="admonition-title">Implements hooks</p>  <table>
     <tr class="even"><td><a href="../hooks/#shrubcoreprebootstrap">shrubCorePreBootstrap</a></td><td align="right"><a href="../source/packages/shrub-user#implements-hook-shrubcoreprebootstrap">implementation</a></td></tr>
     <tr class="odd"><td><a href="../hooks/#shrubconfigclient">shrubConfigClient</a></td><td align="right"><a href="../source/packages/shrub-user#implements-hook-shrubconfigclient">implementation</a></td></tr>
-    <tr class="even"><td><a href="../hooks/#shrubrpcroutefinish">shrubRpcRouteFinish</a></td><td align="right"><a href="../source/packages/shrub-user#implements-hook-shrubrpcroutefinish">implementation</a></td></tr>
-    <tr class="odd"><td><a href="../hooks/#shrubauditfingerprint">shrubAuditFingerprint</a></td><td align="right"><a href="../source/packages/shrub-user#implements-hook-shrubauditfingerprint">implementation</a></td></tr>
-    <tr class="even"><td><a href="../hooks/#shrubhttpmiddleware">shrubHttpMiddleware</a></td><td align="right"><a href="../source/packages/shrub-user#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>
-    <tr class="odd"><td><a href="../hooks/#shrubormcollections">shrubOrmCollections</a></td><td align="right"><a href="../source/packages/shrub-user#implements-hook-shrubormcollections">implementation</a></td></tr>
-    <tr class="even"><td><a href="../hooks/#shrubormcollectionsalter">shrubOrmCollectionsAlter</a></td><td align="right"><a href="../source/packages/shrub-user#implements-hook-shrubormcollectionsalter">implementation</a></td></tr>
-    <tr class="odd"><td><a href="../hooks/#shrubconfigserver">shrubConfigServer</a></td><td align="right"><a href="../source/packages/shrub-user#implements-hook-shrubconfigserver">implementation</a></td></tr>
-    <tr class="even"><td><a href="../hooks/#shrubsocketauthorizationmiddleware">shrubSocketAuthorizationMiddleware</a></td><td align="right"><a href="../source/packages/shrub-user#implements-hook-shrubsocketauthorizationmiddleware">implementation</a></td></tr>
-    <tr class="odd"><td><a href="../hooks/#shrubsocketconnectionmiddleware">shrubSocketConnectionMiddleware</a></td><td align="right"><a href="../source/packages/shrub-user#implements-hook-shrubsocketconnectionmiddleware">implementation</a></td></tr>
-    <tr class="even"><td><a href="../hooks/#shrubuserbeforelogoutmiddleware">shrubUserBeforeLogoutMiddleware</a></td><td align="right"><a href="../source/packages/shrub-user#implements-hook-shrubuserbeforelogoutmiddleware">implementation</a></td></tr>
-    <tr class="odd"><td><a href="../hooks/#shrubuserafterlogoutmiddleware">shrubUserAfterLogoutMiddleware</a></td><td align="right"><a href="../source/packages/shrub-user#implements-hook-shrubuserafterlogoutmiddleware">implementation</a></td></tr>
+    <tr class="even"><td><a href="../hooks/#shrubauditfingerprint">shrubAuditFingerprint</a></td><td align="right"><a href="../source/packages/shrub-user#implements-hook-shrubauditfingerprint">implementation</a></td></tr>
+    <tr class="odd"><td><a href="../hooks/#shrubhttpmiddleware">shrubHttpMiddleware</a></td><td align="right"><a href="../source/packages/shrub-user#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>
+    <tr class="even"><td><a href="../hooks/#shrubormcollections">shrubOrmCollections</a></td><td align="right"><a href="../source/packages/shrub-user#implements-hook-shrubormcollections">implementation</a></td></tr>
+    <tr class="odd"><td><a href="../hooks/#shrubormcollectionsalter">shrubOrmCollectionsAlter</a></td><td align="right"><a href="../source/packages/shrub-user#implements-hook-shrubormcollectionsalter">implementation</a></td></tr>
+    <tr class="even"><td><a href="../hooks/#shrubconfigserver">shrubConfigServer</a></td><td align="right"><a href="../source/packages/shrub-user#implements-hook-shrubconfigserver">implementation</a></td></tr>
+    <tr class="odd"><td><a href="../hooks/#shrubrpcroutesalter">shrubRpcRoutesAlter</a></td><td align="right"><a href="../source/packages/shrub-user#implements-hook-shrubrpcroutesalter">implementation</a></td></tr>
+    <tr class="even"><td><a href="../hooks/#shrubsocketconnectionmiddleware">shrubSocketConnectionMiddleware</a></td><td align="right"><a href="../source/packages/shrub-user#implements-hook-shrubsocketconnectionmiddleware">implementation</a></td></tr>
+    <tr class="odd"><td><a href="../hooks/#shrubuserbeforelogoutmiddleware">shrubUserBeforeLogoutMiddleware</a></td><td align="right"><a href="../source/packages/shrub-user#implements-hook-shrubuserbeforelogoutmiddleware">implementation</a></td></tr>
+    <tr class="even"><td><a href="../hooks/#shrubuserafterlogoutmiddleware">shrubUserAfterLogoutMiddleware</a></td><td align="right"><a href="../source/packages/shrub-user#implements-hook-shrubuserafterlogoutmiddleware">implementation</a></td></tr>
   </table>
 </div>
 
@@ -1757,7 +1760,9 @@ across multiple <a href="../source/packages/shrub-audit/fingerprint">fingerprint
     <tr class="odd"><td><a href="../hooks/#shrubormcollections">shrubOrmCollections</a></td><td align="right"><a href="../source/packages/shrub-villiany#implements-hook-shrubormcollections">implementation</a></td></tr>
     <tr class="even"><td><a href="../hooks/#shrubhttpmiddleware">shrubHttpMiddleware</a></td><td align="right"><a href="../source/packages/shrub-villiany#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>
     <tr class="odd"><td><a href="../hooks/#shrubconfigserver">shrubConfigServer</a></td><td align="right"><a href="../source/packages/shrub-villiany#implements-hook-shrubconfigserver">implementation</a></td></tr>
-    <tr class="even"><td><a href="../hooks/#shrubsocketauthorizationmiddleware">shrubSocketAuthorizationMiddleware</a></td><td align="right"><a href="../source/packages/shrub-villiany#implements-hook-shrubsocketauthorizationmiddleware">implementation</a></td></tr>
+    <tr class="even"><td><a href="../hooks/#shrubsocketconnectionmiddleware">shrubSocketConnectionMiddleware</a></td><td align="right"><a href="../source/packages/shrub-villiany#implements-hook-shrubsocketconnectionmiddleware">implementation</a></td></tr>
+    <tr class="odd"><td><a href="../hooks/#shrubrpcroutesalter">shrubRpcRoutesAlter</a></td><td align="right"><a href="../source/packages/shrub-villiany#implements-hook-shrubrpcroutesalter">implementation</a></td></tr>
+    <tr class="even"><td><a href="../hooks/#shrubvillianyreport">shrubVillianyReport</a></td><td align="right"><a href="../source/packages/shrub-villiany#implements-hook-shrubvillianyreport">implementation</a></td></tr>
   </table>
 </div>
 

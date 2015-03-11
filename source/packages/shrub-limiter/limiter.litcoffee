@@ -1,7 +1,7 @@
 # Limiter
 
 *ORM-backed limit handling. Accrue and check scores, and check Time-to-live
-across multiple [fingerprint keys](source/packages/shrub-audit/fingerprint).*
+across multiple [fingerprint keys](source/server/fingerprint).*
 
     Promise = null
 
@@ -39,7 +39,7 @@ window, then the threshold is said to be crossed.
 ## *constructor*
 
 * (string) `key` - A unique key for this limiter, e.g.
-  "rpc://user.login:limiter"
+  "rpc://shrub-user/login:limiter"
 * (Threshold) `threshold` - A threshold, see below for details.
 
 *Create a limiter.*
@@ -63,7 +63,7 @@ Create the low-level limiter.
 ## Limiter#add
 
 * (array) `keys` - An array of keys, e.g. a flattened array of keys from
-  [`Fingerprint.inlineKeys`](source/packages/shrub-audit/fingerprint#fingerprintinlinekeys)
+  [`Fingerprint.inlineKeys`](source/server/fingerprint#fingerprintinlinekeys)
 * (Number) `score` - The score to add. Defaults to 1.
 
 *Accrue score for a limiter.*
@@ -74,7 +74,7 @@ Create the low-level limiter.
 ## Limiter#accrueAndCheckThreshold
 
 * (array) `keys` - An array of keys, e.g. a flattened array of keys from
-  [`Fingerprint.inlineKeys`](source/packages/shrub-audit/fingerprint#fingerprintinlinekeys)
+  [`Fingerprint.inlineKeys`](source/server/fingerprint#fingerprintinlinekeys)
 * (integer) `score` - The score to add. Defaults to 1.
 
 *Add score to a limiter, and check it against the threshold.*
@@ -85,7 +85,7 @@ Create the low-level limiter.
 ## Limiter#score
 
 * (array) `keys` - An array of keys, e.g. a flattened array of keys from
-  [`Fingerprint.inlineKeys`](source/packages/shrub-audit/fingerprint#fingerprintinlinekeys)
+  [`Fingerprint.inlineKeys`](source/server/fingerprint#fingerprintinlinekeys)
 
 *Check score for a limiter.*
 
@@ -94,7 +94,7 @@ Create the low-level limiter.
 ## Limiter#ttl
 
 * (array) `keys` - An array of keys, e.g. a flattened array of keys from
-  [`Fingerprint.inlineKeys`](source/packages/shrub-audit/fingerprint#fingerprintinlinekeys)
+  [`Fingerprint.inlineKeys`](source/server/fingerprint#fingerprintinlinekeys)
 
 *Time-to-live for a limiter.*
 
@@ -103,7 +103,7 @@ Create the low-level limiter.
 ## Limiter#checkThreshold
 
 * (array) `keys` - An array of keys, e.g. a flattened array of keys from
-  [`Fingerprint.inlineKeys`](source/packages/shrub-audit/fingerprint#fingerprintinlinekeys)
+  [`Fingerprint.inlineKeys`](source/server/fingerprint#fingerprintinlinekeys)
 
 *Check the current limiter score against the threshold.*
 
@@ -126,7 +126,7 @@ Create the low-level limiter.
 ## *constructor*
 
 * (string) `key` - A unique key for this limiter, e.g.
-  "rpc://user.login:limiter"
+  "rpc://shrub-user/login:limiter"
 * (Threshold) `threshold` - A threshold, see below for details.
 
 *...*

@@ -178,16 +178,6 @@
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../../shrub-audit/fingerprint">packages/shrub-audit/fingerprint.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../shrub-audit">packages/shrub-audit/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
                     <a class="" href="../../shrub-config">packages/shrub-config/index.litcoffee</a>
                     
                 </li>
@@ -314,6 +304,16 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../shrub-grunt/tests/run">packages/shrub-grunt/tests/run.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-html5-audio/client">packages/shrub-html5-audio/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-html5-audio">packages/shrub-html5-audio/index.litcoffee</a>
                     
                 </li>
             
@@ -682,6 +682,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../server/fingerprint">server/fingerprint.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../server/logging">server/logging.litcoffee</a>
                     
                 </li>
@@ -737,42 +742,51 @@
 
     Promise = require 'bluebird'
 
-    {Limiter} = require 'shrub-limiter'
+    {Limiter, LimiterMiddleware} = require 'shrub-limiter'
     orm = require 'shrub-orm'
 
     routes = []
 
     routes.push
 
-      limiter: threshold: Limiter.threshold(1).every(5).minutes()
       path: 'shrub-user/reset'
 
-      receiver: (req, fn) -&gt;
+      middleware: [
 
-        User = orm.collection 'shrub-user'
+        'shrub-http-express/session'
+        'shrub-villiany'
+
+        new LimiterMiddleware(
+          threshold: Limiter.threshold(1).every(5).minutes()
+        )
+
+        (req, res, next) -&gt;
+
+          User = orm.collection 'shrub-user'
 </code></pre>
 <p>Cancel promise flow if the user doesn't exist.</p>
-<pre><code>        class NoSuchUser extends Error
-          constructor: (@message) -&gt;
+<pre><code>          class NoSuchUser extends Error
+            constructor: (@message) -&gt;
 </code></pre>
 <p>Look up the user.</p>
-<pre><code>        Promise.cast(
-          User.findOne resetPasswordToken: req.body.token
-        ).bind({}).then((@user) -&gt;
-          throw new NoSuchUser unless @user?
+<pre><code>          Promise.cast(
+            User.findOne resetPasswordToken: req.body.token
+          ).bind({}).then((@user) -&gt;
+            throw new NoSuchUser unless @user?
 </code></pre>
 <p>Recalculate the password hashing details.</p>
-<pre><code>          crypto.hasher plaintext: req.body.password
+<pre><code>            crypto.hasher plaintext: req.body.password
 
-        ).then((hashed) -&gt;
+          ).then((hashed) -&gt;
 
-          @user.passwordHash = hashed.key.toString 'hex'
-          @user.salt = hashed.salt.toString 'hex'
-          @user.resetPasswordToken = null
+            @user.passwordHash = hashed.key.toString 'hex'
+            @user.salt = hashed.salt.toString 'hex'
+            @user.resetPasswordToken = null
 
-          @user.save()
+            @user.save()
 
-        ).then(-&gt; fn()).catch(NoSuchUser, -&gt; fn()).catch fn
+          ).then(-&gt; res.end()).catch(NoSuchUser, -&gt; res.end()).catch next
+      ]
 
     return routes
 </code></pre>

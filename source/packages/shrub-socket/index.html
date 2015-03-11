@@ -178,16 +178,6 @@
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../shrub-audit/fingerprint">packages/shrub-audit/fingerprint.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../shrub-audit">packages/shrub-audit/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
                     <a class="" href="../shrub-config">packages/shrub-config/index.litcoffee</a>
                     
                 </li>
@@ -314,6 +304,16 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../shrub-grunt/tests/run">packages/shrub-grunt/tests/run.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-html5-audio/client">packages/shrub-html5-audio/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-html5-audio">packages/shrub-html5-audio/index.litcoffee</a>
                     
                 </li>
             
@@ -690,6 +690,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../server/fingerprint">server/fingerprint.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../server/logging">server/logging.litcoffee</a>
                     
                 </li>
@@ -782,19 +787,13 @@ exports.pkgmanRegister = (registrar) -&gt;
 <h4 id="implements-hook-shrubconfigserver">Implements hook <code>shrubConfigServer</code>.</h4>
 <pre><code>  registrar.registerHook 'shrubConfigServer', -&gt;
 </code></pre>
-<p>Middleware stack dispatched to authorize or reject a socket connection.</p>
-<pre><code>    authorizationMiddleware: [
+<p>Middleware stack dispatched for a socket connection.</p>
+<pre><code>    connectionMiddleware: [
       'shrub-core'
       'shrub-http-express/session'
-      'shrub-user'
-      'shrub-audit'
-      'shrub-villiany'
-    ]
-</code></pre>
-<p>Middleware stack dispatched once a socket connection is authorized.</p>
-<pre><code>    connectionMiddleware: [
       'shrub-session'
       'shrub-user'
+      'shrub-villiany'
       'shrub-rpc'
     ]
 </code></pre>

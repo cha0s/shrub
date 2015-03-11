@@ -178,16 +178,6 @@
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../shrub-audit/fingerprint">packages/shrub-audit/fingerprint.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../shrub-audit">packages/shrub-audit/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
                     <a class="" href="../shrub-config">packages/shrub-config/index.litcoffee</a>
                     
                 </li>
@@ -228,6 +218,8 @@
                         <ul>
                         
                             <li class="toctree-l2"><a href="#example-package">Example package</a></li>
+                            
+                                <li><a class="toctree-l3" href="#implements-hook-shrubrpcroutesalter">Implements hook shrubRpcRoutesAlter.</a></li>
                             
                                 <li><a class="toctree-l3" href="#implements-hook-shrubuinotificationqueues">Implements hook shrubUiNotificationQueues.</a></li>
                             
@@ -323,6 +315,16 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../shrub-grunt/tests/run">packages/shrub-grunt/tests/run.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-html5-audio/client">packages/shrub-html5-audio/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-html5-audio">packages/shrub-html5-audio/index.litcoffee</a>
                     
                 </li>
             
@@ -682,6 +684,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../server/fingerprint">server/fingerprint.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../server/logging">server/logging.litcoffee</a>
                     
                 </li>
@@ -730,11 +737,25 @@
               <h1 id="example-package">Example package</h1>
 <pre><code>exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+<h4 id="implements-hook-shrubrpcroutesalter">Implements hook <code>shrubRpcRoutesAlter</code>.</h4>
+<p>Our notification queue uses the session, so we'll alter those routes to load
+the session if it's for the shrubExampleGeneral queue.</p>
+<pre><code>  registrar.registerHook 'shrubRpcRoutesAlter', (routes) -&gt;
+
+    for path, route of routes
+      if path.match /^shrub-ui\/notifications.*/
+        route.middleware.unshift (req, res, next) -&gt;
+          if 'shrubExampleGeneral' is req.body.queue
+            return req.loadSession next
+          next()
+
+    return
+</code></pre>
 <h4 id="implements-hook-shrubuinotificationqueues">Implements hook <code>shrubUiNotificationQueues</code>.</h4>
 <p>Implement the <code>general</code> queue, used to show some notifications.</p>
 <pre><code>  registrar.registerHook 'shrubUiNotificationQueues', -&gt;
 
-    general:
+    shrubExampleGeneral:
 
       channelFromRequest: (req) -&gt; req.session?.id
 

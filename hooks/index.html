@@ -157,6 +157,9 @@
                             <li class="toctree-l2"><a href="#shrubhttproutes">shrubHttpRoutes</a></li>
                             
                         
+                            <li class="toctree-l2"><a href="#shrublimitercheck">shrubLimiterCheck</a></li>
+                            
+                        
                             <li class="toctree-l2"><a href="#shrubnodemailerhtml">shrubNodemailerHtml</a></li>
                             
                         
@@ -170,9 +173,6 @@
                             
                         
                             <li class="toctree-l2"><a href="#shrubrpccall">shrubRpcCall</a></li>
-                            
-                        
-                            <li class="toctree-l2"><a href="#shrubrpcroutefinish">shrubRpcRouteFinish</a></li>
                             
                         
                             <li class="toctree-l2"><a href="#shrubrpcroutes">shrubRpcRoutes</a></li>
@@ -191,9 +191,6 @@
                             
                         
                             <li class="toctree-l2"><a href="#shrubskinlink-directive-id">shrubSkinLink--DIRECTIVE--ID</a></li>
-                            
-                        
-                            <li class="toctree-l2"><a href="#shrubsocketauthorizationmiddleware">shrubSocketAuthorizationMiddleware</a></li>
                             
                         
                             <li class="toctree-l2"><a href="#shrubsocketconnectionmiddleware">shrubSocketConnectionMiddleware</a></li>
@@ -218,6 +215,9 @@
                             
                         
                             <li class="toctree-l2"><a href="#shrubuserbeforelogoutmiddleware">shrubUserBeforeLogoutMiddleware</a></li>
+                            
+                        
+                            <li class="toctree-l2"><a href="#shrubvillianyreport">shrubVillianyReport</a></li>
                             
                         
                         </ul>
@@ -322,16 +322,6 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../source/packages/shrub-assets/jquery">packages/shrub-assets/jquery.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../source/packages/shrub-audit/fingerprint">packages/shrub-audit/fingerprint.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../source/packages/shrub-audit">packages/shrub-audit/index.litcoffee</a>
                     
                 </li>
             
@@ -462,6 +452,16 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../source/packages/shrub-grunt/tests/run">packages/shrub-grunt/tests/run.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-html5-audio/client">packages/shrub-html5-audio/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-html5-audio">packages/shrub-html5-audio/index.litcoffee</a>
                     
                 </li>
             
@@ -817,6 +817,11 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../source/server/crypto">server/crypto.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/server/fingerprint">server/fingerprint.litcoffee</a>
                     
                 </li>
             
@@ -1203,7 +1208,7 @@ filtered out when doing most checks.</p>
 
 <div class="admonition note"><p class="admonition-title">1 invocation</p>
   <table>
-    <tr class="even"><td><a href="../source/packages/shrub-audit/fingerprint">shrub-audit/fingerprint (server)</a></td><td align="right"><a href="../source/packages/shrub-audit/fingerprint#invoke-hook-shrubauditfingerprint">invocation</a></td></tr>  </table>
+    <tr class="even"><td><a href="../source/server/fingerprint">server/fingerprint (server)</a></td><td align="right"><a href="../source/server/fingerprint#invoke-hook-shrubauditfingerprint">invocation</a></td></tr>  </table>
 </div>
 
 <h2 id="shrubconfigclient">shrubConfigClient</h2>
@@ -1335,9 +1340,9 @@ exports.pkgmanRegister = function(registrar) {
 
 <p>So that the heavy module will not be <code>require</code>d until hook
 <code>shrubCorePeBootstrap</code> is invoked.</p>
-<div class="admonition note"><p class="admonition-title">10 implementations</p>
+<div class="admonition note"><p class="admonition-title">9 implementations</p>
   <table>
-    <tr class="even"><td><a href="../source/packages/shrub-http-express">shrub-http-express (server)</a></td><td align="right"><a href="../source/packages/shrub-http-express#implements-hook-shrubcoreprebootstrap">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-http-express/session">shrub-http-express/session (server)</a></td><td align="right"><a href="../source/packages/shrub-http-express/session#implements-hook-shrubcoreprebootstrap">implementation</a></td></tr>    <tr class="even"><td><a href="../source/packages/shrub-nodemailer">shrub-nodemailer (server)</a></td><td align="right"><a href="../source/packages/shrub-nodemailer#implements-hook-shrubcoreprebootstrap">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-orm">shrub-orm (server)</a></td><td align="right"><a href="../source/packages/shrub-orm#implements-hook-shrubcoreprebootstrap">implementation</a></td></tr>    <tr class="even"><td><a href="../source/packages/shrub-rpc">shrub-rpc (server)</a></td><td align="right"><a href="../source/packages/shrub-rpc#implements-hook-shrubcoreprebootstrap">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-ui/notifications">shrub-ui/notifications (server)</a></td><td align="right"><a href="../source/packages/shrub-ui/notifications#implements-hook-shrubcoreprebootstrap">implementation</a></td></tr>    <tr class="even"><td><a href="../source/packages/shrub-user">shrub-user (server)</a></td><td align="right"><a href="../source/packages/shrub-user#implements-hook-shrubcoreprebootstrap">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-user/login">shrub-user/login (server)</a></td><td align="right"><a href="../source/packages/shrub-user/login#implements-hook-shrubcoreprebootstrap">implementation</a></td></tr>    <tr class="even"><td><a href="../source/packages/shrub-user/register">shrub-user/register (server)</a></td><td align="right"><a href="../source/packages/shrub-user/register#implements-hook-shrubcoreprebootstrap">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-villiany">shrub-villiany (server)</a></td><td align="right"><a href="../source/packages/shrub-villiany#implements-hook-shrubcoreprebootstrap">implementation</a></td></tr>  </table>
+    <tr class="even"><td><a href="../source/packages/shrub-http-express">shrub-http-express (server)</a></td><td align="right"><a href="../source/packages/shrub-http-express#implements-hook-shrubcoreprebootstrap">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-nodemailer">shrub-nodemailer (server)</a></td><td align="right"><a href="../source/packages/shrub-nodemailer#implements-hook-shrubcoreprebootstrap">implementation</a></td></tr>    <tr class="even"><td><a href="../source/packages/shrub-orm">shrub-orm (server)</a></td><td align="right"><a href="../source/packages/shrub-orm#implements-hook-shrubcoreprebootstrap">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-rpc">shrub-rpc (server)</a></td><td align="right"><a href="../source/packages/shrub-rpc#implements-hook-shrubcoreprebootstrap">implementation</a></td></tr>    <tr class="even"><td><a href="../source/packages/shrub-ui/notifications">shrub-ui/notifications (server)</a></td><td align="right"><a href="../source/packages/shrub-ui/notifications#implements-hook-shrubcoreprebootstrap">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-user">shrub-user (server)</a></td><td align="right"><a href="../source/packages/shrub-user#implements-hook-shrubcoreprebootstrap">implementation</a></td></tr>    <tr class="even"><td><a href="../source/packages/shrub-user/login">shrub-user/login (server)</a></td><td align="right"><a href="../source/packages/shrub-user/login#implements-hook-shrubcoreprebootstrap">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-user/register">shrub-user/register (server)</a></td><td align="right"><a href="../source/packages/shrub-user/register#implements-hook-shrubcoreprebootstrap">implementation</a></td></tr>    <tr class="even"><td><a href="../source/packages/shrub-villiany">shrub-villiany (server)</a></td><td align="right"><a href="../source/packages/shrub-villiany#implements-hook-shrubcoreprebootstrap">implementation</a></td></tr>  </table>
 </div>
 
 <div class="admonition note"><p class="admonition-title">1 invocation</p>
@@ -1467,9 +1472,9 @@ The middleware have the following signature:</p>
 }
 </code></pre>
 
-<div class="admonition note"><p class="admonition-title">14 implementations</p>
+<div class="admonition note"><p class="admonition-title">13 implementations</p>
   <table>
-    <tr class="even"><td><a href="../source/packages/shrub-angular-sandbox">shrub-angular-sandbox (server)</a></td><td align="right"><a href="../source/packages/shrub-angular-sandbox#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-audit">shrub-audit (server)</a></td><td align="right"><a href="../source/packages/shrub-audit#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>    <tr class="even"><td><a href="../source/packages/shrub-config">shrub-config (server)</a></td><td align="right"><a href="../source/packages/shrub-config#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-core">shrub-core (server)</a></td><td align="right"><a href="../source/packages/shrub-core#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>    <tr class="even"><td><a href="../source/packages/shrub-form">shrub-form (server)</a></td><td align="right"><a href="../source/packages/shrub-form#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-http-express/errors">shrub-http-express/errors (server)</a></td><td align="right"><a href="../source/packages/shrub-http-express/errors#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>    <tr class="even"><td><a href="../source/packages/shrub-http-express/logger">shrub-http-express/logger (server)</a></td><td align="right"><a href="../source/packages/shrub-http-express/logger#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-http-express/routes">shrub-http-express/routes (server)</a></td><td align="right"><a href="../source/packages/shrub-http-express/routes#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>    <tr class="even"><td><a href="../source/packages/shrub-http-express/session">shrub-http-express/session (server)</a></td><td align="right"><a href="../source/packages/shrub-http-express/session#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-http-express/static">shrub-http-express/static (server)</a></td><td align="right"><a href="../source/packages/shrub-http-express/static#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>    <tr class="even"><td><a href="../source/packages/shrub-http">shrub-http (server)</a></td><td align="right"><a href="../source/packages/shrub-http#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-skin">shrub-skin (server)</a></td><td align="right"><a href="../source/packages/shrub-skin#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>    <tr class="even"><td><a href="../source/packages/shrub-user">shrub-user (server)</a></td><td align="right"><a href="../source/packages/shrub-user#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-villiany">shrub-villiany (server)</a></td><td align="right"><a href="../source/packages/shrub-villiany#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>  </table>
+    <tr class="even"><td><a href="../source/packages/shrub-angular-sandbox">shrub-angular-sandbox (server)</a></td><td align="right"><a href="../source/packages/shrub-angular-sandbox#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-config">shrub-config (server)</a></td><td align="right"><a href="../source/packages/shrub-config#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>    <tr class="even"><td><a href="../source/packages/shrub-core">shrub-core (server)</a></td><td align="right"><a href="../source/packages/shrub-core#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-form">shrub-form (server)</a></td><td align="right"><a href="../source/packages/shrub-form#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>    <tr class="even"><td><a href="../source/packages/shrub-http-express/errors">shrub-http-express/errors (server)</a></td><td align="right"><a href="../source/packages/shrub-http-express/errors#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-http-express/logger">shrub-http-express/logger (server)</a></td><td align="right"><a href="../source/packages/shrub-http-express/logger#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>    <tr class="even"><td><a href="../source/packages/shrub-http-express/routes">shrub-http-express/routes (server)</a></td><td align="right"><a href="../source/packages/shrub-http-express/routes#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-http-express/session">shrub-http-express/session (server)</a></td><td align="right"><a href="../source/packages/shrub-http-express/session#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>    <tr class="even"><td><a href="../source/packages/shrub-http-express/static">shrub-http-express/static (server)</a></td><td align="right"><a href="../source/packages/shrub-http-express/static#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-http">shrub-http (server)</a></td><td align="right"><a href="../source/packages/shrub-http#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>    <tr class="even"><td><a href="../source/packages/shrub-skin">shrub-skin (server)</a></td><td align="right"><a href="../source/packages/shrub-skin#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-user">shrub-user (server)</a></td><td align="right"><a href="../source/packages/shrub-user#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>    <tr class="even"><td><a href="../source/packages/shrub-villiany">shrub-villiany (server)</a></td><td align="right"><a href="../source/packages/shrub-villiany#implements-hook-shrubhttpmiddleware">implementation</a></td></tr>  </table>
 </div>
 
 <div class="admonition note"><p class="admonition-title">1 invocation</p>
@@ -1503,6 +1508,12 @@ The middleware have the following signature:</p>
 <div class="admonition note"><p class="admonition-title">1 invocation</p>
   <table>
     <tr class="even"><td><a href="../source/packages/shrub-http/manager">shrub-http/manager (server)</a></td><td align="right"><a href="../source/packages/shrub-http/manager#invoke-hook-shrubhttproutes">invocation</a></td></tr>  </table>
+</div>
+
+<h2 id="shrublimitercheck">shrubLimiterCheck</h2>
+<div class="admonition note"><p class="admonition-title">1 invocation</p>
+  <table>
+    <tr class="even"><td><a href="../source/packages/shrub-limiter">shrub-limiter (server)</a></td><td align="right"><a href="../source/packages/shrub-limiter#invoke-hook-shrublimitercheck">invocation</a></td></tr>  </table>
 </div>
 
 <h2 id="shrubnodemailerhtml">shrubNodemailerHtml</h2>
@@ -1632,25 +1643,6 @@ locals are injected:</p>
     <tr class="even"><td><a href="../source/packages/shrub-rpc/client">shrub-rpc (client)</a></td><td align="right"><a href="../source/packages/shrub-rpc/client#invoke-hook-shrubrpccall">invocation</a></td></tr>  </table>
 </div>
 
-<h2 id="shrubrpcroutefinish">shrubRpcRouteFinish</h2>
-<p><em>Finish up an RPC route call.</em></p>
-<p>This hook gives packages the chance to run some code after an RPC route
-finishes. For instance, <a href="../packages/#shrub-session"><code>shrub-session</code></a> and
-<a href="../packages/#shrub-user"><code>shrub-user</code></a> use this hook to update the session and
-user records (respectively) after each RPC call.</p>
-<h3>Implementations must return</h3>
-
-<p>A promise which when fulfilled allows the RPC call to finish.</p>
-<div class="admonition note"><p class="admonition-title">2 implementations</p>
-  <table>
-    <tr class="even"><td><a href="../source/packages/shrub-session">shrub-session (server)</a></td><td align="right"><a href="../source/packages/shrub-session#implements-hook-shrubrpcroutefinish">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-user">shrub-user (server)</a></td><td align="right"><a href="../source/packages/shrub-user#implements-hook-shrubrpcroutefinish">implementation</a></td></tr>  </table>
-</div>
-
-<div class="admonition note"><p class="admonition-title">1 invocation</p>
-  <table>
-    <tr class="even"><td><a href="../source/packages/shrub-rpc">shrub-rpc (server)</a></td><td align="right"><a href="../source/packages/shrub-rpc#invoke-hook-shrubrpcroutefinish">invocation</a></td></tr>  </table>
-</div>
-
 <h2 id="shrubrpcroutes">shrubRpcRoutes</h2>
 <p><em>Define RPC routes.</em></p>
 <p>Packages use this hook to define RPC routes.</p>
@@ -1681,9 +1673,9 @@ user records (respectively) after each RPC call.</p>
 </div>
 
 <h2 id="shrubrpcroutesalter">shrubRpcRoutesAlter</h2>
-<div class="admonition note"><p class="admonition-title">1 implementation</p>
+<div class="admonition note"><p class="admonition-title">7 implementations</p>
   <table>
-    <tr class="even"><td><a href="../source/packages/shrub-limiter">shrub-limiter (server)</a></td><td align="right"><a href="../source/packages/shrub-limiter#implements-hook-shrubrpcroutesalter">implementation</a></td></tr>  </table>
+    <tr class="even"><td><a href="../source/packages/shrub-core">shrub-core (server)</a></td><td align="right"><a href="../source/packages/shrub-core#implements-hook-shrubrpcroutesalter">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-example">shrub-example (server)</a></td><td align="right"><a href="../source/packages/shrub-example#implements-hook-shrubrpcroutesalter">implementation</a></td></tr>    <tr class="even"><td><a href="../source/packages/shrub-http-express">shrub-http-express (server)</a></td><td align="right"><a href="../source/packages/shrub-http-express#implements-hook-shrubrpcroutesalter">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-http-express/session">shrub-http-express/session (server)</a></td><td align="right"><a href="../source/packages/shrub-http-express/session#implements-hook-shrubrpcroutesalter">implementation</a></td></tr>    <tr class="even"><td><a href="../source/packages/shrub-limiter">shrub-limiter (server)</a></td><td align="right"><a href="../source/packages/shrub-limiter#implements-hook-shrubrpcroutesalter">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-user">shrub-user (server)</a></td><td align="right"><a href="../source/packages/shrub-user#implements-hook-shrubrpcroutesalter">implementation</a></td></tr>    <tr class="even"><td><a href="../source/packages/shrub-villiany">shrub-villiany (server)</a></td><td align="right"><a href="../source/packages/shrub-villiany#implements-hook-shrubrpcroutesalter">implementation</a></td></tr>  </table>
 </div>
 
 <div class="admonition note"><p class="admonition-title">1 invocation</p>
@@ -1784,38 +1776,6 @@ locals are injected:</p>
     <tr class="even"><td><a href="../source/packages/shrub-skin/client">shrub-skin (client)</a></td><td align="right"><a href="../source/packages/shrub-skin/client#invoke-hook-shrubskinlink-directive-id">invocation</a></td></tr>  </table>
 </div>
 
-<h2 id="shrubsocketauthorizationmiddleware">shrubSocketAuthorizationMiddleware</h2>
-<p><em>Define authorization checks for socket connection.</em></p>
-<p>Packages may implement this hook to contribute to determining whether a socket
-is authorized to connect to the server.</p>
-<p>The <code>req</code> parameter to the middleware is an instance of
-<a href="http://nodejs.org/api/http.html#http_http_incomingmessage">http.IncomingMessage</a>
-from the HTTP request.</p>
-<p>The <code>res</code> parameter to the middleware is an instance of
-<a href="http://nodejs.org/api/http.html#http_class_http_serverresponse">http.ServerResponse</a>
-from the HTTP request.</p>
-<p>Throwing an error or passing an error to <code>next</code> will cause authorization to
-fail, and the client will be disconnected.</p>
-<h3>Implementations must return</h3>
-
-<p>A
-<a href="../guide/concepts#middleware-hook-specification">middleware hook specification</a>.
-The middleware have the following signature:</p>
-<pre><code class="javascript">function(req, res, next) {
-  ...
-}
-</code></pre>
-
-<div class="admonition note"><p class="admonition-title">5 implementations</p>
-  <table>
-    <tr class="even"><td><a href="../source/packages/shrub-audit">shrub-audit (server)</a></td><td align="right"><a href="../source/packages/shrub-audit#implements-hook-shrubsocketauthorizationmiddleware">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-core">shrub-core (server)</a></td><td align="right"><a href="../source/packages/shrub-core#implements-hook-shrubsocketauthorizationmiddleware">implementation</a></td></tr>    <tr class="even"><td><a href="../source/packages/shrub-http-express/session">shrub-http-express/session (server)</a></td><td align="right"><a href="../source/packages/shrub-http-express/session#implements-hook-shrubsocketauthorizationmiddleware">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-user">shrub-user (server)</a></td><td align="right"><a href="../source/packages/shrub-user#implements-hook-shrubsocketauthorizationmiddleware">implementation</a></td></tr>    <tr class="even"><td><a href="../source/packages/shrub-villiany">shrub-villiany (server)</a></td><td align="right"><a href="../source/packages/shrub-villiany#implements-hook-shrubsocketauthorizationmiddleware">implementation</a></td></tr>  </table>
-</div>
-
-<div class="admonition note"><p class="admonition-title">1 invocation</p>
-  <table>
-    <tr class="even"><td><a href="../source/packages/shrub-socket/manager">shrub-socket/manager (server)</a></td><td align="right"><a href="../source/packages/shrub-socket/manager#invoke-hook-shrubsocketauthorizationmiddleware">invocation</a></td></tr>  </table>
-</div>
-
 <h2 id="shrubsocketconnectionmiddleware">shrubSocketConnectionMiddleware</h2>
 <p><em>Act after a socket connection.</em></p>
 <p>Packages may implement this hook to take action after a socket is connected.</p>
@@ -1835,9 +1795,9 @@ The middleware have the following signature:</p>
 }
 </code></pre>
 
-<div class="admonition note"><p class="admonition-title">3 implementations</p>
+<div class="admonition note"><p class="admonition-title">6 implementations</p>
   <table>
-    <tr class="even"><td><a href="../source/packages/shrub-rpc">shrub-rpc (server)</a></td><td align="right"><a href="../source/packages/shrub-rpc#implements-hook-shrubsocketconnectionmiddleware">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-session">shrub-session (server)</a></td><td align="right"><a href="../source/packages/shrub-session#implements-hook-shrubsocketconnectionmiddleware">implementation</a></td></tr>    <tr class="even"><td><a href="../source/packages/shrub-user">shrub-user (server)</a></td><td align="right"><a href="../source/packages/shrub-user#implements-hook-shrubsocketconnectionmiddleware">implementation</a></td></tr>  </table>
+    <tr class="even"><td><a href="../source/packages/shrub-core">shrub-core (server)</a></td><td align="right"><a href="../source/packages/shrub-core#implements-hook-shrubsocketconnectionmiddleware">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-http-express/session">shrub-http-express/session (server)</a></td><td align="right"><a href="../source/packages/shrub-http-express/session#implements-hook-shrubsocketconnectionmiddleware">implementation</a></td></tr>    <tr class="even"><td><a href="../source/packages/shrub-rpc">shrub-rpc (server)</a></td><td align="right"><a href="../source/packages/shrub-rpc#implements-hook-shrubsocketconnectionmiddleware">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-session">shrub-session (server)</a></td><td align="right"><a href="../source/packages/shrub-session#implements-hook-shrubsocketconnectionmiddleware">implementation</a></td></tr>    <tr class="even"><td><a href="../source/packages/shrub-user">shrub-user (server)</a></td><td align="right"><a href="../source/packages/shrub-user#implements-hook-shrubsocketconnectionmiddleware">implementation</a></td></tr>    <tr class="odd"><td><a href="../source/packages/shrub-villiany">shrub-villiany (server)</a></td><td align="right"><a href="../source/packages/shrub-villiany#implements-hook-shrubsocketconnectionmiddleware">implementation</a></td></tr>  </table>
 </div>
 
 <div class="admonition note"><p class="admonition-title">1 invocation</p>
@@ -2006,6 +1966,17 @@ The middleware have the following signature:</p>
 <div class="admonition note"><p class="admonition-title">1 invocation</p>
   <table>
     <tr class="even"><td><a href="../source/packages/shrub-user/logout">shrub-user/logout (server)</a></td><td align="right"><a href="../source/packages/shrub-user/logout#invoke-hook-shrubuserbeforelogoutmiddleware">invocation</a></td></tr>  </table>
+</div>
+
+<h2 id="shrubvillianyreport">shrubVillianyReport</h2>
+<div class="admonition note"><p class="admonition-title">1 implementation</p>
+  <table>
+    <tr class="even"><td><a href="../source/packages/shrub-villiany">shrub-villiany (server)</a></td><td align="right"><a href="../source/packages/shrub-villiany#implements-hook-shrubvillianyreport">implementation</a></td></tr>  </table>
+</div>
+
+<div class="admonition note"><p class="admonition-title">1 invocation</p>
+  <table>
+    <tr class="even"><td><a href="../source/packages/shrub-limiter">shrub-limiter (server)</a></td><td align="right"><a href="../source/packages/shrub-limiter#invoke-hook-shrubvillianyreport">invocation</a></td></tr>  </table>
 </div>
 
 

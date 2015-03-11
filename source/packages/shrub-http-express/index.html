@@ -178,16 +178,6 @@
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../shrub-audit/fingerprint">packages/shrub-audit/fingerprint.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../shrub-audit">packages/shrub-audit/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
                     <a class="" href="../shrub-config">packages/shrub-config/index.litcoffee</a>
                     
                 </li>
@@ -318,6 +308,16 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../shrub-html5-audio/client">packages/shrub-html5-audio/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-html5-audio">packages/shrub-html5-audio/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../shrub-html5-local-storage/client">packages/shrub-html5-local-storage/client/index.litcoffee</a>
                     
                 </li>
@@ -350,6 +350,8 @@
                             <li class="toctree-l2"><a href="#express">Express</a></li>
                             
                                 <li><a class="toctree-l3" href="#implements-hook-shrubcoreprebootstrap">Implements hook shrubCorePreBootstrap.</a></li>
+                            
+                                <li><a class="toctree-l3" href="#implements-hook-shrubrpcroutesalter">Implements hook shrubRpcRoutesAlter.</a></li>
                             
                                 <li><a class="toctree-l3" href="#constructor">constructor</a></li>
                             
@@ -692,6 +694,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../server/fingerprint">server/fingerprint.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../server/logging">server/logging.litcoffee</a>
                     
                 </li>
@@ -760,6 +767,25 @@ exports.pkgmanRegister = (registrar) -&gt;
     sticky = require 'sticky-session'
 
     Promise = require 'bluebird'
+</code></pre>
+<h4 id="implements-hook-shrubrpcroutesalter">Implements hook <code>shrubRpcRoutesAlter</code>.</h4>
+<p>Patch in express-specific variables that will be required by middleware.</p>
+<pre><code>  registrar.registerHook 'shrubRpcRoutesAlter', (routes) -&gt;
+
+    expressMiddleware = (req, res, next) -&gt;
+
+      req.headers = req.socket.request.headers
+      req.originalUrl = req.socket.request.originalUrl
+
+      next()
+
+    expressMiddleware.weight = -9999
+
+    for path, route of routes
+
+      route.middleware.unshift expressMiddleware
+
+    return
 
   registrar.recur [
     'errors', 'logger', 'routes', 'session', 'static'

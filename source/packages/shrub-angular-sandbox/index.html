@@ -223,16 +223,6 @@
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../shrub-audit/fingerprint">packages/shrub-audit/fingerprint.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../shrub-audit">packages/shrub-audit/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
                     <a class="" href="../shrub-config">packages/shrub-config/index.litcoffee</a>
                     
                 </li>
@@ -359,6 +349,16 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../shrub-grunt/tests/run">packages/shrub-grunt/tests/run.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-html5-audio/client">packages/shrub-html5-audio/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-html5-audio">packages/shrub-html5-audio/index.litcoffee</a>
                     
                 </li>
             
@@ -718,6 +718,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../server/fingerprint">server/fingerprint.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../server/logging">server/logging.litcoffee</a>
                     
                 </li>
@@ -790,14 +795,20 @@ hold their sandbox.</p>
     routes.push
 
       path: 'shrub-angular-sandbox/hangup'
-      receiver: (req, fn) -&gt;
+      middleware: [
+
+        'shrub-http-express/session'
+
+        (req, res, next) -&gt;
 </code></pre>
 <h6 id="todo-cookie-less-clients-wont-have-a-valid-session-id-to-call-with-this-should-be-some-other-token-perhaps-csrf">TODO: Cookie-less clients won't have a valid session ID to call with. This should be some other token, perhaps CSRF.</h6>
-<pre><code>        id = req.session?.id
-        if (sandbox = sandboxManager.lookup id)?
-          sandbox.close().finally -&gt; fn()
-        else
-          fn()
+<pre><code>          id = req.session?.id
+          if (sandbox = sandboxManager.lookup id)?
+            sandbox.close().finally -&gt; res.end()
+          else
+            res.end()
+
+      ]
 
     return routes
 </code></pre>

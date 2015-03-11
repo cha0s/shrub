@@ -178,16 +178,6 @@
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../../../shrub-audit/fingerprint">packages/shrub-audit/fingerprint.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../shrub-audit">packages/shrub-audit/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
                     <a class="" href="../../../shrub-config">packages/shrub-config/index.litcoffee</a>
                     
                 </li>
@@ -325,6 +315,16 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../tests/run">packages/shrub-grunt/tests/run.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../shrub-html5-audio/client">packages/shrub-html5-audio/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../shrub-html5-audio">packages/shrub-html5-audio/index.litcoffee</a>
                     
                 </li>
             
@@ -684,6 +684,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../../server/fingerprint">server/fingerprint.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../../server/logging">server/logging.litcoffee</a>
                     
                 </li>
@@ -971,10 +976,6 @@ portion from the end of the filename.</p>
         render += '&lt;/p&gt;\n'
         render += '  &lt;table&gt;\n'
 
-        # render += "!!! note \"#{count} #{key}"
-        # render += 's' if count &gt; 1
-        # render += '"\n'
-
         stripe = 0
         instances = for file, {fullName, types} of O[pluralKey][hook]
 </code></pre>
@@ -992,9 +993,6 @@ portion from the end of the filename.</p>
 
         render += '  &lt;/table&gt;\n'
         render += '&lt;/div&gt;'
-        render += '\n\n'
-
-
         render += '\n\n'
 
   new Promise (resolve, reject) -&gt;

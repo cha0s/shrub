@@ -195,16 +195,6 @@
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-audit/fingerprint">packages/shrub-audit/fingerprint.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-audit">packages/shrub-audit/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
                     <a class="" href="../../../packages/shrub-config">packages/shrub-config/index.litcoffee</a>
                     
                 </li>
@@ -331,6 +321,16 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../../packages/shrub-grunt/tests/run">packages/shrub-grunt/tests/run.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../packages/shrub-html5-audio/client">packages/shrub-html5-audio/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../packages/shrub-html5-audio">packages/shrub-html5-audio/index.litcoffee</a>
                     
                 </li>
             
@@ -690,6 +690,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../server/fingerprint">server/fingerprint.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../server/logging">server/logging.litcoffee</a>
                     
                 </li>
@@ -831,13 +836,12 @@ along.</p>
 </code></pre>
 <p>Kick things off.</p>
 <pre><code>    invoke()
-
-debug = require('debug') 'shrub:middleware'
-debugSilly = require('debug') 'shrub-silly:middleware'
 </code></pre>
 <h2 id="middlewarefromhook">middleware.fromHook</h2>
 <p><em>Create a middleware stack from the results of a hook and path configuration.</em></p>
 <pre><code>exports.fromHook = (hook, paths, args...) -&gt;
+
+  debugSilly = require('debug') 'shrub-silly:middleware'
 
   middleware = new Middleware()
 </code></pre>
@@ -853,8 +857,8 @@ debugSilly = require('debug') 'shrub-silly:middleware'
       fn.label = spec.label
       middleware.use fn, spec.label
 
-  middleware.on 'invoking', (fn) -&gt; debugSilly "Invoking #{fn.label}"
-  middleware.on 'invoked', (fn) -&gt; debugSilly "Invoked #{fn.label}"
+  # middleware.on 'invoking', (fn) -&gt; debugSilly "Invoking #{fn.label}"
+  # middleware.on 'invoked', (fn) -&gt; debugSilly "Invoked #{fn.label}"
 
   middleware
 </code></pre>

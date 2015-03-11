@@ -178,16 +178,6 @@
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../../shrub-audit/fingerprint">packages/shrub-audit/fingerprint.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../shrub-audit">packages/shrub-audit/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
                     <a class="" href="../../shrub-config">packages/shrub-config/index.litcoffee</a>
                     
                 </li>
@@ -314,6 +304,16 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../shrub-grunt/tests/run">packages/shrub-grunt/tests/run.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-html5-audio/client">packages/shrub-html5-audio/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-html5-audio">packages/shrub-html5-audio/index.litcoffee</a>
                     
                 </li>
             
@@ -686,6 +686,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../server/fingerprint">server/fingerprint.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../server/logging">server/logging.litcoffee</a>
                     
                 </li>
@@ -744,7 +749,6 @@ server (e.g. <a href="../../../../source/packages/shrub-socket-socket.io">Socket
 
     super
 
-    @_authorizationMiddleware = null
     @_connectionMiddleware = null
     @_disconnectionMiddleware = null
 </code></pre>
@@ -759,11 +763,6 @@ real error occurred, but authorization failed.</p>
 <pre><code>  loadMiddleware: -&gt;
 
     middleware = require 'middleware'
-</code></pre>
-<h4 id="invoke-hook-shrubsocketauthorizationmiddleware">Invoke hook <code>shrubSocketAuthorizationMiddleware</code>.</h4>
-<pre><code>    @_authorizationMiddleware = middleware.fromConfig(
-      'shrub-socket:authorizationMiddleware'
-    )
 </code></pre>
 <h4 id="invoke-hook-shrubsocketconnectionmiddleware">Invoke hook <code>shrubSocketConnectionMiddleware</code>.</h4>
 <pre><code>    @_connectionMiddleware = middleware.fromConfig(

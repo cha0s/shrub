@@ -178,16 +178,6 @@
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../../shrub-audit/fingerprint">packages/shrub-audit/fingerprint.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../shrub-audit">packages/shrub-audit/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
                     <a class="" href="../../shrub-config">packages/shrub-config/index.litcoffee</a>
                     
                 </li>
@@ -314,6 +304,16 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../shrub-grunt/tests/run">packages/shrub-grunt/tests/run.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-html5-audio/client">packages/shrub-html5-audio/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-html5-audio">packages/shrub-html5-audio/index.litcoffee</a>
                     
                 </li>
             
@@ -686,6 +686,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../server/fingerprint">server/fingerprint.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../server/logging">server/logging.litcoffee</a>
                     
                 </li>
@@ -748,73 +753,80 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     nodemailer = require 'shrub-nodemailer'
 
-    {Limiter} = require 'shrub-limiter'
+    {Limiter, LimiterMiddleware} = require 'shrub-limiter'
 
     routes = []
 
     routes.push
 
-      limiter:
-        message: 'You are trying to register too much.'
-        threshold: Limiter.threshold(5).every(2).minutes()
-
       path: 'shrub-user/register'
 
-      receiver: (req, fn) -&gt;
+      middleware: [
 
-        {body} = req
-        {email, password, username} = body
+        'shrub-http-express/session'
+        'shrub-villiany'
 
-        {
-          'shrub-ui-notification': Notification
-          'shrub-user': User
-        } = orm.collections()
+        new LimiterMiddleware(
+          message: 'You are trying to register too much.'
+          threshold: Limiter.threshold(5).every(2).minutes()
+        )
+
+        (req, res, next) -&gt;
+
+          {body} = req
+          {email, password, username} = body
+
+          {
+            'shrub-ui-notification': Notification
+            'shrub-user': User
+          } = orm.collections()
 </code></pre>
 <p>Register a new user.</p>
-<pre><code>        User.register(username, email, password).then((user) -&gt;
+<pre><code>          User.register(username, email, password).then((user) -&gt;
 </code></pre>
 <p>Send an email to the new user's email with a one-time login link.</p>
-<pre><code>          siteHostname = config.get 'packageSettings:shrub-core:siteHostname'
-          siteUrl = "http://#{siteHostname}"
+<pre><code>            siteHostname = config.get 'packageSettings:shrub-core:siteHostname'
+            siteUrl = "http://#{siteHostname}"
 
-          scope =
+            scope =
 
-            email: email
+              email: email
 </code></pre>
 <h6 id="todo-https">TODO: HTTPS</h6>
-<pre><code>            loginUrl: "#{siteUrl}/user/reset/#{user.resetPasswordToken}"
+<pre><code>              loginUrl: "#{siteUrl}/user/reset/#{user.resetPasswordToken}"
 
-            siteUrl: siteUrl
+              siteUrl: siteUrl
 
-            user: user
+              user: user
 
-          Notification.createFromRequest(
-            req, 'shrubExampleGeneral'
-            type: 'register'
-            name: user.name
-            email: email
-          ).done()
+            Notification.createFromRequest(
+              req, 'shrubExampleGeneral'
+              type: 'register'
+              name: user.name
+              email: email
+            ).done()
 
-          nodemailer.sendMail(
-            'shrub-user-email-register'
-          ,
-            to: email
-            subject: 'Registration details'
-          ,
-            scope
-          ).done()
+            nodemailer.sendMail(
+              'shrub-user-email-register'
+            ,
+              to: email
+              subject: 'Registration details'
+            ,
+              scope
+            ).done()
 
-          return
+            return
 
-        ).then(-&gt; fn()).catch fn
+          ).then(-&gt; res.end()).catch next
+      ]
 
     return routes
 </code></pre>
 <h4 id="implements-hook-shrubreplcontext">Implements hook <code>shrubReplContext</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubReplContext', (context) -&gt;
-    orm = require 'shrub-orm'
-    User = orm.collection 'shrub-user'
-    context.registerUser = -&gt; User.register arguments...
+<pre><code>    registrar.registerHook 'shrubReplContext', (context) -&gt;
+      orm = require 'shrub-orm'
+      User = orm.collection 'shrub-user'
+      context.registerUser = -&gt; User.register arguments...
 </code></pre>
 
             </div>

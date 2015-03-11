@@ -178,16 +178,6 @@
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../../shrub-audit/fingerprint">packages/shrub-audit/fingerprint.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../shrub-audit">packages/shrub-audit/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
                     <a class="" href="../../shrub-config">packages/shrub-config/index.litcoffee</a>
                     
                 </li>
@@ -314,6 +304,16 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../shrub-grunt/tests/run">packages/shrub-grunt/tests/run.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-html5-audio/client">packages/shrub-html5-audio/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-html5-audio">packages/shrub-html5-audio/index.litcoffee</a>
                     
                 </li>
             
@@ -708,6 +708,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../server/fingerprint">server/fingerprint.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../server/logging">server/logging.litcoffee</a>
                     
                 </li>
@@ -974,14 +979,6 @@ not append.</p>
         queuesConfig[promiseKeys[index]] = notifications.reverse()
 
       queuesConfig
-
-  ensureQueueExists = (req, res, next) -&gt;
-    return next new Error(
-      "Notification queue `#{req.body.queue}' doesn't exist."
-    ) unless queue = notificationQueues[req.body.queue]
-
-    req.queue = queue
-    next()
 </code></pre>
 <p>Ensure that the requested notification is owned by the request.</p>
 <pre><code>  ensureNotificationsOwnedByRequest = (req, res, next) -&gt;
@@ -1012,64 +1009,76 @@ not append.</p>
 
       path: 'shrub-ui/notifications/acknowledged'
 
-      validators: [
-        ensureQueueExists
-      ]
+      middleware: [
+</code></pre>
+<p>Ensure that the queue exists.</p>
+<pre><code>        (req, res, next) -&gt;
+          return next new Error(
+            "Notification queue `#{req.body.queue}' doesn't exist."
+          ) unless queue = notificationQueues[req.body.queue]
 
-      receiver: (req, fn) -&gt;
+          req.queue = queue
+          next()
+
+        (req, res, next) -&gt;
 </code></pre>
 <p>Mark all notifications in a queue owned by the request as acknowledged.</p>
-<pre><code>        Notification = orm.collection 'shrub-ui-notification'
-        query = Notification.find()
-        query = query.where(channel: req.queue.channelFromRequest req)
-        query = query.where(queue: req.body.queue)
-        query.then((notifications) -&gt;
+<pre><code>          Notification = orm.collection 'shrub-ui-notification'
+          query = Notification.find()
+          query = query.where(channel: req.queue.channelFromRequest req)
+          query = query.where(queue: req.body.queue)
+          query.then((notifications) -&gt;
 </code></pre>
 <p>Broadcast to others.</p>
-<pre><code>          broadcastNotificationsEvent(
-            req
-            event: 'shrub-ui/notifications/acknowledged'
-            notifications: notifications
-          )
+<pre><code>            broadcastNotificationsEvent(
+              req
+              event: 'shrub-ui/notifications/acknowledged'
+              notifications: notifications
+            )
 
-          Promise.all(
-            for notification in notifications
-              notification.acknowledged = true
-              notification.save()
-          )
+            Promise.all(
+              for notification in notifications
+                notification.acknowledged = true
+                notification.save()
+            )
 
-        ).then(-&gt; fn()).catch fn
+          ).then(-&gt; res.end()).catch next
+
+      ]
 
     routes.push
 
       path: 'shrub-ui/notifications/markAsRead'
 
-      validators: [
-        ensureNotificationsOwnedByRequest
-      ]
+      middleware: [
 
-      receiver: (req, fn) -&gt;
+        ensureNotificationsOwnedByRequest
+
+        (req, res, next) -&gt;
 </code></pre>
 <p>Broadcast to others.</p>
-<pre><code>        broadcastNotificationsEvent(
-          req
-          data: markedAsRead: req.body.markedAsRead
-          event: 'shrub-ui/notifications/markAsRead'
-          notifications: req.notifications
-        )
+<pre><code>          broadcastNotificationsEvent(
+            req
+            data: markedAsRead: req.body.markedAsRead
+            event: 'shrub-ui/notifications/markAsRead'
+            notifications: req.notifications
+          )
 
-        Promise.all(
-          for notification in req.notifications
-            notification.markedAsRead = req.body.markedAsRead
-            notification.save()
+          Promise.all(
+            for notification in req.notifications
+              notification.markedAsRead = req.body.markedAsRead
+              notification.save()
 
-        ).then(-&gt; fn()).catch fn
+          ).then(-&gt; res.end()).catch next
+
+      ]
 
     routes.push
 
       path: 'shrub-ui/notifications/remove'
 
-      validators: [
+      middleware: [
+
         ensureNotificationsOwnedByRequest
 </code></pre>
 <p>Ensure that the requested notifications may be removed.</p>
@@ -1082,35 +1091,35 @@ not append.</p>
 
           next()
 
-      ]
-
-      receiver: (req, fn) -&gt;
+        (req, res, next) -&gt;
 </code></pre>
 <p>Broadcast to others.</p>
-<pre><code>        broadcastNotificationsEvent(
-          req
-          event: 'shrub-ui/notifications/remove'
-          notifications: req.notifications
-        )
+<pre><code>          broadcastNotificationsEvent(
+            req
+            event: 'shrub-ui/notifications/remove'
+            notifications: req.notifications
+          )
 
-        Promise.all(
-          for notification in req.notifications
-            notification.destroy()
+          Promise.all(
+            for notification in req.notifications
+              notification.destroy()
 
-        ).then(-&gt; fn()).catch fn
+          ).then(-&gt; res.end()).catch next
+
+      ]
 
     routes.push
 
       path: 'shrub-ui/notifications'
 
-      receiver: (req, fn) -&gt;
+      middleware: (req, res, next) -&gt;
 
         Notification = orm.collection 'shrub-ui-notification'
         Notification.queueFromRequest(req).then((notifications) -&gt;
 
-          fn null, notifications
+          res.end notifications
 
-        ).catch fn
+        ).catch next
 
     return routes
 </code></pre>

@@ -178,16 +178,6 @@
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../shrub-audit/fingerprint">packages/shrub-audit/fingerprint.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../shrub-audit">packages/shrub-audit/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
                     <a class="" href="../shrub-config">packages/shrub-config/index.litcoffee</a>
                     
                 </li>
@@ -314,6 +304,16 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../shrub-grunt/tests/run">packages/shrub-grunt/tests/run.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-html5-audio/client">packages/shrub-html5-audio/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-html5-audio">packages/shrub-html5-audio/index.litcoffee</a>
                     
                 </li>
             
@@ -662,7 +662,11 @@
                             
                                 <li><a class="toctree-l3" href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer.</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-shrubsocketauthorizationmiddleware">Implements hook shrubSocketAuthorizationMiddleware.</a></li>
+                                <li><a class="toctree-l3" href="#implements-hook-shrubsocketconnectionmiddleware">Implements hook shrubSocketConnectionMiddleware.</a></li>
+                            
+                                <li><a class="toctree-l3" href="#implements-hook-shrubrpcroutesalter">Implements hook shrubRpcRoutesAlter.</a></li>
+                            
+                                <li><a class="toctree-l3" href="#implements-hook-shrubvillianyreport">Implements hook shrubVillianyReport.</a></li>
                             
                         
                         </ul>
@@ -686,6 +690,11 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../server/crypto">server/crypto.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../server/fingerprint">server/fingerprint.litcoffee</a>
                     
                 </li>
             
@@ -740,10 +749,12 @@
 <pre><code>i8n = null
 Promise = null
 
-logger = null
+config = require 'config'
 
 orm = null
 
+Fingerprint = require 'fingerprint'
+logger = null
 villianyLimiter = null
 
 exports.pkgmanRegister = (registrar) -&gt;
@@ -762,20 +773,26 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     {Limiter} = require 'shrub-limiter'
 
+    {
+      thresholdScore
+      thresholdMs
+    } = config.get 'packageSettings:shrub-villiany:ban'
+
     villianyLimiter = new Limiter(
-      'villiany', Limiter.threshold(1000).every(10).minutes()
+      'villiany'
+      Limiter.threshold(thresholdScore).every(thresholdMs).milliseconds()
     )
 </code></pre>
 <h4 id="implements-hook-shrubormcollections">Implements hook <code>shrubOrmCollections</code>.</h4>
 <pre><code>  registrar.registerHook 'shrubOrmCollections', -&gt;
 
-    audit = require 'shrub-audit'
+    Fingerprint = require 'fingerprint'
 </code></pre>
 <p>Bans.</p>
 <pre><code>    Ban = attributes: expires: 'date'
 </code></pre>
 <p>The structure of a ban is dictated by the fingerprint structure.</p>
-<pre><code>    audit.Fingerprint.keys().forEach (key) -&gt;
+<pre><code>    Fingerprint.keys().forEach (key) -&gt;
       Ban.attributes[key] =
         index: true
         type: 'string'
@@ -816,11 +833,9 @@ exports.pkgmanRegister = (registrar) -&gt;
 <p>Create a ban from a fingerprint.</p>
 <pre><code>    Ban.createFromFingerprint = (fingerprint, expires) -&gt;
 
-      config = require 'config'
-
       unless expires?
         settings = config.get 'packageSettings:shrub-villiany:ban'
-        expires = parseInt settings.defaultExpiration
+        expires = parseInt settings.thresholdMs
 
       data = expires: new Date Date.now() + expires
       data[key] = value for key, value of fingerprint
@@ -836,20 +851,12 @@ exports.pkgmanRegister = (registrar) -&gt;
 
       (req, res, next) -&gt;
 
-        req.villianyKick = (subject, ttl) -&gt;
-</code></pre>
-<p>Destroy any session.</p>
-<pre><code>          req.session?.destroy()
-</code></pre>
-<p>Log the user out.</p>
-<pre><code>          req.logOut().then -&gt;
+        req.on 'shrubVillianyKick', (subject, ttl) -&gt;
 
-            res.status 401
-            res.end buildBanMessage subject, ttl
+          res.status 401
+          res.end buildBanMessage subject, ttl
 
         next()
-
-      reporterMiddleware
 
       enforcementMiddleware
 
@@ -860,53 +867,42 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     ban:
 </code></pre>
-<p>10 minute ban time by default.</p>
-<pre><code>      defaultExpiration: 1000 * 60 * 10
+<p>Villiany threshold score.</p>
+<pre><code>      thresholdScore: 1000
 </code></pre>
-<h4 id="implements-hook-shrubsocketauthorizationmiddleware">Implements hook <code>shrubSocketAuthorizationMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubSocketAuthorizationMiddleware', -&gt;
+<p>10 minute villiany threshold window by default.</p>
+<pre><code>      thresholdMs: 1000 * 60 * 10
+</code></pre>
+<h4 id="implements-hook-shrubsocketconnectionmiddleware">Implements hook <code>shrubSocketConnectionMiddleware</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubSocketConnectionMiddleware', -&gt;
 
     {AuthorizationFailure} = require 'shrub-socket/manager'
 
     label: 'Provide villiany management'
-    middleware: [
-
-      (req, res, next) -&gt;
-
-        req.villianyKick = (subject, ttl) -&gt;
+    middleware: socketMiddleware()
 </code></pre>
-<p>Destroy any session.</p>
-<pre><code>          req.session?.destroy()
+<h4 id="implements-hook-shrubrpcroutesalter">Implements hook <code>shrubRpcRoutesAlter</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubRpcRoutesAlter', (routes) -&gt;
+
+    {spliceRouteMiddleware} = require 'shrub-rpc'
+
+    for path, route of routes
+      spliceRouteMiddleware route, 'shrub-villiany', socketMiddleware()
+
+    return
 </code></pre>
-<p>Log the user out.</p>
-<pre><code>          req.logOut().then -&gt;
-</code></pre>
-<p>Not already authorized?</p>
-<pre><code>            throw new AuthorizationFailure unless req.socket?
+<h4 id="implements-hook-shrubvillianyreport">Implements hook <code>shrubVillianyReport</code>.</h4>
+<p>Catch villiany reports.</p>
+<pre><code>  registrar.registerHook 'shrubVillianyReport', (req, score, type, excluded = []) -&gt;
 
-            req.socket.emit 'core.reload'
-
-
-        next()
-
-      reporterMiddleware
-
-      enforcementMiddleware
-
-    ]
-</code></pre>
-<p>Define <code>req.reportVilliany()</code>.</p>
-<pre><code>reporterMiddleware = (req, res, next) -&gt;
-
-  Ban = orm.collection 'shrub-ban'
-
-  req.reportVilliany = (score, type, excluded = []) -&gt;
+    Ban = orm.collection 'shrub-ban'
 </code></pre>
 <p>Terminate the chain if not a villian.</p>
 <pre><code>    class NotAVillian extends Error
       constructor: (@message) -&gt;
 
-    inlineKeys = req.fingerprint.inlineKeys excluded
+    fingerprint = new Fingerprint req
+    inlineKeys = fingerprint.inlineKeys excluded
 
     villianyLimiter.accrueAndCheckThreshold(
       inlineKeys, score
@@ -914,10 +910,10 @@ exports.pkgmanRegister = (registrar) -&gt;
     ).then((isVillian) -&gt;
 </code></pre>
 <p>Log this transgression.</p>
-<pre><code>      fingerprint = req.fingerprint.get excluded
+<pre><code>      fingerprint = fingerprint.get excluded
 </code></pre>
 <h6 id="todo-multiline">TODO: Multiline</h6>
-<pre><code>      message = "Logged villiany score #{score} for #{type}, audit keys: #{JSON.stringify fingerprint}"
+<pre><code>      message = "Logged villiany score #{score} for #{type}, fingerprint: #{JSON.stringify fingerprint}"
       message += ', which resulted in a ban.' if isVillian
       logger[if isVillian then 'error' else 'warn'] message
 
@@ -929,11 +925,9 @@ exports.pkgmanRegister = (registrar) -&gt;
     ).then(-&gt;
 </code></pre>
 <p>Kick.</p>
-<pre><code>      req.villianyKick villianyLimiter.ttl inlineKeys
+<pre><code>      req.emit 'shrubVillianyKick', villianyLimiter.ttl inlineKeys
 
     ).then(-&gt; true).catch NotAVillian, -&gt; false
-
-  next()
 </code></pre>
 <p>Enforce bans.</p>
 <pre><code>enforcementMiddleware = (req, res, next) -&gt;
@@ -942,19 +936,19 @@ exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 <p>Terminate the request if a ban is enforced.</p>
 <pre><code>  class RequestBanned extends Error
-    constructor: (@message) -&gt;
+    constructor: (@message, @key, @ttl) -&gt;
 
-  banPromises = for key, value of req.fingerprint.get()
+  fingerprint = new Fingerprint req
+  banPromises = for key, value of fingerprint.get()
     do (key, value) -&gt;
       method = i8n.camelize "is_#{key}_banned", true
       Ban[method](value).then ({isBanned, ttl}) -&gt;
-        return unless isBanned
-        req.villianyKick(key, ttl).then -&gt; throw new RequestBanned()
+        throw new RequestBanned '', key, ttl if isBanned
 
   Promise.all(banPromises).then(-&gt; next()).catch(
 </code></pre>
-<p>Ignore the error when it's only signifying a ban.</p>
-<pre><code>    RequestBanned, -&gt;
+<p>RequestBanned error just means we should emit.</p>
+<pre><code>    RequestBanned, ({key, ttl}) -&gt; req.emit 'shrubVillianyKick', key, ttl
   ).catch (error) -&gt; next error
 </code></pre>
 <p>Build a nice message for the villian.</p>
@@ -966,12 +960,28 @@ exports.pkgmanRegister = (registrar) -&gt;
     "Your #{subject} is banned."
   else
     'You are banned.'
-
-  message += " The ban will be lifted #{
-    moment().add('seconds', ttl).fromNow()
-  }." if ttl?
+</code></pre>
+<h6 id="todo-multiline_1">TODO: Multiline.</h6>
+<pre><code>  message += " The ban will be lifted #{moment().add('seconds', ttl).fromNow()}." if ttl?
 
   message
+</code></pre>
+<p>Middleware for sockets.</p>
+<pre><code>socketMiddleware = -&gt; [
+
+  (req, res, next) -&gt;
+
+    req.on 'shrubVillianyKick', (subject, ttl) -&gt;
+
+      throw new AuthorizationFailure unless req.socket?
+
+      req.socket.emit 'core.reload'
+
+    next()
+
+  enforcementMiddleware
+
+]
 </code></pre>
 
             </div>

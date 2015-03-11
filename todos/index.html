@@ -92,6 +92,12 @@
                             <li class="toctree-l2"><a href="#todo-generated-indexmd-from-readmemd">TODO: Generated index.md from README.md</a></li>
                             
                         
+                            <li class="toctree-l2"><a href="#todo-cluster-refactoring-with-masterworker-hooks">TODO: Cluster refactoring, with master/worker hooks</a></li>
+                            
+                        
+                            <li class="toctree-l2"><a href="#todo-shrub-passport-split-off-from-shrub-user">TODO: shrub-passport split off from shrub-user</a></li>
+                            
+                        
                             <li class="toctree-l2"><a href="#todo-link-this-to-where-this-happens-in-grunt-for-illustration">TODO: Link this to where this happens in Grunt for illustration.</a></li>
                             
                         
@@ -123,6 +129,9 @@
                             
                         
                             <li class="toctree-l2"><a href="#todo-multiline_2">TODO: Multiline</a></li>
+                            
+                        
+                            <li class="toctree-l2"><a href="#todo-configure-filetype-priorities-per-browser">TODO: Configure filetype priorities per browser.</a></li>
                             
                         
                             <li class="toctree-l2"><a href="#todo-need-to-track-current-this-should-be-a-nop-in-that-case">TODO: Need to track current, this should be a nop in that case.</a></li>
@@ -216,6 +225,9 @@
                             
                         
                             <li class="toctree-l2"><a href="#todo-multiline_7">TODO: Multiline</a></li>
+                            
+                        
+                            <li class="toctree-l2"><a href="#todo-multiline_8">TODO: Multiline.</a></li>
                             
                         
                             <li class="toctree-l2"><a href="#todo-rename-all-config-key-uses-to-path">TODO: Rename all config key uses to path.</a></li>
@@ -316,16 +328,6 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../source/packages/shrub-assets/jquery">packages/shrub-assets/jquery.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../source/packages/shrub-audit/fingerprint">packages/shrub-audit/fingerprint.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../source/packages/shrub-audit">packages/shrub-audit/index.litcoffee</a>
                     
                 </li>
             
@@ -456,6 +458,16 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../source/packages/shrub-grunt/tests/run">packages/shrub-grunt/tests/run.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-html5-audio/client">packages/shrub-html5-audio/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-html5-audio">packages/shrub-html5-audio/index.litcoffee</a>
                     
                 </li>
             
@@ -815,6 +827,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../source/server/fingerprint">server/fingerprint.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../source/server/logging">server/logging.litcoffee</a>
                     
                 </li>
@@ -866,6 +883,8 @@
 This is a dynamically generated list of TODO items, each with context.</p>
 <h6 id="todo-make-sure-to-give-all-credit-where-its-due">TODO: Make sure to give all credit where it's due.</h6>
 <h6 id="todo-generated-indexmd-from-readmemd">TODO: Generated index.md from README.md</h6>
+<h6 id="todo-cluster-refactoring-with-masterworker-hooks">TODO: Cluster refactoring, with master/worker hooks</h6>
+<h6 id="todo-shrub-passport-split-off-from-shrub-user">TODO: shrub-passport split off from shrub-user</h6>
 <pre><code> See the documentation for
  [`shrubAngularPackageDependencies`](hooks/#shrubAngularPackageDependencies).
 </code></pre>
@@ -904,7 +923,7 @@ This is a dynamically generated list of TODO items, each with context.</p>
 <h2 id="todo-unify-on-packages">TODO: Unify on <code>'packages'</code>.</h2>
 <pre><code>       configKey = if global? then 'packageSettings' else 'packageConfig'
 </code></pre>
-<p><a href="../source/client/modules/middleware#todo-unify-on-packages">the above found in client/modules/middleware.litcoffee:150</a></p>
+<p><a href="../source/client/modules/middleware#todo-unify-on-packages">the above found in client/modules/middleware.litcoffee:149</a></p>
 <pre><code> * (function) `impl` - The hook implementation function. This is invoked when
    the hook is invoked. The signature of the implementation function may vary,
    consult the documentation for the specific hook to learn more.
@@ -955,6 +974,14 @@ This is a dynamically generated list of TODO items, each with context.</p>
                    checkbox.type = 'checkbox'
 </code></pre>
 <p><a href="../source/packages/shrub-form/client/widget/checkboxes#todo-multilin">the above found in packages/shrub-form/client/widget/checkboxes.litcoffee:22</a></p>
+<pre><code>             ($q, $window) -&gt;
+
+               service = {}
+</code></pre>
+<h2 id="todo-configure-filetype-priorities-per-browser">TODO: Configure filetype priorities per browser.</h2>
+<pre><code>               service.loadFile = (filename) -&gt;
+</code></pre>
+<p><a href="../source/packages/shrub-html5-audio/client#todo-configure-filetype-priorities-per-browser">the above found in packages/shrub-html5-audio/client/index.litcoffee:26</a></p>
 <pre><code> (String) `skinKey` - The key of the skin to change to
 
  *Change skin.*
@@ -1022,7 +1049,7 @@ This is a dynamically generated list of TODO items, each with context.</p>
 <h2 id="todo-finish-collection-docs">TODO: Finish collection docs.</h2>
 <pre><code>       User =
 </code></pre>
-<p><a href="../source/packages/shrub-user/client#todo-finish-collection-docs">the above found in packages/shrub-user/client/index.litcoffee:132</a></p>
+<p><a href="../source/packages/shrub-user/client#todo-finish-collection-docs">the above found in packages/shrub-user/client/index.litcoffee:134</a></p>
 <pre><code> Implement all the built-in collection methods as authenticated versions, which
  take a user.
 </code></pre>
@@ -1030,7 +1057,7 @@ This is a dynamically generated list of TODO items, each with context.</p>
 <pre><code>       for identity, collection of collections
          do (identity, collection) -&gt;
 </code></pre>
-<p><a href="../source/packages/shrub-user/client#todo-this-is-legacy-from-having-full-orm-in-browser-what-do">the above found in packages/shrub-user/client/index.litcoffee:218</a></p>
+<p><a href="../source/packages/shrub-user/client#todo-this-is-legacy-from-having-full-orm-in-browser-what-do">the above found in packages/shrub-user/client/index.litcoffee:220</a></p>
 <pre><code>               $scope.form =
 
                  key: 'shrub-user-login'
@@ -1048,14 +1075,15 @@ This is a dynamically generated list of TODO items, each with context.</p>
      Promise = require 'bluebird'
 </code></pre>
 <p><a href="../source/packages/shrub-angular-sandbox#todo-sandbox-pool-might-be-better-handled-by-sandboxes">the above found in packages/shrub-angular-sandbox/index.litcoffee:4</a></p>
-<pre><code>           path: 'shrub-angular-sandbox/hangup'
-           receiver: (req, fn) -&gt;
+<pre><code>             'shrub-http-express/session'
+
+             (req, res, next) -&gt;
 </code></pre>
 <h2 id="todo-cookie-less-clients-wont-have-a-valid-session-id-to-call-with-this-should-be-some-other-token-perhaps-csrf">TODO: Cookie-less clients won't have a valid session ID to call with. This should be some other token, perhaps CSRF.</h2>
-<pre><code>             id = req.session?.id
-             if (sandbox = sandboxManager.lookup id)?
+<pre><code>               id = req.session?.id
+               if (sandbox = sandboxManager.lookup id)?
 </code></pre>
-<p><a href="../source/packages/shrub-angular-sandbox#todo-cookie-less-clients-wont-have-a-valid-session-id-to-call-with-this-should-be-some-other-token-perhaps-csrf">the above found in packages/shrub-angular-sandbox/index.litcoffee:35</a></p>
+<p><a href="../source/packages/shrub-angular-sandbox#todo-cookie-less-clients-wont-have-a-valid-session-id-to-call-with-this-should-be-some-other-token-perhaps-csrf">the above found in packages/shrub-angular-sandbox/index.litcoffee:39</a></p>
 <pre><code>                 html
                ,
                  cookie: req.headers.cookie
@@ -1064,7 +1092,7 @@ This is a dynamically generated list of TODO items, each with context.</p>
 <pre><code>                 url: "http://localhost:#{config.get 'packageSettings:shrub-http:port'}/shrub-angular-entry-point"
                ,
 </code></pre>
-<p><a href="../source/packages/shrub-angular-sandbox#todo-multiline">the above found in packages/shrub-angular-sandbox/index.litcoffee:76</a></p>
+<p><a href="../source/packages/shrub-angular-sandbox#todo-multiline">the above found in packages/shrub-angular-sandbox/index.litcoffee:82</a></p>
 <pre><code>             navigationReq = Object.create req
              navigationReq.sandbox = sandbox
 </code></pre>
@@ -1072,14 +1100,14 @@ This is a dynamically generated list of TODO items, each with context.</p>
 <pre><code>             navigationMiddleware.dispatch navigationReq, (error) =&gt;
                return reject error if error?
 </code></pre>
-<p><a href="../source/packages/shrub-angular-sandbox#todo-remove-unused-res-parameter">the above found in packages/shrub-angular-sandbox/index.litcoffee:349</a></p>
+<p><a href="../source/packages/shrub-angular-sandbox#todo-remove-unused-res-parameter">the above found in packages/shrub-angular-sandbox/index.litcoffee:355</a></p>
 <pre><code>           for key, route of routes
              if route.regexp?.test path
 </code></pre>
 <h2 id="todo-need-to-extract-params-to-build-redirectto-its-a-small-enough-mismatch-to-ignore-for-now">TODO: Need to extract params to build redirectTo, it's a small enough mismatch to ignore for now.</h2>
 <pre><code>               return
 </code></pre>
-<p><a href="../source/packages/shrub-angular-sandbox#todo-need-to-extract-params-to-build-redirectto-its-a-small-enough-mismatch-to-ignore-for-now">the above found in packages/shrub-angular-sandbox/index.litcoffee:389</a></p>
+<p><a href="../source/packages/shrub-angular-sandbox#todo-need-to-extract-params-to-build-redirectto-its-a-small-enough-mismatch-to-ignore-for-now">the above found in packages/shrub-angular-sandbox/index.litcoffee:395</a></p>
 <pre><code>           subconfig = fulfilledSubconfigs[index++]
            for key, value of subconfig
              continue unless value?
@@ -1103,7 +1131,7 @@ This is a dynamically generated list of TODO items, each with context.</p>
 <pre><code>         data = fs.readFileSync fileStats.file, 'utf8'
          chunks = data.split '\n\n'
 </code></pre>
-<p><a href="../source/packages/shrub-grunt/dox/dynamic#todo-this-chunk-parsing-should-be-done-with-a-transform-like-the-others">the above found in packages/shrub-grunt/dox/dynamic.litcoffee:432</a></p>
+<p><a href="../source/packages/shrub-grunt/dox/dynamic#todo-this-chunk-parsing-should-be-done-with-a-transform-like-the-others">the above found in packages/shrub-grunt/dox/dynamic.litcoffee:425</a></p>
 <pre><code>           render += '  &lt;/table&gt;\n'
            render += '&lt;/div&gt;'
            render += '\n\n'
@@ -1111,7 +1139,7 @@ This is a dynamically generated list of TODO items, each with context.</p>
 <h2 id="todo-we-should-do-some-preprocessing-hre-with-a-transform-namely-linking-the-hook-headers-to-their-respective-documentation">TODO: We should do some preprocessing hre with a transform, namely linking the hook headers to their respective documentation.</h2>
 <pre><code>       fs.writeFileSync 'docs/packages.md', render
 </code></pre>
-<p><a href="../source/packages/shrub-grunt/dox/dynamic#todo-we-should-do-some-preprocessing-hre-with-a-transform-namely-linking-the-hook-headers-to-their-respective-documentation">the above found in packages/shrub-grunt/dox/dynamic.litcoffee:474</a></p>
+<p><a href="../source/packages/shrub-grunt/dox/dynamic#todo-we-should-do-some-preprocessing-hre-with-a-transform-namely-linking-the-hook-headers-to-their-respective-documentation">the above found in packages/shrub-grunt/dox/dynamic.litcoffee:467</a></p>
 <pre><code> # HTTP Manager
 
  *Manage an HTTP server instance.*
@@ -1169,14 +1197,14 @@ This is a dynamically generated list of TODO items, each with context.</p>
 <pre><code>     exports.assets = (skinKey) -&gt;
 </code></pre>
 <p><a href="../source/packages/shrub-skin#todo-this-needs-caching">the above found in packages/shrub-skin/index.litcoffee:191</a></p>
-<pre><code>               scope =
+<pre><code>                 scope =
 
-                 email: email
+                   email: email
 </code></pre>
 <h2 id="todo-https">TODO: HTTPS</h2>
-<pre><code>                 loginUrl: "#{siteUrl}/user/reset/#{user.resetPasswordToken}"
+<pre><code>                   loginUrl: "#{siteUrl}/user/reset/#{user.resetPasswordToken}"
 </code></pre>
-<p><a href="../source/packages/shrub-user/forgot#todo-http">the above found in packages/shrub-user/forgot.litcoffee:85</a></p>
+<p><a href="../source/packages/shrub-user/forgot#todo-http">the above found in packages/shrub-user/forgot.litcoffee:92</a></p>
 <pre><code>           'shrub-user-group': UserGroup
            'shrub-user-permission': UserPermission
          } = collections
@@ -1184,7 +1212,7 @@ This is a dynamically generated list of TODO items, each with context.</p>
 <h2 id="todo-finish-collections-doc">TODO: Finish collections doc.</h2>
 <pre><code> Case-insensitivized name.
 </code></pre>
-<p><a href="../source/packages/shrub-user#todo-finish-collections-doc">the above found in packages/shrub-user/index.litcoffee:114</a></p>
+<p><a href="../source/packages/shrub-user#todo-finish-collections-doc">the above found in packages/shrub-user/index.litcoffee:69</a></p>
 <pre><code>           (next) -&gt;
 
  Implement a local passport strategy.
@@ -1193,24 +1221,32 @@ This is a dynamically generated list of TODO items, each with context.</p>
 <pre><code>             LocalStrategy = require('passport-local').Strategy
              passport.use new LocalStrategy (username, password, done) -&gt;
 </code></pre>
-<p><a href="../source/packages/shrub-user/login#todo-strategies-should-be-dynamically-defined-through-a-hook">the above found in packages/shrub-user/login.litcoffee:87</a></p>
-<pre><code>               scope =
+<p><a href="../source/packages/shrub-user/login#todo-strategies-should-be-dynamically-defined-through-a-hook">the above found in packages/shrub-user/login.litcoffee:92</a></p>
+<pre><code>                 scope =
 
-                 email: email
+                   email: email
 </code></pre>
 <h2 id="todo-https_1">TODO: HTTPS</h2>
-<pre><code>                 loginUrl: "#{siteUrl}/user/reset/#{user.resetPasswordToken}"
+<pre><code>                   loginUrl: "#{siteUrl}/user/reset/#{user.resetPasswordToken}"
 </code></pre>
-<p><a href="../source/packages/shrub-user/register#todo-http">the above found in packages/shrub-user/register.litcoffee:55</a></p>
+<p><a href="../source/packages/shrub-user/register#todo-http">the above found in packages/shrub-user/register.litcoffee:61</a></p>
 <pre><code> Log this transgression.
 
-           fingerprint = req.fingerprint.get excluded
+           fingerprint = fingerprint.get excluded
 </code></pre>
 <h2 id="todo-multiline_7">TODO: Multiline</h2>
-<pre><code>           message = "Logged villiany score #{score} for #{type}, audit keys: #{JSON.stringify fingerprint}"
+<pre><code>           message = "Logged villiany score #{score} for #{type}, fingerprint: #{JSON.stringify fingerprint}"
            message += ', which resulted in a ban.' if isVillian
 </code></pre>
-<p><a href="../source/packages/shrub-villiany#todo-multilin">the above found in packages/shrub-villiany/index.litcoffee:205</a></p>
+<p><a href="../source/packages/shrub-villiany#todo-multilin">the above found in packages/shrub-villiany/index.litcoffee:190</a></p>
+<pre><code>         "Your #{subject} is banned."
+       else
+         'You are banned.'
+</code></pre>
+<h2 id="todo-multiline_8">TODO: Multiline.</h2>
+<pre><code>       message += " The ban will be lifted #{moment().add('seconds', ttl).fromNow()}." if ttl?
+</code></pre>
+<p><a href="../source/packages/shrub-villiany#todo-multiline">the above found in packages/shrub-villiany/index.litcoffee:246</a></p>
 <pre><code> # Server configuration
 
  *Manages server and package configuration.*

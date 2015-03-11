@@ -29,11 +29,13 @@ from the server, or rejected with the error from the server.
 
             deferred = defer()
 
-            socket.emit "rpc://#{path}", data, ({error, result}) ->
-              if error?
-                deferred.reject errors.unserialize error
-              else
+            socket.emit(
+              'shrub-rpc'
+              path: path, data: data
+              ({error, result}) ->
+                return deferred.reject errors.unserialize error if error?
                 deferred.resolve result
+            )
 
 #### Invoke hook `shrubRpcCall`.
 

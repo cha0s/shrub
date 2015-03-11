@@ -94,7 +94,9 @@ Log a user out if we get a socket call.
               password ?= 'password'
               id ?= 1
 
-              socket.catchEmit 'rpc://shrub-user/login', (data, fn) ->
+              socket.catchEmit 'shrub-rpc', ({path, data}, fn) ->
+                return unless 'shrub-user/login' is path
+
                 fn result: id: id, name: username
 
               service.login 'local', username, password

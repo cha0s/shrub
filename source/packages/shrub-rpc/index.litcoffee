@@ -3,6 +3,9 @@
 Framework for communication between client and server through
 [RPC](http://en.wikipedia.org/wiki/Remote_procedure_call#Message_passing)
 
+    {EventEmitter} = require 'events'
+    {IncomingMessage} = require 'http'
+
     pkgman = null
 
 RPC route information.
@@ -38,11 +41,13 @@ RPC route information.
             debug '- Registering RPC routess...'
             for route in _.flatten pkgman.invokeFlat 'shrubRpcRoutes'
 
-Default the RPC route to the package path, replacing slashes with dots.
+              debug route.path
 
-              debug "- - rpc://#{route.path}"
+Normalize middleware to array form.
 
-              route.validators ?= []
+              route.middleware ?= []
+              if 'function' is typeof route.middleware
+                route.middleware = [route.middleware]
 
               routes[route.path] = route
             debug '- RPC routes registered.'
@@ -51,13 +56,17 @@ Default the RPC route to the package path, replacing slashes with dots.
 
             pkgman.invoke 'shrubRpcRoutesAlter', routes
 
-Set up the validators as middleware.
+Set up the middleware dispatcher.
 
             for path, route of routes
-              validators = new Middleware()
-              for validator in route.validators
-                validators.use validator
-              route.validators = validators
+              route.dispatcher = new Middleware()
+
+              fn.weight ?= index for fn, index in route.middleware
+
+              sortedMiddleware = route.middleware.sort (l, r) ->
+                (l.weight ? 0) - (r.weight ? 0)
+
+              route.dispatcher.use fn for fn in sortedMiddleware
 
             next()
 
@@ -81,75 +90,95 @@ Set up the validators as middleware.
 
           (req, res, next) ->
 
-            Object.keys(routes).forEach (path) ->
-              route = routes[path]
+Log an error without transmitting it.
 
-              req.socket.on "rpc://#{path}", (data, fn) ->
+            logError = (error) -> logger.error errors.stack error
+
+Hub for RPC calls. Dispatch routes.
+
+            req.socket.on 'shrub-rpc', ({path, data}, fn) ->
+              unless (route = routes[path])?
+                return logError new Error "Unknown route called: #{path}"
 
 Don't pass req directly, since it can be mutated by routes, and violate other
 routes' expectations.
 
-                routeReq = Object.create req
-                routeReq.body = data
-                routeReq.route = route
+              routeReq = new IncomingMessage req.socket.conn
+              routeReq.body = data
+              routeReq.route = route
+              routeReq.socket = req.socket
+
+              routeRes = new class RpcRouteResponse extends EventEmitter
+
+                constructor: ->
+                  super
+
+                  @error = null
+
+                setError: (@error) -> return this
+
+                end: (data) ->
+                  return fn error: errors.serialize @error if @error?
+                  fn result: data
 
 Send an error to the client.
 
-                emitError = (error) -> fn error: errors.serialize error
-
-Log an error without transmitting it.
-
-                logError = (error) -> logger.error errors.stack error
+              emitError = (error) -> routeRes.setError(error).end()
 
 Send an error to the client, but don't notify them of the real underlying
 issue.
 
-                concealErrorFromClient = (error) ->
+              concealErrorFromClient = (error) ->
 
-                  emitError new Error 'Please try again later.'
-                  logError error
+                emitError new Error 'Please try again later.'
+                logError error
 
 Transmit the error as it is directly to the client.
 
-                sendErrorToClient = (error) ->
-                  emitError error
+              sendErrorToClient = (error) ->
+                emitError error
 
 Log the full error stack, because it might help track down any problem.
 
-                  logError error if do ->
+                logError error if do ->
 
 Unknown errors.
 
-                    unless error instanceof TransmittableError
-                      return true
+                  unless error instanceof TransmittableError
+                    return true
 
 If we're not running in production.
 
-                    if 'production' isnt config.get 'NODE_ENV'
-                      return true
+                  if 'production' isnt config.get 'NODE_ENV'
+                    return true
 
-Validate.
+Dispatch the route.
 
-                route.validators.dispatch routeReq, null, (error) ->
-                  return sendErrorToClient error if error?
-
-Receive.
-
-                  route.receiver routeReq, (error, result) ->
-                    return sendErrorToClient error if error?
-
-#### Invoke hook `shrubRpcRouteFinish`.
-
-                    Promise.all(
-                      pkgman.invokeFlat(
-                        'shrubRpcRouteFinish', routeReq, result, req
-                      )
-
-                    ).then(
-                      -> fn result: result
-                      concealErrorFromClient
-                    )
+              route.dispatcher.dispatch routeReq, routeRes, (error) ->
+                sendErrorToClient error if error?
 
             next()
 
         ]
+
+### spliceRouteMiddleware
+
+* (Object) `route` - The RPC route definition object.
+* (String) `key` - The key used by RPC routes to be replaced with middleware.
+* (Function Array) `middleware` - The middleware to be spliced in.
+
+*Splice middleware functions in place of a key.*
+
+Some packages define RPC route middleware that can be included as a string
+(e.g. `'shrub-user'`). This function will splice in an array of middleware
+where a placeholder key specifies.
+
+    exports.spliceRouteMiddleware = (route, key, middleware) ->
+      return unless ~(index = route.middleware.indexOf key)
+
+      l = route.middleware.slice 0, index
+      r = route.middleware.slice index + 1
+
+      route.middleware = l.concat middleware, r
+
+      return

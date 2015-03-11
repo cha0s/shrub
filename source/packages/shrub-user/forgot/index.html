@@ -178,16 +178,6 @@
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../../shrub-audit/fingerprint">packages/shrub-audit/fingerprint.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../shrub-audit">packages/shrub-audit/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
                     <a class="" href="../../shrub-config">packages/shrub-config/index.litcoffee</a>
                     
                 </li>
@@ -314,6 +304,16 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../shrub-grunt/tests/run">packages/shrub-grunt/tests/run.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-html5-audio/client">packages/shrub-html5-audio/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-html5-audio">packages/shrub-html5-audio/index.litcoffee</a>
                     
                 </li>
             
@@ -682,6 +682,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../server/fingerprint">server/fingerprint.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../server/logging">server/logging.litcoffee</a>
                     
                 </li>
@@ -742,9 +747,7 @@
 
     crypto = require 'server/crypto'
 
-    {Limiter} = require 'shrub-limiter'
-
-    limiter: threshold: Limiter.threshold(1).every(30).seconds()
+    {Limiter, LimiterMiddleware} = require 'shrub-limiter'
 
     routes = []
 
@@ -752,76 +755,87 @@
 
       path: 'shrub-user/forgot'
 
-      receiver: (req, fn) -&gt;
+      middleware: [
 
-        User = orm.collection 'shrub-user'
+        'shrub-http-express/session'
+        'shrub-villiany'
+
+        new LimiterMiddleware(
+          threshold: Limiter.threshold(1).every(30).seconds()
+        )
+
+        (req, res, next) -&gt;
+
+          User = orm.collection 'shrub-user'
 </code></pre>
 <p>Cancel promise flow if the user doesn't exist.</p>
-<pre><code>        class NoSuchUser extends Error
-          constructor: (@message) -&gt;
+<pre><code>          class NoSuchUser extends Error
+            constructor: (@message) -&gt;
 </code></pre>
 <p>Look up the user.</p>
-<pre><code>        Promise.resolve().then(-&gt;
+<pre><code>          Promise.resolve().then(-&gt;
 </code></pre>
 <p>Search for username or encrypted email.</p>
-<pre><code>          if -1 is req.body.usernameOrEmail.indexOf '@'
+<pre><code>            if -1 is req.body.usernameOrEmail.indexOf '@'
 
-            iname: req.body.usernameOrEmail.toLowerCase()
+              iname: req.body.usernameOrEmail.toLowerCase()
 
-          else
+            else
 
-            crypto.encrypt(
-              req.body.usernameOrEmail.toLowerCase()
+              crypto.encrypt(
+                req.body.usernameOrEmail.toLowerCase()
 
-            ).then (encryptedEmail) -&gt; email: encryptedEmail
+              ).then (encryptedEmail) -&gt; email: encryptedEmail
 
-        ).then((filter) -&gt;
+          ).then((filter) -&gt;
 </code></pre>
 <p>Find the user.</p>
-<pre><code>          User.findOne filter
+<pre><code>            User.findOne filter
 
-        ).then((@user) -&gt;
-          throw new NoSuchUser unless @user?
+          ).then((@user) -&gt;
+            throw new NoSuchUser unless @user?
 </code></pre>
 <p>Generate a one-time login token.</p>
-<pre><code>          crypto.randomBytes 24
+<pre><code>            crypto.randomBytes 24
 
-        ).then((token) -&gt;
+          ).then((token) -&gt;
 
-          @user.resetPasswordToken = token.toString 'hex'
+            @user.resetPasswordToken = token.toString 'hex'
 </code></pre>
 <p>Decrypt the user's email address.</p>
-<pre><code>          crypto.decrypt @user.email
+<pre><code>            crypto.decrypt @user.email
 
-        ).then((email) -&gt;
+          ).then((email) -&gt;
 </code></pre>
 <p>Send an email to the user's email with a one-time login link.</p>
-<pre><code>          siteHostname = config.get 'packageSettings:shrub-core:siteHostname'
-          siteUrl = "http://#{siteHostname}"
+<pre><code>            siteHostname = config.get 'packageSettings:shrub-core:siteHostname'
+            siteUrl = "http://#{siteHostname}"
 
-          scope =
+            scope =
 
-            email: email
+              email: email
 </code></pre>
 <h6 id="todo-https">TODO: HTTPS</h6>
-<pre><code>            loginUrl: "#{siteUrl}/user/reset/#{user.resetPasswordToken}"
+<pre><code>              loginUrl: "#{siteUrl}/user/reset/#{user.resetPasswordToken}"
 
-            siteUrl: siteUrl
+              siteUrl: siteUrl
 
-            user: @user
+              user: @user
 
-          nodemailer.sendMail(
-            'shrub-user-email-forgot'
-          ,
-            to: email
-            subject: 'Password recovery request'
-          ,
-            scope
-          )
+            nodemailer.sendMail(
+              'shrub-user-email-forgot'
+            ,
+              to: email
+              subject: 'Password recovery request'
+            ,
+              scope
+            )
 
-          @user.save()
+            @user.save()
 
-        ).then(-&gt; fn()).catch(NoSuchUser, -&gt; fn()).catch fn
+          ).then(-&gt; res.end()).catch(NoSuchUser, -&gt; res.end()).catch next
+
+      ]
 
     return routes
 </code></pre>

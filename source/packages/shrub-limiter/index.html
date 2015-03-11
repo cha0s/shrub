@@ -178,16 +178,6 @@
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../shrub-audit/fingerprint">packages/shrub-audit/fingerprint.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../shrub-audit">packages/shrub-audit/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
                     <a class="" href="../shrub-config">packages/shrub-config/index.litcoffee</a>
                     
                 </li>
@@ -318,6 +308,16 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../shrub-html5-audio/client">packages/shrub-html5-audio/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-html5-audio">packages/shrub-html5-audio/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../shrub-html5-local-storage/client">packages/shrub-html5-local-storage/client/index.litcoffee</a>
                     
                 </li>
@@ -394,7 +394,7 @@
                         
                             <li class="toctree-l2"><a href="#rate-limiter">Rate limiter</a></li>
                             
-                                <li><a class="toctree-l3" href="#implements-hook-shrubormcollections">Implements hook shrubOrmCollections.</a></li>
+                                <li><a class="toctree-l3" href="#limitermiddleware">LimiterMiddleware</a></li>
                             
                                 <li><a class="toctree-l3" href="#limitkey">Limit#key</a></li>
                             
@@ -696,6 +696,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../server/fingerprint">server/fingerprint.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../server/logging">server/logging.litcoffee</a>
                     
                 </li>
@@ -744,7 +749,62 @@
               <h1 id="rate-limiter">Rate limiter</h1>
 <p><em>Limits the rate at which clients can do certain operations, like call RPC
 routes.</em></p>
-<pre><code>exports.SKIP = SKIP = {}
+<pre><code>pkgman = require 'pkgman'
+
+exports.SKIP = SKIP = {}
+</code></pre>
+<p>A limiter on a route is defined like:</p>
+<pre><code class="javascript">
+registrar.registerHook('shrubRpcRoutes', function() {
+
+  var shrubLimiter = require 'shrub-limiter'
+  var Limiter = shrubLimiter.Limiter;
+  var LimiterMiddleware = shrubLimiter.LimiterMiddleware;
+
+  var routes = []
+
+  routes.push({
+
+.    path: 'my-package/route',
+
+.    middleware: [
+
+.      ...
+
+.      'shrub-villiany' // Include if limit infractions lead to eventual ban
+
+.      new LimiterMiddleware(
+.        limiterDefinitionObject
+.      )
+
+.      ...
+
+.    ]
+
+  });
+
+  return routes;
+});
+
+</code></pre>
+
+<p><small><strong><em>NOTE:</em></strong> <em>Ignore the leading dots, they are a result of literate coffee
+limitations.</em></small></p>
+<p>Where <code>limiterDefinitionObject</code> above is defined as an object with the
+following properties:</p>
+<ul>
+<li><code>threshold</code>: The <a href="../../.././limiter#threshold">threshold</a> for this limiter.</li>
+<li><code>message</code>: The message returned to the client when the threshold is
+  passed.</li>
+<li><code>ignoreKeys</code>: The
+  <a href="../../../source/server/fingerprint">fingerprint keys</a> to ignore when
+  determining the total limit.</li>
+<li><code>villianyScore</code>: The score accumulated when this limit is crossed.</li>
+</ul>
+<h3 id="limitermiddleware">LimiterMiddleware</h3>
+<pre><code>exports.LimiterMiddleware = class LimiterMiddleware
+
+  constructor: (@config) -&gt;
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
@@ -755,13 +815,15 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     Limit =
 
+      autoPK: false
+
       attributes:
 </code></pre>
 <h2 id="limitkey">Limit#key</h2>
 <p><em>The limiter key.</em></p>
 <pre><code>        key:
           type: 'string'
-          index: true
+          primaryKey: true
 </code></pre>
 <h2 id="limitscores">Limit#scores</h2>
 <p><em>Scores accrued for this limit.</em></p>
@@ -823,85 +885,83 @@ exports.pkgmanRegister = (registrar) -&gt;
 <p>Allow RPC routes definitions to specify rate limiters.</p>
 <pre><code>  registrar.registerHook 'shrubRpcRoutesAlter', (routes) -&gt;
 
+    Promise = require 'bluebird'
     moment = require 'moment'
 
     errors = require 'errors'
-    pkgman = require 'pkgman'
 </code></pre>
-<p>A limiter on a route is defined like:</p>
-<ul>
-<li><code>message</code>: The message returned to the client when the threshold is
-  passed.</li>
-<li><code>threshold</code>: The <a href="../../.././limiter#threshold">threshold</a> for this limiter.</li>
-<li><code>ignoreKeys</code>: The
-  <a href="../../../source/packages/shrub-audit/fingerprint">fingerprint keys</a> to ignore when
-  determining the total limit.</li>
-<li><code>villianyScore</code>: The score accumulated when this limit is crossed.</li>
-</ul>
-<p>Check all routes for limiter definitions.</p>
+<p>Check all routes' middleware for limiter definitions.</p>
 <pre><code>    Object.keys(routes).forEach (path) -&gt;
       route = routes[path]
-</code></pre>
-<p>No limiter? Nevermind...</p>
-<pre><code>      return unless route.limiter?
+
+      Fingerprint = require 'fingerprint'
+
+      for fn, index in route.middleware
+        continue unless fn instanceof exports.LimiterMiddleware
+
+        route.limiter = fn.config
 </code></pre>
 <p>Create a limiter based on the threshold defined.</p>
-<pre><code>      route.limiter.instance = new Limiter(
-        "rpc://#{route}", route.limiter.threshold
-      )
+<pre><code>        route.limiter.instance = new Limiter(
+          "rpc://#{path}", route.limiter.threshold
+        )
 </code></pre>
 <p>Set defaults.</p>
-<pre><code>      route.limiter.excludedKeys ?= []
-      route.limiter.message ?= 'You are doing that too much.'
-      route.limiter.villianyScore ?= 20
+<pre><code>        route.limiter.excludedKeys ?= []
+        route.limiter.message ?= 'You are doing that too much.'
+        route.limiter.villianyScore ?= 20
 </code></pre>
 <p>Add a validator, where we'll check the threshold.</p>
-<pre><code>      route.validators.push (req, res, next) -&gt;
+<pre><code>        route.middleware[index] = (req, res, next) -&gt;
 
-        {
-          excludedKeys
-          instance
-          message
-          villianyScore
-        } = route.limiter
+          {
+            excludedKeys
+            instance
+            message
+            villianyScore
+          } = route.limiter
 </code></pre>
 <p>Allow packages to check and optionally skip the limiter.</p>
-<pre><code>        for rule in pkgman.invokeFlat 'limiterCheck', req
-          continue unless rule?
-          return next() if SKIP is rule
+<h4 id="invoke-hook-shrublimitercheck">Invoke hook <code>shrubLimiterCheck</code>.</h4>
+<pre><code>          for rule in pkgman.invokeFlat 'shrubLimiterCheck', req
+            continue unless rule?
+            return next() if SKIP is rule
 
-        inlineKeys = req.fingerprint.inlineKeys excludedKeys
+          fingerprint = new Fingerprint req
+
+          inlineKeys = fingerprint.inlineKeys excludedKeys
 </code></pre>
 <p>Build a nice error message for the client, so they hopefully will stop doing
 that.</p>
-<pre><code>        sendLimiterError = -&gt;
-          instance.ttl(inlineKeys).then (ttl) -&gt;
-            next errors.instantiate(
-              'limiterThreshold'
-              message
-              moment().add('seconds', ttl).fromNow()
-            )
+<pre><code>          sendLimiterError = -&gt;
+            instance.ttl(inlineKeys).then (ttl) -&gt;
+              next errors.instantiate(
+                'limiterThreshold'
+                message
+                moment().add('seconds', ttl).fromNow()
+              )
 </code></pre>
 <p>Accrue a hit and check the threshold.</p>
-<pre><code>        instance.accrueAndCheckThreshold(inlineKeys).then((isLimited) -&gt;
-          return next() unless isLimited
+<pre><code>          instance.accrueAndCheckThreshold(inlineKeys).then((isLimited) -&gt;
+            return next() unless isLimited
 </code></pre>
-<p>Zero score skips the villiany check.</p>
-<pre><code>          return sendLimiterError() if villianyScore is 0
-          unless pkgman.packageExists 'shrub-villiany'
-            return sendLimiterError()
+<h4 id="invoke-hook-shrubvillianyreport">Invoke hook <code>shrubVillianyReport</code>.</h4>
+<pre><code>            Promise.all(
+              pkgman.invokeFlat(
+                'shrubVillianyReport'
+                req
+                villianyScore
+                "rpc://#{path}:limiter"
+                excludedKeys
+              )
 
-          req.reportVilliany(
-            villianyScore
-            "rpc://#{req.route}:limiter"
-            excludedKeys
+            ).then (reports) -&gt;
+</code></pre>
+<p>Only send an error if the user wasn't banned for this.</p>
+<pre><code>              if reports.filter((isBanned) -&gt; !!isBanned).length is 0
+                sendLimiterError()
 
-          ).then (isVillian) -&gt;
-            return next() if isVillian
-
-            sendLimiterError()
-
-        ).catch next
+          ).catch next
 </code></pre>
 <h4 id="implements-hook-shrubtransmittableerrors">Implements hook <code>shrubTransmittableErrors</code>.</h4>
 <p>Just defer to client, where the error is defined.</p>

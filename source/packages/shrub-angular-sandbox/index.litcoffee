@@ -31,15 +31,21 @@ hold their sandbox.
         routes.push
 
           path: 'shrub-angular-sandbox/hangup'
-          receiver: (req, fn) ->
+          middleware: [
+
+            'shrub-http-express/session'
+
+            (req, res, next) ->
 
 ###### TODO: Cookie-less clients won't have a valid session ID to call with. This should be some other token, perhaps CSRF.
 
-            id = req.session?.id
-            if (sandbox = sandboxManager.lookup id)?
-              sandbox.close().finally -> fn()
-            else
-              fn()
+              id = req.session?.id
+              if (sandbox = sandboxManager.lookup id)?
+                sandbox.close().finally -> res.end()
+              else
+                res.end()
+
+          ]
 
         return routes
 

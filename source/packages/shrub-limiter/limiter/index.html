@@ -178,16 +178,6 @@
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../../shrub-audit/fingerprint">packages/shrub-audit/fingerprint.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../shrub-audit">packages/shrub-audit/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
                     <a class="" href="../../shrub-config">packages/shrub-config/index.litcoffee</a>
                     
                 </li>
@@ -314,6 +304,16 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../shrub-grunt/tests/run">packages/shrub-grunt/tests/run.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-html5-audio/client">packages/shrub-html5-audio/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-html5-audio">packages/shrub-html5-audio/index.litcoffee</a>
                     
                 </li>
             
@@ -726,6 +726,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../server/fingerprint">server/fingerprint.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../server/logging">server/logging.litcoffee</a>
                     
                 </li>
@@ -773,7 +778,7 @@
             <div class="section">
               <h1 id="limiter">Limiter</h1>
 <p><em>ORM-backed limit handling. Accrue and check scores, and check Time-to-live
-across multiple <a href="../../../../source/packages/shrub-audit/fingerprint">fingerprint keys</a>.</em></p>
+across multiple <a href="../../../../source/server/fingerprint">fingerprint keys</a>.</em></p>
 <pre><code>Promise = null
 
 orm = null
@@ -803,7 +808,7 @@ window, then the threshold is said to be crossed.</p>
 <h2 id="constructor"><em>constructor</em></h2>
 <ul>
 <li>(string) <code>key</code> - A unique key for this limiter, e.g.
-  "rpc://user.login:limiter"</li>
+  "rpc://shrub-user/login:limiter"</li>
 <li>(Threshold) <code>threshold</code> - A threshold, see below for details.</li>
 </ul>
 <p><em>Create a limiter.</em></p>
@@ -824,7 +829,7 @@ window, then the threshold is said to be crossed.</p>
 <h2 id="limiteradd">Limiter#add</h2>
 <ul>
 <li>(array) <code>keys</code> - An array of keys, e.g. a flattened array of keys from
-  <a href="../../../../source/packages/shrub-audit/fingerprint#fingerprintinlinekeys"><code>Fingerprint.inlineKeys</code></a></li>
+  <a href="../../../../source/server/fingerprint#fingerprintinlinekeys"><code>Fingerprint.inlineKeys</code></a></li>
 <li>(Number) <code>score</code> - The score to add. Defaults to 1.</li>
 </ul>
 <p><em>Accrue score for a limiter.</em></p>
@@ -834,7 +839,7 @@ window, then the threshold is said to be crossed.</p>
 <h2 id="limiteraccrueandcheckthreshold">Limiter#accrueAndCheckThreshold</h2>
 <ul>
 <li>(array) <code>keys</code> - An array of keys, e.g. a flattened array of keys from
-  <a href="../../../../source/packages/shrub-audit/fingerprint#fingerprintinlinekeys"><code>Fingerprint.inlineKeys</code></a></li>
+  <a href="../../../../source/server/fingerprint#fingerprintinlinekeys"><code>Fingerprint.inlineKeys</code></a></li>
 <li>(integer) <code>score</code> - The score to add. Defaults to 1.</li>
 </ul>
 <p><em>Add score to a limiter, and check it against the threshold.</em></p>
@@ -844,7 +849,7 @@ window, then the threshold is said to be crossed.</p>
 <h2 id="limiterscore">Limiter#score</h2>
 <ul>
 <li>(array) <code>keys</code> - An array of keys, e.g. a flattened array of keys from
-  <a href="../../../../source/packages/shrub-audit/fingerprint#fingerprintinlinekeys"><code>Fingerprint.inlineKeys</code></a></li>
+  <a href="../../../../source/server/fingerprint#fingerprintinlinekeys"><code>Fingerprint.inlineKeys</code></a></li>
 </ul>
 <p><em>Check score for a limiter.</em></p>
 <pre><code>  score: (keys) -&gt; @_largest keys, 'score'
@@ -852,7 +857,7 @@ window, then the threshold is said to be crossed.</p>
 <h2 id="limiterttl">Limiter#ttl</h2>
 <ul>
 <li>(array) <code>keys</code> - An array of keys, e.g. a flattened array of keys from
-  <a href="../../../../source/packages/shrub-audit/fingerprint#fingerprintinlinekeys"><code>Fingerprint.inlineKeys</code></a></li>
+  <a href="../../../../source/server/fingerprint#fingerprintinlinekeys"><code>Fingerprint.inlineKeys</code></a></li>
 </ul>
 <p><em>Time-to-live for a limiter.</em></p>
 <pre><code>  ttl: (keys) -&gt; @_largest keys, 'ttl'
@@ -860,7 +865,7 @@ window, then the threshold is said to be crossed.</p>
 <h2 id="limitercheckthreshold">Limiter#checkThreshold</h2>
 <ul>
 <li>(array) <code>keys</code> - An array of keys, e.g. a flattened array of keys from
-  <a href="../../../../source/packages/shrub-audit/fingerprint#fingerprintinlinekeys"><code>Fingerprint.inlineKeys</code></a></li>
+  <a href="../../../../source/server/fingerprint#fingerprintinlinekeys"><code>Fingerprint.inlineKeys</code></a></li>
 </ul>
 <p><em>Check the current limiter score against the threshold.</em></p>
 <pre><code>  checkThreshold: (keys) -&gt;
@@ -880,7 +885,7 @@ class LimiterManager
 <h2 id="constructor_1"><em>constructor</em></h2>
 <ul>
 <li>(string) <code>key</code> - A unique key for this limiter, e.g.
-  "rpc://user.login:limiter"</li>
+  "rpc://shrub-user/login:limiter"</li>
 <li>(Threshold) <code>threshold</code> - A threshold, see below for details.</li>
 </ul>
 <p><em>...</em></p>

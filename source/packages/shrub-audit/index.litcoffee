@@ -14,20 +14,24 @@ for analytics, or anything else.*
 
           (req, res, next) ->
 
+            return next()
+
             req.fingerprint = new exports.Fingerprint req
 
             next()
 
         ]
 
-#### Implements hook `shrubSocketAuthorizationMiddleware`.
+#### Implements hook `shrubSocketConnectionMiddleware`.
 
-      registrar.registerHook 'shrubSocketAuthorizationMiddleware', (http) ->
+      registrar.registerHook 'shrubSocketConnectionMiddleware', (http) ->
 
         label: 'Store fingerprint'
         middleware: [
 
           (req, res, next) ->
+
+            return next()
 
             req.fingerprint = new exports.Fingerprint req
 

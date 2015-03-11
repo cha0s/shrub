@@ -178,16 +178,6 @@
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../../shrub-audit/fingerprint">packages/shrub-audit/fingerprint.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../shrub-audit">packages/shrub-audit/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
                     <a class="" href="../../shrub-config">packages/shrub-config/index.litcoffee</a>
                     
                 </li>
@@ -314,6 +304,16 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../shrub-grunt/tests/run">packages/shrub-grunt/tests/run.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-html5-audio/client">packages/shrub-html5-audio/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-html5-audio">packages/shrub-html5-audio/index.litcoffee</a>
                     
                 </li>
             
@@ -692,6 +692,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../server/fingerprint">server/fingerprint.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../server/logging">server/logging.litcoffee</a>
                     
                 </li>
@@ -739,7 +744,9 @@
             <div class="section">
               <h1 id="socketiomanager">SocketIoManager</h1>
 <p><em>A <a href="http://socket.io/">Socket.IO</a> implementation of SocketManager.</em></p>
-<pre><code>Promise = null
+<pre><code>{EventEmitter} = require 'events'
+
+Promise = null
 
 config = null
 errors = null
@@ -839,8 +846,18 @@ module.exports = class SocketIoManager extends SocketManager
       socket.request.http = http
       socket.request.socket = socket
 </code></pre>
+<p>Connect provides this, it will make middleware (like session) not choke and
+die.</p>
+<pre><code>      socket.request.originalUrl = socket.request.url
+</code></pre>
+<p>Build a fake response which extends EventEmitter because some connect
+middleware (like session) listenes for errors with <code>on</code>. Even though they're
+never actually emitted, this will make sure nothing breaks.</p>
+<pre><code>      res = new class SocketConnectionResponse extends EventEmitter
+        constructor: -&gt; super
+</code></pre>
 <p>Dispatch the authorization middleware.</p>
-<pre><code>      @_authorizationMiddleware.dispatch socket.request, null, (error) -&gt;
+<pre><code>      @_connectionMiddleware.dispatch socket.request, res, (error) -&gt;
 </code></pre>
 <p>If any kind of error was thrown, propagate it.</p>
 <pre><code>        return next error if error?
@@ -854,7 +871,7 @@ module.exports = class SocketIoManager extends SocketManager
 <pre><code>      oncloseProxy = socket.onclose
       socket.onclose = =&gt;
         @_disconnectionMiddleware.dispatch socket.request, null, (error) -&gt;
-          return socketLogger.error errors.stack error if error?
+          socketLogger.error errors.stack error if error?
 
         oncloseProxy.call socket
 </code></pre>
@@ -863,10 +880,7 @@ module.exports = class SocketIoManager extends SocketManager
         return socketLogger.error errors.stack error if error?
 </code></pre>
 <p>Dispatch the connection middleware.</p>
-<pre><code>        @_connectionMiddleware.dispatch socket.request, null, (error) -&gt;
-          return socketLogger.error errors.stack error if error?
-
-          socket.emit 'initialized'
+<pre><code>        socket.emit 'initialized'
 </code></pre>
 
             </div>

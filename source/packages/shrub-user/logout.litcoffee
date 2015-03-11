@@ -14,7 +14,14 @@
 
 Log out.
 
-          receiver: (req, fn) -> req.logOut().nodeify fn
+          middleware: [
+
+            'shrub-http-express/session'
+            'shrub-user'
+
+            (req, res, next) -> req.logOut().then(-> res.end()).catch next
+
+          ]
 
         return routes
 

@@ -53,21 +53,14 @@ Spin up the socket server, and have it listen on the HTTP server.
 
       registrar.registerHook 'shrubConfigServer', ->
 
-Middleware stack dispatched to authorize or reject a socket connection.
-
-        authorizationMiddleware: [
-          'shrub-core'
-          'shrub-http-express/session'
-          'shrub-user'
-          'shrub-audit'
-          'shrub-villiany'
-        ]
-
-Middleware stack dispatched once a socket connection is authorized.
+Middleware stack dispatched for a socket connection.
 
         connectionMiddleware: [
+          'shrub-core'
+          'shrub-http-express/session'
           'shrub-session'
           'shrub-user'
+          'shrub-villiany'
           'shrub-rpc'
         ]
 

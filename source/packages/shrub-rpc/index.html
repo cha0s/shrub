@@ -178,16 +178,6 @@
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../shrub-audit/fingerprint">packages/shrub-audit/fingerprint.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../shrub-audit">packages/shrub-audit/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
                     <a class="" href="../shrub-config">packages/shrub-config/index.litcoffee</a>
                     
                 </li>
@@ -318,6 +308,16 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../shrub-html5-audio/client">packages/shrub-html5-audio/client/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-html5-audio">packages/shrub-html5-audio/index.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../shrub-html5-local-storage/client">packages/shrub-html5-local-storage/client/index.litcoffee</a>
                     
                 </li>
@@ -439,7 +439,7 @@
                             
                                 <li><a class="toctree-l3" href="#implements-hook-shrubsocketconnectionmiddleware">Implements hook shrubSocketConnectionMiddleware.</a></li>
                             
-                                <li><a class="toctree-l3" href="#invoke-hook-shrubrpcroutefinish">Invoke hook shrubRpcRouteFinish.</a></li>
+                                <li><a class="toctree-l3" href="#spliceroutemiddleware">spliceRouteMiddleware</a></li>
                             
                         
                         </ul>
@@ -692,6 +692,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../server/fingerprint">server/fingerprint.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../server/logging">server/logging.litcoffee</a>
                     
                 </li>
@@ -740,7 +745,10 @@
               <h1 id="rpc">RPC</h1>
 <p>Framework for communication between client and server through
 <a href="http://en.wikipedia.org/wiki/Remote_procedure_call#Message_passing">RPC</a></p>
-<pre><code>pkgman = null
+<pre><code>{EventEmitter} = require 'events'
+{IncomingMessage} = require 'http'
+
+pkgman = null
 </code></pre>
 <p>RPC route information.</p>
 <pre><code>routes = {}
@@ -770,11 +778,13 @@ exports.pkgmanRegister = (registrar) -&gt;
 <h4 id="invoke-hook-shrubrpcroutes">Invoke hook <code>shrubRpcRoutes</code>.</h4>
 <pre><code>        debug '- Registering RPC routess...'
         for route in _.flatten pkgman.invokeFlat 'shrubRpcRoutes'
-</code></pre>
-<p>Default the RPC route to the package path, replacing slashes with dots.</p>
-<pre><code>          debug "- - rpc://#{route.path}"
 
-          route.validators ?= []
+          debug route.path
+</code></pre>
+<p>Normalize middleware to array form.</p>
+<pre><code>          route.middleware ?= []
+          if 'function' is typeof route.middleware
+            route.middleware = [route.middleware]
 
           routes[route.path] = route
         debug '- RPC routes registered.'
@@ -782,12 +792,16 @@ exports.pkgmanRegister = (registrar) -&gt;
 <h4 id="invoke-hook-shrubrpcroutesalter">Invoke hook <code>shrubRpcRoutesAlter</code>.</h4>
 <pre><code>        pkgman.invoke 'shrubRpcRoutesAlter', routes
 </code></pre>
-<p>Set up the validators as middleware.</p>
+<p>Set up the middleware dispatcher.</p>
 <pre><code>        for path, route of routes
-          validators = new Middleware()
-          for validator in route.validators
-            validators.use validator
-          route.validators = validators
+          route.dispatcher = new Middleware()
+
+          fn.weight ?= index for fn, index in route.middleware
+
+          sortedMiddleware = route.middleware.sort (l, r) -&gt;
+            (l.weight ? 0) - (r.weight ? 0)
+
+          route.dispatcher.use fn for fn in sortedMiddleware
 
         next()
 
@@ -809,68 +823,87 @@ exports.pkgmanRegister = (registrar) -&gt;
     middleware: [
 
       (req, res, next) -&gt;
-
-        Object.keys(routes).forEach (path) -&gt;
-          route = routes[path]
-
-          req.socket.on "rpc://#{path}", (data, fn) -&gt;
+</code></pre>
+<p>Log an error without transmitting it.</p>
+<pre><code>        logError = (error) -&gt; logger.error errors.stack error
+</code></pre>
+<p>Hub for RPC calls. Dispatch routes.</p>
+<pre><code>        req.socket.on 'shrub-rpc', ({path, data}, fn) -&gt;
+          unless (route = routes[path])?
+            return logError new Error "Unknown route called: #{path}"
 </code></pre>
 <p>Don't pass req directly, since it can be mutated by routes, and violate other
 routes' expectations.</p>
-<pre><code>            routeReq = Object.create req
-            routeReq.body = data
-            routeReq.route = route
+<pre><code>          routeReq = new IncomingMessage req.socket.conn
+          routeReq.body = data
+          routeReq.route = route
+          routeReq.socket = req.socket
+
+          routeRes = new class RpcRouteResponse extends EventEmitter
+
+            constructor: -&gt;
+              super
+
+              @error = null
+
+            setError: (@error) -&gt; return this
+
+            end: (data) -&gt;
+              return fn error: errors.serialize @error if @error?
+              fn result: data
 </code></pre>
 <p>Send an error to the client.</p>
-<pre><code>            emitError = (error) -&gt; fn error: errors.serialize error
-</code></pre>
-<p>Log an error without transmitting it.</p>
-<pre><code>            logError = (error) -&gt; logger.error errors.stack error
+<pre><code>          emitError = (error) -&gt; routeRes.setError(error).end()
 </code></pre>
 <p>Send an error to the client, but don't notify them of the real underlying
 issue.</p>
-<pre><code>            concealErrorFromClient = (error) -&gt;
+<pre><code>          concealErrorFromClient = (error) -&gt;
 
-              emitError new Error 'Please try again later.'
-              logError error
+            emitError new Error 'Please try again later.'
+            logError error
 </code></pre>
 <p>Transmit the error as it is directly to the client.</p>
-<pre><code>            sendErrorToClient = (error) -&gt;
-              emitError error
+<pre><code>          sendErrorToClient = (error) -&gt;
+            emitError error
 </code></pre>
 <p>Log the full error stack, because it might help track down any problem.</p>
-<pre><code>              logError error if do -&gt;
+<pre><code>            logError error if do -&gt;
 </code></pre>
 <p>Unknown errors.</p>
-<pre><code>                unless error instanceof TransmittableError
-                  return true
+<pre><code>              unless error instanceof TransmittableError
+                return true
 </code></pre>
 <p>If we're not running in production.</p>
-<pre><code>                if 'production' isnt config.get 'NODE_ENV'
-                  return true
+<pre><code>              if 'production' isnt config.get 'NODE_ENV'
+                return true
 </code></pre>
-<p>Validate.</p>
-<pre><code>            route.validators.dispatch routeReq, null, (error) -&gt;
-              return sendErrorToClient error if error?
-</code></pre>
-<p>Receive.</p>
-<pre><code>              route.receiver routeReq, (error, result) -&gt;
-                return sendErrorToClient error if error?
-</code></pre>
-<h4 id="invoke-hook-shrubrpcroutefinish">Invoke hook <code>shrubRpcRouteFinish</code>.</h4>
-<pre><code>                Promise.all(
-                  pkgman.invokeFlat(
-                    'shrubRpcRouteFinish', routeReq, result, req
-                  )
-
-                ).then(
-                  -&gt; fn result: result
-                  concealErrorFromClient
-                )
+<p>Dispatch the route.</p>
+<pre><code>          route.dispatcher.dispatch routeReq, routeRes, (error) -&gt;
+            sendErrorToClient error if error?
 
         next()
 
     ]
+</code></pre>
+<h3 id="spliceroutemiddleware">spliceRouteMiddleware</h3>
+<ul>
+<li>(Object) <code>route</code> - The RPC route definition object.</li>
+<li>(String) <code>key</code> - The key used by RPC routes to be replaced with middleware.</li>
+<li>(Function Array) <code>middleware</code> - The middleware to be spliced in.</li>
+</ul>
+<p><em>Splice middleware functions in place of a key.</em></p>
+<p>Some packages define RPC route middleware that can be included as a string
+(e.g. <code>'shrub-user'</code>). This function will splice in an array of middleware
+where a placeholder key specifies.</p>
+<pre><code>exports.spliceRouteMiddleware = (route, key, middleware) -&gt;
+  return unless ~(index = route.middleware.indexOf key)
+
+  l = route.middleware.slice 0, index
+  r = route.middleware.slice index + 1
+
+  route.middleware = l.concat middleware, r
+
+  return
 </code></pre>
 
             </div>
