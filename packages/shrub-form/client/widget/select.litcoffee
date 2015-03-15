@@ -11,6 +11,13 @@
 
           scope: field: '=', form: '='
 
+          link: (scope) ->
+
+              field.change ?= ->
+
+              field.$change = ($event) -> scope.$$postDigest ->
+                field.change field.value, $event
+
           template: '''
 
     <label
@@ -22,6 +29,7 @@
       name="{{field.name}}"
 
       data-shrub-ui-attributes="field.attributes"
+      data-ng-change="field.$change($event);"
       data-ng-model="field.value"
       data-ng-required="field.required"
       data-ng-options="field.options"

@@ -9,13 +9,16 @@
 
           scope: field: '=', form: '='
 
-          link: (scope, element) ->
+          link: (scope) ->
 
             scope.$watch 'field', (field) ->
 
               field.change ?= ->
               field.selectedValue ?= true
               field.model ?= 'field.value'
+
+              field.$change = ($event) -> scope.$$postDigest ->
+                field.change field.value, $event
 
               field.syncModel scope
 
@@ -30,7 +33,7 @@
           type="radio"
 
           data-shrub-ui-attributes="field.attributes"
-          data-ng-change="field.change(field.value, $event);"
+          data-ng-change="field.$change($event);"
           data-ng-model="field.value"
           data-ng-value="field.selectedValue"
         >
