@@ -50,6 +50,7 @@
             'client/{packages,require}.litcoffee'
             'client/modules/**/*.{coffee,litcoffee}'
             '{custom,packages}/*/client/**/*.{coffee,litcoffee}'
+            'custom/*/client/**/*.js'
           ]
           tasks: [
             'build:modules', 'build:shrub'
