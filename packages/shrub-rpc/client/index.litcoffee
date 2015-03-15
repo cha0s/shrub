@@ -50,6 +50,17 @@ from the server, or rejected with the error from the server.
 
             deferred.promise
 
+## rpc.on
+
+* (String) `eventName` - The name of the event to listen for.
+* (optional Function) `fn` - Callback called with the event data.
+
+*Listen for an event.*
+
+Proxies directly to `socket.on`.
+
+          service.on = (eventName, fn) -> socket.on eventName, fn
+
 ## rpc.formSubmitHandler
 
 * (String) `path` - The RPC route path, e.g. `shrub-user/login`.
