@@ -36,7 +36,13 @@ Build a submit function which will be bound to ngSubmit.
 Gather all the field values.
 
                 values = {}
-                values[field.name] = field.value for name, field of form.fields
+                for name, field of form.fields
+
+                  widget = formService.widgets[field.type]
+                  if widget.extractValues?
+                    widget.extractValues field, values, formService
+                  else
+                    values[field.name] = field.value
 
 Call all the form submission handlers.
 
@@ -65,7 +71,6 @@ Default method to POST.
 Build the form fields.
 
               for name, field of form.fields
-                field.name ?= name
 
 Look up the widget definition and warn if it doesn't exist.
 
@@ -76,12 +81,40 @@ Look up the widget definition and warn if it doesn't exist.
                   $log.warn "Form `#{form.key}` contains non-existent field type `#{field.type}`!"
                   continue
 
+Default name to the key.
+
+                field.name ?= name
+
+Helper function to synchronize the field and model value.
+
+                do (field) -> field.syncModel = (scope) ->
+                  self = this
+
+                  return unless self.model?
+
+                  self.$modelDereg?()
+                  self.$modelDereg = null
+
+                  self.$valueDereg?()
+                  self.$valueDereg = null
+
+                  if self.model isnt 'field.value'
+
+                    self.$valueDereg = scope.$watch 'field.value', (value) ->
+                      scope.$eval "#{self.model} = value", value: value
+
+                    self.$modelDereg = scope.$watch self.model, (value) ->
+                      self.value = value
+
+                  return
+
                 $form.append """
 
     <div
       data-#{widget.directive}
       data-field="#{attrs.form}.fields['#{name}']"
-    ></div>
+      data-form="#{attrs.form}"
+    ></div><span> </span>
 
     """
 
@@ -143,7 +176,9 @@ Register the form in the system.
       registrar.recur [
         'widget/checkbox'
         'widget/checkboxes'
+        'widget/group'
         'widget/hidden'
+        'widget/markup'
         'widget/radio'
         'widget/radios'
         'widget/submit'

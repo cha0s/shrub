@@ -7,7 +7,7 @@
       registrar.registerHook 'shrubAngularDirective', -> [
         ->
 
-          scope: field: '=?'
+          scope: field: '=', form: '='
 
           template: '''
 
@@ -15,6 +15,8 @@
       name="{{field.name}}"
       type="hidden"
       value="{{field.value}}"
+
+      data-shrub-ui-attributes="field.attributes"
     >
 
     '''

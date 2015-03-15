@@ -7,7 +7,7 @@
       registrar.registerHook 'shrubAngularDirective', -> [
         ->
 
-          scope: field: '=?'
+          scope: field: '=', form: '='
 
           link: (scope) ->
 
@@ -16,30 +16,29 @@
               field.minLength ?= 0
               field.maxLength ?= Infinity
               field.pattern ?= /.*/
-              field.value ?= ''
+              field.model ?= 'field.value'
+
+              field.syncModel scope
 
           template: '''
 
-    <div class="form-group">
+    <label
+      data-ng-bind="field.label"
+    ></label>
 
-      <label
-        data-ng-bind="field.label"
-      ></label>
+    <input
+      class="form-control"
+      name="{{field.name}}"
+      type="{{field.type}}"
 
-      <input
-        class="form-control"
-        name="{{field.name}}"
-        type="{{field.type}}"
-
-        data-ng-model="field.value"
-        data-ng-required="field.required"
-        data-ng-minlength="{{field.minlength}}"
-        data-ng-maxlength="{{field.maxlength}}"
-        data-ng-pattern="field.pattern"
-        data-ng-trim="{{field.trim}}"
-      >
-
-    </div>
+      data-shrub-ui-attributes="field.attributes"
+      data-ng-model="field.value"
+      data-ng-required="field.required"
+      data-ng-minlength="{{field.minlength}}"
+      data-ng-maxlength="{{field.maxlength}}"
+      data-ng-pattern="field.pattern"
+      data-ng-trim="{{field.trim}}"
+    >
 
     '''
 
