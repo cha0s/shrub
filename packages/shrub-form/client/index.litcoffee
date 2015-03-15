@@ -29,6 +29,10 @@ need to be rebuilt.
 
               form.key ?= attrs.form
 
+Normalize form submits into an array.
+
+              form.submits = [form.submits] unless angular.isArray form.submits
+
 Build a submit function which will be bound to ngSubmit.
 
               (scope['$shrubSubmit'] ?= {})[form.key] = ($event) ->
