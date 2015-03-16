@@ -3,6 +3,10 @@ h1:target, h2:target, h3:target, h4:target, h5:target, h6:target {
   background: none repeat scroll 0 0 yellow;
 }
 
+.wy-nav-content {
+  max-width: 1024px;
+}
+
 .wy-menu-vertical ul {
   margin-bottom: 2em;
 }
