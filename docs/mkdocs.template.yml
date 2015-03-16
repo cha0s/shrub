@@ -18,6 +18,7 @@ pages:
 - ['guide/errors.md', 'Guide', 'Errors']
 - ['guide/forms.md', 'Guide', 'Form handling']
 - ['guide/concepts.md', 'Guide', 'Concepts and conventions']
+- ['examples/todo-list.md', 'Examples', 'TODO list']
 - [hooks.md, 'Reference', 'Hooks']
 - [packages.md, 'Reference', 'Packages']
 - [todos.md, 'Reference', 'TODO list']
