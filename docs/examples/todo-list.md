@@ -268,7 +268,7 @@ Finally, when an item is to be deleted.
         function(req, res, next) {
 
           // Destroy by ID.
-          TodoListItem.destroy({id: req.body.id}, req.body).then(function() {
+          TodoListItem.destroy({id: req.body.id}).then(function() {
 
             // Finish the request.
             res.end();
