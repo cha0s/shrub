@@ -5,8 +5,8 @@
 #### Implements hook `shrubAngularDirective`.
 
       registrar.registerHook 'shrubAngularDirective', -> [
-        'shrub-ui/window-title', 'shrub-user'
-        (windowTitle, user) ->
+        'shrub-ui/window-title'
+        (windowTitle) ->
 
           link: (scope, elm, attr) ->
 
@@ -16,26 +16,9 @@ Add some useful links to the nav.
 
               name: 'main-nav'
               attributes:
-                class: ['nav', 'navbar-nav', 'navbar-right']
+                class: ['nav', 'navbar-nav', 'navbar-left']
                 id: 'main-nav'
-              items: [
-                path: 'home'
-                label: 'Home'
-              ,
-                path: 'about'
-                label: 'About'
-              ,
-                path: 'user/register'
-                label: 'Sign up'
-              ,
-                path: 'user/login'
-                label: 'Sign in'
-              ,
-                path: 'user/logout'
-                label: 'Sign out'
-              ]
-
-            scope.user = user.instance()
+              items: []
 
             scope.$watch(
               -> windowTitle.page()
@@ -75,11 +58,15 @@ Add some useful links to the nav.
           >
           </div>
 
-          <p class="navbar-text navbar-right identity-wrapper">
-            <span class="identity">
-              You are <span class="username" data-ng-bind="user.name"></span>
+          <div
+            class="navbar-text navbar-right navbar-user"
+          >
+            Hi,
+            <span
+              data-shrub-user
+            >
             </span>
-          </p>
+          </div>
 
           <div
             data-shrub-ui-menu

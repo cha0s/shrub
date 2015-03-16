@@ -82,6 +82,10 @@
                     type: 'submit'
                     value: 'Sign in'
 
+                  forgot:
+                    type: 'markup'
+                    value: '<a class="forgot" href="/user/forgot">Forgot your password?</a>'
+
           ]
 
           template: '''
@@ -90,8 +94,6 @@
       data-shrub-form
       data-form="form"
     ></div>
-
-    <a class="forgot" href="/user/forgot">Forgot your password?</a>
 
     '''
 

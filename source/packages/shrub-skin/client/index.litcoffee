@@ -133,6 +133,7 @@ Add the candidates in reverse order, so they ascend in specificity.
 
                   $injector.invoke(
                     f, null
+                    $directive: directive
                     $scope: scope
                     $element: element
                     $attr: attr

@@ -69,6 +69,17 @@
 
     
         
+        <span>Examples</span>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../examples/todo-list">TODO list</a>
+                    
+                </li>
+            
+        
+
+    
+        
         <span>Reference</span>
             
                 <li class="toctree-l1 ">
@@ -233,7 +244,17 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../shrub-form/client/widget/group">packages/shrub-form/client/widget/group.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../shrub-form/client/widget/hidden">packages/shrub-form/client/widget/hidden.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-form/client/widget/markup">packages/shrub-form/client/widget/markup.litcoffee</a>
                     
                 </li>
             
@@ -449,6 +470,11 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../shrub-session/store">packages/shrub-session/store.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../shrub-skin-strapped/client/form">packages/shrub-skin-strapped/client/form.litcoffee</a>
                     
                 </li>
             
@@ -753,7 +779,9 @@ exports.pkgmanRegister = (registrar) -&gt;
 
         return next() if 'production' is config.get 'NODE_ENV'
 
-        assets.scripts.push 'http://localhost:35729/livereload.js'
+        hostname = config.get 'packageSettings:shrub-core:siteHostname'
+        [hostname] = hostname.split ':'
+        assets.scripts.push "http://#{hostname}:35729/livereload.js"
 
         next()
 

@@ -12,6 +12,45 @@
 
       registrar.registerHook 'shrubOrmCollectionsAlter', exports.shrubOrmCollectionsAlter
 
+#### Implements hook `shrubAngularDirective`.
+
+      registrar.registerHook 'shrubAngularDirective', -> [
+        'shrub-user'
+        (user) ->
+
+          directive = {}
+
+          directive.link = (scope) -> scope.user = user
+
+          directive.scope = {}
+
+          directive.template = '''
+
+    <span class="user">
+      <span class="username" data-ng-bind="user.instance().name"></span>
+
+      <span
+        class="actions"
+        data-ng-if="!user.isLoggedIn()"
+      >
+        [<a href="/user/login">Log in</a> · <a href="/user/register">Register</a>]
+      </span>
+
+      <span
+        class="actions"
+        data-ng-if="user.isLoggedIn()"
+      >
+        [<a href="/user/logout">Log out</a>]
+      </span>
+
+    </span>
+
+    '''
+
+          return directive
+
+      ]
+
 #### Implements hook `shrubAngularService`.
 
       registrar.registerHook 'shrubAngularService', -> [

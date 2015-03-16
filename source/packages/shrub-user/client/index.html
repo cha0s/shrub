@@ -69,6 +69,17 @@
 
     
         
+        <span>Examples</span>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../../examples/todo-list">TODO list</a>
+                    
+                </li>
+            
+        
+
+    
+        
         <span>Reference</span>
             
                 <li class="toctree-l1 ">
@@ -233,7 +244,17 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-form/client/widget/group">packages/shrub-form/client/widget/group.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../shrub-form/client/widget/hidden">packages/shrub-form/client/widget/hidden.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-form/client/widget/markup">packages/shrub-form/client/widget/markup.litcoffee</a>
                     
                 </li>
             
@@ -438,6 +459,11 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-skin-strapped/client/form">packages/shrub-skin-strapped/client/form.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../shrub-skin-strapped/client">packages/shrub-skin-strapped/client/index.litcoffee</a>
                     
                 </li>
@@ -603,6 +629,8 @@
                             
                                 <li><a class="toctree-l3" href="#implements-hook-shrubormcollectionsalter">Implements hook shrubOrmCollectionsAlter.</a></li>
                             
+                                <li><a class="toctree-l3" href="#implements-hook-shrubangulardirective">Implements hook shrubAngularDirective.</a></li>
+                            
                                 <li><a class="toctree-l3" href="#implements-hook-shrubangularservice">Implements hook shrubAngularService.</a></li>
                             
                                 <li><a class="toctree-l3" href="#userisloggedin">user.isLoggedIn</a></li>
@@ -755,6 +783,44 @@
 </code></pre>
 <h4 id="implements-hook-shrubormcollectionsalter">Implements hook <code>shrubOrmCollectionsAlter</code>.</h4>
 <pre><code>  registrar.registerHook 'shrubOrmCollectionsAlter', exports.shrubOrmCollectionsAlter
+</code></pre>
+<h4 id="implements-hook-shrubangulardirective">Implements hook <code>shrubAngularDirective</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubAngularDirective', -&gt; [
+    'shrub-user'
+    (user) -&gt;
+
+      directive = {}
+
+      directive.link = (scope) -&gt; scope.user = user
+
+      directive.scope = {}
+
+      directive.template = '''
+
+&lt;span class="user"&gt;
+  &lt;span class="username" data-ng-bind="user.instance().name"&gt;&lt;/span&gt;
+
+  &lt;span
+    class="actions"
+    data-ng-if="!user.isLoggedIn()"
+  &gt;
+    [&lt;a href="../../../..//user/login"&gt;Log in&lt;/a&gt; · &lt;a href="../../../..//user/register"&gt;Register&lt;/a&gt;]
+  &lt;/span&gt;
+
+  &lt;span
+    class="actions"
+    data-ng-if="user.isLoggedIn()"
+  &gt;
+    [&lt;a href="../../../..//user/logout"&gt;Log out&lt;/a&gt;]
+  &lt;/span&gt;
+
+&lt;/span&gt;
+
+'''
+
+      return directive
+
+  ]
 </code></pre>
 <h4 id="implements-hook-shrubangularservice">Implements hook <code>shrubAngularService</code>.</h4>
 <pre><code>  registrar.registerHook 'shrubAngularService', -&gt; [

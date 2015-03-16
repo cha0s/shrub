@@ -69,6 +69,17 @@
 
     
         
+        <span>Examples</span>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../../../../examples/todo-list">TODO list</a>
+                    
+                </li>
+            
+        
+
+    
+        
         <span>Reference</span>
             
                 <li class="toctree-l1 ">
@@ -233,7 +244,17 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../group">packages/shrub-form/client/widget/group.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../hidden">packages/shrub-form/client/widget/hidden.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../markup">packages/shrub-form/client/widget/markup.litcoffee</a>
                     
                 </li>
             
@@ -445,6 +466,11 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../../../shrub-session/store">packages/shrub-session/store.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../../shrub-skin-strapped/client/form">packages/shrub-skin-strapped/client/form.litcoffee</a>
                     
                 </li>
             
@@ -741,29 +767,27 @@
 <pre><code>  registrar.registerHook 'shrubAngularDirective', -&gt; [
     -&gt;
 
-      scope: field: '=?'
+      scope: field: '=', form: '='
 
       link: (scope) -&gt;
 
+        scope.clicked = -&gt; scope.form.$submitted = scope.field
+
         scope.$watch 'field', (field) -&gt;
 
-          scope.$watch 'field', (field) -&gt;
-
-            field.value ?= 'Submit'
+          field.value ?= 'Submit'
 
       template: '''
 
-&lt;div class="form-group"&gt;
+&lt;input
+  class="btn btn-default"
+  name="{{field.name}}"
+  type="submit"
 
-  &lt;input
-    class="btn btn-default"
-    name="{{field.name}}"
-    type="submit"
-
-    data-ng-value="field.value"
-  &gt;
-
-&lt;/div&gt;
+  data-shrub-ui-attributes="field.attributes"
+  data-ng-click="clicked();"
+  data-ng-value="field.value"
+&gt;
 
 '''
 

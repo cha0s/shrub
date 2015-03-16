@@ -15,7 +15,9 @@
 
             return next() if 'production' is config.get 'NODE_ENV'
 
-            assets.scripts.push 'http://localhost:35729/livereload.js'
+            hostname = config.get 'packageSettings:shrub-core:siteHostname'
+            [hostname] = hostname.split ':'
+            assets.scripts.push "http://#{hostname}:35729/livereload.js"
 
             next()
 

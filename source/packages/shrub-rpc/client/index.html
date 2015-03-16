@@ -69,6 +69,17 @@
 
     
         
+        <span>Examples</span>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../../examples/todo-list">TODO list</a>
+                    
+                </li>
+            
+        
+
+    
+        
         <span>Reference</span>
             
                 <li class="toctree-l1 ">
@@ -233,7 +244,17 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-form/client/widget/group">packages/shrub-form/client/widget/group.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../shrub-form/client/widget/hidden">packages/shrub-form/client/widget/hidden.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-form/client/widget/markup">packages/shrub-form/client/widget/markup.litcoffee</a>
                     
                 </li>
             
@@ -428,6 +449,8 @@
                             
                                 <li><a class="toctree-l3" href="#rpccall">rpc.call</a></li>
                             
+                                <li><a class="toctree-l3" href="#rpcon">rpc.on</a></li>
+                            
                                 <li><a class="toctree-l3" href="#rpcformsubmithandler">rpc.formSubmitHandler</a></li>
                             
                         
@@ -447,6 +470,11 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../shrub-session/store">packages/shrub-session/store.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-skin-strapped/client/form">packages/shrub-skin-strapped/client/form.litcoffee</a>
                     
                 </li>
             
@@ -781,6 +809,15 @@ from the server, or rejected with the error from the server.</p>
         ) for injectable in pkgman.invokeFlat 'shrubRpcCall'
 
         deferred.promise
+</code></pre>
+<h2 id="rpcon">rpc.on</h2>
+<ul>
+<li>(String) <code>eventName</code> - The name of the event to listen for.</li>
+<li>(optional Function) <code>fn</code> - Callback called with the event data.</li>
+</ul>
+<p><em>Listen for an event.</em></p>
+<p>Proxies directly to <code>socket.on</code>.</p>
+<pre><code>      service.on = (eventName, fn) -&gt; socket.on eventName, fn
 </code></pre>
 <h2 id="rpcformsubmithandler">rpc.formSubmitHandler</h2>
 <ul>

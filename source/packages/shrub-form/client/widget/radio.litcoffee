@@ -1,7 +1,5 @@
 # Form - Radio
 
-    _ = require 'lodash'
-
     exports.pkgmanRegister = (registrar) ->
 
 #### Implements hook `shrubAngularDirective`.
@@ -9,13 +7,20 @@
       registrar.registerHook 'shrubAngularDirective', -> [
         ->
 
-          scope: field: '=?'
+          scope: field: '=', form: '='
 
-          link: (scope, element) ->
+          link: (scope) ->
 
             scope.$watch 'field', (field) ->
 
-              element.find('input').attr 'data-ng-model', field.value
+              field.change ?= ->
+              field.selectedValue ?= true
+              field.model ?= 'field.value'
+
+              field.$change = ($event) -> scope.$$postDigest ->
+                field.change field.value, $event
+
+              field.syncModel scope
 
           template: '''
 
@@ -27,6 +32,9 @@
           name="{{field.name}}"
           type="radio"
 
+          data-shrub-ui-attributes="field.attributes"
+          data-ng-change="field.$change($event);"
+          data-ng-model="field.value"
           data-ng-value="field.selectedValue"
         >
 

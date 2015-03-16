@@ -5,6 +5,8 @@
     _ = require 'lodash'
     Promise = require 'bluebird'
 
+    config = require 'config'
+
     exports.pkgmanRegister = (registrar) ->
 
 #### Implements hook `shrubAngularAHrefSanitizationWhitelist`.
@@ -37,6 +39,9 @@ Allow javascript:void(0).
           $compileProvider.aHrefSanitizationWhitelist new RegExp(
             "^\s*(?:#{regexes.join '|'})"
           )
+
+          unless config.get 'packageConfig:shrub-core:testMode'
+            $compileProvider.debugInfoEnabled false
 
 Completely override $q with Bluebird, because it's awesome.
 

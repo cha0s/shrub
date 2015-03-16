@@ -9,7 +9,7 @@
       registrar.registerHook 'shrubAngularDirective', -> [
         ->
 
-          scope: field: '=?'
+          scope: field: '=', form: '='
 
           link: (scope, element) ->
 
@@ -34,7 +34,10 @@ Sync the radio value with field.value
 
           template: '''
 
-    <div class="radios">
+    <div
+      class="radios"
+      data-shrub-ui-attributes="field.attributes"
+    >
 
       <label
         data-ng-bind="field.label"

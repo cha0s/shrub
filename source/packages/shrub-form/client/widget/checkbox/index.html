@@ -69,6 +69,17 @@
 
     
         
+        <span>Examples</span>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../../../../examples/todo-list">TODO list</a>
+                    
+                </li>
+            
+        
+
+    
+        
         <span>Reference</span>
             
                 <li class="toctree-l1 ">
@@ -244,7 +255,17 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../group">packages/shrub-form/client/widget/group.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../hidden">packages/shrub-form/client/widget/hidden.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../markup">packages/shrub-form/client/widget/markup.litcoffee</a>
                     
                 </li>
             
@@ -445,6 +466,11 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../../../shrub-session/store">packages/shrub-session/store.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../../shrub-skin-strapped/client/form">packages/shrub-skin-strapped/client/form.litcoffee</a>
                     
                 </li>
             
@@ -743,7 +769,19 @@ exports.pkgmanRegister = (registrar) -&gt;
 <pre><code>  registrar.registerHook 'shrubAngularDirective', -&gt; [
     -&gt;
 
-      scope: field: '=?'
+      scope: field: '=', form: '='
+
+      link: (scope) -&gt;
+
+        scope.$watch 'field', (field) -&gt;
+
+          field.change ?= -&gt;
+          field.model ?= 'field.value'
+
+          field.$change = ($event) -&gt; scope.$$postDigest -&gt;
+            field.change field.value, $event
+
+          field.syncModel scope
 
       template: '''
 
@@ -755,6 +793,10 @@ exports.pkgmanRegister = (registrar) -&gt;
       name="{{field.name}}"
       type="checkbox"
 
+      data-shrub-ui-attributes="field.attributes"
+      data-ng-change="field.$change($event);"
+      data-ng-true-value="{{field.trueValue || true}}"
+      data-ng-false-value="{{field.falseValue || false}}"
       data-ng-model="field.value"
     &gt;
 

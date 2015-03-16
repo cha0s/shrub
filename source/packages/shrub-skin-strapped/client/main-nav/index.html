@@ -69,6 +69,17 @@
 
     
         
+        <span>Examples</span>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../../../examples/todo-list">TODO list</a>
+                    
+                </li>
+            
+        
+
+    
+        
         <span>Reference</span>
             
                 <li class="toctree-l1 ">
@@ -233,7 +244,17 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../../shrub-form/client/widget/group">packages/shrub-form/client/widget/group.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../../shrub-form/client/widget/hidden">packages/shrub-form/client/widget/hidden.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../shrub-form/client/widget/markup">packages/shrub-form/client/widget/markup.litcoffee</a>
                     
                 </li>
             
@@ -434,6 +455,11 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../../shrub-session/store">packages/shrub-session/store.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../form">packages/shrub-skin-strapped/client/form.litcoffee</a>
                     
                 </li>
             
@@ -737,8 +763,8 @@
 </code></pre>
 <h4 id="implements-hook-shrubangulardirective">Implements hook <code>shrubAngularDirective</code>.</h4>
 <pre><code>  registrar.registerHook 'shrubAngularDirective', -&gt; [
-    'shrub-ui/window-title', 'shrub-user'
-    (windowTitle, user) -&gt;
+    'shrub-ui/window-title'
+    (windowTitle) -&gt;
 
       link: (scope, elm, attr) -&gt;
 </code></pre>
@@ -747,26 +773,9 @@
 
           name: 'main-nav'
           attributes:
-            class: ['nav', 'navbar-nav', 'navbar-right']
+            class: ['nav', 'navbar-nav', 'navbar-left']
             id: 'main-nav'
-          items: [
-            path: 'home'
-            label: 'Home'
-          ,
-            path: 'about'
-            label: 'About'
-          ,
-            path: 'user/register'
-            label: 'Sign up'
-          ,
-            path: 'user/login'
-            label: 'Sign in'
-          ,
-            path: 'user/logout'
-            label: 'Sign out'
-          ]
-
-        scope.user = user.instance()
+          items: []
 
         scope.$watch(
           -&gt; windowTitle.page()
@@ -806,11 +815,15 @@
       &gt;
       &lt;/div&gt;
 
-      &lt;p class="navbar-text navbar-right identity-wrapper"&gt;
-        &lt;span class="identity"&gt;
-          You are &lt;span class="username" data-ng-bind="user.name"&gt;&lt;/span&gt;
+      &lt;div
+        class="navbar-text navbar-right navbar-user"
+      &gt;
+        Hi,
+        &lt;span
+          data-shrub-user
+        &gt;
         &lt;/span&gt;
-      &lt;/p&gt;
+      &lt;/div&gt;
 
       &lt;div
         data-shrub-ui-menu

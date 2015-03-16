@@ -9,26 +9,31 @@
       registrar.registerHook 'shrubAngularDirective', -> [
         ->
 
-          scope: field: '=?'
+          scope: field: '=', form: '='
+
+          link: (scope) ->
+
+              field.change ?= ->
+
+              field.$change = ($event) -> scope.$$postDigest ->
+                field.change field.value, $event
 
           template: '''
 
-    <div class="form-group">
+    <label
+      data-ng-bind="field.label"
+    ></label>
 
-      <label
-        data-ng-bind="field.label"
-      ></label>
+    <select
+      class="form-control"
+      name="{{field.name}}"
 
-      <select
-        class="form-control"
-        name="{{field.name}}"
-
-        data-ng-model="field.value"
-        data-ng-required="field.required"
-        data-ng-options="field.options"
-      ></select>
-
-    </div>
+      data-shrub-ui-attributes="field.attributes"
+      data-ng-change="field.$change($event);"
+      data-ng-model="field.value"
+      data-ng-required="field.required"
+      data-ng-options="field.options"
+    ></select>
 
     '''
 

@@ -69,6 +69,17 @@
 
     
         
+        <span>Examples</span>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../examples/todo-list">TODO list</a>
+                    
+                </li>
+            
+        
+
+    
+        
         <span>Reference</span>
             
                 <li class="toctree-l1 ">
@@ -134,6 +145,9 @@
                             <li class="toctree-l2"><a href="#todo-multiline_2">TODO: Multiline</a></li>
                             
                         
+                            <li class="toctree-l2"><a href="#todo-multiline_3">TODO: Multiline</a></li>
+                            
+                        
                             <li class="toctree-l2"><a href="#todo-configure-filetype-priorities-per-browser">TODO: Configure filetype priorities per browser.</a></li>
                             
                         
@@ -143,7 +157,7 @@
                             <li class="toctree-l2"><a href="#todo-need-to-handle-connection-errors">TODO: Need to handle connection errors.</a></li>
                             
                         
-                            <li class="toctree-l2"><a href="#todo-multiline_3">TODO: Multiline</a></li>
+                            <li class="toctree-l2"><a href="#todo-multiline_4">TODO: Multiline</a></li>
                             
                         
                             <li class="toctree-l2"><a href="#todo-we-should-do-a-proper-_intersects-check-here">TODO: We should do a proper _.intersects check here.</a></li>
@@ -173,7 +187,7 @@
                             <li class="toctree-l2"><a href="#todo-cookie-less-clients-wont-have-a-valid-session-id-to-call-with-this-should-be-some-other-token-perhaps-csrf">TODO: Cookie-less clients won't have a valid session ID to call with. This should be some other token, perhaps CSRF.</a></li>
                             
                         
-                            <li class="toctree-l2"><a href="#todo-multiline_4">TODO: Multiline.</a></li>
+                            <li class="toctree-l2"><a href="#todo-multiline_5">TODO: Multiline.</a></li>
                             
                         
                             <li class="toctree-l2"><a href="#todo-remove-unused-res-parameter">TODO: Remove unused res parameter.</a></li>
@@ -182,7 +196,7 @@
                             <li class="toctree-l2"><a href="#todo-need-to-extract-params-to-build-redirectto-its-a-small-enough-mismatch-to-ignore-for-now">TODO: Need to extract params to build redirectTo, it's a small enough mismatch to ignore for now.</a></li>
                             
                         
-                            <li class="toctree-l2"><a href="#todo-multiline_5">TODO: Multiline</a></li>
+                            <li class="toctree-l2"><a href="#todo-multiline_6">TODO: Multiline</a></li>
                             
                         
                             <li class="toctree-l2"><a href="#todo-crsf-check-needed-here">TODO: CRSF check needed here.</a></li>
@@ -209,7 +223,7 @@
                             <li class="toctree-l2"><a href="#todo-there-should-be-a-more-robust-check-than-just-is-there-a-superuser">TODO: There should be a more robust check than just 'is there a superuser'.</a></li>
                             
                         
-                            <li class="toctree-l2"><a href="#todo-multiline_6">TODO: Multiline</a></li>
+                            <li class="toctree-l2"><a href="#todo-multiline_7">TODO: Multiline</a></li>
                             
                         
                             <li class="toctree-l2"><a href="#todo-this-needs-caching">TODO: This needs caching.</a></li>
@@ -227,10 +241,10 @@
                             <li class="toctree-l2"><a href="#todo-https_1">TODO: HTTPS</a></li>
                             
                         
-                            <li class="toctree-l2"><a href="#todo-multiline_7">TODO: Multiline</a></li>
+                            <li class="toctree-l2"><a href="#todo-multiline_8">TODO: Multiline</a></li>
                             
                         
-                            <li class="toctree-l2"><a href="#todo-multiline_8">TODO: Multiline.</a></li>
+                            <li class="toctree-l2"><a href="#todo-multiline_9">TODO: Multiline.</a></li>
                             
                         
                             <li class="toctree-l2"><a href="#todo-rename-all-config-key-uses-to-path">TODO: Rename all config key uses to path.</a></li>
@@ -390,7 +404,17 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-form/client/widget/group">packages/shrub-form/client/widget/group.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../source/packages/shrub-form/client/widget/hidden">packages/shrub-form/client/widget/hidden.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-form/client/widget/markup">packages/shrub-form/client/widget/markup.litcoffee</a>
                     
                 </li>
             
@@ -591,6 +615,11 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../source/packages/shrub-session/store">packages/shrub-session/store.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../source/packages/shrub-skin-strapped/client/form">packages/shrub-skin-strapped/client/form.litcoffee</a>
                     
                 </li>
             
@@ -936,7 +965,7 @@ This is a dynamically generated list of TODO items, each with context.</p>
 <pre><code>       registerHook: (submodule, hook, impl) -&gt;
 </code></pre>
 <p><a href="../source/client/modules/pkgman#todo-link-to-an-instance-of-using-the-submodule-arg-in-core-if-one-exists">the above found in client/modules/pkgman.litcoffee:71</a></p>
-<pre><code>           )
+<pre><code>             $compileProvider.debugInfoEnabled false
 
  Completely override $q with Bluebird, because it's awesome.
 </code></pre>
@@ -944,7 +973,7 @@ This is a dynamically generated list of TODO items, each with context.</p>
 <pre><code>           $provide.decorator '$q', [
              '$rootScope', '$exceptionHandler'
 </code></pre>
-<p><a href="../source/packages/shrub-angular/client#todo-angular-also-implements-a-private-service-called-q-used-for-animation-we-should-override-that-one-too">the above found in packages/shrub-angular/client/index.litcoffee:42</a></p>
+<p><a href="../source/packages/shrub-angular/client#todo-angular-also-implements-a-private-service-called-q-used-for-animation-we-should-override-that-one-too">the above found in packages/shrub-angular/client/index.litcoffee:47</a></p>
 <pre><code> Keep a reference to the form scope, if the form attribute value changes, it'll
  need to be rebuilt.
 </code></pre>
@@ -960,7 +989,7 @@ This is a dynamically generated list of TODO items, each with context.</p>
 <h2 id="todo-multiline">TODO: Multiline</h2>
 <pre><code>               pkgman.invokeFlat "shrubForm#{pkgman.normalizePath form.key, true}Alter", form
 </code></pre>
-<p><a href="../source/packages/shrub-form/client#todo-multilin">the above found in packages/shrub-form/client/index.litcoffee:50</a></p>
+<p><a href="../source/packages/shrub-form/client#todo-multilin">the above found in packages/shrub-form/client/index.litcoffee:60</a></p>
 <pre><code> Look up the widget definition and warn if it doesn't exist.
 
                  unless (widget = formService.widgets[field.type])?
@@ -969,7 +998,7 @@ This is a dynamically generated list of TODO items, each with context.</p>
 <pre><code>                   $log.warn "Form `#{form.key}` contains non-existent field type `#{field.type}`!"
                    continue
 </code></pre>
-<p><a href="../source/packages/shrub-form/client#todo-multilin_1">the above found in packages/shrub-form/client/index.litcoffee:73</a></p>
+<p><a href="../source/packages/shrub-form/client#todo-multilin_1">the above found in packages/shrub-form/client/index.litcoffee:82</a></p>
 <pre><code>                 for checkbox in scope.field.checkboxes
                    checkbox.childName ?= checkbox.name
 </code></pre>
@@ -978,6 +1007,15 @@ This is a dynamically generated list of TODO items, each with context.</p>
                    checkbox.type = 'checkbox'
 </code></pre>
 <p><a href="../source/packages/shrub-form/client/widget/checkboxes#todo-multilin">the above found in packages/shrub-form/client/widget/checkboxes.litcoffee:22</a></p>
+<pre><code> Look up the widget definition and warn if it doesn't exist.
+
+                   unless (widget = formService.widgets[field.type])?
+</code></pre>
+<h2 id="todo-multiline_3">TODO: Multiline</h2>
+<pre><code>                     $log.warn "Form `#{scope.form.key}` contains a group `#{scope.field.name}` with a non-existent field type `#{field.type}`!"
+                     continue
+</code></pre>
+<p><a href="../source/packages/shrub-form/client/widget/group#todo-multilin">the above found in packages/shrub-form/client/widget/group.litcoffee:30</a></p>
 <pre><code>             ($q, $window) -&gt;
 
                service = {}
@@ -993,7 +1031,7 @@ This is a dynamically generated list of TODO items, each with context.</p>
 <h2 id="todo-need-to-track-current-this-should-be-a-nop-in-that-case">TODO: Need to track current, this should be a nop in that case.</h2>
 <pre><code>               service.change = (skinKey) -&gt;
 </code></pre>
-<p><a href="../source/packages/shrub-skin/client#todo-need-to-track-current-this-should-be-a-nop-in-that-case">the above found in packages/shrub-skin/client/index.litcoffee:310</a></p>
+<p><a href="../source/packages/shrub-skin/client#todo-need-to-track-current-this-should-be-a-nop-in-that-case">the above found in packages/shrub-skin/client/index.litcoffee:311</a></p>
 <pre><code> # Socket.IO socket
 
  *Provide an Angular service wrapping Socket.IO.*
@@ -1007,7 +1045,7 @@ This is a dynamically generated list of TODO items, each with context.</p>
 
            message = "response: #{eventName}"
 </code></pre>
-<h2 id="todo-multiline_3">TODO: Multiline</h2>
+<h2 id="todo-multiline_4">TODO: Multiline</h2>
 <pre><code>           message += ", #{JSON.stringify response, null, '  '}" if response.result? or response.error?
            debug message
 </code></pre>
@@ -1036,7 +1074,7 @@ This is a dynamically generated list of TODO items, each with context.</p>
 <h2 id="todo-username-and-password-are-tightly-coupled-to-local-strategy-change-that">TODO: username and password are tightly coupled to local strategy. Change that.</h2>
 <pre><code>           service.login = (method, username, password) -&gt;
 </code></pre>
-<p><a href="../source/packages/shrub-user/client#todo-username-and-password-are-tightly-coupled-to-local-strategy-change-that">the above found in packages/shrub-user/client/index.litcoffee:53</a></p>
+<p><a href="../source/packages/shrub-user/client#todo-username-and-password-are-tightly-coupled-to-local-strategy-change-that">the above found in packages/shrub-user/client/index.litcoffee:92</a></p>
 <pre><code> ## user.fakeLogin
 
  *Mock a login process.*
@@ -1045,7 +1083,7 @@ This is a dynamically generated list of TODO items, each with context.</p>
 <pre><code>             service.fakeLogin = (username, password, id) -&gt;
                password ?= 'password'
 </code></pre>
-<p><a href="../source/packages/shrub-user/client#todo-this-will-change-when-login-method-generalization-happens">the above found in packages/shrub-user/client/index.litcoffee:90</a></p>
+<p><a href="../source/packages/shrub-user/client#todo-this-will-change-when-login-method-generalization-happens">the above found in packages/shrub-user/client/index.litcoffee:129</a></p>
 <pre><code>           permission: 'string'
 
            group: model: 'shrub-group'
@@ -1053,7 +1091,7 @@ This is a dynamically generated list of TODO items, each with context.</p>
 <h2 id="todo-finish-collection-docs">TODO: Finish collection docs.</h2>
 <pre><code>       User =
 </code></pre>
-<p><a href="../source/packages/shrub-user/client#todo-finish-collection-docs">the above found in packages/shrub-user/client/index.litcoffee:134</a></p>
+<p><a href="../source/packages/shrub-user/client#todo-finish-collection-docs">the above found in packages/shrub-user/client/index.litcoffee:173</a></p>
 <pre><code> Implement all the built-in collection methods as authenticated versions, which
  take a user.
 </code></pre>
@@ -1061,7 +1099,7 @@ This is a dynamically generated list of TODO items, each with context.</p>
 <pre><code>       for identity, collection of collections
          do (identity, collection) -&gt;
 </code></pre>
-<p><a href="../source/packages/shrub-user/client#todo-this-is-legacy-from-having-full-orm-in-browser-what-do">the above found in packages/shrub-user/client/index.litcoffee:220</a></p>
+<p><a href="../source/packages/shrub-user/client#todo-this-is-legacy-from-having-full-orm-in-browser-what-do">the above found in packages/shrub-user/client/index.litcoffee:259</a></p>
 <pre><code>               $scope.form =
 
                  key: 'shrub-user-login'
@@ -1092,7 +1130,7 @@ This is a dynamically generated list of TODO items, each with context.</p>
                ,
                  cookie: req.headers.cookie
 </code></pre>
-<h2 id="todo-multiline_4">TODO: Multiline.</h2>
+<h2 id="todo-multiline_5">TODO: Multiline.</h2>
 <pre><code>                 url: "http://localhost:#{config.get 'packageSettings:shrub-http:port'}/shrub-angular-entry-point"
                ,
 </code></pre>
@@ -1116,7 +1154,7 @@ This is a dynamically generated list of TODO items, each with context.</p>
            for key, value of subconfig
              continue unless value?
 </code></pre>
-<h2 id="todo-multiline_5">TODO: Multiline</h2>
+<h2 id="todo-multiline_6">TODO: Multiline</h2>
 <pre><code>             config_.set "packageConfig:#{path.replace /\//g, ':'}:#{key.replace /\//g, ':'}", value
 </code></pre>
 <p><a href="../source/packages/shrub-config#todo-multilin">the above found in packages/shrub-config/index.litcoffee:92</a></p>
@@ -1189,7 +1227,7 @@ This is a dynamically generated list of TODO items, each with context.</p>
 
                sandbox = new Sandbox()
 </code></pre>
-<h2 id="todo-multiline_6">TODO: Multiline</h2>
+<h2 id="todo-multiline_7">TODO: Multiline</h2>
 <pre><code>               sandbox.createDocument html, url: "http://localhost:#{config.get 'packageSettings:shrub-http:port'}/home"
 </code></pre>
 <p><a href="../source/packages/shrub-nodemailer#todo-multilin">the above found in packages/shrub-nodemailer/index.litcoffee:59</a></p>
@@ -1238,7 +1276,7 @@ This is a dynamically generated list of TODO items, each with context.</p>
 
            fingerprint = fingerprint.get excluded
 </code></pre>
-<h2 id="todo-multiline_7">TODO: Multiline</h2>
+<h2 id="todo-multiline_8">TODO: Multiline</h2>
 <pre><code>           message = "Logged villiany score #{score} for #{type}, fingerprint: #{JSON.stringify fingerprint}"
            message += ', which resulted in a ban.' if isVillian
 </code></pre>
@@ -1247,7 +1285,7 @@ This is a dynamically generated list of TODO items, each with context.</p>
        else
          'You are banned.'
 </code></pre>
-<h2 id="todo-multiline_8">TODO: Multiline.</h2>
+<h2 id="todo-multiline_9">TODO: Multiline.</h2>
 <pre><code>       message += " The ban will be lifted #{moment().add('seconds', ttl).fromNow()}." if ttl?
 </code></pre>
 <p><a href="../source/packages/shrub-villiany#todo-multiline">the above found in packages/shrub-villiany/index.litcoffee:246</a></p>

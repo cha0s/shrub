@@ -69,6 +69,17 @@
 
     
         
+        <span>Examples</span>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../../../../examples/todo-list">TODO list</a>
+                    
+                </li>
+            
+        
+
+    
+        
         <span>Reference</span>
             
                 <li class="toctree-l1 ">
@@ -244,7 +255,17 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../group">packages/shrub-form/client/widget/group.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../hidden">packages/shrub-form/client/widget/hidden.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../markup">packages/shrub-form/client/widget/markup.litcoffee</a>
                     
                 </li>
             
@@ -445,6 +466,11 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../../../shrub-session/store">packages/shrub-session/store.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../../shrub-skin-strapped/client/form">packages/shrub-skin-strapped/client/form.litcoffee</a>
                     
                 </li>
             
@@ -743,7 +769,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 <pre><code>  registrar.registerHook 'shrubAngularDirective', -&gt; [
     -&gt;
 
-      scope: field: '=?'
+      scope: field: '=', form: '='
 
       link: (scope, element) -&gt;
 
@@ -777,7 +803,11 @@ exports.pkgmanRegister = (registrar) -&gt;
 
       template: '''
 
-&lt;div class="checkboxes"&gt;
+&lt;div
+  class="checkboxes"
+
+  data-shrub-ui-attributes="field.attributes"
+&gt;
 
   &lt;label
     data-ng-bind="field.label"
@@ -826,7 +856,7 @@ exports.pkgmanRegister = (registrar) -&gt;
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../hidden" class="btn btn-neutral float-right" title="packages/shrub-form/client/widget/hidden.litcoffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../group" class="btn btn-neutral float-right" title="packages/shrub-form/client/widget/group.litcoffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../checkbox" class="btn btn-neutral" title="packages/shrub-form/client/widget/checkbox.litcoffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -858,7 +888,7 @@ exports.pkgmanRegister = (registrar) -&gt;
             <a class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
         
       <span><a href="../checkbox" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      <span style="margin-left: 15px"><a href="../hidden" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span style="margin-left: 15px"><a href="../group" style="color: #fcfcfc">Next &raquo;</a></span>
     </span>
 </div>
 </body>

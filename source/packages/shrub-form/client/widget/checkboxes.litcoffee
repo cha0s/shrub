@@ -9,7 +9,7 @@
       registrar.registerHook 'shrubAngularDirective', -> [
         ->
 
-          scope: field: '=?'
+          scope: field: '=', form: '='
 
           link: (scope, element) ->
 
@@ -44,7 +44,11 @@
 
           template: '''
 
-    <div class="checkboxes">
+    <div
+      class="checkboxes"
+
+      data-shrub-ui-attributes="field.attributes"
+    >
 
       <label
         data-ng-bind="field.label"

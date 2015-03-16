@@ -7,29 +7,27 @@
       registrar.registerHook 'shrubAngularDirective', -> [
         ->
 
-          scope: field: '=?'
+          scope: field: '=', form: '='
 
           link: (scope) ->
 
+            scope.clicked = -> scope.form.$submitted = scope.field
+
             scope.$watch 'field', (field) ->
 
-              scope.$watch 'field', (field) ->
-
-                field.value ?= 'Submit'
+              field.value ?= 'Submit'
 
           template: '''
 
-    <div class="form-group">
+    <input
+      class="btn btn-default"
+      name="{{field.name}}"
+      type="submit"
 
-      <input
-        class="btn btn-default"
-        name="{{field.name}}"
-        type="submit"
-
-        data-ng-value="field.value"
-      >
-
-    </div>
+      data-shrub-ui-attributes="field.attributes"
+      data-ng-click="clicked();"
+      data-ng-value="field.value"
+    >
 
     '''
 

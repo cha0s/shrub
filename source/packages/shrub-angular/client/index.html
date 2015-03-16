@@ -69,6 +69,17 @@
 
     
         
+        <span>Examples</span>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../../examples/todo-list">TODO list</a>
+                    
+                </li>
+            
+        
+
+    
+        
         <span>Reference</span>
             
                 <li class="toctree-l1 ">
@@ -250,7 +261,17 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-form/client/widget/group">packages/shrub-form/client/widget/group.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../../shrub-form/client/widget/hidden">packages/shrub-form/client/widget/hidden.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-form/client/widget/markup">packages/shrub-form/client/widget/markup.litcoffee</a>
                     
                 </li>
             
@@ -451,6 +472,11 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../shrub-session/store">packages/shrub-session/store.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../shrub-skin-strapped/client/form">packages/shrub-skin-strapped/client/form.litcoffee</a>
                     
                 </li>
             
@@ -745,6 +771,8 @@
 <pre><code>_ = require 'lodash'
 Promise = require 'bluebird'
 
+config = require 'config'
+
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 <h4 id="implements-hook-shrubangularahrefsanitizationwhitelist">Implements hook <code>shrubAngularAHrefSanitizationWhitelist</code>.</h4>
@@ -772,6 +800,9 @@ exports.pkgmanRegister = (registrar) -&gt;
       $compileProvider.aHrefSanitizationWhitelist new RegExp(
         "^\s*(?:#{regexes.join '|'})"
       )
+
+      unless config.get 'packageConfig:shrub-core:testMode'
+        $compileProvider.debugInfoEnabled false
 </code></pre>
 <p>Completely override $q with Bluebird, because it's awesome.</p>
 <h6 id="todo-angular-also-implements-a-private-service-called-q-used-for-animation-we-should-override-that-one-too">TODO: Angular also implements a private service called $$q used for animation. We should override that one, too.</h6>

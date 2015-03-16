@@ -69,6 +69,17 @@
 
     
         
+        <span>Examples</span>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../../../../examples/todo-list">TODO list</a>
+                    
+                </li>
+            
+        
+
+    
+        
         <span>Reference</span>
             
                 <li class="toctree-l1 ">
@@ -233,7 +244,17 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../group">packages/shrub-form/client/widget/group.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../hidden">packages/shrub-form/client/widget/hidden.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../markup">packages/shrub-form/client/widget/markup.litcoffee</a>
                     
                 </li>
             
@@ -445,6 +466,11 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../../../shrub-session/store">packages/shrub-session/store.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../../shrub-skin-strapped/client/form">packages/shrub-skin-strapped/client/form.litcoffee</a>
                     
                 </li>
             
@@ -741,7 +767,7 @@
 <pre><code>  registrar.registerHook 'shrubAngularDirective', -&gt; [
     -&gt;
 
-      scope: field: '=?'
+      scope: field: '=', form: '='
 
       link: (scope) -&gt;
 
@@ -750,30 +776,29 @@
           field.minLength ?= 0
           field.maxLength ?= Infinity
           field.pattern ?= /.*/
-          field.value ?= ''
+          field.model ?= 'field.value'
+
+          field.syncModel scope
 
       template: '''
 
-&lt;div class="form-group"&gt;
+&lt;label
+  data-ng-bind="field.label"
+&gt;&lt;/label&gt;
 
-  &lt;label
-    data-ng-bind="field.label"
-  &gt;&lt;/label&gt;
+&lt;input
+  class="form-control"
+  name="{{field.name}}"
+  type="{{field.type}}"
 
-  &lt;input
-    class="form-control"
-    name="{{field.name}}"
-    type="{{field.type}}"
-
-    data-ng-model="field.value"
-    data-ng-required="field.required"
-    data-ng-minlength="{{field.minlength}}"
-    data-ng-maxlength="{{field.maxlength}}"
-    data-ng-pattern="field.pattern"
-    data-ng-trim="{{field.trim}}"
-  &gt;
-
-&lt;/div&gt;
+  data-shrub-ui-attributes="field.attributes"
+  data-ng-model="field.value"
+  data-ng-required="field.required"
+  data-ng-minlength="{{field.minlength}}"
+  data-ng-maxlength="{{field.maxlength}}"
+  data-ng-pattern="field.pattern"
+  data-ng-trim="{{field.trim}}"
+&gt;
 
 '''
 

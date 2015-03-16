@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Concepts and conventions - Shrub</title>
+  <title>TODO list - Shrub</title>
   
 
   
@@ -46,32 +46,22 @@
         <span>Guide</span>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../getting-started">Getting Started</a>
+                    <a class="" href="../../guide/getting-started">Getting Started</a>
                     
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../errors">Errors</a>
+                    <a class="" href="../../guide/errors">Errors</a>
                     
                 </li>
             
                 <li class="toctree-l1 ">
-                    <a class="" href="../forms">Form handling</a>
+                    <a class="" href="../../guide/forms">Form handling</a>
                     
                 </li>
             
-                <li class="toctree-l1 current">
-                    <a class="current" href=".">Concepts and conventions</a>
-                    
-                        <ul>
-                        
-                            <li class="toctree-l2"><a href="#middleware-hook-specification">Middleware hook specification</a></li>
-                            
-                        
-                            <li class="toctree-l2"><a href="#annotated-functions">Annotated functions</a></li>
-                            
-                        
-                        </ul>
+                <li class="toctree-l1 ">
+                    <a class="" href="../../guide/concepts">Concepts and conventions</a>
                     
                 </li>
             
@@ -81,8 +71,15 @@
         
         <span>Examples</span>
             
-                <li class="toctree-l1 ">
-                    <a class="" href="../../examples/todo-list">TODO list</a>
+                <li class="toctree-l1 current">
+                    <a class="current" href=".">TODO list</a>
+                    
+                        <ul>
+                        
+                            <li class="toctree-l2"><a href="#tldr">TL;DR</a></li>
+                            
+                        
+                        </ul>
                     
                 </li>
             
@@ -746,7 +743,7 @@
           <div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../..">Docs</a> &raquo;</li>
-    <li>Concepts and conventions</li>
+    <li>TODO list</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -759,42 +756,287 @@
 </div>
           <div role="main">
             <div class="section">
-              <p>This page explains various concepts and conventions used in Shrub.</p>
-<h1 id="middleware-hook-specification">Middleware hook specification</h1>
-<p>Shrub invokes various hooks
-(<a href="../../hooks#shrubhttpmiddleware"><code>shrubHttpMiddleware</code></a>,
-<a href="../../hooks#shrubbootstrapmiddleware"><code>shrubbootstrapMiddleware</code></a>, and more...)
-which allow packages to define middleware to be dispatched during various
-processes.</p>
-<p>Middleware hooks return a specification that looks like:</p>
-<pre><code class="javascript">{
-  label: 'What the middleware functions do',
-  middleware: [
-
-    function(args..., next) {
-
-      // Do stuff with args...
-      next();
-    },
-
-    function(args..., next) {
-
-      // Do stuff with args...
-      next();
-    }
-  ]
-}
+              <p>How could Shrub be complete without an implementation of a simple TODO list? It
+would be unthinkable! So that's exactly what this document is going to
+describe.</p>
+<p>If you haven't yet, read the <a href="../../guide/getting-started/">getting started guide</a>
+and get yourself a working copy of Shrub. I'll wait.</p>
+<div class="admonition note">
+<p class="admonition-title">Can't contain your excitement?</p>
+<p>If you would like to skip all this and just get to trying out a fully
+formed TODO list, <a href="../../examples/todo-list/#tldr">check out the TL;DR</a></p>
+</div>
+<p>The TODO list will be implemented as a Shrub package. This means we're going to
+create a package and enable it.</p>
+<p>Your Shrub installation includes a <code>custom</code> directory. Within it we will create
+our TODO package. Create a directory and file structure like this:</p>
+<pre><code class="bash">YOUR_SHRUB_DIRECTORY/custom/todo-list/index.js
+YOUR_SHRUB_DIRECTORY/custom/todo-list/client/index.js
+YOUR_SHRUB_DIRECTORY/custom/todo-list/client/item.js
+YOUR_SHRUB_DIRECTORY/custom/todo-list/client/list.js
+YOUR_SHRUB_DIRECTORY/custom/todo-list/client/new.js
 </code></pre>
 
-<p>The <code>label</code> exists only to provide debugging information so you can see if any
-of your middleware are having problems by checking the debug console logs.</p>
-<p>The <code>middleware</code> are applied serially, meaning the first function in the array
-is dispatched first, followed by the second, etc.</p>
-<h1 id="annotated-functions">Annotated functions</h1>
-<p>Annotated functions are an Angular convention, but are used widely throughout
-Shrub on the client-side. Annotated functions allow dependency injection. You
-can read more about annotated functions in
-<a href="http://docs.angularjs.org/guide/di#dependency-annotation">the Angular documentation</a>.</p>
+<p>We'll go through one at a time and talk about what goes in these files. I will
+Mostly show the source code, punctuated by commentary when necessary.</p>
+<p>Lets start with the top-level index.js file. This is the code that will run on
+the server. In fact, everything except files in the <code>client</code> directory are only
+available on the server. The <code>client</code> directory is available to the server as
+well, but the reverse doesn't apply: <strong>the client has no access to anything
+outside the <code>client</code> directory.</strong></p>
+<p>First off, we'll start with the package manager's entry point. This is defined
+for every package file which implements hooks.</p>
+<pre><code class="javascript">
+// Entry point for package management. Every package defining hooks does so
+// through the registrar passed to `exports.pkgmanRegister`.
+exports.pkgmanRegister = function(registrar) {
+
+</code></pre>
+
+<p><code>pkgman</code> will pass in a registrar which is used to register hooks and point to
+subpackage files. More on the latter to come.</p>
+<p>Let's implement a model that will represent our TODO list items. See
+<a href="../../hooks/#shrubormcollections">the documentation for <code>shrubOrmCollections</code></a> for
+details.</p>
+<pre><code class="javascript">
+  // Implements hook `shrubOrmCollections`.
+  registrar.registerHook('shrubOrmCollections', function() {
+
+    // Return an object whose keys determine the name of the collection in the
+    // system, and whose values are Waterline configuration.
+    return {
+
+      // We're only defining a TODO list item model since we only have one
+      // global list in this example. It'd be possible to create a `todo-list`
+      // model and associate the `todo-list-item`s with it, but we opt for
+      // simplicity.
+      'todo-list-item': {
+
+        attributes: {
+
+          // Whether the item is marked as completed.
+          isCompleted: {
+            type: 'boolean',
+            defaultsTo: false
+          },
+
+          // The item text, e.g. &quot;Make a TODO example for Shrub&quot;.
+          text: {
+            type: 'string'
+          }
+        }
+      }
+    };
+  });
+
+</code></pre>
+
+<p>This registers a model named <code>todo-list-item</code> in the ORM so we can create,
+read, update, and delete instances.</p>
+<p>Finally, we'll create some RPC routes. These are the endpoints that the client
+communicates with. We'll create RPC routes for retrieving all TODO items,
+creating an item, updating an item, and deleting an item.</p>
+<pre><code class="javascript">
+  // Implements hook `shrubRpcRoutes`.
+  registrar.registerHook('shrubRpcRoutes', function() {
+
+    var routes = [];
+
+    // Get our collection.
+    var TodoListItem = require('shrub-orm').collection('todo-list-item');
+
+</code></pre>
+
+<p>First, the route to retrieve all items.</p>
+<pre><code class="javascript">
+    // This route will be hit when a client first connects, to give them a
+    // snapshot of the current TODO list.
+    routes.push({
+      path: 'todo-list',
+
+      // Route middleware can be a single function. It will be normalized into
+      // array form internally by the time shrubRpcRoutesAlter is invoked.
+      middleware: function(req, res, next) {
+
+        // Get the TODO list items, sorted by when they were created.
+        TodoListItem.find().sort('createdAt DESC').then(function(items) {
+
+          // Send the client the items.
+          res.end(items);
+        });
+      }
+    });
+
+</code></pre>
+
+<p>Next, the route when an item is to be created.</p>
+<pre><code class="javascript">
+    // This route will be hit when a client wants to create a new item.
+    routes.push({
+      path: 'todo-list-item/create',
+
+      // Route middleware can also be defined as an array. In this route, we
+      // will handle validation before the main creation function is invoked.
+      middleware: [
+
+        // Validator. If next(error) is called here, the main creation function
+        // will never be invoked.
+        function(req, res, next) {
+
+          // Text must not be empty.
+          if (!req.body.text) {
+
+            // Passing an error to next will return it to the client.
+            return next(new Error(&quot;Item text must not be empty!&quot;));
+          }
+
+          // Continue on normally to the next middleware function.
+          next();
+        },
+
+        function(req, res, next) {
+
+          var item = {text: req.body.text};
+
+          TodoListItem.create(item).then(function(item) {
+
+</code></pre>
+
+<p>Here we work around a quirk in Waterline: when sending any models over the wire
+to the client, the <code>toJSON</code> method must be stripped out of the model, or else
+the message won't be sent and a nasty exception will be raised.</p>
+<pre><code class="javascript">
+            // Work around waterline weirdness. You must remove the toJSON
+            // method from all models returned from Waterline before sending
+            // over a socket to prevent a stack overflow, because
+            // model.toJSON() returns an object that also has a toJSON method,
+            // and msgpack (used by socket.io) will recur until stack space
+            // is exhausted.
+            item.toJSON = undefined;
+
+            // Send the client the new item.
+            res.end(item);
+
+            // Notify other clients of the creation.
+            req.socket.broadcast.to('$global').emit(
+              'todo-list-item/create', item
+            );
+          }).catch(next);
+        }
+      ]
+    });
+
+</code></pre>
+
+<p>When an item is to be updated.</p>
+<pre><code class="javascript">
+    // This route will be hit when a client wants to update an item.
+    routes.push({
+      path: 'todo-list-item/update',
+      middleware: [
+
+        // Validator.
+        function(req, res, next) {
+
+          // ID must be set.
+          if (!req.body.id) {
+            return next(new Error(&quot;ID must be supplied when updating a TODO item!&quot;));
+          }
+
+          // Either text or isCompleted must be set.
+          if (!req.body.text &amp;&amp; !req.body.isCompleted) {
+            return next(new Error(&quot;Item text or isCompleted must be set when updating a TODO item!&quot;));
+          }
+
+          next();
+        },
+
+        function(req, res, next) {
+
+          // Update the item with the values in the request body.
+          TodoListItem.update({id: req.body.id}, req.body).then(function(items) {
+            items[0].toJSON = undefined;
+
+            // Send the client the updated item.
+            res.end(items[0]);
+
+            // Notify other clients of the update.
+            req.socket.broadcast.to('$global').emit(
+              'todo-list-item/update', items[0]
+            );
+          }).catch(next);
+        }
+      ]
+    });
+
+</code></pre>
+
+<p>Finally, when an item is to be deleted.</p>
+<pre><code class="javascript">
+    // This route will be hit when a client wants to delete an item.
+    routes.push({
+      path: 'todo-list-item/delete',
+      middleware: [
+
+        // Validator.
+        function(req, res, next) {
+
+          // ID must be set.
+          if (!req.body.id) {
+            return next(new Error(&quot;ID must be supplied when deleting a TODO item!&quot;));
+          }
+
+          next();
+        },
+
+        function(req, res, next) {
+
+          // Destroy by ID.
+          TodoListItem.destroy({id: req.body.id}, req.body).then(function() {
+
+            // Finish the request.
+            res.end();
+
+            // Notify other clients of the deletion.
+            req.socket.broadcast.to('$global').emit(
+              'todo-list-item/delete', {id: req.body.id}
+            );
+          }).catch(next);
+        }
+      ]
+    });
+
+    return routes;
+  });
+};
+</code></pre>
+
+<p>That's it for the server code. Next, we'll go over the client code. Let's start
+with client/index.js.</p>
+<h1 id="tldr">TL;DR</h1>
+<p>A repository containing the TODO list package can be found at
+<a href="https://github.com/cha0s/shrub-todo-list">https://github.com/cha0s/shrub-todo-list</a>.
+You may clone it into the <code>custom</code> directory like so:</p>
+<pre><code class="bash">cd YOUR_SHRUB_DIRECTORY/custom
+git clone https://github.com/cha0s/shrub-todo-list.git todo-list
+</code></pre>
+
+<p>After you do so, edit config/settings.json like so:</p>
+<pre><code class="json">...
+    &quot;shrub-user&quot;,
+    &quot;shrub-villiany&quot;,
+    &quot;todo-list&quot;
+  ],
+  &quot;packageSettings&quot;: {
+...
+</code></pre>
+
+<p>You're good to go now, just the usual rigamarole for running in development
+mode:</p>
+<pre><code class="bash">DEBUG=shrub:* grunt execute
+</code></pre>
+
+<p>Enjoy! Come on back and read more thoroughly afterward if you'd like.</p>
 
             </div>
           </div>
@@ -802,10 +1044,10 @@ can read more about annotated functions in
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../examples/todo-list" class="btn btn-neutral float-right" title="TODO list"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../../hooks" class="btn btn-neutral float-right" title="Hooks"/>Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../forms" class="btn btn-neutral" title="Form handling"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../guide/concepts" class="btn btn-neutral" title="Concepts and conventions"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -833,8 +1075,8 @@ can read more about annotated functions in
         
             <a class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
         
-      <span><a href="../forms" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      <span style="margin-left: 15px"><a href="../../examples/todo-list" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../../guide/concepts" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      <span style="margin-left: 15px"><a href="../../hooks" style="color: #fcfcfc">Next &raquo;</a></span>
     </span>
 </div>
 </body>

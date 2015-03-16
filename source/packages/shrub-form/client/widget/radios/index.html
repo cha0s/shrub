@@ -69,6 +69,17 @@
 
     
         
+        <span>Examples</span>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../../../../examples/todo-list">TODO list</a>
+                    
+                </li>
+            
+        
+
+    
+        
         <span>Reference</span>
             
                 <li class="toctree-l1 ">
@@ -233,7 +244,17 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../group">packages/shrub-form/client/widget/group.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../hidden">packages/shrub-form/client/widget/hidden.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../markup">packages/shrub-form/client/widget/markup.litcoffee</a>
                     
                 </li>
             
@@ -445,6 +466,11 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../../../shrub-session/store">packages/shrub-session/store.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../../shrub-skin-strapped/client/form">packages/shrub-skin-strapped/client/form.litcoffee</a>
                     
                 </li>
             
@@ -743,7 +769,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 <pre><code>  registrar.registerHook 'shrubAngularDirective', -&gt; [
     -&gt;
 
-      scope: field: '=?'
+      scope: field: '=', form: '='
 
       link: (scope, element) -&gt;
 
@@ -767,7 +793,10 @@ exports.pkgmanRegister = (registrar) -&gt;
 
       template: '''
 
-&lt;div class="radios"&gt;
+&lt;div
+  class="radios"
+  data-shrub-ui-attributes="field.attributes"
+&gt;
 
   &lt;label
     data-ng-bind="field.label"

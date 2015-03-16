@@ -69,6 +69,17 @@
 
     
         
+        <span>Examples</span>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../../../../examples/todo-list">TODO list</a>
+                    
+                </li>
+            
+        
+
+    
+        
         <span>Reference</span>
             
                 <li class="toctree-l1 ">
@@ -233,7 +244,17 @@
                 </li>
             
                 <li class="toctree-l1 ">
+                    <a class="" href="../group">packages/shrub-form/client/widget/group.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
                     <a class="" href="../hidden">packages/shrub-form/client/widget/hidden.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../markup">packages/shrub-form/client/widget/markup.litcoffee</a>
                     
                 </li>
             
@@ -445,6 +466,11 @@
             
                 <li class="toctree-l1 ">
                     <a class="" href="../../../../shrub-session/store">packages/shrub-session/store.litcoffee</a>
+                    
+                </li>
+            
+                <li class="toctree-l1 ">
+                    <a class="" href="../../../../shrub-skin-strapped/client/form">packages/shrub-skin-strapped/client/form.litcoffee</a>
                     
                 </li>
             
@@ -743,26 +769,31 @@ exports.pkgmanRegister = (registrar) -&gt;
 <pre><code>  registrar.registerHook 'shrubAngularDirective', -&gt; [
     -&gt;
 
-      scope: field: '=?'
+      scope: field: '=', form: '='
+
+      link: (scope) -&gt;
+
+          field.change ?= -&gt;
+
+          field.$change = ($event) -&gt; scope.$$postDigest -&gt;
+            field.change field.value, $event
 
       template: '''
 
-&lt;div class="form-group"&gt;
+&lt;label
+  data-ng-bind="field.label"
+&gt;&lt;/label&gt;
 
-  &lt;label
-    data-ng-bind="field.label"
-  &gt;&lt;/label&gt;
+&lt;select
+  class="form-control"
+  name="{{field.name}}"
 
-  &lt;select
-    class="form-control"
-    name="{{field.name}}"
-
-    data-ng-model="field.value"
-    data-ng-required="field.required"
-    data-ng-options="field.options"
-  &gt;&lt;/select&gt;
-
-&lt;/div&gt;
+  data-shrub-ui-attributes="field.attributes"
+  data-ng-change="field.$change($event);"
+  data-ng-model="field.value"
+  data-ng-required="field.required"
+  data-ng-options="field.options"
+&gt;&lt;/select&gt;
 
 '''
 
