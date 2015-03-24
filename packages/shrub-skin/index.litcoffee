@@ -101,12 +101,15 @@ dependencies, you do it manually so you can control exactly when it happens.*
       gruntConfig.configureTask(
         'watch', "#{key}Copy"
 
-        files: copyFiles.map((copyFile) -> copyFile.src).reduce(
-          ((l, r) -> l.concat r), []
+        files: copyFiles.concat(
+          src: "template/**/*"
+        ).map(
+          (copyFile) -> "#{skinPath}/app/#{copyFile.src}"
         )
         tasks: [
           "newer:copy:#{key}"
         ]
+        options: livereload: true
       )
 
 ## renderAppHtml
