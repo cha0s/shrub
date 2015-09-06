@@ -54,6 +54,7 @@ Add our future-compiled LESS style sheets.
           tasks: [
             'newer:less:shrub-skin-strapped'
           ]
+          options: livereload: true
         )
 
         gruntConfig.registerTask 'build:shrub-skin-strapped', [
