@@ -152,6 +152,10 @@ Log a user out if we get a socket call.
 
       Group =
 
+        associations: [
+          alias: 'permissions'
+        ]
+
         attributes:
 
           name:
@@ -165,6 +169,10 @@ Log a user out if we get a socket call.
 
       GroupPermission =
 
+        associations: [
+          alias: 'shrub-group'
+        ]
+
         attributes:
 
           permission: 'string'
@@ -174,6 +182,12 @@ Log a user out if we get a socket call.
 ###### TODO: Finish collection docs.
 
       User =
+
+        associations: [
+          alias: 'groups'
+        ,
+          alias: 'permissions'
+        ]
 
         attributes:
 

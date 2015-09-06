@@ -76,6 +76,10 @@ following properties:
 
           autoPK: false
 
+          associations: [
+            alias: 'scores'
+          ]
+
           attributes:
 
 ## Limit#key
