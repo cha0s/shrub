@@ -137,8 +137,8 @@ sane API for this.
 
 Load the collections into Waterline.
 
-      waterlineConfig.collections = for i, collection of collections_
-        Waterline.Collection.extend collection
+      for i, collection of collections_
+        waterline.loadCollection Waterline.Collection.extend collection
 
       waterline.initialize waterlineConfig, (error, data) ->
         return fn error if error?
