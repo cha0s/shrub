@@ -169,10 +169,6 @@ Log a user out if we get a socket call.
 
       GroupPermission =
 
-        associations: [
-          alias: 'shrub-group'
-        ]
-
         attributes:
 
           permission: 'string'
