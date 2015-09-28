@@ -58,14 +58,24 @@ Instantiate a model with defaults supplied.
             model = JSON.parse JSON.stringify values
 
             for key, value of @attributes
-              continue unless value.defaultsTo?
+
+Set functions.
+
+              model[key] = value if 'function' is typeof value
 
 Set any model defaults.
 
-              model[key] ?= if 'function' is typeof value.defaultsTo
-                value.defaultsTo.call model
-              else
-                JSON.parse JSON.stringify value.defaultsTo
+              if value.defaultsTo?
+
+                model[key] ?= if 'function' is typeof value.defaultsTo
+                  value.defaultsTo.call model
+                else
+                  JSON.parse JSON.stringify value.defaultsTo
+
+Handle dates.
+
+              if model[key]? and 'date' is value or 'date' is value.type
+                model[key] = new Date model[key]
 
             model
 
