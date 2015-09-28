@@ -75,6 +75,16 @@ See: https://docs.angularjs.org/api/ng/service/$q#the-deferred-api
                   resolve = arguments[0]
                   reject = arguments[1]
 
+Angular depends on notify, which is a crap API. We'll hack support for it in.
+
+                __notifications = []
+                proxyThen = promise.then
+                promise.then = ->
+                  args = (arg for arg in arguments)
+                  __notifications.push args[2] if args[2]?
+                  proxyThen.apply promise, args
+                notify: (args...) -> fn args... for fn in __notifications
+
                 promise: promise
                 resolve: resolve
                 reject: reject
