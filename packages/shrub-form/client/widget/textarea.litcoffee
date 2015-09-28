@@ -27,7 +27,7 @@
       data-ng-bind="field.label"
     ></label>
 
-    <input
+    <textarea
       class="form-control"
       name="{{field.name}}"
       type="{{field.type}}"
@@ -39,7 +39,7 @@
       data-ng-maxlength="{{field.maxlength}}"
       data-ng-pattern="field.pattern"
       data-ng-trim="{{field.trim}}"
-    >
+    ></textarea>
 
     '''
 
@@ -55,20 +55,8 @@
 
         widgets.push
 
-          type: 'email'
+          type: 'textarea'
           assignToElement: assignToElement
-          directive: 'shrub-form-widget-text'
-
-        widgets.push
-
-          type: 'password'
-          assignToElement: assignToElement
-          directive: 'shrub-form-widget-text'
-
-        widgets.push
-
-          type: 'text'
-          assignToElement: assignToElement
-          directive: 'shrub-form-widget-text'
+          directive: 'shrub-form-widget-textarea'
 
         widgets

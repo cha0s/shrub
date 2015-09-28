@@ -188,4 +188,5 @@ Register the form in the system.
         'widget/submit'
         'widget/select'
         'widget/text'
+        'widget/textarea'
       ]
