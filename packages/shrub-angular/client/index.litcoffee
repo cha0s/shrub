@@ -103,26 +103,32 @@ values from the promise.
               originalAll = Promise.all
               Promise.all = (promises) ->
 
-Defer to Bluebird unless it's an object.
+Cast it to a promise to be able to determine whether it's an array.
 
-                return originalAll promises unless angular.isObject(
-                  promises
-                )
+                Promise.cast(promises).then ->
+
+Defer to Bluebird if it's an array.
+
+                  return originalAll promises if angular.isArray promises
+
+If it's not an object, defer to Bluebird (it'll throw).
+
+                  return originalAll promises unless angular.isObject promises
 
 Track the keys so we can map the values.
 
-                promiseKeys = []
-                promiseArray = for key, promise of promises
-                  promiseKeys.push key
-                  promise
+                  promiseKeys = []
+                  promiseArray = for key, promise of promises
+                    promiseKeys.push key
+                    promise
 
-                originalAll(promiseArray).then (results) ->
-                  objectResult = {}
+                  originalAll(promiseArray).then (results) ->
+                    objectResult = {}
 
-                  for result, index in results
-                    objectResult[promiseKeys[index]] = result
+                    for result, index in results
+                      objectResult[promiseKeys[index]] = result
 
-                  objectResult
+                    objectResult
 
               Promise
 
