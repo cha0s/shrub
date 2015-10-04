@@ -57,6 +57,12 @@ Instantiate a model with defaults supplied.
           collection.instantiate = (values = {}) ->
             model = JSON.parse JSON.stringify values
 
+            if not @autoCreatedAt? or @autoCreatedAt is true
+              model.createdAt = new Date values.createdAt ? Date.now()
+
+            if not @autoUpdatedAt? or @autoUpdatedAt is true
+              model.updatedAt = new Date values.updatedAt ? Date.now()
+
             for key, value of @attributes
 
 Set functions.
@@ -66,7 +72,6 @@ Set functions.
 Set any model defaults.
 
               if value.defaultsTo?
-
                 model[key] ?= if 'function' is typeof value.defaultsTo
                   value.defaultsTo.call model
                 else
