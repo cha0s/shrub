@@ -8,7 +8,7 @@ DOM contexts a pleasant breeze.
 
     config = require 'config'
     Promise = require 'bluebird'
-    WebSocket = require 'socket.io/node_modules/socket.io-client/node_modules/engine.io-client/node_modules/ws/lib/WebSocket'
+    WebSocket = require 'ws/lib/WebSocket'
 
     errors = require 'errors'
     logging = require 'logging'
@@ -17,9 +17,9 @@ DOM contexts a pleasant breeze.
 
 Hax: Fix document.domain since jsdom has a stub here.
 
-    level2Html = require 'jsdom/lib/jsdom/level2/html'
+    {HTMLDocument} = require 'jsdom/lib/jsdom/living'
     Object.defineProperties(
-      level2Html.dom.level2.html.HTMLDocument.prototype
+      HTMLDocument.prototype
       domain: get: -> 'localhost'
     )
 
@@ -84,11 +84,9 @@ Set up a DOM, forwarding our cookie.
           cookie: options.cookie
           cookieDomain: options.cookieDomain ? 'localhost'
 
-          url: options.url ? "http://localhost:#{
-            config.get 'packageSettings:shrub-http:port'
-          }/"
+          url: options.url ? "http://localhost:#{config.get 'packageSettings:shrub-http:port'}/"
         )
-        @_window = window = document.createWindow()
+        @_window = window = document.defaultView
 
 Capture "client" console logs.
 
