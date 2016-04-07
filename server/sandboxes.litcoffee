@@ -79,7 +79,7 @@ Actually close the window and null it out.
 Set up a DOM, forwarding our cookie.
 
         document = jsdom(
-          html, jsdom.defaultLevel
+          html
 
           cookie: options.cookie
           cookieDomain: options.cookieDomain ? 'localhost'
@@ -116,11 +116,7 @@ When the window is loaded, we'll reject with any error, or resolve.
 
             for documentError in window.document.errors ? []
               if documentError.data?.error?
-                error = new Error "#{
-                  documentError.message
-                }\n#{
-                  errors.stack documentError.data.error
-                }"
+                error = new Error "#{documentError.message}\n#{errors.stack documentError.data.error}"
 
             if error?
               reject error
