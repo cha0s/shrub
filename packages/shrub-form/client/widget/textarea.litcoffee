@@ -33,6 +33,7 @@
       type="{{field.type}}"
 
       data-shrub-ui-attributes="field.attributes"
+      data-ng-keypress="field.keyPress($event)"
       data-ng-model="field.value"
       data-ng-required="field.required"
       data-ng-minlength="{{field.minlength}}"
