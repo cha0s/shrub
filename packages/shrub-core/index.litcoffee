@@ -54,8 +54,7 @@ Normalize IP address.
 
           (req, res, next) ->
 
-            req.normalizedIp = resolvedAddress(
-              config.get 'packageSettings:shrub-core:trustedProxies'
+            req.normalizedIp = trustedAddress(
               req.connection.remoteAddress
               req.headers['x-forwarded-for']
             )
@@ -116,8 +115,7 @@ Patch in express-specific variables that will be required by middleware.
 
           req.headers = req.socket.request.headers
 
-          req.normalizedIp = resolvedAddress(
-            config.get 'packageSettings:shrub-core:trustedProxies'
+          req.normalizedIp = trustedAddress(
             req.socket.client.conn.remoteAddress
             req.headers['x-forwarded-for']
           )
@@ -141,8 +139,7 @@ Normalize IP address.
 
           (req, res, next) ->
 
-            req.normalizedIp = resolvedAddress(
-              config.get 'packageSettings:shrub-core:trustedProxies'
+            req.normalizedIp = trustedAddress(
               req.socket.client.conn.remoteAddress
               req.headers['x-forwarded-for']
             )
@@ -151,9 +148,15 @@ Normalize IP address.
 
         ]
 
+    trustedAddress = (address, forwardedFor) -> resolveAddress(
+      config.get 'packageSettings:shrub-core:trustedProxies'
+      address
+      forwardedFor
+    )
+
 Walk up the X-Forwarded-For header until we hit an untrusted address.
 
-    resolvedAddress = (trustedProxies, address, forwardedFor) ->
+    resolveAddress = (trustedProxies, address, forwardedFor) ->
       return address unless forwardedFor?
       return address if trustedProxies.length is 0
 
