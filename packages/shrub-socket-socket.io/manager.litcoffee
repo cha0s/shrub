@@ -126,6 +126,13 @@ never actually emitted, this will make sure nothing breaks.
           res = new class SocketConnectionResponse extends EventEmitter
             constructor: -> super
 
+Stubs.
+
+`TODO`: Make these not stubs.
+
+            getHeader: -> null
+            write: -> null
+
 Dispatch the authorization middleware.
 
           @_connectionMiddleware.dispatch socket.request, res, (error) ->

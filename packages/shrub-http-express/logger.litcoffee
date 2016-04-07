@@ -1,5 +1,7 @@
 # Express - logger
 
+    morgan = require 'morgan'
+
     exports.pkgmanRegister = (registrar) ->
 
 #### Implements hook `shrubHttpMiddleware`.
@@ -20,7 +22,7 @@ Differentiate between remote clients and our own sandbox clients.
         label: 'Log requests'
         middleware: [
 
-          express.logger stream:
+          morgan 'combined', stream:
             write: (message, encoding) ->
 
               logger = if message.match /(http:\/\/localhost:|node-XMLHttpRequest)/

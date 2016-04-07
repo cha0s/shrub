@@ -1,13 +1,15 @@
 # Session store
 
-*An implementation of connect's
-[Session Store](http://www.senchalabs.org/connect/session.html#session) API.
+*An implementation of express's
+[Session Store](https://www.npmjs.com/package/express-session#session-store-implementation) API.
+
+    ExpressSession = require 'express-session'
 
     orm = null
 
     module.exports = (connect) ->
 
-      Store = connect.session.Store
+      Store = ExpressSession.Store
 
       class OrmStore extends Store
 
@@ -74,6 +76,8 @@ Use the cookie expiration if it exists, otherwise default to one day.
             session.blob = JSON.stringify sess
             session.save()
           ).then((session) -> fn null, session).catch fn
+
+        touch: @::['set']
 
 ## OrmStore#destroy
 

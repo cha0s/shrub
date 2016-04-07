@@ -1,5 +1,8 @@
 # Express - routes
 
+    CookieParser = require 'cookie-parser'
+    ExpressSession = require 'express-session'
+
     express = null
 
     config = require 'config'
@@ -27,7 +30,7 @@
               'packageSettings:shrub-session'
             )
 
-            cookieParser = express.cookieParser cookie.cryptoKey
+            cookieParser = CookieParser cookie.cryptoKey
 
             OrmStore = require('shrub-session/store') express
             sessionStore = new OrmStore()
@@ -94,9 +97,11 @@ Express cookie parser.
 
 Session reification.
 
-        express.session(
+        ExpressSession(
           cookie: cookie
           key: key
+          resave: false
+          saveUninitialized: false
           secret: cookie.cryptoKey
           store: sessionStore
         )

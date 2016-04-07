@@ -5,6 +5,8 @@ middleware for sessions, routing, logging, etc.*
 
     config = require 'config'
 
+    {routeSentinel} = require './routes'
+
     http = null
 
     express = null
@@ -71,19 +73,17 @@ Register middleware.
 
         @registerMiddleware()
 
+        @_routes = []
+
 Spin up an HTTP server.
 
         @_server = http.createServer @_app
-
-Connect (no pun) Express's middleware system to ours.
-
-        @_app.use (req, res, next) => @_middleware.dispatch req, res, next
 
 ## Express#addRoute
 
 *Add HTTP routes.*
 
-      addRoute: ({verb, path, receiver}) -> @_app[verb] path, receiver
+      addRoute: (route) -> @_routes.push route
 
 ## Express#cluster
 
@@ -99,6 +99,21 @@ Connect (no pun) Express's middleware system to ours.
         )
 
         return
+
+      initialize: ->
+        listenPromise = super
+
+Connect (no pun) Express's middleware system to ours.
+
+        for fn in @_middleware._middleware
+          if fn is routeSentinel
+            for {verb, path, receiver} in @_routes
+              @_app[verb] path, receiver
+
+          else
+            @_app.use fn
+
+        return listenPromise
 
 ## Express#listener
 

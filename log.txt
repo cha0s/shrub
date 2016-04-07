@@ -1,0 +1,19 @@
+
+> shrub@0.1.0 start /home/cha0s/dev/code/js/shrub
+> DEBUG=shrub:*,reddichat:* coffee server.litcoffee
+
+Sun, 11 Oct 2015 08:12:19 GMT shrub:server Loading config...
+Sun, 11 Oct 2015 08:12:19 GMT shrub:config Registering packages...
+Sun, 11 Oct 2015 08:12:20 GMT shrub:pkgman Missing package shrub-files.
+Sun, 11 Oct 2015 08:12:22 GMT shrub:pkgman Missing package shrub-svg.
+Sun, 11 Oct 2015 08:12:24 GMT shrub:config Packages registered.
+Sun, 11 Oct 2015 08:12:24 GMT shrub:server Config loaded.
+Sun, 11 Oct 2015 08:12:28 GMT shrub:http Shrub HTTP server up and running on port 4201!
+127.0.0.1 5b58be1a
+Sun, 11 Oct 2015 08:12:32 GMT shrub:repl REPL server listening at /home/cha0s/dev/code/js/shrub/packages/shrub-repl/socket
+Sun, 11 Oct 2015 08:12:32 GMT shrub:server Bootstrap complete.
+10.0.0.43 d29022d7
+10.0.0.43 d29022d7
+10.0.0.43 d29022d7
+10.0.0.43 d29022d7
+10.0.0.43 d29022d7

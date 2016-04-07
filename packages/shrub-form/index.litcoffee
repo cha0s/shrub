@@ -3,6 +3,9 @@
 *Handle form and method parsing, and submission of POST'ed data into the
 Angular sandbox.*
 
+    bodyParser = require 'body-parser'
+    methodOverride = require 'method-override'
+
     exports.pkgmanRegister = (registrar) ->
 
 #### Implements hook `shrubAngularSandboxNavigationMiddleware`.
@@ -69,6 +72,6 @@ Parse POST submissions, and allow arbitrary method form attribute.
 
         label: 'Parse form submissions'
         middleware: [
-          express.bodyParser()
-          express.methodOverride()
+          bodyParser.urlencoded extended: true
+          methodOverride()
         ]

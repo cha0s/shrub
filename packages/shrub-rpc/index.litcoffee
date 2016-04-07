@@ -115,6 +115,13 @@ routes' expectations.
 
                   @error = null
 
+Stubs.
+
+`TODO`: Make these not stubs.
+
+                getHeader: -> null
+                write: -> null
+
                 setError: (@error) -> return this
 
                 end: (data) ->

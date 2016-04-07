@@ -1,5 +1,7 @@
 # Express - error handler
 
+    errorHandler = require 'errorhandler'
+
     exports.pkgmanRegister = (registrar) ->
 
 #### Implements hook `shrubHttpMiddleware`.
@@ -30,7 +32,7 @@ Otherwise, we'll let Express format the error all pretty-like.
 
           else
 
-            express.errorHandler.title = 'Shrub'
-            express.errorHandler()
+            errorHandler.title = 'Shrub'
+            errorHandler()
 
         ]

@@ -10,5 +10,7 @@ Serve Express routes.
 
         label: 'Serve routes'
         middleware: [
-          http._app.router
+          exports.routeSentinel
         ]
+
+    exports.routeSentinel = ->
