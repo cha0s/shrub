@@ -13,8 +13,8 @@ up later.*
 #### Implements hook `shrubAngularDirective`.
 
       registrar.registerHook 'shrubAngularDirective', -> [
-        '$compile', '$injector', '$log', '$q', 'shrub-form', 'shrub-require'
-        ($compile, $injector, $log, $q, formService, require) ->
+        '$compile', '$exceptionHandler', '$injector', '$log', '$q', 'shrub-form', 'shrub-require'
+        ($compile, $exceptionHandler, $injector, $log, $q, formService, require) ->
 
           link: (scope, element, attrs) ->
 
@@ -29,6 +29,20 @@ need to be rebuilt.
 
               form.key ?= attrs.form
 
+Get the form's current values.
+
+              form.values = ->
+                values = {}
+
+                for name, field of form.fields
+                  widget = formService.widgets[field.type]
+                  if widget.extractValues?
+                    widget.extractValues field, values, formService
+                  else
+                    values[field.name] = field.value
+
+                return values
+
 Normalize form submits into an array.
 
               form.submits = [form.submits] unless angular.isArray form.submits
@@ -37,20 +51,19 @@ Build a submit function which will be bound to ngSubmit.
 
               (scope['$shrubSubmit'] ?= {})[form.key] = ($event) ->
 
-Gather all the field values.
-
-                values = {}
-                for name, field of form.fields
-
-                  widget = formService.widgets[field.type]
-                  if widget.extractValues?
-                    widget.extractValues field, values, formService
-                  else
-                    values[field.name] = field.value
-
 Call all the form submission handlers.
 
-                $q.all (submit values, form, $event for submit in form.submits)
+                try
+
+                  values = form.values()
+
+                  promises = for submit in form.submits
+                    submit values, form, $event
+
+                  $q.all promises
+
+                catch error
+                  $exceptionHandler error
 
 #### Invoke hook `shrubFormAlter`.
 
