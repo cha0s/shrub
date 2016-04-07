@@ -2,6 +2,8 @@
 
 *Tools for working with [Waterline](https://github.com/balderdashy/waterline).*
 
+    require('events').EventEmitter.prototype._maxListeners = 100
+
     config = require 'config'
     pkgman = require 'pkgman'
 
