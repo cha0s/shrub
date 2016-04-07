@@ -122,7 +122,7 @@ following properties:
 *Reset scores and created time.*
 
             reset: ->
-              @scores.remove id for id in _.pluck @scores, 'id'
+              @scores.remove id for id in _.map @scores, 'id'
               @createdAt = new Date()
 
               return this
@@ -132,7 +132,7 @@ following properties:
 *Get the sum of all scores for this limit.*
 
             score: ->
-              _.pluck(@scores, 'score').reduce ((l, r) -> l + r), 0
+              _.map(@scores, 'score').reduce ((l, r) -> l + r), 0
 
 ## Limit#ttl
 
