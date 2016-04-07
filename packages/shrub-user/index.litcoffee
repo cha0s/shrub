@@ -7,6 +7,8 @@
 
     {Middleware} = require 'middleware'
 
+    {monkeyPatchLogin} = require './login'
+
     orm = null
 
     clientModule = require './client'
@@ -384,6 +386,10 @@ Passport middleware.
 
       passport.initialize()
       passport.session()
+
+Monkey patch.
+
+      monkeyPatchLogin
 
 Set the user into the request.
 

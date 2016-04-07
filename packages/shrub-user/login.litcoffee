@@ -42,14 +42,18 @@
 
               errors = require 'errors'
 
-              deferred = Promise.defer()
-              req._passport.instance.authenticate(
-                req.body.method, deferred.callback
-              ) req
+              promise = new Promise (resolve, reject) ->
+                req._passport.instance.authenticate(
+                  req.body.method
+                  (error, user, info) ->
+                    return reject error if error?
+                    resolve user, info
+
+                ) req, res
 
 Log the user in (if it exists), and redact it for the response.
 
-              deferred.promise.bind({}).spread((@user, info) ->
+              promise.bind({}).then((@user, info) ->
                 throw errors.instantiate 'login' unless @user
 
                 req.logIn @user
@@ -125,8 +129,6 @@ Load a user and compare the hashed password.
                 user.populateAll()
               ).then((user) -> done null, user).catch done
 
-            monkeyPatchLogin()
-
             next()
 
         ]
@@ -138,13 +140,9 @@ Load a user and compare the hashed password.
 Monkey patch http.IncomingMessage.prototype.login to run our middleware, and
 return a promise.
 
-    monkeyPatchLogin = ->
-
-      {IncomingMessage} = require 'http'
+    exports.monkeyPatchLogin = (req, res, next) ->
 
       middleware = require 'middleware'
-
-      req = IncomingMessage.prototype
 
 #### Invoke hook `shrubUserBeforeLoginMiddleware`.
 
@@ -175,3 +173,5 @@ return a promise.
                 return reject error if error?
 
                 resolve()
+
+      next()
