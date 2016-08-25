@@ -58,7 +58,7 @@ Emit the configuration module.
 
 * (http.IncomingRequest) `req` - The request object.
 
-USe a client's request object to render configuration.
+Use a client's request object to render configuration.
 
     exports.renderPackageConfig = (req) ->
 
