@@ -6,17 +6,18 @@ implementations of controllers, services, filters, providers, and directives
 are gathered and registered into Angular.*
 
     angular.module('shrub.packages', [
+      'shrub.directive'
       'shrub.require'
       'shrub.pkgman'
     ])
 
       .config([
         '$compileProvider', '$controllerProvider', '$filterProvider'
-        '$injector', '$provide', 'shrub-pkgmanProvider'
-        'shrub-requireProvider'
+        '$injector', '$provide', 'shrub-directiveProvider'
+        'shrub-pkgmanProvider', 'shrub-requireProvider'
         (
           $compileProvider, $controllerProvider, $filterProvider
-          $injector, $provide, pkgman, {require}
+          $injector, $provide, directive, pkgman, {require}
         ) ->
 
           config = require 'config'
@@ -34,6 +35,71 @@ are gathered and registered into Angular.*
           debug 'Controllers registered.'
 
           debug 'Registering directives...'
+
+#### Invoke hook `shrubAngularDirective`.
+
+          for path, injected of pkgman.invoke 'shrubAngularDirective'
+            directive.define path, injected
+
+          debug 'Directives registered.'
+
+          debug 'Registering filters...'
+
+#### Invoke hook `shrubAngularFilter`.
+
+          for path, injected of pkgman.invoke 'shrubAngularFilter'
+            filterName = pkgman.normalizePath path
+            debug filterName
+            $filterProvider.register filterName, injected
+
+          debug 'Filters registered.'
+
+#### Invoke hook `shrubAngularProvider`.
+
+          debug 'Registering providers...'
+
+          for path, provider of pkgman.invoke 'shrubAngularProvider'
+            debug path
+            $provide.provider path, provider
+
+          debug 'Providers registered.'
+
+#### Invoke hook `shrubAngularService`.
+
+          debug 'Registering services...'
+
+          for path, injected of pkgman.invoke 'shrubAngularService'
+            debug path
+            $provide.service path, injected
+
+          debug 'Services registered.'
+
+      ])
+
+      .run([
+        '$injector', 'shrub-require'
+        ($injector, require) ->
+
+Set an injector so that Angular injection can occur out of band.
+
+          angular_ = require 'angular'
+          angular_.setInjector $injector
+
+      ])
+
+Provide Shrub's directive definition API.
+
+    angular.module('shrub.directive', [
+      'shrub.pkgman'
+      'shrub.require'
+    ])
+
+      .provider 'shrub-directive', [
+        '$compileProvider', '$injector', '$provide', 'shrub-pkgmanProvider'
+        'shrub-requireProvider'
+        ($compileProvider, $injector, $provide, pkgman, {require}) ->
+
+          debug = require('debug') 'shrub:angular'
 
 Normalize, augment, and register a directive.
 
@@ -123,72 +189,31 @@ Internal Angular state that we have to reset.
 
             return bindings
 
-#### Invoke hook `shrubAngularDirective`.
+          directive = {}
 
-          for path, injected of pkgman.invoke 'shrubAngularDirective'
-            do (path, injected) ->
-              directiveName = pkgman.normalizePath path
-              debug directiveName
+          directive.define = (path, injected) ->
+            directiveName = pkgman.normalizePath path
+            debug directiveName
 
 First, register it through Angular's normal registration mechanism. This sets
 a bunch of internal state we don't have access to.
 
-              $compileProvider.directive directiveName, injected
+            $compileProvider.directive directiveName, injected
 
 Follow that by normalizing, augmenting, and registering the directive again.
 It will run over the previous definition, ensuring everything works nicely.
 
-              $provide.factory "#{directiveName}Directive", [
-                '$injector', prepareDirective directiveName, path, injected
-              ]
+            $provide.factory "#{directiveName}Directive", [
+              '$injector', prepareDirective directiveName, path, injected
+            ]
 
-          debug 'Directives registered.'
+          directive.$get = -> directive
 
-          debug 'Registering filters...'
+          return directive
 
-#### Invoke hook `shrubAngularFilter`.
+      ]
 
-          for path, injected of pkgman.invoke 'shrubAngularFilter'
-            filterName = pkgman.normalizePath path
-            debug filterName
-            $filterProvider.register filterName, injected
-
-          debug 'Filters registered.'
-
-#### Invoke hook `shrubAngularProvider`.
-
-          debug 'Registering providers...'
-
-          for path, provider of pkgman.invoke 'shrubAngularProvider'
-            debug path
-            $provide.provider path, provider
-
-          debug 'Providers registered.'
-
-#### Invoke hook `shrubAngularService`.
-
-          debug 'Registering services...'
-
-          for path, injected of pkgman.invoke 'shrubAngularService'
-            debug path
-            $provide.service path, injected
-
-          debug 'Services registered.'
-
-      ])
-
-      .run([
-        '$injector', 'shrub-require'
-        ($injector, require) ->
-
-Set an injector so that Angular injection can occur out of band.
-
-          angular_ = require 'angular'
-          angular_.setInjector $injector
-
-      ])
-
-The module that provides Angular with access to Shrub's package manager.
+Provide Angular with access to Shrub's package manager.
 
     angular.module('shrub.pkgman', [
       'shrub.require'
@@ -216,5 +241,3 @@ Simply pass along pkgman as the 'service'.
 
           return pkgman
       ]
-
-
