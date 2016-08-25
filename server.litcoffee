@@ -19,6 +19,16 @@ included without qualification.
       middleware = require 'middleware'
       pkgman = require 'pkgman'
 
+Set up exit hooks.
+
+#### Invoke hook `shrubCoreProcessExit`.
+
+      process.on 'exit', -> pkgman.invoke 'shrubCoreProcessExit'
+
+      process.on 'SIGINT', -> process.exit()
+      process.on 'SIGTERM', -> process.exit()
+      process.on 'unhandledException', -> process.exit()
+
 Load the configuration.
 
       debug 'Loading config...'
@@ -60,11 +70,3 @@ listener below.
 
         console.error errors.stack error
         throw error
-
-#### Invoke hook `shrubCoreProcessExit`.
-
-      process.on 'exit', -> pkgman.invoke 'shrubCoreProcessExit'
-
-      process.on 'SIGINT', -> process.exit()
-      process.on 'SIGTERM', -> process.exit()
-      process.on 'unhandledException', -> process.exit()
