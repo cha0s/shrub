@@ -13,7 +13,7 @@
 
 /app
 /build
-/config/settings.json
+/config/settings.yml
 
 /gh-pages
 mkdocs.yml

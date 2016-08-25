@@ -8,6 +8,8 @@
     nconf = require 'nconf'
     fs = require 'fs'
 
+    yaml = require 'js-yaml'
+
     pkgman = require 'pkgman'
 
     {Config} = require 'client/modules/config'
@@ -36,12 +38,13 @@
 
 Ensure the configuration file exists.
 
-      unless fs.existsSync settingsFilename = './config/settings.json'
-        throw new Error 'Settings file not found! You should copy config/default.settings.json to config/settings.json'
+      unless fs.existsSync settingsFilename = './config/settings.yml'
+        throw new Error 'Settings file not found! You should copy config/default.settings.yml to config/settings.yml'
 
-      nconf.argv().env().file settingsFilename
+      settings = yaml.safeLoad fs.readFileSync settingsFilename, 'utf8'
+      settings.path = "#{__dirname}/.."
 
-      nconf.defaults path: "#{__dirname}/.."
+      nconf.argv().env().overrides settings
 
       return
 
