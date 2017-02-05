@@ -108,6 +108,7 @@ Set collection defaults.
 
           collection.connection ?= 'shrub'
           collection.identity ?= identity
+          collection.migrate ?= 'create'
           collections_[collection.identity] = collection
 
 ## Collection#instantiate.
