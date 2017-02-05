@@ -95,12 +95,11 @@ Generate random 512-bit salt if no salt provided
           exports.hasher options
         )
 
-      # Node.js PBKDF2 forces sha1
-      options.hash = 'sha1'
-      options.iterations = options.iterations ? 10000
+      options.digest ?= 'sha1'
+      options.iterations ?= 10000
 
       exports.pbkdf2(
-        options.plaintext, options.salt, options.iterations, 64
+        options.plaintext, options.salt, options.iterations, 64, options.digest
 
       ).then (key) ->
         options.key = new Buffer key
