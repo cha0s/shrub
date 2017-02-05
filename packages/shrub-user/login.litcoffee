@@ -73,7 +73,11 @@ Join a channel for the username.
 
                 @user.redactFor @user
 
-              ).then((user) -> res.end user).catch next
+              ).then((user) ->
+
+                res.end user
+
+              ).catch next
 
           ]
 
