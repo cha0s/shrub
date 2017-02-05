@@ -113,20 +113,25 @@ routes' expectations.
                 constructor: ->
                   super
 
+                  @data = {}
                   @error = null
 
 Stubs.
 
-`TODO`: Make these not stubs.
+`TODO`: Make this not a stub.
 
                 getHeader: -> null
-                write: -> null
 
                 setError: (@error) -> return this
 
                 end: (data) ->
+
+                  @write data
+
                   return fn error: errors.serialize @error if @error?
-                  fn result: data
+                  fn result: @data
+
+                write: (data) -> @data[k] = v for k, v of data
 
 Send an error to the client.
 
