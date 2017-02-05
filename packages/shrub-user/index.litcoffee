@@ -173,11 +173,12 @@ Generate a one-time login token.
 
               crypto.randomBytes 24
 
-            ).then (token) ->
+            ).then((token) ->
 
               user.resetPasswordToken = token.toString 'hex'
-
               user.save()
+
+            ).then -> return user
           )
 
         User.redactors = [(redactFor) ->
