@@ -101,35 +101,9 @@ Session reification.
           cookie: cookie
           key: key
           resave: false
-          saveUninitialized: false
+          saveUninitialized: true
           secret: cookie.cryptoKey
           store: sessionStore
         )
-
-If this is the first request made by a client, the cookie won't exist in
-req.headers.cookie. We normalize that inconsistency, so all consumers of the
-cookie will have a consistent interface on the first as well as subsequent
-requests.
-
-        (req, res, next) ->
-
-If the client is already in sync, awesome!
-
-          return next() if req.signedCookies[key] is req.sessionID
-
-Generate the cookie
-
-          val = 's:' + signature.sign req.sessionID, cookie.cryptoKey
-          cookieText = req.session.cookie.serialize key, val
-
-Commit the session before offering the cookie, otherwise it wouldn't actually
-be pointing at anything yet.
-
-          req.session.save (error) ->
-            next error if error?
-
-            req.signedCookies[key] = req.sessionID
-            req.headers.cookie = cookieText
-            next()
 
       ]
