@@ -115,12 +115,15 @@ routes' expectations.
 
                   @data = {}
                   @error = null
+                  @headers = {}
 
 Stubs.
 
 `TODO`: Make this not a stub.
 
-                getHeader: -> null
+                getHeader: (key) -> @headers[key]
+
+                setHeader: (key, value) -> @headers[key] = value
 
                 setError: (@error) -> return this
 
@@ -132,6 +135,9 @@ Stubs.
                   fn result: @data
 
                 write: (data) -> @data[k] = v for k, v of data
+
+                writeHead: (code, headers) ->
+                  @headers[k] = v for k, v of headers
 
 Send an error to the client.
 
