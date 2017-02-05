@@ -85,7 +85,6 @@ Module implementing the socket manager.
           'shrub-skin/path'
           'shrub-assets'
           'shrub-skin/render'
-          'shrub-angular'
           'shrub-http-express/errors'
         ]
 
