@@ -9,6 +9,7 @@ _resolveModuleName = (name, parentFilename) ->
     return name if requires_[name]?
     return "#{name}/index" if requires_["#{name}/index"]?
 
+  # Absolute path match?
   return checked if (checked = checkModuleName name)?
 
   # Resolve relative paths. We have to check methods on `path`. See below for

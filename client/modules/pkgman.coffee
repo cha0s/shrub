@@ -13,11 +13,10 @@ pathIndex = {}
 # A list of registered packages.
 _packages = []
 
+# Registrar object passed to packages to allow them to register hooks and/or
+# recur into their own subpackages to allow them to.
 class PkgmanRegistrar
 
-  # Registrar function passed to packages to allow them to register hooks
-  # and/or recur into their own subpackages to allow them to.
-  #
   # ## *constructor*
   #
   # *Instantiate the registrar with the current (sub)package path.*

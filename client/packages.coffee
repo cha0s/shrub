@@ -32,17 +32,17 @@ angular.module('shrub.packages', [
 
       debug 'Controllers registered.'
 
+      # #### Invoke hook `shrubAngularDirective`.
       debug 'Registering directives...'
 
-      # #### Invoke hook `shrubAngularDirective`.
       for path, injected of pkgman.invoke 'shrubAngularDirective'
         directive.define path, injected
 
       debug 'Directives registered.'
 
+      # #### Invoke hook `shrubAngularFilter`.
       debug 'Registering filters...'
 
-      # #### Invoke hook `shrubAngularFilter`.
       for path, injected of pkgman.invoke 'shrubAngularFilter'
         filterName = pkgman.normalizePath path
         debug filterName
@@ -70,11 +70,11 @@ angular.module('shrub.packages', [
 
   ])
 
+  # Set an injector so that Angular injection can occur out of band.
   .run([
     '$injector', 'shrub-require'
     ($injector, require) ->
 
-      # Set an injector so that Angular injection can occur out of band.
       angular_ = require 'angular'
       angular_.setInjector $injector
 
@@ -173,8 +173,10 @@ angular.module('shrub.directive', [
 
         return bindings
 
+      # Build the directive provider.
       directive = {}
 
+      # Define a directive.
       directive.define = (path, injected) ->
         directiveName = pkgman.normalizePath path
         debug directiveName
@@ -190,6 +192,7 @@ angular.module('shrub.directive', [
           '$injector', prepareDirective directiveName, path, injected
         ]
 
+      # Provide the service.
       directive.$get = -> directive
 
       return directive
@@ -209,9 +212,9 @@ angular.module('shrub.pkgman', [
       debug = require('debug') 'shrub:pkgman'
       pkgman = require 'pkgman'
 
+      # Load the package list from configuration.
       debug 'Loading packages...'
 
-      # Load the package list from configuration.
       pkgman.registerPackageList config.get 'packageList'
 
       debug 'Packages loaded.'

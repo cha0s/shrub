@@ -2,10 +2,10 @@
 pkgman = require 'pkgman'
 
 # ## TransmittableError
+#
+# Extend this class if you'd like to implement an error.
 exports.TransmittableError = class TransmittableError extends Error
 
-  # Extend this class if you'd like to implement an error
-  #
   # ## *constructor*
   #
   # See:

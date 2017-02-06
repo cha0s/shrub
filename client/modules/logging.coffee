@@ -2,8 +2,7 @@
 #
 # *A unified interface for logging information.*
 #
-# ###### TODO: This isn't much use on the client. To properly log, we would
-# have to hook into localStorage.
+# ###### TODO: This isn't much use on the client. To properly log, we would have to hook into localStorage.
 config = require 'config'
 
 # ## logger.create

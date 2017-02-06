@@ -1,7 +1,8 @@
 # # Angular augmentation module
 #
-# *Provides functionality related to Angular for client packages.* Allow shrub
-# to set the injector.
+# *Provides functionality related to Angular for client packages.*
+#
+# Allow shrub to set the injector.
 _$injector = null
 exports.setInjector = ($injector) -> _$injector = $injector
 

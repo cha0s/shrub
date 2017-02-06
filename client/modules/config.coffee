@@ -6,16 +6,53 @@ module.exports = new class Config
   # This class allows us to wrap and subsequently get, set, and check the
   # existence of values in a configuration tree. The configuration tree may be
   # traversed with colons, e.g. `parent:child:grandchild`. Supposing we have a
-  # configuration structure: ```coffeescript configuration = visible: true
-  # child: id: 200, tag: null ``` We may wrap and interact with it as follows:
-  # ```coffeescript wrapped = new Config configuration wrapped.get 'visible'
-  # ``` Returns: `true` ```coffeescript wrapped.set 'child:name', 'Billy'
-  # wrapped.get 'child' ``` Returns: `{ id: 200, name: 'Billy' }`
-  # ```coffeescript wrapped.has 'child:id' ``` Returns: `true` ```coffeescript
-  # wrapped.has 'child:thing' ``` Returns: `false` `has` works with null
-  # values: ```coffeescript wrapped.has 'child:tag' ``` Returns: `true`
+  # configuration structure:
   #
-  # ###### TODO: Is this necessary? If not, remove it.
+  # ```coffeescript
+  # configuration =
+  #   visible: true
+  #   child:
+  #     id: 200
+  #     tag: null
+  # ```
+  #
+  # We may wrap and interact with it as follows:
+  #
+  # ```coffeescript
+  # wrapped = new Config configuration
+  # wrapped.get 'visible'
+  # ```
+  #
+  # Returns: `true`
+  #
+  # ```coffeescript
+  # wrapped.set 'child:name', 'Billy'
+  # wrapped.get 'child'
+  # ```
+  #
+  # Returns: `{ id: 200, name: 'Billy' }`
+  #
+  # ```coffeescript
+  # wrapped.has 'child:id'
+  # ```
+  #
+  # Returns: `true`
+  #
+  # ```coffeescript
+  # wrapped.has 'child:thing'
+  # ```
+  #
+  # Returns: `false`
+  #
+  # **NOTE:** `has` works with null values:
+  #
+  # ```coffeescript
+  # wrapped.has 'child:tag'
+  # ```
+  #
+  # Returns: `true`
+  #
+  # ## Provide the class externally.
   Config: Config
 
   # ## *constructor*
@@ -34,25 +71,25 @@ module.exports = new class Config
 
   # ## Config#get
   #
-  # * (string) `key` - The key to look up, e.g. parent:child:grandchild
+  # * (string) `path` - The path to look up, e.g. parent:child:grandchild
   #
-  # *Get a value by key.*
-  get: (key) ->
+  # *Get a value by path.*
+  get: (path) ->
 
     current = @config
-    for part in key.split ':'
+    for part in path.split ':'
       current = current?[part]
     current
 
   # ## Config#has
   #
-  # * (string) `key` - The key to look up, e.g. `'parent:child:grandchild'`
+  # * (string) `path` - The path to look up, e.g. `'parent:child:grandchild'`
   #
-  # *Check whether a key exists.*
-  has: (key) ->
+  # *Check whether a path exists.*
+  has: (path) ->
 
     current = @config
-    for part in key.split ':'
+    for part in path.split ':'
       return false unless part of current
       current = current[part]
 
@@ -60,14 +97,14 @@ module.exports = new class Config
 
   # ## Config#set
   #
-  # * (string) `key` - The key to look up, e.g. parent:child:grandchild
+  # * (string) `path` - The path to look up, e.g. parent:child:grandchild
   #
-  # * (any) `value` - The value to store at the key location.
+  # * (any) `value` - The value to store at the path location.
   #
-  # *Set a value by key.*
-  set: (key, value) ->
+  # *Set a value by path.*
+  set: (path, value) ->
 
-    [parts..., last] = key.split ':'
+    [parts..., last] = path.split ':'
     current = @config
     for part in parts
       current = (current[part] ?= {})

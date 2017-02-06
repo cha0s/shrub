@@ -4,20 +4,19 @@
 config = require 'config'
 pkgman = require 'pkgman'
 
+# Implements a middleware stack. Middleware functions can be added to the
+# stack with `use`. Calling `dispatch` invokes the middleware functions
+# serially. Each middleware accepts an arbitrary parameters and finally a
+# `next` function. When a middleware finishes, it must call the `next`
+# function. If there was an error, it must be thrown or passed as the first
+# argument to `next`. If no error occurred, `next` must be invoked without
+# arguments. Error-handling middleware can also be defined. These middleware
+# take an additional parameter at the beginning of the function signature:
+# `error`. Error-handling middleware are only called if a previous middleware
+# threw or passed an error. Conversely, non-error-handling middleware are
+# skipped if a previous error occurred.
 exports.Middleware = class Middleware extends EventEmitter
 
-  # Implements a middleware stack. Middleware functions can be added to the
-  # stack with `use`. Calling `dispatch` invokes the middleware functions
-  # serially. Each middleware accepts an arbitrary parameters and finally a
-  # `next` function. When a middleware finishes, it must call the `next`
-  # function. If there was an error, it must be thrown or passed as the first
-  # argument to `next`. If no error occurred, `next` must be invoked without
-  # arguments. Error-handling middleware can also be defined. These middleware
-  # take an additional parameter at the beginning of the function signature:
-  # `error`. Error-handling middleware are only called if a previous
-  # middleware threw or passed an error. Conversely, non-error-handling
-  # middleware are skipped if a previous error occurred.
-  #
   # ## *constructor*
   #
   # *Create a middleware stack.*
@@ -35,8 +34,8 @@ exports.Middleware = class Middleware extends EventEmitter
   # * (mixed) `...` - One or more values to pass to the middleware.
   #
   # * (function) `fn` - A function invoked when the middleware stack has
-  #
   # finished. If an error occurred, it will be passed as the first argument.
+  #
   # *Invoke the middleware functions serially.*
   dispatch: (args..., fn) ->
     self = this
@@ -116,12 +115,7 @@ exports.fromHook = (hook, paths, args...) ->
 
     debugSilly "- - #{spec.label}"
 
-    for fn in spec.middleware ? []
-      fn.label = spec.label
-      middleware.use fn, spec.label
-
-  # middleware.on 'invoking', (fn) -> debugSilly "Invoking #{fn.label}"
-  # middleware.on 'invoked', (fn) -> debugSilly "Invoked #{fn.label}"
+    middleware.use fn for fn in spec.middleware ? []
 
   middleware
 

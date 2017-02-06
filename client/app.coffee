@@ -11,10 +11,10 @@ coreDependencies.push 'ngRoute'
 coreDependencies.push 'ngSanitize'
 
 # `packageDependencies` will be automatically generated and populated by
-# Grunt. See the documentation for
-# [`shrubAngularPackageDependencies`](hooks/#shrubAngularPackageDependencies).
+# Grunt.
 #
-# ###### TODO: Link this to where this happens in Grunt for illustration.
+# See the documentation for
+# [`shrubAngularPackageDependencies`](../../hooks/#shrubangularpackagedependencies).
 coreDependencies.push packageDependencies...
 
 # Include core shrub dependencies.
