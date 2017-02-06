@@ -374,12 +374,37 @@ _allSourceFiles().then (files) ->
 
   yml = fs.readFileSync 'docs/mkdocs.template.yml', 'utf8'
 
+  renderHierarchy = (output, hierarchy) ->
+
+    renderHierarchyInternal = (output, hierarchy, indent) ->
+
+      if _.isString hierarchy
+
+        output[output.length - 1] += " '#{hierarchy}'"
+
+      else
+
+        for k, v of hierarchy
+
+          output.push "#{indent}- #{k}:"
+          renderHierarchyInternal output, v, "#{indent}    "
+
+    renderHierarchyInternal output, hierarchy, ''
+
+  hierarchy = Source: {}
   for file in files
+    walk = hierarchy.Source
+    parts = file.split '/'
+    for part, i in parts
+      if i is parts.length - 1
+        walk[part] = "source/#{file}"
+      else
+        walk[part] ?= {}
+        walk = walk[part]
 
-    # Add them under the 'Source code' path.
-    yml += "- [source/#{file}, 'Source code', '#{file}']\n"
-
-  fs.writeFileSync 'mkdocs.yml', yml
+  output = []
+  renderHierarchy output, hierarchy
+  fs.writeFileSync 'mkdocs.yml', yml + output.join "\n"
 
 # Render the packages page.
 fileStatsListPromise.then((fileStatsList) ->
