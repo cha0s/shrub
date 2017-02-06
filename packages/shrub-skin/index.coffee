@@ -225,7 +225,13 @@ exports.assets = (skinKey) ->
         'css/**/*.min.css'
       ]
 
+  # Make script and stylesheet paths absolute.
+  for type in ['scripts', 'styleSheets']
+    for env in ['default', 'production']
+      for asset, i in skinAssets[type][env]
+        skinAssets[type][env][i] = "/#{asset}"
+
   # #### Invoke hook `shrubSkinAssets`.
   pkgman.invokePackage skinKey, 'shrubSkinAssets', skinAssets
 
-  skinAssets
+  return skinAssets

@@ -2,8 +2,7 @@
 #
 # *A sandboxed version of Angular, for clients lacking JS.*
 #
-# ###### TODO: Sandbox pool, might be better handled by
-# [sandboxes](source/server/sandboxes).
+# ###### TODO: Sandbox pool, might be better handled by [sandboxes](source/server/sandboxes).
 _ = require 'lodash'
 Promise = require 'bluebird'
 url = require 'url'
@@ -35,8 +34,7 @@ exports.pkgmanRegister = (registrar) ->
 
         (req, res, next) ->
 
-          # ###### TODO: Cookie-less clients won't have a valid session ID to
-          # call with. This should be some other token, perhaps CSRF.
+          # ###### TODO: Cookie-less clients won't have a valid session ID to call with. This should be some other token, perhaps CSRF.
           id = req.session?.id
           if (sandbox = sandboxManager.lookup id)?
             sandbox.close().finally -> res.end()
@@ -74,8 +72,9 @@ exports.pkgmanRegister = (registrar) ->
           ,
             cookie: req.headers.cookie
 
-            # ###### TODO: Multiline.
-            url: "http://localhost:#{config.get 'packageSettings:shrub-http:port'}/shrub-angular-entry-point"
+            url: "http://localhost:#{
+              config.get 'packageSettings:shrub-http:port'
+            }/shrub-angular-entry-point"
           ,
             req.session.id
           )
@@ -211,10 +210,10 @@ sandboxManager = new class SandboxManager
   # * (string) `cookie` - The cookie to use for the document if creating.
   #
   # * (optional string) `id` - An ID either for looking up later (if
-  # creating), or
+  # creating), or as a search now.
   #
-  # as a search now. *Look up a sandbox by ID, or create one if none is
-  # registered for this ID.*
+  # *Look up a sandbox by ID, or create one if none is registered for this
+  # ID.*
   lookupOrCreate: (html, options, id = null) ->
 
     if (sandbox = @lookup id)?
@@ -368,9 +367,9 @@ augmentSandbox = (sandbox) ->
 
   # ## Sandbox#inject
   #
-  # * (mixed) `injectable` - An annotated function to inject with
+  # * (mixed) `injectable` - An annotated function to inject with dependencies.
   #
-  # dependencies. *Inject an [annotated
+  # *Inject an [annotated
   # function](http://docs.angularjs.org/guide/di#dependency-annotation) with
   # dependencies.*
   sandbox.inject = (injectable) ->

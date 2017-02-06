@@ -34,13 +34,14 @@ exports.pkgmanRegister = (registrar) ->
         "^\s*(?:#{regexes.join '|'})"
       )
 
+      # Attach debug info if we're in test mode.
       unless config.get 'packageConfig:shrub-core:testMode'
         $compileProvider.debugInfoEnabled false
 
-      # Completely override $q with Bluebird, because it's awesome.
+      # Completely override the $q service with Bluebird, because it's
+      # awesome.
       #
-      # ###### TODO: Angular also implements a private service called $$q used
-      # for animation. We should override that one, too.
+      # ###### TODO: Angular also implements a private service called $$q used for animation. We should override that one, too.
       $provide.decorator '$q', [
         '$rootScope', '$exceptionHandler'
         ($rootScope, $exceptionHandler) ->
@@ -63,6 +64,7 @@ exports.pkgmanRegister = (registrar) ->
             resolve = null
             reject = null
 
+            # Create a promise.
             promise = new Promise ->
               resolve = arguments[0]
               reject = arguments[1]
@@ -77,6 +79,7 @@ exports.pkgmanRegister = (registrar) ->
               proxyThen.apply promise, args
             notify: (args...) -> fn args... for fn in __notifications
 
+            # Return the deferred object.
             promise: promise
             resolve: resolve
             reject: reject
@@ -93,30 +96,27 @@ exports.pkgmanRegister = (registrar) ->
           originalAll = Promise.all
           Promise.all = (promises) ->
 
-            # Cast it to a promise to be able to determine whether it's an
-            # array.
-            Promise.cast(promises).then ->
+            # Defer to Bluebird if it's an array.
+            return originalAll promises if angular.isArray promises
 
-              # Defer to Bluebird if it's an array.
-              return originalAll promises if angular.isArray promises
+            # If it's not an object, defer to Bluebird (it'll throw).
+            return originalAll promises unless angular.isObject promises
 
-              # If it's not an object, defer to Bluebird (it'll throw).
-              return originalAll promises unless angular.isObject promises
+            # Track the keys so we can map the values.
+            promiseKeys = []
+            promiseArray = for key, promise of promises
+              promiseKeys.push key
+              promise
 
-              # Track the keys so we can map the values.
-              promiseKeys = []
-              promiseArray = for key, promise of promises
-                promiseKeys.push key
-                promise
+            originalAll(promiseArray).then (results) ->
+              objectResult = {}
 
-              originalAll(promiseArray).then (results) ->
-                objectResult = {}
+              for result, index in results
+                objectResult[promiseKeys[index]] = result
 
-                for result, index in results
-                  objectResult[promiseKeys[index]] = result
+              objectResult
 
-                objectResult
-
+          # Return the service.
           Promise
 
       ]
@@ -144,6 +144,7 @@ exports.pkgmanRegister = (registrar) ->
             '$controller', '$injector', '$q', '$scope'
             ($controller, $injector, $q, $scope) ->
 
+              # Immediately resolve if there's no controller.
               unless routeController?
                 return $scope.$emit 'shrub.core.routeRendered'
 
@@ -158,6 +159,7 @@ exports.pkgmanRegister = (registrar) ->
 
           ]
 
+          # Ensure a template exists to make Angular happy.
           route.template ?= ' '
 
           # Register the path into Angular.

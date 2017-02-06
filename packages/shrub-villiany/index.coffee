@@ -169,7 +169,13 @@ exports.pkgmanRegister = (registrar) ->
       fingerprint = fingerprint.get excluded
 
       # ###### TODO: Multiline
-      message = "Logged villiany score #{score} for #{type}, fingerprint: #{JSON.stringify fingerprint}"
+      message = "Logged villiany score #{
+        score
+      } for #{
+        type
+      }, fingerprint: #{
+        JSON.stringify fingerprint
+      }"
       message += ', which resulted in a ban.' if isVillian
       logger[if isVillian then 'error' else 'warn'] message
 

@@ -43,7 +43,7 @@ exports.pkgmanRegister = (registrar) ->
     middleware: [
       'shrub-assets/jquery'
       'shrub-socket-socket.io'
-      'shrub-assets/angular'
+      'shrub-angular'
       'shrub-assets'
       'shrub-html5-notification'
       'shrub-html5-local-storage'
@@ -52,7 +52,7 @@ exports.pkgmanRegister = (registrar) ->
     ]
 
   registrar.recur [
-    'angular', 'jquery'
+    'jquery'
   ]
 
 exports.assets = ->
@@ -65,8 +65,6 @@ exports.assets = ->
   assets = scripts: [], styleSheets: []
 
   # #### Invoke hook `shrubAssetsMiddleware`.
-  #
-  # Invoked to gather script assets for requests.
   debug '- Loading asset middleware...'
 
   assetsMiddleware = middleware.fromConfig 'shrub-assets:middleware'

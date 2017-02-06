@@ -81,8 +81,11 @@ exports.renderPackageConfig = (req) ->
       for key, value of subconfig
         continue unless value?
 
-        # ###### TODO: Multiline
-        config_.set "packageConfig:#{path.replace /\//g, ':'}:#{key.replace /\//g, ':'}", value
+        config_.set "packageConfig:#{
+          path.replace /\//g, ':'
+        }:#{
+          key.replace /\//g, ':'
+        }", value
 
     # #### Invoke hook `shrubConfigClientAlter`.
     pkgman.invoke 'shrubConfigClientAlter', req, config_
