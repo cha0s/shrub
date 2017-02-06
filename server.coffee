@@ -12,6 +12,7 @@ unless fork()
   debug = require('debug') 'shrub:server'
   debugSilly = require('debug') 'shrub-silly:server'
 
+  config = require 'config'
   errors = require 'errors'
   middleware = require 'middleware'
   pkgman = require 'pkgman'
@@ -28,7 +29,6 @@ unless fork()
   # Load the configuration.
   debug 'Loading config...'
 
-  config = require 'config'
   config.load()
   config.loadPackageSettings()
 
@@ -44,11 +44,6 @@ unless fork()
 
   bootstrapMiddleware = middleware.fromConfig(
     'shrub-core:bootstrapMiddleware'
-  )
-
-  middleware.fromHook(
-    'shrubCoreBootstrapMiddleware'
-    config.get 'packageSettings:shrub-core:shrubCoreBootstrapMiddleware'
   )
 
   debugSilly 'Bootstrap middleware loaded.'
