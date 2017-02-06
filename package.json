@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "author": "cha0s <cha0s@cha0s.io>",
   "scripts": {
-    "debug": "coffee --nodejs debug server.litcoffee",
+    "debug": "coffee --nodejs debug server.coffee",
     "doc": "mkdir -p gh-pages && coffee generate-docs.coffee && node_modules/groc/bin/groc",
-    "start": "DEBUG=shrub:*,reddichat:* coffee server.litcoffee"
+    "start": "DEBUG=shrub:* coffee server.coffee"
   },
   "repository": {
     "type": "git",
@@ -64,16 +64,16 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-karma": "^2.0.0",
     "grunt-newer": "^1.2.0",
-    "grunt-protractor-runner": "^3.2.0",
+    "grunt-protractor-runner": "^4.0.0",
     "grunt-wrap": "cha0s/grunt-wrap",
     "jasmine-node": "^1.14.5",
-    "karma": "^0.13.22",
-    "karma-chrome-launcher": "^0.2.3",
-    "karma-firefox-launcher": "^0.1.7",
-    "karma-jasmine": "^0.3.8",
-    "karma-junit-reporter": "^0.4.1",
-    "phantomjs": "^2.1.3",
-    "protractor": "^3.2.2",
+    "karma": "^1.4.1",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-firefox-launcher": "^1.0.0",
+    "karma-jasmine": "^1.1.0",
+    "karma-junit-reporter": "^1.2.0",
+    "phantomjs": "^2.1.7",
+    "protractor": "^5.1.0",
     "tcp-port-used": "^0.1.2"
   },
   "license": "MIT"
