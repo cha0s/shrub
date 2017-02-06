@@ -1179,12 +1179,8 @@ source file.</p>
 
   _transform: (chunk, encoding, done) -&gt;
     line = chunk.toString('utf8')
-</code></pre>
-<p>console.log line</p>
-<pre><code>    if matches = line.match /^\#\#\#\# Implements hook `([^`]+)`/
-</code></pre>
-<p>console.log matches[1]</p>
-<pre><code>      @list.push matches[1]
+    if matches = line.match /^\#\#\#\# Implements hook `([^`]+)`/
+      @list.push matches[1]
 
     done()
 </code></pre>
@@ -1451,7 +1447,7 @@ information.</p>
           packageName = parts.join '/'
 
           types = types.map (type) -&gt;
-            "    &lt;tr class=\"#{if stripe++ % 2 then 'odd' else 'even'}\"&gt;&lt;td&gt;&lt;a href=\"/source/#{_sourcePath fullName}\"&gt;#{_sourcePath file} (#{type})&lt;/a&gt;&lt;/td&gt;&lt;td align=\"right\"&gt;&lt;a href=\"/source/#{_sourcePath fullName}##{wordingFor[key]}-hook-#{_idFromString hook}\"&gt;#{key}&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;"
+            "    &lt;tr class=\"#{if stripe++ % 2 then 'odd' else 'even'}\"&gt;&lt;td&gt;&lt;a href=\"../source/#{_sourcePath fullName}\"&gt;#{_sourcePath file} (#{type})&lt;/a&gt;&lt;/td&gt;&lt;td align=\"right\"&gt;&lt;a href=\"../source/#{_sourcePath fullName}##{wordingFor[key]}-hook-#{_idFromString hook}\"&gt;#{key}&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;"
           types.join ''
 
         render += instances.join ''
@@ -1612,7 +1608,7 @@ i.e. italicized in markdown.</p>
       render += '&lt;p class="admonition-title"&gt;Implements hooks&lt;/p&gt;'
       render += '  &lt;table&gt;\n'
       render += fileStats.implementations.map((hook, index) -&gt;
-        "    &lt;tr class=\"#{if index % 2 then 'odd' else 'even'}\"&gt;&lt;td&gt;&lt;a href=\"/hooks/##{_idFromString hook}\"&gt;#{hook}&lt;/a&gt;&lt;/td&gt;&lt;td align=\"right\"&gt;&lt;a href=\"/source/#{sourcePath}#implements-hook-#{hook.toLowerCase()}\"&gt;implementation&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;\n"
+        "    &lt;tr class=\"#{if index % 2 then 'odd' else 'even'}\"&gt;&lt;td&gt;&lt;a href=\"../hooks/##{_idFromString hook}\"&gt;#{hook}&lt;/a&gt;&lt;/td&gt;&lt;td align=\"right\"&gt;&lt;a href=\"../source/#{sourcePath}#implements-hook-#{hook.toLowerCase()}\"&gt;implementation&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;\n"
       ).join ''
       render += '  &lt;/table&gt;\n'
       render += '&lt;/div&gt;'
@@ -1624,7 +1620,7 @@ i.e. italicized in markdown.</p>
       render += '&lt;p class="admonition-title"&gt;Implements hooks&lt;/p&gt;'
       render += '  &lt;table&gt;\n'
       render += fileStats.implementations.map((hook, index) -&gt;
-        "    &lt;tr class=\"#{if index % 2 then 'odd' else 'even'}\"&gt;&lt;td&gt;&lt;a href=\"/hooks/##{_idFromString hook}\"&gt;#{hook}&lt;/a&gt;&lt;/td&gt;&lt;td align=\"right\"&gt;&lt;a href=\"/source/#{sourcePath}#invoke-hook-#{hook.toLowerCase()}\"&gt;invocation&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;\n"
+        "    &lt;tr class=\"#{if index % 2 then 'odd' else 'even'}\"&gt;&lt;td&gt;&lt;a href=\"../hooks/##{_idFromString hook}\"&gt;#{hook}&lt;/a&gt;&lt;/td&gt;&lt;td align=\"right\"&gt;&lt;a href=\"../source/#{sourcePath}#invoke-hook-#{hook.toLowerCase()}\"&gt;invocation&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;\n"
       ).join ''
       render += '  &lt;/table&gt;\n'
       render += '&lt;/div&gt;'
