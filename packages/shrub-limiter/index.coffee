@@ -2,32 +2,58 @@
 #
 # *Limits the rate at which clients can do certain operations, like call RPC
 # routes.*
+orm = null
 pkgman = require 'pkgman'
 
+# Exported symbol to allow implementations to skip limiter checks.
 exports.SKIP = SKIP = {}
 
-# A limiter on a route is defined like: ```javascript
-# registrar.registerHook('shrubRpcRoutes', function() { var shrubLimiter =
-# require 'shrub-limiter' var Limiter = shrubLimiter.Limiter; var
-# LimiterMiddleware = shrubLimiter.LimiterMiddleware; var routes = []
-# routes.push({ .    path: 'my-package/route', .    middleware: [ .      ... .
-#      'shrub-villiany' // Include if limit infractions lead to eventual ban .
-#      new LimiterMiddleware( .        limiterDefinitionObject .      ) .     
-# ... .    ] }); return routes; }); ``` <small>***NOTE:*** *Ignore the leading
-# dots, they are a result of literate coffee limitations.*</small> Where
-# `limiterDefinitionObject` above is defined as an object with the following
-# properties:
+# A limiter on a route is defined like:
+#
+# ```javascript
+#
+# registrar.registerHook('shrubRpcRoutes', function() {
+#
+#   var shrubLimiter = require('shrub-limiter');
+#   var Limiter = shrubLimiter.Limiter;
+#   var LimiterMiddleware = shrubLimiter.LimiterMiddleware;
+#
+#   var routes = [];
+#
+#   routes.push({
+#
+#     path: 'my-package/route',
+#
+#     middleware: [
+#
+#       ...
+#
+#       'shrub-villiany', // Include if limit infractions lead to eventual ban
+#
+#       new LimiterMiddleware(
+#         [[limiterDefinitionObject]]
+#       ),
+#
+#       ...
+#
+#     ]
+#
+#   });
+#
+#   return routes;
+# });
+# ```
+#
+# Where `[[limiterDefinitionObject]]` above is defined as an object with the
+# following properties:
 #
 # * `threshold`: The [threshold](./limiter#threshold) for this limiter.
 #
 # * `message`: The message returned to the client when the threshold is
-#
 # passed.
 #
-# * `ignoreKeys`: The
-#
-# [fingerprint keys](source/server/fingerprint) to ignore when determining the
-# total limit.
+# * `ignoreKeys`: The [fingerprint keys](source/server/fingerprint) to ignore
+# when determining the total limit.
 #
 # * `villianyScore`: The score accumulated when this limit is crossed.
 #
@@ -37,6 +63,11 @@ exports.LimiterMiddleware = class LimiterMiddleware
   constructor: (@config) ->
 
 exports.pkgmanRegister = (registrar) ->
+
+  # #### Implements hook `shrubCorePreBootstrap`.
+  registrar.registerHook 'shrubCorePreBootstrap', ->
+
+    orm = require 'shrub-orm'
 
   # #### Implements hook `shrubOrmCollections`.
   registrar.registerHook 'shrubOrmCollections', ->
@@ -88,12 +119,18 @@ exports.pkgmanRegister = (registrar) ->
         #
         # *Reset scores and created time.*
         reset: ->
-          @scores.remove id for id in _.map @scores, 'id'
+
+          ShrubLimitScore = orm.collection 'shrub-limit-score'
+
+          for id in _.map @scores, 'id'
+            @scores.remove id
+            ShrubLimitScore.destroy(id: id).exec ->
+
           @createdAt = new Date()
 
           return this
 
-        # ## Limit#reset
+        # ## Limit#score
         #
         # *Get the sum of all scores for this limit.*
         score: ->
