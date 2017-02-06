@@ -65,6 +65,9 @@ exports.decrypt = (message, password) ->
 # * (object) `options` - The options to use. The options object may include
 # the following values:
 #
+#     * `digest`: The cryptographic digest function to use to generate the
+#       hash. Defaults to 'sha1'.
+#
 #     * `plaintext`: The plaintext password to hash and return as `key`. If
 #       none is provided, an 8-character random plaintext password will be
 #       generated.
