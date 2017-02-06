@@ -1586,7 +1586,7 @@ _allSourceFiles().then (files) -&gt;
 i.e. italicized in markdown.</p>
 <h6 id="todo-this-chunk-parsing-should-be-done-with-a-transform-like">TODO: This 'chunk' parsing should be done with a Transform like</h6>
 <p>the others.</p>
-<pre><code>    data = fs.readFileSync fileStats.file, 'utf8'
+<pre><code>    data = fs.readFileSync "docs/source/#{fileStats.file}", 'utf8'
     chunks = data.split '\n\n'
 
     title = chunks[0]
