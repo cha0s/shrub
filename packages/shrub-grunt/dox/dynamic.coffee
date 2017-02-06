@@ -304,7 +304,7 @@ fileStatsListPromise.then((fileStatsList) ->
           packageName = parts.join '/'
 
           types = types.map (type) ->
-            "    <tr class=\"#{if stripe++ % 2 then 'odd' else 'even'}\"><td><a href=\"/source/#{_sourcePath fullName}\">#{_sourcePath file} (#{type})</a></td><td align=\"right\"><a href=\"/source/#{_sourcePath fullName}##{wordingFor[key]}-hook-#{_idFromString hook}\">#{key}</a></td></tr>"
+            "    <tr class=\"#{if stripe++ % 2 then 'odd' else 'even'}\"><td><a href=\"../source/#{_sourcePath fullName}\">#{_sourcePath file} (#{type})</a></td><td align=\"right\"><a href=\"../source/#{_sourcePath fullName}##{wordingFor[key]}-hook-#{_idFromString hook}\">#{key}</a></td></tr>"
           types.join ''
 
         render += instances.join ''
@@ -466,7 +466,7 @@ fileStatsListPromise.then((fileStatsList) ->
       render += '<p class="admonition-title">Implements hooks</p>'
       render += '  <table>\n'
       render += fileStats.implementations.map((hook, index) ->
-        "    <tr class=\"#{if index % 2 then 'odd' else 'even'}\"><td><a href=\"/hooks/##{_idFromString hook}\">#{hook}</a></td><td align=\"right\"><a href=\"/source/#{sourcePath}#implements-hook-#{hook.toLowerCase()}\">implementation</a></td></tr>\n"
+        "    <tr class=\"#{if index % 2 then 'odd' else 'even'}\"><td><a href=\"../hooks/##{_idFromString hook}\">#{hook}</a></td><td align=\"right\"><a href=\"../source/#{sourcePath}#implements-hook-#{hook.toLowerCase()}\">implementation</a></td></tr>\n"
       ).join ''
       render += '  </table>\n'
       render += '</div>'
@@ -478,7 +478,7 @@ fileStatsListPromise.then((fileStatsList) ->
       render += '<p class="admonition-title">Implements hooks</p>'
       render += '  <table>\n'
       render += fileStats.implementations.map((hook, index) ->
-        "    <tr class=\"#{if index % 2 then 'odd' else 'even'}\"><td><a href=\"/hooks/##{_idFromString hook}\">#{hook}</a></td><td align=\"right\"><a href=\"/source/#{sourcePath}#invoke-hook-#{hook.toLowerCase()}\">invocation</a></td></tr>\n"
+        "    <tr class=\"#{if index % 2 then 'odd' else 'even'}\"><td><a href=\"../hooks/##{_idFromString hook}\">#{hook}</a></td><td align=\"right\"><a href=\"../source/#{sourcePath}#invoke-hook-#{hook.toLowerCase()}\">invocation</a></td></tr>\n"
       ).join ''
       render += '  </table>\n'
       render += '</div>'
