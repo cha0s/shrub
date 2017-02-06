@@ -444,7 +444,7 @@ fileStatsListPromise.then((fileStatsList) ->
     #
     # ###### TODO: This 'chunk' parsing should be done with a Transform like
     # the others.
-    data = fs.readFileSync fileStats.file, 'utf8'
+    data = fs.readFileSync "docs/source/#{fileStats.file}", 'utf8'
     chunks = data.split '\n\n'
 
     title = chunks[0]
