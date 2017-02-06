@@ -262,19 +262,14 @@
             
                 <li class="toctree-l3"><a href="#angular">Angular</a></li>
                 
+                    <li><a class="toctree-l4" href="#implements-hook-shrubassetsmiddleware">Implements hook shrubAssetsMiddleware.</a></li>
+                
                     <li><a class="toctree-l4" href="#implements-hook-shrubgruntconfig">Implements hook shrubGruntConfig.</a></li>
                 
                     <li><a class="toctree-l4" href="#invoke-hook-shrubangularpackagedependencies">Invoke hook shrubAngularPackageDependencies.</a></li>
                 
             
             </ul>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-assets/angular/">packages/shrub-assets/angular.coffee</a>
         
     </li>
 
@@ -1142,7 +1137,33 @@
             <div class="section">
               
                 <h1 id="angular">Angular</h1>
-<pre><code>exports.pkgmanRegister = (registrar) -&gt;
+<pre><code>config = require 'config'
+
+exports.pkgmanRegister = (registrar) -&gt;
+</code></pre>
+<h4 id="implements-hook-shrubassetsmiddleware">Implements hook <code>shrubAssetsMiddleware</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubAssetsMiddleware', -&gt;
+
+    label: 'Angular'
+    middleware: [
+
+      (assets, next) -&gt;
+
+        if 'production' is config.get 'NODE_ENV'
+
+          assets.scripts.push '//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js'
+          assets.scripts.push '//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular-route.min.js'
+          assets.scripts.push '//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular-sanitize.min.js'
+
+        else
+
+          assets.scripts.push '/lib/angular/angular.js'
+          assets.scripts.push '/lib/angular/angular-route.js'
+          assets.scripts.push '/lib/angular/angular-sanitize.js'
+
+        next()
+
+    ]
 </code></pre>
 <h4 id="implements-hook-shrubgruntconfig">Implements hook <code>shrubGruntConfig</code>.</h4>
 <pre><code>  registrar.registerHook 'shrubGruntConfig', (gruntConfig, grunt) -&gt;
@@ -1187,19 +1208,22 @@
       ]
       options: livereload: true
     )
-
-    gruntConfig.registerTask 'shrubAngularPackageDependencies:angular', -&gt;
+</code></pre>
+<p>Build the list of third-party Angular modules to be injected as
+dependencies of the Angular application.</p>
+<pre><code>    gruntConfig.registerTask 'shrubAngularPackageDependencies:angular', -&gt;
 
       pkgman = require 'pkgman'
-
-      dependencies = []
 </code></pre>
 <h4 id="invoke-hook-shrubangularpackagedependencies">Invoke hook <code>shrubAngularPackageDependencies</code>.</h4>
-<pre><code>      for dependenciesList in pkgman.invokeFlat 'shrubAngularPackageDependencies'
+<pre><code>      dependencies = []
+      for dependenciesList in pkgman.invokeFlat 'shrubAngularPackageDependencies'
         dependencies.push.apply dependencies, dependenciesList
 
-      js = '\nvar packageDependencies = [];\n\n\n'
-      js += "packageDependencies.push('#{dependencies.join "');\npackageDependencies.push('"}');\n" if dependencies.length &gt; 0
+      js = 'var packageDependencies = [];\n\n'
+      js += "packageDependencies.push('#{
+        dependencies.join "');\npackageDependencies.push('"
+      }');\n" if dependencies.length &gt; 0
 
       grunt.file.write 'build/js/app/app-dependencies.js', js
 
@@ -1218,7 +1242,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../shrub-assets/angular/" class="btn btn-neutral float-right" title="packages/shrub-assets/angular.coffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../shrub-assets/" class="btn btn-neutral float-right" title="packages/shrub-assets/index.coffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="client/" class="btn btn-neutral" title="packages/shrub-angular/client/index.coffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -1252,7 +1276,7 @@
         <span><a href="client/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../shrub-assets/angular/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../shrub-assets/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

@@ -282,13 +282,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-assets/angular/">packages/shrub-assets/angular.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../packages/shrub-assets/">packages/shrub-assets/index.coffee</a>
         
     </li>
@@ -1180,19 +1173,19 @@ directives are gathered and registered into Angular.</em></p>
         $controllerProvider.register controllerName, injected
 
       debug 'Controllers registered.'
-
-      debug 'Registering directives...'
 </code></pre>
 <h4 id="invoke-hook-shrubangulardirective">Invoke hook <code>shrubAngularDirective</code>.</h4>
-<pre><code>      for path, injected of pkgman.invoke 'shrubAngularDirective'
+<pre><code>      debug 'Registering directives...'
+
+      for path, injected of pkgman.invoke 'shrubAngularDirective'
         directive.define path, injected
 
       debug 'Directives registered.'
-
-      debug 'Registering filters...'
 </code></pre>
 <h4 id="invoke-hook-shrubangularfilter">Invoke hook <code>shrubAngularFilter</code>.</h4>
-<pre><code>      for path, injected of pkgman.invoke 'shrubAngularFilter'
+<pre><code>      debug 'Registering filters...'
+
+      for path, injected of pkgman.invoke 'shrubAngularFilter'
         filterName = pkgman.normalizePath path
         debug filterName
         $filterProvider.register filterName, injected
@@ -1218,13 +1211,13 @@ directives are gathered and registered into Angular.</em></p>
       debug 'Services registered.'
 
   ])
-
-  .run([
-    '$injector', 'shrub-require'
-    ($injector, require) -&gt;
 </code></pre>
 <p>Set an injector so that Angular injection can occur out of band.</p>
-<pre><code>      angular_ = require 'angular'
+<pre><code>  .run([
+    '$injector', 'shrub-require'
+    ($injector, require) -&gt;
+
+      angular_ = require 'angular'
       angular_.setInjector $injector
 
   ])
@@ -1321,10 +1314,12 @@ be, but it does.</p>
             attrName: match[4] or scopeName
 
         return bindings
-
-      directive = {}
-
-      directive.define = (path, injected) -&gt;
+</code></pre>
+<p>Build the directive provider.</p>
+<pre><code>      directive = {}
+</code></pre>
+<p>Define a directive.</p>
+<pre><code>      directive.define = (path, injected) -&gt;
         directiveName = pkgman.normalizePath path
         debug directiveName
 </code></pre>
@@ -1338,8 +1333,9 @@ everything works nicely.</p>
 <pre><code>        $provide.factory "#{directiveName}Directive", [
           '$injector', prepareDirective directiveName, path, injected
         ]
-
-      directive.$get = -&gt; directive
+</code></pre>
+<p>Provide the service.</p>
+<pre><code>      directive.$get = -&gt; directive
 
       return directive
 
@@ -1357,11 +1353,11 @@ everything works nicely.</p>
       config = require 'config'
       debug = require('debug') 'shrub:pkgman'
       pkgman = require 'pkgman'
-
-      debug 'Loading packages...'
 </code></pre>
 <p>Load the package list from configuration.</p>
-<pre><code>      pkgman.registerPackageList config.get 'packageList'
+<pre><code>      debug 'Loading packages...'
+
+      pkgman.registerPackageList config.get 'packageList'
 
       debug 'Packages loaded.'
 </code></pre>

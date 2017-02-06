@@ -263,13 +263,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-assets/angular/">packages/shrub-assets/angular.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../shrub-assets/">packages/shrub-assets/index.coffee</a>
         
     </li>
@@ -1320,7 +1313,13 @@ exports.pkgmanRegister = (registrar) -&gt;
 <pre><code>      fingerprint = fingerprint.get excluded
 </code></pre>
 <h6 id="todo-multiline">TODO: Multiline</h6>
-<pre><code>      message = "Logged villiany score #{score} for #{type}, fingerprint: #{JSON.stringify fingerprint}"
+<pre><code>      message = "Logged villiany score #{
+        score
+      } for #{
+        type
+      }, fingerprint: #{
+        JSON.stringify fingerprint
+      }"
       message += ', which resulted in a ban.' if isVillian
       logger[if isVillian then 'error' else 'warn'] message
 

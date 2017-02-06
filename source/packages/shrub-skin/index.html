@@ -263,13 +263,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-assets/angular/">packages/shrub-assets/angular.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../shrub-assets/">packages/shrub-assets/index.coffee</a>
         
     </li>
@@ -1377,10 +1370,16 @@ for production.</p>
         'css/**/*.min.css'
       ]
 </code></pre>
+<p>Make script and stylesheet paths absolute.</p>
+<pre><code>  for type in ['scripts', 'styleSheets']
+    for env in ['default', 'production']
+      for asset, i in skinAssets[type][env]
+        skinAssets[type][env][i] = "/#{asset}"
+</code></pre>
 <h4 id="invoke-hook-shrubskinassets">Invoke hook <code>shrubSkinAssets</code>.</h4>
 <pre><code>  pkgman.invokePackage skinKey, 'shrubSkinAssets', skinAssets
 
-  skinAssets
+  return skinAssets
 </code></pre>
               
             </div>

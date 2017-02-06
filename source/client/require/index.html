@@ -270,13 +270,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-assets/angular/">packages/shrub-assets/angular.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../packages/shrub-assets/">packages/shrub-assets/index.coffee</a>
         
     </li>
@@ -1145,8 +1138,9 @@
 <pre><code>  checkModuleName = (name) -&gt;
     return name if requires_[name]?
     return "#{name}/index" if requires_["#{name}/index"]?
-
-  return checked if (checked = checkModuleName name)?
+</code></pre>
+<p>Absolute path match?</p>
+<pre><code>  return checked if (checked = checkModuleName name)?
 </code></pre>
 <p>Resolve relative paths. We have to check methods on <code>path</code>. See below for
 more.</p>

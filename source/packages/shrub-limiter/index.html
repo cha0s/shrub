@@ -263,13 +263,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-assets/angular/">packages/shrub-assets/angular.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../shrub-assets/">packages/shrub-assets/index.coffee</a>
         
     </li>
@@ -638,7 +631,7 @@
                 
                     <li><a class="toctree-l4" href="#limitreset">Limit#reset</a></li>
                 
-                    <li><a class="toctree-l4" href="#limitreset_1">Limit#reset</a></li>
+                    <li><a class="toctree-l4" href="#limitscore">Limit#score</a></li>
                 
                     <li><a class="toctree-l4" href="#limitttl">Limit#ttl</a></li>
                 
@@ -1156,37 +1149,63 @@
                 <h1 id="rate-limiter">Rate limiter</h1>
 <p><em>Limits the rate at which clients can do certain operations, like call RPC
 routes.</em></p>
-<pre><code>pkgman = require 'pkgman'
-
-exports.SKIP = SKIP = {}
+<pre><code>orm = null
+pkgman = require 'pkgman'
 </code></pre>
-<p>A limiter on a route is defined like: <code>javascript
-registrar.registerHook('shrubRpcRoutes', function() { var shrubLimiter =
-require 'shrub-limiter' var Limiter = shrubLimiter.Limiter; var
-LimiterMiddleware = shrubLimiter.LimiterMiddleware; var routes = []
-routes.push({ .    path: 'my-package/route', .    middleware: [ .      ... .
-     'shrub-villiany' // Include if limit infractions lead to eventual ban .
-     new LimiterMiddleware( .        limiterDefinitionObject .      ) .
-... .    ] }); return routes; });</code> <small><strong><em>NOTE:</em></strong> <em>Ignore the leading
-dots, they are a result of literate coffee limitations.</em></small> Where
-<code>limiterDefinitionObject</code> above is defined as an object with the following
-properties:</p>
+<p>Exported symbol to allow implementations to skip limiter checks.</p>
+<pre><code>exports.SKIP = SKIP = {}
+</code></pre>
+<p>A limiter on a route is defined like:</p>
+<pre><code class="javascript">
+registrar.registerHook('shrubRpcRoutes', function() {
+
+  var shrubLimiter = require('shrub-limiter');
+  var Limiter = shrubLimiter.Limiter;
+  var LimiterMiddleware = shrubLimiter.LimiterMiddleware;
+
+  var routes = [];
+
+  routes.push({
+
+    path: 'my-package/route',
+
+    middleware: [
+
+      ...
+
+      'shrub-villiany', // Include if limit infractions lead to eventual ban
+
+      new LimiterMiddleware(
+        [[limiterDefinitionObject]]
+      ),
+
+      ...
+
+    ]
+
+  });
+
+  return routes;
+});
+</code></pre>
+
+<p>Where <code>[[limiterDefinitionObject]]</code> above is defined as an object with the
+following properties:</p>
 <ul>
 <li>
 <p><code>threshold</code>: The <a href="../limiter#threshold">threshold</a> for this limiter.</p>
 </li>
 <li>
-<p><code>message</code>: The message returned to the client when the threshold is</p>
+<p><code>message</code>: The message returned to the client when the threshold is
+passed.</p>
 </li>
-</ul>
-<p>passed.</p>
-<ul>
-<li><code>ignoreKeys</code>: The</li>
-</ul>
-<p><a href="../source/server/fingerprint">fingerprint keys</a> to ignore when determining the
-total limit.</p>
-<ul>
-<li><code>villianyScore</code>: The score accumulated when this limit is crossed.</li>
+<li>
+<p><code>ignoreKeys</code>: The <a href="../source/server/fingerprint">fingerprint keys</a> to ignore
+when determining the total limit.</p>
+</li>
+<li>
+<p><code>villianyScore</code>: The score accumulated when this limit is crossed.</p>
+</li>
 </ul>
 <h3 id="limitermiddleware">LimiterMiddleware</h3>
 <pre><code>exports.LimiterMiddleware = class LimiterMiddleware
@@ -1194,6 +1213,11 @@ total limit.</p>
   constructor: (@config) -&gt;
 
 exports.pkgmanRegister = (registrar) -&gt;
+</code></pre>
+<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <code>shrubCorePreBootstrap</code>.</h4>
+<pre><code>  registrar.registerHook 'shrubCorePreBootstrap', -&gt;
+
+    orm = require 'shrub-orm'
 </code></pre>
 <h4 id="implements-hook-shrubormcollections">Implements hook <code>shrubOrmCollections</code>.</h4>
 <pre><code>  registrar.registerHook 'shrubOrmCollections', -&gt;
@@ -1242,12 +1266,18 @@ exports.pkgmanRegister = (registrar) -&gt;
 <h2 id="limitreset">Limit#reset</h2>
 <p><em>Reset scores and created time.</em></p>
 <pre><code>        reset: -&gt;
-          @scores.remove id for id in _.map @scores, 'id'
+
+          ShrubLimitScore = orm.collection 'shrub-limit-score'
+
+          for id in _.map @scores, 'id'
+            @scores.remove id
+            ShrubLimitScore.destroy(id: id).exec -&gt;
+
           @createdAt = new Date()
 
           return this
 </code></pre>
-<h2 id="limitreset_1">Limit#reset</h2>
+<h2 id="limitscore">Limit#score</h2>
 <p><em>Get the sum of all scores for this limit.</em></p>
 <pre><code>        score: -&gt;
           _.map(@scores, 'score').reduce ((l, r) -&gt; l + r), 0

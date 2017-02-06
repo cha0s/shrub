@@ -294,13 +294,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-assets/angular/">packages/shrub-assets/angular.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../../packages/shrub-assets/">packages/shrub-assets/index.coffee</a>
         
     </li>
@@ -1173,11 +1166,11 @@ pathIndex = {}
 </code></pre>
 <p>A list of registered packages.</p>
 <pre><code>_packages = []
-
-class PkgmanRegistrar
 </code></pre>
-<p>Registrar function passed to packages to allow them to register hooks
-and/or recur into their own subpackages to allow them to.</p>
+<p>Registrar object passed to packages to allow them to register hooks and/or
+recur into their own subpackages to allow them to.</p>
+<pre><code>class PkgmanRegistrar
+</code></pre>
 <h2 id="constructor"><em>constructor</em></h2>
 <p><em>Instantiate the registrar with the current (sub)package path.</em></p>
 <pre><code>  constructor: (@_path) -&gt;

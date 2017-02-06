@@ -321,9 +321,6 @@
                 <li class="toctree-l3"><a href="#shrub-assets">shrub-assets</a></li>
                 
             
-                <li class="toctree-l3"><a href="#shrub-assetsangular">shrub-assets/angular</a></li>
-                
-            
                 <li class="toctree-l3"><a href="#shrub-assetsjquery">shrub-assets/jquery</a></li>
                 
             
@@ -609,13 +606,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../source/packages/shrub-angular/">packages/shrub-angular/index.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../source/packages/shrub-assets/angular/">packages/shrub-assets/angular.coffee</a>
         
     </li>
 
@@ -1899,12 +1889,14 @@ page load.</em></p>
 <h2 id="shrub-angular"><a href="../source/packages/shrub-angular">shrub-angular</a></h2>
 <p><span class="package-title">Angular</span></p>
 <div class="admonition note"><p class="admonition-title">Implements hooks</p>  <table>
-    <tr class="even"><td><a href="../hooks/#shrubgruntconfig">shrubGruntConfig</a></td><td align="right"><a href="../source/packages/shrub-angular#implements-hook-shrubgruntconfig">implementation</a></td></tr>
+    <tr class="even"><td><a href="../hooks/#shrubassetsmiddleware">shrubAssetsMiddleware</a></td><td align="right"><a href="../source/packages/shrub-angular#implements-hook-shrubassetsmiddleware">implementation</a></td></tr>
+    <tr class="odd"><td><a href="../hooks/#shrubgruntconfig">shrubGruntConfig</a></td><td align="right"><a href="../source/packages/shrub-angular#implements-hook-shrubgruntconfig">implementation</a></td></tr>
   </table>
 </div>
 
 <div class="admonition note"><p class="admonition-title">Implements hooks</p>  <table>
-    <tr class="even"><td><a href="../hooks/#shrubgruntconfig">shrubGruntConfig</a></td><td align="right"><a href="../source/packages/shrub-angular#invoke-hook-shrubgruntconfig">invocation</a></td></tr>
+    <tr class="even"><td><a href="../hooks/#shrubassetsmiddleware">shrubAssetsMiddleware</a></td><td align="right"><a href="../source/packages/shrub-angular#invoke-hook-shrubassetsmiddleware">invocation</a></td></tr>
+    <tr class="odd"><td><a href="../hooks/#shrubgruntconfig">shrubGruntConfig</a></td><td align="right"><a href="../source/packages/shrub-angular#invoke-hook-shrubgruntconfig">invocation</a></td></tr>
   </table>
 </div>
 
@@ -1945,12 +1937,6 @@ page load.</em></p>
 </div>
 
 <blockquote>
-<h2 id="shrub-assetsangular"><a href="../source/packages/shrub-assets/angular"><small>shrub-assets/</small>angular</a></h2>
-<p><span class="package-title">Angular assets</span></p>
-<p><div class="admonition note"><p class="admonition-title">Implements hooks</p>  <table>
-    <tr class="even"><td><a href="../hooks/#shrubassetsmiddleware">shrubAssetsMiddleware</a></td><td align="right"><a href="../source/packages/shrub-assets/angular#implements-hook-shrubassetsmiddleware">implementation</a></td></tr>
-  </table>
-</div></p>
 <h2 id="shrub-assetsjquery"><a href="../source/packages/shrub-assets/jquery"><small>shrub-assets/</small>jquery</a></h2>
 <p><span class="package-title">jQuery assets</span></p>
 <p><div class="admonition note"><p class="admonition-title">Implements hooks</p>  <table>
@@ -2159,16 +2145,18 @@ now, but will be fleshed out as we go.</em></p>
 <p><em>Limits the rate at which clients can do certain operations, like call RPC
 routes.</em></p>
 <div class="admonition note"><p class="admonition-title">Implements hooks</p>  <table>
-    <tr class="even"><td><a href="../hooks/#shrubormcollections">shrubOrmCollections</a></td><td align="right"><a href="../source/packages/shrub-limiter#implements-hook-shrubormcollections">implementation</a></td></tr>
-    <tr class="odd"><td><a href="../hooks/#shrubrpcroutesalter">shrubRpcRoutesAlter</a></td><td align="right"><a href="../source/packages/shrub-limiter#implements-hook-shrubrpcroutesalter">implementation</a></td></tr>
-    <tr class="even"><td><a href="../hooks/#shrubtransmittableerrors">shrubTransmittableErrors</a></td><td align="right"><a href="../source/packages/shrub-limiter#implements-hook-shrubtransmittableerrors">implementation</a></td></tr>
+    <tr class="even"><td><a href="../hooks/#shrubcoreprebootstrap">shrubCorePreBootstrap</a></td><td align="right"><a href="../source/packages/shrub-limiter#implements-hook-shrubcoreprebootstrap">implementation</a></td></tr>
+    <tr class="odd"><td><a href="../hooks/#shrubormcollections">shrubOrmCollections</a></td><td align="right"><a href="../source/packages/shrub-limiter#implements-hook-shrubormcollections">implementation</a></td></tr>
+    <tr class="even"><td><a href="../hooks/#shrubrpcroutesalter">shrubRpcRoutesAlter</a></td><td align="right"><a href="../source/packages/shrub-limiter#implements-hook-shrubrpcroutesalter">implementation</a></td></tr>
+    <tr class="odd"><td><a href="../hooks/#shrubtransmittableerrors">shrubTransmittableErrors</a></td><td align="right"><a href="../source/packages/shrub-limiter#implements-hook-shrubtransmittableerrors">implementation</a></td></tr>
   </table>
 </div>
 
 <div class="admonition note"><p class="admonition-title">Implements hooks</p>  <table>
-    <tr class="even"><td><a href="../hooks/#shrubormcollections">shrubOrmCollections</a></td><td align="right"><a href="../source/packages/shrub-limiter#invoke-hook-shrubormcollections">invocation</a></td></tr>
-    <tr class="odd"><td><a href="../hooks/#shrubrpcroutesalter">shrubRpcRoutesAlter</a></td><td align="right"><a href="../source/packages/shrub-limiter#invoke-hook-shrubrpcroutesalter">invocation</a></td></tr>
-    <tr class="even"><td><a href="../hooks/#shrubtransmittableerrors">shrubTransmittableErrors</a></td><td align="right"><a href="../source/packages/shrub-limiter#invoke-hook-shrubtransmittableerrors">invocation</a></td></tr>
+    <tr class="even"><td><a href="../hooks/#shrubcoreprebootstrap">shrubCorePreBootstrap</a></td><td align="right"><a href="../source/packages/shrub-limiter#invoke-hook-shrubcoreprebootstrap">invocation</a></td></tr>
+    <tr class="odd"><td><a href="../hooks/#shrubormcollections">shrubOrmCollections</a></td><td align="right"><a href="../source/packages/shrub-limiter#invoke-hook-shrubormcollections">invocation</a></td></tr>
+    <tr class="even"><td><a href="../hooks/#shrubrpcroutesalter">shrubRpcRoutesAlter</a></td><td align="right"><a href="../source/packages/shrub-limiter#invoke-hook-shrubrpcroutesalter">invocation</a></td></tr>
+    <tr class="odd"><td><a href="../hooks/#shrubtransmittableerrors">shrubTransmittableErrors</a></td><td align="right"><a href="../source/packages/shrub-limiter#invoke-hook-shrubtransmittableerrors">invocation</a></td></tr>
   </table>
 </div>
 

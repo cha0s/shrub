@@ -150,8 +150,6 @@
             
                 <li class="toctree-l3"><a href="#client-application-entry-point">Client application entry point.</a></li>
                 
-                    <li><a class="toctree-l4" href="#todo-link-this-to-where-this-happens-in-grunt-for-illustration">TODO: Link this to where this happens in Grunt for illustration.</a></li>
-                
                     <li><a class="toctree-l4" href="#invoke-hook-shrubangularappconfig">Invoke hook shrubAngularAppConfig.</a></li>
                 
                     <li><a class="toctree-l4" href="#invoke-hook-shrubangularapprun">Invoke hook shrubAngularAppRun.</a></li>
@@ -270,13 +268,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../packages/shrub-angular/">packages/shrub-angular/index.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-assets/angular/">packages/shrub-assets/angular.coffee</a>
         
     </li>
 
@@ -1145,7 +1136,8 @@
               
                 <h1 id="client-application-entry-point">Client application entry point.</h1>
 <p><em>Definition of the main top-level Angular module, with dependency gathering
-and config/run hook invocation.</em> Top-level module.</p>
+and config/run hook invocation.</em></p>
+<p>Top-level module.</p>
 <pre><code>angular.module 'shrub', ['shrub.core']
 </code></pre>
 <p>Include core Angular dependencies.</p>
@@ -1154,9 +1146,9 @@ coreDependencies.push 'ngRoute'
 coreDependencies.push 'ngSanitize'
 </code></pre>
 <p><code>packageDependencies</code> will be automatically generated and populated by
-Grunt. See the documentation for
-<a href="../hooks/#shrubAngularPackageDependencies"><code>shrubAngularPackageDependencies</code></a>.</p>
-<h6 id="todo-link-this-to-where-this-happens-in-grunt-for-illustration">TODO: Link this to where this happens in Grunt for illustration.</h6>
+Grunt.</p>
+<p>See the documentation for
+<a href="../../../hooks/#shrubangularpackagedependencies"><code>shrubAngularPackageDependencies</code></a>.</p>
 <pre><code>coreDependencies.push packageDependencies...
 </code></pre>
 <p>Include core shrub dependencies.</p>

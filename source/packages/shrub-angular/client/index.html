@@ -280,13 +280,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-assets/angular/">packages/shrub-assets/angular.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../shrub-assets/">packages/shrub-assets/index.coffee</a>
         
     </li>
@@ -1181,13 +1174,14 @@ exports.pkgmanRegister = (registrar) -&gt;
       $compileProvider.aHrefSanitizationWhitelist new RegExp(
         "^\s*(?:#{regexes.join '|'})"
       )
-
-      unless config.get 'packageConfig:shrub-core:testMode'
+</code></pre>
+<p>Attach debug info if we're in test mode.</p>
+<pre><code>      unless config.get 'packageConfig:shrub-core:testMode'
         $compileProvider.debugInfoEnabled false
 </code></pre>
-<p>Completely override $q with Bluebird, because it's awesome.</p>
-<h6 id="todo-angular-also-implements-a-private-service-called-q-used">TODO: Angular also implements a private service called $$q used</h6>
-<p>for animation. We should override that one, too.</p>
+<p>Completely override the $q service with Bluebird, because it's
+awesome.</p>
+<h6 id="todo-angular-also-implements-a-private-service-called-q-used-for-animation-we-should-override-that-one-too">TODO: Angular also implements a private service called $$q used for animation. We should override that one, too.</h6>
 <pre><code>      $provide.decorator '$q', [
         '$rootScope', '$exceptionHandler'
         ($rootScope, $exceptionHandler) -&gt;
@@ -1208,8 +1202,9 @@ non-notable.</p>
 <pre><code>          Promise.defer = -&gt;
             resolve = null
             reject = null
-
-            promise = new Promise -&gt;
+</code></pre>
+<p>Create a promise.</p>
+<pre><code>            promise = new Promise -&gt;
               resolve = arguments[0]
               reject = arguments[1]
 </code></pre>
@@ -1222,8 +1217,9 @@ support for it in.</p>
               __notifications.push args[2] if args[2]?
               proxyThen.apply promise, args
             notify: (args...) -&gt; fn args... for fn in __notifications
-
-            promise: promise
+</code></pre>
+<p>Return the deferred object.</p>
+<pre><code>            promise: promise
             resolve: resolve
             reject: reject
 </code></pre>
@@ -1238,31 +1234,28 @@ with the resolved values from the promise.</p>
 <pre><code>          originalAll = Promise.all
           Promise.all = (promises) -&gt;
 </code></pre>
-<p>Cast it to a promise to be able to determine whether it's an
-array.</p>
-<pre><code>            Promise.cast(promises).then -&gt;
-</code></pre>
 <p>Defer to Bluebird if it's an array.</p>
-<pre><code>              return originalAll promises if angular.isArray promises
+<pre><code>            return originalAll promises if angular.isArray promises
 </code></pre>
 <p>If it's not an object, defer to Bluebird (it'll throw).</p>
-<pre><code>              return originalAll promises unless angular.isObject promises
+<pre><code>            return originalAll promises unless angular.isObject promises
 </code></pre>
 <p>Track the keys so we can map the values.</p>
-<pre><code>              promiseKeys = []
-              promiseArray = for key, promise of promises
-                promiseKeys.push key
-                promise
+<pre><code>            promiseKeys = []
+            promiseArray = for key, promise of promises
+              promiseKeys.push key
+              promise
 
-              originalAll(promiseArray).then (results) -&gt;
-                objectResult = {}
+            originalAll(promiseArray).then (results) -&gt;
+              objectResult = {}
 
-                for result, index in results
-                  objectResult[promiseKeys[index]] = result
+              for result, index in results
+                objectResult[promiseKeys[index]] = result
 
-                objectResult
-
-          Promise
+              objectResult
+</code></pre>
+<p>Return the service.</p>
+<pre><code>          Promise
 
       ]
 </code></pre>
@@ -1287,8 +1280,9 @@ routes.</p>
           route.controller = [
             '$controller', '$injector', '$q', '$scope'
             ($controller, $injector, $q, $scope) -&gt;
-
-              unless routeController?
+</code></pre>
+<p>Immediately resolve if there's no controller.</p>
+<pre><code>              unless routeController?
                 return $scope.$emit 'shrub.core.routeRendered'
 </code></pre>
 <p>Controllers may return a promise, so wait until any returned
@@ -1301,8 +1295,9 @@ next tick.</p>
               )).then(-&gt; $scope.$emit 'shrub.core.routeRendered').done()
 
           ]
-
-          route.template ?= ' '
+</code></pre>
+<p>Ensure a template exists to make Angular happy.</p>
+<pre><code>          route.template ?= ' '
 </code></pre>
 <p>Register the path into Angular.</p>
 <pre><code>          $routeProvider.when "/#{route.path ? path}", route

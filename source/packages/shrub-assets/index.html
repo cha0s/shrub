@@ -262,13 +262,6 @@
 
         
             
-    <li class="toctree-l1 ">
-        <a class="" href="angular/">packages/shrub-assets/angular.coffee</a>
-        
-    </li>
-
-        
-            
     <li class="toctree-l1 current">
         <a class="current" href="./">packages/shrub-assets/index.coffee</a>
         
@@ -1189,7 +1182,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     middleware: [
       'shrub-assets/jquery'
       'shrub-socket-socket.io'
-      'shrub-assets/angular'
+      'shrub-angular'
       'shrub-assets'
       'shrub-html5-notification'
       'shrub-html5-local-storage'
@@ -1198,7 +1191,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     ]
 
   registrar.recur [
-    'angular', 'jquery'
+    'jquery'
   ]
 
 exports.assets = -&gt;
@@ -1211,7 +1204,6 @@ exports.assets = -&gt;
   assets = scripts: [], styleSheets: []
 </code></pre>
 <h4 id="invoke-hook-shrubassetsmiddleware">Invoke hook <code>shrubAssetsMiddleware</code>.</h4>
-<p>Invoked to gather script assets for requests.</p>
 <pre><code>  debug '- Loading asset middleware...'
 
   assetsMiddleware = middleware.fromConfig 'shrub-assets:middleware'
@@ -1232,7 +1224,7 @@ exports.assets = -&gt;
         <a href="jquery/" class="btn btn-neutral float-right" title="packages/shrub-assets/jquery.coffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="angular/" class="btn btn-neutral" title="packages/shrub-assets/angular.coffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../shrub-angular/" class="btn btn-neutral" title="packages/shrub-angular/index.coffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -1260,7 +1252,7 @@ exports.assets = -&gt;
           <a class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="angular/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../shrub-angular/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
         <span style="margin-left: 15px"><a href="jquery/" style="color: #fcfcfc">Next &raquo;</a></span>

@@ -263,13 +263,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-assets/angular/">packages/shrub-assets/angular.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../shrub-assets/">packages/shrub-assets/index.coffee</a>
         
     </li>
@@ -1223,9 +1216,12 @@ object.</p>
       subconfig = fulfilledSubconfigs[index++]
       for key, value of subconfig
         continue unless value?
-</code></pre>
-<h6 id="todo-multiline">TODO: Multiline</h6>
-<pre><code>        config_.set "packageConfig:#{path.replace /\//g, ':'}:#{key.replace /\//g, ':'}", value
+
+        config_.set "packageConfig:#{
+          path.replace /\//g, ':'
+        }:#{
+          key.replace /\//g, ':'
+        }", value
 </code></pre>
 <h4 id="invoke-hook-shrubconfigclientalter">Invoke hook <code>shrubConfigClientAlter</code>.</h4>
 <pre><code>    pkgman.invoke 'shrubConfigClientAlter', req, config_

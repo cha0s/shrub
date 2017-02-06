@@ -248,7 +248,7 @@
             
                 <li class="toctree-l3"><a href="#angular-sandbox">Angular sandbox</a></li>
                 
-                    <li><a class="toctree-l4" href="#todo-sandbox-pool-might-be-better-handled-by">TODO: Sandbox pool, might be better handled by</a></li>
+                    <li><a class="toctree-l4" href="#todo-sandbox-pool-might-be-better-handled-by-sandboxes">TODO: Sandbox pool, might be better handled by sandboxes.</a></li>
                 
                     <li><a class="toctree-l4" href="#implements-hook-shrubrpcroutes">Implements hook shrubRpcRoutes.</a></li>
                 
@@ -302,13 +302,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../shrub-angular/">packages/shrub-angular/index.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-assets/angular/">packages/shrub-assets/angular.coffee</a>
         
     </li>
 
@@ -1177,8 +1170,7 @@
               
                 <h1 id="angular-sandbox">Angular sandbox</h1>
 <p><em>A sandboxed version of Angular, for clients lacking JS.</em></p>
-<h6 id="todo-sandbox-pool-might-be-better-handled-by">TODO: Sandbox pool, might be better handled by</h6>
-<p><a href="../source/server/sandboxes">sandboxes</a>.</p>
+<h6 id="todo-sandbox-pool-might-be-better-handled-by-sandboxes">TODO: Sandbox pool, might be better handled by <a href="../source/server/sandboxes">sandboxes</a>.</h6>
 <pre><code>_ = require 'lodash'
 Promise = require 'bluebird'
 url = require 'url'
@@ -1209,8 +1201,7 @@ hold their sandbox.</p>
 
         (req, res, next) -&gt;
 </code></pre>
-<h6 id="todo-cookie-less-clients-wont-have-a-valid-session-id-to">TODO: Cookie-less clients won't have a valid session ID to</h6>
-<p>call with. This should be some other token, perhaps CSRF.</p>
+<h6 id="todo-cookie-less-clients-wont-have-a-valid-session-id-to-call-with-this-should-be-some-other-token-perhaps-csrf">TODO: Cookie-less clients won't have a valid session ID to call with. This should be some other token, perhaps CSRF.</h6>
 <pre><code>          id = req.session?.id
           if (sandbox = sandboxManager.lookup id)?
             sandbox.close().finally -&gt; res.end()
@@ -1246,9 +1237,10 @@ sandbox.</p>
             html
           ,
             cookie: req.headers.cookie
-</code></pre>
-<h6 id="todo-multiline">TODO: Multiline.</h6>
-<pre><code>            url: "http://localhost:#{config.get 'packageSettings:shrub-http:port'}/shrub-angular-entry-point"
+
+            url: "http://localhost:#{
+              config.get 'packageSettings:shrub-http:port'
+            }/shrub-angular-entry-point"
           ,
             req.session.id
           )
@@ -1388,11 +1380,11 @@ mechanism for registering and looking up persistent sandboxes using an id.</p>
 </li>
 <li>
 <p>(optional string) <code>id</code> - An ID either for looking up later (if
-creating), or</p>
+creating), or as a search now.</p>
 </li>
 </ul>
-<p>as a search now. <em>Look up a sandbox by ID, or create one if none is
-registered for this ID.</em></p>
+<p><em>Look up a sandbox by ID, or create one if none is registered for this
+ID.</em></p>
 <pre><code>  lookupOrCreate: (html, options, id = null) -&gt;
 
     if (sandbox = @lookup id)?
@@ -1545,9 +1537,9 @@ location path. If it is, redirect Angular.</em></p>
 </code></pre>
 <h2 id="sandboxinject">Sandbox#inject</h2>
 <ul>
-<li>(mixed) <code>injectable</code> - An annotated function to inject with</li>
+<li>(mixed) <code>injectable</code> - An annotated function to inject with dependencies.</li>
 </ul>
-<p>dependencies. <em>Inject an <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated
+<p><em>Inject an <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated
 function</a> with
 dependencies.</em></p>
 <pre><code>  sandbox.inject = (injectable) -&gt;
