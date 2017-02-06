@@ -2,4 +2,4 @@
 // Gruntfiles anymore apparently... Jerks.
 
 require('coffee-script/register');
-module.exports = require('./Gruntfile.litcoffee');
+module.exports = require('./Gruntfile.coffee');
