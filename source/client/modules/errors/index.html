@@ -5,8 +5,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>client/modules/errors.litcoffee - Shrub</title>
+  <title>client/modules/errors.coffee - Shrub</title>
   
+
+  <link rel="shortcut icon" href="../../../../img/favicon.ico">
 
   
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
@@ -16,16 +18,18 @@
   <link rel="stylesheet" href="../../../../css/highlight.css">
   <link href="../../../../css/extra.css" rel="stylesheet">
 
-  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "client/modules/errors.coffee";
+  </script>
+  
+  <script src="../../../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../../../js/modernizr-2.8.3.min.js"></script>
   <script type="text/javascript" src="../../../../js/highlight.pack.js"></script>
-  <script src="../../../../js/theme.js"></script>
+  <script src="../../../../js/theme.js"></script> 
 
-  <style>
-    body {font-size: 90%;}
-    pre, code {font-size: 100%;}
-    h3, h4, h5, h6 {color: #2980b9; font-weight: 300}
-  </style> 
+  
 </head>
 
 <body class="wy-body-for-nav" role="document">
@@ -36,717 +40,1086 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
       <div class="wy-side-nav-search">
         <a href="../../../.." class="icon icon-home"> Shrub</a>
-        
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-      <ul class="current">
-    
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../../..">Home</a>
         
-        <span>Guide</span>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../../guide/getting-started">Getting Started</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../../guide/errors">Errors</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../../guide/forms">Form handling</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../../guide/concepts">Concepts and conventions</a>
-                    
-                </li>
-            
-        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Guide</span></li>
 
-    
         
-        <span>Examples</span>
             
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../../examples/todo-list">TODO list</a>
-                    
-                </li>
-            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../guide/getting-started/">Getting Started</a>
         
+    </li>
 
-    
         
-        <span>Reference</span>
             
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../../hooks">Hooks</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../../packages">Packages</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../../todos">TODO list</a>
-                    
-                </li>
-            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../guide/errors/">Errors</a>
         
+    </li>
 
-    
         
-        <span>Source code</span>
             
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../Gruntfile">Gruntfile.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../app">client/app.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../angular">client/modules/angular.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../config">client/modules/config.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 current">
-                    <a class="current" href=".">client/modules/errors.litcoffee</a>
-                    
-                        <ul>
-                        
-                            <li class="toctree-l2"><a href="#error-handling">Error handling</a></li>
-                            
-                                <li><a class="toctree-l3" href="#transmittableerror">TransmittableError</a></li>
-                            
-                                <li><a class="toctree-l3" href="#constructor">constructor</a></li>
-                            
-                                <li><a class="toctree-l3" href="#transmittableerrorkey">TransmittableError#key</a></li>
-                            
-                                <li><a class="toctree-l3" href="#transmittableerrortemplate">TransmittableError#template</a></li>
-                            
-                                <li><a class="toctree-l3" href="#transmittableerrortojson">TransmittableError#toJSON</a></li>
-                            
-                                <li><a class="toctree-l3" href="#errorsinstantiate">errors.instantiate</a></li>
-                            
-                                <li><a class="toctree-l3" href="#errorsmessage">errors.message</a></li>
-                            
-                                <li><a class="toctree-l3" href="#errorsserialize">errors.serialize</a></li>
-                            
-                                <li><a class="toctree-l3" href="#errorsstack">errors.stack</a></li>
-                            
-                                <li><a class="toctree-l3" href="#errorstransmittableerrors">errors.transmittableErrors</a></li>
-                            
-                                <li><a class="toctree-l3" href="#errorsunserialize">errors.unserialize</a></li>
-                            
-                        
-                        </ul>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../logging">client/modules/logging.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../middleware">client/modules/middleware.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../pkgman">client/modules/pkgman.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../packages">client/packages.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../require">client/require.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-angular-sandbox/client">packages/shrub-angular-sandbox/client/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-angular-sandbox">packages/shrub-angular-sandbox/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-angular/client">packages/shrub-angular/client/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-angular">packages/shrub-angular/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-assets/angular">packages/shrub-assets/angular.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-assets">packages/shrub-assets/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-assets/jquery">packages/shrub-assets/jquery.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-config">packages/shrub-config/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-core/client">packages/shrub-core/client/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-core">packages/shrub-core/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-example/about">packages/shrub-example/about.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-example/client/about">packages/shrub-example/client/about.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-example/client/home">packages/shrub-example/client/home.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-example/client">packages/shrub-example/client/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-example">packages/shrub-example/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-form/client">packages/shrub-form/client/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-form/client/widget/checkbox">packages/shrub-form/client/widget/checkbox.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-form/client/widget/checkboxes">packages/shrub-form/client/widget/checkboxes.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-form/client/widget/group">packages/shrub-form/client/widget/group.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-form/client/widget/hidden">packages/shrub-form/client/widget/hidden.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-form/client/widget/markup">packages/shrub-form/client/widget/markup.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-form/client/widget/radio">packages/shrub-form/client/widget/radio.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-form/client/widget/radios">packages/shrub-form/client/widget/radios.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-form/client/widget/select">packages/shrub-form/client/widget/select.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-form/client/widget/submit">packages/shrub-form/client/widget/submit.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-form/client/widget/text">packages/shrub-form/client/widget/text.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-form">packages/shrub-form/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-grunt/dox/dynamic">packages/shrub-grunt/dox/dynamic.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-grunt/dox">packages/shrub-grunt/dox/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-grunt">packages/shrub-grunt/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-grunt/lint">packages/shrub-grunt/lint.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-grunt/modules">packages/shrub-grunt/modules.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-grunt/tests/build">packages/shrub-grunt/tests/build.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-grunt/tests">packages/shrub-grunt/tests/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-grunt/tests/run">packages/shrub-grunt/tests/run.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-html5-audio/client">packages/shrub-html5-audio/client/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-html5-audio">packages/shrub-html5-audio/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-html5-local-storage/client">packages/shrub-html5-local-storage/client/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-html5-local-storage">packages/shrub-html5-local-storage/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-html5-notification/client">packages/shrub-html5-notification/client/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-html5-notification">packages/shrub-html5-notification/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-http-express/errors">packages/shrub-http-express/errors.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-http-express">packages/shrub-http-express/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-http-express/logger">packages/shrub-http-express/logger.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-http-express/routes">packages/shrub-http-express/routes.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-http-express/session">packages/shrub-http-express/session.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-http-express/static">packages/shrub-http-express/static.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-http">packages/shrub-http/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-http/manager">packages/shrub-http/manager.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-install">packages/shrub-install/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-limiter/client">packages/shrub-limiter/client/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-limiter">packages/shrub-limiter/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-limiter/limiter">packages/shrub-limiter/limiter.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-nodemailer">packages/shrub-nodemailer/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-orm/client">packages/shrub-orm/client/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-orm">packages/shrub-orm/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-repl">packages/shrub-repl/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-rpc/client">packages/shrub-rpc/client/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-rpc">packages/shrub-rpc/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-session">packages/shrub-session/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-session/store">packages/shrub-session/store.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-skin-strapped/client/form">packages/shrub-skin-strapped/client/form.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-skin-strapped/client">packages/shrub-skin-strapped/client/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-skin-strapped/client/main-nav">packages/shrub-skin-strapped/client/main-nav.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-skin-strapped/client/notifications">packages/shrub-skin-strapped/client/notifications.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-skin-strapped">packages/shrub-skin-strapped/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-skin/client">packages/shrub-skin/client/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-skin">packages/shrub-skin/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-socket-socket.io/client">packages/shrub-socket-socket.io/client/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-socket-socket.io">packages/shrub-socket-socket.io/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-socket-socket.io/manager">packages/shrub-socket-socket.io/manager.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-socket/client/dummy">packages/shrub-socket/client/dummy.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-socket/client">packages/shrub-socket/client/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-socket/client/socket">packages/shrub-socket/client/socket.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-socket">packages/shrub-socket/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-socket/manager">packages/shrub-socket/manager.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-ui/client/attributes">packages/shrub-ui/client/attributes.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-ui/client">packages/shrub-ui/client/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-ui/client/list">packages/shrub-ui/client/list/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-ui/client/list/item">packages/shrub-ui/client/list/item.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-ui/client/markdown">packages/shrub-ui/client/markdown.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-ui/client/menu">packages/shrub-ui/client/menu.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-ui/client/messages">packages/shrub-ui/client/messages.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-ui/client/notifications">packages/shrub-ui/client/notifications/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-ui/client/notifications/item">packages/shrub-ui/client/notifications/item.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-ui/client/notifications/title">packages/shrub-ui/client/notifications/title.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-ui/client/window-title">packages/shrub-ui/client/window-title.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-ui">packages/shrub-ui/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-ui/notifications">packages/shrub-ui/notifications.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-user/client/email/forgot">packages/shrub-user/client/email/forgot.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-user/client/email">packages/shrub-user/client/email/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-user/client/email/register">packages/shrub-user/client/email/register.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-user/client/forgot">packages/shrub-user/client/forgot.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-user/client">packages/shrub-user/client/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-user/client/login">packages/shrub-user/client/login.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-user/client/logout">packages/shrub-user/client/logout.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-user/client/register">packages/shrub-user/client/register.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-user/client/reset">packages/shrub-user/client/reset.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-user/forgot">packages/shrub-user/forgot.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-user">packages/shrub-user/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-user/login">packages/shrub-user/login.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-user/logout">packages/shrub-user/logout.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-user/register">packages/shrub-user/register.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-user/reset">packages/shrub-user/reset.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../packages/shrub-villiany">packages/shrub-villiany/index.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../server">server.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../server/bootstrap">server/bootstrap.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../server/config">server/config.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../server/crypto">server/crypto.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../server/fingerprint">server/fingerprint.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../server/logging">server/logging.litcoffee</a>
-                    
-                </li>
-            
-                <li class="toctree-l1 ">
-                    <a class="" href="../../../server/sandboxes">server/sandboxes.litcoffee</a>
-                    
-                </li>
-            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../guide/forms/">Form handling</a>
         
+    </li>
 
-    
-</ul>
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../guide/concepts/">Concepts and conventions</a>
+        
+    </li>
 
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Examples</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../examples/todo-list/">TODO list</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Reference</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../hooks/">Hooks</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../packages/">Packages</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../todos/">TODO list</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Source code</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../app/">client/app.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../angular/">client/modules/angular.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../config/">client/modules/config.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../config.spec/">client/modules/config.spec.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">client/modules/errors.coffee</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#error-handling">Error handling</a></li>
+                
+                    <li><a class="toctree-l4" href="#transmittableerror">TransmittableError</a></li>
+                
+                    <li><a class="toctree-l4" href="#constructor">constructor</a></li>
+                
+                    <li><a class="toctree-l4" href="#transmittableerrorkey">TransmittableError#key</a></li>
+                
+                    <li><a class="toctree-l4" href="#transmittableerrortemplate">TransmittableError#template</a></li>
+                
+                    <li><a class="toctree-l4" href="#transmittableerrortojson">TransmittableError#toJSON</a></li>
+                
+                    <li><a class="toctree-l4" href="#errorsinstantiate">errors.instantiate</a></li>
+                
+                    <li><a class="toctree-l4" href="#errorsmessage">errors.message</a></li>
+                
+                    <li><a class="toctree-l4" href="#errorsserialize">errors.serialize</a></li>
+                
+                    <li><a class="toctree-l4" href="#errorsstack">errors.stack</a></li>
+                
+                    <li><a class="toctree-l4" href="#errorstransmittableerrors">errors.transmittableErrors</a></li>
+                
+                    <li><a class="toctree-l4" href="#errorsunserialize">errors.unserialize</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../errors.spec/">client/modules/errors.spec.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../logging/">client/modules/logging.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../middleware/">client/modules/middleware.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../middleware.spec/">client/modules/middleware.spec.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../pkgman/">client/modules/pkgman.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/">client/packages.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../require/">client/require.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../Gruntfile/">Gruntfile.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-angular-sandbox/client/">packages/shrub-angular-sandbox/client/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-angular-sandbox/">packages/shrub-angular-sandbox/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-angular/client/">packages/shrub-angular/client/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-angular/">packages/shrub-angular/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-assets/angular/">packages/shrub-assets/angular.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-assets/">packages/shrub-assets/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-assets/jquery/">packages/shrub-assets/jquery.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-config/">packages/shrub-config/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-core/client/">packages/shrub-core/client/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-core/client/test-e2e/">packages/shrub-core/client/test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-core/">packages/shrub-core/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-example/about/">packages/shrub-example/about.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-example/client/about/">packages/shrub-example/client/about.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-example/client/home/">packages/shrub-example/client/home.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-example/client/">packages/shrub-example/client/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-example/client/test-e2e/">packages/shrub-example/client/test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-example/">packages/shrub-example/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-form/client/">packages/shrub-form/client/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-form/client/test-unit/">packages/shrub-form/client/test-unit.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-form/client/widget/checkbox/">packages/shrub-form/client/widget/checkbox.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-form/client/widget/checkboxes/">packages/shrub-form/client/widget/checkboxes.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-form/client/widget/group/">packages/shrub-form/client/widget/group.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-form/client/widget/hidden/">packages/shrub-form/client/widget/hidden.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-form/client/widget/markup/">packages/shrub-form/client/widget/markup.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-form/client/widget/radio/">packages/shrub-form/client/widget/radio.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-form/client/widget/radios/">packages/shrub-form/client/widget/radios.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-form/client/widget/select/">packages/shrub-form/client/widget/select.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-form/client/widget/submit/">packages/shrub-form/client/widget/submit.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-form/client/widget/text/">packages/shrub-form/client/widget/text.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-form/client/widget/textarea/">packages/shrub-form/client/widget/textarea.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-form/">packages/shrub-form/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-grunt/dox/dynamic/">packages/shrub-grunt/dox/dynamic.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-grunt/dox/">packages/shrub-grunt/dox/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-grunt/">packages/shrub-grunt/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-grunt/lint/">packages/shrub-grunt/lint.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-grunt/modules/">packages/shrub-grunt/modules.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-grunt/tests/build/">packages/shrub-grunt/tests/build.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-grunt/tests/">packages/shrub-grunt/tests/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-grunt/tests/run/">packages/shrub-grunt/tests/run.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-html5-audio/client/">packages/shrub-html5-audio/client/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-html5-audio/">packages/shrub-html5-audio/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-html5-local-storage/client/">packages/shrub-html5-local-storage/client/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-html5-local-storage/">packages/shrub-html5-local-storage/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-html5-notification/client/">packages/shrub-html5-notification/client/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-html5-notification/">packages/shrub-html5-notification/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-http-express/errors/">packages/shrub-http-express/errors.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-http-express/">packages/shrub-http-express/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-http-express/logger/">packages/shrub-http-express/logger.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-http-express/routes/">packages/shrub-http-express/routes.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-http-express/session/">packages/shrub-http-express/session.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-http-express/static/">packages/shrub-http-express/static.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-http/">packages/shrub-http/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-http/manager/">packages/shrub-http/manager.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-install/">packages/shrub-install/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-limiter/client/">packages/shrub-limiter/client/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-limiter/">packages/shrub-limiter/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-limiter/limiter/">packages/shrub-limiter/limiter.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-nodemailer/">packages/shrub-nodemailer/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-orm/client/">packages/shrub-orm/client/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-orm/">packages/shrub-orm/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-repl/">packages/shrub-repl/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-rpc/client/">packages/shrub-rpc/client/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-rpc/client/test-unit/">packages/shrub-rpc/client/test-unit.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-rpc/">packages/shrub-rpc/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-schema-rest/">packages/shrub-schema-rest/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-session/">packages/shrub-session/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-session/store/">packages/shrub-session/store.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-skin-strapped/client/form/">packages/shrub-skin-strapped/client/form.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-skin-strapped/client/">packages/shrub-skin-strapped/client/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-skin-strapped/client/main-nav/">packages/shrub-skin-strapped/client/main-nav.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-skin-strapped/client/notifications/">packages/shrub-skin-strapped/client/notifications.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-skin-strapped/">packages/shrub-skin-strapped/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-skin/client/">packages/shrub-skin/client/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-skin/">packages/shrub-skin/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-socket-socket.io/client/">packages/shrub-socket-socket.io/client/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-socket-socket.io/">packages/shrub-socket-socket.io/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-socket-socket.io/manager/">packages/shrub-socket-socket.io/manager.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-socket/client/dummy/">packages/shrub-socket/client/dummy.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-socket/client/">packages/shrub-socket/client/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-socket/client/socket/">packages/shrub-socket/client/socket.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-socket/">packages/shrub-socket/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-socket/manager/">packages/shrub-socket/manager.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-ui/client/attributes/">packages/shrub-ui/client/attributes.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-ui/client/">packages/shrub-ui/client/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-ui/client/list/">packages/shrub-ui/client/list/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-ui/client/list/item/">packages/shrub-ui/client/list/item.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-ui/client/markdown/">packages/shrub-ui/client/markdown.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-ui/client/menu/">packages/shrub-ui/client/menu.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-ui/client/messages/">packages/shrub-ui/client/messages.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-ui/client/notifications/">packages/shrub-ui/client/notifications/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-ui/client/notifications/item/">packages/shrub-ui/client/notifications/item.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-ui/client/notifications/title/">packages/shrub-ui/client/notifications/title.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-ui/client/test-unit/">packages/shrub-ui/client/test-unit.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-ui/client/window-title/">packages/shrub-ui/client/window-title.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-ui/">packages/shrub-ui/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-ui/notifications/">packages/shrub-ui/notifications.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user/client/email/forgot/">packages/shrub-user/client/email/forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user/client/email/">packages/shrub-user/client/email/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user/client/email/register/">packages/shrub-user/client/email/register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user/client/forgot/">packages/shrub-user/client/forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user/client/">packages/shrub-user/client/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user/client/login/">packages/shrub-user/client/login.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user/client/logout/">packages/shrub-user/client/logout.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user/client/register/">packages/shrub-user/client/register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user/client/reset/">packages/shrub-user/client/reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user/client/test-e2e/">packages/shrub-user/client/test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user/client/test-unit/">packages/shrub-user/client/test-unit.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user/forgot/">packages/shrub-user/forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user/">packages/shrub-user/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user/login/">packages/shrub-user/login.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user/logout/">packages/shrub-user/logout.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user/register/">packages/shrub-user/register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user/reset/">packages/shrub-user/reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-villiany/">packages/shrub-villiany/index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../server/">server.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../server/bootstrap/">server/bootstrap.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../server/config/">server/config.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../server/crypto/">server/crypto.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../server/crypto.spec/">server/crypto.spec.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../server/fingerprint/">server/fingerprint.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../server/logging/">server/logging.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../server/sandboxes/">server/sandboxes.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+        </ul>
       </div>
       &nbsp;
     </nav>
@@ -755,8 +1128,8 @@
 
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="icon icon-reorder"></i>
-        <a href="../../../.."></a>
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../..">Shrub</a>
       </nav>
 
       
@@ -765,20 +1138,28 @@
           <div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../../../..">Docs</a> &raquo;</li>
-    <li>client/modules/errors.litcoffee</li>
-      <li class="wy-breadcrumbs-aside">
+    
+      
         
-          
-            <a href="https://github.com/cha0s/shrub" class="icon icon-github"> Edit on GitHub</a>
-          
+          <li>Source code &raquo;</li>
         
-      </li>
+      
+    
+    <li>client/modules/errors.coffee</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="https://github.com/cha0s/shrub" class="icon icon-github"> Edit on GitHub</a>
+        
+      
+    </li>
   </ul>
   <hr/>
 </div>
           <div role="main">
             <div class="section">
-              <h1 id="error-handling">Error handling</h1>
+              
+                <h1 id="error-handling">Error handling</h1>
 <pre><code>pkgman = require 'pkgman'
 </code></pre>
 <h2 id="transmittableerror">TransmittableError</h2>
@@ -786,7 +1167,8 @@
 </code></pre>
 <p>Extend this class if you'd like to implement an error</p>
 <h2 id="constructor"><em>constructor</em></h2>
-<p>See: <a href="https://github.com/jashkenas/coffee-script/issues/2359">https://github.com/jashkenas/coffee-script/issues/2359</a></p>
+<p>See:
+<a href="https://github.com/jashkenas/coffee-script/issues/2359">https://github.com/jashkenas/coffee-script/issues/2359</a></p>
 <pre><code>  constructor: (@message) -&gt;
 </code></pre>
 <h2 id="transmittableerrorkey">TransmittableError#key</h2>
@@ -799,22 +1181,26 @@
 <pre><code>  template: 'Unknown error: :message'
 </code></pre>
 <h2 id="transmittableerrortojson">TransmittableError#toJSON</h2>
-<p>Implement this if you need to transmit more than just the key and the message.
-Shrub uses the result from this function to serialize the error over the wire.</p>
+<p>Implement this if you need to transmit more than just the key and the
+message. Shrub uses the result from this function to serialize the error
+over the wire.</p>
 <pre><code>  toJSON: -&gt; [@key, @message]
 </code></pre>
 <h2 id="errorsinstantiate">errors.instantiate</h2>
 <ul>
-<li>(string) <code>key</code> - The error type.</li>
-<li>(any) <code>args...</code> - Additional arguments to pass to the error type's
-  constructor.</li>
+<li>
+<p>(string) <code>key</code> - The error type.</p>
+</li>
+<li>
+<p>(any) <code>args...</code> - Additional arguments to pass to the error type's</p>
+</li>
 </ul>
-<p><em>Instantiate an error based on key, passing along args to the error's
-constructor.</em></p>
+<p>constructor. <em>Instantiate an error based on key, passing along args to the
+error's constructor.</em></p>
 <pre><code>exports.instantiate = (key, args...) -&gt;
 </code></pre>
-<p>Look up the error type and use it. If it's not registered, fall back to the
-TransmittableError superclass.</p>
+<p>Look up the error type and use it. If it's not registered, fall back to
+the TransmittableError superclass.</p>
 <pre><code>  Types = exports.transmittableErrors()
   Type = if Types[key]? then Types[key] else TransmittableError
 </code></pre>
@@ -849,8 +1235,8 @@ TransmittableError superclass.</p>
 <pre><code>  else if error instanceof Error
     TransmittableError::template.replace ':message', error.message
 </code></pre>
-<p>Not an instance of <code>Error</code>. This probably shouldn't happen, but we deal with it
-anyway.</p>
+<p>Not an instance of <code>Error</code>. This probably shouldn't happen, but we deal
+with it anyway.</p>
 <pre><code>  else
     TransmittableError::template.replace ':message', error.toString()
 </code></pre>
@@ -873,8 +1259,8 @@ anyway.</p>
 <pre><code>  else if error instanceof Error
     [undefined, error.message]
 </code></pre>
-<p>Not an instance of <code>Error</code>. This probably shouldn't happen, but we deal with it
-anyway.</p>
+<p>Not an instance of <code>Error</code>. This probably shouldn't happen, but we deal
+with it anyway.</p>
 <pre><code>  else
     [undefined, error]
 </code></pre>
@@ -907,8 +1293,8 @@ anyway.</p>
   _ = require 'lodash'
 </code></pre>
 <h4 id="invoke-hook-shrubtransmittableerrors">Invoke hook <code>shrubTransmittableErrors</code>.</h4>
-<p>Allows packages to specify transmittable errors. Implementations should return
-a subclass of <code>TransmittableError</code>.</p>
+<p>Allows packages to specify transmittable errors. Implementations should
+return a subclass of <code>TransmittableError</code>.</p>
 <pre><code>  Types = {}
 
   Types[Type::key] = Type for Type in [TransmittableError].concat(
@@ -921,17 +1307,17 @@ a subclass of <code>TransmittableError</code>.</p>
 <p><em>Unserialize an error from over the wire.</em></p>
 <pre><code>exports.unserialize = (data) -&gt; exports.instantiate.apply null, data
 </code></pre>
-
+              
             </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../logging" class="btn btn-neutral float-right" title="client/modules/logging.litcoffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../errors.spec/" class="btn btn-neutral float-right" title="client/modules/errors.spec.coffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../config" class="btn btn-neutral" title="client/modules/config.litcoffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../config.spec/" class="btn btn-neutral" title="client/modules/config.spec.coffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -939,9 +1325,8 @@ a subclass of <code>TransmittableError</code>.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>
     <!-- Copyright etc -->
-    </p>
+    
   </div>
 
   Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
@@ -956,12 +1341,17 @@ a subclass of <code>TransmittableError</code>.</p>
 
 <div class="rst-versions" role="note" style="cursor: pointer">
     <span class="rst-current-version" data-toggle="rst-current-version">
-        
-            <a class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
-        
-      <span><a href="../config" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      <span style="margin-left: 15px"><a href="../logging" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+          <a class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../config.spec/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../errors.spec/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
     </span>
 </div>
+
 </body>
 </html>

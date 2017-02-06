@@ -1,0 +1,886 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    
+    <url>
+     <loc>None/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+        
+    <url>
+     <loc>None/guide/getting-started/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/guide/errors/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/guide/forms/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/guide/concepts/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+    
+        
+    <url>
+     <loc>None/examples/todo-list/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+    
+        
+    <url>
+     <loc>None/hooks/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/packages/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/todos/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+    
+        
+    <url>
+     <loc>None/source/client/app/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/client/modules/angular/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/client/modules/config/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/client/modules/config.spec/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/client/modules/errors/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/client/modules/errors.spec/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/client/modules/logging/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/client/modules/middleware/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/client/modules/middleware.spec/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/client/modules/pkgman/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/client/packages/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/client/require/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/Gruntfile/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-angular-sandbox/client/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-angular-sandbox/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-angular/client/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-angular/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-assets/angular/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-assets/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-assets/jquery/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-config/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-core/client/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-core/client/test-e2e/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-core/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-example/about/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-example/client/about/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-example/client/home/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-example/client/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-example/client/test-e2e/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-example/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-form/client/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-form/client/test-unit/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-form/client/widget/checkbox/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-form/client/widget/checkboxes/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-form/client/widget/group/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-form/client/widget/hidden/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-form/client/widget/markup/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-form/client/widget/radio/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-form/client/widget/radios/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-form/client/widget/select/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-form/client/widget/submit/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-form/client/widget/text/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-form/client/widget/textarea/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-form/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-grunt/dox/dynamic/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-grunt/dox/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-grunt/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-grunt/lint/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-grunt/modules/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-grunt/tests/build/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-grunt/tests/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-grunt/tests/run/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-html5-audio/client/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-html5-audio/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-html5-local-storage/client/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-html5-local-storage/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-html5-notification/client/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-html5-notification/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-http-express/errors/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-http-express/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-http-express/logger/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-http-express/routes/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-http-express/session/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-http-express/static/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-http/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-http/manager/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-install/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-limiter/client/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-limiter/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-limiter/limiter/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-nodemailer/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-orm/client/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-orm/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-repl/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-rpc/client/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-rpc/client/test-unit/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-rpc/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-schema-rest/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-session/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-session/store/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-skin-strapped/client/form/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-skin-strapped/client/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-skin-strapped/client/main-nav/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-skin-strapped/client/notifications/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-skin-strapped/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-skin/client/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-skin/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-socket-socket.io/client/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-socket-socket.io/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-socket-socket.io/manager/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-socket/client/dummy/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-socket/client/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-socket/client/socket/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-socket/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-socket/manager/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-ui/client/attributes/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-ui/client/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-ui/client/list/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-ui/client/list/item/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-ui/client/markdown/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-ui/client/menu/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-ui/client/messages/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-ui/client/notifications/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-ui/client/notifications/item/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-ui/client/notifications/title/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-ui/client/test-unit/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-ui/client/window-title/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-ui/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-ui/notifications/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-user/client/email/forgot/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-user/client/email/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-user/client/email/register/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-user/client/forgot/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-user/client/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-user/client/login/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-user/client/logout/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-user/client/register/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-user/client/reset/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-user/client/test-e2e/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-user/client/test-unit/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-user/forgot/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-user/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-user/login/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-user/logout/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-user/register/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-user/reset/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/packages/shrub-villiany/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/server/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/server/bootstrap/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/server/config/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/server/crypto/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/server/crypto.spec/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/server/fingerprint/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/server/logging/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/source/server/sandboxes/</loc>
+     <lastmod>2017-02-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+</urlset>
