@@ -70,6 +70,31 @@ class Todos extends Transform
       index: todo
       lines: @lines.slice start, end
 
+# Implement a transform stream to convert a .coffee file to .litcoffee
+class LitcoffeeConversion extends Transform
+
+  constructor: ->
+    super
+
+    @commenting = false
+
+  _transform: (chunk, encoding, done) ->
+
+    line = chunk.toString 'utf8'
+
+    # Comment.
+    if '#'.charCodeAt(0) is line.trim().charCodeAt(0)
+      @push "#{line.trim().substr 2}\n"
+      @commenting = true
+
+    else
+      @push "\n" if @commenting
+      @push '    ' if line.length > 0
+      @push "#{line}\n"
+      @commenting = false
+
+    done()
+
 # Gather all source files.
 _allSourceFiles = ->
   new Promise (resolve, reject) ->
@@ -124,8 +149,34 @@ _collateFilesByType = (files) ->
 
   client: client, server: server
 
+# Add all the source files to a generated mkdocs.yml
+generatedFilesPromise = _allSourceFiles().then (files) ->
+
+  promises = for file in files
+    parts = file.split '/'
+
+    for i in [0...parts.length]
+      try
+        fs.mkdirSync "docs/source/#{parts.slice(0, i).join '/'}"
+      catch error
+
+    fstream = fs.createReadStream file
+    fstream.pipe lineStream = new LineStream keepEmptyLines: true
+
+    # Convert to litcoffee.
+    lineStream.pipe litcoffeeConversion = new LitcoffeeConversion()
+
+    writeStream = fs.createWriteStream "docs/source/#{file}"
+    litcoffeeConversion.pipe writeStream
+
+    new Promise (resolve) -> do (file) ->
+
+      writeStream.on 'close', -> resolve file
+
+  Promise.all promises
+
 # Gather statistics for all files.
-fileStatsListPromise = _allSourceFiles().then (allFiles) ->
+fileStatsListPromise = generatedFilesPromise.then (allFiles) ->
 
   allFilesPromises = for type, files of _collateFilesByType allFiles
 
@@ -133,7 +184,7 @@ fileStatsListPromise = _allSourceFiles().then (allFiles) ->
 
       do (type, file) -> new Promise (resolve, reject) ->
 
-        fstream = fs.createReadStream file
+        fstream = fs.createReadStream "docs/source/#{file}"
         fstream.pipe lineStream = new LineStream keepEmptyLines: true
 
         # Pass all files through the Transform list to parse out relevant
@@ -190,7 +241,7 @@ fileStatsListPromise.then((fileStatsList) ->
   for key in keys
     for hook, stats of indexes[key]
       for file of stats
-        stats[file].types = _.unique stats[file].types ? []
+        stats[file].types = _.sortedUniq stats[file].types.sort() ? []
 
   hooks = (hook for hook of hooksIndex).sort()
 
@@ -253,7 +304,7 @@ fileStatsListPromise.then((fileStatsList) ->
           packageName = parts.join '/'
 
           types = types.map (type) ->
-            "    <tr class=\"#{if stripe++ % 2 then 'odd' else 'even'}\"><td><a href=\"source/#{_sourcePath fullName}\">#{_sourcePath file} (#{type})</a></td><td align=\"right\"><a href=\"source/#{_sourcePath fullName}##{wordingFor[key]}-hook-#{_idFromString hook}\">#{key}</a></td></tr>"
+            "    <tr class=\"#{if stripe++ % 2 then 'odd' else 'even'}\"><td><a href=\"/source/#{_sourcePath fullName}\">#{_sourcePath file} (#{type})</a></td><td align=\"right\"><a href=\"/source/#{_sourcePath fullName}##{wordingFor[key]}-hook-#{_idFromString hook}\">#{key}</a></td></tr>"
           types.join ''
 
         render += instances.join ''
@@ -319,29 +370,16 @@ fileStatsListPromise.then((fileStatsList) ->
 
 ).done()
 
-# Add all the source files to a generated mkdocs.yml
 _allSourceFiles().then (files) ->
 
   yml = fs.readFileSync 'docs/mkdocs.template.yml', 'utf8'
 
   for file in files
-    parts = file.split '/'
-
-    for i in [0...parts.length]
-      try
-        fs.mkdirSync "docs/source/#{parts.slice(0, i).join '/'}"
-      catch error
-
-    fs.createReadStream(file).pipe(
-      fs.createWriteStream("docs/source/#{file}")
-    )
 
     # Add them under the 'Source code' path.
     yml += "- [source/#{file}, 'Source code', '#{file}']\n"
 
   fs.writeFileSync 'mkdocs.yml', yml
-
-  return
 
 # Render the packages page.
 fileStatsListPromise.then((fileStatsList) ->
@@ -417,7 +455,7 @@ fileStatsListPromise.then((fileStatsList) ->
 
     render += '\n\n'
 
-    description = chunks[1]
+    description = chunks[1] ? ''
     if 42 is description.charCodeAt 0 and 42 is description.charCodeAt description.length - 1
       render += '> ' if isSubpackage
       render += "#{description}\n\n"
@@ -428,7 +466,7 @@ fileStatsListPromise.then((fileStatsList) ->
       render += '<p class="admonition-title">Implements hooks</p>'
       render += '  <table>\n'
       render += fileStats.implementations.map((hook, index) ->
-        "    <tr class=\"#{if index % 2 then 'odd' else 'even'}\"><td><a href=\"hooks/##{_idFromString hook}\">#{hook}</a></td><td align=\"right\"><a href=\"source/#{sourcePath}#implements-hook-#{hook.toLowerCase()}\">implementation</a></td></tr>\n"
+        "    <tr class=\"#{if index % 2 then 'odd' else 'even'}\"><td><a href=\"/hooks/##{_idFromString hook}\">#{hook}</a></td><td align=\"right\"><a href=\"/source/#{sourcePath}#implements-hook-#{hook.toLowerCase()}\">implementation</a></td></tr>\n"
       ).join ''
       render += '  </table>\n'
       render += '</div>'
@@ -440,7 +478,7 @@ fileStatsListPromise.then((fileStatsList) ->
       render += '<p class="admonition-title">Implements hooks</p>'
       render += '  <table>\n'
       render += fileStats.implementations.map((hook, index) ->
-        "    <tr class=\"#{if index % 2 then 'odd' else 'even'}\"><td><a href=\"hooks/##{_idFromString hook}\">#{hook}</a></td><td align=\"right\"><a href=\"source/#{sourcePath}#invoke-hook-#{hook.toLowerCase()}\">invocation</a></td></tr>\n"
+        "    <tr class=\"#{if index % 2 then 'odd' else 'even'}\"><td><a href=\"/hooks/##{_idFromString hook}\">#{hook}</a></td><td align=\"right\"><a href=\"/source/#{sourcePath}#invoke-hook-#{hook.toLowerCase()}\">invocation</a></td></tr>\n"
       ).join ''
       render += '  </table>\n'
       render += '</div>'

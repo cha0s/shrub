@@ -8,6 +8,15 @@ exports.pkgmanRegister = (registrar) ->
   # #### Implements hook `shrubGruntConfig`.
   registrar.registerHook 'shrubGruntConfig', (gruntConfig, grunt) ->
 
+    gruntConfig.configureTask 'clean', 'dox', [
+      'mkdocs.yml'
+      'docs/source'
+      'docs/{hooks,packages,todos}.md'
+      'gh-pages/*'
+      '!gh-pages/.git'
+      '!gh-pages/.gitignore'
+    ]
+
     gruntConfig.registerTask 'dox:prepareDirectory', ->
       grunt.file.mkdir 'gh-pages'
 
