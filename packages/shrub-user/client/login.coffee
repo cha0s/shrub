@@ -42,13 +42,12 @@ exports.pkgmanRegister = (registrar) ->
 
             key: 'shrub-user-login'
 
-            # ###### TODO: Use rpc submission with a hidden 'method' field.
             submits: [
 
               (values) ->
 
                 user.login(
-                  'local'
+                  values.method
                   values.username
                   values.password
                 ).then ->
@@ -63,6 +62,10 @@ exports.pkgmanRegister = (registrar) ->
             ]
 
             fields:
+
+              method:
+                type: 'hidden'
+                value: 'local'
 
               username:
                 type: 'text'
