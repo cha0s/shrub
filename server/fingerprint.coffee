@@ -80,10 +80,6 @@ module.exports = class Fingerprint
     _excluded[key] = true for key in excluded
 
     # #### Invoke hook `shrubAuditFingerprint`.
-    #
-    # Allows a package to specify unique keys for this request, e.g. IP
-    # address session ID, etc. Implementations take a request object as the
-    # only parameter. The request parameter may be null.
     for keys in pkgman.invokeFlat 'shrubAuditFingerprint', req
       for key, value of keys ? {}
         continue if _excluded[key]
