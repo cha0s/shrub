@@ -1578,6 +1578,24 @@
 <h4 id="implements-hook-shrubgruntconfig">Implements hook <code>shrubGruntConfig</code>.</h4>
 <pre><code>  registrar.registerHook 'shrubGruntConfig', (gruntConfig) -&gt;
 
+    gruntConfig.configureTask 'browserify', 'shrub-debug', {
+      src: ['node_modules/debug/browser.js']
+      dest: 'build/js/app/modules/debug.js'
+      options: browserifyOptions: standalone: 'debug'
+    }
+
+    gruntConfig.configureTask 'browserify', 'shrub-inflection', {
+      src: ['node_modules/inflection/lib/inflection.js']
+      dest: 'build/js/app/modules/inflection.js'
+      options: browserifyOptions: standalone: 'inflection'
+    }
+
+    gruntConfig.configureTask 'browserify', 'shrub-path', {
+      src: ['node_modules/path-browserify/index.js']
+      dest: 'build/js/app/modules/path.js'
+      options: browserifyOptions: standalone: 'path'
+    }
+
     gruntConfig.configureTask 'coffee', 'modules', files: [
       cwd: 'client'
       src: [
@@ -1613,6 +1631,15 @@
       expand: true
       src: ['{custom,packages}/*/client/**/*.js']
       dest: 'build/js/app'
+    ,
+      src: ['node_modules/bluebird/js/browser/bluebird.js']
+      dest: 'build/js/app/modules/bluebird.js'
+    ,
+      src: ['node_modules/lodash/lodash.js']
+      dest: 'build/js/app/modules/lodash.js'
+    ,
+      src: ['node_modules/marked/lib/marked.js']
+      dest: 'build/js/app/modules/marked.js'
     ]
 
     gruntConfig.configureTask(
@@ -1690,9 +1717,16 @@
 
     )
 
+    gruntConfig.registerTask 'shrub-browserify', [
+      'newer:browserify:shrub-debug'
+      'newer:browserify:shrub-inflection'
+      'newer:browserify:shrub-path'
+    ]
+
     gruntConfig.registerTask 'build:modules', [
       'newer:coffee:modules'
       'newer:copy:modules'
+      'shrub-browserify'
       'wrap:modules'
       'concat:modules'
       'newer:wrap:modulesAll'

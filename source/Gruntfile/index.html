@@ -1635,16 +1635,15 @@ module.exports = (grunt) -&gt;
 </li>
 <li>
 <p>(String) <code>key</code> - The name of the key in the task configuration to set.
-This</p>
+This is generally the name of the package, but can be anything.</p>
+</li>
+<li>
+<p>(Object) <code>config_</code> - The configuration to set. See the documentation
+for the particular grunt task being configured to learn how to configure
+it.</p>
 </li>
 </ul>
-<p>is generally the name of the package, but can be anything.</p>
-<ul>
-<li>(Object) <code>config_</code> - The configuration to set. See the documentation
-for the</li>
-</ul>
-<p>particular grunt task being configured to learn how to configure it.
-<em>Configure a Grunt task.</em></p>
+<p><em>Configure a Grunt task.</em></p>
 <pre><code>    configureTask: (task, key, config_) -&gt;
 
       (@_taskConfig[task] ?= {})[key] = config_
@@ -1658,11 +1657,10 @@ for the</li>
 </li>
 <li>
 <p>(String) <code>key</code> - The name of the key in the task configuration to set.
-This</p>
+This is generally the name of the package, but can be anything.</p>
 </li>
 </ul>
-<p>is generally the name of the package, but can be anything. <em>Get the
-configuration for a Grunt task.</em></p>
+<p><em>Get the configuration for a Grunt task.</em></p>
 <pre><code>    taskConfiguration: (task, key) -&gt; @_taskConfig[task]?[key]
 </code></pre>
 <h2 id="gruntconfigurationloadnpmtasks">GruntConfiguration#loadNpmTasks</h2>
@@ -1683,11 +1681,11 @@ configuration for a Grunt task.</em></p>
 </li>
 <li>
 <p>(String Array or Function) <code>subtasksOrFunction</code> - Either an array of
-strings</p>
+strings which define the dependencies for the task, or a function which
+will be executed for the task.</p>
 </li>
 </ul>
-<p>which define the dependencies for the task, or a function which will be
-executed for the task. <em>Register a Grunt task.</em></p>
+<p><em>Register a Grunt task.</em></p>
 <pre><code>    registerTask: (task, subtasksOrFunction) -&gt;
 
       if 'function' is typeof subtasksOrFunction
@@ -1704,14 +1702,14 @@ executed for the task. <em>Register a Grunt task.</em></p>
 </li>
 <li>
 <p>(String) <code>key</code> - The name of the key in the task configuration to set.
-This</p>
+This is generally the name of the package, but can be anything.</p>
 </li>
 <li>
 <p>(String) <code>dest</code> - The destination where the files will be copied.
-Defaults to</p>
+Defaults to <code>'app'</code>.</p>
 </li>
 </ul>
-<p><code>'app'</code>. <em>Copy package files to <code>app</code>.</em></p>
+<p><em>Copy package files to <code>app</code>.</em></p>
 <pre><code>    copyAppFiles: (path, key, dest = 'app') -&gt;
 
       dest ?= 'app'

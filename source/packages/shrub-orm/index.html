@@ -915,19 +915,19 @@
                 
                     <li><a class="toctree-l4" href="#implements-hook-shrubreplcontext">Implements hook shrubReplContext.</a></li>
                 
-                    <li><a class="toctree-l4" href="#initialize">initialize</a></li>
+                    <li><a class="toctree-l4" href="#orminitialize">orm.initialize</a></li>
                 
                     <li><a class="toctree-l4" href="#collectioninstantiate">Collection#instantiate.</a></li>
                 
-                    <li><a class="toctree-l4" href="#collection">collection</a></li>
+                    <li><a class="toctree-l4" href="#ormcollection">orm.collection</a></li>
                 
-                    <li><a class="toctree-l4" href="#collections">collections</a></li>
+                    <li><a class="toctree-l4" href="#ormcollections">orm.collections</a></li>
                 
-                    <li><a class="toctree-l4" href="#connections">connections</a></li>
+                    <li><a class="toctree-l4" href="#ormconnections">orm.connections</a></li>
                 
-                    <li><a class="toctree-l4" href="#teardown">teardown</a></li>
+                    <li><a class="toctree-l4" href="#ormteardown">orm.teardown</a></li>
                 
-                    <li><a class="toctree-l4" href="#waterline">waterline</a></li>
+                    <li><a class="toctree-l4" href="#ormwaterline">orm.waterline</a></li>
                 
             
             </ul>
@@ -1667,7 +1667,7 @@ sails-redis adapter with defaults.</p>
 <p>Provide ORM to the REPL context.</p>
 <pre><code>  registrar.registerHook 'shrubReplContext', (context) -&gt; context.orm = exports
 </code></pre>
-<h2 id="initialize">initialize</h2>
+<h2 id="orminitialize">orm.initialize</h2>
 <ul>
 <li>(Function) <code>fn</code> - Nodeback called when initialization completes.</li>
 </ul>
@@ -1731,29 +1731,29 @@ with a sane API for this.</p>
 
     fn()
 </code></pre>
-<h2 id="collection">collection</h2>
+<h2 id="ormcollection">orm.collection</h2>
 <ul>
 <li>(String) <code>identity</code> - Collection identity. e.g. <code>'shrub-user'</code></li>
 </ul>
 <p><em>Get a collection by identity.</em></p>
 <pre><code>exports.collection = (identity) -&gt; collections[identity]
 </code></pre>
-<h2 id="collections">collections</h2>
+<h2 id="ormcollections">orm.collections</h2>
 <p><em>Get all collections.</em></p>
 <pre><code>exports.collections = -&gt; collections
 </code></pre>
-<h2 id="connections">connections</h2>
+<h2 id="ormconnections">orm.connections</h2>
 <p><em>Get all connections.</em></p>
 <pre><code>exports.connections = -&gt; connections
 </code></pre>
-<h2 id="teardown">teardown</h2>
+<h2 id="ormteardown">orm.teardown</h2>
 <ul>
 <li>(Function) <code>fn</code> - Nodeback called after teardown.</li>
 </ul>
 <p><em>Tear down Waterline.</em></p>
 <pre><code>exports.teardown = (fn) -&gt; waterline.teardown fn
 </code></pre>
-<h2 id="waterline">waterline</h2>
+<h2 id="ormwaterline">orm.waterline</h2>
 <p><em>Get the Waterline instance.</em></p>
 <pre><code>exports.waterline = -&gt; waterline
 </code></pre>

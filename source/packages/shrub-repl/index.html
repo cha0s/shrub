@@ -1626,8 +1626,9 @@ exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 <h4 id="invoke-hook-shrubreplcontext">Invoke hook <code>shrubReplContext</code>.</h4>
 <pre><code>          pkgman.invoke 'shrubReplContext', context = {}
-
-          opts =
+</code></pre>
+<p>REPL server options.</p>
+<pre><code>          opts =
             prompt: settings.prompt
             input: socket
             output: socket
@@ -1643,8 +1644,9 @@ exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 <p>Handle blank lines correctly.</p>
 <pre><code>              return callback null, undefined if cmd is '(\n)'
-
-              try
+</code></pre>
+<p>Forward the input to CoffeeScript for evalulation.</p>
+<pre><code>              try
 
                 callback null, CoffeeScript.eval(
                   cmd
@@ -1664,8 +1666,12 @@ prepare for later cleanup.</p>
 </code></pre>
 <p>Try to be tidy about things.</p>
 <pre><code>        fs.unlink settings.socket, (error) -&gt;
-          return next error if error.code isnt 'ENOENT' if error?
-          server.listen settings.socket, (error) -&gt;
+</code></pre>
+<p>Ignore the error if it's just saying the socket didn't exist.</p>
+<pre><code>          return next error if error.code isnt 'ENOENT' if error?
+</code></pre>
+<p>Bind the REPL server socket.</p>
+<pre><code>          server.listen settings.socket, (error) -&gt;
             return next error if error?
             debug "REPL server listening at #{settings.socket}"
             next()
