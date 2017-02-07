@@ -50,8 +50,9 @@ exports.pkgmanRegister = (registrar) ->
 
           sandbox = new Sandbox()
 
-          # ###### TODO: Multiline
-          sandbox.createDocument html, url: "http://localhost:#{config.get 'packageSettings:shrub-http:port'}/home"
+          sandbox.createDocument html, url: "http://localhost:#{
+            config.get 'packageSettings:shrub-http:port'
+          }/home"
 
         ).then(->
 
@@ -74,6 +75,12 @@ exports.pkgmanRegister = (registrar) ->
     transport:
       module: 'nodemailer-sendmail-transport'
       options: {}
+
+  # #### Implements hook `shrubReplContext`.
+  #
+  # Provide mail sending to the REPL context.
+  registrar.registerHook 'shrubReplContext', (context) ->
+    context.sendMail = exports.sendMail
 
 # ## sendMail
 #
