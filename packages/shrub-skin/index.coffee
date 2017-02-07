@@ -164,7 +164,8 @@ exports.renderAppHtml = ->
       src: "/skin/#{skinKey}/#{script}"
     ) for script in skinAssets.scripts[environmentKey] ? []
 
-    $.html()
+    # Return the full HTML.
+    return $.html()
 
 # ## skinDirectory
 #

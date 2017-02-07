@@ -105,7 +105,6 @@ exports.pkgmanRegister = (registrar) ->
               @error = null
               @headers = {}
 
-            # Stubs. `TODO`: Make this not a stub.
             getHeader: (key) -> @headers[key]
 
             setHeader: (key, value) -> @headers[key] = value

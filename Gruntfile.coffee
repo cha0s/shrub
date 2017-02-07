@@ -48,14 +48,12 @@ module.exports = (grunt) ->
     # * (String) `task` - The name of the task to configure.
     #
     # * (String) `key` - The name of the key in the task configuration to set.
-    # This
-    #
-    # is generally the name of the package, but can be anything.
+    # This is generally the name of the package, but can be anything.
     #
     # * (Object) `config_` - The configuration to set. See the documentation
-    # for the
+    # for the particular grunt task being configured to learn how to configure
+    # it.
     #
-    # particular grunt task being configured to learn how to configure it.
     # *Configure a Grunt task.*
     configureTask: (task, key, config_) ->
 
@@ -68,10 +66,9 @@ module.exports = (grunt) ->
     # * (String) `task` - The name of the task to configure.
     #
     # * (String) `key` - The name of the key in the task configuration to set.
-    # This
+    # This is generally the name of the package, but can be anything.
     #
-    # is generally the name of the package, but can be anything. *Get the
-    # configuration for a Grunt task.*
+    # *Get the configuration for a Grunt task.*
     taskConfiguration: (task, key) -> @_taskConfig[task]?[key]
 
     # ## GruntConfiguration#loadNpmTasks
@@ -90,10 +87,10 @@ module.exports = (grunt) ->
     # * (String) `task` - The name of the task to configure.
     #
     # * (String Array or Function) `subtasksOrFunction` - Either an array of
-    # strings
+    # strings which define the dependencies for the task, or a function which
+    # will be executed for the task.
     #
-    # which define the dependencies for the task, or a function which will be
-    # executed for the task. *Register a Grunt task.*
+    # *Register a Grunt task.*
     registerTask: (task, subtasksOrFunction) ->
 
       if 'function' is typeof subtasksOrFunction
@@ -108,12 +105,12 @@ module.exports = (grunt) ->
     # * (String) `path` - The path of the files to copy.
     #
     # * (String) `key` - The name of the key in the task configuration to set.
-    # This
+    # This is generally the name of the package, but can be anything.
     #
     # * (String) `dest` - The destination where the files will be copied.
-    # Defaults to
+    # Defaults to `'app'`.
     #
-    # `'app'`. *Copy package files to `app`.*
+    # *Copy package files to `app`.*
     copyAppFiles: (path, key, dest = 'app') ->
 
       dest ?= 'app'

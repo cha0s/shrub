@@ -48,6 +48,7 @@ exports.pkgmanRegister = (registrar) ->
           # #### Invoke hook `shrubReplContext`.
           pkgman.invoke 'shrubReplContext', context = {}
 
+          # REPL server options.
           opts =
             prompt: settings.prompt
             input: socket
@@ -65,6 +66,7 @@ exports.pkgmanRegister = (registrar) ->
               # Handle blank lines correctly.
               return callback null, undefined if cmd is '(\n)'
 
+              # Forward the input to CoffeeScript for evalulation.
               try
 
                 callback null, CoffeeScript.eval(
@@ -85,7 +87,11 @@ exports.pkgmanRegister = (registrar) ->
 
         # Try to be tidy about things.
         fs.unlink settings.socket, (error) ->
+
+          # Ignore the error if it's just saying the socket didn't exist.
           return next error if error.code isnt 'ENOENT' if error?
+
+          # Bind the REPL server socket.
           server.listen settings.socket, (error) ->
             return next error if error?
             debug "REPL server listening at #{settings.socket}"

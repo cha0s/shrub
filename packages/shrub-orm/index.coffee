@@ -73,7 +73,7 @@ exports.pkgmanRegister = (registrar) ->
   # Provide ORM to the REPL context.
   registrar.registerHook 'shrubReplContext', (context) -> context.orm = exports
 
-# ## initialize
+# ## orm.initialize
 #
 # * (Function) `fn` - Nodeback called when initialization completes.
 #
@@ -137,31 +137,31 @@ exports.initialize = (fn) ->
 
     fn()
 
-# ## collection
+# ## orm.collection
 #
 # * (String) `identity` - Collection identity. e.g. `'shrub-user'`
 #
 # *Get a collection by identity.*
 exports.collection = (identity) -> collections[identity]
 
-# ## collections
+# ## orm.collections
 #
 # *Get all collections.*
 exports.collections = -> collections
 
-# ## connections
+# ## orm.connections
 #
 # *Get all connections.*
 exports.connections = -> connections
 
-# ## teardown
+# ## orm.teardown
 #
 # * (Function) `fn` - Nodeback called after teardown.
 #
 # *Tear down Waterline.*
 exports.teardown = (fn) -> waterline.teardown fn
 
-# ## waterline
+# ## orm.waterline
 #
 # *Get the Waterline instance.*
 exports.waterline = -> waterline
