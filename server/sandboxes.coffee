@@ -61,9 +61,9 @@ exports.Sandbox = class Sandbox
 # * (object) `options` - An options object which may contain the following
 #
 # values:
-* (string) `cookie` - Cookie string.
-* (string) `cookieDomain` - The domain the cookie applies to.
-* (string) `url` - The canonical URL of the HTML document.
+#     * (string) `cookie` - Cookie string.
+#     * (string) `cookieDomain` - The domain the cookie applies to.
+#     * (string) `url` - The canonical URL of the HTML document.
 
   # *Create a DOM from an HTML document.*
   createDocument: (html, options = {}) ->
