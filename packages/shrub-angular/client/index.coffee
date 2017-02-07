@@ -67,7 +67,15 @@ exports.pkgmanRegister = (registrar) ->
             # Create a promise.
             promise = new Promise ->
               resolve = arguments[0]
-              reject = arguments[1]
+
+              # Angular is a scrub, and will reject promises with strings
+              # instead of fully-fledged Error instances. Hold its hand.
+              reject_ = arguments[1]
+              reject = (error) ->
+                error = new Error error if _.isString error
+                reject_ error
+
+              return
 
             # Angular depends on notify, which is a crap API. We'll hack
             # support for it in.
