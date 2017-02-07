@@ -4,6 +4,24 @@ exports.pkgmanRegister = (registrar) ->
   # #### Implements hook `shrubGruntConfig`.
   registrar.registerHook 'shrubGruntConfig', (gruntConfig) ->
 
+    gruntConfig.configureTask 'browserify', 'shrub-debug', {
+      src: ['node_modules/debug/browser.js']
+      dest: 'build/js/app/modules/debug.js'
+      options: browserifyOptions: standalone: 'debug'
+    }
+
+    gruntConfig.configureTask 'browserify', 'shrub-inflection', {
+      src: ['node_modules/inflection/lib/inflection.js']
+      dest: 'build/js/app/modules/inflection.js'
+      options: browserifyOptions: standalone: 'inflection'
+    }
+
+    gruntConfig.configureTask 'browserify', 'shrub-path', {
+      src: ['node_modules/path-browserify/index.js']
+      dest: 'build/js/app/modules/path.js'
+      options: browserifyOptions: standalone: 'path'
+    }
+
     gruntConfig.configureTask 'coffee', 'modules', files: [
       cwd: 'client'
       src: [
@@ -39,6 +57,15 @@ exports.pkgmanRegister = (registrar) ->
       expand: true
       src: ['{custom,packages}/*/client/**/*.js']
       dest: 'build/js/app'
+    ,
+      src: ['node_modules/bluebird/js/browser/bluebird.js']
+      dest: 'build/js/app/modules/bluebird.js'
+    ,
+      src: ['node_modules/lodash/lodash.js']
+      dest: 'build/js/app/modules/lodash.js'
+    ,
+      src: ['node_modules/marked/lib/marked.js']
+      dest: 'build/js/app/modules/marked.js'
     ]
 
     gruntConfig.configureTask(
@@ -116,9 +143,16 @@ exports.pkgmanRegister = (registrar) ->
 
     )
 
+    gruntConfig.registerTask 'shrub-browserify', [
+      'newer:browserify:shrub-debug'
+      'newer:browserify:shrub-inflection'
+      'newer:browserify:shrub-path'
+    ]
+
     gruntConfig.registerTask 'build:modules', [
       'newer:coffee:modules'
       'newer:copy:modules'
+      'shrub-browserify'
       'wrap:modules'
       'concat:modules'
       'newer:wrap:modulesAll'

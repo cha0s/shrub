@@ -81,6 +81,7 @@ exports.pkgmanRegister = (registrar) ->
     ]
 
     gruntConfig.loadNpmTasks [
+      'grunt-browserify'
       'grunt-contrib-clean'
       'grunt-contrib-coffee'
       'grunt-contrib-concat'
