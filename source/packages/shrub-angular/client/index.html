@@ -1646,7 +1646,15 @@ non-notable.</p>
 <p>Create a promise.</p>
 <pre><code>            promise = new Promise -&gt;
               resolve = arguments[0]
-              reject = arguments[1]
+</code></pre>
+<p>Angular is a scrub, and will reject promises with strings
+instead of fully-fledged Error instances. Hold its hand.</p>
+<pre><code>              reject_ = arguments[1]
+              reject = (error) -&gt;
+                error = new Error error if _.isString error
+                reject_ error
+
+              return
 </code></pre>
 <p>Angular depends on notify, which is a crap API. We'll hack
 support for it in.</p>

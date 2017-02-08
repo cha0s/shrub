@@ -1617,14 +1617,13 @@ exports.pkgmanRegister = (registrar) -&gt;
           $scope.form =
 
             key: 'shrub-user-login'
-</code></pre>
-<h6 id="todo-use-rpc-submission-with-a-hidden-method-field">TODO: Use rpc submission with a hidden 'method' field.</h6>
-<pre><code>            submits: [
+
+            submits: [
 
               (values) -&gt;
 
                 user.login(
-                  'local'
+                  values.method
                   values.username
                   values.password
                 ).then -&gt;
@@ -1639,6 +1638,10 @@ exports.pkgmanRegister = (registrar) -&gt;
             ]
 
             fields:
+
+              method:
+                type: 'hidden'
+                value: 'local'
 
               username:
                 type: 'text'

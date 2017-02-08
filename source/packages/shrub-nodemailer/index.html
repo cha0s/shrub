@@ -881,6 +881,8 @@
                 
                     <li><a class="toctree-l4" href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer.</a></li>
                 
+                    <li><a class="toctree-l4" href="#implements-hook-shrubreplcontext">Implements hook shrubReplContext.</a></li>
+                
                     <li><a class="toctree-l4" href="#sendmail">sendMail</a></li>
                 
                     <li><a class="toctree-l4" href="#sandboxinject">Sandbox#inject</a></li>
@@ -1636,9 +1638,10 @@ exports.pkgmanRegister = (registrar) -&gt;
 <pre><code>        skin.renderAppHtml().then((html) -&gt;
 
           sandbox = new Sandbox()
-</code></pre>
-<h6 id="todo-multiline">TODO: Multiline</h6>
-<pre><code>          sandbox.createDocument html, url: "http://localhost:#{config.get 'packageSettings:shrub-http:port'}/home"
+
+          sandbox.createDocument html, url: "http://localhost:#{
+            config.get 'packageSettings:shrub-http:port'
+          }/home"
 
         ).then(-&gt;
 </code></pre>
@@ -1661,6 +1664,11 @@ exports.pkgmanRegister = (registrar) -&gt;
 <pre><code>    transport:
       module: 'nodemailer-sendmail-transport'
       options: {}
+</code></pre>
+<h4 id="implements-hook-shrubreplcontext">Implements hook <code>shrubReplContext</code>.</h4>
+<p>Provide mail sending to the REPL context.</p>
+<pre><code>  registrar.registerHook 'shrubReplContext', (context) -&gt;
+    context.sendMail = exports.sendMail
 </code></pre>
 <h2 id="sendmail">sendMail</h2>
 <ul>
