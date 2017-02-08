@@ -43,6 +43,14 @@ h1:target, h2:target, h3:target, h4:target, h5:target, h6:target {
   font-weight: 700;
 }
 
+.rst-content .admonition table {
+  margin-bottom: 0;
+}
+
+.rst-content .admonition table td {
+  border-left: none;
+}
+
 .admonition.note > ul {
   margin-bottom: 0;
 }
