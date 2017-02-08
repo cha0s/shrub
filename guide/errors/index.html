@@ -1579,8 +1579,8 @@
 <p>Shrub provides a mechanism to define errors that can be transmitted over the
 wire.</p>
 <p>This is accomplished by subclassing
-<a href="../source/client/modules/errors/#transmittableerror"><code>TransmittableError</code></a>. Let's
-look at an example.</p>
+<a href="../../source/client/modules/errors/#transmittableerror"><code>TransmittableError</code></a>.
+Let's look at an example.</p>
 <p>Say we'd like to implement an error saying that one user can't add another
 user as a friend. We might implement that like so:</p>
 <pre><code class="javascript">var TransmittableError = require('errors').TransmittableError;
@@ -1607,7 +1607,7 @@ FriendRequestError.prototype.toJSON = function() {
 
 <p>We now have our friend request error! You'll want to return it (in an array)
 from your package's implementation of
-<a href="../hooks/#shrubtransmittableerrors"><code>shrubTransmittableErrors</code></a>.</p>
+<a href="../../hooks/#shrubtransmittableerrors"><code>shrubTransmittableErrors</code></a>.</p>
 <p>You can instantiate one of these errors:</p>
 <pre><code class="javascript">var errors = require('errors');
 var error = errors.instantiate('friendRequest', 'Friend request error!', 'Alice', 'Bob');
@@ -1636,7 +1636,7 @@ console.error(errors.stack(error));
 
 <p>The real joy of <code>TransmittableError</code> subclasses comes from the fact that you
 can throw or return them from an implementation of
-<a href="../hooks/#shrubrpcroutes"><code>shrubRpcRoutes</code></a> and they will be automatically
+<a href="../../hooks/#shrubrpcroutes"><code>shrubRpcRoutes</code></a> and they will be automatically
 serialized and reified on the client side so they can be presented to the
 user in a meaningful way.</p>
               
