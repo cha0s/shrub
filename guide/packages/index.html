@@ -1591,14 +1591,14 @@ Shrub's behavior.</p>
 </code></pre>
 
 <p>This package simply hooks into the
-<a href="../../../hooks#shrubcoreprebootstrap"><code>shrubCorePreBootstrap</code></a> hook and logs
+<a href="../../hooks#shrubcoreprebootstrap"><code>shrubCorePreBootstrap</code></a> hook and logs
 a message to the console when that hook is invoked. Obviously this particular
 package isn't super useful!</p>
 <p>Hooks are how Shrub allows packages to implement (or invoke) dynamic behavior.
 Hooks can also serve as a form of message passing between packages.</p>
 <p>You can do anything from
-<a href="../../../hooks#shrubangulardirective">defining an Angular directive</a>
-to <a href="../../../hooks#shrubormcollections">specifying model collections</a>. See the
+<a href="../../hooks#shrubangulardirective">defining an Angular directive</a>
+to <a href="../../hooks#shrubormcollections">specifying model collections</a>. See the
 <a href="../../../hooks">hook reference</a> to learn more about the hooks that come
 included with shrub's core packages.</p>
 <p>To implement a hook, export a <code>pkgmanRegister</code> method which takes a <code>registrar</code>
@@ -1623,7 +1623,7 @@ var results = pkgman.invoke('someOtherHook', arg);
 
 <p>Any arguments following the hook name will be passed along to the
 implementations. Hooks are invoked synchronously. For more information about
-<code>pkgman</code>, see <a href="../../../source/client/modules/pkgman/">the pkgman documentation</a>.</p>
+<code>pkgman</code>, see <a href="../../source/client/modules/pkgman/">the pkgman documentation</a>.</p>
               
             </div>
           </div>
