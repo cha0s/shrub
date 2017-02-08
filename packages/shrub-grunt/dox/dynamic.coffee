@@ -20,7 +20,7 @@ class HookInvocations extends Transform
 
   _transform: (chunk, encoding, done) ->
     line = chunk.toString('utf8')
-    if matches = line.match /^\#\#\#\# Invoke hook `([^`]+)`/
+    if matches = line.match /^\s*# \#\#\#\# Invoke hook `([^`]+)`/
       @list.push matches[1]
 
     done()
@@ -36,7 +36,7 @@ class HookImplementations extends Transform
 
   _transform: (chunk, encoding, done) ->
     line = chunk.toString('utf8')
-    if matches = line.match /^\#\#\#\# Implements hook `([^`]+)`/
+    if matches = line.match /^\s*# \#\#\#\# Implements hook `([^`]+)`/
       @list.push matches[1]
 
     done()
@@ -55,7 +55,7 @@ class Todos extends Transform
 
   _transform: (chunk, encoding, done) ->
     @lines.push line = chunk.toString('utf8')
-    if matches = line.match /^\#\#\#\#\#\# TODO/
+    if matches = line.match /^\s*# \#\#\#\#\#\# TODO/
       @todos.push @lines.length - 1
 
     done()
@@ -184,7 +184,7 @@ fileStatsListPromise = generatedFilesPromise.then (allFiles) ->
 
       do (type, file) -> new Promise (resolve, reject) ->
 
-        fstream = fs.createReadStream "docs/source/#{file}"
+        fstream = fs.createReadStream file
         fstream.pipe lineStream = new LineStream keepEmptyLines: true
 
         # Pass all files through the Transform list to parse out relevant
@@ -333,7 +333,16 @@ fileStatsListPromise.then((fileStatsList) ->
 
     for todo in fileStats.todos
 
-      render += '\n'
+      filename = _sourcePath fileStats.file
+
+      if fileStats.file.match /\.(?:lit)?coffee$/
+        highlight = 'coffeescript'
+      else if fileStats.file.match /\.js$/
+        highlight = 'javascript'
+      else
+        highlight = 'no-highlight'
+
+      render += "\n---\n\n```#{highlight}\n"
 
       id = ''
       for line, index in todo.lines
@@ -343,15 +352,12 @@ fileStatsListPromise.then((fileStatsList) ->
         if index is Todos.context
           id = _idFromString(line).slice 1, -1
 
-          render += line.slice 4
+          render += "```\n\n#{line.trim().slice 6}\n\n```#{highlight}"
         else
-          render += '    '
-          render += " #{line}"
+          render += line
         render += '\n'
 
-      render += '\n'
-
-      filename = _sourcePath fileStats.file
+      render += '```\n\n'
 
       # Keep track of ID usage and modify the location hash for subsequent
       # uses.
@@ -361,7 +367,15 @@ fileStatsListPromise.then((fileStatsList) ->
       else
         idMap[id] = 0
 
-      render += "[the above found in #{fileStats.file}:#{todo.index}](source/#{filename}##{id})\n"
+      render += "[the above found in #{
+        fileStats.file
+      }:#{
+        todo.index
+      }](source/#{
+        filename
+      }##{
+        id
+      })\n\n"
 
   new Promise (resolve, reject) ->
     fs.writeFile 'docs/todos.md', render, (error) ->
