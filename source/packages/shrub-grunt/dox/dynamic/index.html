@@ -2095,9 +2095,9 @@ i.e. italicized in markdown.</p>
     if fileStats.invocations.length &gt; 0
       render += '&gt; ' if isSubpackage
       render += '&lt;div class="admonition note"&gt;'
-      render += '&lt;p class="admonition-title"&gt;Implements hooks&lt;/p&gt;'
+      render += '&lt;p class="admonition-title"&gt;Invokes hooks&lt;/p&gt;'
       render += '  &lt;table&gt;\n'
-      render += fileStats.implementations.map((hook, index) -&gt;
+      render += fileStats.invocations.map((hook, index) -&gt;
         "    &lt;tr class=\"#{if index % 2 then 'odd' else 'even'}\"&gt;&lt;td&gt;&lt;a href=\"../hooks/##{_idFromString hook}\"&gt;#{hook}&lt;/a&gt;&lt;/td&gt;&lt;td align=\"right\"&gt;&lt;a href=\"../source/#{sourcePath}#invoke-hook-#{hook.toLowerCase()}\"&gt;invocation&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;\n"
       ).join ''
       render += '  &lt;/table&gt;\n'
