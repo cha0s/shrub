@@ -4,7 +4,7 @@ Packages can implement this hook to define collections of models for use
 throughout the server (and to a limited extent, the client) application.
 
 Shrub uses Waterline as an ORM, so you can follow the
-[Waterline documentation for how to define model collections](https://github.com/balderdashy/waterline-docs/blob/master/models.md).
+[Waterline documentation for how to define model collections](https://github.com/balderdashy/waterline-docs/blob/master/models/models.md).
 Shrub handles calling `Waterline.Collection.extend`, so you only have to return
 the raw object.
 
