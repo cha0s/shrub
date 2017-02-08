@@ -7,6 +7,8 @@ This is accomplished by subclassing
 [`TransmittableError`](../source/client/modules/errors/#transmittableerror).
 Let's look at an example.
 
+## Define an error
+
 Say we'd like to implement an error saying that one user can't add another
 user as a friend. We might implement that like so:
 
@@ -37,6 +39,8 @@ We now have our friend request error! You'll want to return it (in an array)
 from your package's implementation of
 [`shrubTransmittableErrors`](../hooks/#shrubtransmittableerrors).
 
+## Instantiate an error
+
 You can instantiate one of these errors:
 
 ```javascript
@@ -46,6 +50,8 @@ var error = errors.instantiate('friendRequest', 'Friend request error!', 'Alice'
 
 Notice the arguments to `errors.instantiate` are first the key, followed by
 the arguments defined by your subclass constructor.
+
+## Render a formatted error
 
 To see the error output you could do something like:
 
@@ -66,6 +72,8 @@ instead of a method on `TransmittableError`? The reason is because
 `TransmittableError`, but also instances of `Error`, as well as primitive
 types.
 
+## Render an error stack
+
 You can view the stack of any error in a similar way:
 
 ```javascript
@@ -73,8 +81,10 @@ var errors = require('errors');
 console.error(errors.stack(error));
 ```
 
+## The beauty of subclassing `TransmittableError`
+
 The real joy of `TransmittableError` subclasses comes from the fact that you
 can throw or return them from an implementation of
 [`shrubRpcRoutes`](../hooks/#shrubrpcroutes) and they will be automatically
-serialized and reified on the client side so they can be presented to the
-user in a meaningful way.
+serialized, sent over the wire, and reified on the client side so they can be
+presented to the user in a meaningful way.
