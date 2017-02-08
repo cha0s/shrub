@@ -3,8 +3,8 @@ This page explains various concepts and conventions used in Shrub.
 # Middleware hook specification
 
 Shrub invokes various hooks
-([`shrubHttpMiddleware`](hooks#shrubhttpmiddleware),
-[`shrubbootstrapMiddleware`](hooks#shrubbootstrapmiddleware), and more...)
+([`shrubHttpMiddleware`](../hooks#shrubhttpmiddleware),
+[`shrubBootstrapMiddleware`](../hooks#shrubbootstrapmiddleware), and more...)
 which allow packages to define middleware to be dispatched during various
 processes.
 
@@ -35,6 +35,10 @@ of your middleware are having problems by checking the debug console logs.
 
 The `middleware` are applied serially, meaning the first function in the array
 is dispatched first, followed by the second, etc.
+
+See the
+[middleware module](../source/client/modules/middleware#defining-middleware)
+for even more information about defining middleware.
 
 # Annotated functions
 

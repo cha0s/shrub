@@ -6,15 +6,19 @@ pkgman = require 'pkgman'
 
 # Implements a middleware stack. Middleware functions can be added to the
 # stack with `use`. Calling `dispatch` invokes the middleware functions
-# serially. Each middleware accepts an arbitrary parameters and finally a
-# `next` function. When a middleware finishes, it must call the `next`
-# function. If there was an error, it must be thrown or passed as the first
-# argument to `next`. If no error occurred, `next` must be invoked without
-# arguments. Error-handling middleware can also be defined. These middleware
-# take an additional parameter at the beginning of the function signature:
-# `error`. Error-handling middleware are only called if a previous middleware
-# threw or passed an error. Conversely, non-error-handling middleware are
-# skipped if a previous error occurred.
+# serially.
+#
+# ## Defining middleware
+#
+# Each middleware accepts an arbitrary parameters and finally a `next`
+# function. When a middleware finishes, it must call the `next` function.
+# If there was an error, it must be thrown or passed as the first argument to
+# `next`. If no error occurred, `next` must be invoked without arguments.
+# Error-handling middleware can also be defined. These middleware take an
+# additional parameter at the beginning of the function signature: `error`.
+# Error-handling middleware are only called if a previous middleware threw
+# or passed an error. Conversely, non-error-handling middleware are skipped
+# if a previous error occurred.
 exports.Middleware = class Middleware extends EventEmitter
 
   # ## *constructor*
