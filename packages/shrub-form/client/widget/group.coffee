@@ -25,8 +25,13 @@ exports.pkgmanRegister = (registrar) ->
               # Look up the widget definition and warn if it doesn't exist.
               unless (widget = formService.widgets[field.type])?
 
-                # ###### TODO: Multiline
-                $log.warn "Form `#{scope.form.key}` contains a group `#{scope.field.name}` with a non-existent field type `#{field.type}`!"
+                $log.warn "Form `#{
+                  scope.form.key
+                }` contains a group `#{
+                  scope.field.name
+                }` with a non-existent field type `#{
+                  field.type
+                }`!"
                 continue
 
               # Default name to the key.

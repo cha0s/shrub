@@ -467,8 +467,7 @@ fileStatsListPromise.then((fileStatsList) ->
     # Naively parse out the file description. It must be wrapped in asterisks,
     # i.e. italicized in markdown.
     #
-    # ###### TODO: This 'chunk' parsing should be done with a Transform like
-    # the others.
+    # ###### TODO: This 'chunk' parsing should be done with a Transform like the others.
     data = fs.readFileSync "docs/source/#{fileStats.file}", 'utf8'
     chunks = data.split '\n\n'
 
@@ -509,8 +508,7 @@ fileStatsListPromise.then((fileStatsList) ->
       render += '</div>'
       render += '\n\n'
 
-  # ###### TODO: We should do some preprocessing hre with a transform, namely
-  # linking the hook headers to their respective documentation.
+  # ###### TODO: We should do some preprocessing hre with a transform, namely linking the hook headers to their respective documentation.
   fs.writeFileSync 'docs/packages.md', render
 
 )

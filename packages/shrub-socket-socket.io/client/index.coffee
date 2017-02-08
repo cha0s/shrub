@@ -60,9 +60,9 @@ exports.Manager = class SocketIoSocket extends Socket
 
       # Log.
       message = "response: #{eventName}"
-
-      # ###### TODO: Multiline
-      message += ", #{JSON.stringify response, null, '  '}" if response.result? or response.error?
+      message += ", #{
+        JSON.stringify response, null, '  '
+      }" if response.result? or response.error?
       debug message
 
       # Enter Angular scope.

@@ -16,8 +16,7 @@ exports.pkgmanRegister = (registrar) ->
 
         # No superuser? Install...
         #
-        # ###### TODO: There should be a more robust check than just 'is there
-        # a superuser'.
+        # ###### TODO: There should be a more robust check than just 'is there a superuser?'.
         User = orm.collection 'shrub-user'
         User.findOne(id: 1).then((user) ->
           return if user?

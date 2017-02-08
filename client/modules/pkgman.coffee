@@ -52,22 +52,17 @@ class PkgmanRegistrar
   # ## PkgmanRegistrar#registerHook
   #
   # * (optional string) `submodule` - Register this hook under a submodule.
-  # This is
-  #
-  # a convenience for when you might need to register more than one
+  # This is a convenience for when you might need to register more than one
   # implementation of a hook, bur prefer to keep both implementations in the
   # same physical file.
   #
   # * (string) `hook` - The name of the hook to register.
   #
   # * (function) `impl` - The hook implementation function. This is invoked
-  # when
-  #
-  # the hook is invoked. The signature of the implementation function may
+  # when the hook is invoked. The signature of the implementation function may
   # vary, consult the documentation for the specific hook to learn more.
   #
-  # ###### TODO: Link to an instance of using the `submodule` arg in core if
-  # one exists.
+  # *Register a hook implementation.*
   registerHook: (submodule, hook, impl) ->
 
     # If `submodule` was passed in, modify the path this hook is registered
@@ -93,8 +88,10 @@ class PkgmanRegistrar
 
 # ## pkgman.rebuildPackageCache
 #
-# *Rebuild the package cache.* **Do not invoke this unless you are absolutely
-# sure you know what you're doing.**
+# *Rebuild the package cache.*
+#
+# **Do not invoke this unless you are absolutely sure you know what you're
+# doing.**
 exports.rebuildPackageCache = ->
   modules = {}
   hookIndex = {}
@@ -172,7 +169,6 @@ exports.invokeFlat = (hook, args...) ->
 # ## pkgman.invokePackage
 #
 # * (string) `path` - The path of the package whose implementation we're
-#
 # invoking.
 #
 # * (string) `hook` - The name of the hook to invoke.

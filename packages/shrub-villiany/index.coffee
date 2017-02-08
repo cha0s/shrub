@@ -168,7 +168,6 @@ exports.pkgmanRegister = (registrar) ->
       # Log this transgression.
       fingerprint = fingerprint.get excluded
 
-      # ###### TODO: Multiline
       message = "Logged villiany score #{
         score
       } for #{
@@ -223,8 +222,9 @@ buildBanMessage = (subject, ttl) ->
   else
     'You are banned.'
 
-  # ###### TODO: Multiline.
-  message += " The ban will be lifted #{moment().add('seconds', ttl).fromNow()}." if ttl?
+  message += " The ban will be lifted #{
+    moment().add('seconds', ttl).fromNow()
+  }." if ttl?
 
   message
 

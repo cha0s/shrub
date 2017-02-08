@@ -19,8 +19,7 @@ exports.pkgmanRegister = (registrar) ->
         # Keep a reference to the form scope, if the form attribute value
         # changes, it'll need to be rebuilt.
         #
-        # ###### TODO: It shouldn't be trashed as it is now, it should be
-        # moved over to a new scope non-destructively.
+        # ###### TODO: It shouldn't be trashed as it is now, it should be moved over to a new scope non-destructively.
         formScope = null
         scope.$watch attrs.form, (form) ->
           return unless form?
@@ -63,9 +62,9 @@ exports.pkgmanRegister = (registrar) ->
           pkgman.invokeFlat 'shrubFormAlter', form
 
           # #### Invoke hook `shrubFormFormKeyAlter`.
-          #
-          # ###### TODO: Multiline
-          pkgman.invokeFlat "shrubForm#{pkgman.normalizePath form.key, true}Alter", form
+          pkgman.invokeFlat "shrubForm#{
+            pkgman.normalizePath form.key, true
+          }Alter", form
 
           # Create the form element.
           $form = angular.element '<form />'
@@ -81,8 +80,11 @@ exports.pkgmanRegister = (registrar) ->
             # Look up the widget definition and warn if it doesn't exist.
             unless (widget = formService.widgets[field.type])?
 
-              # ###### TODO: Multiline
-              $log.warn "Form `#{form.key}` contains non-existent field type `#{field.type}`!"
+              $log.warn "Form `#{
+                form.key
+              }` contains non-existent field type `#{
+                field.type
+              }`!"
               continue
 
             # Default name to the key.

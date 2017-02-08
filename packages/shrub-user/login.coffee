@@ -93,8 +93,7 @@ exports.pkgmanRegister = (registrar) ->
 
         # Implement a local passport strategy.
         #
-        # ###### TODO: Strategies should be dynamically defined through a
-        # hook.
+        # ###### TODO: Strategies should be dynamically defined through a hook.
         LocalStrategy = require('passport-local').Strategy
         passport.use new LocalStrategy (username, password, done) ->
 

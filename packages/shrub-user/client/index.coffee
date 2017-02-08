@@ -83,8 +83,7 @@ exports.pkgmanRegister = (registrar) ->
       #
       # *Log in with method and args.*
       #
-      # ###### TODO: username and password are tightly coupled to local
-      # strategy. Change that.
+      # ###### TODO: username and password are tightly coupled to local strategy. Change that.
       service.login = (method, username, password) ->
 
         rpc.call(
@@ -118,8 +117,7 @@ exports.pkgmanRegister = (registrar) ->
         #
         # *Mock a login process.*
         #
-        # ###### TODO: This will change when login method generalization
-        # happens.
+        # ###### TODO: This will change when login method generalization happens.
         service.fakeLogin = (username, password, id) ->
           password ?= 'password'
           id ?= 1

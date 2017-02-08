@@ -358,8 +358,7 @@ augmentSandbox = (sandbox) ->
       for key, route of routes
         if route.regexp?.test path
 
-          # ###### TODO: Need to extract params to build redirectTo, it's a
-          # small enough mismatch to ignore for now.
+          # ###### TODO: Need to extract params to build redirectTo, it's a small enough mismatch to ignore for now.
           return
 
       # Angular's $routeProvider.otherwise() target.

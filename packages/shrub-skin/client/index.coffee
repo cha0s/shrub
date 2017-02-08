@@ -282,8 +282,7 @@ exports.pkgmanRegister = (registrar) ->
           # (String) `skinKey` - The key of the skin to change to *Change
           # skin.*
           #
-          # ###### TODO: Need to track current, this should be a nop in that
-          # case.
+          # ###### TODO: Need to track current, this should be a nop in that case.
           service.change = (skinKey) ->
 
             # Cloak the body.
