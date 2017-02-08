@@ -4,8 +4,8 @@ Shrub provides a mechanism to define errors that can be transmitted over the
 wire.
 
 This is accomplished by subclassing
-[`TransmittableError`](source/client/modules/errors/#transmittableerror). Let's
-look at an example.
+[`TransmittableError`](../source/client/modules/errors/#transmittableerror).
+Let's look at an example.
 
 Say we'd like to implement an error saying that one user can't add another
 user as a friend. We might implement that like so:
@@ -35,7 +35,7 @@ FriendRequestError.prototype.toJSON = function() {
 
 We now have our friend request error! You'll want to return it (in an array)
 from your package's implementation of
-[`shrubTransmittableErrors`](hooks/#shrubtransmittableerrors).
+[`shrubTransmittableErrors`](../hooks/#shrubtransmittableerrors).
 
 You can instantiate one of these errors:
 
@@ -75,6 +75,6 @@ console.error(errors.stack(error));
 
 The real joy of `TransmittableError` subclasses comes from the fact that you
 can throw or return them from an implementation of
-[`shrubRpcRoutes`](hooks/#shrubrpcroutes) and they will be automatically
+[`shrubRpcRoutes`](../hooks/#shrubrpcroutes) and they will be automatically
 serialized and reified on the client side so they can be presented to the
 user in a meaningful way.

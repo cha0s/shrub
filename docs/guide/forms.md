@@ -1,7 +1,7 @@
 <h1>Form handling</h1>
 
 Forms are created by passing a form definition object to the
-[`shrub-form` directive](source/packages/shrub-form/client#implements-hook-shrubangulardirective).
+[`shrub-form` directive](../source/packages/shrub-form/client#implements-hook-shrubangulardirective).
 
 A form definition object is defined like:
 
@@ -13,7 +13,7 @@ A form definition object is defined like:
   a keyed object of all field values in the form.
 * (Object) `fields` - A keyed object of all form fields. Each field is defined
   like:
-    * (String) `type` - The [widget](hooks/#shrubformwidgets) type.
+    * (String) `type` - The [widget](../hooks/#shrubformwidgets) type.
     * (Optional String) `label` - The human-readable label. Defaults to no
       label.
     * (Optional Boolean) `required` - Whether this field is required for
