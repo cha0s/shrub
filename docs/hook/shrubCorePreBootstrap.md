@@ -25,7 +25,7 @@ var someHeavyModule = null;
 
 exports.pkgmanRegister = function(registrar) {
 
-  registrar.registerHook('shrubCorePeBootstrap', function() {
+  registrar.registerHook('shrubCorePreBootstrap', function() {
     someHeavyModule = require('some-heavy-module');
   });
 
@@ -36,4 +36,4 @@ exports.pkgmanRegister = function(registrar) {
 ```
 
 So that the heavy module will not be `require`d until hook
-`shrubCorePeBootstrap` is invoked.
+`shrubCorePreBootstrap` is invoked.
