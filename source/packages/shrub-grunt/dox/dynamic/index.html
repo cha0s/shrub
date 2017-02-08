@@ -71,7 +71,7 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../../../guide/errors/">Errors</a>
+        <a class="" href="../../../../../guide/errors/">Error handling</a>
         
     </li>
 
@@ -79,6 +79,13 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../../../../guide/forms/">Form handling</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../../guide/packages/">Package system</a>
         
     </li>
 
@@ -1943,7 +1950,15 @@ uses.</p>
       else
         idMap[id] = 0
 
-      render += "[the above found in #{fileStats.file}:#{todo.index}](source/#{filename}##{id})\n\n"
+      render += "[the above found in #{
+        fileStats.file
+      }:#{
+        todo.index
+      }](source/#{
+        filename
+      }##{
+        id
+      })\n\n"
 
   new Promise (resolve, reject) -&gt;
     fs.writeFile 'docs/todos.md', render, (error) -&gt;

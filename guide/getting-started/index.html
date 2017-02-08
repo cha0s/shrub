@@ -88,7 +88,7 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../errors/">Errors</a>
+        <a class="" href="../errors/">Error handling</a>
         
     </li>
 
@@ -96,6 +96,13 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../forms/">Form handling</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../packages/">Package system</a>
         
     </li>
 
@@ -1580,7 +1587,9 @@
           <div role="main">
             <div class="section">
               
-                <p>Welcome to Shrub, an opinionated full stack JavaScript web application
+                <h1>Getting started</h1>
+
+<p>Welcome to Shrub, an opinionated full stack JavaScript web application
 framework. In this guide, we'll go over how to set up a working Shrub instance
 and outline some of the steps forward to build your application.</p>
 <p><strong>NOTE:</strong> Shrub uses a database abstraction layer and presently it defaults
@@ -1595,8 +1604,8 @@ not that there's anything wrong with that...)</p>
 <p>Head into the directory you just cloned and issue:</p>
 <p><code>npm install</code></p>
 <p>The next step is to create a configuration file. Look in the <code>config</code> directory
-and you will see a file called <code>default.settings.json</code>. Create a copy of that
-file called <code>settings.json</code>. Shrub <strong>requires</strong> a configuration file at this
+and you will see a file called <code>default.settings.yml</code>. Create a copy of that
+file called <code>settings.yml</code>. Shrub <strong>requires</strong> a configuration file at this
 time, so this is not an optional step.</p>
 <p>Finally, to build and run the code you can do this:</p>
 <p><code>DEBUG=shrub:* grunt execute</code></p>
@@ -1630,14 +1639,13 @@ and put in the following code:</p>
 will stick to JavaScript for the examples so we don't scare anyone)</p>
 <h3 id="add-the-package-to-the-settings-file">Add the package to the settings file</h3>
 <p>Currently to enable a package for shrub, you must add it by hand to the
-settings file. We'll open up the <code>config/settings.json</code> file we created earlier
+settings file. We'll open up the <code>config/settings.yml</code> file we created earlier
 and add our package to the <code>packageList</code> array:</p>
-<pre><code class="json">{
-  &quot;packageList&quot;: [
-    &quot;my-package&quot;,
-    &quot;shrub-angular&quot;,
-    &quot;shrub-assets&quot;,
-    &quot;shrub-audit&quot;,
+<pre><code class="yaml">packageList: [
+  &quot;my-package&quot;,
+  &quot;shrub-angular&quot;,
+  &quot;shrub-assets&quot;,
+  &quot;shrub-config&quot;,
 ...
 </code></pre>
 
@@ -1656,7 +1664,7 @@ package.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../errors/" class="btn btn-neutral float-right" title="Errors"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../errors/" class="btn btn-neutral float-right" title="Error handling"/>Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../.." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>

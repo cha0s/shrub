@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Errors - Shrub</title>
+  <title>Error handling - Shrub</title>
   
 
   <link rel="shortcut icon" href="../../img/favicon.ico">
@@ -21,7 +21,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Errors";
+    var mkdocs_page_name = "Error handling";
   </script>
   
   <script src="../../js/jquery-2.1.1.min.js"></script>
@@ -71,7 +71,7 @@
         
             
     <li class="toctree-l1 current">
-        <a class="current" href="./">Errors</a>
+        <a class="current" href="./">Error handling</a>
         
             <ul>
             
@@ -83,6 +83,13 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../forms/">Form handling</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../packages/">Package system</a>
         
     </li>
 
@@ -1553,7 +1560,7 @@
         
       
     
-    <li>Errors</li>
+    <li>Error handling</li>
     <li class="wy-breadcrumbs-aside">
       
         
@@ -1567,7 +1574,9 @@
           <div role="main">
             <div class="section">
               
-                <p>Shrub provides a mechanism to define errors that can be transmitted over the
+                <h1>Error handling</h1>
+
+<p>Shrub provides a mechanism to define errors that can be transmitted over the
 wire.</p>
 <p>This is accomplished by subclassing
 <a href="../source/client/modules/errors/#transmittableerror"><code>TransmittableError</code></a>. Let's
