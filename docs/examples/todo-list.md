@@ -2,13 +2,13 @@ How could Shrub be complete without an implementation of a simple TODO list? It
 would be unthinkable! So that's exactly what this document is going to
 describe.
 
-If you haven't yet, read the [getting started guide](guide/getting-started/)
+If you haven't yet, read the [getting started guide](../guide/getting-started/)
 and get yourself a working copy of Shrub. I'll wait.
 
 !!! note "Can't contain your excitement?"
     If you would like to skip all this and just get to trying out a fully
     formed TODO list,
-    [check out the executive summary](examples/todo-list/#executive-summary)
+    [check out the executive summary](#executive-summary)
 
 # Create the package
 
@@ -54,8 +54,8 @@ exports.pkgmanRegister = function(registrar) {
 subpackage files. More on the latter to come.
 
 Let's implement a model that will represent our TODO list items. See
-[the documentation for `shrubOrmCollections`](hooks/#shrubormcollections) for
-details.
+[the documentation for `shrubOrmCollections`](../hooks/#shrubormcollections)
+for details.
 
 ```javascript
 
