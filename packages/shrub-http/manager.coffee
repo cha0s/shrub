@@ -75,15 +75,11 @@ exports.Manager = class HttpManager
   # ## HttpManager#path
   #
   # *The path where static files are served from.*
-  #
-  # ###### TODO: Shouldn't this be gotten from config?
   path: -> @_config.path
 
   # ## HttpManager#port
   #
   # *Get the port this server (is|will be) listening on.*
-  #
-  # ###### TODO: Shouldn't this be gotten from config?
   port: -> @_config.port
 
   # ## HttpManager#registerMiddleware

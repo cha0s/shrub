@@ -323,7 +323,6 @@ augmentSandbox = (sandbox) ->
         navigationReq = Object.create req
         navigationReq.sandbox = sandbox
 
-        # ###### TODO: Remove unused `res` parameter.
         navigationMiddleware.dispatch navigationReq, (error) =>
           return reject error if error?
 
