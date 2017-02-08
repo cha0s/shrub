@@ -75,6 +75,21 @@
         
             <ul>
             
+                <li class="toctree-l3"><a href="#define-an-error">Define an error</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#instantiate-an-error">Instantiate an error</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#render-a-formatted-error">Render a formatted error</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#render-an-error-stack">Render an error stack</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#the-beauty-of-subclassing-transmittableerror">The beauty of subclassing TransmittableError</a></li>
+                
+            
             </ul>
         
     </li>
@@ -1581,6 +1596,7 @@ wire.</p>
 <p>This is accomplished by subclassing
 <a href="../../source/client/modules/errors/#transmittableerror"><code>TransmittableError</code></a>.
 Let's look at an example.</p>
+<h2 id="define-an-error">Define an error</h2>
 <p>Say we'd like to implement an error saying that one user can't add another
 user as a friend. We might implement that like so:</p>
 <pre><code class="javascript">var TransmittableError = require('errors').TransmittableError;
@@ -1608,6 +1624,7 @@ FriendRequestError.prototype.toJSON = function() {
 <p>We now have our friend request error! You'll want to return it (in an array)
 from your package's implementation of
 <a href="../../hooks/#shrubtransmittableerrors"><code>shrubTransmittableErrors</code></a>.</p>
+<h2 id="instantiate-an-error">Instantiate an error</h2>
 <p>You can instantiate one of these errors:</p>
 <pre><code class="javascript">var errors = require('errors');
 var error = errors.instantiate('friendRequest', 'Friend request error!', 'Alice', 'Bob');
@@ -1615,6 +1632,7 @@ var error = errors.instantiate('friendRequest', 'Friend request error!', 'Alice'
 
 <p>Notice the arguments to <code>errors.instantiate</code> are first the key, followed by
 the arguments defined by your subclass constructor.</p>
+<h2 id="render-a-formatted-error">Render a formatted error</h2>
 <p>To see the error output you could do something like:</p>
 <pre><code class="javascript">var errors = require('errors');
 console.error(errors.message(error));
@@ -1629,16 +1647,18 @@ instead of a method on <code>TransmittableError</code>? The reason is because
 <code>errors.message</code> is designed to work not only if you pass it an instance of
 <code>TransmittableError</code>, but also instances of <code>Error</code>, as well as primitive
 types.</p>
+<h2 id="render-an-error-stack">Render an error stack</h2>
 <p>You can view the stack of any error in a similar way:</p>
 <pre><code class="javascript">var errors = require('errors');
 console.error(errors.stack(error));
 </code></pre>
 
+<h2 id="the-beauty-of-subclassing-transmittableerror">The beauty of subclassing <code>TransmittableError</code></h2>
 <p>The real joy of <code>TransmittableError</code> subclasses comes from the fact that you
 can throw or return them from an implementation of
 <a href="../../hooks/#shrubrpcroutes"><code>shrubRpcRoutes</code></a> and they will be automatically
-serialized and reified on the client side so they can be presented to the
-user in a meaningful way.</p>
+serialized, sent over the wire, and reified on the client side so they can be
+presented to the user in a meaningful way.</p>
               
             </div>
           </div>
