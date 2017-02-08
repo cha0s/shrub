@@ -1954,7 +1954,7 @@ uses.</p>
         fileStats.file
       }:#{
         todo.index
-      }](source/#{
+      }](../source/#{
         filename
       }##{
         id
@@ -2057,9 +2057,9 @@ _allSourceFiles().then (files) -&gt;
       parts = fileStats.pkg.split '/'
       parentPkg = parts.shift()
       subPkg = parts.join '/'
-      render += "## [&lt;small&gt;#{parentPkg}/&lt;/small&gt;#{subPkg}](source/#{sourcePath})"
+      render += "## [&lt;small&gt;#{parentPkg}/&lt;/small&gt;#{subPkg}](../source/#{sourcePath})"
     else
-      render += "## [#{fileStats.pkg}](source/#{sourcePath})"
+      render += "## [#{fileStats.pkg}](../source/#{sourcePath})"
 </code></pre>
 <p>Naively parse out the file description. It must be wrapped in asterisks,
 i.e. italicized in markdown.</p>
