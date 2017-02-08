@@ -1,3 +1,5 @@
+<h1>Error handling</h1>
+
 Shrub provides a mechanism to define errors that can be transmitted over the
 wire.
 

@@ -16,8 +16,9 @@ pages:
 - Home: 'index.md'
 - Guide:
     - Getting started: 'guide/getting-started.md'
-    - Errors: 'guide/errors.md'
+    - Error handling: 'guide/errors.md'
     - Form handling: 'guide/forms.md'
+    - Package system: 'guide/packages.md'
     - Concepts and conventions: 'guide/concepts.md'
 - Examples:
     - TODO list app: 'examples/todo-list.md'

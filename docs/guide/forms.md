@@ -1,5 +1,4 @@
-
-# Form definition objects
+<h1>Form handling</h1>
 
 Forms are created by passing a form definition object to the
 [`shrub-form` directive](source/packages/shrub-form/client#implements-hook-shrubangulardirective).

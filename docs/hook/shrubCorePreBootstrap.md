@@ -3,7 +3,7 @@
 <h3>Mitigate slow build times</h3>
 
 If your package `require`s heavy modules, you should require them in an
-implementation of hook `shrubCorePeBootstrap`. For instance, say you have a
+implementation of hook `shrubCorePreBootstrap`. For instance, say you have a
 package like:
 
 ```javascript

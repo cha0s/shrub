@@ -1,3 +1,5 @@
+<h1>Getting started</h1>
+
 Welcome to Shrub, an opinionated full stack JavaScript web application
 framework. In this guide, we'll go over how to set up a working Shrub instance
 and outline some of the steps forward to build your application.
@@ -21,8 +23,8 @@ Head into the directory you just cloned and issue:
 `npm install`
 
 The next step is to create a configuration file. Look in the `config` directory
-and you will see a file called `default.settings.json`. Create a copy of that
-file called `settings.json`. Shrub **requires** a configuration file at this
+and you will see a file called `default.settings.yml`. Create a copy of that
+file called `settings.yml`. Shrub **requires** a configuration file at this
 time, so this is not an optional step.
 
 Finally, to build and run the code you can do this:
@@ -69,16 +71,15 @@ will stick to JavaScript for the examples so we don't scare anyone)
 ### Add the package to the settings file
 
 Currently to enable a package for shrub, you must add it by hand to the
-settings file. We'll open up the `config/settings.json` file we created earlier
+settings file. We'll open up the `config/settings.yml` file we created earlier
 and add our package to the `packageList` array:
 
-```json
-{
-  "packageList": [
-    "my-package",
-    "shrub-angular",
-    "shrub-assets",
-    "shrub-audit",
+```yaml
+packageList: [
+  "my-package",
+  "shrub-angular",
+  "shrub-assets",
+  "shrub-config",
 ...
 ```
 
