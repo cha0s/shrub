@@ -513,9 +513,9 @@ fileStatsListPromise.then((fileStatsList) ->
     if fileStats.invocations.length > 0
       render += '> ' if isSubpackage
       render += '<div class="admonition note">'
-      render += '<p class="admonition-title">Implements hooks</p>'
+      render += '<p class="admonition-title">Invokes hooks</p>'
       render += '  <table>\n'
-      render += fileStats.implementations.map((hook, index) ->
+      render += fileStats.invocations.map((hook, index) ->
         "    <tr class=\"#{if index % 2 then 'odd' else 'even'}\"><td><a href=\"../hooks/##{_idFromString hook}\">#{hook}</a></td><td align=\"right\"><a href=\"../source/#{sourcePath}#invoke-hook-#{hook.toLowerCase()}\">invocation</a></td></tr>\n"
       ).join ''
       render += '  </table>\n'

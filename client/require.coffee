@@ -1,7 +1,9 @@
 
 # # Require system for Angular
 #
-# *Implement require in the spirit of NodeJS.* Resolve the module name.
+# *Implement require in the spirit of NodeJS.*
+
+# Resolve the module name.
 _resolveModuleName = (name, parentFilename) ->
 
   # Strip `/index` from the end, if necessary.
