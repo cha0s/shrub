@@ -1599,13 +1599,13 @@
                 <p>How could Shrub be complete without an implementation of a simple TODO list? It
 would be unthinkable! So that's exactly what this document is going to
 describe.</p>
-<p>If you haven't yet, read the <a href="../guide/getting-started/">getting started guide</a>
+<p>If you haven't yet, read the <a href="../../guide/getting-started/">getting started guide</a>
 and get yourself a working copy of Shrub. I'll wait.</p>
 <div class="admonition note">
 <p class="admonition-title">Can't contain your excitement?</p>
 <p>If you would like to skip all this and just get to trying out a fully
 formed TODO list,
-<a href="../examples/todo-list/#executive-summary">check out the executive summary</a></p>
+<a href="#executive-summary">check out the executive summary</a></p>
 </div>
 <h1 id="create-the-package">Create the package</h1>
 <p>The TODO list will be implemented as a Shrub package. This means we're going to
@@ -1641,8 +1641,8 @@ exports.pkgmanRegister = function(registrar) {
 <p><code>pkgman</code> will pass in a registrar which is used to register hooks and point to
 subpackage files. More on the latter to come.</p>
 <p>Let's implement a model that will represent our TODO list items. See
-<a href="../hooks/#shrubormcollections">the documentation for <code>shrubOrmCollections</code></a> for
-details.</p>
+<a href="../../hooks/#shrubormcollections">the documentation for <code>shrubOrmCollections</code></a>
+for details.</p>
 <pre><code class="javascript">
   // Implements hook `shrubOrmCollections`.
   registrar.registerHook('shrubOrmCollections', function() {
