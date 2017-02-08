@@ -216,6 +216,8 @@
             
                 <li class="toctree-l3"><a href="#abstract-middleware-stacks">Abstract middleware stacks</a></li>
                 
+                    <li><a class="toctree-l4" href="#defining-middleware">Defining middleware</a></li>
+                
                     <li><a class="toctree-l4" href="#constructor">constructor</a></li>
                 
                     <li><a class="toctree-l4" href="#middlwareuse">Middlware#use</a></li>
@@ -1595,15 +1597,17 @@ pkgman = require 'pkgman'
 </code></pre>
 <p>Implements a middleware stack. Middleware functions can be added to the
 stack with <code>use</code>. Calling <code>dispatch</code> invokes the middleware functions
-serially. Each middleware accepts an arbitrary parameters and finally a
-<code>next</code> function. When a middleware finishes, it must call the <code>next</code>
-function. If there was an error, it must be thrown or passed as the first
-argument to <code>next</code>. If no error occurred, <code>next</code> must be invoked without
-arguments. Error-handling middleware can also be defined. These middleware
-take an additional parameter at the beginning of the function signature:
-<code>error</code>. Error-handling middleware are only called if a previous middleware
-threw or passed an error. Conversely, non-error-handling middleware are
-skipped if a previous error occurred.</p>
+serially.</p>
+<h2 id="defining-middleware">Defining middleware</h2>
+<p>Each middleware accepts an arbitrary parameters and finally a <code>next</code>
+function. When a middleware finishes, it must call the <code>next</code> function.
+If there was an error, it must be thrown or passed as the first argument to
+<code>next</code>. If no error occurred, <code>next</code> must be invoked without arguments.
+Error-handling middleware can also be defined. These middleware take an
+additional parameter at the beginning of the function signature: <code>error</code>.
+Error-handling middleware are only called if a previous middleware threw
+or passed an error. Conversely, non-error-handling middleware are skipped
+if a previous error occurred.</p>
 <pre><code>exports.Middleware = class Middleware extends EventEmitter
 </code></pre>
 <h2 id="constructor"><em>constructor</em></h2>

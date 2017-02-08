@@ -1583,8 +1583,8 @@
                 <p>This page explains various concepts and conventions used in Shrub.</p>
 <h1 id="middleware-hook-specification">Middleware hook specification</h1>
 <p>Shrub invokes various hooks
-(<a href="../hooks#shrubhttpmiddleware"><code>shrubHttpMiddleware</code></a>,
-<a href="../hooks#shrubbootstrapmiddleware"><code>shrubbootstrapMiddleware</code></a>, and more...)
+(<a href="../../hooks#shrubhttpmiddleware"><code>shrubHttpMiddleware</code></a>,
+<a href="../../hooks#shrubbootstrapmiddleware"><code>shrubBootstrapMiddleware</code></a>, and more...)
 which allow packages to define middleware to be dispatched during various
 processes.</p>
 <p>Middleware hooks return a specification that looks like:</p>
@@ -1611,6 +1611,9 @@ processes.</p>
 of your middleware are having problems by checking the debug console logs.</p>
 <p>The <code>middleware</code> are applied serially, meaning the first function in the array
 is dispatched first, followed by the second, etc.</p>
+<p>See the
+<a href="../../source/client/modules/middleware#defining-middleware">middleware module</a>
+for even more information about defining middleware.</p>
 <h1 id="annotated-functions">Annotated functions</h1>
 <p>Annotated functions are an Angular convention, but are used widely throughout
 Shrub on the client-side. Annotated functions allow dependency injection. You
