@@ -1590,8 +1590,7 @@ now, but will be fleshed out as we go.</em></p>
       (next) -&gt;
 </code></pre>
 <p>No superuser? Install...</p>
-<h6 id="todo-there-should-be-a-more-robust-check-than-just-is-there">TODO: There should be a more robust check than just 'is there</h6>
-<p>a superuser'.</p>
+<h6 id="todo-there-should-be-a-more-robust-check-than-just-is-there-a-superuser">TODO: There should be a more robust check than just 'is there a superuser?'.</h6>
 <pre><code>        User = orm.collection 'shrub-user'
         User.findOne(id: 1).then((user) -&gt;
           return if user?

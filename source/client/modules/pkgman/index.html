@@ -1643,25 +1643,22 @@ and/or recur further.</em></p>
 </code></pre>
 <h2 id="pkgmanregistrarregisterhook">PkgmanRegistrar#registerHook</h2>
 <ul>
-<li>(optional string) <code>submodule</code> - Register this hook under a submodule.
-This is</li>
-</ul>
-<p>a convenience for when you might need to register more than one
+<li>
+<p>(optional string) <code>submodule</code> - Register this hook under a submodule.
+This is a convenience for when you might need to register more than one
 implementation of a hook, bur prefer to keep both implementations in the
 same physical file.</p>
-<ul>
+</li>
 <li>
 <p>(string) <code>hook</code> - The name of the hook to register.</p>
 </li>
 <li>
 <p>(function) <code>impl</code> - The hook implementation function. This is invoked
-when</p>
+when the hook is invoked. The signature of the implementation function may
+vary, consult the documentation for the specific hook to learn more.</p>
 </li>
 </ul>
-<p>the hook is invoked. The signature of the implementation function may
-vary, consult the documentation for the specific hook to learn more.</p>
-<h6 id="todo-link-to-an-instance-of-using-the-submodule-arg-in-core-if">TODO: Link to an instance of using the <code>submodule</code> arg in core if</h6>
-<p>one exists.</p>
+<p><em>Register a hook implementation.</em></p>
 <pre><code>  registerHook: (submodule, hook, impl) -&gt;
 </code></pre>
 <p>If <code>submodule</code> was passed in, modify the path this hook is registered
@@ -1686,8 +1683,9 @@ against.</p>
     debugSilly "Registered hook #{hook}"
 </code></pre>
 <h2 id="pkgmanrebuildpackagecache">pkgman.rebuildPackageCache</h2>
-<p><em>Rebuild the package cache.</em> <strong>Do not invoke this unless you are absolutely
-sure you know what you're doing.</strong></p>
+<p><em>Rebuild the package cache.</em></p>
+<p><strong>Do not invoke this unless you are absolutely sure you know what you're
+doing.</strong></p>
 <pre><code>exports.rebuildPackageCache = -&gt;
   modules = {}
   hookIndex = {}
@@ -1770,10 +1768,10 @@ package path.</em></p>
 </code></pre>
 <h2 id="pkgmaninvokepackage">pkgman.invokePackage</h2>
 <ul>
-<li>(string) <code>path</code> - The path of the package whose implementation we're</li>
-</ul>
-<p>invoking.</p>
-<ul>
+<li>
+<p>(string) <code>path</code> - The path of the package whose implementation we're
+invoking.</p>
+</li>
 <li>
 <p>(string) <code>hook</code> - The name of the hook to invoke.</p>
 </li>

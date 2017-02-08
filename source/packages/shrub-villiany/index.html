@@ -1751,9 +1751,8 @@ exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 <p>Log this transgression.</p>
 <pre><code>      fingerprint = fingerprint.get excluded
-</code></pre>
-<h6 id="todo-multiline">TODO: Multiline</h6>
-<pre><code>      message = "Logged villiany score #{
+
+      message = "Logged villiany score #{
         score
       } for #{
         type
@@ -1806,9 +1805,10 @@ exports.pkgmanRegister = (registrar) -&gt;
     "Your #{subject} is banned."
   else
     'You are banned.'
-</code></pre>
-<h6 id="todo-multiline_1">TODO: Multiline.</h6>
-<pre><code>  message += " The ban will be lifted #{moment().add('seconds', ttl).fromNow()}." if ttl?
+
+  message += " The ban will be lifted #{
+    moment().add('seconds', ttl).fromNow()
+  }." if ttl?
 
   message
 </code></pre>

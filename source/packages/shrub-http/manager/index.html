@@ -1610,8 +1610,7 @@ httpMiddlewareDebug = require('debug') 'shrub-silly:http:middleware'
 <p><em>Create the server.</em></p>
 <pre><code>  constructor: -&gt;
 </code></pre>
-<h6 id="todo-keeping-a-reference-here-means-http-stuff-cant-be-updated">TODO: Keeping a reference here means HTTP stuff can't be updated</h6>
-<p>at run-time.</p>
+<h6 id="todo-keeping-a-reference-here-means-http-stuff-cant-be-updated-at-run-time">TODO: Keeping a reference here means HTTP stuff can't be updated at run-time.</h6>
 <pre><code>    @_config = config.get 'packageSettings:shrub-http'
 
     @_middleware = null
@@ -1657,12 +1656,10 @@ httpMiddlewareDebug = require('debug') 'shrub-silly:http:middleware'
 </code></pre>
 <h2 id="httpmanagerpath">HttpManager#path</h2>
 <p><em>The path where static files are served from.</em></p>
-<h6 id="todo-shouldnt-this-be-gotten-from-config">TODO: Shouldn't this be gotten from config?</h6>
 <pre><code>  path: -&gt; @_config.path
 </code></pre>
 <h2 id="httpmanagerport">HttpManager#port</h2>
 <p><em>Get the port this server (is|will be) listening on.</em></p>
-<h6 id="todo-shouldnt-this-be-gotten-from-config_1">TODO: Shouldn't this be gotten from config?</h6>
 <pre><code>  port: -&gt; @_config.port
 </code></pre>
 <h2 id="httpmanagerregistermiddleware">HttpManager#registerMiddleware</h2>

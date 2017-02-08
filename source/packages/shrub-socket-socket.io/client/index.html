@@ -1643,9 +1643,9 @@ returned.</p>
 </code></pre>
 <p>Log.</p>
 <pre><code>      message = "response: #{eventName}"
-</code></pre>
-<h6 id="todo-multiline">TODO: Multiline</h6>
-<pre><code>      message += ", #{JSON.stringify response, null, '  '}" if response.result? or response.error?
+      message += ", #{
+        JSON.stringify response, null, '  '
+      }" if response.result? or response.error?
       debug message
 </code></pre>
 <p>Enter Angular scope.</p>

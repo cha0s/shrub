@@ -1932,9 +1932,8 @@ location path. If it is, redirect Angular.</em></p>
 
         navigationReq = Object.create req
         navigationReq.sandbox = sandbox
-</code></pre>
-<h6 id="todo-remove-unused-res-parameter">TODO: Remove unused <code>res</code> parameter.</h6>
-<pre><code>        navigationMiddleware.dispatch navigationReq, (error) =&gt;
+
+        navigationMiddleware.dispatch navigationReq, (error) =&gt;
           return reject error if error?
 
           self.catchAngularRedirection path
@@ -1968,8 +1967,7 @@ location path. If it is, redirect Angular.</em></p>
 <pre><code>      for key, route of routes
         if route.regexp?.test path
 </code></pre>
-<h6 id="todo-need-to-extract-params-to-build-redirectto-its-a">TODO: Need to extract params to build redirectTo, it's a</h6>
-<p>small enough mismatch to ignore for now.</p>
+<h6 id="todo-need-to-extract-params-to-build-redirectto-its-a-small-enough-mismatch-to-ignore-for-now">TODO: Need to extract params to build redirectTo, it's a small enough mismatch to ignore for now.</h6>
 <pre><code>          return
 </code></pre>
 <p>Angular's $routeProvider.otherwise() target.</p>

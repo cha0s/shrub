@@ -1672,8 +1672,7 @@
 </code></pre>
 <h2 id="userlogin">user.login</h2>
 <p><em>Log in with method and args.</em></p>
-<h6 id="todo-username-and-password-are-tightly-coupled-to-local">TODO: username and password are tightly coupled to local</h6>
-<p>strategy. Change that.</p>
+<h6 id="todo-username-and-password-are-tightly-coupled-to-local-strategy-change-that">TODO: username and password are tightly coupled to local strategy. Change that.</h6>
 <pre><code>      service.login = (method, username, password) -&gt;
 
         rpc.call(
@@ -1703,8 +1702,7 @@
 </code></pre>
 <h2 id="userfakelogin">user.fakeLogin</h2>
 <p><em>Mock a login process.</em></p>
-<h6 id="todo-this-will-change-when-login-method-generalization">TODO: This will change when login method generalization</h6>
-<p>happens.</p>
+<h6 id="todo-this-will-change-when-login-method-generalization-happens">TODO: This will change when login method generalization happens.</h6>
 <pre><code>        service.fakeLogin = (username, password, id) -&gt;
           password ?= 'password'
           id ?= 1

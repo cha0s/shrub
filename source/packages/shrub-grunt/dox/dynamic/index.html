@@ -586,9 +586,9 @@
             
                 <li class="toctree-l3"><a href="#grunt-build-process-dynamic-documentation">Grunt build process - Dynamic documentation</a></li>
                 
-                    <li><a class="toctree-l4" href="#todo-this-chunk-parsing-should-be-done-with-a-transform-like">TODO: This 'chunk' parsing should be done with a Transform like</a></li>
+                    <li><a class="toctree-l4" href="#todo-this-chunk-parsing-should-be-done-with-a-transform-like-the-others">TODO: This 'chunk' parsing should be done with a Transform like the others.</a></li>
                 
-                    <li><a class="toctree-l4" href="#todo-we-should-do-some-preprocessing-hre-with-a-transform-namely">TODO: We should do some preprocessing hre with a transform, namely</a></li>
+                    <li><a class="toctree-l4" href="#todo-we-should-do-some-preprocessing-hre-with-a-transform-namely-linking-the-hook-headers-to-their-respective-documentation">TODO: We should do some preprocessing hre with a transform, namely linking the hook headers to their respective documentation.</a></li>
                 
             
             </ul>
@@ -1596,7 +1596,7 @@ file.</p>
 
   _transform: (chunk, encoding, done) -&gt;
     line = chunk.toString('utf8')
-    if matches = line.match /^\#\#\#\# Invoke hook `([^`]+)`/
+    if matches = line.match /^\s*# \#\#\#\# Invoke hook `([^`]+)`/
       @list.push matches[1]
 
     done()
@@ -1612,7 +1612,7 @@ source file.</p>
 
   _transform: (chunk, encoding, done) -&gt;
     line = chunk.toString('utf8')
-    if matches = line.match /^\#\#\#\# Implements hook `([^`]+)`/
+    if matches = line.match /^\s*# \#\#\#\# Implements hook `([^`]+)`/
       @list.push matches[1]
 
     done()
@@ -1631,7 +1631,7 @@ caches lines to be able to build context around each TODO item.</p>
 
   _transform: (chunk, encoding, done) -&gt;
     @lines.push line = chunk.toString('utf8')
-    if matches = line.match /^\#\#\#\#\#\# TODO/
+    if matches = line.match /^\s*# \#\#\#\#\#\# TODO/
       @todos.push @lines.length - 1
 
     done()
@@ -1760,7 +1760,7 @@ caches lines to be able to build context around each TODO item.</p>
 
       do (type, file) -&gt; new Promise (resolve, reject) -&gt;
 
-        fstream = fs.createReadStream "docs/source/#{file}"
+        fstream = fs.createReadStream file
         fstream.pipe lineStream = new LineStream keepEmptyLines: true
 </code></pre>
 <p>Pass all files through the Transform list to parse out relevant
@@ -1909,7 +1909,16 @@ location hash in the case of multiple TODO items with the same wording.</p>
 
     for todo in fileStats.todos
 
-      render += '\n'
+      filename = _sourcePath fileStats.file
+
+      if fileStats.file.match /\.(?:lit)?coffee$/
+        highlight = 'coffeescript'
+      else if fileStats.file.match /\.js$/
+        highlight = 'javascript'
+      else
+        highlight = 'no-highlight'
+
+      render += "\n---\n\n```#{highlight}\n"
 
       id = ''
       for line, index in todo.lines
@@ -1919,15 +1928,12 @@ text, and render it as h2 (TODO are h6) to increase visibility.</p>
 <pre><code>        if index is Todos.context
           id = _idFromString(line).slice 1, -1
 
-          render += line.slice 4
+          render += "```\n\n#{line.trim().slice 6}\n\n```#{highlight}"
         else
-          render += '    '
-          render += " #{line}"
+          render += line
         render += '\n'
 
-      render += '\n'
-
-      filename = _sourcePath fileStats.file
+      render += '```\n\n'
 </code></pre>
 <p>Keep track of ID usage and modify the location hash for subsequent
 uses.</p>
@@ -1937,7 +1943,7 @@ uses.</p>
       else
         idMap[id] = 0
 
-      render += "[the above found in #{fileStats.file}:#{todo.index}](source/#{filename}##{id})\n"
+      render += "[the above found in #{fileStats.file}:#{todo.index}](source/#{filename}##{id})\n\n"
 
   new Promise (resolve, reject) -&gt;
     fs.writeFile 'docs/todos.md', render, (error) -&gt;
@@ -2042,8 +2048,7 @@ _allSourceFiles().then (files) -&gt;
 </code></pre>
 <p>Naively parse out the file description. It must be wrapped in asterisks,
 i.e. italicized in markdown.</p>
-<h6 id="todo-this-chunk-parsing-should-be-done-with-a-transform-like">TODO: This 'chunk' parsing should be done with a Transform like</h6>
-<p>the others.</p>
+<h6 id="todo-this-chunk-parsing-should-be-done-with-a-transform-like-the-others">TODO: This 'chunk' parsing should be done with a Transform like the others.</h6>
 <pre><code>    data = fs.readFileSync "docs/source/#{fileStats.file}", 'utf8'
     chunks = data.split '\n\n'
 
@@ -2084,8 +2089,7 @@ i.e. italicized in markdown.</p>
       render += '&lt;/div&gt;'
       render += '\n\n'
 </code></pre>
-<h6 id="todo-we-should-do-some-preprocessing-hre-with-a-transform-namely">TODO: We should do some preprocessing hre with a transform, namely</h6>
-<p>linking the hook headers to their respective documentation.</p>
+<h6 id="todo-we-should-do-some-preprocessing-hre-with-a-transform-namely-linking-the-hook-headers-to-their-respective-documentation">TODO: We should do some preprocessing hre with a transform, namely linking the hook headers to their respective documentation.</h6>
 <pre><code>  fs.writeFileSync 'docs/packages.md', render
 
 )

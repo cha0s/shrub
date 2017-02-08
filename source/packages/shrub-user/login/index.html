@@ -1421,7 +1421,7 @@
             
                 <li class="toctree-l3"><a href="#implements-hook-shrubcorebootstrapmiddleware">Implements hook shrubCoreBootstrapMiddleware.</a></li>
                 
-                    <li><a class="toctree-l4" href="#todo-strategies-should-be-dynamically-defined-through-a">TODO: Strategies should be dynamically defined through a</a></li>
+                    <li><a class="toctree-l4" href="#todo-strategies-should-be-dynamically-defined-through-a-hook">TODO: Strategies should be dynamically defined through a hook.</a></li>
                 
             
                 <li class="toctree-l3"><a href="#implements-hook-shrubtransmittableerrors">Implements hook shrubTransmittableErrors.</a></li>
@@ -1680,8 +1680,7 @@ exports.pkgmanRegister = (registrar) -&gt;
       (next) -&gt;
 </code></pre>
 <p>Implement a local passport strategy.</p>
-<h6 id="todo-strategies-should-be-dynamically-defined-through-a">TODO: Strategies should be dynamically defined through a</h6>
-<p>hook.</p>
+<h6 id="todo-strategies-should-be-dynamically-defined-through-a-hook">TODO: Strategies should be dynamically defined through a hook.</h6>
 <pre><code>        LocalStrategy = require('passport-local').Strategy
         passport.use new LocalStrategy (username, password, done) -&gt;
 </code></pre>

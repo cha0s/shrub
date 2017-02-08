@@ -1599,8 +1599,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 <p>Keep a reference to the form scope, if the form attribute value
 changes, it'll need to be rebuilt.</p>
-<h6 id="todo-it-shouldnt-be-trashed-as-it-is-now-it-should-be">TODO: It shouldn't be trashed as it is now, it should be</h6>
-<p>moved over to a new scope non-destructively.</p>
+<h6 id="todo-it-shouldnt-be-trashed-as-it-is-now-it-should-be-moved-over-to-a-new-scope-non-destructively">TODO: It shouldn't be trashed as it is now, it should be moved over to a new scope non-destructively.</h6>
 <pre><code>        formScope = null
         scope.$watch attrs.form, (form) -&gt;
           return unless form?
@@ -1643,8 +1642,9 @@ changes, it'll need to be rebuilt.</p>
 <pre><code>          pkgman.invokeFlat 'shrubFormAlter', form
 </code></pre>
 <h4 id="invoke-hook-shrubformformkeyalter">Invoke hook <code>shrubFormFormKeyAlter</code>.</h4>
-<h6 id="todo-multiline">TODO: Multiline</h6>
-<pre><code>          pkgman.invokeFlat "shrubForm#{pkgman.normalizePath form.key, true}Alter", form
+<pre><code>          pkgman.invokeFlat "shrubForm#{
+            pkgman.normalizePath form.key, true
+          }Alter", form
 </code></pre>
 <p>Create the form element.</p>
 <pre><code>          $form = angular.element '&lt;form /&gt;'
@@ -1659,9 +1659,12 @@ changes, it'll need to be rebuilt.</p>
 </code></pre>
 <p>Look up the widget definition and warn if it doesn't exist.</p>
 <pre><code>            unless (widget = formService.widgets[field.type])?
-</code></pre>
-<h6 id="todo-multiline_1">TODO: Multiline</h6>
-<pre><code>              $log.warn "Form `#{form.key}` contains non-existent field type `#{field.type}`!"
+
+              $log.warn "Form `#{
+                form.key
+              }` contains non-existent field type `#{
+                field.type
+              }`!"
               continue
 </code></pre>
 <p>Default name to the key.</p>
