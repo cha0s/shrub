@@ -132,39 +132,3 @@ exports.pkgmanRegister = (registrar) ->
 
   # #### Implements hook `shrubTransmittableErrors`.
   registrar.registerHook 'shrubTransmittableErrors', clientModule.shrubTransmittableErrors
-
-# Monkey patch http.IncomingMessage.prototype.login to run our middleware, and
-# return a promise.
-exports.monkeyPatchLogin = (req, res, next) ->
-
-  middleware = require 'middleware'
-
-  # #### Invoke hook `shrubUserBeforeLoginMiddleware`.
-  beforeLoginMiddleware = middleware.fromConfig(
-    'shrub-user:beforeLoginMiddleware'
-  )
-
-  # #### Invoke hook `shrubUserAfterLoginMiddleware`.
-  afterLoginMiddleware = middleware.fromConfig(
-    'shrub-user:afterLoginMiddleware'
-  )
-
-  login = req.passportLogIn = req.login
-  req.login = req.logIn = (user, fn) ->
-
-    new Promise (resolve, reject) =>
-
-      loginReq = req: this, user: user
-
-      beforeLoginMiddleware.dispatch loginReq, null, (error) =>
-        return reject error if error?
-
-        login.call this, loginReq.user, (error) ->
-          return reject error if error?
-
-          afterLoginMiddleware.dispatch loginReq, null, (error) ->
-            return reject error if error?
-
-            resolve()
-
-  next()

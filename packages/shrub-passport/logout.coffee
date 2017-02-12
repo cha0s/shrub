@@ -29,6 +29,7 @@ exports.pkgmanRegister = (registrar) ->
 
     middleware = require 'middleware'
 
+    # #### TODO: Does this actually work..?
     label: 'Bootstrap user logout'
     middleware: [
 
@@ -40,12 +41,12 @@ exports.pkgmanRegister = (registrar) ->
 
         # #### Invoke hook `shrubUserBeforeLogoutMiddleware`.
         beforeLogoutMiddleware = middleware.fromConfig(
-          'shrub-user:beforeLogoutMiddleware'
+          'shrub-passport:beforeLogoutMiddleware'
         )
 
         # #### Invoke hook `shrubUserAfterLogoutMiddleware`.
         afterLogoutMiddleware = middleware.fromConfig(
-          'shrub-user:afterLogoutMiddleware'
+          'shrub-passport:afterLogoutMiddleware'
         )
 
         logout = req.passportLogOut = req.logout

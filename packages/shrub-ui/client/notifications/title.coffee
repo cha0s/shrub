@@ -16,12 +16,14 @@ exports.pkgmanRegister = (registrar) ->
 
         _ = require 'lodash'
 
+        scope.notAlreadyRead = -> _.filter(
+          scope.queue.notifications()
+          (notification) -> not notification.markedAsRead
+        )
+
         # Mark all notifications as read.
         scope.markAllRead = ->
-          notAlreadyRead = _.filter(
-            scope.queue.notifications()
-            (notification) -> not notification.markedAsRead
-          )
+          notAlreadyRead = @notAlreadyRead()
 
           # Early out if there's nothing to do.
           return if notAlreadyRead.length is 0
@@ -45,6 +47,7 @@ exports.pkgmanRegister = (registrar) ->
 <a
   class="mark-all-read"
   data-ng-click="markAllRead()"
+  data-ng-show="notAlreadyRead().length > 0"
 >Mark all read</a>
 
 <p

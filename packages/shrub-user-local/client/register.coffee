@@ -8,7 +8,7 @@ exports.pkgmanRegister = (registrar) ->
 
     routes.push
 
-      path: 'user/register'
+      path: 'user/local/register'
       title: 'Sign up'
 
       controller: [
@@ -22,7 +22,7 @@ exports.pkgmanRegister = (registrar) ->
 
             submits: [
 
-              rpc.formSubmitHandler 'shrub-user/register', (error, result) ->
+              rpc.formSubmitHandler 'shrub-user/local/register', (error, result) ->
                 return if error?
 
                 messages.add(

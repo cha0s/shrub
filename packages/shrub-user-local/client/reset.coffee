@@ -10,7 +10,7 @@ exports.pkgmanRegister = (registrar) ->
 
     routes.push
 
-      path: 'user/reset/:token'
+      path: 'user/local/reset/:token'
       title: 'Reset your password'
 
       controller: [
@@ -23,14 +23,14 @@ exports.pkgmanRegister = (registrar) ->
 
             submits: [
 
-              rpc.formSubmitHandler 'shrub-user/reset', (error, result) ->
+              rpc.formSubmitHandler 'shrub-user/local/reset', (error, result) ->
                 return if error?
 
                 messages.add(
                   text: 'You may now log in with your new password.'
                 )
 
-                $location.path '/user/login'
+                $location.path '/user/login/local'
 
             ]
 

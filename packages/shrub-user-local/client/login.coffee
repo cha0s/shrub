@@ -30,7 +30,7 @@ exports.pkgmanRegister = (registrar) ->
 
     routes.push
 
-      path: 'user/login'
+      path: 'user/login/local'
       title: 'Sign in'
 
       controller: [
