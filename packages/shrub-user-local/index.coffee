@@ -1,10 +1,72 @@
 # Local user authentication.
 
+orm = null
+Promise = null
+
 clientModule = require './client'
 
 # *ORM collection and passport strategy for local authentication.*
 
 exports.pkgmanRegister = (registrar) ->
+
+  # #### Implements hook `shrubCorePreBootstrap`.
+  registrar.registerHook 'shrubCorePreBootstrap', ->
+
+    orm = require 'shrub-orm'
+    Promise = require 'bluebird'
+
+  # #### Implements hook `shrubUserLoginStrategies`.
+  registrar.registerHook 'shrubUserLoginStrategies', ->
+    strategy = clientModule.shrubUserLoginStrategies()
+
+    LocalStrategy = require('passport-local').Strategy
+    UserLocal = orm.collection 'shrub-user-local'
+
+    # Implement a local passport strategy.
+    options = passReqToCallback: true
+
+    verifyCallback = (req, username, password, done) ->
+
+      crypto = require 'server/crypto'
+      errors = require 'errors'
+
+      # Load a user and compare the hashed password.
+      Promise.cast(
+        UserLocal.findOne iname: username
+      ).bind({}).then((@localUser) ->
+        throw errors.instantiate 'shrub-user-local-login' unless @localUser
+
+        crypto.hasher(
+          plaintext: password
+          salt: new Buffer @localUser.salt, 'hex'
+        )
+
+      ).then((hashed) ->
+
+        throw errors.instantiate(
+          'shrub-user-local-login'
+        ) if @localUser.passwordHash isnt hashed.key.toString 'hex'
+
+      ).then(->
+        self = this
+
+        # Join a channel for the username.
+        new Promise (resolve, reject) ->
+          req.socket.join self.localUser.name, (error) ->
+            return reject error if error?
+            resolve()
+
+      ).then(->
+
+        @localUser.associatedUser()
+
+      ).nodeify done
+
+    passportStrategy = new LocalStrategy options, verifyCallback
+    passportStrategy.name = 'shrub-user-local'
+    strategy.passportStrategy = passportStrategy
+
+    return strategy
 
   # #### Implements hook `shrubUserRedactors`.
   registrar.registerHook 'shrubUserRedactors', ->
@@ -75,6 +137,17 @@ exports.pkgmanRegister = (registrar) ->
       type: 'string'
       size: 128
 
+    UserLocal.attributes.associatedUser = ->
+      {
+        'shrub-user-instance': UserInstance
+        'shrub-user': User
+      } = orm.collections()
+
+      UserInstance.findOne(
+        model: 'shrub-user-local'
+        modelId: @id
+      ).then (userInstance) -> User.findOnePopulated id: userInstance?.user
+
     UserLocal.attributes.toJSON = ->
       O = @toObject()
       O.groups = @groups
@@ -144,6 +217,9 @@ exports.pkgmanRegister = (registrar) ->
 
     collections
 
+  # #### Implements hook `shrubTransmittableErrors`.
+  registrar.registerHook 'shrubTransmittableErrors', clientModule.shrubTransmittableErrors
+
   registrar.recur [
-    'forgot', 'login', 'register', 'reset'
+    'forgot', 'register', 'reset'
   ]

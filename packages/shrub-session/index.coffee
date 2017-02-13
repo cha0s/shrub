@@ -57,7 +57,7 @@ exports.pkgmanRegister = (registrar) ->
 
       (req, res, next) ->
 
-        return req.socket.join req.session.id, next if req.session?
+        return req.socket.join "session/#{req.session.id}", next if req.session?
 
         next()
 

@@ -113,12 +113,26 @@ exports.pkgmanRegister = (registrar) ->
 
             end: (data) ->
 
+              unless data?
+                try
+                  throw new Error
+                catch e
+                  console.log e.stack
+
               @write data
+              console.log @data
 
               return fn error: errors.serialize @error if @error?
               fn result: @data
 
-            write: (data) -> @data[k] = v for k, v of data
+            write: (data) ->
+              try
+                throw new Error
+              catch e
+                console.log data
+                console.log e.stack
+
+              @data[k] = v for k, v of data
 
             writeHead: (code, headers) ->
               @headers[k] = v for k, v of headers
@@ -166,10 +180,11 @@ exports.pkgmanRegister = (registrar) ->
 #
 # * (Function Array) `middleware` - The middleware to be spliced in.
 #
-# *Splice middleware functions in place of a key.* Some packages define RPC
-# route middleware that can be included as a string (e.g. `'shrub-user'`).
-# This function will splice in an array of middleware where a placeholder key
-# specifies.
+# *Splice middleware functions in place of a key.*
+#
+# Some packages define RPC route middleware that can be included as a string
+# (e.g. `'shrub-user'`). This function will splice in an array of middleware
+# where a placeholder key specifies.
 exports.spliceRouteMiddleware = (route, key, middleware) ->
   return unless ~(index = route.middleware.indexOf key)
 

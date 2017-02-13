@@ -11,10 +11,10 @@ exports.pkgmanRegister = (registrar) ->
 
       link: (scope) ->
 
-          field.change ?= ->
+          scope.field.change ?= ->
 
-          field.$change = ($event) -> scope.$$postDigest ->
-            field.change field.value, $event
+          scope.field.$change = ($event) -> scope.$$postDigest ->
+            scope.field.change scope.field.value, $event
 
       template: '''
 
@@ -30,7 +30,7 @@ exports.pkgmanRegister = (registrar) ->
   data-ng-change="field.$change($event);"
   data-ng-model="field.value"
   data-ng-required="field.required"
-  data-ng-options="field.options"
+  data-ng-options="{{field.options}}"
 ></select>
 
 '''

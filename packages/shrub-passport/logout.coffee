@@ -14,7 +14,7 @@ exports.pkgmanRegister = (registrar) ->
       middleware: [
 
         'shrub-http-express/session'
-        'shrub-user'
+        'shrub-passport'
 
         (req, res, next) -> req.logOut().then(-> res.end()).catch next
 
@@ -41,12 +41,12 @@ exports.pkgmanRegister = (registrar) ->
 
         # #### Invoke hook `shrubUserBeforeLogoutMiddleware`.
         beforeLogoutMiddleware = middleware.fromConfig(
-          'shrub-passport:beforeLogoutMiddleware'
+          'shrub-user:beforeLogoutMiddleware'
         )
 
         # #### Invoke hook `shrubUserAfterLogoutMiddleware`.
         afterLogoutMiddleware = middleware.fromConfig(
-          'shrub-passport:afterLogoutMiddleware'
+          'shrub-user:afterLogoutMiddleware'
         )
 
         logout = req.passportLogOut = req.logout

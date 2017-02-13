@@ -89,10 +89,10 @@ exports.pkgmanRegister = (registrar) ->
     GroupPermission.autoCreatedAt = false
     GroupPermission.autoUpdatedAt = false
 
-    User.loadPopulated = (id) ->
+    User.findOnePopulated = (where) ->
 
       User_ = orm.collection 'shrub-user'
-      User_.findOne(id: id).populateAll().then (user) -> user.populateAll()
+      User_.findOne(where).populateAll().then (user) -> user.populateAll()
 
     User.attributes.populateAll = ->
       self = this
@@ -146,9 +146,13 @@ exports.pkgmanRegister = (registrar) ->
     User.attributes.toJSON = ->
       O = @toObject()
 
-      O.groups = @groups
-      O.permissions = @permission
-      O.instances = @instances
+      console.log this
+
+      O.groups = @groups.map (e) -> e
+      O.permissions = @permissions.map (e) -> e
+      O.instances = @instances.map (e) -> e
+
+      console.log O
 
       O
 
@@ -173,3 +177,7 @@ exports.pkgmanRegister = (registrar) ->
     UserPermission.autoUpdatedAt = false
 
     collections
+
+  registrar.recur [
+    'login'
+  ]

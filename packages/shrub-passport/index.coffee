@@ -2,6 +2,9 @@
 
 # *Authentication system, leaning on [passport](http://passportjs.org).*
 
+pkgman = require 'pkgman'
+
+orm = null
 passport = null
 Promise = null
 
@@ -10,8 +13,48 @@ exports.pkgmanRegister = (registrar) ->
   # #### Implements hook `shrubCorePreBootstrap`.
   registrar.registerHook 'shrubCorePreBootstrap', ->
 
+    orm = require 'shrub-orm'
     passport = require 'passport'
     Promise = require 'bluebird'
+
+  # #### Implements hook `shrubCoreBootstrapMiddleware`.
+  registrar.registerHook 'shrubCoreBootstrapMiddleware', ->
+
+    Promise = require 'bluebird'
+
+    middleware = require 'middleware'
+
+    label: 'Bootstrap user authorization'
+    middleware: [
+
+      (next) ->
+
+        {IncomingMessage} = require 'http'
+
+        IncomingMessage::authorize = (method, res) ->
+          self = this
+
+          new Promise (resolve, reject) ->
+
+            self._passport.instance.authenticate(
+              method
+              (error, user, info) ->
+                return reject error if error?
+                resolve user, info
+
+            ) self, res
+
+        for packageName, strategy of pkgman.invoke 'shrubUserLoginStrategies'
+          passport.use strategy.passportStrategy
+
+        passport.serializeUser (user, done) -> done null, user.id
+
+        passport.deserializeUser (id, done) ->
+          orm.collection('shrub-user').findOnePopulated(id: id).nodeify done
+
+        next()
+
+    ]
 
   # #### Implements hook `shrubHttpMiddleware`.
   registrar.registerHook 'shrubHttpMiddleware', ->
@@ -88,21 +131,6 @@ exports.pkgmanRegister = (registrar) ->
       (req, next) ->
         req.instantiateAnonymous().then(-> next()).catch next
 
-    ]
-
-  # #### Implements hook `shrubConfigServer`.
-  registrar.registerHook 'shrubConfigServer', ->
-
-    beforeLoginMiddleware: []
-
-    afterLoginMiddleware: []
-
-    beforeLogoutMiddleware: [
-      'shrub-passport'
-    ]
-
-    afterLogoutMiddleware: [
-      'shrub-passport'
     ]
 
   registrar.recur [

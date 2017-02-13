@@ -9,6 +9,131 @@ exports.pkgmanRegister = (registrar) ->
   # #### Implements hook `shrubOrmCollectionsAlter`.
   registrar.registerHook 'shrubOrmCollectionsAlter', exports.shrubOrmCollectionsAlter
 
+  # #### Implements hook `shrubAngularDirective`.
+  registrar.registerHook 'shrubAngularDirective', -> [
+    'shrub-user'
+    (user) ->
+
+      directive = {}
+
+      # ###### TODO: Make it possible to override directive name/path
+      # directive.name = 'shrub-user-actions'
+
+      directive.link = (scope) -> scope.user = user
+
+      directive.scope = {}
+
+      directive.template = '''
+
+<span class="user">
+  <span class="username" data-ng-bind="user.instance().name"></span>
+
+  <span
+    class="actions"
+    data-ng-if="!user.isLoggedIn()"
+  >
+    [<a href="/user/login">Log in</a> · <a href="/user/register">Register</a>]
+  </span>
+
+  <span
+    class="actions"
+    data-ng-if="user.isLoggedIn()"
+  >
+    [<a href="/user/logout">Log out</a>]
+  </span>
+
+</span>
+
+'''
+
+      return directive
+
+  ]
+
+  # #### Implements hook `shrubAngularService`.
+  registrar.registerHook 'shrubAngularService', -> [
+    'shrub-orm', 'shrub-rpc', 'shrub-socket'
+    (orm, rpc, socket) ->
+
+      config = require 'config'
+
+      User = orm.collection 'shrub-user'
+
+      service = {}
+
+      _instance = {}
+      _instance[k] = v for k, v of User.instantiate(
+        config.get 'packageConfig:shrub-user'
+      )
+
+      # Log a user out if we get a socket call.
+      logout = ->
+
+        blank = User.instantiate()
+        delete _instance[k] for k of _instance
+        _instance[k] = v for k, v of blank
+
+        return
+
+      socket.on 'shrub-user/logout', logout
+
+      # ## user.isLoggedIn
+      #
+      # *Whether the current application user is logged in.*
+      service.isLoggedIn = -> _instance.id?
+
+      # ## user.login
+      #
+      # *Log in with method and args.*
+      #
+      # ###### TODO: username and password are tightly coupled to local strategy. Change that.
+      service.login = (values) ->
+
+        rpc.call('shrub-user/login', values).then (O) ->
+          _instance[k] = v for k, v of O
+          return
+
+      # ## user.logout
+      #
+      # *Log out.*
+      service.logout = ->
+
+        rpc.call(
+          'shrub-user/logout'
+
+        ).then logout
+
+      # ## user.instance
+      #
+      # *Retrieve the user instance.*
+      service.instance = -> _instance
+
+      if config.get 'packageConfig:shrub-core:testMode'
+
+        # ## user.fakeLogin
+        #
+        # *Mock a login process.*
+        #
+        # ###### TODO: This will change when login method generalization happens.
+        service.fakeLogin = (username, password, id) ->
+          password ?= 'password'
+          id ?= 1
+
+          socket.catchEmit 'shrub-rpc', ({path, data}, fn) ->
+            return unless 'shrub-user/login' is path
+
+            fn result: id: id, name: username
+
+          service.login 'local', username, password
+
+      service
+
+  ]
+
+  registrar.recur [
+    'login'
+  ]
+
 exports.shrubOrmCollections = ->
 
   Group =
