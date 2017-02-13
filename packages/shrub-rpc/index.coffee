@@ -113,26 +113,12 @@ exports.pkgmanRegister = (registrar) ->
 
             end: (data) ->
 
-              unless data?
-                try
-                  throw new Error
-                catch e
-                  console.log e.stack
-
               @write data
-              console.log @data
 
               return fn error: errors.serialize @error if @error?
               fn result: @data
 
-            write: (data) ->
-              try
-                throw new Error
-              catch e
-                console.log data
-                console.log e.stack
-
-              @data[k] = v for k, v of data
+            write: (data) -> @data[k] = v for own k, v of data
 
             writeHead: (code, headers) ->
               @headers[k] = v for k, v of headers

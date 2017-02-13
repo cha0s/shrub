@@ -69,7 +69,7 @@ exports.pkgmanRegister = (registrar) ->
       'shrub-core'
       'shrub-socket/factory'
       'shrub-http-express/session'
-      'shrub-user'
+      'shrub-passport'
       'shrub-http-express/logger'
       'shrub-villiany'
       'shrub-form'

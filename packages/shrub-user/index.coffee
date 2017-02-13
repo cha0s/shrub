@@ -22,7 +22,21 @@ exports.pkgmanRegister = (registrar) ->
   registrar.registerHook 'shrubConfigClient', (req) ->
 
     # Send a redacted version of the request user.
-    req.user.redact 'shrub-user', req.user if req.user?
+    req.user.redactObject 'shrub-user', req.user if req.user?
+
+  # #### Implements hook `shrubConfigServer`.
+  registrar.registerHook 'shrubConfigServer', ->
+
+    beforeLoginMiddleware: []
+
+    afterLoginMiddleware: []
+
+    beforeLogoutMiddleware: [
+      'shrub-passport'
+    ]
+
+    afterLogoutMiddleware: [
+    ]
 
   # #### Implements hook `shrubUserRedactors`.
   registrar.registerHook 'shrubUserRedactors', ->
@@ -30,21 +44,26 @@ exports.pkgmanRegister = (registrar) ->
     'shrub-user': [
       (object, user) ->
 
+        redacted =
+          id: object.id
+
+        # ###### TODO: Include/merge permissions.
+
         for group in object.groups
 
-          for permission in group.permissions ? []
-
-            delete permission.group
-            delete permission.id
-
-          delete group.iname
-          delete group.id
+          (redacted.groups ?= []).push group.name
 
         # Redact instances.
         return Promise.all(
+
           for instance in object.instances
             user.redactObject instance.model, instance
-        )
+
+        ).then (instances) ->
+
+          redacted.instances = instances
+
+          return redacted
 
     ]
 
@@ -90,9 +109,17 @@ exports.pkgmanRegister = (registrar) ->
     GroupPermission.autoUpdatedAt = false
 
     User.findOnePopulated = (where) ->
+      @findOne(where).populateAll().then (user) -> user.populateAll()
 
-      User_ = orm.collection 'shrub-user'
-      User_.findOne(where).populateAll().then (user) -> user.populateAll()
+    User.instantiateAnonymous = ->
+      user = @instantiate()
+
+      # Add to anonymous group.
+      user.groups = [
+        orm.collection('shrub-user-group').instantiate group: 2
+      ]
+
+      user.populateAll()
 
     User.attributes.populateAll = ->
       self = this
@@ -124,6 +151,7 @@ exports.pkgmanRegister = (registrar) ->
 
     redactors = null
     User.attributes.redactObject = (type, object) ->
+      self = this
 
       pkgman = require 'pkgman'
 
@@ -139,20 +167,20 @@ exports.pkgmanRegister = (registrar) ->
       # No redactors? Just promise the original object.
       return Promise.resolve object if redactors[type].length is 0
 
-      Promise.all(
-        redactor object, this for redactor in redactors[type]
-      ).then -> object
+      promise = Promise.resolve object
+
+      for redactor in redactors[type]
+        promise = do (redactor) -> promise.then (redacted) ->
+          Promise.cast redactor object, self
+
+      return promise
 
     User.attributes.toJSON = ->
       O = @toObject()
 
-      console.log this
-
-      O.groups = @groups.map (e) -> e
-      O.permissions = @permissions.map (e) -> e
-      O.instances = @instances.map (e) -> e
-
-      console.log O
+      O.groups = @groups
+      O.permissions = @permissions
+      O.instances = @instances
 
       O
 

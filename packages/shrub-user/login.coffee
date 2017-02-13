@@ -39,15 +39,13 @@ exports.pkgmanRegister = (registrar) ->
           # Log the user in (if it exists), and redact it for the response.
           req.authorize(req.body.method, res).bind({}).then((@user, info) ->
 
-            req.logIn @user
+            req.logIn @user unless req.user?
 
           ).then(->
 
             @user.redactObject 'shrub-user', @user
 
           ).then((user) ->
-
-            console.log user
 
             res.end user
 
@@ -56,34 +54,3 @@ exports.pkgmanRegister = (registrar) ->
       ]
 
     return routes
-
-  # #### Implements hook `shrubConfigServer`.
-  registrar.registerHook 'shrubConfigServer', ->
-
-    beforeLoginMiddleware: []
-
-    afterLoginMiddleware: []
-
-    beforeLogoutMiddleware: [
-      'shrub-passport'
-    ]
-
-    afterLogoutMiddleware: [
-      'shrub-passport'
-    ]
-
-  # #### Implements hook `shrubCoreBootstrapMiddleware`.
-  registrar.registerHook 'shrubCoreBootstrapMiddleware', ->
-
-    orm = require 'shrub-orm'
-
-    crypto = require 'server/crypto'
-
-    label: 'Bootstrap user login'
-    middleware: [
-
-      (next) ->
-
-        next()
-
-    ]

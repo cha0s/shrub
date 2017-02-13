@@ -34,6 +34,7 @@ exports.pkgmanRegister = (registrar) ->
       Promise.cast(
         UserLocal.findOne iname: username
       ).bind({}).then((@localUser) ->
+
         throw errors.instantiate 'shrub-user-local-login' unless @localUser
 
         crypto.hasher(
@@ -60,6 +61,21 @@ exports.pkgmanRegister = (registrar) ->
 
         @localUser.associatedUser()
 
+      ).then((associatedUser) ->
+        self = this
+
+        return associatedUser if associatedUser?
+
+        promise = if req.user?
+          Promise.resolve req.user
+        else
+          require('shrub-user').instantiateAnonymous()
+
+        promise.then (user) ->
+
+          user.instances.add self.localUser
+          return user
+
       ).nodeify done
 
     passportStrategy = new LocalStrategy options, verifyCallback
@@ -77,23 +93,19 @@ exports.pkgmanRegister = (registrar) ->
 
         crypto = require 'server/crypto'
 
-        delete object.iname
-        delete object.plaintext if object.plaintext?
-        delete object.salt
-        delete object.passwordHash
-        delete object.resetPasswordToken
+        redacted =
+          model: object.model
+          createdAt: object.createdAt
+          updatedAt: object.updatedAt
+          name: object.name
 
-        Promise.resolve().then ->
-          return unless object.email?
+        # Different user means full email redaction.
+        return redacted if user.id isnt object.user
 
-          # Different redacted means full email redaction.
-          if user.id isnt object.user
-            delete object.email
-            return
-
-          # Decrypt the e-mail if redacting for the same user.
-          crypto.decrypt(object.email).then (email) ->
-            object.email = email
+        # Decrypt the e-mail if redacting for the same user.
+        crypto.decrypt(object.email).then (email) ->
+          redacted.email = email
+          return redacted
 
     ]
 
@@ -191,29 +203,6 @@ exports.pkgmanRegister = (registrar) ->
 
         ).then -> return localUser
       )
-
-    UserLocal.redactors = [(redactFor) ->
-      self = this
-
-      delete self.iname
-      delete self.plaintext if self.plaintext?
-      delete self.salt
-      delete self.passwordHash
-      delete self.resetPasswordToken
-
-      Promise.resolve().then ->
-        return unless self.email?
-
-        # Different user means full email redaction.
-        if redactFor.id isnt self.id
-          delete self.email
-          return
-
-        # Decrypt the e-mail if redacting for the same user.
-        crypto.decrypt(self.email).then (email) ->
-          self.email = email
-
-    ]
 
     collections
 

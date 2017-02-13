@@ -1,6 +1,9 @@
 # # User
 #
 # *User operations, model, etc.*
+
+{TransmittableError} = require 'errors'
+
 exports.pkgmanRegister = (registrar) ->
 
   # #### Implements hook `shrubOrmCollections`.
@@ -130,6 +133,9 @@ exports.pkgmanRegister = (registrar) ->
 
   ]
 
+  # #### Implements hook `shrubTransmittableErrors`.
+  registrar.registerHook 'shrubTransmittableErrors', exports.shrubTransmittableErrors
+
   registrar.recur [
     'login'
   ]
@@ -237,3 +243,13 @@ exports.shrubOrmCollections = ->
   'shrub-user-group': UserGroup
   'shrub-user-instance': UserInstance
   'shrub-user-permission': UserPermission
+
+# Transmittable login conflict error.
+class LoginConflictError extends TransmittableError
+
+  key: 'shrub-user-login-conflict'
+  template: 'That account already belongs to another user. First log out and then log in with that account.'
+
+exports.shrubTransmittableErrors = -> [
+  LoginConflictError
+]

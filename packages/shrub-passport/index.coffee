@@ -122,17 +122,6 @@ exports.pkgmanRegister = (registrar) ->
 
     ]
 
-  # #### Implements hook `shrubUserAfterLogoutMiddleware`.
-  registrar.registerHook 'shrubUserAfterLogoutMiddleware', ->
-
-    label: 'Instantiate anonymous user'
-    middleware: [
-
-      (req, next) ->
-        req.instantiateAnonymous().then(-> next()).catch next
-
-    ]
-
   registrar.recur [
     'logout'
   ]
@@ -194,15 +183,6 @@ passportMiddleware = -> [
 
     next()
 
-  # Set the user into the request.
-  (req, res, next) ->
-    promise = if req.user?
-      Promise.resolve()
-    else
-      req.instantiateAnonymous()
-
-    promise.then(-> next()).catch next
-
   # Save the user at the end of the request.
   (req, res, next) ->
 
@@ -210,7 +190,7 @@ passportMiddleware = -> [
     res.end = (data, encoding) ->
       res.end = end
 
-      return res.end data, encoding unless req.user.id
+      return res.end data, encoding unless req.user?.id
 
       req.user.save().finally -> res.end data, encoding
 
