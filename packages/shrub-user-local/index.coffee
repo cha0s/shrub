@@ -30,13 +30,18 @@ exports.pkgmanRegister = (registrar) ->
       crypto = require 'server/crypto'
       errors = require 'errors'
 
-      # Load a user and compare the hashed password.
+      # Find a local user and compare the hashed password.
       Promise.cast(
         UserLocal.findOne iname: username
       ).bind({}).then((@localUser) ->
 
+        # Not found? Generic login error.
         throw errors.instantiate 'shrub-user-local-login' unless @localUser
 
+        # ###### TODO: Any way to automate this?
+        @localUser.model = 'shrub-user-local'
+
+        # Hash the input password for comparison.
         crypto.hasher(
           plaintext: password
           salt: new Buffer @localUser.salt, 'hex'
@@ -44,40 +49,17 @@ exports.pkgmanRegister = (registrar) ->
 
       ).then((hashed) ->
 
+        # Hash mismatch (wrong password)? Generic login error.
         throw errors.instantiate(
           'shrub-user-local-login'
         ) if @localUser.passwordHash isnt hashed.key.toString 'hex'
 
-      ).then(->
-        self = this
-
-        # Join a channel for the username.
-        new Promise (resolve, reject) ->
-          req.socket.join self.localUser.name, (error) ->
-            return reject error if error?
-            resolve()
-
-      ).then(->
-
-        @localUser.associatedUser()
-
-      ).then((associatedUser) ->
-        self = this
-
-        return associatedUser if associatedUser?
-
-        promise = if req.user?
-          Promise.resolve req.user
-        else
-          require('shrub-user').instantiateAnonymous()
-
-        promise.then (user) ->
-
-          user.instances.add self.localUser
-          return user
+        # Return the local user instance.
+        return @localUser
 
       ).nodeify done
 
+    # Implement a [Passport](http://passportjs.org/) login strategy.
     passportStrategy = new LocalStrategy options, verifyCallback
     passportStrategy.name = 'shrub-user-local'
     strategy.passportStrategy = passportStrategy
@@ -91,8 +73,6 @@ exports.pkgmanRegister = (registrar) ->
 
       (object, user) ->
 
-        crypto = require 'server/crypto'
-
         redacted =
           model: object.model
           createdAt: object.createdAt
@@ -103,7 +83,7 @@ exports.pkgmanRegister = (registrar) ->
         return redacted if user.id isnt object.user
 
         # Decrypt the e-mail if redacting for the same user.
-        crypto.decrypt(object.email).then (email) ->
+        require('server/crypto').decrypt(object.email).then (email) ->
           redacted.email = email
           return redacted
 
@@ -114,10 +94,6 @@ exports.pkgmanRegister = (registrar) ->
 
     crypto = require 'server/crypto'
 
-    autoIname = (values, cb) ->
-      values.iname = values.name.toLowerCase()
-      cb()
-
     # Invoke the client hook implementation.
     collections = clientModule.shrubOrmCollections()
 
@@ -125,10 +101,15 @@ exports.pkgmanRegister = (registrar) ->
       'shrub-user-local': UserLocal
     } = collections
 
+    # Store case-insensitive name.
+    autoIname = (values, cb) ->
+      values.iname = values.name.toLowerCase()
+      cb()
+
     UserLocal.beforeCreate = autoIname
     UserLocal.beforeUpdate = autoIname
 
-    # Case-insensitivized name.
+    # Case-insensitive name.
     UserLocal.attributes.iname =
       type: 'string'
       size: 24
@@ -149,6 +130,11 @@ exports.pkgmanRegister = (registrar) ->
       type: 'string'
       size: 128
 
+    # ## UserLocal#associatedUser
+    #
+    # ###### TODO: This should be in a superclass.
+    #
+    # *Get the user (if any) associated with this instance.*
     UserLocal.attributes.associatedUser = ->
       {
         'shrub-user-instance': UserInstance
@@ -160,13 +146,7 @@ exports.pkgmanRegister = (registrar) ->
         modelId: @id
       ).then (userInstance) -> User.findOnePopulated id: userInstance?.user
 
-    UserLocal.attributes.toJSON = ->
-      O = @toObject()
-      O.groups = @groups
-      O.permissions = @permission
-      O
-
-    # ## UserLocal#register
+    # ## UserLocal.register
     #
     # * (string) `name` - Name of the new user.
     #

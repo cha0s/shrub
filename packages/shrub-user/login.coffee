@@ -1,4 +1,7 @@
 
+errors = require 'errors'
+
+orm = null
 Promise = null
 
 clientModule = require './client/login'
@@ -9,6 +12,7 @@ exports.pkgmanRegister = (registrar) ->
   # #### Implements hook `shrubCorePreBootstrap`.
   registrar.registerHook 'shrubCorePreBootstrap', ->
 
+    orm = require 'shrub-orm'
     Promise = require 'bluebird'
 
   # #### Implements hook `shrubRpcRoutes`.
@@ -36,20 +40,72 @@ exports.pkgmanRegister = (registrar) ->
 
         (req, res, next) ->
 
-          # Log the user in (if it exists), and redact it for the response.
-          req.authorize(req.body.method, res).bind({}).then((@user, info) ->
+          # Authorize a user instance.
+          req.authorize(req.body.method, res).bind({}).then((@instance, info) ->
+
+            # Get any associated user.
+            @instance.associatedUser()
+
+          ).then((associatedUser) ->
+            self = this
+
+            if associatedUser?
+
+              if req.user?
+
+                # If the user is already logged in and the instance has an
+                # associated user, they're either already logged in with
+                # the instance, or the instance belongs to another user. Throw
+                # a relevant error either way.
+                if req.user.id is associatedUser.id
+
+                  throw errors.instantiate('shrub-user-login-redundant')
+
+                else
+
+                  throw errors.instantiate('shrub-user-login-conflict')
+
+              # If the user isn't already logged in, just return the user
+              # associated with the instance.
+              else
+
+                return associatedUser
+
+            else
+
+              # If the instance isn't already associated with a user, either
+              # target the logged-in user, or if the user isn't already
+              # logged in, target a new user.
+              promise = if req.user?
+
+                Promise.resolve req.user
+
+              else
+
+                orm.collection('shrub-user').create()
+
+              # Associate the instance with the user targeted just above.
+              promise.then (user) ->
+
+                user.instances.add(
+                  model: self.instance.model
+                  modelId: self.instance.id
+                )
+
+                return user
+
+          # Log in the user if not already logged in.
+          ).then((@user) ->
 
             req.logIn @user unless req.user?
 
+          # Redact the user object for delivery to the client.
           ).then(->
 
             @user.redactObject 'shrub-user', @user
 
-          ).then((user) ->
-
-            res.end user
-
-          ).catch next
+          # End the request, sending the redacted user.
+          ).then((redactedUser) -> res.end redactedUser).catch next
 
       ]
 

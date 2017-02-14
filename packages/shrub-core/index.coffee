@@ -64,7 +64,6 @@ exports.pkgmanRegister = (registrar) ->
       'shrub-socket'
       'shrub-rpc'
       'shrub-passport'
-      'shrub-passport/logout'
       'shrub-angular'
       'shrub-ui/notifications'
       'shrub-nodemailer'

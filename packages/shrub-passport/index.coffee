@@ -2,11 +2,17 @@
 
 # *Authentication system, leaning on [passport](http://passportjs.org).*
 
+middleware = require 'middleware'
 pkgman = require 'pkgman'
 
 orm = null
 passport = null
 Promise = null
+
+beforeLoginMiddleware = null
+afterLoginMiddleware = null
+beforeLogoutMiddleware = null
+afterLogoutMiddleware = null
 
 exports.pkgmanRegister = (registrar) ->
 
@@ -22,8 +28,6 @@ exports.pkgmanRegister = (registrar) ->
 
     Promise = require 'bluebird'
 
-    middleware = require 'middleware'
-
     label: 'Bootstrap user authorization'
     middleware: [
 
@@ -31,6 +35,13 @@ exports.pkgmanRegister = (registrar) ->
 
         {IncomingMessage} = require 'http'
 
+        # ## IncomingMessage::authorize
+        #
+        # * (string) `method` - The authorization method.
+        #
+        # * (response) `res` - The HTTP/socket response object.
+        #
+        # *Authorize a user instance.*
         IncomingMessage::authorize = (method, res) ->
           self = this
 
@@ -44,13 +55,55 @@ exports.pkgmanRegister = (registrar) ->
 
             ) self, res
 
+        # #### Invoke hook `shrubUserBeforeLoginMiddleware`.
+        beforeLoginMiddleware = middleware.fromConfig(
+          'shrub-user:beforeLoginMiddleware'
+        )
+
+        # #### Invoke hook `shrubUserAfterLoginMiddleware`.
+        afterLoginMiddleware = middleware.fromConfig(
+          'shrub-user:afterLoginMiddleware'
+        )
+
+        # #### Invoke hook `shrubUserBeforeLogoutMiddleware`.
+        beforeLogoutMiddleware = middleware.fromConfig(
+          'shrub-user:beforeLogoutMiddleware'
+        )
+
+        # #### Invoke hook `shrubUserAfterLogoutMiddleware`.
+        afterLogoutMiddleware = middleware.fromConfig(
+          'shrub-user:afterLogoutMiddleware'
+        )
+
+        # #### Invoke hook `shrubUserLoginStrategies`.
+        #
+        # Use passport authorization strategies.
         for packageName, strategy of pkgman.invoke 'shrubUserLoginStrategies'
           passport.use strategy.passportStrategy
 
+        # Passport serialization callback. Store the user ID.
         passport.serializeUser (user, done) -> done null, user.id
 
-        passport.deserializeUser (id, done) ->
-          orm.collection('shrub-user').findOnePopulated(id: id).nodeify done
+        # Passport deserialization callback.
+        passport.deserializeUser (req, id, done) ->
+
+          # Load user based on ID
+          promise = orm.collection(
+            'shrub-user'
+          ).findOnePopulated(
+            id: id
+          ).then((user) ->
+
+            # Pass in the user to be logged in through the request.
+            req.loggingInUser = user
+
+            # Invoke the `beforeLogin` middleware.
+            new Promise (resolve, reject) ->
+              beforeLoginMiddleware.dispatch req, (error) ->
+                return reject error if error?
+                resolve user
+
+          ).nodeify done
 
         next()
 
@@ -67,24 +120,28 @@ exports.pkgmanRegister = (registrar) ->
 
     {spliceRouteMiddleware} = require 'shrub-rpc'
 
+    # Implement `req.loadUser`.
     loadUserMiddleware = (req, res, next) ->
 
+      # Bootstrap Passport into a request.
       req.loadUser = (done) -> req.loadSession ->
 
         passportMiddleware_ = new Middleware()
-        for fn in passportMiddleware()
-          passportMiddleware_.use fn
-
+        passportMiddleware_.use fn for fn in passportMiddleware()
         passportMiddleware_.dispatch req, res, (error) ->
           return next error if error?
           done()
 
       next()
 
+    # Make sure loadUser is available early.
     loadUserMiddleware.weight = -4999
 
     for path, route of routes
+      # Prepend the loadUser bootstrapping.
       route.middleware.unshift loadUserMiddleware
+
+      # Splice in Passport middleware.
       spliceRouteMiddleware route, 'shrub-passport', passportMiddleware()
 
     return
@@ -95,32 +152,7 @@ exports.pkgmanRegister = (registrar) ->
     label: 'Load user using passport'
 
     # Join a channel for the username.
-    middleware: passportMiddleware().concat (req, res, next) ->
-
-      return req.socket.join "user/#{req.user.id}", next if req.user.id?
-
-      next()
-
-  # #### Implements hook `shrubUserBeforeLogoutMiddleware`.
-  registrar.registerHook 'shrubUserBeforeLogoutMiddleware', ->
-
-    label: 'Tell client to log out, and leave the user channel'
-    middleware: [
-
-      (req, next) ->
-
-        return next() unless req.socket?
-
-        # Tell client to log out.
-        req.socket.emit 'shrub-user/logout'
-
-        # Leave the user channel.
-        if req.user.id?
-          req.socket.leave req.user.name, next
-        else
-          next()
-
-    ]
+    middleware: passportMiddleware()
 
   registrar.recur [
     'logout'
@@ -128,58 +160,71 @@ exports.pkgmanRegister = (registrar) ->
 
 passportMiddleware = -> [
 
-  (req, res, next) ->
-
-    req.instantiateAnonymous = ->
-
-      @user = orm.collection('shrub-user').instantiate()
-
-      # Add to anonymous group.
-      @user.groups = [
-        orm.collection('shrub-user-group').instantiate group: 2
-      ]
-
-      @user.populateAll()
-
-    next()
-
   # Passport middleware.
   passport.initialize()
   passport.session()
 
-  # Monkey patch http.IncomingMessage.prototype.login to run our middleware,
-  # and return a promise.
+  # Invoke after login middleware if a user already exists in the session.
+  (req, res, next) ->
+    return next() unless req.user?
+
+    promise = new Promise (resolve, reject) ->
+      afterLoginMiddleware.dispatch req, (error) ->
+        return reject error if error?
+        resolve()
+
+    promise.nodeify next
+
+    promise.finally -> delete req.loggingInUser
+
+  # Proxy req.log[iI]n to run our middleware, and
+  # return a promise.
   (req, res, next) ->
 
-    middleware = require 'middleware'
-
-    # #### Invoke hook `shrubUserBeforeLoginMiddleware`.
-    beforeLoginMiddleware = middleware.fromConfig(
-      'shrub-user:beforeLoginMiddleware'
-    )
-
-    # #### Invoke hook `shrubUserAfterLoginMiddleware`.
-    afterLoginMiddleware = middleware.fromConfig(
-      'shrub-user:afterLoginMiddleware'
-    )
-
-    login = req.passportLogIn = req.login
+    login = req.login
     req.login = req.logIn = (user, fn) ->
 
-      new Promise (resolve, reject) ->
+      promise = new Promise (resolve, reject) ->
 
-        loginReq = req: req, user: user
+        req.loggingInUser = user
 
-        beforeLoginMiddleware.dispatch loginReq, null, (error) =>
+        beforeLoginMiddleware.dispatch req, (error) ->
           return reject error if error?
 
-          login.call req, loginReq.user, (error) ->
+          login.call req, req.loggingInUser, (error) ->
             return reject error if error?
 
-            afterLoginMiddleware.dispatch loginReq, null, (error) ->
+            afterLoginMiddleware.dispatch req, (error) ->
               return reject error if error?
 
               resolve()
+
+      promise.finally -> delete req.loggingInUser
+
+    next()
+
+  # Proxy req.log[oO]ut to run our middleware, and
+  # return a promise.
+  (req, res, next) ->
+
+    logout = req.logout
+    req.logout = req.logOut = ->
+
+      req.loggingOutUser = req.user
+
+      promise = new Promise (resolve, reject) ->
+
+        beforeLogoutMiddleware.dispatch req, (error) ->
+          return reject error if error?
+
+          logout.call req
+
+          afterLogoutMiddleware.dispatch req, (error) ->
+            return reject error if error?
+
+            resolve()
+
+      promise.finally -> delete req.loggingOutUser
 
     next()
 

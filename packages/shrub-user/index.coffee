@@ -27,12 +27,15 @@ exports.pkgmanRegister = (registrar) ->
   # #### Implements hook `shrubConfigServer`.
   registrar.registerHook 'shrubConfigServer', ->
 
-    beforeLoginMiddleware: []
+    beforeLoginMiddleware: [
+      'shrub-user'
+    ]
 
-    afterLoginMiddleware: []
+    afterLoginMiddleware: [
+    ]
 
     beforeLogoutMiddleware: [
-      'shrub-passport'
+      'shrub-user'
     ]
 
     afterLogoutMiddleware: [
@@ -76,10 +79,6 @@ exports.pkgmanRegister = (registrar) ->
   # #### Implements hook `shrubOrmCollections`.
   registrar.registerHook 'shrubOrmCollections', ->
 
-    autoIname = (values, cb) ->
-      values.iname = values.name.toLowerCase()
-      cb()
-
     # Invoke the client hook implementation.
     collections = clientModule.shrubOrmCollections()
 
@@ -91,50 +90,56 @@ exports.pkgmanRegister = (registrar) ->
       'shrub-user-permission': UserPermission
     } = collections
 
-    # ###### TODO: Finish collections doc.
-    #
-    # Case-insensitivized name.
+    # Store case-insensitive name.
+    autoIname = (values, cb) ->
+      values.iname = values.name.toLowerCase()
+      cb()
+
+    Group.beforeCreate = autoIname
+    Group.beforeUpdate = autoIname
+
+    # Case-insensitive name.
     Group.attributes.iname =
       type: 'string'
       size: 24
       index: true
 
+    # Disable the default createdAt/updatedAt attributes.
     Group.autoCreatedAt = false
     Group.autoUpdatedAt = false
 
-    Group.beforeCreate = autoIname
-    Group.beforeUpdate = autoIname
-
+    # Disable the default createdAt/updatedAt attributes.
     GroupPermission.autoCreatedAt = false
     GroupPermission.autoUpdatedAt = false
 
+    # ## User.findOnePopulated
+    #
+    # * (object) `where` - Query conditions.
+    #
+    # *Find a user in the system and fully populate it.*
     User.findOnePopulated = (where) ->
-      @findOne(where).populateAll().then (user) -> user.populateAll()
+      @findOne(where).populateAll().then (user) -> user?.populateAll()
 
-    User.instantiateAnonymous = ->
-      user = @instantiate()
-
-      # Add to anonymous group.
-      user.groups = [
-        orm.collection('shrub-user-group').instantiate group: 2
-      ]
-
-      user.populateAll()
-
+    # ## User#populateAll
+    #
+    # *Fully populate a user.*
     User.attributes.populateAll = ->
       self = this
 
-      Group_ = orm.collection 'shrub-group'
-
+      # Populate permissions.
       @permissions = @permissions.map ({permission}) -> permission
 
-      groupPromises = Promise.all(
+      # Load and populate groups.
+      Group_ = orm.collection 'shrub-group'
+
+      groupsPromise = Promise.all(
 
         Group_.findOne(id: group).populateAll() for {group}, index in @groups
 
       ).then (groups) -> self.groups[index] = group for group, index in groups
 
-      instancePromises = Promise.all(
+      # Load and populate user instances.
+      instancesPromise = Promise.all(
 
         for instance, index in @instances
           Model = orm.collection instance.model
@@ -147,9 +152,19 @@ exports.pkgmanRegister = (registrar) ->
           model.model = self.instances[index].model
           self.instances[index] = model
 
-      Promise.all(groupPromises, instancePromises).then -> self
+      Promise.all([
+        groupsPromise
+        instancesPromise
+      ]).then -> self
 
     redactors = null
+    # ## User#redactObject
+    #
+    # * (string) `type` - The type of object to redact.
+    #
+    # * (object) `object` - The object to redact.
+    #
+    # *Redact an object based on a user's permission.*
     User.attributes.redactObject = (type, object) ->
       self = this
 
@@ -160,6 +175,8 @@ exports.pkgmanRegister = (registrar) ->
       # ###### TODO: Caching.
       unless redactors?
         redactors = {}
+
+        # #### Invoke hook `shrubUserRedactors`.
         for redactorTypes in pkgman.invokeFlat 'shrubUserRedactors'
           for type_, redactors_ of redactorTypes
             (redactors[type_] ?= []).push redactors_...
@@ -167,14 +184,17 @@ exports.pkgmanRegister = (registrar) ->
       # No redactors? Just promise the original object.
       return Promise.resolve object if redactors[type].length is 0
 
+      # Walk down the list of redactors promising and returning them serially.
       promise = Promise.resolve object
-
       for redactor in redactors[type]
         promise = do (redactor) -> promise.then (redacted) ->
           Promise.cast redactor object, self
 
       return promise
 
+    # ## User#toJSON
+    #
+    # *Render the user as a POD object.*
     User.attributes.toJSON = ->
       O = @toObject()
 
@@ -184,9 +204,13 @@ exports.pkgmanRegister = (registrar) ->
 
       O
 
+    # Disable the default createdAt/updatedAt attributes.
     UserGroup.autoCreatedAt = false
     UserGroup.autoUpdatedAt = false
 
+    # ## UserGroup#populateAll
+    #
+    # *Fully populate a user group.*
     UserGroup.attributes.populateAll = ->
       self = this
 
@@ -196,15 +220,48 @@ exports.pkgmanRegister = (registrar) ->
 
         return self
 
-    UserGroup.attributes.depopulateAll = ->
-      @group = @group.id
-
-      return this
-
+    # Disable the default createdAt/updatedAt attributes.
     UserPermission.autoCreatedAt = false
     UserPermission.autoUpdatedAt = false
 
     collections
+
+  # #### Implements hook `shrubTransmittableErrors`.
+  registrar.registerHook 'shrubTransmittableErrors', clientModule.shrubTransmittableErrors
+
+  # #### Implements hook `shrubUserBeforeLoginMiddleware`.
+  registrar.registerHook 'shrubUserBeforeLoginMiddleware', ->
+
+    label: 'Join user channel'
+    middleware: [
+      (req, next) ->
+        return next() unless req.socket.join?
+        req.socket.join "user/#{req.loggingInUser.id}", next
+    ]
+
+  # #### Implements hook `shrubUserBeforeLogoutMiddleware`.
+  registrar.registerHook 'shrubUserBeforeLogoutMiddleware', ->
+
+    label: 'Tell client to log out, and leave the user channel'
+    middleware: [
+
+      (req, next) ->
+        return next() unless req.socket.emit?
+
+        # Tell client to log out.
+        req.socket.emit 'shrub-user/logout'
+        next()
+
+      (req, next) ->
+        return next() unless req.socket.leave?
+
+        # Leave the user channel.
+        if req.user.id?
+          req.socket.leave "user/#{req.loggingOutUser.id}", next
+        else
+          next()
+
+    ]
 
   registrar.recur [
     'login'

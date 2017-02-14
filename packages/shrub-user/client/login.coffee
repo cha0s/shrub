@@ -32,45 +32,52 @@ exports.pkgmanRegister = (registrar) ->
       controller: [
         '$location', '$scope', 'shrub-ui/messages', 'shrub-user'
         ($location, $scope, messages, user) ->
-          return $location.path '/' if user.isLoggedIn()
 
+          # #### Invoke hook `shrubUserLoginStrategies`.
           strategies = pkgman.invoke 'shrubUserLoginStrategies'
+
+          # Count the active strategies.
           strategiesCount = pkgman.packagesImplementing(
             'shrubUserLoginStrategies'
           ).length
 
+          # Build the login form.
           $scope.form =
 
             key: 'shrub-user-login'
-
-            fields: {}
 
             submits: [
 
               (values) ->
 
+                # Extract the values from the active strategy's fieldgroup.
                 methodValues = values[values.method]
+
+                # Manually inject the method into the strategy values.
                 methodValues.method = values.method
 
-                # console.log values
-                # return
-
+                # Attempt the login.
                 user.login(methodValues).then ->
 
+                  # Notify user.
                   messages.add(
                     class: 'alert-success'
                     text: 'Logged in successfully.'
                   )
 
-                  # $location.path '/'
+                  # Redirect to root.
+                  $location.path '/'
 
             ]
 
           # No strategies? Bail.
           return $location.path '/' if strategiesCount is 0
 
-          fields = $scope.form.fields
+          # DRY
+          fields = $scope.form.fields = {}
 
+          # If there's only one strategy active, simply inject the `method`
+          # into the form as a hidden field.
           if strategiesCount is 1
 
             method = packageName for packageName, strategy of strategies
@@ -79,6 +86,10 @@ exports.pkgmanRegister = (registrar) ->
               type: 'hidden'
               value: method
 
+          # If there's more than one method, use a dropdown to select the
+          # login strategy.
+          #
+          # ###### TODO: This is janky from UX perspective. Rely on skin? At least hide inactive strategies' fieldgroups...
           else
 
             fields.method =
@@ -86,18 +97,23 @@ exports.pkgmanRegister = (registrar) ->
               label: 'Method'
               options: 'key as value for (key , value) in field.methodOptions'
 
+            # Build the options list.
             fields.method.methodOptions = {}
             for packageName, {methodLabel} of strategies
+
+              # Start the select with the first value, otherwise Angular
+              # will inject a blank element.
               fields.method.value = packageName unless fields.method.value?
+
+              # Use the strategy labels.
               fields.method.methodOptions[packageName] = methodLabel
 
-          for packageName, strategy of strategies
-
-            $scope.form.fields[packageName] =
-
-              type: 'group'
-              collapse: false
-              fields: strategy.fields
+          # Inject a fieldgroup for every login strategy.
+          fields[packageName] = {
+            type: 'group'
+            collapse: false
+            fields: strategy.fields
+          } for packageName, strategy of strategies
 
       ]
 
