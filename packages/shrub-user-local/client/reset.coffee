@@ -19,7 +19,7 @@ exports.pkgmanRegister = (registrar) ->
 
           $scope.form =
 
-            key: 'shrub-user-reset'
+            key: 'shrub-user-local-reset'
 
             submits: [
 
@@ -30,7 +30,7 @@ exports.pkgmanRegister = (registrar) ->
                   text: 'You may now log in with your new password.'
                 )
 
-                $location.path '/user/login/local'
+                $location.path '/user/login'
 
             ]
 

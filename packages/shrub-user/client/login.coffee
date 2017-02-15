@@ -9,21 +9,6 @@ exports.pkgmanRegister = (registrar) ->
 
     routes = []
 
-    if 'e2e' is config.get 'packageConfig:shrub-core:testMode'
-
-      routes.push
-
-        path: 'e2e/user/login/:destination'
-
-        controller: [
-          '$location', '$routeParams', 'shrub-rpc', 'shrub-socket', 'shrub-user'
-          ($location, {destination}, rpc, socket, user) ->
-
-            user.fakeLogin('cha0s').then ->
-              $location.path "/user/#{destination}"
-
-        ]
-
     routes.push
 
       path: 'user/login'

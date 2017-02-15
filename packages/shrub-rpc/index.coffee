@@ -96,6 +96,7 @@ exports.pkgmanRegister = (registrar) ->
           routeReq.route = route
           routeReq.socket = req.socket
 
+          # ###### TODO: Doc
           routeRes = new class RpcRouteResponse extends EventEmitter
 
             constructor: ->

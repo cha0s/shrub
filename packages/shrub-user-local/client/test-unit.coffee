@@ -25,7 +25,11 @@ describe 'user', ->
 
           fn result: id: 1, name: 'cha0s'
 
-        user.login 'local', 'cha0s', 'password'
+        user.login(
+          method: 'shrub-user-local'
+          username: 'cha0s'
+          password: 'password'
+        )
 
         $timeout.flush()
 

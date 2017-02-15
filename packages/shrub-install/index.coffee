@@ -50,18 +50,27 @@ reinstall = (name = 'admin', email = 'admin@example.com', password = 'admin') ->
 
   ).then(->
 
-    # Teardown and rebuild the schema.
+    # Teardown the schema.
     new Promise (resolve, reject) ->
       orm.teardown (error) ->
         return reject error if error?
-        orm.initialize (error) ->
-          return reject error if error?
-          resolve()
+        resolve()
 
   ).then(->
 
-    Group = orm.collection 'shrub-group'
-    User = orm.collection 'shrub-user'
+    # Rebuild the schema.
+    new Promise (resolve, reject) ->
+      orm.initialize (error) ->
+        return reject error if error?
+        resolve()
+
+  ).then(->
+
+    {
+      'shrub-group': Group
+      'shrub-user': User
+      'shrub-user-local': UserLocal
+    } = orm.collections()
 
     Promise.all [
 
@@ -71,12 +80,24 @@ reinstall = (name = 'admin', email = 'admin@example.com', password = 'admin') ->
       Group.create name: 'Administrator'
 
       # Create superuser.
-      User.register name, email, password
+      UserLocal.register(name, email, password).bind({}).then((@localUser) ->
+
+        User.create()
+
+      ).then (user) ->
+
+        user.instances.add(
+          model: 'shrub-user-local'
+          modelId: @localUser.id
+        )
+
+        return user
+
     ]
 
   ).then(([groups..., user]) ->
 
     user.groups.add group: groups[2].id
-    user.save().then()
+    user.save()
 
-  ).catch console.error
+  ).then(-> console.log "Site installed!").catch console.error

@@ -21,7 +21,7 @@ exports.pkgmanRegister = (registrar) ->
 
     routes.push
 
-      path: 'shrub-user/register'
+      path: 'shrub-user/local/register'
 
       middleware: [
 
@@ -40,11 +40,11 @@ exports.pkgmanRegister = (registrar) ->
 
           {
             'shrub-ui-notification': Notification
-            'shrub-user': User
+            'shrub-user-local': UserLocal
           } = orm.collections()
 
           # Register a new user.
-          User.register(username, email, password).then((user) ->
+          UserLocal.register(username, email, password).then((localUser) ->
 
             # Send an email to the new user's email with a one-time login
             # link.
@@ -60,17 +60,17 @@ exports.pkgmanRegister = (registrar) ->
 
               siteUrl: siteUrl
 
-              user: user
+              user: localUser
 
             Notification.createFromRequest(
               req, 'shrubExampleGeneral'
               type: 'register'
-              name: user.name
+              name: localUser.name
               email: email
             ).done()
 
             nodemailer.sendMail(
-              'shrub-user-email-register'
+              'shrub-user-local-email-register'
             ,
               to: email
               subject: 'Registration details'

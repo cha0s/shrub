@@ -15,7 +15,7 @@ exports.pkgmanRegister = (registrar) ->
 
     routes.push
 
-      path: 'shrub-user/reset'
+      path: 'shrub-user/local/reset'
 
       middleware: [
 
@@ -28,7 +28,7 @@ exports.pkgmanRegister = (registrar) ->
 
         (req, res, next) ->
 
-          User = orm.collection 'shrub-user'
+          User =
 
           # Cancel promise flow if the user doesn't exist.
           class NoSuchUser extends Error
@@ -36,20 +36,22 @@ exports.pkgmanRegister = (registrar) ->
 
           # Look up the user.
           Promise.cast(
-            User.findOne resetPasswordToken: req.body.token
-          ).bind({}).then((@user) ->
-            throw new NoSuchUser unless @user?
+            orm.collection('shrub-user-local').findOne(
+              resetPasswordToken: req.body.token
+            )
+          ).bind({}).then((@localUser) ->
+            throw new NoSuchUser unless @localUser?
 
             # Recalculate the password hashing details.
             crypto.hasher plaintext: req.body.password
 
           ).then((hashed) ->
 
-            @user.passwordHash = hashed.key.toString 'hex'
-            @user.salt = hashed.salt.toString 'hex'
-            @user.resetPasswordToken = null
+            @localUser.passwordHash = hashed.key.toString 'hex'
+            @localUser.salt = hashed.salt.toString 'hex'
+            @localUser.resetPasswordToken = null
 
-            @user.save()
+            @localUser.save()
 
           ).then(-> res.end()).catch(NoSuchUser, -> res.end()).catch next
       ]

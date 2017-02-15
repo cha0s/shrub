@@ -18,7 +18,7 @@ exports.pkgmanRegister = (registrar) ->
 
           $scope.form =
 
-            key: 'shrub-user-register'
+            key: 'shrub-user-local-register'
 
             submits: [
 

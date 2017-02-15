@@ -19,7 +19,7 @@ exports.pkgmanRegister = (registrar) ->
 
     routes.push
 
-      path: 'shrub-user/forgot'
+      path: 'shrub-user/local/forgot'
 
       middleware: [
 
@@ -31,8 +31,6 @@ exports.pkgmanRegister = (registrar) ->
         )
 
         (req, res, next) ->
-
-          User = orm.collection 'shrub-user'
 
           # Cancel promise flow if the user doesn't exist.
           class NoSuchUser extends Error
@@ -55,21 +53,21 @@ exports.pkgmanRegister = (registrar) ->
 
           ).then((filter) ->
 
-            # Find the user.
-            User.findOne filter
+            # Find the local user.
+            orm.collection('shrub-user-local').findOne filter
 
-          ).then((@user) ->
-            throw new NoSuchUser unless @user?
+          ).then((@localUser) ->
+            throw new NoSuchUser unless @localUser?
 
             # Generate a one-time login token.
             crypto.randomBytes 24
 
           ).then((token) ->
 
-            @user.resetPasswordToken = token.toString 'hex'
+            @localUser.resetPasswordToken = token.toString 'hex'
 
             # Decrypt the user's email address.
-            crypto.decrypt @user.email
+            crypto.decrypt @localUser.email
 
           ).then((email) ->
 
@@ -82,14 +80,14 @@ exports.pkgmanRegister = (registrar) ->
               email: email
 
               # ###### TODO: HTTPS
-              loginUrl: "#{siteUrl}/user/reset/#{user.resetPasswordToken}"
+              loginUrl: "#{siteUrl}/user/reset/#{localUser.resetPasswordToken}"
 
               siteUrl: siteUrl
 
-              user: @user
+              user: @localUser
 
             nodemailer.sendMail(
-              'shrub-user-email-forgot'
+              'shrub-user-local-email-forgot'
             ,
               to: email
               subject: 'Password recovery request'
@@ -97,7 +95,7 @@ exports.pkgmanRegister = (registrar) ->
               scope
             )
 
-            @user.save()
+            @localUser.save()
 
           ).then(-> res.end()).catch(NoSuchUser, -> res.end()).catch next
 

@@ -8,7 +8,7 @@ exports.pkgmanRegister = (registrar) ->
 
     routes.push
 
-      path: 'user/forgot'
+      path: 'user/local/forgot'
       title: 'Forgot password'
 
       controller: [
@@ -18,11 +18,11 @@ exports.pkgmanRegister = (registrar) ->
 
           $scope.form =
 
-            key: 'shrub-user-forgot'
+            key: 'shrub-user-local-forgot'
 
             submits: [
 
-              rpc.formSubmitHandler 'shrub-user/forgot', (error, result) ->
+              rpc.formSubmitHandler 'shrub-user/local/forgot', (error, result) ->
                 return if error?
 
                 messages.add(

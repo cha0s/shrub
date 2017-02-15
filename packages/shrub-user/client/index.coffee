@@ -22,14 +22,21 @@ exports.pkgmanRegister = (registrar) ->
       # ###### TODO: Make it possible to override directive name/path
       # directive.name = 'shrub-user-actions'
 
-      directive.link = (scope) -> scope.user = user
+      directive.link = (scope) ->
+
+        scope.user = user
+
+        scope.username = -> user.instance()?.instances?[0]?.name or 'Anonymous'
 
       directive.scope = {}
 
       directive.template = '''
 
 <span class="user">
-  <span class="username" data-ng-bind="user.instance().name"></span>
+  <span
+    class="username"
+    data-ng-bind="username()"
+  ></span>
 
   <span
     class="actions"
@@ -87,9 +94,7 @@ exports.pkgmanRegister = (registrar) ->
 
       # ## user.login
       #
-      # *Log in with method and args.*
-      #
-      # ###### TODO: username and password are tightly coupled to local strategy. Change that.
+      # *Log in with strategy values.*
       service.login = (values) ->
 
         rpc.call('shrub-user/login', values).then (O) ->
@@ -111,25 +116,7 @@ exports.pkgmanRegister = (registrar) ->
       # *Retrieve the user instance.*
       service.instance = -> _instance
 
-      if config.get 'packageConfig:shrub-core:testMode'
-
-        # ## user.fakeLogin
-        #
-        # *Mock a login process.*
-        #
-        # ###### TODO: This will change when login method generalization happens.
-        service.fakeLogin = (username, password, id) ->
-          password ?= 'password'
-          id ?= 1
-
-          socket.catchEmit 'shrub-rpc', ({path, data}, fn) ->
-            return unless 'shrub-user/login' is path
-
-            fn result: id: id, name: username
-
-          service.login 'local', username, password
-
-      service
+      return service
 
   ]
 
@@ -168,7 +155,6 @@ exports.shrubOrmCollections = ->
 
       group: model: 'shrub-group'
 
-  # ###### TODO: Finish collection docs.
   User =
 
     associations: [
