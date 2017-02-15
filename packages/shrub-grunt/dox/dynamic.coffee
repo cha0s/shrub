@@ -73,10 +73,21 @@ class Todos extends Transform
 # Implement a transform stream to convert a .coffee file to .litcoffee
 class LitcoffeeConversion extends Transform
 
-  constructor: ->
+  constructor: (filename) ->
     super
 
+    @highlight = if filename.match /\.(?:lit)?coffee$/
+      'coffeescript'
+    else if filename.match /\.js$/
+      'javascript'
+    else
+      'no-highlight'
+
+    @hanging = []
+    @hasWrittenCode = false
     @commenting = false
+
+    @on 'finish', => @unshift "```\n" if @hasWrittenCode and not @commenting
 
   _transform: (chunk, encoding, done) ->
 
@@ -84,14 +95,28 @@ class LitcoffeeConversion extends Transform
 
     # Comment.
     if '#'.charCodeAt(0) is line.trim().charCodeAt(0)
-      @push "#{line.trim().substr 2}\n"
+
+      @push "```\n" if @hasWrittenCode and not @commenting
+
+      comment = line.trim().substr 2
+      @push "#{comment}\n"
+
       @commenting = true
 
     else
-      @push "\n" if @commenting
-      @push '    ' if line.length > 0
-      @push "#{line}\n"
+
+      @hanging = [] if @commenting
+      @push "```#{@highlight}\n" if @commenting
+
+      if line.length is 0
+        @hanging.push '' unless @commenting
+      else
+        @push "\n" for blank in @hanging
+        @hanging = []
+        @push "#{line}\n"
+
       @commenting = false
+      @hasWrittenCode = true
 
     done()
 
@@ -164,8 +189,7 @@ generatedFilesPromise = _allSourceFiles().then (files) ->
     fstream.pipe lineStream = new LineStream keepEmptyLines: true
 
     # Convert to litcoffee.
-    lineStream.pipe litcoffeeConversion = new LitcoffeeConversion()
-
+    lineStream.pipe litcoffeeConversion = new LitcoffeeConversion file
     writeStream = fs.createWriteStream "docs/source/#{file}"
     litcoffeeConversion.pipe writeStream
 
@@ -335,12 +359,12 @@ fileStatsListPromise.then((fileStatsList) ->
 
       filename = _sourcePath fileStats.file
 
-      if fileStats.file.match /\.(?:lit)?coffee$/
-        highlight = 'coffeescript'
+      highlight = if fileStats.file.match /\.(?:lit)?coffee$/
+         'coffeescript'
       else if fileStats.file.match /\.js$/
-        highlight = 'javascript'
+        'javascript'
       else
-        highlight = 'no-highlight'
+        'no-highlight'
 
       render += "\n---\n\n```#{highlight}\n"
 
