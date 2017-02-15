@@ -969,6 +969,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1357,7 +1379,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1372,21 +1394,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1396,9 +1418,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1422,42 +1523,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1470,27 +1536,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1626,10 +1671,11 @@
                 <h1 id="limiter">Limiter</h1>
 <p><em>ORM-backed limit handling. Accrue and check scores, and check Time-to-live
 across multiple <a href="../source/server/fingerprint">fingerprint keys</a>.</em></p>
-<pre><code>Promise = null
+<pre><code class="coffeescript">Promise = null
 
 orm = null
 </code></pre>
+
 <h2 id="limiter_1">Limiter</h2>
 <p>Provides methods to tally scores, and compare them against a threshold of
 time. The <a href="../source/packages/shrub-limiter">limiter</a> package implements hook
@@ -1637,8 +1683,9 @@ time. The <a href="../source/packages/shrub-limiter">limiter</a> package impleme
 limit consumers to a specified number of requests per time period. For
 instance, by default the <a href="../source/packages/user/login">user login</a> route
 limits the number of logins a user may attempt to 3 every 30 seconds.</p>
-<pre><code>module.exports = class Limiter
+<pre><code class="coffeescript">module.exports = class Limiter
 </code></pre>
+
 <h2 id="limiterthreshold">Limiter.threshold</h2>
 <p>Expose a factory method for constructing Threshold instances. A Threshold
 is defined like: <code>var Limiter = require('shrub-limiter').Limiter;
@@ -1646,8 +1693,9 @@ Limiter.threshold(4).every(20).minutes();</code> Which means that the
 threshold represents the allowance of a score of 4 to accumulate over the
 period of 20 minutes. If more score is accrued during that window, then
 the threshold is said to be crossed.</p>
-<pre><code>  @threshold: (score) -&gt; new ThresholdBase score
+<pre><code class="coffeescript">  @threshold: (score) -&gt; new ThresholdBase score
 </code></pre>
+
 <h2 id="constructor"><em>constructor</em></h2>
 <ul>
 <li>(string) <code>key</code> - A unique key for this limiter, e.g.</li>
@@ -1657,20 +1705,23 @@ the threshold is said to be crossed.</p>
 <li>(Threshold) <code>threshold</code> - A threshold, see below for details.</li>
 </ul>
 <p><em>Create a limiter.</em></p>
-<pre><code>  constructor: (key, @threshold, @excluded = []) -&gt;
+<pre><code class="coffeescript">  constructor: (key, @threshold, @excluded = []) -&gt;
 </code></pre>
+
 <p>Ensure it's a threshold.</p>
-<pre><code>    throw new TypeError(
-      "Limiter(#{key}) must be constructed with a valid threshold!"
+<pre><code class="coffeescript">    throw new TypeError(
+      &quot;Limiter(#{key}) must be constructed with a valid threshold!&quot;
     ) unless @threshold instanceof ThresholdFinal
 
     Promise ?= require 'bluebird'
 
     orm ?= require 'shrub-orm'
 </code></pre>
+
 <p>Create the low-level limiter.</p>
-<pre><code>    @limiter = new LimiterManager key, @threshold.calculateSeconds()
+<pre><code class="coffeescript">    @limiter = new LimiterManager key, @threshold.calculateSeconds()
 </code></pre>
+
 <h2 id="limiteradd">Limiter#add</h2>
 <ul>
 <li>(array) <code>keys</code> - An array of keys, e.g. a flattened array of keys from</li>
@@ -1680,9 +1731,10 @@ the threshold is said to be crossed.</p>
 <li>(Number) <code>score</code> - The score to add. Defaults to 1.</li>
 </ul>
 <p><em>Accrue score for a limiter.</em></p>
-<pre><code>  accrue: (keys, score = 1) -&gt;
+<pre><code class="coffeescript">  accrue: (keys, score = 1) -&gt;
     Promise.all (@limiter.accrue key, score for key in keys)
 </code></pre>
+
 <h2 id="limiteraccrueandcheckthreshold">Limiter#accrueAndCheckThreshold</h2>
 <ul>
 <li>(array) <code>keys</code> - An array of keys, e.g. a flattened array of keys from</li>
@@ -1692,37 +1744,41 @@ the threshold is said to be crossed.</p>
 <li>(integer) <code>score</code> - The score to add. Defaults to 1.</li>
 </ul>
 <p><em>Add score to a limiter, and check it against the threshold.</em></p>
-<pre><code>  accrueAndCheckThreshold: (keys, score = 1) -&gt;
+<pre><code class="coffeescript">  accrueAndCheckThreshold: (keys, score = 1) -&gt;
     @accrue(keys, score).then =&gt; @checkThreshold keys
 </code></pre>
+
 <h2 id="limiterscore">Limiter#score</h2>
 <ul>
 <li>(array) <code>keys</code> - An array of keys, e.g. a flattened array of keys from</li>
 </ul>
 <p><a href="../source/server/fingerprint#fingerprintinlinekeys"><code>Fingerprint.inlineKeys</code></a>
 <em>Check score for a limiter.</em></p>
-<pre><code>  score: (keys) -&gt; @_largest keys, 'score'
+<pre><code class="coffeescript">  score: (keys) -&gt; @_largest keys, 'score'
 </code></pre>
+
 <h2 id="limiterttl">Limiter#ttl</h2>
 <ul>
 <li>(array) <code>keys</code> - An array of keys, e.g. a flattened array of keys from</li>
 </ul>
 <p><a href="../source/server/fingerprint#fingerprintinlinekeys"><code>Fingerprint.inlineKeys</code></a>
 <em>Time-to-live for a limiter.</em></p>
-<pre><code>  ttl: (keys) -&gt; @_largest keys, 'ttl'
+<pre><code class="coffeescript">  ttl: (keys) -&gt; @_largest keys, 'ttl'
 </code></pre>
+
 <h2 id="limitercheckthreshold">Limiter#checkThreshold</h2>
 <ul>
 <li>(array) <code>keys</code> - An array of keys, e.g. a flattened array of keys from</li>
 </ul>
 <p><a href="../source/server/fingerprint#fingerprintinlinekeys"><code>Fingerprint.inlineKeys</code></a>
 <em>Check the current limiter score against the threshold.</em></p>
-<pre><code>  checkThreshold: (keys) -&gt;
+<pre><code class="coffeescript">  checkThreshold: (keys) -&gt;
     @score(keys).then (score) =&gt; score &gt; @threshold.score()
 </code></pre>
+
 <h2 id="limiter_largest">Limiter#_largest</h2>
 <p><em>Find the largest result from a group of results.</em></p>
-<pre><code>  _largest: (keys, index) -&gt;
+<pre><code class="coffeescript">  _largest: (keys, index) -&gt;
     Promise.all(
       @limiter[index] key for key in keys
 
@@ -1731,6 +1787,7 @@ the threshold is said to be crossed.</p>
 
 class LimiterManager
 </code></pre>
+
 <h2 id="constructor_1"><em>constructor</em></h2>
 <ul>
 <li>(string) <code>key</code> - A unique key for this limiter, e.g.</li>
@@ -1740,8 +1797,9 @@ class LimiterManager
 <li>(Threshold) <code>threshold</code> - A threshold, see below for details.</li>
 </ul>
 <p><em>...</em></p>
-<pre><code>  constructor: (@key, @threshold) -&gt;
+<pre><code class="coffeescript">  constructor: (@key, @threshold) -&gt;
 </code></pre>
+
 <h2 id="limitermanageradd">LimiterManager#add</h2>
 <ul>
 <li>
@@ -1752,8 +1810,8 @@ class LimiterManager
 </li>
 </ul>
 <p><em>Add score to a limiter.</em></p>
-<pre><code>  accrue: (id, score = 1) -&gt;
-    key = "#{@key}:#{id}"
+<pre><code class="coffeescript">  accrue: (id, score = 1) -&gt;
+    key = &quot;#{@key}:#{id}&quot;
 
     Limit = orm.collection 'shrub-limit'
     Limit.findOrCreate(
@@ -1762,55 +1820,64 @@ class LimiterManager
       key: key
     ).populateAll().then((limit) =&gt;
 </code></pre>
+
 <p>Reset if it's expired.</p>
-<pre><code>      limit.reset() if 0 &gt;= limit.ttl @threshold
+<pre><code class="coffeescript">      limit.reset() if 0 &gt;= limit.ttl @threshold
 
       return limit
 
     ).then (limit) -&gt; limit.accrue(parseInt score).save()
 </code></pre>
+
 <h2 id="limitermanagerscore">LimiterManager#score</h2>
 <ul>
 <li>(string) <code>id</code> - The ID of the limiter.</li>
 </ul>
 <p><em>Check score for a limiter.</em></p>
-<pre><code>  score: (id) -&gt;
+<pre><code class="coffeescript">  score: (id) -&gt;
 </code></pre>
+
 <p>Get all scores for this limiter.</p>
-<pre><code>    Limit = orm.collection 'shrub-limit'
-    Limit.findOne(key: "#{@key}:#{id}").populateAll().then (limit) =&gt;
+<pre><code class="coffeescript">    Limit = orm.collection 'shrub-limit'
+    Limit.findOne(key: &quot;#{@key}:#{id}&quot;).populateAll().then (limit) =&gt;
       return 0 unless limit?
       return limit.score() if 0 &lt; limit.ttl @threshold
 </code></pre>
+
 <p>Reset if it's expired.</p>
-<pre><code>      limit.reset().save().then -&gt; 0
+<pre><code class="coffeescript">      limit.reset().save().then -&gt; 0
 </code></pre>
+
 <h2 id="limitermanagerttl">LimiterManager#ttl</h2>
 <ul>
 <li>(string) <code>id</code> - The ID of the limiter.</li>
 </ul>
 <p><em>Time-to-live for a limiter.</em></p>
-<pre><code>  ttl: (id) -&gt;
+<pre><code class="coffeescript">  ttl: (id) -&gt;
 
     Limit = orm.collection 'shrub-limit'
-    Limit.findOne(key: "#{@key}:#{id}").then (limit) =&gt;
+    Limit.findOne(key: &quot;#{@key}:#{id}&quot;).then (limit) =&gt;
       return 0 unless limit?
       return ttl if 0 &lt; ttl = limit.ttl @threshold
 </code></pre>
+
 <p>Reset if it's expired.</p>
-<pre><code>      limit.reset().save().then -&gt; 0
+<pre><code class="coffeescript">      limit.reset().save().then -&gt; 0
 </code></pre>
+
 <h2 id="thresholdbase">ThresholdBase</h2>
 <p><em>The base class used to define a threshold.</em></p>
-<pre><code>class ThresholdBase
+<pre><code class="coffeescript">class ThresholdBase
 </code></pre>
+
 <h2 id="constructor_2"><em>constructor</em></h2>
 <ul>
 <li>(Number) <code>score</code> - The maximum score allowed to accrue.</li>
 </ul>
 <p><em>Create a threshold base object.</em></p>
-<pre><code>  constructor: (@_score) -&gt;
+<pre><code class="coffeescript">  constructor: (@_score) -&gt;
 </code></pre>
+
 <h2 id="thresholdbaseevery">ThresholdBase#every</h2>
 <ul>
 <li>(Number) <code>amount</code> - The quantity of time units this threshold concerns
@@ -1818,12 +1885,14 @@ e.g,</li>
 </ul>
 <p>if the threshold is every 5 minutes, this will be <code>5</code>. <em>Define the
 quantity of time this threshold concerns.</em></p>
-<pre><code>  every: (amount) -&gt; new ThresholdMultiplier @_score, amount
+<pre><code class="coffeescript">  every: (amount) -&gt; new ThresholdMultiplier @_score, amount
 </code></pre>
+
 <h2 id="thresholdmultiplier">ThresholdMultiplier</h2>
 <p><em>A threshold class to collect the multiplier.</em></p>
-<pre><code>class ThresholdMultiplier
+<pre><code class="coffeescript">class ThresholdMultiplier
 </code></pre>
+
 <h2 id="constructor_3"><em>constructor</em></h2>
 <ul>
 <li>
@@ -1834,15 +1903,16 @@ quantity of time this threshold concerns.</em></p>
 </li>
 </ul>
 <p><em>Create a threshold.</em></p>
-<pre><code>  constructor: (@_score, @_amount) -&gt;
+<pre><code class="coffeescript">  constructor: (@_score, @_amount) -&gt;
 
     @_multiplier = 1
 </code></pre>
+
 <h2 id="thresholdmultipliermilliseconds">ThresholdMultiplier#milliseconds</h2>
 <h2 id="thresholdmultiplierseconds">ThresholdMultiplier#seconds</h2>
 <h2 id="thresholdmultiplierminutes">ThresholdMultiplier#minutes</h2>
 <p><em>Add a method for each multipler. This is this way just to DRY things up.</em></p>
-<pre><code>  multipliers =
+<pre><code class="coffeescript">  multipliers =
     milliseconds: 1 / 1000
     seconds: 1
     minutes: 60
@@ -1852,13 +1922,16 @@ quantity of time this threshold concerns.</em></p>
       ThresholdMultiplier::[key] = -&gt;
         @_multiplier = multiplier
 </code></pre>
+
 <p>Return a finalized threshold.</p>
-<pre><code>        new ThresholdFinal @_score, @_amount, @_multiplier
+<pre><code class="coffeescript">        new ThresholdFinal @_score, @_amount, @_multiplier
 </code></pre>
+
 <h2 id="thresholdfinal">ThresholdFinal</h2>
 <p>A finalized threshold definition.</p>
-<pre><code>class ThresholdFinal
+<pre><code class="coffeescript">class ThresholdFinal
 </code></pre>
+
 <h2 id="constructor_4"><em>constructor</em></h2>
 <ul>
 <li>
@@ -1872,7 +1945,7 @@ quantity of time this threshold concerns.</em></p>
 </li>
 </ul>
 <p><em>Create a threshold.</em></p>
-<pre><code>  constructor: (score, amount, multiplier) -&gt;
+<pre><code class="coffeescript">  constructor: (score, amount, multiplier) -&gt;
 
     @calculateSeconds = -&gt; amount * multiplier
     @score = -&gt; score

@@ -916,6 +916,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1304,7 +1326,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1319,21 +1341,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../email/forgot/">forgot.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../email/">index.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../email/register/">register.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1343,9 +1365,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../forgot/">forgot.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1363,9 +1464,9 @@
             
                 <li class="toctree-l3"><a href="#user-login">User login</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubtransmittableerrors">Implements hook shrubTransmittableErrors.</a></li>
-                
                     <li><a class="toctree-l4" href="#implements-hook-shrubangularroutes">Implements hook shrubAngularRoutes.</a></li>
+                
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubuserloginstrategies">Invoke hook shrubUserLoginStrategies.</a></li>
                 
             
             </ul>
@@ -1380,42 +1481,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1428,27 +1494,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../reset/">reset.coffee</a>
         
     </li>
 
@@ -1582,34 +1627,16 @@
             <div class="section">
               
                 <h1 id="user-login">User login</h1>
-<pre><code>config = require 'config'
-
-{TransmittableError} = require 'errors'
+<pre><code class="coffeescript">config = require 'config'
+pkgman = require 'pkgman'
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
-<h4 id="implements-hook-shrubtransmittableerrors">Implements hook <code>shrubTransmittableErrors</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubTransmittableErrors', exports.shrubTransmittableErrors
-</code></pre>
+
 <h4 id="implements-hook-shrubangularroutes">Implements hook <code>shrubAngularRoutes</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubAngularRoutes', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAngularRoutes', -&gt;
 
     routes = []
-
-    if 'e2e' is config.get 'packageConfig:shrub-core:testMode'
-
-      routes.push
-
-        path: 'e2e/user/login/:destination'
-
-        controller: [
-          '$location', '$routeParams', 'shrub-rpc', 'shrub-socket', 'shrub-user'
-          ($location, {destination}, rpc, socket, user) -&gt;
-
-            user.fakeLogin('cha0s').then -&gt;
-              $location.path "/user/#{destination}"
-
-        ]
 
     routes.push
 
@@ -1619,54 +1646,103 @@ exports.pkgmanRegister = (registrar) -&gt;
       controller: [
         '$location', '$scope', 'shrub-ui/messages', 'shrub-user'
         ($location, $scope, messages, user) -&gt;
-          return $location.path '/' if user.isLoggedIn()
+</code></pre>
 
-          $scope.form =
+<h4 id="invoke-hook-shrubuserloginstrategies">Invoke hook <code>shrubUserLoginStrategies</code>.</h4>
+<pre><code class="coffeescript">          strategies = pkgman.invoke 'shrubUserLoginStrategies'
+</code></pre>
+
+<p>Count the active strategies.</p>
+<pre><code class="coffeescript">          strategiesCount = pkgman.packagesImplementing(
+            'shrubUserLoginStrategies'
+          ).length
+</code></pre>
+
+<p>Build the login form.</p>
+<pre><code class="coffeescript">          $scope.form =
 
             key: 'shrub-user-login'
 
             submits: [
 
               (values) -&gt;
+</code></pre>
 
-                user.login(
-                  values.method
-                  values.username
-                  values.password
-                ).then -&gt;
+<p>Extract the values from the active strategy's fieldgroup.</p>
+<pre><code class="coffeescript">                methodValues = values[values.method]
+</code></pre>
 
-                  messages.add(
+<p>Manually inject the method into the strategy values.</p>
+<pre><code class="coffeescript">                methodValues.method = values.method
+</code></pre>
+
+<p>Attempt the login.</p>
+<pre><code class="coffeescript">                user.login(methodValues).then -&gt;
+</code></pre>
+
+<p>Notify user.</p>
+<pre><code class="coffeescript">                  messages.add(
                     class: 'alert-success'
                     text: 'Logged in successfully.'
                   )
+</code></pre>
 
-                  $location.path '/'
+<p>Redirect to root.</p>
+<pre><code class="coffeescript">                  $location.path '/'
 
             ]
+</code></pre>
 
-            fields:
+<p>No strategies? Bail.</p>
+<pre><code class="coffeescript">          return $location.path '/' if strategiesCount is 0
+</code></pre>
 
-              method:
-                type: 'hidden'
-                value: 'local'
+<p>DRY</p>
+<pre><code class="coffeescript">          fields = $scope.form.fields = {}
+</code></pre>
 
-              username:
-                type: 'text'
-                label: 'Username'
-                required: true
+<p>If there's only one strategy active, simply inject the <code>method</code>
+into the form as a hidden field.</p>
+<pre><code class="coffeescript">          if strategiesCount is 1
 
-              password:
-                type: 'password'
-                label: 'Password'
-                required: true
+            method = packageName for packageName, strategy of strategies
 
-              submit:
-                type: 'submit'
-                value: 'Sign in'
+            fields.method =
+              type: 'hidden'
+              value: method
+</code></pre>
 
-              forgot:
-                type: 'markup'
-                value: '&lt;a class="forgot" href="/user/forgot"&gt;Forgot your password?&lt;/a&gt;'
+<p>If there's more than one method, use a dropdown to select the
+login strategy.</p>
+<h6 id="todo-this-is-janky-from-ux-perspective-rely-on-skin-at-least-hide-inactive-strategies-fieldgroups">TODO: This is janky from UX perspective. Rely on skin? At least hide inactive strategies' fieldgroups...</h6>
+<pre><code class="coffeescript">          else
+
+            fields.method =
+              type: 'select'
+              label: 'Method'
+              options: 'key as value for (key , value) in field.methodOptions'
+</code></pre>
+
+<p>Build the options list.</p>
+<pre><code class="coffeescript">            fields.method.methodOptions = {}
+            for packageName, {methodLabel} of strategies
+</code></pre>
+
+<p>Start the select with the first value, otherwise Angular
+will inject a blank element.</p>
+<pre><code class="coffeescript">              fields.method.value = packageName unless fields.method.value?
+</code></pre>
+
+<p>Use the strategy labels.</p>
+<pre><code class="coffeescript">              fields.method.methodOptions[packageName] = methodLabel
+</code></pre>
+
+<p>Inject a fieldgroup for every login strategy.</p>
+<pre><code class="coffeescript">          fields[packageName] = {
+            type: 'group'
+            collapse: false
+            fields: strategy.fields
+          } for packageName, strategy of strategies
 
       ]
 
@@ -1674,22 +1750,12 @@ exports.pkgmanRegister = (registrar) -&gt;
 
 &lt;div
   data-shrub-form
-  data-form="form"
+  data-form=&quot;form&quot;
 &gt;&lt;/div&gt;
 
 '''
 
     return routes
-</code></pre>
-<p>Transmittable login error.</p>
-<pre><code>class LoginError extends TransmittableError
-
-  key: 'login'
-  template: 'No such username/password.'
-
-exports.shrubTransmittableErrors = -&gt; [
-  LoginError
-]
 </code></pre>
               
             </div>

@@ -929,6 +929,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1317,7 +1339,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1332,21 +1354,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../../../packages/shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../../../packages/shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../../../packages/shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1356,9 +1378,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../../../packages/shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1382,42 +1483,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1430,27 +1496,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../../packages/shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1586,14 +1631,15 @@
                 <h1 id="logging">Logging</h1>
 <p><em>A unified interface for logging information.</em></p>
 <h6 id="todo-this-isnt-much-use-on-the-client-to-properly-log-we-would-have-to-hook-into-localstorage">TODO: This isn't much use on the client. To properly log, we would have to hook into localStorage.</h6>
-<pre><code>config = require 'config'
+<pre><code class="coffeescript">config = require 'config'
 </code></pre>
+
 <h2 id="loggercreate">logger.create</h2>
 <ul>
 <li>(string) <code>type</code> - The type of log.</li>
 </ul>
 <p><em>Create a new logger instance.</em></p>
-<pre><code>exports.create = (type) -&gt;
+<pre><code class="coffeescript">exports.create = (type) -&gt;
 
   augmentedConsoleFunction = (key) -&gt; -&gt;
     args = (arg for arg in arguments)
@@ -1606,9 +1652,10 @@
   ]
   logger
 </code></pre>
+
 <h2 id="loggerdefaultlogger">logger.defaultLogger</h2>
 <p><em>Create a default logger, for convenience.</em></p>
-<pre><code>defaultLogger = exports.create 'shrub'
+<pre><code class="coffeescript">defaultLogger = exports.create 'shrub'
 exports.defaultLogger = defaultLogger
 </code></pre>
               

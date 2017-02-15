@@ -149,9 +149,6 @@
                 <li class="toctree-l3"><a href="#todo-cluster-refactoring-with-masterworker-hooks">TODO: Cluster refactoring, with master/worker hooks</a></li>
                 
             
-                <li class="toctree-l3"><a href="#todo-shrub-passport-split-off-from-shrub-user">TODO: shrub-passport split off from shrub-user</a></li>
-                
-            
                 <li class="toctree-l3"><a href="#todo-html5-audio">TODO: HTML5 audio</a></li>
                 
             
@@ -188,16 +185,13 @@
                 <li class="toctree-l3"><a href="#todo-i-dont-really-like-this-think-about-it-some-more">TODO: I don't really like this. Think about it some more.</a></li>
                 
             
-                <li class="toctree-l3"><a href="#todo-username-and-password-are-tightly-coupled-to-local-strategy-change-that">TODO: username and password are tightly coupled to local strategy. Change that.</a></li>
+                <li class="toctree-l3"><a href="#todo-make-it-possible-to-override-directive-namepath">TODO: Make it possible to override directive name/path</a></li>
                 
             
-                <li class="toctree-l3"><a href="#todo-this-will-change-when-login-method-generalization-happens">TODO: This will change when login method generalization happens.</a></li>
+                <li class="toctree-l3"><a href="#todo-finish-these-docs">TODO: Finish these docs.</a></li>
                 
             
-                <li class="toctree-l3"><a href="#todo-finish-collection-docs">TODO: Finish collection docs.</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#todo-this-is-legacy-from-having-full-orm-in-browser-what-do">TODO: This is legacy from having full ORM in browser. What do?</a></li>
+                <li class="toctree-l3"><a href="#todo-this-is-janky-from-ux-perspective-rely-on-skin-at-least-hide-inactive-strategies-fieldgroups">TODO: This is janky from UX perspective. Rely on skin? At least hide inactive strategies' fieldgroups...</a></li>
                 
             
                 <li class="toctree-l3"><a href="#todo-sandbox-pool-might-be-better-handled-by-sandboxes">TODO: Sandbox pool, might be better handled by sandboxes.</a></li>
@@ -227,19 +221,28 @@
                 <li class="toctree-l3"><a href="#todo-there-should-be-a-more-robust-check-than-just-is-there-a-superuser">TODO: There should be a more robust check than just 'is there a superuser?'.</a></li>
                 
             
+                <li class="toctree-l3"><a href="#todo-doc">TODO: Doc</a></li>
+                
+            
                 <li class="toctree-l3"><a href="#todo-this-needs-caching">TODO: This needs caching.</a></li>
                 
             
                 <li class="toctree-l3"><a href="#todo-https">TODO: HTTPS</a></li>
                 
             
-                <li class="toctree-l3"><a href="#todo-finish-collections-doc">TODO: Finish collections doc.</a></li>
+                <li class="toctree-l3"><a href="#todo-any-way-to-automate-this">TODO: Any way to automate this?</a></li>
                 
             
-                <li class="toctree-l3"><a href="#todo-strategies-should-be-dynamically-defined-through-a-hook">TODO: Strategies should be dynamically defined through a hook.</a></li>
+                <li class="toctree-l3"><a href="#todo-this-should-be-in-a-superclass">TODO: This should be in a superclass.</a></li>
                 
             
                 <li class="toctree-l3"><a href="#todo-https_1">TODO: HTTPS</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#todo-includemerge-permissions">TODO: Include/merge permissions.</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#todo-caching">TODO: Caching.</a></li>
                 
             
                 <li class="toctree-l3"><a href="#todo-rename-all-config-key-uses-to-path">TODO: Rename all config key uses to path.</a></li>
@@ -1028,6 +1031,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../source/packages/shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../source/packages/shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1416,7 +1441,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1431,21 +1456,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../source/packages/shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../source/packages/shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../source/packages/shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../source/packages/shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../source/packages/shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../source/packages/shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1455,9 +1480,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../source/packages/shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../source/packages/shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../source/packages/shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../source/packages/shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../source/packages/shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../source/packages/shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../source/packages/shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../source/packages/shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../source/packages/shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../source/packages/shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../source/packages/shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1481,42 +1585,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../source/packages/shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../source/packages/shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../source/packages/shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../source/packages/shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../source/packages/shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1529,27 +1598,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../source/packages/shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../source/packages/shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../source/packages/shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../source/packages/shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1691,8 +1739,6 @@ This is a dynamically generated list of TODO items, each with context.</p>
 <h2 id="todo-generated-indexmd-from-readmemd">TODO: Generated index.md from README.md</h2>
 <hr />
 <h2 id="todo-cluster-refactoring-with-masterworker-hooks">TODO: Cluster refactoring, with master/worker hooks</h2>
-<hr />
-<h2 id="todo-shrub-passport-split-off-from-shrub-user">TODO: shrub-passport split off from shrub-user</h2>
 <hr />
 <h2 id="todo-html5-audio">TODO: HTML5 audio</h2>
 <hr />
@@ -1850,61 +1896,47 @@ exports.pkgmanRegister = (registrar) -&gt;
 
 <p><a href="../source/packages/shrub-ui/client/messages#todo-i-dont-really-like-this-think-about-it-some-more">the above found in packages/shrub-ui/client/messages.coffee:4</a></p>
 <hr />
-<pre><code class="coffeescript">      # ## user.login
-      #
-      # *Log in with method and args.*
-      #
+<pre><code class="coffeescript">    (user) -&gt;
+
+      directive = {}
+
 </code></pre>
 
-<h2 id="todo-username-and-password-are-tightly-coupled-to-local-strategy-change-that">TODO: username and password are tightly coupled to local strategy. Change that.</h2>
-<pre><code class="coffeescript">      service.login = (method, username, password) -&gt;
+<h2 id="todo-make-it-possible-to-override-directive-namepath">TODO: Make it possible to override directive name/path</h2>
+<pre><code class="coffeescript">      # directive.name = 'shrub-user-actions'
 
-        rpc.call(
+      directive.link = (scope) -&gt;
 </code></pre>
 
-<p><a href="../source/packages/shrub-user/client#todo-username-and-password-are-tightly-coupled-to-local-strategy-change-that">the above found in packages/shrub-user/client/index.coffee:85</a></p>
+<p><a href="../source/packages/shrub-user/client#todo-make-it-possible-to-override-directive-namepat">the above found in packages/shrub-user/client/index.coffee:21</a></p>
 <hr />
-<pre><code class="coffeescript">        # ## user.fakeLogin
-        #
-        # *Mock a login process.*
-        #
-</code></pre>
+<pre><code class="coffeescript">  ]
 
-<h2 id="todo-this-will-change-when-login-method-generalization-happens">TODO: This will change when login method generalization happens.</h2>
-<pre><code class="coffeescript">        service.fakeLogin = (username, password, id) -&gt;
-          password ?= 'password'
-          id ?= 1
-</code></pre>
-
-<p><a href="../source/packages/shrub-user/client#todo-this-will-change-when-login-method-generalization-happens">the above found in packages/shrub-user/client/index.coffee:119</a></p>
-<hr />
-<pre><code class="coffeescript">      permission: 'string'
-
-      group: model: 'shrub-group'
+exports.shrubOrmCollections = -&gt;
 
 </code></pre>
 
-<h2 id="todo-finish-collection-docs">TODO: Finish collection docs.</h2>
-<pre><code class="coffeescript">  User =
+<h2 id="todo-finish-these-docs">TODO: Finish these docs.</h2>
+<pre><code class="coffeescript">  Group =
 
     associations: [
 </code></pre>
 
-<p><a href="../source/packages/shrub-user/client#todo-finish-collection-docs">the above found in packages/shrub-user/client/index.coffee:166</a></p>
+<p><a href="../source/packages/shrub-user/client#todo-finish-these-docs">the above found in packages/shrub-user/client/index.coffee:131</a></p>
 <hr />
 <pre><code class="coffeescript">
-  # Implement all the built-in collection methods as authenticated versions,
-  # which take a user.
-  #
+          # If there's more than one method, use a dropdown to select the
+          # login strategy.
+          #
 </code></pre>
 
-<h2 id="todo-this-is-legacy-from-having-full-orm-in-browser-what-do">TODO: This is legacy from having full ORM in browser. What do?</h2>
-<pre><code class="coffeescript">  for identity, collection of collections
-    do (identity, collection) -&gt;
+<h2 id="todo-this-is-janky-from-ux-perspective-rely-on-skin-at-least-hide-inactive-strategies-fieldgroups">TODO: This is janky from UX perspective. Rely on skin? At least hide inactive strategies' fieldgroups...</h2>
+<pre><code class="coffeescript">          else
 
+            fields.method =
 </code></pre>
 
-<p><a href="../source/packages/shrub-user/client#todo-this-is-legacy-from-having-full-orm-in-browser-what-do">the above found in packages/shrub-user/client/index.coffee:248</a></p>
+<p><a href="../source/packages/shrub-user/client/login#todo-this-is-janky-from-ux-perspective-rely-on-skin-at-least-hide-inactive-strategies-fieldgroups">the above found in packages/shrub-user/client/login.coffee:76</a></p>
 <hr />
 <pre><code class="coffeescript"># # Angular sandbox
 #
@@ -1974,7 +2006,7 @@ url = require 'url'
 
 </code></pre>
 
-<p><a href="../source/packages/shrub-grunt/dox/dynamic#todo-this-chunk-parsing-should-be-done-with-a-transform-like-the-others">the above found in packages/shrub-grunt/dox/dynamic.coffee:483</a></p>
+<p><a href="../source/packages/shrub-grunt/dox/dynamic#todo-this-chunk-parsing-should-be-done-with-a-transform-like-the-others">the above found in packages/shrub-grunt/dox/dynamic.coffee:507</a></p>
 <hr />
 <pre><code class="coffeescript">      render += '  &lt;/table&gt;\n'
       render += '&lt;/div&gt;'
@@ -1987,7 +2019,7 @@ url = require 'url'
 
 </code></pre>
 
-<p><a href="../source/packages/shrub-grunt/dox/dynamic#todo-we-should-do-some-preprocessing-hre-with-a-transform-namely-linking-the-hook-headers-to-their-respective-documentation">the above found in packages/shrub-grunt/dox/dynamic.coffee:524</a></p>
+<p><a href="../source/packages/shrub-grunt/dox/dynamic#todo-we-should-do-some-preprocessing-hre-with-a-transform-namely-linking-the-hook-headers-to-their-respective-documentation">the above found in packages/shrub-grunt/dox/dynamic.coffee:548</a></p>
 <hr />
 <pre><code class="coffeescript"># # HTTP Manager
 #
@@ -2031,6 +2063,20 @@ config = require 'config'
 
 <p><a href="../source/packages/shrub-install#todo-there-should-be-a-more-robust-check-than-just-is-there-a-superuser">the above found in packages/shrub-install/index.coffee:18</a></p>
 <hr />
+<pre><code class="coffeescript">          routeReq.body = data
+          routeReq.route = route
+          routeReq.socket = req.socket
+
+</code></pre>
+
+<h2 id="todo-doc">TODO: Doc</h2>
+<pre><code class="coffeescript">          routeRes = new class RpcRouteResponse extends EventEmitter
+
+            constructor: -&gt;
+</code></pre>
+
+<p><a href="../source/packages/shrub-rpc#todo-do">the above found in packages/shrub-rpc/index.coffee:98</a></p>
+<hr />
 <pre><code class="coffeescript"># * (String) `key` - The skin key.
 #
 # *Get the assets for a skin.*
@@ -2052,40 +2098,40 @@ config = require 'config'
 </code></pre>
 
 <h2 id="todo-https">TODO: HTTPS</h2>
-<pre><code class="coffeescript">              loginUrl: &quot;#{siteUrl}/user/reset/#{user.resetPasswordToken}&quot;
+<pre><code class="coffeescript">              loginUrl: &quot;#{siteUrl}/user/reset/#{localUser.resetPasswordToken}&quot;
 
               siteUrl: siteUrl
 </code></pre>
 
-<p><a href="../source/packages/shrub-user/forgot#todo-http">the above found in packages/shrub-user/forgot.coffee:83</a></p>
+<p><a href="../source/packages/shrub-user-local/forgot#todo-http">the above found in packages/shrub-user-local/forgot.coffee:81</a></p>
 <hr />
-<pre><code class="coffeescript">      'shrub-user-group': UserGroup
-      'shrub-user-permission': UserPermission
-    } = collections
+<pre><code class="coffeescript">
+        # Not found? Generic login error.
+        throw errors.instantiate 'shrub-user-local-login' unless @localUser
 
 </code></pre>
 
-<h2 id="todo-finish-collections-doc">TODO: Finish collections doc.</h2>
+<h2 id="todo-any-way-to-automate-this">TODO: Any way to automate this?</h2>
+<pre><code class="coffeescript">        @localUser.model = 'shrub-user-local'
+
+        # Hash the input password for comparison.
+</code></pre>
+
+<p><a href="../source/packages/shrub-user-local#todo-any-way-to-automate-this">the above found in packages/shrub-user-local/index.coffee:40</a></p>
+<hr />
+<pre><code class="coffeescript">      size: 128
+
+    # ## UserLocal#associatedUser
+    #
+</code></pre>
+
+<h2 id="todo-this-should-be-in-a-superclass">TODO: This should be in a superclass.</h2>
 <pre><code class="coffeescript">    #
-    # Case-insensitivized name.
-    Group.attributes.iname =
+    # *Get the user (if any) associated with this instance.*
+    UserLocal.attributes.associatedUser = -&gt;
 </code></pre>
 
-<p><a href="../source/packages/shrub-user#todo-finish-collections-doc">the above found in packages/shrub-user/index.coffee:62</a></p>
-<hr />
-<pre><code class="coffeescript">      (next) -&gt;
-
-        # Implement a local passport strategy.
-        #
-</code></pre>
-
-<h2 id="todo-strategies-should-be-dynamically-defined-through-a-hook">TODO: Strategies should be dynamically defined through a hook.</h2>
-<pre><code class="coffeescript">        LocalStrategy = require('passport-local').Strategy
-        passport.use new LocalStrategy (username, password, done) -&gt;
-
-</code></pre>
-
-<p><a href="../source/packages/shrub-user/login#todo-strategies-should-be-dynamically-defined-through-a-hook">the above found in packages/shrub-user/login.coffee:95</a></p>
+<p><a href="../source/packages/shrub-user-local#todo-this-should-be-in-a-superclass">the above found in packages/shrub-user-local/index.coffee:134</a></p>
 <hr />
 <pre><code class="coffeescript">            scope =
 
@@ -2099,7 +2145,35 @@ config = require 'config'
               siteUrl: siteUrl
 </code></pre>
 
-<p><a href="../source/packages/shrub-user/register#todo-http">the above found in packages/shrub-user/register.coffee:57</a></p>
+<p><a href="../source/packages/shrub-user-local/register#todo-http">the above found in packages/shrub-user-local/register.coffee:57</a></p>
+<hr />
+<pre><code class="coffeescript">
+        redacted =
+          id: object.id
+
+</code></pre>
+
+<h2 id="todo-includemerge-permissions">TODO: Include/merge permissions.</h2>
+<pre><code class="coffeescript">
+        for group in object.groups
+
+</code></pre>
+
+<p><a href="../source/packages/shrub-user#todo-includemerge-permissions">the above found in packages/shrub-user/index.coffee:52</a></p>
+<hr />
+<pre><code class="coffeescript">      pkgman = require 'pkgman'
+
+      # Collect redactors.
+      #
+</code></pre>
+
+<h2 id="todo-caching">TODO: Caching.</h2>
+<pre><code class="coffeescript">      unless redactors?
+        redactors = {}
+
+</code></pre>
+
+<p><a href="../source/packages/shrub-user#todo-caching">the above found in packages/shrub-user/index.coffee:174</a></p>
 <hr />
 <pre><code class="coffeescript"># # Server configuration
 #

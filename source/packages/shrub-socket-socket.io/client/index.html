@@ -916,6 +916,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1321,7 +1343,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1336,21 +1358,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1360,9 +1382,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1386,42 +1487,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1434,27 +1500,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1590,7 +1635,7 @@
                 <h1 id="socketio-socket">Socket.IO socket</h1>
 <p><em>Provide an Angular service wrapping Socket.IO.</em></p>
 <h6 id="todo-need-to-handle-connection-errors">TODO: Need to handle connection errors.</h6>
-<pre><code>config = require 'config'
+<pre><code class="coffeescript">config = require 'config'
 debug = require('debug') 'shrub:socket.io'
 
 Socket = require 'shrub-socket/socket'
@@ -1599,17 +1644,19 @@ exports.Manager = class SocketIoSocket extends Socket
 
   @$inject = ['$rootScope']
 </code></pre>
+
 <h2 id="constructor"><em>constructor</em>*</h2>
-<pre><code>  constructor: ($rootScope) -&gt;
+<pre><code class="coffeescript">  constructor: ($rootScope) -&gt;
     super
 
     @_isConnected = false
     @_$rootScope = $rootScope
     @_socket = io.connect()
 </code></pre>
+
 <p>Queue up any messages to be emitted before initialization completes, and
 send them all immediately upon connection.</p>
-<pre><code>    @_initializedQueue = []
+<pre><code class="coffeescript">    @_initializedQueue = []
     @_socket.on 'initialized', =&gt;
       @emit.apply this, args for args in @_initializedQueue
 
@@ -1617,10 +1664,12 @@ send them all immediately upon connection.</p>
 
     return
 </code></pre>
+
 <h2 id="socketiosocketdisconnect">SocketIoSocket#disconnect</h2>
 <p><em>Disconnect the socket from the server.</em></p>
-<pre><code>  disconnect: -&gt; @_socket.disconnect()
+<pre><code class="coffeescript">  disconnect: -&gt; @_socket.disconnect()
 </code></pre>
+
 <h2 id="socketiosocketemit">SocketIoSocket#emit</h2>
 <ul>
 <li>
@@ -1635,29 +1684,34 @@ returned.</p>
 </li>
 </ul>
 <p><em>Emit an event to the server.</em></p>
-<pre><code>  emit: (eventName, data, fn) -&gt;
+<pre><code class="coffeescript">  emit: (eventName, data, fn) -&gt;
     return @_initializedQueue.push arguments unless @_isConnected
 </code></pre>
+
 <p>Log.</p>
-<pre><code>    message = "sent: #{eventName}"
-    message += ", #{JSON.stringify data, null, '  '}" if data?
+<pre><code class="coffeescript">    message = &quot;sent: #{eventName}&quot;
+    message += &quot;, #{JSON.stringify data, null, '  '}&quot; if data?
     debug message
 
     @_socket.emit eventName, data, (response) =&gt;
 </code></pre>
+
 <p>Early out if the client doesn't care about the response.</p>
-<pre><code>      return unless fn?
+<pre><code class="coffeescript">      return unless fn?
 </code></pre>
+
 <p>Log.</p>
-<pre><code>      message = "response: #{eventName}"
-      message += ", #{
+<pre><code class="coffeescript">      message = &quot;response: #{eventName}&quot;
+      message += &quot;, #{
         JSON.stringify response, null, '  '
-      }" if response.result? or response.error?
+      }&quot; if response.result? or response.error?
       debug message
 </code></pre>
+
 <p>Enter Angular scope.</p>
-<pre><code>      @_$rootScope.$apply -&gt; fn response
+<pre><code class="coffeescript">      @_$rootScope.$apply -&gt; fn response
 </code></pre>
+
 <h2 id="socketiosocketon">SocketIoSocket#on</h2>
 <ul>
 <li>
@@ -1668,18 +1722,21 @@ returned.</p>
 </li>
 </ul>
 <p><em>Listen for an event.</em></p>
-<pre><code>  on: (eventName, fn) -&gt;
+<pre><code class="coffeescript">  on: (eventName, fn) -&gt;
 </code></pre>
+
 <p>We need to digest the scope after the response.</p>
-<pre><code>    @_socket.on eventName, (data) =&gt;
+<pre><code class="coffeescript">    @_socket.on eventName, (data) =&gt;
 </code></pre>
+
 <p>Log.</p>
-<pre><code>      message = "received: #{eventName}"
-      message += ", #{JSON.stringify data, null, '  '}" if data?
+<pre><code class="coffeescript">      message = &quot;received: #{eventName}&quot;
+      message += &quot;, #{JSON.stringify data, null, '  '}&quot; if data?
       debug message
 </code></pre>
+
 <p>Enter Angular scope.</p>
-<pre><code>      onArguments = arguments
+<pre><code class="coffeescript">      onArguments = arguments
       @_$rootScope.$apply =&gt; fn.apply @_socket, onArguments
 </code></pre>
               

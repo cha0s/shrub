@@ -945,6 +945,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1333,7 +1355,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1348,21 +1370,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../../../packages/shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../../../packages/shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../../../packages/shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1372,9 +1394,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../../../packages/shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1398,42 +1499,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1446,27 +1512,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../../packages/shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1600,32 +1645,38 @@
             <div class="section">
               
                 <h1 id="error-handling">Error handling</h1>
-<pre><code>pkgman = require 'pkgman'
+<pre><code class="coffeescript">pkgman = require 'pkgman'
 </code></pre>
+
 <h2 id="transmittableerror">TransmittableError</h2>
 <p>Extend this class if you'd like to implement an error.</p>
-<pre><code>exports.TransmittableError = class TransmittableError extends Error
+<pre><code class="coffeescript">exports.TransmittableError = class TransmittableError extends Error
 </code></pre>
+
 <h2 id="constructor"><em>constructor</em></h2>
 <p>See:
 <a href="https://github.com/jashkenas/coffee-script/issues/2359">https://github.com/jashkenas/coffee-script/issues/2359</a></p>
-<pre><code>  constructor: (@message) -&gt;
+<pre><code class="coffeescript">  constructor: (@message) -&gt;
 </code></pre>
+
 <h2 id="transmittableerrorkey">TransmittableError#key</h2>
 <p>A unique key for this error.</p>
 <h6 id="todo-key-should-be-called-errortype-or-something-similar">TODO: <code>key</code> should be called errorType or something similar.</h6>
-<pre><code>  key: 'unknown'
+<pre><code class="coffeescript">  key: 'unknown'
 </code></pre>
+
 <h2 id="transmittableerrortemplate">TransmittableError#template</h2>
 <p>The template used to format the error output.</p>
-<pre><code>  template: 'Unknown error: :message'
+<pre><code class="coffeescript">  template: 'Unknown error: :message'
 </code></pre>
+
 <h2 id="transmittableerrortojson">TransmittableError#toJSON</h2>
 <p>Implement this if you need to transmit more than just the key and the
 message. Shrub uses the result from this function to serialize the error
 over the wire.</p>
-<pre><code>  toJSON: -&gt; [@key, @message]
+<pre><code class="coffeescript">  toJSON: -&gt; [@key, @message]
 </code></pre>
+
 <h2 id="errorsinstantiate">errors.instantiate</h2>
 <ul>
 <li>
@@ -1637,21 +1688,24 @@ over the wire.</p>
 </ul>
 <p>constructor. <em>Instantiate an error based on key, passing along args to the
 error's constructor.</em></p>
-<pre><code>exports.instantiate = (key, args...) -&gt;
+<pre><code class="coffeescript">exports.instantiate = (key, args...) -&gt;
 </code></pre>
+
 <p>Look up the error type and use it. If it's not registered, fall back to
 the TransmittableError superclass.</p>
-<pre><code>  Types = exports.transmittableErrors()
+<pre><code class="coffeescript">  Types = exports.transmittableErrors()
   Type = if Types[key]? then Types[key] else TransmittableError
 </code></pre>
+
 <p>Trickery to be able to essentially call <code>new</code> with <code>Function::apply</code>.</p>
-<pre><code>  IType = do (Type) -&gt;
+<pre><code class="coffeescript">  IType = do (Type) -&gt;
     F = (args) -&gt; Type.apply this, args
     F.prototype = Type.prototype
     (args) -&gt; new F args
 </code></pre>
+
 <p>Throw so we have a (possibly) meaningful stack.</p>
-<pre><code>  try
+<pre><code class="coffeescript">  try
     throw new Error()
   catch error
     stack = error.stack
@@ -1660,82 +1714,98 @@ the TransmittableError superclass.</p>
   error.stack = stack
   error
 </code></pre>
+
 <h2 id="errorsmessage">errors.message</h2>
 <ul>
 <li>(Error) <code>error</code> - The error object.</li>
 </ul>
 <p><em>Extract an error message from an error.</em></p>
-<pre><code>exports.message = (error) -&gt;
+<pre><code class="coffeescript">exports.message = (error) -&gt;
 </code></pre>
+
 <p>One of us! One of us!</p>
-<pre><code>  output = if error instanceof TransmittableError
+<pre><code class="coffeescript">  output = if error instanceof TransmittableError
     error.template
 </code></pre>
+
 <p>Abstract Error.</p>
-<pre><code>  else if error instanceof Error
+<pre><code class="coffeescript">  else if error instanceof Error
     TransmittableError::template.replace ':message', error.message
 </code></pre>
+
 <p>Not an instance of <code>Error</code>. This probably shouldn't happen, but we deal
 with it anyway.</p>
-<pre><code>  else
+<pre><code class="coffeescript">  else
     TransmittableError::template.replace ':message', error.toString()
 </code></pre>
+
 <p>Replace placeholders in the template.</p>
-<pre><code>  output = output.replace ":#{key}", value for key, value of error
+<pre><code class="coffeescript">  output = output.replace &quot;:#{key}&quot;, value for key, value of error
   output
 </code></pre>
+
 <h2 id="errorsserialize">errors.serialize</h2>
 <ul>
 <li>(Error) <code>error</code> - The error object.</li>
 </ul>
 <p><em>Serialize an error to send over the wire.</em></p>
-<pre><code>exports.serialize = (error) -&gt;
+<pre><code class="coffeescript">exports.serialize = (error) -&gt;
 </code></pre>
+
 <p>One of us! One of us!</p>
-<pre><code>  if error instanceof TransmittableError
+<pre><code class="coffeescript">  if error instanceof TransmittableError
     error.toJSON()
 </code></pre>
+
 <p>Abstract Error.</p>
-<pre><code>  else if error instanceof Error
+<pre><code class="coffeescript">  else if error instanceof Error
     [undefined, error.message]
 </code></pre>
+
 <p>Not an instance of <code>Error</code>. This probably shouldn't happen, but we deal
 with it anyway.</p>
-<pre><code>  else
+<pre><code class="coffeescript">  else
     [undefined, error]
 </code></pre>
+
 <h2 id="errorsstack">errors.stack</h2>
 <ul>
 <li>(Error) <code>error</code> - The error object.</li>
 </ul>
 <p><em>Extract the stack trace from an error.</em></p>
-<pre><code>exports.stack = (error) -&gt;
+<pre><code class="coffeescript">exports.stack = (error) -&gt;
 </code></pre>
+
 <p>Does the stack trace exist?</p>
-<pre><code>  formatStack = if (formatStack = error.stack)?
+<pre><code class="coffeescript">  formatStack = if (formatStack = error.stack)?
 </code></pre>
+
 <p>If so, shift off the first line (the message).</p>
-<pre><code>    formatStack = formatStack.split '\n'
+<pre><code class="coffeescript">    formatStack = formatStack.split '\n'
     formatStack.shift()
     '\n' + formatStack.join '\n'
 </code></pre>
+
 <p>Otherwise, we don't have much to work with...</p>
-<pre><code>  else
+<pre><code class="coffeescript">  else
     ''
 </code></pre>
+
 <p>Prepend our pretty formatted message before the stack trace.</p>
-<pre><code>  "#{@message error}#{formatStack}"
+<pre><code class="coffeescript">  &quot;#{@message error}#{formatStack}&quot;
 </code></pre>
+
 <h2 id="errorstransmittableerrors">errors.transmittableErrors</h2>
 <p><em>Collect the error types implemented by packages.</em></p>
-<pre><code>exports.transmittableErrors = -&gt;
+<pre><code class="coffeescript">exports.transmittableErrors = -&gt;
 
   _ = require 'lodash'
 </code></pre>
+
 <h4 id="invoke-hook-shrubtransmittableerrors">Invoke hook <code>shrubTransmittableErrors</code>.</h4>
 <p>Allows packages to specify transmittable errors. Implementations should
 return a subclass of <code>TransmittableError</code>.</p>
-<pre><code>  Types = {}
+<pre><code class="coffeescript">  Types = {}
 
   Types[Type::key] = Type for Type in [TransmittableError].concat(
     _.flatten pkgman.invokeFlat 'shrubTransmittableErrors'
@@ -1743,9 +1813,10 @@ return a subclass of <code>TransmittableError</code>.</p>
 
   Types
 </code></pre>
+
 <h2 id="errorsunserialize">errors.unserialize</h2>
 <p><em>Unserialize an error from over the wire.</em></p>
-<pre><code>exports.unserialize = (data) -&gt; exports.instantiate.apply null, data
+<pre><code class="coffeescript">exports.unserialize = (data) -&gt; exports.instantiate.apply null, data
 </code></pre>
               
             </div>

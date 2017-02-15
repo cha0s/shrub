@@ -916,6 +916,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1319,7 +1341,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1334,21 +1356,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1358,9 +1380,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1384,42 +1485,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1432,27 +1498,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1589,7 +1634,7 @@
 <p>*An implementation of express's <a href="https://www.npmjs.com/package/express-session#session-store-implementation">Session
 Store</a>
 API.</p>
-<pre><code>ExpressSession = require 'express-session'
+<pre><code class="coffeescript">ExpressSession = require 'express-session'
 
 orm = null
 
@@ -1599,13 +1644,15 @@ module.exports = (connect) -&gt;
 
   class OrmStore extends Store
 </code></pre>
+
 <h2 id="constructor"><em>constructor</em></h2>
 <p>*Lazy-load ORM so as not to bog down the build process (and we have no
 way to implement hook <code>shrubCorePreBootstrap</code> at this point).</p>
-<pre><code>    constructor: -&gt;
+<pre><code class="coffeescript">    constructor: -&gt;
 
       orm = require 'shrub-orm'
 </code></pre>
+
 <h2 id="ormstoreget">OrmStore#get</h2>
 <ul>
 <li>
@@ -1616,7 +1663,7 @@ way to implement hook <code>shrubCorePreBootstrap</code> at this point).</p>
 </li>
 </ul>
 <p><em>Get a session by ID.</em></p>
-<pre><code>    get: (sid, fn) -&gt;
+<pre><code class="coffeescript">    get: (sid, fn) -&gt;
       self = this
 
       Session = orm.collection 'shrub-session'
@@ -1624,8 +1671,9 @@ way to implement hook <code>shrubCorePreBootstrap</code> at this point).</p>
       Session.findOne(sid: sid).then((session) -&gt;
         return fn() unless session?
 </code></pre>
+
 <p>Expired?</p>
-<pre><code>        if Date.now &gt;= session.expires.getTime()
+<pre><code class="coffeescript">        if Date.now &gt;= session.expires.getTime()
           return self.destroy sid, (error) -&gt;
             return fn error if error?
             fn()
@@ -1634,6 +1682,7 @@ way to implement hook <code>shrubCorePreBootstrap</code> at this point).</p>
 
       ).catch fn
 </code></pre>
+
 <h2 id="ormstoreset">OrmStore#set</h2>
 <ul>
 <li>
@@ -1647,12 +1696,13 @@ way to implement hook <code>shrubCorePreBootstrap</code> at this point).</p>
 </li>
 </ul>
 <p><em>Get a session by ID.</em></p>
-<pre><code>    set: (sid, sess, fn) -&gt;
+<pre><code class="coffeescript">    set: (sid, sess, fn) -&gt;
 
       Session = orm.collection 'shrub-session'
 </code></pre>
+
 <p>Use the cookie expiration if it exists, otherwise default to one day.</p>
-<pre><code>      ttl = @ttl ? if 'number' is typeof maxAge = sess.cookie.maxAge
+<pre><code class="coffeescript">      ttl = @ttl ? if 'number' is typeof maxAge = sess.cookie.maxAge
         maxAge / 1000 or 0
       else
         86400
@@ -1669,6 +1719,7 @@ way to implement hook <code>shrubCorePreBootstrap</code> at this point).</p>
 
     touch: @::['set']
 </code></pre>
+
 <h2 id="ormstoredestroy">OrmStore#destroy</h2>
 <ul>
 <li>
@@ -1679,7 +1730,7 @@ way to implement hook <code>shrubCorePreBootstrap</code> at this point).</p>
 </li>
 </ul>
 <p><em>Destroy a session by ID.</em></p>
-<pre><code>    destroy: (sid, fn) -&gt;
+<pre><code class="coffeescript">    destroy: (sid, fn) -&gt;
 
       Session = orm.collection 'shrub-session'
 

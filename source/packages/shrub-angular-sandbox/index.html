@@ -961,6 +961,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1349,7 +1371,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1364,21 +1386,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1388,9 +1410,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1414,42 +1515,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1462,27 +1528,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1618,7 +1663,7 @@
                 <h1 id="angular-sandbox">Angular sandbox</h1>
 <p><em>A sandboxed version of Angular, for clients lacking JS.</em></p>
 <h6 id="todo-sandbox-pool-might-be-better-handled-by-sandboxes">TODO: Sandbox pool, might be better handled by <a href="../source/server/sandboxes">sandboxes</a>.</h6>
-<pre><code>_ = require 'lodash'
+<pre><code class="coffeescript">_ = require 'lodash'
 Promise = require 'bluebird'
 url = require 'url'
 
@@ -1627,15 +1672,17 @@ debug = require('debug') 'shrub:angular'
 middleware = require 'middleware'
 {Sandbox} = require 'sandboxes'
 </code></pre>
+
 <p>The middleware dispatched every time sandboxed angular is navigated.</p>
-<pre><code>navigationMiddleware = []
+<pre><code class="coffeescript">navigationMiddleware = []
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+
 <h4 id="implements-hook-shrubrpcroutes">Implements hook <code>shrubRpcRoutes</code>.</h4>
 <p>Allow a JSful client to call us back and inform us that we don't need to
 hold their sandbox.</p>
-<pre><code>  registrar.registerHook 'shrubRpcRoutes', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubRpcRoutes', -&gt;
 
     routes = []
 
@@ -1648,8 +1695,9 @@ hold their sandbox.</p>
 
         (req, res, next) -&gt;
 </code></pre>
+
 <h6 id="todo-cookie-less-clients-wont-have-a-valid-session-id-to-call-with-this-should-be-some-other-token-perhaps-csrf">TODO: Cookie-less clients won't have a valid session ID to call with. This should be some other token, perhaps CSRF.</h6>
-<pre><code>          id = req.session?.id
+<pre><code class="coffeescript">          id = req.session?.id
           if (sandbox = sandboxManager.lookup id)?
             sandbox.close().finally -&gt; res.end()
           else
@@ -1659,49 +1707,55 @@ hold their sandbox.</p>
 
     return routes
 </code></pre>
+
 <h4 id="implements-hook-shrubhttpmiddleware">Implements hook <code>shrubHttpMiddleware</code>.</h4>
 <p>If configuration dictates, render the client-side Angular application in a
 sandbox.</p>
-<pre><code>  registrar.registerHook 'shrubHttpMiddleware', (http) -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubHttpMiddleware', (http) -&gt;
 
     label: 'Render page with Angular'
     middleware: [
 
       (req, res, next) -&gt;
 </code></pre>
+
 <p>Skip render in a sandbox?</p>
-<pre><code>        settings = config.get 'packageSettings:shrub-angular'
+<pre><code class="coffeescript">        settings = config.get 'packageSettings:shrub-angular'
         return next() unless settings.render
 </code></pre>
+
 <p>Thrown when a request is complete.</p>
-<pre><code>        class ResponseComplete extends Error
+<pre><code class="coffeescript">        class ResponseComplete extends Error
           constructor: (@message) -&gt;
 </code></pre>
+
 <p>After the template is rendered, lookup or create the sandbox.</p>
-<pre><code>        Promise.resolve(req.delivery).bind({}).then((html) -&gt;
+<pre><code class="coffeescript">        Promise.resolve(req.delivery).bind({}).then((html) -&gt;
 
           sandboxManager.lookupOrCreate(
             html
           ,
             cookie: req.headers.cookie
 
-            url: "http://localhost:#{
+            url: &quot;http://localhost:#{
               config.get 'packageSettings:shrub-http:port'
-            }/shrub-angular-entry-point"
+            }/shrub-angular-entry-point&quot;
           ,
             req.session.id
           )
 
         ).then((@sandbox) -&gt;
 </code></pre>
+
 <p>Emit the HTML from before the last redirection.</p>
-<pre><code>          if (redirectionHtml = @sandbox.redirectionHtml())?
+<pre><code class="coffeescript">          if (redirectionHtml = @sandbox.redirectionHtml())?
             @sandbox.setRedirectionHtml null
             res.end redirectionHtml
             throw new ResponseComplete()
 </code></pre>
+
 <p>Check for any new redirection and handle it.</p>
-<pre><code>          if (redirectionPath = @sandbox.redirectionPath())?
+<pre><code class="coffeescript">          if (redirectionPath = @sandbox.redirectionPath())?
             @sandbox.setRedirectionPath null
             res.redirect redirectionPath
             throw new ResponseComplete()
@@ -1712,41 +1766,47 @@ sandbox.</p>
 
           emission = @sandbox.emitHtml()
 </code></pre>
+
 <p>If a redirect happened in the sandbox, actually redirect the
 browser and save the emission for the next request.</p>
-<pre><code>          if (redirectionPath = @sandbox.redirectionPath())?
+<pre><code class="coffeescript">          if (redirectionPath = @sandbox.redirectionPath())?
             @sandbox.setRedirectionPath null
             @sandbox.setRedirectionHtml emission
             res.redirect redirectionPath
 </code></pre>
+
 <p>Otherwise, just emit.</p>
-<pre><code>          else
+<pre><code class="coffeescript">          else
 
             req.delivery = emission
             next()
 </code></pre>
+
 <p>The request was completed early.</p>
-<pre><code>        ).catch(ResponseComplete, -&gt;
+<pre><code class="coffeescript">        ).catch(ResponseComplete, -&gt;
 
         ).catch next
 
   ]
 </code></pre>
+
 <h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <code>shrubCoreBootstrapMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubCoreBootstrapMiddleware', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubCoreBootstrapMiddleware', -&gt;
 
     label: 'Bootstrap Angular'
     middleware: [
 
       (next) -&gt;
 </code></pre>
+
 <p>Always disable sandbox rendering in end-to-end testing mode.</p>
-<pre><code>        if config.get 'E2E'
+<pre><code class="coffeescript">        if config.get 'E2E'
           config.set 'packageSettings:shrub-angular:render', false
 </code></pre>
+
 <h4 id="invoke-hook-shrubangularsandboxnavigationmiddleware">Invoke hook <code>shrubAngularSandboxNavigationMiddleware</code>.</h4>
 <p>Load the navigation middleware.</p>
-<pre><code>        navigationMiddleware = middleware.fromConfig(
+<pre><code class="coffeescript">        navigationMiddleware = middleware.fromConfig(
           'shrub-angular-sandbox:navigationMiddleware'
         )
 
@@ -1754,30 +1814,37 @@ browser and save the emission for the next request.</p>
 
     ]
 </code></pre>
+
 <h4 id="implements-hook-shrubconfigserver">Implements hook <code>shrubConfigServer</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubConfigServer', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubConfigServer', -&gt;
 </code></pre>
+
 <p>Default navigation middleware.</p>
-<pre><code>    navigationMiddleware: [
+<pre><code class="coffeescript">    navigationMiddleware: [
       'shrub-form'
     ]
 </code></pre>
+
 <p>Should we render in the sandbox?</p>
-<pre><code>    render: true
+<pre><code class="coffeescript">    render: true
 </code></pre>
+
 <p>Time-to-live for rendering sandboxes.</p>
-<pre><code>    ttl: 1000 * 60 * 5
+<pre><code class="coffeescript">    ttl: 1000 * 60 * 5
 </code></pre>
+
 <p>This class handles instantiation of new sandboxes, as well as providing a
 mechanism for registering and looking up persistent sandboxes using an id.</p>
-<pre><code>sandboxManager = new class SandboxManager
+<pre><code class="coffeescript">sandboxManager = new class SandboxManager
 </code></pre>
+
 <h2 id="constructor"><em>constructor</em></h2>
 <p><em>Initialize the persistent store.</em></p>
-<pre><code>  constructor: -&gt;
+<pre><code class="coffeescript">  constructor: -&gt;
 
     @_sandboxes = {}
 </code></pre>
+
 <h2 id="sandboxmanagercreate">SandboxManager#create</h2>
 <ul>
 <li>
@@ -1791,32 +1858,36 @@ mechanism for registering and looking up persistent sandboxes using an id.</p>
 </li>
 </ul>
 <p><em>Create a sandbox.</em></p>
-<pre><code>  create: (html, options, id = null) -&gt;
+<pre><code class="coffeescript">  create: (html, options, id = null) -&gt;
 
-    debug "Creating sandbox ID: #{id}"
+    debug &quot;Creating sandbox ID: #{id}&quot;
 
     sandbox = new Sandbox()
     sandbox.id = id
 </code></pre>
+
 <h2 id="sandboxclose-monkeypatch">Sandbox#close (monkeypatch)</h2>
 <p><em>Remove from the manager when closing.</em></p>
-<pre><code>    close = sandbox.close
+<pre><code class="coffeescript">    close = sandbox.close
     sandbox.close = =&gt;
-      debug "Closing sandbox ID: #{id}"
+      debug &quot;Closing sandbox ID: #{id}&quot;
 
       @_sandboxes[id] = null
       close.apply sandbox
 </code></pre>
+
 <p>Create the document.</p>
-<pre><code>    (@_sandboxes[id] = sandbox).createDocument html, options
+<pre><code class="coffeescript">    (@_sandboxes[id] = sandbox).createDocument html, options
 </code></pre>
+
 <h2 id="sandboxmanagerlookup">SandboxManager#lookup</h2>
 <ul>
 <li>(string) <code>id</code> - An ID for looking up this sandbox later.</li>
 </ul>
 <p><em>Look up a sandbox by ID.</em></p>
-<pre><code>  lookup: (id) -&gt; @_sandboxes[id]?.touch()
+<pre><code class="coffeescript">  lookup: (id) -&gt; @_sandboxes[id]?.touch()
 </code></pre>
+
 <h2 id="sandboxmanagerlookuporcreate">SandboxManager#lookupOrCreate</h2>
 <ul>
 <li>
@@ -1832,7 +1903,7 @@ creating), or as a search now.</p>
 </ul>
 <p><em>Look up a sandbox by ID, or create one if none is registered for this
 ID.</em></p>
-<pre><code>  lookupOrCreate: (html, options, id = null) -&gt;
+<pre><code class="coffeescript">  lookupOrCreate: (html, options, id = null) -&gt;
 
     if (sandbox = @lookup id)?
 
@@ -1842,45 +1913,50 @@ ID.</em></p>
 
       @create(html, options, id).then (sandbox) -&gt; augmentSandbox sandbox
 </code></pre>
+
 <p>Augment a sandbox with Angular-specific functionality.</p>
-<pre><code>augmentSandbox = (sandbox) -&gt;
+<pre><code class="coffeescript">augmentSandbox = (sandbox) -&gt;
 </code></pre>
+
 <h2 id="sandboxtouch">Sandbox#touch</h2>
 <p><em>Reset the time-to-live for a sandbox.</em></p>
-<pre><code>  ttl = config.get 'packageSettings:shrub-angular:ttl'
+<pre><code class="coffeescript">  ttl = config.get 'packageSettings:shrub-angular:ttl'
   toucher = _.debounce (-&gt; sandbox.close()), ttl
   do sandbox.touch = -&gt;
-    debug "Touched sandbox ID: #{id}"
+    debug &quot;Touched sandbox ID: #{id}&quot;
 
     toucher()
     sandbox
 </code></pre>
+
 <h2 id="sandboxsetrredirectionhtml">Sandbox#(setR|r)edirectionHtml</h2>
 <ul>
 <li>(string) <code>html</code> - The HTML to be deliviered.</li>
 </ul>
 <p><em>HTML to be delivered upon the next request using this sandbox.</em></p>
-<pre><code>  redirectionHtml = null
+<pre><code class="coffeescript">  redirectionHtml = null
   sandbox.redirectionHtml = -&gt; redirectionHtml
   sandbox.setRedirectionHtml = (html) -&gt; redirectionHtml = html
 </code></pre>
+
 <h2 id="sandboxsetrredirectionpath">Sandbox#(setR|r)edirectionPath</h2>
 <ul>
 <li>(string) <code>path</code> - The URL path to redirect to.</li>
 </ul>
 <p><em>The path that the client will be redirected to at the end of this
 request.</em></p>
-<pre><code>  redirectionPath = null
+<pre><code class="coffeescript">  redirectionPath = null
   sandbox.redirectionPath = -&gt; redirectionPath
   sandbox.setRedirectionPath = (path) -&gt; redirectionPath = path
 </code></pre>
+
 <h2 id="sandboxcatchangularredirection">Sandbox#catchAngularRedirection</h2>
 <ul>
 <li>(string) <code>path</code> - URL path.</li>
 </ul>
 <p><em>Check whether Angular was redirected, and set the client redirection path
 if it was.</em></p>
-<pre><code>  sandbox.catchAngularRedirection = (path) -&gt;
+<pre><code class="coffeescript">  sandbox.catchAngularRedirection = (path) -&gt;
     self = this
 
     @inject [
@@ -1896,13 +1972,14 @@ if it was.</em></p>
 
     ]
 </code></pre>
+
 <h2 id="sandboxcheckpathchanges">Sandbox#checkPathChanges</h2>
 <ul>
 <li>(string) <code>path</code> - URL path.</li>
 </ul>
 <p><em>Check whether the navigation path is different than the current Angular
 location path. If it is, redirect Angular.</em></p>
-<pre><code>  sandbox.checkPathChanges = (path) -&gt;
+<pre><code class="coffeescript">  sandbox.checkPathChanges = (path) -&gt;
     self = this
 
     new Promise (resolve) -&gt;
@@ -1911,11 +1988,13 @@ location path. If it is, redirect Angular.</em></p>
         '$location', '$rootScope'
         ($location, $rootScope) -&gt;
 </code></pre>
+
 <p>} Nowhere to go?</p>
-<pre><code>          return resolve() if path is url.parse(self.url()).path
+<pre><code class="coffeescript">          return resolve() if path is url.parse(self.url()).path
 </code></pre>
+
 <p>} Navigate Angular to the request path.</p>
-<pre><code>          unlisten = $rootScope.$on 'shrub.core.routeRendered', -&gt;
+<pre><code class="coffeescript">          unlisten = $rootScope.$on 'shrub.core.routeRendered', -&gt;
             unlisten()
             resolve()
 
@@ -1923,12 +2002,13 @@ location path. If it is, redirect Angular.</em></p>
 
       ]
 </code></pre>
+
 <h2 id="sandboxnavigate">Sandbox#navigate</h2>
 <ul>
 <li>(http.IncomingMessage) <code>req</code> - The HTTP request object.</li>
 </ul>
 <p><em>Navigate angular to a path, and dispatch navigation middleware.</em></p>
-<pre><code>  sandbox.navigate = (req) -&gt;
+<pre><code class="coffeescript">  sandbox.navigate = (req) -&gt;
     self = this
 
     {path} = url.parse req.url
@@ -1946,12 +2026,13 @@ location path. If it is, redirect Angular.</em></p>
           self.catchAngularRedirection path
           resolve()
 </code></pre>
+
 <h2 id="sandboxpathredirectsto">Sandbox#pathRedirectsTo</h2>
 <ul>
 <li>(string) <code>path</code> - URL path.</li>
 </ul>
 <p><em>Check where a path would be redirected by Angular's router.</em></p>
-<pre><code>  sandbox.pathRedirectsTo = (path) -&gt;
+<pre><code class="coffeescript">  sandbox.pathRedirectsTo = (path) -&gt;
 
     routes = null
 
@@ -1960,26 +2041,32 @@ location path. If it is, redirect Angular.</em></p>
       ($route) -&gt; routes = $route.routes
     ]
 </code></pre>
+
 <p>Perfect match.</p>
-<pre><code>    if routes[path]?
+<pre><code class="coffeescript">    if routes[path]?
 </code></pre>
+
 <p>Does this path redirect? Do an HTTP redirect.</p>
-<pre><code>      return routes[path].redirectTo if routes[path].redirectTo?
+<pre><code class="coffeescript">      return routes[path].redirectTo if routes[path].redirectTo?
 
     else
 
       match = false
 </code></pre>
+
 <p>Check for any regexs.</p>
-<pre><code>      for key, route of routes
+<pre><code class="coffeescript">      for key, route of routes
         if route.regexp?.test path
 </code></pre>
+
 <h6 id="todo-need-to-extract-params-to-build-redirectto-its-a-small-enough-mismatch-to-ignore-for-now">TODO: Need to extract params to build redirectTo, it's a small enough mismatch to ignore for now.</h6>
-<pre><code>          return
+<pre><code class="coffeescript">          return
 </code></pre>
+
 <p>Angular's $routeProvider.otherwise() target.</p>
-<pre><code>      return routes[null].redirectTo if routes[null]?
+<pre><code class="coffeescript">      return routes[null].redirectTo if routes[null]?
 </code></pre>
+
 <h2 id="sandboxinject">Sandbox#inject</h2>
 <ul>
 <li>(mixed) <code>injectable</code> - An annotated function to inject with dependencies.</li>
@@ -1987,13 +2074,14 @@ location path. If it is, redirect Angular.</em></p>
 <p><em>Inject an <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated
 function</a> with
 dependencies.</em></p>
-<pre><code>  sandbox.inject = (injectable) -&gt;
+<pre><code class="coffeescript">  sandbox.inject = (injectable) -&gt;
 
     injector = @_window.angular.element(@_window.document).injector()
     injector.invoke injectable
 </code></pre>
+
 <p>Make sure the socket is dead.</p>
-<pre><code>  sandbox.registerCleanupFunction -&gt;
+<pre><code class="coffeescript">  sandbox.registerCleanupFunction -&gt;
 
     new Promise (resolve) -&gt;
 
@@ -2012,11 +2100,13 @@ dependencies.</em></p>
       '$sniffer', 'shrub-socket'
       ($sniffer, socket) -&gt;
 </code></pre>
+
 <p>Don't even try HTML 5 history on the server side.</p>
-<pre><code>        $sniffer.history = false
+<pre><code class="coffeescript">        $sniffer.history = false
 </code></pre>
+
 <p>Let the socket finish initialization.</p>
-<pre><code>        socket.on 'initialized', -&gt; resolve sandbox
+<pre><code class="coffeescript">        socket.on 'initialized', -&gt; resolve sandbox
 
     ]
 </code></pre>

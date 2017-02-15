@@ -916,6 +916,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1304,7 +1326,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1319,21 +1341,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1343,9 +1365,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1369,42 +1470,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1417,27 +1483,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1593,7 +1638,7 @@
               
                 <h1 id="villiany">Villiany</h1>
 <p><em>Watch for and punish bad behavior.</em></p>
-<pre><code>i8n = null
+<pre><code class="coffeescript">i8n = null
 Promise = null
 
 config = require 'config'
@@ -1606,8 +1651,9 @@ villianyLimiter = null
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+
 <h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <code>shrubCorePreBootstrap</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubCorePreBootstrap', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubCorePreBootstrap', -&gt;
 
     i8n = require 'inflection'
     Promise = require 'bluebird'
@@ -1630,29 +1676,34 @@ exports.pkgmanRegister = (registrar) -&gt;
       Limiter.threshold(thresholdScore).every(thresholdMs).milliseconds()
     )
 </code></pre>
+
 <h4 id="implements-hook-shrubormcollections">Implements hook <code>shrubOrmCollections</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubOrmCollections', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubOrmCollections', -&gt;
 
     Fingerprint = require 'fingerprint'
 </code></pre>
+
 <p>Bans.</p>
-<pre><code>    Ban = attributes: expires: 'date'
+<pre><code class="coffeescript">    Ban = attributes: expires: 'date'
 </code></pre>
+
 <p>The structure of a ban is dictated by the fingerprint structure.</p>
-<pre><code>    Fingerprint.keys().forEach (key) -&gt;
+<pre><code class="coffeescript">    Fingerprint.keys().forEach (key) -&gt;
       Ban.attributes[key] =
         index: true
         type: 'string'
 </code></pre>
+
 <p>Generate a test for whether each fingerprint key has been banned. e.g.
 <code>session</code> -&gt; <code>isSessionBanned</code></p>
-<pre><code>      Ban[i8n.camelize "is_#{key}_banned", true] = (value) -&gt;
-        method = i8n.camelize "find_by_#{key}", true
+<pre><code class="coffeescript">      Ban[i8n.camelize &quot;is_#{key}_banned&quot;, true] = (value) -&gt;
+        method = i8n.camelize &quot;find_by_#{key}&quot;, true
         Promise.cast(this[method] value).bind({}).then((@bans) -&gt;
           return false if @bans.length is 0
 </code></pre>
+
 <p>Destroy all expired bans.</p>
-<pre><code>          expired = @bans.filter (ban) -&gt;
+<pre><code class="coffeescript">          expired = @bans.filter (ban) -&gt;
             ban.expires.getTime() &lt;= Date.now()
           Promise.all expired.map (ban) -&gt; ban.destroy()
 
@@ -1660,11 +1711,13 @@ exports.pkgmanRegister = (registrar) -&gt;
 
           _ = require 'lodash'
 </code></pre>
+
 <p>More bans than those that expired?</p>
-<pre><code>          isBanned: @bans.length &gt; expired.length
+<pre><code class="coffeescript">          isBanned: @bans.length &gt; expired.length
 </code></pre>
+
 <p>Ban ttl.</p>
-<pre><code>          ttl: Math.round (_.difference(@bans, expired).reduce(
+<pre><code class="coffeescript">          ttl: Math.round (_.difference(@bans, expired).reduce(
             (l, r) -&gt;
 
               if l &gt; r.expires.getTime()
@@ -1674,11 +1727,13 @@ exports.pkgmanRegister = (registrar) -&gt;
 
             -Infinity
 </code></pre>
+
 <p>It's a timestamp, and it's in ms.</p>
-<pre><code>          ) - Date.now()) / 1000
+<pre><code class="coffeescript">          ) - Date.now()) / 1000
 </code></pre>
+
 <p>Create a ban from a fingerprint.</p>
-<pre><code>    Ban.createFromFingerprint = (fingerprint, expires) -&gt;
+<pre><code class="coffeescript">    Ban.createFromFingerprint = (fingerprint, expires) -&gt;
 
       unless expires?
         settings = config.get 'packageSettings:shrub-villiany:ban'
@@ -1690,8 +1745,9 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     'shrub-ban': Ban
 </code></pre>
+
 <h4 id="implements-hook-shrubhttpmiddleware">Implements hook <code>shrubHttpMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubHttpMiddleware', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubHttpMiddleware', -&gt;
 
     label: 'Provide villiany management'
     middleware: [
@@ -1709,27 +1765,32 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     ]
 </code></pre>
+
 <h4 id="implements-hook-shrubconfigserver">Implements hook <code>shrubConfigServer</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubConfigServer', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubConfigServer', -&gt;
 
     ban:
 </code></pre>
+
 <p>Villiany threshold score.</p>
-<pre><code>      thresholdScore: 1000
+<pre><code class="coffeescript">      thresholdScore: 1000
 </code></pre>
+
 <p>10 minute villiany threshold window by default.</p>
-<pre><code>      thresholdMs: 1000 * 60 * 10
+<pre><code class="coffeescript">      thresholdMs: 1000 * 60 * 10
 </code></pre>
+
 <h4 id="implements-hook-shrubsocketconnectionmiddleware">Implements hook <code>shrubSocketConnectionMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubSocketConnectionMiddleware', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubSocketConnectionMiddleware', -&gt;
 
     {AuthorizationFailure} = require 'shrub-socket/manager'
 
     label: 'Provide villiany management'
     middleware: socketMiddleware()
 </code></pre>
+
 <h4 id="implements-hook-shrubrpcroutesalter">Implements hook <code>shrubRpcRoutesAlter</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubRpcRoutesAlter', (routes) -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubRpcRoutesAlter', (routes) -&gt;
 
     {spliceRouteMiddleware} = require 'shrub-rpc'
 
@@ -1738,14 +1799,16 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     return
 </code></pre>
+
 <h4 id="implements-hook-shrubvillianyreport">Implements hook <code>shrubVillianyReport</code>.</h4>
 <p>Catch villiany reports.</p>
-<pre><code>  registrar.registerHook 'shrubVillianyReport', (req, score, type, excluded = []) -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubVillianyReport', (req, score, type, excluded = []) -&gt;
 
     Ban = orm.collection 'shrub-ban'
 </code></pre>
+
 <p>Terminate the chain if not a villian.</p>
-<pre><code>    class NotAVillian extends Error
+<pre><code class="coffeescript">    class NotAVillian extends Error
       constructor: (@message) -&gt;
 
     fingerprint = new Fingerprint req
@@ -1756,71 +1819,79 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     ).then((isVillian) -&gt;
 </code></pre>
-<p>Log this transgression.</p>
-<pre><code>      fingerprint = fingerprint.get excluded
 
-      message = "Logged villiany score #{
+<p>Log this transgression.</p>
+<pre><code class="coffeescript">      fingerprint = fingerprint.get excluded
+
+      message = &quot;Logged villiany score #{
         score
       } for #{
         type
       }, fingerprint: #{
         JSON.stringify fingerprint
-      }"
+      }&quot;
       message += ', which resulted in a ban.' if isVillian
       logger[if isVillian then 'error' else 'warn'] message
 
       throw new NotAVillian unless isVillian
 </code></pre>
+
 <p>Ban.</p>
-<pre><code>      Ban.createFromFingerprint fingerprint
+<pre><code class="coffeescript">      Ban.createFromFingerprint fingerprint
 
     ).then(-&gt;
 </code></pre>
+
 <p>Kick.</p>
-<pre><code>      req.emit 'shrubVillianyKick', villianyLimiter.ttl inlineKeys
+<pre><code class="coffeescript">      req.emit 'shrubVillianyKick', villianyLimiter.ttl inlineKeys
 
     ).then(-&gt; true).catch NotAVillian, -&gt; false
 </code></pre>
+
 <p>Enforce bans.</p>
-<pre><code>enforcementMiddleware = (req, res, next) -&gt;
+<pre><code class="coffeescript">enforcementMiddleware = (req, res, next) -&gt;
 
   Ban = orm.collection 'shrub-ban'
 </code></pre>
+
 <p>Terminate the request if a ban is enforced.</p>
-<pre><code>  class RequestBanned extends Error
+<pre><code class="coffeescript">  class RequestBanned extends Error
     constructor: (@message, @key, @ttl) -&gt;
 
   fingerprint = new Fingerprint req
   banPromises = for key, value of fingerprint.get()
     do (key, value) -&gt;
-      method = i8n.camelize "is_#{key}_banned", true
+      method = i8n.camelize &quot;is_#{key}_banned&quot;, true
       Ban[method](value).then ({isBanned, ttl}) -&gt;
         throw new RequestBanned '', key, ttl if isBanned
 
   Promise.all(banPromises).then(-&gt; next()).catch(
 </code></pre>
+
 <p>RequestBanned error just means we should emit.</p>
-<pre><code>    RequestBanned, ({key, ttl}) -&gt; req.emit 'shrubVillianyKick', key, ttl
+<pre><code class="coffeescript">    RequestBanned, ({key, ttl}) -&gt; req.emit 'shrubVillianyKick', key, ttl
   ).catch (error) -&gt; next error
 </code></pre>
+
 <p>Build a nice message for the villian.</p>
-<pre><code>buildBanMessage = (subject, ttl) -&gt;
+<pre><code class="coffeescript">buildBanMessage = (subject, ttl) -&gt;
 
   moment = require 'moment'
 
   message = if subject?
-    "Your #{subject} is banned."
+    &quot;Your #{subject} is banned.&quot;
   else
     'You are banned.'
 
-  message += " The ban will be lifted #{
+  message += &quot; The ban will be lifted #{
     moment().add('seconds', ttl).fromNow()
-  }." if ttl?
+  }.&quot; if ttl?
 
   message
 </code></pre>
+
 <p>Middleware for sockets.</p>
-<pre><code>socketMiddleware = -&gt; [
+<pre><code class="coffeescript">socketMiddleware = -&gt; [
 
   (req, res, next) -&gt;
 
@@ -1846,7 +1917,7 @@ exports.pkgmanRegister = (registrar) -&gt;
         <a href="../../server/" class="btn btn-neutral float-right" title="server.coffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../shrub-user/reset/" class="btn btn-neutral" title="reset.coffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../shrub-user/login/" class="btn btn-neutral" title="login.coffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -1874,7 +1945,7 @@ exports.pkgmanRegister = (registrar) -&gt;
           <a class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../shrub-user/reset/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../shrub-user/login/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
         <span style="margin-left: 15px"><a href="../../server/" style="color: #fcfcfc">Next &raquo;</a></span>

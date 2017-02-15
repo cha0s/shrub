@@ -939,6 +939,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1327,7 +1349,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1342,21 +1364,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1366,9 +1388,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1392,42 +1493,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1440,27 +1506,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1596,12 +1641,14 @@
                 <h1 id="rate-limiter">Rate limiter</h1>
 <p><em>Limits the rate at which clients can do certain operations, like call RPC
 routes.</em></p>
-<pre><code>orm = null
+<pre><code class="coffeescript">orm = null
 pkgman = require 'pkgman'
 </code></pre>
+
 <p>Exported symbol to allow implementations to skip limiter checks.</p>
-<pre><code>exports.SKIP = SKIP = {}
+<pre><code class="coffeescript">exports.SKIP = SKIP = {}
 </code></pre>
+
 <p>A limiter on a route is defined like:</p>
 <pre><code class="javascript">
 registrar.registerHook('shrubRpcRoutes', function() {
@@ -1655,19 +1702,21 @@ when determining the total limit.</p>
 </li>
 </ul>
 <h3 id="limitermiddleware">LimiterMiddleware</h3>
-<pre><code>exports.LimiterMiddleware = class LimiterMiddleware
+<pre><code class="coffeescript">exports.LimiterMiddleware = class LimiterMiddleware
 
   constructor: (@config) -&gt;
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+
 <h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <code>shrubCorePreBootstrap</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubCorePreBootstrap', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubCorePreBootstrap', -&gt;
 
     orm = require 'shrub-orm'
 </code></pre>
+
 <h4 id="implements-hook-shrubormcollections">Implements hook <code>shrubOrmCollections</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubOrmCollections', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubOrmCollections', -&gt;
 
     _ = require 'lodash'
 
@@ -1681,38 +1730,43 @@ exports.pkgmanRegister = (registrar) -&gt;
 
       attributes:
 </code></pre>
+
 <h2 id="limitkey">Limit#key</h2>
 <p><em>The limiter key.</em></p>
-<pre><code>        key:
+<pre><code class="coffeescript">        key:
           type: 'string'
           primaryKey: true
 </code></pre>
+
 <h2 id="limitscores">Limit#scores</h2>
 <p><em>Scores accrued for this limit.</em></p>
-<pre><code>        scores:
+<pre><code class="coffeescript">        scores:
           collection: 'shrub-limit-score'
           via: 'limit'
 </code></pre>
+
 <h2 id="limitaccrue">Limit#accrue</h2>
 <ul>
 <li>(Number) <code>score</code> - The numeric score to accrue.</li>
 </ul>
 <p><em>Accrue a score for this limit.</em></p>
-<pre><code>        accrue: (score) -&gt;
+<pre><code class="coffeescript">        accrue: (score) -&gt;
           @scores.add score: score
 
           return this
 </code></pre>
+
 <h2 id="limitpassed">Limit#passed</h2>
 <ul>
 <li>(Number) <code>threshold</code> - The threshold duration in seconds.</li>
 </ul>
 <p><em>Check whether a limit has passed the time threshold.</em></p>
-<pre><code>        passed: (threshold) -&gt; 0 &gt;= @ttl threshold
+<pre><code class="coffeescript">        passed: (threshold) -&gt; 0 &gt;= @ttl threshold
 </code></pre>
+
 <h2 id="limitreset">Limit#reset</h2>
 <p><em>Reset scores and created time.</em></p>
-<pre><code>        reset: -&gt;
+<pre><code class="coffeescript">        reset: -&gt;
 
           ShrubLimitScore = orm.collection 'shrub-limit-score'
 
@@ -1724,17 +1778,19 @@ exports.pkgmanRegister = (registrar) -&gt;
 
           return this
 </code></pre>
+
 <h2 id="limitscore">Limit#score</h2>
 <p><em>Get the sum of all scores for this limit.</em></p>
-<pre><code>        score: -&gt;
+<pre><code class="coffeescript">        score: -&gt;
           _.map(@scores, 'score').reduce ((l, r) -&gt; l + r), 0
 </code></pre>
+
 <h2 id="limitttl">Limit#ttl</h2>
 <ul>
 <li>(Number) <code>threshold</code> - The threshold duration in seconds.</li>
 </ul>
 <p><em>Get the current time-to-live for this limit.</em></p>
-<pre><code>        ttl: (threshold) -&gt;
+<pre><code class="coffeescript">        ttl: (threshold) -&gt;
           diff = (Date.now() - @createdAt.getTime()) / 1000
           Math.ceil threshold - diff
 
@@ -1749,17 +1805,19 @@ exports.pkgmanRegister = (registrar) -&gt;
     'shrub-limit': Limit
     'shrub-limit-score': LimitScore
 </code></pre>
+
 <h4 id="implements-hook-shrubrpcroutesalter">Implements hook <code>shrubRpcRoutesAlter</code>.</h4>
 <p>Allow RPC routes definitions to specify rate limiters.</p>
-<pre><code>  registrar.registerHook 'shrubRpcRoutesAlter', (routes) -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubRpcRoutesAlter', (routes) -&gt;
 
     Promise = require 'bluebird'
     moment = require 'moment'
 
     errors = require 'errors'
 </code></pre>
+
 <p>Check all routes' middleware for limiter definitions.</p>
-<pre><code>    Object.keys(routes).forEach (path) -&gt;
+<pre><code class="coffeescript">    Object.keys(routes).forEach (path) -&gt;
       route = routes[path]
 
       Fingerprint = require 'fingerprint'
@@ -1769,18 +1827,21 @@ exports.pkgmanRegister = (registrar) -&gt;
 
         route.limiter = fn.config
 </code></pre>
+
 <p>Create a limiter based on the threshold defined.</p>
-<pre><code>        route.limiter.instance = new Limiter(
-          "rpc://#{path}", route.limiter.threshold
+<pre><code class="coffeescript">        route.limiter.instance = new Limiter(
+          &quot;rpc://#{path}&quot;, route.limiter.threshold
         )
 </code></pre>
+
 <p>Set defaults.</p>
-<pre><code>        route.limiter.excludedKeys ?= []
+<pre><code class="coffeescript">        route.limiter.excludedKeys ?= []
         route.limiter.message ?= 'You are doing that too much.'
         route.limiter.villianyScore ?= 20
 </code></pre>
+
 <p>Add a validator, where we'll check the threshold.</p>
-<pre><code>        route.middleware[index] = (req, res, next) -&gt;
+<pre><code class="coffeescript">        route.middleware[index] = (req, res, next) -&gt;
 
           {
             excludedKeys
@@ -1789,9 +1850,10 @@ exports.pkgmanRegister = (registrar) -&gt;
             villianyScore
           } = route.limiter
 </code></pre>
+
 <p>Allow packages to check and optionally skip the limiter.</p>
 <h4 id="invoke-hook-shrublimitercheck">Invoke hook <code>shrubLimiterCheck</code>.</h4>
-<pre><code>          for rule in pkgman.invokeFlat 'shrubLimiterCheck', req
+<pre><code class="coffeescript">          for rule in pkgman.invokeFlat 'shrubLimiterCheck', req
             continue unless rule?
             return next() if SKIP is rule
 
@@ -1799,9 +1861,10 @@ exports.pkgmanRegister = (registrar) -&gt;
 
           inlineKeys = fingerprint.inlineKeys excludedKeys
 </code></pre>
+
 <p>Build a nice error message for the client, so they hopefully will
 stop doing that.</p>
-<pre><code>          sendLimiterError = -&gt;
+<pre><code class="coffeescript">          sendLimiterError = -&gt;
             instance.ttl(inlineKeys).then (ttl) -&gt;
               next errors.instantiate(
                 'limiterThreshold'
@@ -1809,31 +1872,35 @@ stop doing that.</p>
                 moment().add('seconds', ttl).fromNow()
               )
 </code></pre>
+
 <p>Accrue a hit and check the threshold.</p>
-<pre><code>          instance.accrueAndCheckThreshold(inlineKeys).then((isLimited) -&gt;
+<pre><code class="coffeescript">          instance.accrueAndCheckThreshold(inlineKeys).then((isLimited) -&gt;
             return next() unless isLimited
 </code></pre>
+
 <h4 id="invoke-hook-shrubvillianyreport">Invoke hook <code>shrubVillianyReport</code>.</h4>
-<pre><code>            Promise.all(
+<pre><code class="coffeescript">            Promise.all(
               pkgman.invokeFlat(
                 'shrubVillianyReport'
                 req
                 villianyScore
-                "rpc://#{path}:limiter"
+                &quot;rpc://#{path}:limiter&quot;
                 excludedKeys
               )
 
             ).then (reports) -&gt;
 </code></pre>
+
 <p>Only send an error if the user wasn't banned for this.</p>
-<pre><code>              if reports.filter((isBanned) -&gt; !!isBanned).length is 0
+<pre><code class="coffeescript">              if reports.filter((isBanned) -&gt; !!isBanned).length is 0
                 sendLimiterError()
 
           ).catch next
 </code></pre>
+
 <h4 id="implements-hook-shrubtransmittableerrors">Implements hook <code>shrubTransmittableErrors</code>.</h4>
 <p>Just defer to client, where the error is defined.</p>
-<pre><code>  registrar.registerHook 'shrubTransmittableErrors', require('./client').shrubTransmittableErrors
+<pre><code class="coffeescript">  registrar.registerHook 'shrubTransmittableErrors', require('./client').shrubTransmittableErrors
 
 exports.Limiter = Limiter = require './limiter'
 </code></pre>

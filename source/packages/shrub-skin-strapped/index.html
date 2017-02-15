@@ -916,6 +916,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1317,7 +1339,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1332,21 +1354,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1356,9 +1378,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1382,42 +1483,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1430,27 +1496,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1585,14 +1630,15 @@
               
                 <h1 id="strapped">Strapped</h1>
 <p><em>Shrub's default skin.</em></p>
-<pre><code>path = require 'path'
+<pre><code class="coffeescript">path = require 'path'
 
 shrubSkin = require 'shrub-skin'
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+
 <h4 id="implements-hook-shrubnodemailerhtml">Implements hook <code>shrubNodemailerHtml</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubNodemailerHtml', ($body, html, $) -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubNodemailerHtml', ($body, html, $) -&gt;
 
     $('.container &gt; .main', $body).html html
 
@@ -1603,15 +1649,18 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     $('noscript', $body).remove()
 </code></pre>
+
 <h4 id="implements-hook-shrubskinassets">Implements hook <code>shrubSkinAssets</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubSkinAssets', (assets) -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubSkinAssets', (assets) -&gt;
 </code></pre>
+
 <p>Add our future-compiled LESS style sheets.</p>
-<pre><code>    assets.styleSheets.default.push '/css/style.css'
+<pre><code class="coffeescript">    assets.styleSheets.default.push '/css/style.css'
     assets.styleSheets.production.push '/css/style.css'
 </code></pre>
+
 <h4 id="implements-hook-shrubgruntconfig">Implements hook <code>shrubGruntConfig</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubGruntConfig', (gruntConfig) -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubGruntConfig', (gruntConfig) -&gt;
 
     gruntConfig.less ?= {}
 
@@ -1619,7 +1668,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     gruntConfig.configureTask 'less', 'shrub-skin-strapped', files: [
       src: [
-        "#{__dirname}/app/less/style.less"
+        &quot;#{__dirname}/app/less/style.less&quot;
       ]
       dest: 'app/skin/shrub-skin-strapped/css/style.css'
     ]
@@ -1628,7 +1677,7 @@ exports.pkgmanRegister = (registrar) -&gt;
       'watch', 'shrub-skin-strappedLess'
 
       files: [
-        "#{__dirname}/app/less/style.less"
+        &quot;#{__dirname}/app/less/style.less&quot;
       ]
       tasks: [
         'newer:less:shrub-skin-strapped'

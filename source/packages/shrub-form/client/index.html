@@ -933,6 +933,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1321,7 +1343,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1336,21 +1358,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1360,9 +1382,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1386,42 +1487,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1434,27 +1500,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1590,31 +1635,34 @@
                 <h1 id="form-processing">Form processing</h1>
 <p><em>Define a directive for Angular forms, and a service to cache and look them
 up later.</em></p>
-<pre><code>_ = require 'lodash'
+<pre><code class="coffeescript">_ = require 'lodash'
 i8n = require 'inflection'
 
 pkgman = require 'pkgman'
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+
 <h4 id="implements-hook-shrubangulardirective">Implements hook <code>shrubAngularDirective</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubAngularDirective', -&gt; [
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAngularDirective', -&gt; [
     '$compile', '$exceptionHandler', '$injector', '$log', '$q', 'shrub-form', 'shrub-require'
     ($compile, $exceptionHandler, $injector, $log, $q, formService, require) -&gt;
 
       link: (scope, element, attrs) -&gt;
 </code></pre>
+
 <p>Keep a reference to the form scope, if the form attribute value
 changes, it'll need to be rebuilt.</p>
 <h6 id="todo-it-shouldnt-be-trashed-as-it-is-now-it-should-be-moved-over-to-a-new-scope-non-destructively">TODO: It shouldn't be trashed as it is now, it should be moved over to a new scope non-destructively.</h6>
-<pre><code>        formScope = null
+<pre><code class="coffeescript">        formScope = null
         scope.$watch attrs.form, (form) -&gt;
           return unless form?
 
           form.key ?= attrs.form
 </code></pre>
+
 <p>Get the form's current values.</p>
-<pre><code>          form.values = -&gt;
+<pre><code class="coffeescript">          form.values = -&gt;
             values = {}
 
             for name, field of form.fields
@@ -1626,14 +1674,17 @@ changes, it'll need to be rebuilt.</p>
 
             return values
 </code></pre>
+
 <p>Normalize form submits into an array.</p>
-<pre><code>          form.submits = [form.submits] unless angular.isArray form.submits
+<pre><code class="coffeescript">          form.submits = [form.submits] unless angular.isArray form.submits
 </code></pre>
+
 <p>Build a submit function which will be bound to ngSubmit.</p>
-<pre><code>          (scope['$shrubSubmit'] ?= {})[form.key] = ($event) -&gt;
+<pre><code class="coffeescript">          (scope['$shrubSubmit'] ?= {})[form.key] = ($event) -&gt;
 </code></pre>
+
 <p>Call all the form submission handlers.</p>
-<pre><code>            try
+<pre><code class="coffeescript">            try
 
               values = form.values()
 
@@ -1645,40 +1696,48 @@ changes, it'll need to be rebuilt.</p>
             catch error
               $exceptionHandler error
 </code></pre>
+
 <h4 id="invoke-hook-shrubformalter">Invoke hook <code>shrubFormAlter</code>.</h4>
-<pre><code>          pkgman.invokeFlat 'shrubFormAlter', form
+<pre><code class="coffeescript">          pkgman.invokeFlat 'shrubFormAlter', form
 </code></pre>
+
 <h4 id="invoke-hook-shrubformformkeyalter">Invoke hook <code>shrubFormFormKeyAlter</code>.</h4>
-<pre><code>          pkgman.invokeFlat "shrubForm#{
+<pre><code class="coffeescript">          pkgman.invokeFlat &quot;shrubForm#{
             pkgman.normalizePath form.key, true
-          }Alter", form
+          }Alter&quot;, form
 </code></pre>
+
 <p>Create the form element.</p>
-<pre><code>          $form = angular.element '&lt;form /&gt;'
+<pre><code class="coffeescript">          $form = angular.element '&lt;form /&gt;'
           $form.addClass form.key
 </code></pre>
-<p>Default method to POST.</p>
-<pre><code>          $form.attr 'method', attrs.method ? 'POST'
-          $form.attr 'data-ng-submit', "$shrubSubmit['#{form.key}']($event)"
-</code></pre>
-<p>Build the form fields.</p>
-<pre><code>          for name, field of form.fields
-</code></pre>
-<p>Look up the widget definition and warn if it doesn't exist.</p>
-<pre><code>            unless (widget = formService.widgets[field.type])?
 
-              $log.warn "Form `#{
+<p>Default method to POST.</p>
+<pre><code class="coffeescript">          $form.attr 'method', attrs.method ? 'POST'
+          $form.attr 'data-ng-submit', &quot;$shrubSubmit['#{form.key}']($event)&quot;
+</code></pre>
+
+<p>Build the form fields.</p>
+<pre><code class="coffeescript">          for name, field of form.fields
+</code></pre>
+
+<p>Look up the widget definition and warn if it doesn't exist.</p>
+<pre><code class="coffeescript">            unless (widget = formService.widgets[field.type])?
+
+              $log.warn &quot;Form `#{
                 form.key
               }` contains non-existent field type `#{
                 field.type
-              }`!"
+              }`!&quot;
               continue
 </code></pre>
+
 <p>Default name to the key.</p>
-<pre><code>            field.name ?= name
+<pre><code class="coffeescript">            field.name ?= name
 </code></pre>
+
 <p>Helper function to synchronize the field and model value.</p>
-<pre><code>            do (field) -&gt; field.syncModel = (scope) -&gt;
+<pre><code class="coffeescript">            do (field) -&gt; field.syncModel = (scope) -&gt;
               self = this
 
               return unless self.model?
@@ -1692,49 +1751,55 @@ changes, it'll need to be rebuilt.</p>
               if self.model isnt 'field.value'
 
                 self.$valueDereg = scope.$watch 'field.value', (value) -&gt;
-                  scope.$eval "#{self.model} = value", value: value
+                  scope.$eval &quot;#{self.model} = value&quot;, value: value
 
                 self.$modelDereg = scope.$watch self.model, (value) -&gt;
                   self.value = value
 
               return
 
-            $form.append """
+            $form.append &quot;&quot;&quot;
 
 &lt;div
   data-#{widget.directive}
-  data-field="#{attrs.form}.fields['#{name}']"
-  data-form="#{attrs.form}"
+  data-field=&quot;#{attrs.form}.fields['#{name}']&quot;
+  data-form=&quot;#{attrs.form}&quot;
 &gt;&lt;/div&gt;&lt;span&gt; &lt;/span&gt;
 
-"""
+&quot;&quot;&quot;
 </code></pre>
+
 <p>Add hidden form key to allow server-side interception/processing.</p>
-<pre><code>          $formKeyElement = angular.element '&lt;input type="hidden" /&gt;'
+<pre><code class="coffeescript">          $formKeyElement = angular.element '&lt;input type=&quot;hidden&quot; /&gt;'
           $formKeyElement.attr name: 'formKey', value: form.key
           $form.append $formKeyElement
 </code></pre>
+
 <p>Remove any old stuff.</p>
-<pre><code>          if formScope
+<pre><code class="coffeescript">          if formScope
             formScope.$destroy()
             element.find('form').remove()
 </code></pre>
+
 <p>Insert and compile the form element.</p>
-<pre><code>          element.append $form
+<pre><code class="coffeescript">          element.append $form
           $compile($form) formScope = scope.$new()
 </code></pre>
+
 <p>Register the form in the system.</p>
-<pre><code>          formService.cache form.key, formScope, $form
+<pre><code class="coffeescript">          formService.cache form.key, formScope, $form
 
   ]
 </code></pre>
+
 <h4 id="implements-hook-shrubangularservice">Implements hook <code>shrubAngularService</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubAngularService', -&gt; [
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAngularService', -&gt; [
 
     -&gt;
 
       service = forms: {}, widgets: {}
 </code></pre>
+
 <h2 id="formcache">form.cache</h2>
 <ul>
 <li>
@@ -1748,11 +1813,12 @@ changes, it'll need to be rebuilt.</p>
 </li>
 </ul>
 <p><em>Cache a form for later lookup.</em></p>
-<pre><code>      service.cache = (key, scope, element) -&gt;
+<pre><code class="coffeescript">      service.cache = (key, scope, element) -&gt;
         service.forms[key] = scope: scope, element: element
 </code></pre>
+
 <h4 id="invoke-hook-shrubformwidgets">Invoke hook <code>shrubFormWidgets</code>.</h4>
-<pre><code>      for formWidgets in pkgman.invokeFlat 'shrubFormWidgets'
+<pre><code class="coffeescript">      for formWidgets in pkgman.invokeFlat 'shrubFormWidgets'
         formWidgets = [formWidgets] unless _.isArray formWidgets
 
         for formWidget in formWidgets

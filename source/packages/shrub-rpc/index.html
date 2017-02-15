@@ -916,6 +916,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1323,7 +1345,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1338,21 +1360,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1362,9 +1384,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1388,42 +1489,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1436,27 +1502,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1592,23 +1637,26 @@
                 <h1 id="rpc">RPC</h1>
 <p>Framework for communication between client and server through
 <a href="http://en.wikipedia.org/wiki/Remote_procedure_call#Message_passing">RPC</a></p>
-<pre><code>{EventEmitter} = require 'events'
+<pre><code class="coffeescript">{EventEmitter} = require 'events'
 {IncomingMessage} = require 'http'
 
 pkgman = null
 </code></pre>
+
 <p>RPC route information.</p>
-<pre><code>routes = {}
+<pre><code class="coffeescript">routes = {}
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+
 <h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <code>shrubCorePreBootstrap</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubCorePreBootstrap', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubCorePreBootstrap', -&gt;
 
     pkgman = require 'pkgman'
 </code></pre>
+
 <h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <code>shrubCoreBootstrapMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubCoreBootstrapMiddleware', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubCoreBootstrapMiddleware', -&gt;
 
     _ = require 'lodash'
     debug = require('debug') 'shrub-silly:rpc'
@@ -1622,25 +1670,29 @@ exports.pkgmanRegister = (registrar) -&gt;
 
       (next) -&gt;
 </code></pre>
+
 <h4 id="invoke-hook-shrubrpcroutes">Invoke hook <code>shrubRpcRoutes</code>.</h4>
-<pre><code>        debug '- Registering RPC routess...'
+<pre><code class="coffeescript">        debug '- Registering RPC routess...'
         for route in _.flatten pkgman.invokeFlat 'shrubRpcRoutes'
 
           debug route.path
 </code></pre>
+
 <p>Normalize middleware to array form.</p>
-<pre><code>          route.middleware ?= []
+<pre><code class="coffeescript">          route.middleware ?= []
           if 'function' is typeof route.middleware
             route.middleware = [route.middleware]
 
           routes[route.path] = route
         debug '- RPC routes registered.'
 </code></pre>
+
 <h4 id="invoke-hook-shrubrpcroutesalter">Invoke hook <code>shrubRpcRoutesAlter</code>.</h4>
-<pre><code>        pkgman.invoke 'shrubRpcRoutesAlter', routes
+<pre><code class="coffeescript">        pkgman.invoke 'shrubRpcRoutesAlter', routes
 </code></pre>
+
 <p>Set up the middleware dispatcher.</p>
-<pre><code>        for path, route of routes
+<pre><code class="coffeescript">        for path, route of routes
           route.dispatcher = new Middleware()
 
           fn.weight ?= index for fn, index in route.middleware
@@ -1654,8 +1706,9 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     ]
 </code></pre>
+
 <h4 id="implements-hook-shrubsocketconnectionmiddleware">Implements hook <code>shrubSocketConnectionMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubSocketConnectionMiddleware', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubSocketConnectionMiddleware', -&gt;
 
     Promise = require 'bluebird'
 
@@ -1671,22 +1724,27 @@ exports.pkgmanRegister = (registrar) -&gt;
 
       (req, res, next) -&gt;
 </code></pre>
+
 <p>Log an error without transmitting it.</p>
-<pre><code>        logError = (error) -&gt; logger.error errors.stack error
+<pre><code class="coffeescript">        logError = (error) -&gt; logger.error errors.stack error
 </code></pre>
+
 <p>Hub for RPC calls. Dispatch routes.</p>
-<pre><code>        req.socket.on 'shrub-rpc', ({path, data}, fn) -&gt;
+<pre><code class="coffeescript">        req.socket.on 'shrub-rpc', ({path, data}, fn) -&gt;
           unless (route = routes[path])?
-            return logError new Error "Unknown route called: #{path}"
+            return logError new Error &quot;Unknown route called: #{path}&quot;
 </code></pre>
+
 <p>Don't pass req directly, since it can be mutated by routes, and
 violate other routes' expectations.</p>
-<pre><code>          routeReq = new IncomingMessage req.socket.conn
+<pre><code class="coffeescript">          routeReq = new IncomingMessage req.socket.conn
           routeReq.body = data
           routeReq.route = route
           routeReq.socket = req.socket
+</code></pre>
 
-          routeRes = new class RpcRouteResponse extends EventEmitter
+<h6 id="todo-doc">TODO: Doc</h6>
+<pre><code class="coffeescript">          routeRes = new class RpcRouteResponse extends EventEmitter
 
             constructor: -&gt;
               super
@@ -1708,45 +1766,53 @@ violate other routes' expectations.</p>
               return fn error: errors.serialize @error if @error?
               fn result: @data
 
-            write: (data) -&gt; @data[k] = v for k, v of data
+            write: (data) -&gt; @data[k] = v for own k, v of data
 
             writeHead: (code, headers) -&gt;
               @headers[k] = v for k, v of headers
 </code></pre>
+
 <p>Send an error to the client.</p>
-<pre><code>          emitError = (error) -&gt; routeRes.setError(error).end()
+<pre><code class="coffeescript">          emitError = (error) -&gt; routeRes.setError(error).end()
 </code></pre>
+
 <p>Send an error to the client, but don't notify them of the real
 underlying issue.</p>
-<pre><code>          concealErrorFromClient = (error) -&gt;
+<pre><code class="coffeescript">          concealErrorFromClient = (error) -&gt;
 
             emitError new Error 'Please try again later.'
             logError error
 </code></pre>
+
 <p>Transmit the error as it is directly to the client.</p>
-<pre><code>          sendErrorToClient = (error) -&gt;
+<pre><code class="coffeescript">          sendErrorToClient = (error) -&gt;
             emitError error
 </code></pre>
+
 <p>Log the full error stack, because it might help track down any
 problem.</p>
-<pre><code>            logError error if do -&gt;
+<pre><code class="coffeescript">            logError error if do -&gt;
 </code></pre>
+
 <p>Unknown errors.</p>
-<pre><code>              unless error instanceof TransmittableError
+<pre><code class="coffeescript">              unless error instanceof TransmittableError
                 return true
 </code></pre>
+
 <p>If we're not running in production.</p>
-<pre><code>              if 'production' isnt config.get 'NODE_ENV'
+<pre><code class="coffeescript">              if 'production' isnt config.get 'NODE_ENV'
                 return true
 </code></pre>
+
 <p>Dispatch the route.</p>
-<pre><code>          route.dispatcher.dispatch routeReq, routeRes, (error) -&gt;
+<pre><code class="coffeescript">          route.dispatcher.dispatch routeReq, routeRes, (error) -&gt;
             sendErrorToClient error if error?
 
         next()
 
     ]
 </code></pre>
+
 <h3 id="spliceroutemiddleware">spliceRouteMiddleware</h3>
 <ul>
 <li>
@@ -1760,11 +1826,11 @@ middleware.</p>
 <p>(Function Array) <code>middleware</code> - The middleware to be spliced in.</p>
 </li>
 </ul>
-<p><em>Splice middleware functions in place of a key.</em> Some packages define RPC
-route middleware that can be included as a string (e.g. <code>'shrub-user'</code>).
-This function will splice in an array of middleware where a placeholder key
-specifies.</p>
-<pre><code>exports.spliceRouteMiddleware = (route, key, middleware) -&gt;
+<p><em>Splice middleware functions in place of a key.</em></p>
+<p>Some packages define RPC route middleware that can be included as a string
+(e.g. <code>'shrub-user'</code>). This function will splice in an array of middleware
+where a placeholder key specifies.</p>
+<pre><code class="coffeescript">exports.spliceRouteMiddleware = (route, key, middleware) -&gt;
   return unless ~(index = route.middleware.indexOf key)
 
   l = route.middleware.slice 0, index

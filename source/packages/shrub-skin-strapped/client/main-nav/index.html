@@ -916,6 +916,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1313,7 +1335,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1328,21 +1350,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1352,9 +1374,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1378,42 +1479,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1426,27 +1492,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1580,17 +1625,19 @@
             <div class="section">
               
                 <h1 id="strapped-main-navigation">Strapped - Main navigation</h1>
-<pre><code>exports.pkgmanRegister = (registrar) -&gt;
+<pre><code class="coffeescript">exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+
 <h4 id="implements-hook-shrubangulardirective">Implements hook <code>shrubAngularDirective</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubAngularDirective', -&gt; [
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAngularDirective', -&gt; [
     'shrub-ui/window-title'
     (windowTitle) -&gt;
 
       link: (scope, elm, attr) -&gt;
 </code></pre>
+
 <p>Add some useful links to the nav.</p>
-<pre><code>        scope.menu =
+<pre><code class="coffeescript">        scope.menu =
 
           name: 'main-nav'
           attributes:
@@ -1605,39 +1652,39 @@
 
       template: '''
 
-&lt;nav class="navbar navbar-default" role="navigation"&gt;
-  &lt;div class="container-fluid"&gt;
+&lt;nav class=&quot;navbar navbar-default&quot; role=&quot;navigation&quot;&gt;
+  &lt;div class=&quot;container-fluid&quot;&gt;
 
-    &lt;div class="navbar-header"&gt;
-      &lt;button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".shrub-skin-strapped-ui-nav"&gt;
-        &lt;span class="sr-only"&gt;Toggle navigation&lt;/span&gt;
-        &lt;span class="icon-bar"&gt;&lt;/span&gt;
-        &lt;span class="icon-bar"&gt;&lt;/span&gt;
-        &lt;span class="icon-bar"&gt;&lt;/span&gt;
+    &lt;div class=&quot;navbar-header&quot;&gt;
+      &lt;button type=&quot;button&quot; class=&quot;navbar-toggle&quot; data-toggle=&quot;collapse&quot; data-target=&quot;.shrub-skin-strapped-ui-nav&quot;&gt;
+        &lt;span class=&quot;sr-only&quot;&gt;Toggle navigation&lt;/span&gt;
+        &lt;span class=&quot;icon-bar&quot;&gt;&lt;/span&gt;
+        &lt;span class=&quot;icon-bar&quot;&gt;&lt;/span&gt;
+        &lt;span class=&quot;icon-bar&quot;&gt;&lt;/span&gt;
       &lt;/button&gt;
 
-      &lt;a class="navbar-brand" href="#"&gt;&lt;span data-ng-bind="pageTitle"&gt;&lt;/span&gt;&lt;/a&gt;
+      &lt;a class=&quot;navbar-brand&quot; href=&quot;#&quot;&gt;&lt;span data-ng-bind=&quot;pageTitle&quot;&gt;&lt;/span&gt;&lt;/a&gt;
 
       &lt;div
-        class="mobile navbar-notification"
+        class=&quot;mobile navbar-notification&quot;
         data-shrub-ui-notifications
-        data-queue-name="shrubExampleGeneral"
+        data-queue-name=&quot;shrubExampleGeneral&quot;
       &gt;
       &lt;/div&gt;
 
     &lt;/div&gt;
 
-    &lt;div class="navbar-collapse collapse shrub-skin-strapped-ui-nav"&gt;
+    &lt;div class=&quot;navbar-collapse collapse shrub-skin-strapped-ui-nav&quot;&gt;
 
       &lt;div
-        class="desktop navbar-notification navbar-right"
+        class=&quot;desktop navbar-notification navbar-right&quot;
         data-shrub-ui-notifications
-        data-queue-name="shrubExampleGeneral"
+        data-queue-name=&quot;shrubExampleGeneral&quot;
       &gt;
       &lt;/div&gt;
 
       &lt;div
-        class="navbar-text navbar-right navbar-user"
+        class=&quot;navbar-text navbar-right navbar-user&quot;
       &gt;
         Hi,
         &lt;span
@@ -1648,7 +1695,7 @@
 
       &lt;div
         data-shrub-ui-menu
-        data-menu="menu"
+        data-menu=&quot;menu&quot;
       &gt;&lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;

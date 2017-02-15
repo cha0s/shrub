@@ -916,6 +916,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1319,7 +1341,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1334,21 +1356,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1358,9 +1380,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1384,42 +1485,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1432,27 +1498,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1587,7 +1632,7 @@
               
                 <h1 id="repl">REPL</h1>
 <p><em>Runs a REPL and allows packages to add values to its context.</em></p>
-<pre><code>CoffeeScript = require 'coffee-script'
+<pre><code class="coffeescript">CoffeeScript = require 'coffee-script'
 fs = require 'fs'
 net = require 'net'
 replServer = require 'repl'
@@ -1597,28 +1642,35 @@ pkgman = require 'pkgman'
 
 debug = require('debug') 'shrub:repl'
 </code></pre>
+
 <p>The socket server.</p>
-<pre><code>server = null
+<pre><code class="coffeescript">server = null
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+
 <h4 id="implements-hook-shrubconfigserver">Implements hook <code>shrubConfigServer</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubConfigServer', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubConfigServer', -&gt;
 </code></pre>
+
 <p>The prompt display for REPL clients.</p>
-<pre><code>    prompt: 'shrub&gt; '
+<pre><code class="coffeescript">    prompt: 'shrub&gt; '
 </code></pre>
+
 <p>The location of the socket.</p>
-<pre><code>    socket: "#{__dirname}/socket"
+<pre><code class="coffeescript">    socket: &quot;#{__dirname}/socket&quot;
 </code></pre>
+
 <p>Use a CoffeeScript REPL?</p>
-<pre><code>    useCoffee: true
+<pre><code class="coffeescript">    useCoffee: true
 </code></pre>
+
 <h4 id="implements-hook-shrubcoreprocessexit">Implements hook <code>shrubCoreProcessExit</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubCoreProcessExit', -&gt; server?.close()
+<pre><code class="coffeescript">  registrar.registerHook 'shrubCoreProcessExit', -&gt; server?.close()
 </code></pre>
+
 <h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <code>shrubCoreBootstrapMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubCoreBootstrapMiddleware', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubCoreBootstrapMiddleware', -&gt;
 
     orm = require 'shrub-orm'
 
@@ -1631,29 +1683,35 @@ exports.pkgmanRegister = (registrar) -&gt;
 
         server = net.createServer (socket) -&gt;
 </code></pre>
+
 <h4 id="invoke-hook-shrubreplcontext">Invoke hook <code>shrubReplContext</code>.</h4>
-<pre><code>          pkgman.invoke 'shrubReplContext', context = {}
+<pre><code class="coffeescript">          pkgman.invoke 'shrubReplContext', context = {}
 </code></pre>
+
 <p>REPL server options.</p>
-<pre><code>          opts =
+<pre><code class="coffeescript">          opts =
             prompt: settings.prompt
             input: socket
             output: socket
             ignoreUndefined: true
 </code></pre>
-<p>CoffeeScript?</p>
-<pre><code>          if settings.useCoffee
 
-            opts.prompt = "(coffee) #{settings.prompt}"
+<p>CoffeeScript?</p>
+<pre><code class="coffeescript">          if settings.useCoffee
+
+            opts.prompt = &quot;(coffee) #{settings.prompt}&quot;
 </code></pre>
+
 <p>Define our own eval function, using CoffeeScript.</p>
-<pre><code>            opts.eval = (cmd, context, filename, callback) -&gt;
+<pre><code class="coffeescript">            opts.eval = (cmd, context, filename, callback) -&gt;
 </code></pre>
+
 <p>Handle blank lines correctly.</p>
-<pre><code>              return callback null, undefined if cmd is '(\n)'
+<pre><code class="coffeescript">              return callback null, undefined if cmd is '(\n)'
 </code></pre>
+
 <p>Forward the input to CoffeeScript for evalulation.</p>
-<pre><code>              try
+<pre><code class="coffeescript">              try
 
                 callback null, CoffeeScript.eval(
                   cmd
@@ -1665,22 +1723,26 @@ exports.pkgmanRegister = (registrar) -&gt;
 
                 callback error
 </code></pre>
+
 <p>Spin up the server, inject the values from <code>shrubReplContext</code>, and
 prepare for later cleanup.</p>
-<pre><code>          repl = replServer.start opts
+<pre><code class="coffeescript">          repl = replServer.start opts
           repl.context[key] = value for key, value of context
           repl.on 'exit', -&gt; socket.end()
 </code></pre>
+
 <p>Try to be tidy about things.</p>
-<pre><code>        fs.unlink settings.socket, (error) -&gt;
+<pre><code class="coffeescript">        fs.unlink settings.socket, (error) -&gt;
 </code></pre>
+
 <p>Ignore the error if it's just saying the socket didn't exist.</p>
-<pre><code>          return next error if error.code isnt 'ENOENT' if error?
+<pre><code class="coffeescript">          return next error if error.code isnt 'ENOENT' if error?
 </code></pre>
+
 <p>Bind the REPL server socket.</p>
-<pre><code>          server.listen settings.socket, (error) -&gt;
+<pre><code class="coffeescript">          server.listen settings.socket, (error) -&gt;
             return next error if error?
-            debug "REPL server listening at #{settings.socket}"
+            debug &quot;REPL server listening at #{settings.socket}&quot;
             next()
 
     ]
@@ -1695,7 +1757,7 @@ prepare for later cleanup.</p>
         <a href="../shrub-rpc/client/" class="btn btn-neutral float-right" title="index.coffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../shrub-orm/" class="btn btn-neutral" title="index.coffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../shrub-passport/logout/" class="btn btn-neutral" title="logout.coffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -1723,7 +1785,7 @@ prepare for later cleanup.</p>
           <a class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../shrub-orm/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../shrub-passport/logout/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
         <span style="margin-left: 15px"><a href="../shrub-rpc/client/" style="color: #fcfcfc">Next &raquo;</a></span>

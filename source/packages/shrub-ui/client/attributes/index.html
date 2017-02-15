@@ -916,6 +916,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1313,7 +1335,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1328,21 +1350,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1352,9 +1374,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1378,42 +1479,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1426,27 +1492,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1581,10 +1626,11 @@
               
                 <h1 id="ui-attributes">UI - Attributes</h1>
 <p><em>Generalized attribute directive.</em></p>
-<pre><code>exports.pkgmanRegister = (registrar) -&gt;
+<pre><code class="coffeescript">exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+
 <h4 id="implements-hook-shrubangulardirective">Implements hook <code>shrubAngularDirective</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubAngularDirective', -&gt; [
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAngularDirective', -&gt; [
     '$compile'
     ($compile) -&gt;
 
@@ -1595,16 +1641,18 @@
         updateAttributes = (attributes, oldAttributes) -&gt;
           return unless attributes?
 </code></pre>
+
 <p>Create a dummy attribute to apply all attributes to, since trying
 to apply then directly to the element is potentially problematic.</p>
-<pre><code>          dummy = angular.element '&lt;div&gt;'
+<pre><code class="coffeescript">          dummy = angular.element '&lt;div&gt;'
 
           for k, v of attributes
 
             if 'class' is k
 </code></pre>
+
 <h6 id="todo-we-should-do-a-proper-_intersects-check-here">TODO: We should do a proper _.intersects check here.</h6>
-<pre><code>              for class_ in oldAttributes?.class ? []
+<pre><code class="coffeescript">              for class_ in oldAttributes?.class ? []
                 dummy.removeClass class_
 
               v = [v] unless angular.isArray v
@@ -1614,14 +1662,16 @@ to apply then directly to the element is potentially problematic.</p>
 
               dummy.attr k, v
 </code></pre>
+
 <p>Compile and link child directives.</p>
-<pre><code>          compileScope = scope.$new true
+<pre><code class="coffeescript">          compileScope = scope.$new true
           compileScope.attributes = attributes
           $compile(dummy)(compileScope)
 </code></pre>
+
 <p>Set everything that ended up on our dummy element to the parent
 element.</p>
-<pre><code>          dummy.removeClass 'ng-scope'
+<pre><code class="coffeescript">          dummy.removeClass 'ng-scope'
           attr.$set k, dummy.attr k for k of attributes
 
         scope.$watch attr['shrubUiAttributes'], updateAttributes, true

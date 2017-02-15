@@ -916,6 +916,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1327,7 +1349,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1342,21 +1364,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1366,9 +1388,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1392,42 +1493,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1440,27 +1506,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1596,12 +1641,13 @@
                 <h1 id="ui-messages">UI - Messages</h1>
 <p><em>Manage transient UI messages.</em></p>
 <h6 id="todo-i-dont-really-like-this-think-about-it-some-more">TODO: I don't really like this. Think about it some more.</h6>
-<pre><code>errors = require 'errors'
+<pre><code class="coffeescript">errors = require 'errors'
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+
 <h4 id="implements-hook-shrubangulardirective">Implements hook <code>shrubAngularDirective</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubAngularDirective', -&gt; [
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAngularDirective', -&gt; [
     '$timeout', 'shrub-ui/messages'
     ($timeout, {count, removeTop, top}) -&gt;
 
@@ -1611,8 +1657,9 @@ exports.pkgmanRegister = (registrar) -&gt;
 
         $notificationWrapper = elm.find '.notification-wrapper'
 </code></pre>
+
 <p>User closed the notification.</p>
-<pre><code>        scope.close = -&gt;
+<pre><code class="coffeescript">        scope.close = -&gt;
           $timeout.cancel activeNotification
           $notificationWrapper.fadeOut '2000', -&gt; scope.$apply -&gt;
             removeTop()
@@ -1623,12 +1670,14 @@ exports.pkgmanRegister = (registrar) -&gt;
           -&gt; top()
           -&gt;
 </code></pre>
+
 <p>When we get a new notification, make it our active notification.</p>
-<pre><code>            scope.notification = top()
+<pre><code class="coffeescript">            scope.notification = top()
             return if count() is 0
 </code></pre>
+
 <p>Fade it in and keep it on the screen for 15 seconds.</p>
-<pre><code>            $notificationWrapper.fadeIn '2000'
+<pre><code class="coffeescript">            $notificationWrapper.fadeIn '2000'
 
             activeNotification = $timeout(
               -&gt; scope.close()
@@ -1639,19 +1688,19 @@ exports.pkgmanRegister = (registrar) -&gt;
 
       template: '''
 
-&lt;div class="notification-wrapper"&gt;
+&lt;div class=&quot;notification-wrapper&quot;&gt;
 
   &lt;div
-    data-ng-show="!!notification"
-    data-ng-class="notification.class"
-    class="alert notification fade in"
+    data-ng-show=&quot;!!notification&quot;
+    data-ng-class=&quot;notification.class&quot;
+    class=&quot;alert notification fade in&quot;
   &gt;
     &lt;button
-      type="button"
-      class="close"
-      data-ng-click="close()"
+      type=&quot;button&quot;
+      class=&quot;close&quot;
+      data-ng-click=&quot;close()&quot;
     &gt;&amp;times;&lt;/button&gt;
-    &lt;span data-ng-bind-html="notification.text"&gt;&lt;/span&gt;
+    &lt;span data-ng-bind-html=&quot;notification.text&quot;&gt;&lt;/span&gt;
   &lt;/div&gt;
 
 &lt;/div&gt;
@@ -1660,20 +1709,23 @@ exports.pkgmanRegister = (registrar) -&gt;
 
   ]
 </code></pre>
+
 <h4 id="implements-hook-shrubrpccall">Implements hook <code>shrubRpcCall</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubRpcCall', -&gt; [
+<pre><code class="coffeescript">  registrar.registerHook 'shrubRpcCall', -&gt; [
     'shrub-ui/messages', 'result'
     (messages, result) -&gt;
 </code></pre>
+
 <p>Add a message with the error text, if any.</p>
-<pre><code>      result.catch (error) -&gt; messages.add(
+<pre><code class="coffeescript">      result.catch (error) -&gt; messages.add(
         class: 'alert-danger', text: errors.message error
       )
 
   ]
 </code></pre>
+
 <h4 id="implements-hook-shrubangularservice">Implements hook <code>shrubAngularService</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubAngularService', -&gt; [
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAngularService', -&gt; [
     'shrub-socket'
     (socket) -&gt;
 
@@ -1681,28 +1733,33 @@ exports.pkgmanRegister = (registrar) -&gt;
 
       _messages = []
 </code></pre>
+
 <h2 id="messagesadd">messages.add</h2>
 <p><em>Add a notification to be displayed.</em></p>
-<pre><code>      service.add = (notification) -&gt;
+<pre><code class="coffeescript">      service.add = (notification) -&gt;
 
         notification.class ?= 'alert-info'
 
         _messages.push notification
 </code></pre>
+
 <h2 id="messagestop">messages.top</h2>
 <p><em>Get the top notification.</em></p>
-<pre><code>      service.top = -&gt; _messages[0]
+<pre><code class="coffeescript">      service.top = -&gt; _messages[0]
 </code></pre>
+
 <h2 id="messagesremovetop">messages.removeTop</h2>
 <p><em>Remove the top notification.</em></p>
-<pre><code>      service.removeTop = -&gt; _messages.shift()
+<pre><code class="coffeescript">      service.removeTop = -&gt; _messages.shift()
 </code></pre>
+
 <h2 id="messagescount">messages.count</h2>
 <p><em>The number of messages to show.</em></p>
-<pre><code>      service.count = -&gt; _messages.length
+<pre><code class="coffeescript">      service.count = -&gt; _messages.length
 </code></pre>
+
 <p>Accept messages from the server.</p>
-<pre><code>      socket.on 'shrub-ui/messages', (data) -&gt;
+<pre><code class="coffeescript">      socket.on 'shrub-ui/messages', (data) -&gt;
         service.add message for message in data.messages
 
       service

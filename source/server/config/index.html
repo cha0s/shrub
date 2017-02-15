@@ -916,6 +916,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1304,7 +1326,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1319,21 +1341,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../../packages/shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../../packages/shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../../packages/shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1343,9 +1365,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../../packages/shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1369,42 +1470,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1417,27 +1483,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../packages/shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1592,7 +1637,7 @@
                 <h1 id="server-configuration">Server configuration</h1>
 <p><em>Manages server and package configuration.</em></p>
 <h6 id="todo-rename-all-config-key-uses-to-path">TODO: Rename all config <code>key</code> uses to <code>path</code>.</h6>
-<pre><code>debug = require('debug') 'shrub:config'
+<pre><code class="coffeescript">debug = require('debug') 'shrub:config'
 nconf = require 'nconf'
 fs = require 'fs'
 
@@ -1602,66 +1647,75 @@ pkgman = require 'pkgman'
 
 {Config} = require 'client/modules/config'
 </code></pre>
+
 <h2 id="configget">config.get</h2>
 <ul>
 <li>(string) <code>key</code> - The key whose value to get.</li>
 </ul>
 <p><em>Get a configuration value.</em></p>
-<pre><code>exports.get = (key) -&gt; nconf.get key
+<pre><code class="coffeescript">exports.get = (key) -&gt; nconf.get key
 </code></pre>
+
 <h2 id="confighas">config.has</h2>
 <ul>
 <li>(string) <code>key</code> - The key to check.</li>
 </ul>
 <p><em>Check if a configuration key exists.</em></p>
-<pre><code>exports.has = (key) -&gt; nconf.has key
+<pre><code class="coffeescript">exports.has = (key) -&gt; nconf.has key
 </code></pre>
+
 <h2 id="configload">config.load</h2>
 <p><em>Load configuration from the settings file and set package defaults.</em></p>
-<pre><code>exports.load = -&gt;
+<pre><code class="coffeescript">exports.load = -&gt;
 </code></pre>
+
 <p>Ensure the configuration file exists.</p>
-<pre><code>  unless fs.existsSync settingsFilename = './config/settings.yml'
+<pre><code class="coffeescript">  unless fs.existsSync settingsFilename = './config/settings.yml'
     throw new Error 'Settings file not found! You should copy config/default.settings.yml to config/settings.yml'
 
   settings = yaml.safeLoad fs.readFileSync settingsFilename, 'utf8'
-  settings.path = "#{__dirname}/.."
+  settings.path = &quot;#{__dirname}/..&quot;
 
   nconf.argv().env().overrides settings
 
   return
 </code></pre>
+
 <h2 id="configloadpackagesettings">config.loadPackageSettings</h2>
 <p><em>Load package settings as defaults in the configuration.</em></p>
-<pre><code>exports.loadPackageSettings = -&gt;
+<pre><code class="coffeescript">exports.loadPackageSettings = -&gt;
 </code></pre>
+
 <p>Register packages.</p>
-<pre><code>  debug 'Registering packages...'
+<pre><code class="coffeescript">  debug 'Registering packages...'
 
   pkgman.registerPackageList nconf.get 'packageList'
 
   debug 'Packages registered.'
 </code></pre>
+
 <h6 id="todo-unify-config-key-on-packages">TODO: Unify config key on <code>'packages'</code>.</h6>
-<pre><code>  packageSettings = new Config()
+<pre><code class="coffeescript">  packageSettings = new Config()
   for key, value of pkgman.invoke 'shrubConfigServer'
     packageSettings.set key.replace(/\//g, ':'), value
 
   nconf.defaults
 </code></pre>
-<h4 id="invoke-hook-shrubconfigserver">Invoke hook <code>shrubConfigServer</code>.</h4>
-<pre><code>    packageSettings: packageSettings.toJSON()
 
-    path: "#{__dirname}/.."
+<h4 id="invoke-hook-shrubconfigserver">Invoke hook <code>shrubConfigServer</code>.</h4>
+<pre><code class="coffeescript">    packageSettings: packageSettings.toJSON()
+
+    path: &quot;#{__dirname}/..&quot;
 
   return
 </code></pre>
+
 <h2 id="configset">config.set</h2>
 <ul>
 <li>(string) <code>key</code> - The key whose value to set.</li>
 </ul>
 <p><em>Set a configuration value.</em></p>
-<pre><code>exports.set = (key, value) -&gt; nconf.set key, value
+<pre><code class="coffeescript">exports.set = (key, value) -&gt; nconf.set key, value
 </code></pre>
               
             </div>

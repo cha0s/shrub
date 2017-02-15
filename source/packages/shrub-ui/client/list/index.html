@@ -916,6 +916,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1315,7 +1337,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1330,21 +1352,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1354,9 +1376,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1380,42 +1481,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1428,27 +1494,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1582,25 +1627,28 @@
             <div class="section">
               
                 <h1 id="ui-list">UI - List</h1>
-<pre><code>exports.pkgmanRegister = (registrar) -&gt;
+<pre><code class="coffeescript">exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+
 <h4 id="implements-hook-shrubangularcontroller">Implements hook <code>shrubAngularController</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubAngularController', -&gt; [
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAngularController', -&gt; [
 
     class ListController
 
       link: (scope, element, attr) -&gt;
 </code></pre>
+
 <p>Maintain the full ancestor path for list and item.</p>
-<pre><code>        scope.$watchGroup(
+<pre><code class="coffeescript">        scope.$watchGroup(
           [
             -&gt; scope.list?.name
             -&gt; scope.parentAncestorPath
           ]
           -&gt;
 </code></pre>
+
 <p>Keep track of the full ancestor path.</p>
-<pre><code>            parts = []
+<pre><code class="coffeescript">            parts = []
             parts.push scope.parentAncestorPath if scope.parentAncestorPath
             parts.push scope.list.name if scope.list?.name
             scope.ancestorPath = parts.join '-'
@@ -1610,8 +1658,9 @@
 
   ]
 </code></pre>
+
 <h4 id="implements-hook-shrubangulardirective">Implements hook <code>shrubAngularDirective</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubAngularDirective', -&gt; [
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAngularDirective', -&gt; [
 
     '$compile', '$timeout'
     ($compile, $timeout) -&gt;
@@ -1626,8 +1675,9 @@
         'ancestorPath'
       ]
 </code></pre>
+
 <p>Prevent infinite recursion when compiling nested lists.</p>
-<pre><code>      directive.compile = (cElement) -&gt;
+<pre><code class="coffeescript">      directive.compile = (cElement) -&gt;
 
         contents = cElement.contents().remove()
 
@@ -1646,12 +1696,12 @@
       directive.template = '''
 
 &lt;li
-  data-ng-repeat="item in list.items"
+  data-ng-repeat=&quot;item in list.items&quot;
 
   data-shrub-ui-list-item
-  data-shrub-ui-attributes="item.attributes"
-  data-item="item"
-  data-parent-ancestor-path="parentAncestorPath"
+  data-shrub-ui-attributes=&quot;item.attributes&quot;
+  data-item=&quot;item&quot;
+  data-parent-ancestor-path=&quot;parentAncestorPath&quot;
 &gt;&lt;/li&gt;
 
 '''

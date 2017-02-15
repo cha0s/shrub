@@ -927,6 +927,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1315,7 +1337,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1330,21 +1352,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1354,9 +1376,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1380,42 +1481,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1428,27 +1494,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1582,34 +1627,39 @@
             <div class="section">
               
                 <h1 id="html5-notifications">HTML5 notifications</h1>
-<pre><code>exports.pkgmanRegister = (registrar) -&gt;
+<pre><code class="coffeescript">exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+
 <h4 id="implements-hook-shrubangularappconfig">Implements hook <code>shrubAngularAppConfig</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubAngularAppConfig', -&gt; [
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAngularAppConfig', -&gt; [
     'shrub-html5-notificationProvider'
     (notificationProvider) -&gt;
 </code></pre>
+
 <p>Shrub defaults.</p>
-<pre><code>      notificationProvider.setOptions(
+<pre><code class="coffeescript">      notificationProvider.setOptions(
         icon: '/img/shrub.png'
         lang: 'en'
       )
 
   ]
 </code></pre>
+
 <h4 id="implements-hook-shrubangularprovider">Implements hook <code>shrubAngularProvider</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubAngularProvider', -&gt; [
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAngularProvider', -&gt; [
     'NotificationProvider'
     (NotificationProvider) -&gt;
 
       provider = {}
 </code></pre>
+
 <p>Forward.</p>
-<pre><code>      provider.setOptions = (options) -&gt;
+<pre><code class="coffeescript">      provider.setOptions = (options) -&gt;
         NotificationProvider.setOptions options
 </code></pre>
+
 <p>I am not really a fan of using new as an API here.</p>
-<pre><code>      provider.$get = [
+<pre><code class="coffeescript">      provider.$get = [
         'Notification'
         (Notification) -&gt;
 

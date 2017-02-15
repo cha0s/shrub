@@ -927,6 +927,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1315,7 +1337,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1330,21 +1352,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../../../../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../../../../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../../../../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1354,9 +1376,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../../../../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1380,42 +1481,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1428,27 +1494,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../../../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1582,10 +1627,11 @@
             <div class="section">
               
                 <h1 id="form-text">Form - Text</h1>
-<pre><code>exports.pkgmanRegister = (registrar) -&gt;
+<pre><code class="coffeescript">exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+
 <h4 id="implements-hook-shrubangulardirective">Implements hook <code>shrubAngularDirective</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubAngularDirective', -&gt; [
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAngularDirective', -&gt; [
     -&gt;
 
       scope: field: '=', form: '='
@@ -1604,22 +1650,22 @@
       template: '''
 
 &lt;label
-  data-ng-if="!!field.label"
-  data-ng-bind="field.label"
+  data-ng-if=&quot;!!field.label&quot;
+  data-ng-bind=&quot;field.label&quot;
 &gt;&lt;/label&gt;
 
 &lt;input
-  class="form-control"
-  name="{{field.name}}"
-  type="{{field.type}}"
+  class=&quot;form-control&quot;
+  name=&quot;{{field.name}}&quot;
+  type=&quot;{{field.type}}&quot;
 
-  data-shrub-ui-attributes="field.attributes"
-  data-ng-model="field.value"
-  data-ng-required="field.required"
-  data-ng-minlength="{{field.minlength}}"
-  data-ng-maxlength="{{field.maxlength}}"
-  data-ng-pattern="field.pattern"
-  data-ng-trim="{{field.trim}}"
+  data-shrub-ui-attributes=&quot;field.attributes&quot;
+  data-ng-model=&quot;field.value&quot;
+  data-ng-required=&quot;field.required&quot;
+  data-ng-minlength=&quot;{{field.minlength}}&quot;
+  data-ng-maxlength=&quot;{{field.maxlength}}&quot;
+  data-ng-pattern=&quot;field.pattern&quot;
+  data-ng-trim=&quot;{{field.trim}}&quot;
 &gt;
 
 '''
@@ -1628,8 +1674,9 @@
 
   assignToElement = (element, value) -&gt; element.val value
 </code></pre>
+
 <h4 id="implements-hook-shrubformwidgets">Implements hook <code>shrubFormWidgets</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubFormWidgets', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubFormWidgets', -&gt;
 
     widgets = []
 

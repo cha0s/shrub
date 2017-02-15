@@ -916,6 +916,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1317,7 +1339,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1332,21 +1354,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1356,9 +1378,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1382,42 +1483,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1430,27 +1496,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1584,46 +1629,53 @@
             <div class="section">
               
                 <h1 id="socketmanager">SocketManager</h1>
-<pre><code>{EventEmitter} = require 'events'
+<pre><code class="coffeescript">{EventEmitter} = require 'events'
 </code></pre>
+
 <p>This class implements an abstract interface to be implemented by a socket
 server (e.g. <a href="../source/packages/shrub-socket-socket.io">Socket.io</a>).</p>
-<pre><code>module.exports = class SocketManager extends EventEmitter
+<pre><code class="coffeescript">module.exports = class SocketManager extends EventEmitter
 </code></pre>
+
 <h2 id="constructor"><em>constructor</em></h2>
 <p><em>Create the server.</em></p>
-<pre><code>  constructor: -&gt;
+<pre><code class="coffeescript">  constructor: -&gt;
 
     super
 
     @_connectionMiddleware = null
     @_disconnectionMiddleware = null
 </code></pre>
+
 <h2 id="socketmanagerauthorizationfailure">SocketManager.AuthorizationFailure</h2>
 <p>May be thrown from within socket authorization middleware, to denote that
 no real error occurred, but authorization failed.</p>
-<pre><code>  class @AuthorizationFailure extends Error
+<pre><code class="coffeescript">  class @AuthorizationFailure extends Error
     constructor: (@message) -&gt;
 </code></pre>
+
 <h2 id="socketmanagerloadmiddleware">SocketManager#loadMiddleware</h2>
 <p><em>Gather and initialize socket middleware.</em></p>
-<pre><code>  loadMiddleware: -&gt;
+<pre><code class="coffeescript">  loadMiddleware: -&gt;
 
     middleware = require 'middleware'
 </code></pre>
+
 <h4 id="invoke-hook-shrubsocketconnectionmiddleware">Invoke hook <code>shrubSocketConnectionMiddleware</code>.</h4>
-<pre><code>    @_connectionMiddleware = middleware.fromConfig(
+<pre><code class="coffeescript">    @_connectionMiddleware = middleware.fromConfig(
       'shrub-socket:connectionMiddleware'
     )
 </code></pre>
+
 <h4 id="invoke-hook-shrubsocketdisconnectionmiddleware">Invoke hook <code>shrubSocketDisconnectionMiddleware</code>.</h4>
-<pre><code>    @_disconnectionMiddleware = middleware.fromConfig(
+<pre><code class="coffeescript">    @_disconnectionMiddleware = middleware.fromConfig(
       'shrub-socket:disconnectionMiddleware'
     )
 </code></pre>
+
 <p>Ensure any subclass implements these "pure virtual" methods.</p>
-<pre><code>  SocketManager::[method] = (-&gt; throw new ReferenceError(
-    "SocketManager::#{method} is a pure virtual method!"
+<pre><code class="coffeescript">  SocketManager::[method] = (-&gt; throw new ReferenceError(
+    &quot;SocketManager::#{method} is a pure virtual method!&quot;
   )) for method in [
     'broadcast', 'channels', 'clients', 'intercom', 'listen'
   ]

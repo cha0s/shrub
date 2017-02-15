@@ -937,6 +937,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1325,7 +1347,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1340,21 +1362,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../../../packages/shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../../../packages/shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../../../packages/shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1364,9 +1386,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../../../packages/shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1390,42 +1491,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1438,27 +1504,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../../packages/shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1593,8 +1638,9 @@
               
                 <h1 id="configuration-system">Configuration system.</h1>
 <p><em>Handle getting, setting, and checking configuration state.</em></p>
-<pre><code>module.exports = new class Config
+<pre><code class="coffeescript">module.exports = new class Config
 </code></pre>
+
 <p>This class allows us to wrap and subsequently get, set, and check the
 existence of values in a configuration tree. The configuration tree may be
 traversed with colons, e.g. <code>parent:child:grandchild</code>. Supposing we have a
@@ -1631,40 +1677,44 @@ wrapped.get 'child'
 
 <p>Returns: <code>true</code></p>
 <h2 id="provide-the-class-externally">Provide the class externally.</h2>
-<pre><code>  Config: Config
+<pre><code class="coffeescript">  Config: Config
 </code></pre>
+
 <h2 id="constructor"><em>constructor</em></h2>
 <ul>
 <li>(object) <code>config</code> - The configuration tree.</li>
 </ul>
 <p><em>Create a configuration wrapper.</em></p>
-<pre><code>  constructor: (config = {}) -&gt; @from config
+<pre><code class="coffeescript">  constructor: (config = {}) -&gt; @from config
 </code></pre>
+
 <h2 id="configfrom">Config#from</h2>
 <ul>
 <li>(object) <code>config</code> - The configuration object.</li>
 </ul>
 <p><em>Set configuration from an object.</em></p>
-<pre><code>  from: (@config) -&gt;
+<pre><code class="coffeescript">  from: (@config) -&gt;
 </code></pre>
+
 <h2 id="configget">Config#get</h2>
 <ul>
 <li>(string) <code>path</code> - The path to look up, e.g. parent:child:grandchild</li>
 </ul>
 <p><em>Get a value by path.</em></p>
-<pre><code>  get: (path) -&gt;
+<pre><code class="coffeescript">  get: (path) -&gt;
 
     current = @config
     for part in path.split ':'
       current = current?[part]
     current
 </code></pre>
+
 <h2 id="confighas">Config#has</h2>
 <ul>
 <li>(string) <code>path</code> - The path to look up, e.g. <code>'parent:child:grandchild'</code></li>
 </ul>
 <p><em>Check whether a path exists.</em></p>
-<pre><code>  has: (path) -&gt;
+<pre><code class="coffeescript">  has: (path) -&gt;
 
     current = @config
     for part in path.split ':'
@@ -1673,6 +1723,7 @@ wrapped.get 'child'
 
     return true
 </code></pre>
+
 <h2 id="configset">Config#set</h2>
 <ul>
 <li>
@@ -1683,7 +1734,7 @@ wrapped.get 'child'
 </li>
 </ul>
 <p><em>Set a value by path.</em></p>
-<pre><code>  set: (path, value) -&gt;
+<pre><code class="coffeescript">  set: (path, value) -&gt;
 
     [parts..., last] = path.split ':'
     current = @config
@@ -1692,9 +1743,10 @@ wrapped.get 'child'
 
     current[last] = value
 </code></pre>
+
 <h2 id="configtojson">Config#toJSON</h2>
 <p><em>Return config object for serialization.</em></p>
-<pre><code>  toJSON: -&gt; @config
+<pre><code class="coffeescript">  toJSON: -&gt; @config
 </code></pre>
               
             </div>

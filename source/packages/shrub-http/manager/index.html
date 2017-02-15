@@ -939,6 +939,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1327,7 +1349,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1342,21 +1364,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1366,9 +1388,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1392,42 +1493,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1440,27 +1506,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1596,7 +1641,7 @@
                 <h1 id="http-manager">HTTP Manager</h1>
 <p><em>Manage an HTTP server instance.</em></p>
 <h6 id="todo-rename-to-abstracthttp">TODO: Rename to AbstractHttp</h6>
-<pre><code>Promise = require 'bluebird'
+<pre><code class="coffeescript">Promise = require 'bluebird'
 
 config = require 'config'
 pkgman = require 'pkgman'
@@ -1608,42 +1653,49 @@ httpDebug = require('debug') 'shrub:http'
 httpDebugSilly = require('debug') 'shrub-silly:http'
 httpMiddlewareDebug = require('debug') 'shrub-silly:http:middleware'
 </code></pre>
+
 <h2 id="httpmanager">HttpManager</h2>
 <p>An abstract interface to be implemented by an HTTP server (e.g.
 <a href="../source/packages/shrub-http-express">Express</a>).</p>
-<pre><code>exports.Manager = class HttpManager
+<pre><code class="coffeescript">exports.Manager = class HttpManager
 </code></pre>
+
 <h2 id="constructor"><em>constructor</em></h2>
 <p><em>Create the server.</em></p>
-<pre><code>  constructor: -&gt;
+<pre><code class="coffeescript">  constructor: -&gt;
 </code></pre>
+
 <h6 id="todo-keeping-a-reference-here-means-http-stuff-cant-be-updated-at-run-time">TODO: Keeping a reference here means HTTP stuff can't be updated at run-time.</h6>
-<pre><code>    @_config = config.get 'packageSettings:shrub-http'
+<pre><code class="coffeescript">    @_config = config.get 'packageSettings:shrub-http'
 
     @_middleware = null
 </code></pre>
+
 <h2 id="httpmanagerinitialize">HttpManager#initialize</h2>
 <p><em>Initialize the server.</em></p>
-<pre><code>  initialize: -&gt;
+<pre><code class="coffeescript">  initialize: -&gt;
 </code></pre>
+
 <h4 id="invoke-hook-shrubhttproutes">Invoke hook <code>shrubHttpRoutes</code>.</h4>
-<pre><code>    httpDebugSilly '- Registering routes...'
+<pre><code class="coffeescript">    httpDebugSilly '- Registering routes...'
     for routeList in pkgman.invokeFlat 'shrubHttpRoutes', this
 
       for route in routeList
         route.verb ?= 'get'
 
-        httpDebugSilly "- - #{route.verb.toUpperCase()} #{route.path}"
+        httpDebugSilly &quot;- - #{route.verb.toUpperCase()} #{route.path}&quot;
 
         @addRoute route
     httpDebugSilly '- Routes registered.'
 </code></pre>
+
 <p>Start listening.</p>
-<pre><code>    @listen()
+<pre><code class="coffeescript">    @listen()
 </code></pre>
+
 <h2 id="httpmanagerlisten">HttpManager#listen</h2>
 <p><em>Listen for HTTP connections.</em></p>
-<pre><code>  listen: -&gt;
+<pre><code class="coffeescript">  listen: -&gt;
     self = this
 
     new Promise (resolve, reject) -&gt;
@@ -1661,36 +1713,42 @@ httpMiddlewareDebug = require('debug') 'shrub-silly:http:middleware'
 
         )
 </code></pre>
+
 <h2 id="httpmanagerpath">HttpManager#path</h2>
 <p><em>The path where static files are served from.</em></p>
-<pre><code>  path: -&gt; @_config.path
+<pre><code class="coffeescript">  path: -&gt; @_config.path
 </code></pre>
+
 <h2 id="httpmanagerport">HttpManager#port</h2>
 <p><em>Get the port this server (is|will be) listening on.</em></p>
-<pre><code>  port: -&gt; @_config.port
+<pre><code class="coffeescript">  port: -&gt; @_config.port
 </code></pre>
+
 <h2 id="httpmanagerregistermiddleware">HttpManager#registerMiddleware</h2>
 <p><em>Gather and initialize HTTP middleware.</em></p>
-<pre><code>  registerMiddleware: -&gt;
+<pre><code class="coffeescript">  registerMiddleware: -&gt;
 
     httpMiddlewareDebug '- Loading HTTP middleware...'
 
     httpMiddleware = @_config.middleware.concat()
 </code></pre>
+
 <p>Make absolutely sure the requests are finalized.</p>
-<pre><code>    httpMiddleware.push 'shrub-http'
+<pre><code class="coffeescript">    httpMiddleware.push 'shrub-http'
 </code></pre>
+
 <h4 id="invoke-hook-shrubhttpmiddleware">Invoke hook <code>shrubHttpMiddleware</code>.</h4>
 <p>Invoked every time an HTTP connection is established.</p>
-<pre><code>    @_middleware = middleware.fromHook(
+<pre><code class="coffeescript">    @_middleware = middleware.fromHook(
       'shrubHttpMiddleware', httpMiddleware, this
     )
 
     httpMiddlewareDebug '- HTTP middleware loaded.'
 </code></pre>
+
 <p>Ensure any subclass implements these "pure virtual" methods.</p>
-<pre><code>  this::[method] = (-&gt; throw new ReferenceError(
-    "HttpManager::#{method} is a pure virtual method!"
+<pre><code class="coffeescript">  this::[method] = (-&gt; throw new ReferenceError(
+    &quot;HttpManager::#{method} is a pure virtual method!&quot;
   )) for method in [
     'addRoute', 'cluster', 'listener', 'server'
   ]

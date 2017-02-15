@@ -933,6 +933,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1321,7 +1343,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1336,21 +1358,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1360,9 +1382,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1386,42 +1487,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1434,27 +1500,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1589,83 +1634,96 @@
               
                 <h1 id="angular">Angular</h1>
 <p><em>Coordinate various core functionality.</em></p>
-<pre><code>_ = require 'lodash'
+<pre><code class="coffeescript">_ = require 'lodash'
 Promise = require 'bluebird'
 
 config = require 'config'
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+
 <h4 id="implements-hook-shrubangularahrefsanitizationwhitelist">Implements hook <code>shrubAngularAHrefSanitizationWhitelist</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubAngularAHrefSanitizationWhitelist', -&gt; [
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAngularAHrefSanitizationWhitelist', -&gt; [
 </code></pre>
+
 <p>Allow more protocols.</p>
-<pre><code>    '(?:https?|ftp|mailto|tel|file):'
+<pre><code class="coffeescript">    '(?:https?|ftp|mailto|tel|file):'
 </code></pre>
+
 <p>Allow javascript:void(0).</p>
-<pre><code>    'javascript:void\\(0\\)'
+<pre><code class="coffeescript">    'javascript:void\\(0\\)'
   ]
 </code></pre>
+
 <h4 id="implements-hook-shrubangularappconfig">Implements hook <code>shrubAngularAppConfig</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubAngularAppConfig', -&gt; [
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAngularAppConfig', -&gt; [
     '$compileProvider', '$injector', '$provide', '$routeProvider', '$locationProvider', 'shrub-pkgmanProvider'
     ($compileProvider, $injector, $provide, $routeProvider, $locationProvider, pkgmanProvider) -&gt;
 </code></pre>
+
 <h4 id="invoke-hook-shrubangularahrefsanitizationwhitelist">Invoke hook <code>shrubAngularAHrefSanitizationWhitelist</code>.</h4>
-<pre><code>      regexes = []
+<pre><code class="coffeescript">      regexes = []
       for regexes_ in pkgmanProvider.invokeFlat(
         'shrubAngularAHrefSanitizationWhitelist'
       )
         regexes.push regex for regex in regexes_
 
       $compileProvider.aHrefSanitizationWhitelist new RegExp(
-        "^\s*(?:#{regexes.join '|'})"
+        &quot;^\s*(?:#{regexes.join '|'})&quot;
       )
 </code></pre>
+
 <p>Attach debug info if we're in test mode.</p>
-<pre><code>      unless config.get 'packageConfig:shrub-core:testMode'
+<pre><code class="coffeescript">      unless config.get 'packageConfig:shrub-core:testMode'
         $compileProvider.debugInfoEnabled false
 </code></pre>
+
 <p>Completely override the $q service with Bluebird, because it's
 awesome.</p>
 <h6 id="todo-angular-also-implements-a-private-service-called-q-used-for-animation-we-should-override-that-one-too">TODO: Angular also implements a private service called $$q used for animation. We should override that one, too.</h6>
-<pre><code>      $provide.decorator '$q', [
+<pre><code class="coffeescript">      $provide.decorator '$q', [
         '$rootScope', '$exceptionHandler'
         ($rootScope, $exceptionHandler) -&gt;
 
           Promise.onPossiblyUnhandledRejection (error) -&gt;
 </code></pre>
+
 <p>$timeout and $interval will throw this for cancellation. It's
 non-notable.</p>
-<pre><code>            return if 'canceled' is error.message
+<pre><code class="coffeescript">            return if 'canceled' is error.message
 
             $exceptionHandler error
 </code></pre>
+
 <p>Hook Bluebird's schedule up to Angular.</p>
-<pre><code>          Promise.setScheduler (fn) -&gt; $rootScope.$evalAsync fn
+<pre><code class="coffeescript">          Promise.setScheduler (fn) -&gt; $rootScope.$evalAsync fn
 </code></pre>
+
 <h2 id="promisedefer">Promise.defer</h2>
 <p>See: https://docs.angularjs.org/api/ng/service/$q#the-deferred-api</p>
-<pre><code>          Promise.defer = -&gt;
+<pre><code class="coffeescript">          Promise.defer = -&gt;
             resolve = null
             reject = null
 </code></pre>
+
 <p>Create a promise.</p>
-<pre><code>            promise = new Promise -&gt;
+<pre><code class="coffeescript">            promise = new Promise -&gt;
               resolve = arguments[0]
 </code></pre>
+
 <p>Angular is a scrub, and will reject promises with strings
 instead of fully-fledged Error instances. Hold its hand.</p>
-<pre><code>              reject_ = arguments[1]
+<pre><code class="coffeescript">              reject_ = arguments[1]
               reject = (error) -&gt;
                 error = new Error error if _.isString error
                 reject_ error
 
               return
 </code></pre>
+
 <p>Angular depends on notify, which is a crap API. We'll hack
 support for it in.</p>
-<pre><code>            __notifications = []
+<pre><code class="coffeescript">            __notifications = []
             proxyThen = promise.then
             promise.then = -&gt;
               args = (arg for arg in arguments)
@@ -1673,30 +1731,36 @@ support for it in.</p>
               proxyThen.apply promise, args
             notify: (args...) -&gt; fn args... for fn in __notifications
 </code></pre>
+
 <p>Return the deferred object.</p>
-<pre><code>            promise: promise
+<pre><code class="coffeescript">            promise: promise
             resolve: resolve
             reject: reject
 </code></pre>
+
 <h2 id="promisewhen">Promise.when</h2>
 <p>See: https://docs.angularjs.org/api/ng/service/$q#when</p>
-<pre><code>          Promise.when = (value, handlers...) -&gt;
+<pre><code class="coffeescript">          Promise.when = (value, handlers...) -&gt;
             Promise.cast(value).then handlers...
 </code></pre>
+
 <p>Proxy Promise.all because Angular supports passing in an object
 where the values are promises, and the result is an object keyed
 with the resolved values from the promise.</p>
-<pre><code>          originalAll = Promise.all
+<pre><code class="coffeescript">          originalAll = Promise.all
           Promise.all = (promises) -&gt;
 </code></pre>
+
 <p>Defer to Bluebird if it's an array.</p>
-<pre><code>            return originalAll promises if angular.isArray promises
+<pre><code class="coffeescript">            return originalAll promises if angular.isArray promises
 </code></pre>
+
 <p>If it's not an object, defer to Bluebird (it'll throw).</p>
-<pre><code>            return originalAll promises unless angular.isObject promises
+<pre><code class="coffeescript">            return originalAll promises unless angular.isObject promises
 </code></pre>
+
 <p>Track the keys so we can map the values.</p>
-<pre><code>            promiseKeys = []
+<pre><code class="coffeescript">            promiseKeys = []
             promiseArray = for key, promise of promises
               promiseKeys.push key
               promise
@@ -1709,20 +1773,23 @@ with the resolved values from the promise.</p>
 
               objectResult
 </code></pre>
+
 <p>Return the service.</p>
-<pre><code>          Promise
+<pre><code class="coffeescript">          Promise
 
       ]
 </code></pre>
+
 <h4 id="invoke-hook-shrubangularroutes">Invoke hook <code>shrubAngularRoutes</code>.</h4>
 <p>Allow packages to define routes in the Angular application.</p>
-<pre><code>      routes = {}
+<pre><code class="coffeescript">      routes = {}
       for route in _.flatten pkgmanProvider.invokeFlat 'shrubAngularRoutes'
         routes[route.path ? path] = route
 </code></pre>
+
 <p>Invoke hook <code>shrubAngularRoutesAlter</code>. Allow packages to alter defined
 routes.</p>
-<pre><code>      $injector.invoke(
+<pre><code class="coffeescript">      $injector.invoke(
         injectable, null
         routes: routes
       ) for injectable in pkgmanProvider.invokeFlat 'shrubAngularRoutesAlter'
@@ -1730,20 +1797,23 @@ routes.</p>
       for path, route of routes
         do (path, route) -&gt;
 </code></pre>
+
 <p>Wrap the controller so we can provide some automatic behavior.</p>
-<pre><code>          routeController = route.controller
+<pre><code class="coffeescript">          routeController = route.controller
           route.controller = [
             '$controller', '$injector', '$q', '$scope'
             ($controller, $injector, $q, $scope) -&gt;
 </code></pre>
+
 <p>Immediately resolve if there's no controller.</p>
-<pre><code>              unless routeController?
+<pre><code class="coffeescript">              unless routeController?
                 return $scope.$emit 'shrub.core.routeRendered'
 </code></pre>
+
 <p>Controllers may return a promise, so wait until any returned
 value fulfills. If it's not a promise, this will be in the
 next tick.</p>
-<pre><code>              $q.when($injector.invoke(
+<pre><code class="coffeescript">              $q.when($injector.invoke(
                 routeController, null
                 $scope: $scope
                 route: route
@@ -1751,17 +1821,21 @@ next tick.</p>
 
           ]
 </code></pre>
+
 <p>Ensure a template exists to make Angular happy.</p>
-<pre><code>          route.template ?= ' '
+<pre><code class="coffeescript">          route.template ?= ' '
 </code></pre>
+
 <p>Register the path into Angular.</p>
-<pre><code>          $routeProvider.when "/#{route.path ? path}", route
+<pre><code class="coffeescript">          $routeProvider.when &quot;/#{route.path ? path}&quot;, route
 </code></pre>
+
 <p>Create a unique entry point.</p>
-<pre><code>      $routeProvider.when '/shrub-angular-entry-point', {}
+<pre><code class="coffeescript">      $routeProvider.when '/shrub-angular-entry-point', {}
 </code></pre>
+
 <p>Turn on HTML5 mode: "Real" URLs.</p>
-<pre><code>      $locationProvider.html5Mode true
+<pre><code class="coffeescript">      $locationProvider.html5Mode true
   ]
 </code></pre>
               

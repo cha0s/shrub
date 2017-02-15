@@ -916,6 +916,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1323,7 +1345,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1338,21 +1360,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1362,9 +1384,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1388,42 +1489,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1436,27 +1502,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1591,7 +1636,7 @@
               
                 <h1 id="socketiomanager">SocketIoManager</h1>
 <p><em>A <a href="http://socket.io/">Socket.IO</a> implementation of SocketManager.</em></p>
-<pre><code>{EventEmitter} = require 'events'
+<pre><code class="coffeescript">{EventEmitter} = require 'events'
 
 Promise = null
 
@@ -1605,8 +1650,9 @@ SocketManager = require '../shrub-socket/manager'
 
 module.exports = class SocketIoManager extends SocketManager
 </code></pre>
+
 <h2 id="constructor"><em>constructor</em></h2>
-<pre><code>  constructor: -&gt;
+<pre><code class="coffeescript">  constructor: -&gt;
     super
 
     Promise ?= require 'bluebird'
@@ -1619,8 +1665,9 @@ module.exports = class SocketIoManager extends SocketManager
 
     options = config.get 'packageSettings:shrub-socket:manager:options'
 </code></pre>
+
 <p>Load the adapter.</p>
-<pre><code>    @_adapter = switch options?.store ? 'redis'
+<pre><code class="coffeescript">    @_adapter = switch options?.store ? 'redis'
 
       when 'redis'
 
@@ -1631,6 +1678,7 @@ module.exports = class SocketIoManager extends SocketManager
           subClient: redis.createClient()
         )
 </code></pre>
+
 <h2 id="socketiomanagerbroadcast">SocketIoManager#broadcast</h2>
 <ul>
 <li>
@@ -1644,29 +1692,32 @@ module.exports = class SocketIoManager extends SocketManager
 </li>
 </ul>
 <p><em>Broadcast data to clients in a room.</em></p>
-<pre><code>  broadcast: (channel, event, data) -&gt;
+<pre><code class="coffeescript">  broadcast: (channel, event, data) -&gt;
     @io.in(channel).emit event, data
     this
 </code></pre>
+
 <h2 id="socketiomanagerchannels">SocketIoManager#channels</h2>
 <ul>
 <li>(socket) <code>socket</code> - A socket.</li>
 </ul>
 <p><em>Get a list of channels a socket is in.</em></p>
-<pre><code>  channels: (socket) -&gt; socket.rooms
+<pre><code class="coffeescript">  channels: (socket) -&gt; socket.rooms
 </code></pre>
+
 <h2 id="socketiomanagerclients">SocketIoManager#clients</h2>
 <ul>
 <li>(string) <code>channel</code> - The channel to check.</li>
 </ul>
 <p><em>Get a list of clients in a channel.</em></p>
-<pre><code>  clients: (channel) -&gt;
+<pre><code class="coffeescript">  clients: (channel) -&gt;
     self = this
     new Promise (resolve, reject) -&gt;
       self.io.in(channel).clients (error, clients) -&gt;
         return reject error if error?
         resolve clients
 </code></pre>
+
 <h2 id="socketiomanagerintercom">SocketIoManager#intercom</h2>
 <ul>
 <li>
@@ -1680,70 +1731,83 @@ module.exports = class SocketIoManager extends SocketManager
 </li>
 </ul>
 <p><em>Broadcast data to server sockets in a room.</em></p>
-<pre><code>  intercom: (channel, event, data) -&gt;
+<pre><code class="coffeescript">  intercom: (channel, event, data) -&gt;
     @io.in(channel).intercom event, data
     this
 </code></pre>
+
 <h2 id="socketiomanagerlisten">SocketIoManager#listen</h2>
 <ul>
 <li>(HttpServer) <code>http</code> - The HTTP server to listen on for connections.</li>
 </ul>
 <p><em>Listen for socket connections coming through the HTTP server.</em></p>
-<pre><code>  listen: (http) -&gt;
+<pre><code class="coffeescript">  listen: (http) -&gt;
 
     options = config.get 'packageSettings:shrub-socket:manager:options'
 </code></pre>
+
 <p>Set up the socket.io server.</p>
-<pre><code>    @io = require('socket.io') http.server()
+<pre><code class="coffeescript">    @io = require('socket.io') http.server()
 </code></pre>
+
 <p>Set the adapter.</p>
-<pre><code>    @io.adapter @_adapter if @_adapter?
+<pre><code class="coffeescript">    @io.adapter @_adapter if @_adapter?
 </code></pre>
+
 <p>Authorization.</p>
-<pre><code>    @io.use (socket, next) =&gt;
+<pre><code class="coffeescript">    @io.use (socket, next) =&gt;
 
       socket.request.http = http
       socket.request.socket = socket
 </code></pre>
+
 <p>Connect provides this, it will make middleware (like session) not
 choke and die.</p>
-<pre><code>      socket.request.originalUrl = socket.request.url
+<pre><code class="coffeescript">      socket.request.originalUrl = socket.request.url
 </code></pre>
+
 <p>Build a fake response which extends EventEmitter because some connect
 middleware (like session) listenes for errors with <code>on</code>. Even though
 they're never actually emitted, this will make sure nothing breaks.</p>
-<pre><code>      res = new class SocketConnectionResponse extends EventEmitter
+<pre><code class="coffeescript">      res = new class SocketConnectionResponse extends EventEmitter
         constructor: -&gt; super
 </code></pre>
+
 <p>Stubs. <code>TODO</code>: Make these not stubs.</p>
-<pre><code>        getHeader: -&gt; null
+<pre><code class="coffeescript">        getHeader: -&gt; null
         write: -&gt; null
 </code></pre>
+
 <p>Dispatch the authorization middleware.</p>
-<pre><code>      @_connectionMiddleware.dispatch socket.request, res, (error) -&gt;
+<pre><code class="coffeescript">      @_connectionMiddleware.dispatch socket.request, res, (error) -&gt;
 </code></pre>
+
 <p>If any kind of error was thrown, propagate it.</p>
-<pre><code>        return next error if error?
+<pre><code class="coffeescript">        return next error if error?
 
         next()
 </code></pre>
+
 <p>Connection (post-authorization).</p>
-<pre><code>    @io.on 'connection', (socket) =&gt;
+<pre><code class="coffeescript">    @io.on 'connection', (socket) =&gt;
 </code></pre>
+
 <p>Run the disconnection middleware on socket close.</p>
-<pre><code>      oncloseProxy = socket.onclose
+<pre><code class="coffeescript">      oncloseProxy = socket.onclose
       socket.onclose = =&gt;
         @_disconnectionMiddleware.dispatch socket.request, null, (error) -&gt;
           socketLogger.error errors.stack error if error?
 
         oncloseProxy.call socket
 </code></pre>
+
 <p>Join a '$global' channel.</p>
-<pre><code>      socket.join '$global', (error) =&gt;
+<pre><code class="coffeescript">      socket.join '$global', (error) =&gt;
         return socketLogger.error errors.stack error if error?
 </code></pre>
+
 <p>Dispatch the connection middleware.</p>
-<pre><code>        socket.emit 'initialized'
+<pre><code class="coffeescript">        socket.emit 'initialized'
 </code></pre>
               
             </div>

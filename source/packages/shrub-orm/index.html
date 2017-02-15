@@ -947,6 +947,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1335,7 +1357,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1350,21 +1372,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1374,9 +1396,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1400,42 +1501,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1448,27 +1514,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1604,7 +1649,7 @@
                 <h1 id="object-relational-mapping">Object-relational mapping</h1>
 <p><em>Tools for working with
 <a href="https://github.com/balderdashy/waterline">Waterline</a>.</em></p>
-<pre><code>require('events').EventEmitter.prototype._maxListeners = 100
+<pre><code class="coffeescript">require('events').EventEmitter.prototype._maxListeners = 100
 
 config = require 'config'
 pkgman = require 'pkgman'
@@ -1618,13 +1663,15 @@ waterline = null
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+
 <h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <code>shrubCorePreBootstrap</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubCorePreBootstrap', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubCorePreBootstrap', -&gt;
 
     Waterline = require 'waterline'
 </code></pre>
+
 <h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <code>shrubCoreBootstrapMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubCoreBootstrapMiddleware', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubCoreBootstrapMiddleware', -&gt;
 
     waterline = new Waterline()
 
@@ -1635,10 +1682,11 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     ]
 </code></pre>
-<h4 id="implements-hook-shrubgruntconfig">Implements hook <code>shrubGruntConfig</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubGruntConfig', (gruntConfig) -&gt;
 
-    gruntConfig.copyAppFiles "#{__dirname}/app", 'shrub-orm'
+<h4 id="implements-hook-shrubgruntconfig">Implements hook <code>shrubGruntConfig</code>.</h4>
+<pre><code class="coffeescript">  registrar.registerHook 'shrubGruntConfig', (gruntConfig) -&gt;
+
+    gruntConfig.copyAppFiles &quot;#{__dirname}/app&quot;, 'shrub-orm'
 
     gruntConfig.registerTask 'build:shrub-orm', [
       'newer:copy:shrub-orm'
@@ -1646,21 +1694,24 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     gruntConfig.registerTask 'build', ['build:shrub-orm']
 </code></pre>
+
 <h4 id="implements-hook-shrubconfigserver">Implements hook <code>shrubConfigServer</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubConfigServer', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubConfigServer', -&gt;
 </code></pre>
+
 <p>The available adapters. This is a list of module names. We provide
 sails-redis by default.</p>
-<pre><code>    adapters: [
+<pre><code class="coffeescript">    adapters: [
       'sails-redis'
     ]
 </code></pre>
+
 <p>The available connnections. This is a keyed list of available
 connections which are defined as an adapter and the configuration for
 the adapter. The entries in the <code>adapters</code> list are available for use
 here. We provide a <code>shrub</code> connection by default, which uses the
 sails-redis adapter with defaults.</p>
-<pre><code>    connections:
+<pre><code class="coffeescript">    connections:
 
       shrub:
 
@@ -1670,64 +1721,74 @@ sails-redis adapter with defaults.</p>
         password: null
         database: null
 </code></pre>
+
 <h4 id="implements-hook-shrubreplcontext">Implements hook <code>shrubReplContext</code>.</h4>
 <p>Provide ORM to the REPL context.</p>
-<pre><code>  registrar.registerHook 'shrubReplContext', (context) -&gt; context.orm = exports
+<pre><code class="coffeescript">  registrar.registerHook 'shrubReplContext', (context) -&gt; context.orm = exports
 </code></pre>
+
 <h2 id="orminitialize">orm.initialize</h2>
 <ul>
 <li>(Function) <code>fn</code> - Nodeback called when initialization completes.</li>
 </ul>
 <p><em>Spin up Waterline with our configuration.</em></p>
-<pre><code>exports.initialize = (fn) -&gt;
+<pre><code class="coffeescript">exports.initialize = (fn) -&gt;
 
   config_ = config.get 'packageSettings:shrub-orm'
 
   waterlineConfig = adapters: {}, connections: {}
 </code></pre>
+
 <p><code>require</code> all the adapter modules.</p>
-<pre><code>  for adapter in config_.adapters
+<pre><code class="coffeescript">  for adapter in config_.adapters
     waterlineConfig.adapters[adapter] = require adapter
 
   waterlineConfig.connections = config_.connections
 </code></pre>
+
 <h4 id="invoke-hook-shrubormcollections">Invoke hook <code>shrubOrmCollections</code>.</h4>
-<pre><code>  collections_ = {}
+<pre><code class="coffeescript">  collections_ = {}
   for collectionList in pkgman.invokeFlat 'shrubOrmCollections', waterline
     for identity, collection of collectionList
 </code></pre>
+
 <p>Set collection defaults.</p>
-<pre><code>      collection.connection ?= 'shrub'
+<pre><code class="coffeescript">      collection.connection ?= 'shrub'
       collection.identity ?= identity
       collection.migrate ?= 'create'
       collections_[collection.identity] = collection
 </code></pre>
+
 <h2 id="collectioninstantiate">Collection#instantiate.</h2>
 <ul>
 <li>(Object) <code>values</code> - An object with values to populate the model
 properties.</li>
 </ul>
 <p><em>Instantiate a model with defaults supplied.</em></p>
-<pre><code>      collection.instantiate = (values = {}) -&gt;
+<pre><code class="coffeescript">      collection.instantiate = (values = {}) -&gt;
 
         for key, value of @attributes
           continue unless value.defaultsTo?
 </code></pre>
+
 <p>Set any model defaults.</p>
-<pre><code>          values[key] ?= if 'function' is typeof value.defaultsTo
+<pre><code class="coffeescript">          values[key] ?= if 'function' is typeof value.defaultsTo
             value.defaultsTo.call values
           else
             JSON.parse JSON.stringify value.defaultsTo
 </code></pre>
+
 <p>Reach into Waterline a bit, hackish but they simply don't provide us
 with a sane API for this.</p>
-<pre><code>        new @_model @_schema.cleanValues @_transformer.serialize values
+<pre><code class="coffeescript">        new @_model @_schema.cleanValues @_transformer.serialize values
 </code></pre>
+
 <h4 id="invoke-hook-shrubormcollectionsalter">Invoke hook <code>shrubOrmCollectionsAlter</code>.</h4>
-<pre><code>  pkgman.invoke 'shrubOrmCollectionsAlter', collections_, waterline
+<pre><code class="coffeescript">  pkgman.invoke 'shrubOrmCollectionsAlter', collections_, waterline
 </code></pre>
+
 <p>Load the collections into Waterline.</p>
-<pre><code>  for i, collection of collections_
+<pre><code class="coffeescript">  for i, collection of collections_
     waterline.loadCollection Waterline.Collection.extend collection
 
   waterline.initialize waterlineConfig, (error, data) -&gt;
@@ -1738,31 +1799,36 @@ with a sane API for this.</p>
 
     fn()
 </code></pre>
+
 <h2 id="ormcollection">orm.collection</h2>
 <ul>
 <li>(String) <code>identity</code> - Collection identity. e.g. <code>'shrub-user'</code></li>
 </ul>
 <p><em>Get a collection by identity.</em></p>
-<pre><code>exports.collection = (identity) -&gt; collections[identity]
+<pre><code class="coffeescript">exports.collection = (identity) -&gt; collections[identity]
 </code></pre>
+
 <h2 id="ormcollections">orm.collections</h2>
 <p><em>Get all collections.</em></p>
-<pre><code>exports.collections = -&gt; collections
+<pre><code class="coffeescript">exports.collections = -&gt; collections
 </code></pre>
+
 <h2 id="ormconnections">orm.connections</h2>
 <p><em>Get all connections.</em></p>
-<pre><code>exports.connections = -&gt; connections
+<pre><code class="coffeescript">exports.connections = -&gt; connections
 </code></pre>
+
 <h2 id="ormteardown">orm.teardown</h2>
 <ul>
 <li>(Function) <code>fn</code> - Nodeback called after teardown.</li>
 </ul>
 <p><em>Tear down Waterline.</em></p>
-<pre><code>exports.teardown = (fn) -&gt; waterline.teardown fn
+<pre><code class="coffeescript">exports.teardown = (fn) -&gt; waterline.teardown fn
 </code></pre>
+
 <h2 id="ormwaterline">orm.waterline</h2>
 <p><em>Get the Waterline instance.</em></p>
-<pre><code>exports.waterline = -&gt; waterline
+<pre><code class="coffeescript">exports.waterline = -&gt; waterline
 </code></pre>
               
             </div>
@@ -1771,7 +1837,7 @@ with a sane API for this.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../shrub-repl/" class="btn btn-neutral float-right" title="index.coffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../shrub-passport/" class="btn btn-neutral float-right" title="index.coffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="client/" class="btn btn-neutral" title="index.coffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -1805,7 +1871,7 @@ with a sane API for this.</p>
         <span><a href="client/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../shrub-repl/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../shrub-passport/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

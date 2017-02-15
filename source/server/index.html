@@ -916,6 +916,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../packages/shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../packages/shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1304,7 +1326,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1319,21 +1341,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../packages/shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../packages/shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../packages/shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../packages/shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../packages/shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../packages/shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1343,9 +1365,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../packages/shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../packages/shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../packages/shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../packages/shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../packages/shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../packages/shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../packages/shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../packages/shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../packages/shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../packages/shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../packages/shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1369,42 +1470,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../packages/shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../packages/shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../packages/shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../packages/shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../packages/shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1417,27 +1483,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../packages/shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../packages/shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../packages/shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../packages/shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1588,7 +1633,7 @@
 and process exit.</em> The core bootstrap phase injects environment into a
 forked copy of the application including require paths to allow core and
 custom packages to be included without qualification.</p>
-<pre><code>{fork} = require "./server/bootstrap"
+<pre><code class="coffeescript">{fork} = require &quot;./server/bootstrap&quot;
 unless fork()
 
   Promise = require 'bluebird'
@@ -1601,29 +1646,33 @@ unless fork()
   middleware = require 'middleware'
   pkgman = require 'pkgman'
 </code></pre>
+
 <p>Set up exit hooks.</p>
 <h4 id="invoke-hook-shrubcoreprocessexit">Invoke hook <code>shrubCoreProcessExit</code>.</h4>
-<pre><code>  process.on 'exit', -&gt; pkgman.invoke 'shrubCoreProcessExit'
+<pre><code class="coffeescript">  process.on 'exit', -&gt; pkgman.invoke 'shrubCoreProcessExit'
 
   process.on 'SIGINT', -&gt; process.exit()
   process.on 'SIGTERM', -&gt; process.exit()
   process.on 'unhandledException', -&gt; process.exit()
 </code></pre>
+
 <p>Load the configuration.</p>
-<pre><code>  debug 'Loading config...'
+<pre><code class="coffeescript">  debug 'Loading config...'
 
   config.load()
   config.loadPackageSettings()
 
   debug 'Config loaded.'
 </code></pre>
+
 <h4 id="invoke-hook-shrubcoreprebootstrap">Invoke hook <code>shrubCorePreBootstrap</code>.</h4>
-<pre><code>  debugSilly 'Pre bootstrap phase...'
+<pre><code class="coffeescript">  debugSilly 'Pre bootstrap phase...'
   pkgman.invoke 'shrubCorePreBootstrap'
   debugSilly 'Pre bootstrap phase completed.'
 </code></pre>
+
 <h4 id="invoke-hook-shrubcorebootstrapmiddleware">Invoke hook <code>shrubCoreBootstrapMiddleware</code>.</h4>
-<pre><code>  debugSilly 'Loading bootstrap middleware...'
+<pre><code class="coffeescript">  debugSilly 'Loading bootstrap middleware...'
 
   bootstrapMiddleware = middleware.fromConfig(
     'shrub-core:bootstrapMiddleware'
@@ -1631,13 +1680,15 @@ unless fork()
 
   debugSilly 'Bootstrap middleware loaded.'
 </code></pre>
+
 <p>Dispatch the bootstrap middleware stack and log if everything is okay.</p>
-<pre><code>  bootstrapMiddleware.dispatch (error) -&gt;
+<pre><code class="coffeescript">  bootstrapMiddleware.dispatch (error) -&gt;
     return debug 'Bootstrap complete.' unless error?
 </code></pre>
+
 <p>Log and throw any error. This will be caught by the unhandledException
 listener below.</p>
-<pre><code>    console.error errors.stack error
+<pre><code class="coffeescript">    console.error errors.stack error
     throw error
 </code></pre>
               

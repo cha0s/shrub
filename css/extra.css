@@ -3,6 +3,10 @@ h1:target, h2:target, h3:target, h4:target, h5:target, h6:target {
   background: none repeat scroll 0 0 yellow;
 }
 
+code {
+  color: #B22121;
+}
+
 .wy-nav-content {
   max-width: 1024px;
 }
@@ -53,4 +57,8 @@ h1:target, h2:target, h3:target, h4:target, h5:target, h6:target {
 
 .admonition.note > ul {
   margin-bottom: 0;
+}
+
+.rst-content .warning .admonition-title {
+  color: #555;
 }

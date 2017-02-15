@@ -931,6 +931,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1319,7 +1341,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1334,21 +1356,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1358,9 +1380,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1384,42 +1485,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1432,27 +1498,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1586,12 +1631,13 @@
             <div class="section">
               
                 <h1 id="grunt-build-process">Grunt build process</h1>
-<pre><code>config = require 'config'
+<pre><code class="coffeescript">config = require 'config'
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+
 <h4 id="implements-hook-shrubassetsmiddleware">Implements hook <code>shrubAssetsMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubAssetsMiddleware', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAssetsMiddleware', -&gt;
 
     label: 'Livereload'
     middleware: [
@@ -1602,21 +1648,23 @@ exports.pkgmanRegister = (registrar) -&gt;
 
         hostname = config.get 'packageSettings:shrub-core:siteHostname'
         [hostname] = hostname.split ':'
-        assets.scripts.push "http://#{hostname}:35729/livereload.js"
+        assets.scripts.push &quot;http://#{hostname}:35729/livereload.js&quot;
 
         next()
 
     ]
 </code></pre>
+
 <h4 id="implements-hook-shrubconfigclientalter">Implements hook <code>shrubConfigClientAlter</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubConfigClientAlter', (req, config_) -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubConfigClientAlter', (req, config_) -&gt;
     return unless req.grunt?
 
     config_.set 'packageConfig:shrub-socket', manager: module: 'shrub-socket/dummy'
     config_.set 'packageConfig:shrub-user', name: 'Anonymous'
 </code></pre>
+
 <h4 id="implements-hook-shrubgruntconfig">Implements hook <code>shrubGruntConfig</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubGruntConfig', (gruntConfig, grunt) -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubGruntConfig', (gruntConfig, grunt) -&gt;
 
     gruntConfig.configureTask 'clean', 'shrub', [
       'app'
@@ -1640,15 +1688,18 @@ exports.pkgmanRegister = (registrar) -&gt;
     gruntConfig.registerTask 'executeFunction:shrub', -&gt;
       done = @async()
 </code></pre>
+
 <p>Pass arguments to the child process.</p>
-<pre><code>      args = process.argv.slice 2
+<pre><code class="coffeescript">      args = process.argv.slice 2
 </code></pre>
+
 <p>Pass the environment to the child process.</p>
-<pre><code>      options = env: process.env
+<pre><code class="coffeescript">      options = env: process.env
 </code></pre>
+
 <p>Fork it.</p>
-<pre><code>      {fork} = require 'child_process'
-      child = fork "#{__dirname}/../../server.coffee", args, options
+<pre><code class="coffeescript">      {fork} = require 'child_process'
+      child = fork &quot;#{__dirname}/../../server.coffee&quot;, args, options
       child.on 'close', (code) -&gt;
         return done() if code is 0
 
@@ -1679,8 +1730,9 @@ exports.pkgmanRegister = (registrar) -&gt;
       'grunt-wrap'
     ]
 </code></pre>
+
 <h4 id="implements-hook-shrubgruntconfigalter">Implements hook <code>shrubGruntConfigAlter</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubGruntConfigAlter', (gruntConfig) -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubGruntConfigAlter', (gruntConfig) -&gt;
 
     gruntConfig.registerTask 'build', [
       'build:shrub'

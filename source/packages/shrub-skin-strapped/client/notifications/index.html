@@ -916,6 +916,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1313,7 +1335,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1328,21 +1350,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1352,9 +1374,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1378,42 +1479,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1426,27 +1492,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1580,35 +1625,37 @@
             <div class="section">
               
                 <h1 id="strapped-notifications">Strapped - Notifications</h1>
-<pre><code>exports.pkgmanRegister = (registrar) -&gt;
+<pre><code class="coffeescript">exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+
 <h4 id="implements-hook-shrubskinlink-directive">Implements hook <code>shrubSkinLink--DIRECTIVE</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubSkinLink--shrubUiNotifications', -&gt; [
+<pre><code class="coffeescript">  registrar.registerHook 'shrubSkinLink--shrubUiNotifications', -&gt; [
     '$compile', '$scope', '$element', '$attr'
     ($compile, scope, element, attr) -&gt;
 </code></pre>
+
 <p>Initialize the popover.</p>
-<pre><code>      ($button = element.find 'button').popover
+<pre><code class="coffeescript">      ($button = element.find 'button').popover
 
         container: 'body'
         content: -&gt; element.find '.notifications'
         html: true
         placement: 'bottom'
-        template: """
+        template: &quot;&quot;&quot;
 
-&lt;div class="popover popover-notifications popover-#{attr.queueName}" role="tooltip"&gt;
-  &lt;div class="arrow"&gt;&lt;/div&gt;
-  &lt;div class="popover-title"&gt;&lt;/div&gt;
-  &lt;div class="popover-content"&gt;&lt;/div&gt;
+&lt;div class=&quot;popover popover-notifications popover-#{attr.queueName}&quot; role=&quot;tooltip&quot;&gt;
+  &lt;div class=&quot;arrow&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;popover-title&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;popover-content&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
 
-"""
+&quot;&quot;&quot;
         title: -&gt;
 
           tpl = '''
 
 &lt;div
-  class="title"
+  class=&quot;title&quot;
   data-shrub-ui-notifications-title
 &gt;&lt;/div&gt;
 
@@ -1616,12 +1663,14 @@
 
           $compile(tpl)(scope)
 </code></pre>
+
 <p>When the notifications are opened, acknowledge them.</p>
-<pre><code>      $button.on 'show.bs.popover', -&gt; scope.$emit 'shrub.ui.notifications.acknowledged'
+<pre><code class="coffeescript">      $button.on 'show.bs.popover', -&gt; scope.$emit 'shrub.ui.notifications.acknowledged'
 </code></pre>
+
 <p>Wait for the new queue to be compiled into the DOM, and then
 reposition the popover, since the new content may shift it.</p>
-<pre><code>      scope.$watch(
+<pre><code class="coffeescript">      scope.$watch(
         'queue.notifications()', -&gt; scope.$$postDigest -&gt;
           return unless (pop = $button.data 'bs.popover').$tip?
           return unless pop.$tip.hasClass 'in'
@@ -1636,8 +1685,9 @@ reposition the popover, since the new content may shift it.</p>
         true
       )
 </code></pre>
+
 <p>Hide the popover if any notification is clicked.</p>
-<pre><code>      scope.$on 'shrub.ui.notification.clicked', -&gt; $button.popover 'hide'
+<pre><code class="coffeescript">      scope.$on 'shrub.ui.notification.clicked', -&gt; $button.popover 'hide'
 
   ]
 </code></pre>

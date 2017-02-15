@@ -927,6 +927,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1315,7 +1337,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1330,21 +1352,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1354,9 +1376,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1380,42 +1481,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1428,27 +1494,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1584,10 +1629,11 @@
                 <h1 id="installation">Installation</h1>
 <p><em>Install shrub if it hasn't been done so yet. This is essentially a hack for
 now, but will be fleshed out as we go.</em></p>
-<pre><code>exports.pkgmanRegister = (registrar) -&gt;
+<pre><code class="coffeescript">exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+
 <h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <code>shrubCoreBootstrapMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubCoreBootstrapMiddleware', (context) -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubCoreBootstrapMiddleware', (context) -&gt;
 
     orm = require 'shrub-orm'
 
@@ -1596,9 +1642,10 @@ now, but will be fleshed out as we go.</em></p>
 
       (next) -&gt;
 </code></pre>
+
 <p>No superuser? Install...</p>
 <h6 id="todo-there-should-be-a-more-robust-check-than-just-is-there-a-superuser">TODO: There should be a more robust check than just 'is there a superuser?'.</h6>
-<pre><code>        User = orm.collection 'shrub-user'
+<pre><code class="coffeescript">        User = orm.collection 'shrub-user'
         User.findOne(id: 1).then((user) -&gt;
           return if user?
 
@@ -1608,8 +1655,9 @@ now, but will be fleshed out as we go.</em></p>
 
     ]
 </code></pre>
+
 <h4 id="implements-hook-shrubreplcontext">Implements hook <code>shrubReplContext</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubReplContext', (context) -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubReplContext', (context) -&gt;
 
     context.install = reinstall
 
@@ -1619,11 +1667,13 @@ reinstall = (name = 'admin', email = 'admin@example.com', password = 'admin') -&
 
   orm = require 'shrub-orm'
 </code></pre>
+
 <p>Refresh all collections.</p>
-<pre><code>  Promise.all(
+<pre><code class="coffeescript">  Promise.all(
 </code></pre>
+
 <p>Drop all collections and data.</p>
-<pre><code>    for identity, collection of orm.collections()
+<pre><code class="coffeescript">    for identity, collection of orm.collections()
       new Promise (resolve, reject) -&gt;
         collection.drop (error) -&gt;
           return reject error if error?
@@ -1631,36 +1681,61 @@ reinstall = (name = 'admin', email = 'admin@example.com', password = 'admin') -&
 
   ).then(-&gt;
 </code></pre>
-<p>Teardown and rebuild the schema.</p>
-<pre><code>    new Promise (resolve, reject) -&gt;
+
+<p>Teardown the schema.</p>
+<pre><code class="coffeescript">    new Promise (resolve, reject) -&gt;
       orm.teardown (error) -&gt;
         return reject error if error?
-        orm.initialize (error) -&gt;
-          return reject error if error?
-          resolve()
+        resolve()
+
+  ).then(-&gt;
+</code></pre>
+
+<p>Rebuild the schema.</p>
+<pre><code class="coffeescript">    new Promise (resolve, reject) -&gt;
+      orm.initialize (error) -&gt;
+        return reject error if error?
+        resolve()
 
   ).then(-&gt;
 
-    Group = orm.collection 'shrub-group'
-    User = orm.collection 'shrub-user'
+    {
+      'shrub-group': Group
+      'shrub-user': User
+      'shrub-user-local': UserLocal
+    } = orm.collections()
 
     Promise.all [
 </code></pre>
+
 <p>Create groups.</p>
-<pre><code>      Group.create name: 'Anonymous'
+<pre><code class="coffeescript">      Group.create name: 'Anonymous'
       Group.create name: 'Authenticated'
       Group.create name: 'Administrator'
 </code></pre>
+
 <p>Create superuser.</p>
-<pre><code>      User.register name, email, password
+<pre><code class="coffeescript">      UserLocal.register(name, email, password).bind({}).then((@localUser) -&gt;
+
+        User.create()
+
+      ).then (user) -&gt;
+
+        user.instances.add(
+          model: 'shrub-user-local'
+          modelId: @localUser.id
+        )
+
+        return user
+
     ]
 
   ).then(([groups..., user]) -&gt;
 
     user.groups.add group: groups[2].id
-    user.save().then()
+    user.save()
 
-  ).catch console.error
+  ).then(-&gt; console.log &quot;Site installed!&quot;).catch console.error
 </code></pre>
               
             </div>

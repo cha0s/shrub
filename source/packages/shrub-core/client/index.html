@@ -927,6 +927,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1315,7 +1337,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1330,21 +1352,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1354,9 +1376,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1380,42 +1481,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1428,27 +1494,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1583,18 +1628,20 @@
               
                 <h1 id="core-client-functionality">Core client functionality.</h1>
 <p><em>Coordinate various core functionality.</em></p>
-<pre><code>config = require 'config'
+<pre><code class="coffeescript">config = require 'config'
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+
 <h4 id="implements-hook-shrubangularapprun">Implements hook <code>shrubAngularAppRun</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubAngularAppRun', -&gt; [
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAngularAppRun', -&gt; [
     '$rootScope', '$location', '$window', 'shrub-socket'
     ($rootScope, $location, $window, socket) -&gt;
 </code></pre>
+
 <p>Split the path into the corresponding classes, e.g. <code>foo/bar/baz</code> -&gt;
 <code>class="foo foo-bar foo-bar-baz"</code></p>
-<pre><code>      $rootScope.$watch (-&gt; $location.path()), -&gt;
+<pre><code class="coffeescript">      $rootScope.$watch (-&gt; $location.path()), -&gt;
 
         parts = $location.path().substr(1).split '/'
         parts = parts.map (part) -&gt; part.replace /[^_a-zA-Z0-9-]/g, '-'
@@ -1604,14 +1651,17 @@ exports.pkgmanRegister = (registrar) -&gt;
 
         $rootScope.pathClass = classes.join ' '
 </code></pre>
+
 <p>Navigate the client to <code>href</code>.</p>
-<pre><code>      socket.on 'core.navigateTo', (href) -&gt; $window.location.href = href
+<pre><code class="coffeescript">      socket.on 'core.navigateTo', (href) -&gt; $window.location.href = href
 </code></pre>
+
 <p>Reload the client.</p>
-<pre><code>      socket.on 'core.reload', -&gt; $window.location.reload()
+<pre><code class="coffeescript">      socket.on 'core.reload', -&gt; $window.location.reload()
 </code></pre>
+
 <p>Set up application close behavior.</p>
-<pre><code>      $window.addEventListener 'beforeunload', (event) -&gt;
+<pre><code class="coffeescript">      $window.addEventListener 'beforeunload', (event) -&gt;
         appCloseEvent = $rootScope.$emit 'shrub.core.appClose'
         if appCloseEvent.defaultPrevented
           {confirmationMessage} = appCloseEvent
@@ -1620,9 +1670,10 @@ exports.pkgmanRegister = (registrar) -&gt;
 
   ]
 </code></pre>
+
 <h4 id="implements-hook-shrubangularroutes">Implements hook <code>shrubAngularRoutes</code>.</h4>
 <p>A simple path definition to make sure we're running in e2e testing mode.</p>
-<pre><code>  registrar.registerHook 'shrubAngularRoutes', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAngularRoutes', -&gt;
 
     routes = []
 

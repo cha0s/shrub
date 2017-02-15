@@ -929,6 +929,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1317,7 +1339,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1332,21 +1354,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1356,9 +1378,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1382,42 +1483,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1430,27 +1496,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1586,7 +1631,7 @@
                 <h1 id="object-relational-mapping">Object-relational mapping</h1>
 <p><em>This is mostly stubbed for the browser. I can't justify sending a 400k ORM
 library to the client, even though it would be awesome.</em></p>
-<pre><code>Promise = require 'bluebird'
+<pre><code class="coffeescript">Promise = require 'bluebird'
 
 pkgman = require 'pkgman'
 
@@ -1594,8 +1639,9 @@ collections = {}
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+
 <h4 id="implements-hook-shrubangularservice">Implements hook <code>shrubAngularService</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubAngularService', -&gt; [
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAngularService', -&gt; [
     '$http'
     ($http) -&gt;
 
@@ -1603,16 +1649,18 @@ exports.pkgmanRegister = (registrar) -&gt;
 
       exports.initialize()
 </code></pre>
+
 <h2 id="ormcollection">orm.collection</h2>
 <ul>
 <li>(String) <code>identity</code> - Collection identity. e.g. <code>'shrub-user'</code></li>
 </ul>
 <p><em>Get a collection by identity.</em></p>
-<pre><code>      service.collection = (identity) -&gt; collections[identity]
+<pre><code class="coffeescript">      service.collection = (identity) -&gt; collections[identity]
 </code></pre>
+
 <h2 id="ormcollections">orm.collections</h2>
 <p><em>Get all collections.</em></p>
-<pre><code>      service.collections = -&gt; collections
+<pre><code class="coffeescript">      service.collections = -&gt; collections
 
       service
 
@@ -1620,17 +1668,20 @@ exports.pkgmanRegister = (registrar) -&gt;
 
 exports.initialize = -&gt;
 </code></pre>
+
 <h4 id="invoke-hook-shrubormcollections">Invoke hook <code>shrubOrmCollections</code>.</h4>
-<pre><code>  collections_ = {}
+<pre><code class="coffeescript">  collections_ = {}
   for collectionList in pkgman.invokeFlat 'shrubOrmCollections'
     for identity, collection of collectionList
 </code></pre>
+
 <p>Collection defaults.</p>
-<pre><code>      collection.identity ?= identity
+<pre><code class="coffeescript">      collection.identity ?= identity
       collections_[collection.identity] = collection
 </code></pre>
+
 <p>Instantiate a model with defaults supplied.</p>
-<pre><code>      collection.instantiate = (values = {}) -&gt;
+<pre><code class="coffeescript">      collection.instantiate = (values = {}) -&gt;
         model = JSON.parse JSON.stringify values
 
         if not @autoCreatedAt? or @autoCreatedAt is true
@@ -1641,24 +1692,28 @@ exports.initialize = -&gt;
 
         for key, value of @attributes
 </code></pre>
+
 <p>Set functions.</p>
-<pre><code>          model[key] = value if 'function' is typeof value
+<pre><code class="coffeescript">          model[key] = value if 'function' is typeof value
 </code></pre>
+
 <p>Set any model defaults.</p>
-<pre><code>          if value.defaultsTo?
+<pre><code class="coffeescript">          if value.defaultsTo?
             model[key] ?= if 'function' is typeof value.defaultsTo
               value.defaultsTo.call model
             else
               JSON.parse JSON.stringify value.defaultsTo
 </code></pre>
+
 <p>Handle dates.</p>
-<pre><code>          if model[key]? and 'date' is value or 'date' is value.type
+<pre><code class="coffeescript">          if model[key]? and 'date' is value or 'date' is value.type
             model[key] = new Date model[key]
 
         model
 </code></pre>
+
 <h4 id="invoke-hook-shrubormcollectionsalter">Invoke hook <code>shrubOrmCollectionsAlter</code>.</h4>
-<pre><code>  pkgman.invoke 'shrubOrmCollectionsAlter', collections_
+<pre><code class="coffeescript">  pkgman.invoke 'shrubOrmCollectionsAlter', collections_
 
   collections = collections_
 </code></pre>

@@ -941,6 +941,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1329,7 +1351,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1344,21 +1366,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1368,9 +1390,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1394,42 +1495,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1442,27 +1508,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1597,22 +1642,25 @@
               
                 <h1 id="nodemailer">nodemailer</h1>
 <p><em>Renders and sends email.</em></p>
-<pre><code>Promise = null
+<pre><code class="coffeescript">Promise = null
 
 config = null
 
 skin = null
 </code></pre>
+
 <p>Sandbox used to render email as HTML.</p>
-<pre><code>sandbox = null
+<pre><code class="coffeescript">sandbox = null
 </code></pre>
+
 <p>nodemailer transport. Defaults to sendmail.</p>
-<pre><code>transport = null
+<pre><code class="coffeescript">transport = null
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+
 <h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <code>shrubCorePreBootstrap</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubCorePreBootstrap', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubCorePreBootstrap', -&gt;
 
     Promise = require 'bluebird'
 
@@ -1620,8 +1668,9 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     skin = require 'shrub-skin'
 </code></pre>
+
 <h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <code>shrubCoreBootstrapMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubCoreBootstrapMiddleware', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubCoreBootstrapMiddleware', -&gt;
 
     nodemailer = require 'nodemailer'
 
@@ -1634,49 +1683,57 @@ exports.pkgmanRegister = (registrar) -&gt;
 
         settings = config.get 'packageSettings:shrub-nodemailer'
 </code></pre>
+
 <p>Instantiate the email transport.</p>
-<pre><code>        transport = nodemailer.createTransport(
+<pre><code class="coffeescript">        transport = nodemailer.createTransport(
           require(settings.transport.module)(
             settings.transport.options
           )
         )
 </code></pre>
+
 <p>Render the app HTML and create a sandbox with it.</p>
-<pre><code>        skin.renderAppHtml().then((html) -&gt;
+<pre><code class="coffeescript">        skin.renderAppHtml().then((html) -&gt;
 
           sandbox = new Sandbox()
 
-          sandbox.createDocument html, url: "http://localhost:#{
+          sandbox.createDocument html, url: &quot;http://localhost:#{
             config.get 'packageSettings:shrub-http:port'
-          }/home"
+          }/home&quot;
 
         ).then(-&gt;
 </code></pre>
+
 <p>Augment it with functionality we'll find useful and convenient.</p>
-<pre><code>          augmentSandbox sandbox
+<pre><code class="coffeescript">          augmentSandbox sandbox
 
         ).then(-&gt; next()).catch next
 
     ]
 </code></pre>
+
 <h4 id="implements-hook-shrubconfigserver">Implements hook <code>shrubConfigServer</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubConfigServer', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubConfigServer', -&gt;
 </code></pre>
+
 <p>Default site email information.</p>
-<pre><code>    siteEmail:
+<pre><code class="coffeescript">    siteEmail:
       address: 'admin@example.com'
       name: 'Site administrator'
 </code></pre>
+
 <p>Passed through directly to nodemailer.</p>
-<pre><code>    transport:
+<pre><code class="coffeescript">    transport:
       module: 'nodemailer-sendmail-transport'
       options: {}
 </code></pre>
+
 <h4 id="implements-hook-shrubreplcontext">Implements hook <code>shrubReplContext</code>.</h4>
 <p>Provide mail sending to the REPL context.</p>
-<pre><code>  registrar.registerHook 'shrubReplContext', (context) -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubReplContext', (context) -&gt;
     context.sendMail = exports.sendMail
 </code></pre>
+
 <h2 id="sendmail">sendMail</h2>
 <ul>
 <li>
@@ -1692,7 +1749,7 @@ example</a></p>
 <li>(object) <code>scope</code> - Object whose values will be injected into the directive</li>
 </ul>
 <p>scope when compiling the directive for the email output. <em>Send an email.</em></p>
-<pre><code>exports.sendMail = (directive, mail, scope) -&gt;
+<pre><code class="coffeescript">exports.sendMail = (directive, mail, scope) -&gt;
 
   path = config.get 'path'
   siteEmail = config.get 'packageSettings:shrub-nodemailer:siteEmail'
@@ -1705,10 +1762,11 @@ example</a></p>
 
         $scope = $rootScope.$new()
         $scope[key] = value for key, value of scope
-        $element = $compile("&lt;div data-#{directive}&gt;&lt;/div&gt;")($scope)
+        $element = $compile(&quot;&lt;div data-#{directive}&gt;&lt;/div&gt;&quot;)($scope)
 </code></pre>
+
 <p>Just to be sure :)</p>
-<pre><code>        $rootScope.$digest() for i in [0...10]
+<pre><code class="coffeescript">        $rootScope.$digest() for i in [0...10]
 
         sandbox.prepareHtmlForEmail $element.html()
 
@@ -1720,22 +1778,27 @@ example</a></p>
 
   ).then(-&gt;
 </code></pre>
+
 <p>If the from field wasn't specified, look it up in the configuration.</p>
-<pre><code>    unless mail.from
+<pre><code class="coffeescript">    unless mail.from
       unless siteEmail.address
         throw new Error 'Email sent without `from` field, and no site email address is defined!'
 </code></pre>
+
 <p>Use the address by default.</p>
-<pre><code>      mail.from = siteEmail.address
+<pre><code class="coffeescript">      mail.from = siteEmail.address
 </code></pre>
+
 <p>Format if there is a site email name</p>
-<pre><code>      mail.from = "#{siteEmail.name} &lt;#{mail.from}&gt;" if siteEmail.name
+<pre><code class="coffeescript">      mail.from = &quot;#{siteEmail.name} &lt;#{mail.from}&gt;&quot; if siteEmail.name
 </code></pre>
+
 <p>Parse the HTML to plain text as a default if no plain text was provided.</p>
-<pre><code>    mail.text ?= sandbox.text mail.html if mail.html?
+<pre><code class="coffeescript">    mail.text ?= sandbox.text mail.html if mail.html?
 </code></pre>
+
 <p>Send the mail.</p>
-<pre><code>    new Promise (resolve, reject) -&gt;
+<pre><code class="coffeescript">    new Promise (resolve, reject) -&gt;
       transport.sendMail mail, (error) -&gt;
 
         return reject error if error?
@@ -1743,37 +1806,44 @@ example</a></p>
 
   )
 </code></pre>
+
 <p>Augment the sandbox with the ability to rewrite HTML for email, and emit
 HTML as text.</p>
-<pre><code>augmentSandbox = (sandbox) -&gt;
+<pre><code class="coffeescript">augmentSandbox = (sandbox) -&gt;
 </code></pre>
+
 <p>Convenience.</p>
-<pre><code>  $ = sandbox._window.$
+<pre><code class="coffeescript">  $ = sandbox._window.$
 
   selectors = {}
 
   htmlCssText = ''
   bodyCssText = ''
 </code></pre>
+
 <p>Gather all CSS selectors and rules ahead of time.</p>
-<pre><code>  gatherSelectors = -&gt;
+<pre><code class="coffeescript">  gatherSelectors = -&gt;
     for stylesheet in sandbox._window.document.styleSheets
       for rule in stylesheet.cssRules
         continue unless rule.selectorText?
 </code></pre>
+
 <p>Split into individual selectors.</p>
-<pre><code>        parts = rule.selectorText.split(',').map((selector) -&gt;
+<pre><code class="coffeescript">        parts = rule.selectorText.split(',').map((selector) -&gt;
 </code></pre>
+
 <p>Trim whitespace.</p>
-<pre><code>          selector.trim()
+<pre><code class="coffeescript">          selector.trim()
 
         ).filter (selector) -&gt;
 </code></pre>
+
 <p>Filter pseudo selectors.</p>
-<pre><code>          return false if selector.match /[:@]/
+<pre><code class="coffeescript">          return false if selector.match /[:@]/
 </code></pre>
+
 <p>Collect html and body rules manually.</p>
-<pre><code>          if selector is 'html'
+<pre><code class="coffeescript">          if selector is 'html'
             htmlCssText += rule.style.cssText
             return false
 
@@ -1783,11 +1853,13 @@ HTML as text.</p>
 
           true
 </code></pre>
+
 <p>Rejoin the selectors.</p>
-<pre><code>        selector = parts.join ','
+<pre><code class="coffeescript">        selector = parts.join ','
 </code></pre>
+
 <p>Normalize the rule(s).</p>
-<pre><code>        selectors[selector] ?= ''
+<pre><code class="coffeescript">        selectors[selector] ?= ''
         selectors[selector] += rule.style.cssText.split(
 
           ';'
@@ -1803,15 +1875,17 @@ HTML as text.</p>
         ).sort().join '; '
         selectors[selector] += ';'
 </code></pre>
+
 <p>Merge as many rules as we can, so we'll have less work to do for each
 application.</p>
-<pre><code>    cssTextCache = {}
+<pre><code class="coffeescript">    cssTextCache = {}
     for selector, cssText of selectors
       (cssTextCache[cssText] ?= []).push selector
 
     for cssText, selectors_ of cssTextCache
       selectors[selectors_.join ','] = cssText
 </code></pre>
+
 <h2 id="sandboxinject">Sandbox#inject</h2>
 <ul>
 <li>(any) <code>injectable</code> - An annotated function to inject with</li>
@@ -1819,57 +1893,67 @@ application.</p>
 <p>dependencies. <em>Inject an <a href="http://docs.angularjs.org/guide/di#dependency-annotation">annotated
 function</a> with
 dependencies.</em></p>
-<pre><code>  sandbox.inject = (injectable) -&gt;
+<pre><code class="coffeescript">  sandbox.inject = (injectable) -&gt;
     injector = @_window.angular.element(@_window.document).injector()
     injector.invoke injectable
 </code></pre>
+
 <h2 id="sandboxinlinecss">Sandbox#inlineCss</h2>
 <p><em>CREDIT:
 http://devintorr.es/blog/2010/05/26/turn-css-rules-into-inline-style-attributes-using-jquery/
 with some improvements, of course.</em></p>
-<pre><code>  sandbox.inlineCss = (html) -&gt;
+<pre><code class="coffeescript">  sandbox.inlineCss = (html) -&gt;
     for selector, cssText of selectors
       for element in $(selector, $(html))
         element.style.cssText += cssText
 </code></pre>
+
 <h2 id="sandboxpreparehtmlforemail">Sandbox#prepareHtmlForEmail</h2>
 <p><em>Prepare HTML for email; inject all CSS inline and allow the skin to
 modify the output.</em></p>
-<pre><code>  sandbox.prepareHtmlForEmail = (html) -&gt;
+<pre><code class="coffeescript">  sandbox.prepareHtmlForEmail = (html) -&gt;
 </code></pre>
+
 <p>Clone the body and insert the HTML into the main application area.</p>
-<pre><code>    $body = $('body').clone()
+<pre><code class="coffeescript">    $body = $('body').clone()
 </code></pre>
+
 <h4 id="invoke-hook-shrubnodemailerhtml">Invoke hook <code>shrubNodemailerHtml</code>.</h4>
 <p>Let the skin manage the mail HTML.</p>
-<pre><code>    pkgman = require 'pkgman'
+<pre><code class="coffeescript">    pkgman = require 'pkgman'
     pkgman.invokePackage skin.activeKey(), 'shrubNodemailerHtml', $body, html, $
 </code></pre>
+
 <p>Inject all the styles inline.</p>
-<pre><code>    sandbox.inlineCss $body
+<pre><code class="coffeescript">    sandbox.inlineCss $body
 </code></pre>
+
 <p>Return a valid HTML document.</p>
-<pre><code>    """
+<pre><code class="coffeescript">    &quot;&quot;&quot;
 &lt;!doctype html&gt;
-&lt;html style=#{htmlCssText}"&gt;
-&lt;body style=#{bodyCssText}"&gt;
+&lt;html style=#{htmlCssText}&quot;&gt;
+&lt;body style=#{bodyCssText}&quot;&gt;
 </code></pre>
+
 <p>$body.html()}</p>
-<pre><code>&lt;/body&gt;
+<pre><code class="coffeescript">&lt;/body&gt;
 &lt;/html&gt;
-"""
+&quot;&quot;&quot;
 </code></pre>
+
 <h2 id="sandboxtext">Sandbox#text</h2>
 <p>Convert HTML to text.</p>
-<pre><code>  sandbox.text = (html) -&gt;
+<pre><code class="coffeescript">  sandbox.text = (html) -&gt;
 
     text = $(html).text()
 </code></pre>
+
 <p>Remove tab characters.</p>
-<pre><code>    text = text.replace /\t/g, ''
+<pre><code class="coffeescript">    text = text.replace /\t/g, ''
 </code></pre>
+
 <p>Remove excessive empty lines.</p>
-<pre><code>    emptyLines = 0
+<pre><code class="coffeescript">    emptyLines = 0
     text = text.split('').reduce(
       (l, r) -&gt;
 
@@ -1892,11 +1976,13 @@ modify the output.</em></p>
       '$sniffer', 'shrub-socket'
       ($sniffer, socket) -&gt;
 </code></pre>
+
 <p>Don't even try HTML 5 history on the server side.</p>
-<pre><code>        $sniffer.history = false
+<pre><code class="coffeescript">        $sniffer.history = false
 </code></pre>
+
 <p>Let the socket finish initialization.</p>
-<pre><code>        socket.on 'initialized', -&gt;
+<pre><code class="coffeescript">        socket.on 'initialized', -&gt;
 
           gatherSelectors()
 

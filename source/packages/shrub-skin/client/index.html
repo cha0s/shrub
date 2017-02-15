@@ -916,6 +916,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1327,7 +1349,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1342,21 +1364,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1366,9 +1388,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1392,42 +1493,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1440,27 +1506,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1597,51 +1642,59 @@
 <p><em>Implement the skin system, allowing clients to change the look and feel of
 the site on-the-fly, as well as quickly load assets from the default skin on
 page load.</em></p>
-<pre><code>config = require 'config'
+<pre><code class="coffeescript">config = require 'config'
 pkgman = require 'pkgman'
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+
 <h4 id="implements-hook-shrubangulardirectivealter">Implements hook <code>shrubAngularDirectiveAlter</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubAngularDirectiveAlter', (directive, path) -&gt; [
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAngularDirectiveAlter', (directive, path) -&gt; [
 
     '$cacheFactory', '$compile', '$http', '$injector', '$interpolate', '$q', '$rootScope'
     ($cacheFactory, $compile, $http, $injector, $interpolate, $q, $rootScope) -&gt;
 </code></pre>
+
 <p>Ensure ID is a candidate.</p>
-<pre><code>      directive.candidateKeys ?= []
+<pre><code class="coffeescript">      directive.candidateKeys ?= []
       directive.candidateKeys.unshift 'id'
 
       currentSkinKey = null
       defaultSkinKey = config.get 'packageConfig:shrub-skin:default'
 </code></pre>
+
 <p>Proxy link function to add our own directive retrieval and compilation
 step.</p>
-<pre><code>      link = directive.link
+<pre><code class="coffeescript">      link = directive.link
       directive.link = (scope, element, attr, controller, transclude) -&gt;
 
         candidateHooksInvoked = {}
 </code></pre>
+
 <p>Save top-level arguments for later calls to link functions.</p>
-<pre><code>        topLevelArgs = arguments
+<pre><code class="coffeescript">        topLevelArgs = arguments
 </code></pre>
+
 <p>Current template candidate.</p>
-<pre><code>        candidate = undefined
+<pre><code class="coffeescript">        candidate = undefined
 
         recalculateCandidate = -&gt;
 </code></pre>
+
 <p>Get the skin assets.</p>
-<pre><code>          skinAssets = config.get(
-            "packageConfig:shrub-skin:assets:#{currentSkinKey}"
+<pre><code class="coffeescript">          skinAssets = config.get(
+            &quot;packageConfig:shrub-skin:assets:#{currentSkinKey}&quot;
           )
 </code></pre>
+
 <p>Track changes to the current template candidate.</p>
-<pre><code>          oldCandidate = candidate
+<pre><code class="coffeescript">          oldCandidate = candidate
 </code></pre>
+
 <p>Build a list of all candidates by first attempting to interpolate
 candidate keys, and falling back to attribute values, if any.
 Candidate arrays are joined by single dashes.</p>
-<pre><code>          candidateList = do -&gt;
+<pre><code class="coffeescript">          candidateList = do -&gt;
             list = []
 
             for keys in directive.candidateKeys
@@ -1660,55 +1713,64 @@ Candidate arrays are joined by single dashes.</p>
 
             list
 </code></pre>
+
 <p>Map the candidate list to template filenames and add the base path
 template candidate.</p>
-<pre><code>          candidateTemplates = for candidate_ in candidateList
-            "#{path}--#{candidate_}.html"
-          candidateTemplates.push "#{path}.html"
+<pre><code class="coffeescript">          candidateTemplates = for candidate_ in candidateList
+            &quot;#{path}--#{candidate_}.html&quot;
+          candidateTemplates.push &quot;#{path}.html&quot;
 </code></pre>
+
 <p>Return the first existing template. The asset templates are
 already sorted by descending specificity.</p>
-<pre><code>          candidate = do -&gt;
+<pre><code class="coffeescript">          candidate = do -&gt;
             for uri in candidateTemplates
               return uri if skinAssets?.templates?[uri]
 
             return null
 </code></pre>
+
 <p>If the candidate changed, clear the hook invocation cache and
 relink.</p>
-<pre><code>          if candidate isnt oldCandidate
+<pre><code class="coffeescript">          if candidate isnt oldCandidate
             candidateHooksInvoked = {}
 </code></pre>
+
 <p>Insert and compile the template HTML if it exists.</p>
-<pre><code>            if skinAssets?.templates?[candidate]
+<pre><code class="coffeescript">            if skinAssets?.templates?[candidate]
 </code></pre>
+
 <p>Insert and compile HTML.</p>
-<pre><code>              element.html skinAssets.templates[candidate]
+<pre><code class="coffeescript">              element.html skinAssets.templates[candidate]
               $compile(element.contents())(scope)
 </code></pre>
+
 <p>Call directive link function.</p>
-<pre><code>            link topLevelArgs... if link?
+<pre><code class="coffeescript">            link topLevelArgs... if link?
 </code></pre>
+
 <p>Invoke the candidate link hooks.</p>
-<pre><code>          invocations = [
+<pre><code class="coffeescript">          invocations = [
             'shrubSkinLink'
-            "shrubSkinLink--#{directive.name}"
+            &quot;shrubSkinLink--#{directive.name}&quot;
           ]
 </code></pre>
+
 <p>Add the candidates in reverse order, so they ascend in
 specificity.</p>
-<pre><code>          invocations.push(
-            "shrubSkinLink--#{directive.name}--#{c}"
+<pre><code class="coffeescript">          invocations.push(
+            &quot;shrubSkinLink--#{directive.name}--#{c}&quot;
           ) for c in candidateList.reverse()
 
           for hook in invocations
             continue if candidateHooksInvoked[hook]
             candidateHooksInvoked[hook] = true
 </code></pre>
+
 <h4 id="invoke-hook-shrubskinlink">Invoke hook <code>shrubSkinLink</code>.</h4>
 <h4 id="invoke-hook-shrubskinlink-directive">Invoke hook <code>shrubSkinLink--DIRECTIVE</code>.</h4>
 <h4 id="invoke-hook-shrubskinlink-directive-id">Invoke hook <code>shrubSkinLink--DIRECTIVE--ID</code>.</h4>
-<pre><code>            for f in pkgman.invokeFlat hook
+<pre><code class="coffeescript">            for f in pkgman.invokeFlat hook
 
               $injector.invoke(
                 f, null
@@ -1726,13 +1788,15 @@ specificity.</p>
 
         applySkin defaultSkinKey
 </code></pre>
+
 <p>Relink again every time the skin changes.</p>
-<pre><code>        $rootScope.$on 'shrub-skin.changed', (event, skinKey) -&gt;
+<pre><code class="coffeescript">        $rootScope.$on 'shrub-skin.changed', (event, skinKey) -&gt;
           candidateHooksInvoked = {}
           applySkin skinKey
 </code></pre>
+
 <p>Set watches for all candidate-related values.</p>
-<pre><code>        keysSeen = {}
+<pre><code class="coffeescript">        keysSeen = {}
         watchers = []
         for keys in directive.candidateKeys
 
@@ -1748,8 +1812,9 @@ specificity.</p>
 
   ]
 </code></pre>
+
 <h4 id="implements-hook-shrubangularprovider">Implements hook <code>shrubAngularProvider</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubAngularProvider', -&gt; [
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAngularProvider', -&gt; [
 
     '$injector', '$provide'
     ($injector, $provide) -&gt;
@@ -1762,30 +1827,33 @@ specificity.</p>
 
           service = {}
 </code></pre>
+
 <h2 id="skinaddstylesheet">skin.addStylesheet</h2>
 <p>(String) <code>href</code> - The href of the stylesheet to add. <em>Add a skin
 stylesheet.</em></p>
-<pre><code>          service.addStylesheet = (href) -&gt;
+<pre><code class="coffeescript">          service.addStylesheet = (href) -&gt;
 
             deferred = $q.defer()
 
             styleSheets = $window.document.styleSheets
             index = styleSheets.length
 </code></pre>
+
 <p>Insert the stylesheed as a link element in the head element,
 classed with 'skin' so we can easily remove it if the skin
 changes.</p>
-<pre><code>            element = $window.document.createElement 'link'
+<pre><code class="coffeescript">            element = $window.document.createElement 'link'
             element.type = 'text/css'
             element.rel = 'stylesheet'
-            element.href = "/skin/shrub-skin-strapped/#{href}"
+            element.href = &quot;/skin/shrub-skin-strapped/#{href}&quot;
             element.className = 'skin'
             angular.element('head').append element
 
             resolve = -&gt; deferred.resolve()
 </code></pre>
+
 <p>A rare case where IE actually does the right thing! (and Opera).</p>
-<pre><code>            if $window.opera or ~$window.navigator.userAgent.indexOf 'MSIE'
+<pre><code class="coffeescript">            if $window.opera or ~$window.navigator.userAgent.indexOf 'MSIE'
 
               element.onload = resolve
               element.onreadystatechange = -&gt;
@@ -1793,8 +1861,9 @@ changes.</p>
                   when 'loaded', 'complete'
                     resolve()
 </code></pre>
+
 <p>Everyone else needs to resort to polling.</p>
-<pre><code>            else
+<pre><code class="coffeescript">            else
 
               wasParsed = -&gt;
 
@@ -1824,26 +1893,30 @@ changes.</p>
 
             deferred.promise
 </code></pre>
+
 <h2 id="skinaddstylesheets">skin.addStylesheets</h2>
 <p>(String Array) <code>hrefs</code> - The hrefs of the stylesheets to add. <em>Add
 a list of skin stylesheets.</em></p>
-<pre><code>          service.addStylesheets = (hrefs) -&gt;
+<pre><code class="coffeescript">          service.addStylesheets = (hrefs) -&gt;
             $q.all (service.addStylesheet href for href in hrefs)
 </code></pre>
+
 <p>CLoak the body during the skin transition.</p>
-<pre><code>          addBodyCloak = -&gt;
+<pre><code class="coffeescript">          addBodyCloak = -&gt;
 
             $body = angular.element 'body'
             $body.addClass 'shrub-skin-cloak'
 </code></pre>
+
 <p>Remove the cloak after the transition is complete.</p>
-<pre><code>          removeBodyCloak = -&gt;
+<pre><code class="coffeescript">          removeBodyCloak = -&gt;
 
             $body = angular.element 'body'
             $body.removeClass 'shrub-skin-cloak'
 </code></pre>
+
 <p>Remove all current skin stylesheets.</p>
-<pre><code>          removeSkinStylesheets = -&gt;
+<pre><code class="coffeescript">          removeSkinStylesheets = -&gt;
 
             $head = angular.element 'head'
             head = $head[0]
@@ -1861,28 +1934,32 @@ a list of skin stylesheets.</em></p>
 
             return
 </code></pre>
+
 <p>Use the correct assets for the environment.</p>
-<pre><code>          environmentKey = if 'production' is cache.get 'environment'
+<pre><code class="coffeescript">          environmentKey = if 'production' is cache.get 'environment'
             'production'
           else
             'default'
 </code></pre>
+
 <h2 id="skinchange">skin.change</h2>
 <p>(String) <code>skinKey</code> - The key of the skin to change to <em>Change
 skin.</em></p>
 <h6 id="todo-need-to-track-current-this-should-be-a-nop-in-that-case">TODO: Need to track current, this should be a nop in that case.</h6>
-<pre><code>          service.change = (skinKey) -&gt;
+<pre><code class="coffeescript">          service.change = (skinKey) -&gt;
 </code></pre>
+
 <p>Cloak the body.</p>
-<pre><code>            addBodyCloak()
+<pre><code class="coffeescript">            addBodyCloak()
             removeSkinStylesheets()
 
             skinAssets = config.get(
-              "packageConfig:shrub-skin:assets:#{skinKey}"
+              &quot;packageConfig:shrub-skin:assets:#{skinKey}&quot;
             )
 </code></pre>
+
 <p>Uncloak and notify when finished.</p>
-<pre><code>            service.addStylesheets(
+<pre><code class="coffeescript">            service.addStylesheets(
               skinAssets.styleSheets[environmentKey]
             ).finally -&gt;
               removeBodyCloak()

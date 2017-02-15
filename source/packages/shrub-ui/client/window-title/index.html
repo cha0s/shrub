@@ -916,6 +916,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1347,7 +1369,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1362,21 +1384,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1386,9 +1408,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1412,42 +1513,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1460,27 +1526,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1615,12 +1660,13 @@
               
                 <h1 id="ui-window-title">UI - Window title</h1>
 <p><em>Manage the window and page titles.</em></p>
-<pre><code>config = require 'config'
+<pre><code class="coffeescript">config = require 'config'
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+
 <h4 id="implements-hook-shrubangularcontroller">Implements hook <code>shrubAngularController</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubAngularController', -&gt; [
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAngularController', -&gt; [
     'shrub-ui/window-title'
     class WindowTitleController
 
@@ -1636,8 +1682,9 @@ exports.pkgmanRegister = (registrar) -&gt;
 
   ]
 </code></pre>
+
 <h4 id="implements-hook-shrubangulardirective">Implements hook <code>shrubAngularDirective</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubAngularDirective', -&gt; [
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAngularDirective', -&gt; [
 
     -&gt;
 
@@ -1651,13 +1698,15 @@ exports.pkgmanRegister = (registrar) -&gt;
 
   ]
 </code></pre>
+
 <h4 id="implements-hook-shrubangularapprun">Implements hook <code>shrubAngularAppRun</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubAngularAppRun', -&gt; [
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAngularAppRun', -&gt; [
     '$rootScope', 'shrub-ui/window-title'
     ($rootScope, windowTitle) -&gt;
 </code></pre>
+
 <p>Set the site name into the window title.</p>
-<pre><code>      windowTitle.setSite config.get 'packageConfig:shrub-core:siteName'
+<pre><code class="coffeescript">      windowTitle.setSite config.get 'packageConfig:shrub-core:siteName'
 
       $rootScope.$on '$routeChangeSuccess', (event, route) -&gt;
 
@@ -1665,8 +1714,9 @@ exports.pkgmanRegister = (registrar) -&gt;
 
   ]
 </code></pre>
+
 <h4 id="implements-hook-shrubangularservice">Implements hook <code>shrubAngularService</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubAngularService', -&gt; [
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAngularService', -&gt; [
     '$interval'
     ($interval) -&gt;
 
@@ -1674,10 +1724,12 @@ exports.pkgmanRegister = (registrar) -&gt;
 
       _page = ''
 </code></pre>
+
 <h2 id="windowtitlepage">windowTitle.page</h2>
 <p><em>Get the page title.</em></p>
-<pre><code>      service.page = -&gt; _page
+<pre><code class="coffeescript">      service.page = -&gt; _page
 </code></pre>
+
 <h2 id="windowtitlesetpage">windowTitle.setPage</h2>
 <ul>
 <li>
@@ -1688,61 +1740,69 @@ exports.pkgmanRegister = (registrar) -&gt;
 </li>
 </ul>
 <p><em>Set the page title.</em></p>
-<pre><code>      service.setPage = (page, setWindow = true) -&gt;
+<pre><code class="coffeescript">      service.setPage = (page, setWindow = true) -&gt;
 
         _page = page
         service.set [_page, _site].join _separator if setWindow
 
       _separator = ' · '
 </code></pre>
+
 <h2 id="windowtitleseparator">windowTitle.separator</h2>
 <p><em>Get the token that separates the window and page titles.</em></p>
-<pre><code>      service.separator = -&gt; _separator
+<pre><code class="coffeescript">      service.separator = -&gt; _separator
 </code></pre>
+
 <h2 id="windowtitlesetseparator">windowTitle.setSeparator</h2>
 <ul>
 <li>(String) <code>separator</code> - The separator.</li>
 </ul>
 <p><em>Set the token that separates the window and page titles.</em></p>
-<pre><code>      service.setSeparator = (separator) -&gt; _separator = separator
+<pre><code class="coffeescript">      service.setSeparator = (separator) -&gt; _separator = separator
 
       _site = ''
 </code></pre>
+
 <h2 id="windowtitlesite">windowTitle.site</h2>
 <p><em>Get the site name.</em></p>
-<pre><code>      service.site = -&gt; _site
+<pre><code class="coffeescript">      service.site = -&gt; _site
 </code></pre>
+
 <h2 id="windowtitlesetsite">windowTitle.setSite</h2>
 <ul>
 <li>(String) <code>site</code> - The site name.</li>
 </ul>
 <p><em>Set the site name.</em></p>
-<pre><code>      service.setSite = (site) -&gt; _site = site
+<pre><code class="coffeescript">      service.setSite = (site) -&gt; _site = site
 
       _window = ''
 </code></pre>
+
 <h2 id="windowtitleget">windowTitle.get</h2>
 <p><em>Get the window title.</em></p>
-<pre><code>      service.get = -&gt; _windowTitleWrapper _window
+<pre><code class="coffeescript">      service.get = -&gt; _windowTitleWrapper _window
 </code></pre>
+
 <h2 id="windowtitleset">windowTitle.set</h2>
 <ul>
 <li>(String) <code>window</code> - The window title.</li>
 </ul>
 <p><em>Set the window title.</em></p>
-<pre><code>      service.set = (window) -&gt; _window = window
+<pre><code class="coffeescript">      service.set = (window) -&gt; _window = window
 </code></pre>
+
 <p>If you want to make the window/tab title flash for attention, use this
 API.</p>
-<pre><code>      _flashUpWrapper = (text) -&gt; "¯¯¯#{text.toUpperCase()}¯¯¯"
-      _flashDownWrapper = (text) -&gt; "___#{text}___"
+<pre><code class="coffeescript">      _flashUpWrapper = (text) -&gt; &quot;¯¯¯#{text.toUpperCase()}¯¯¯&quot;
+      _flashDownWrapper = (text) -&gt; &quot;___#{text}___&quot;
       _windowTitleWrapper = angular.identity
 
       flashInProgress = null
 </code></pre>
+
 <h2 id="windowtitlestartflashing">windowTitle.startFlashing</h2>
 <p><em>Start flashing the window title.</em></p>
-<pre><code>      service.startFlashing = -&gt;
+<pre><code class="coffeescript">      service.startFlashing = -&gt;
         return if flashInProgress?
 
         flashInProgress = $interval(
@@ -1756,23 +1816,26 @@ API.</p>
           600
         )
 </code></pre>
+
 <h2 id="windowtitlestopflashing">windowTitle.stopFlashing</h2>
 <p><em>Stop flashing the window title.</em></p>
-<pre><code>      service.stopFlashing = -&gt;
+<pre><code class="coffeescript">      service.stopFlashing = -&gt;
 
         $interval.cancel flashInProgress if flashInProgress?
         flashInProgress = null
 
         _windowWrapper = angular.identity
 </code></pre>
+
 <p>The wrappers below handle rendering the window title and flash states.
 The wrappers are passed in a single argument, the title text. The
 wrapper function returns another string, which is the text after
 whatever wrapping you'd like to do.</p>
 <h2 id="windowtitleflashdownwrapper">windowTitle.flashDownWrapper</h2>
 <p><em>Get the transformation function for the 'down' flash.</em></p>
-<pre><code>      service.flashDownWrapper = -&gt; _flashDownWrapper
+<pre><code class="coffeescript">      service.flashDownWrapper = -&gt; _flashDownWrapper
 </code></pre>
+
 <h2 id="windowtitlesetflashdownwrapper">windowTitle.setFlashDownWrapper</h2>
 <ul>
 <li>(Function) <code>flashDownWrapper</code> - Transformation function. Takes the
@@ -1780,13 +1843,15 @@ window</li>
 </ul>
 <p>title as argument and returns a transformed window title. <em>Set the
 transformation function for the 'down' flash.</em></p>
-<pre><code>      service.setFlashDownWrapper = (flashDownWrapper) -&gt;
+<pre><code class="coffeescript">      service.setFlashDownWrapper = (flashDownWrapper) -&gt;
         _flashDownWrapper = flashDownWrapper
 </code></pre>
+
 <h2 id="windowtitleflashupwrapper">windowTitle.flashUpWrapper</h2>
 <p><em>Get the transformation function for the 'up' flash.</em></p>
-<pre><code>      service.flashUpWrapper = -&gt; _flashUpWrapper
+<pre><code class="coffeescript">      service.flashUpWrapper = -&gt; _flashUpWrapper
 </code></pre>
+
 <h2 id="windowtitlesetflashupwrapper">windowTitle.setFlashUpWrapper</h2>
 <ul>
 <li>(Function) <code>flashUpWrapper</code> - Transformation function. Takes the
@@ -1794,7 +1859,7 @@ window</li>
 </ul>
 <p>title as argument and returns a transformed window title. <em>Set the
 transformation function for the 'up' flash.</em></p>
-<pre><code>      service.setFlashUpWrapper = (flashUpWrapper) -&gt;
+<pre><code class="coffeescript">      service.setFlashUpWrapper = (flashUpWrapper) -&gt;
         _flashUpWrapper = flashUpWrapper
 
       service

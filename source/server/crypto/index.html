@@ -916,6 +916,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1304,7 +1326,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1319,21 +1341,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../../packages/shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../../packages/shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../../packages/shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1343,9 +1365,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../../packages/shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1369,42 +1470,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1417,27 +1483,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../packages/shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1585,10 +1630,11 @@
               
                 <h1 id="crypto">Crypto</h1>
 <p><em>Cryptographic helper functions.</em></p>
-<pre><code>crypto = require 'crypto'
+<pre><code class="coffeescript">crypto = require 'crypto'
 config = require 'config'
 Promise = require 'bluebird'
 </code></pre>
+
 <h2 id="cryptoencrypt">crypto.encrypt</h2>
 <ul>
 <li>
@@ -1600,7 +1646,7 @@ Promise = require 'bluebird'
 </ul>
 <p>Defaults to the site's global crypto key. <em>AES encrypt a message with a
 password.</em></p>
-<pre><code>exports.encrypt = (message, password) -&gt;
+<pre><code class="coffeescript">exports.encrypt = (message, password) -&gt;
 
   new Promise (resolve, reject) -&gt;
 
@@ -1614,6 +1660,7 @@ password.</em></p>
     cipherText.push cipher.final 'hex'
     resolve cipherText.join ''
 </code></pre>
+
 <h2 id="cryptodecrypt">crypto.decrypt</h2>
 <ul>
 <li>
@@ -1625,7 +1672,7 @@ password.</em></p>
 </ul>
 <p>Defaults to the site's global crypto key. <em>AES decrypt a message with a
 password.</em></p>
-<pre><code>exports.decrypt = (message, password) -&gt;
+<pre><code class="coffeescript">exports.decrypt = (message, password) -&gt;
 
   new Promise (resolve, reject) -&gt;
 
@@ -1640,12 +1687,14 @@ password.</em></p>
     decipherText.push decipher.final 'binary'
     decipherText = decipherText.join ''
 </code></pre>
+
 <p>Slice off any padding.</p>
-<pre><code>    if 16 &gt;= code = decipherText.charCodeAt decipherText.length - 1
+<pre><code class="coffeescript">    if 16 &gt;= code = decipherText.charCodeAt decipherText.length - 1
       decipherText = decipherText.slice 0, -code
 
     resolve decipherText
 </code></pre>
+
 <h2 id="cryptohasher">crypto.hasher</h2>
 <p>CREDIT:
 <a href="https://gist.github.com/boronine/3548196">https://gist.github.com/boronine/3548196</a>
@@ -1676,19 +1725,23 @@ the following values:</p>
 </ul>
 </li>
 </ul>
+<pre><code class="coffeescript"></code></pre>
+
 <p><em>Cryptographic authentication functionality.</em></p>
-<pre><code>exports.hasher = (options = {}) -&gt;
+<pre><code class="coffeescript">exports.hasher = (options = {}) -&gt;
 </code></pre>
+
 <p>Generate random 8-character base64 password if none provided</p>
-<pre><code>  unless options.plaintext?
+<pre><code class="coffeescript">  unless options.plaintext?
 
     return exports.randomBytes(6).then((buffer) -&gt;
       options.plaintext = buffer.toString 'base64'
       exports.hasher options
     )
 </code></pre>
+
 <p>Generate random 512-bit salt if no salt provided</p>
-<pre><code>  unless options.salt?
+<pre><code class="coffeescript">  unless options.salt?
 
     return exports.randomBytes(64).then((buffer) -&gt;
       options.salt = buffer
@@ -1705,8 +1758,9 @@ the following values:</p>
     options.key = new Buffer key
     options
 </code></pre>
+
 <p>Promisify some useful node.js crypto functions.</p>
-<pre><code>exports.pbkdf2 = Promise.promisify crypto.pbkdf2, crypto
+<pre><code class="coffeescript">exports.pbkdf2 = Promise.promisify crypto.pbkdf2, crypto
 exports.randomBytes = Promise.promisify crypto.randomBytes, crypto
 </code></pre>
               

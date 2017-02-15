@@ -916,6 +916,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1319,7 +1341,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1334,21 +1356,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1358,9 +1380,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1384,42 +1485,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1432,27 +1498,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1586,12 +1631,13 @@
             <div class="section">
               
                 <h1 id="ui-notifications">UI - Notifications</h1>
-<pre><code>config = require 'config'
+<pre><code class="coffeescript">config = require 'config'
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+
 <h4 id="implements-hook-shrubangulardirective">Implements hook <code>shrubAngularDirective</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubAngularDirective', -&gt; [
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAngularDirective', -&gt; [
     'shrub-rpc', 'shrub-ui/notifications'
     (rpc, notifications) -&gt;
 
@@ -1603,26 +1649,31 @@ exports.pkgmanRegister = (registrar) -&gt;
 
       directive.link = (scope, element, attr) -&gt;
 </code></pre>
+
 <p>Put the queue name into the scope.</p>
-<pre><code>        scope.queueName = attr.queueName
+<pre><code class="coffeescript">        scope.queueName = attr.queueName
         scope.queue = notifications.queue scope.queueName
 </code></pre>
+
 <p>When notifications are akcnowledged.</p>
-<pre><code>        scope.$on 'shrub.ui.notifications.acknowledged', -&gt;
+<pre><code class="coffeescript">        scope.$on 'shrub.ui.notifications.acknowledged', -&gt;
           return unless scope.unacknowledged
 </code></pre>
+
 <p>Tell the server.</p>
-<pre><code>          rpc.call(
+<pre><code class="coffeescript">          rpc.call(
             'shrub-ui/notifications/acknowledged'
             queue: attr.queueName
           )
 </code></pre>
+
 <p>Mark client notifications as acknowledged.</p>
-<pre><code>          for notification in scope.queue.notifications()
+<pre><code class="coffeescript">          for notification in scope.queue.notifications()
             notification.acknowledged = true
 </code></pre>
+
 <p>Mark the notification as read.</p>
-<pre><code>        scope.markAsRead = (notification, markedAsRead) -&gt;
+<pre><code class="coffeescript">        scope.markAsRead = (notification, markedAsRead) -&gt;
           return if markedAsRead is notification.markedAsRead
 
           notification.markedAsRead = markedAsRead
@@ -1633,28 +1684,32 @@ exports.pkgmanRegister = (registrar) -&gt;
             markedAsRead: markedAsRead
           )
 </code></pre>
+
 <p>Hide the popover when any notification is clicked. Feel free to
 catch the <code>shrub.ui.notification.clicked</code> event in your
 shrubSkinLink implementation.</p>
-<pre><code>        scope.notificationClicked = ($event, notification) -&gt;
+<pre><code class="coffeescript">        scope.notificationClicked = ($event, notification) -&gt;
 
           scope.$emit(
             'shrub.ui.notification.clicked'
             $event, notification
           )
 </code></pre>
+
 <p>Set up default behavior on a click event, and provide the
 deregistration function to any shrubSkinLink consumers.</p>
-<pre><code>        scope.$deregisterDefaultClickHandler = scope.$on(
+<pre><code class="coffeescript">        scope.$deregisterDefaultClickHandler = scope.$on(
           'shrub.ui.notification.clicked'
           ($event, $clickEvent, notification) -&gt;
 </code></pre>
+
 <p>Mark the notification as read.</p>
-<pre><code>            scope.markAsRead notification, true
+<pre><code class="coffeescript">            scope.markAsRead notification, true
         )
 </code></pre>
+
 <p>Keep track of unread items.</p>
-<pre><code>        scope.$watch 'queue.notifications()', (notifications) -&gt;
+<pre><code class="coffeescript">        scope.$watch 'queue.notifications()', (notifications) -&gt;
           unacknowledged = notifications.filter (notification) -&gt;
             not notification.acknowledged
 
@@ -1666,50 +1721,50 @@ deregistration function to any shrubSkinLink consumers.</p>
 
       directive.scope = {}
 
-      directive.template = """
+      directive.template = &quot;&quot;&quot;
 
 &lt;div
-  class="notifications-container"
+  class=&quot;notifications-container&quot;
 &gt;
 
   &lt;button&gt;
     !
     &lt;span
-      class="unacknowledged"
-      data-ng-bind="unacknowledged"
-      data-ng-if="unacknowledged &gt; 0"
+      class=&quot;unacknowledged&quot;
+      data-ng-bind=&quot;unacknowledged&quot;
+      data-ng-if=&quot;unacknowledged &gt; 0&quot;
     &gt;&lt;/span&gt;
   &lt;/button&gt;
 
   &lt;div
-    data-ng-hide="true"
+    data-ng-hide=&quot;true&quot;
   &gt;
 
     &lt;div
-      class="notifications"
-      data-ng-class="classes"
+      class=&quot;notifications&quot;
+      data-ng-class=&quot;classes&quot;
     &gt;
 
       &lt;ul&gt;
 
         &lt;li
-          data-ng-if="!!queue.notifications().length"
-          data-ng-repeat="notification in queue.notifications()"
+          data-ng-if=&quot;!!queue.notifications().length&quot;
+          data-ng-repeat=&quot;notification in queue.notifications()&quot;
         &gt;
           &lt;a
             data-shrub-ui-notifications-item
-            data-notification="notification"
-            data-ng-href="{{notification.path}}"
-            data-ng-click="notificationClicked($event, notification)"
+            data-notification=&quot;notification&quot;
+            data-ng-href=&quot;{{notification.path}}&quot;
+            data-ng-click=&quot;notificationClicked($event, notification)&quot;
           &gt;
           &lt;/a&gt;
         &lt;/li&gt;
 
         &lt;li
-          data-ng-if="!queue.notifications().length"
+          data-ng-if=&quot;!queue.notifications().length&quot;
         &gt;
           &lt;a
-            href="javascript:void(0)"
+            href=&quot;javascript:void(0)&quot;
           &gt;
             There's nothing here yet...
           &lt;/a&gt;
@@ -1719,14 +1774,15 @@ deregistration function to any shrubSkinLink consumers.</p>
   &lt;/div&gt;
 &lt;/div&gt;
 
-"""
+&quot;&quot;&quot;
 
       directive
 
   ]
 </code></pre>
+
 <h4 id="implements-hook-shrubangularservice">Implements hook <code>shrubAngularService</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubAngularService', -&gt; [
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAngularService', -&gt; [
     '$q', 'shrub-rpc', 'shrub-socket'
     ($q, rpc, socket) -&gt;
 
@@ -1734,14 +1790,16 @@ deregistration function to any shrubSkinLink consumers.</p>
 
       _queues = {}
 </code></pre>
+
 <h2 id="notificationslist">notifications.list</h2>
 <p>Get a queue of notifications.</p>
-<pre><code>      service.queue = (queue) -&gt;
+<pre><code class="coffeescript">      service.queue = (queue) -&gt;
         _queues[queue] ?= new NotificationQueue()
 </code></pre>
+
 <h2 id="notificationsloadmore">notifications.loadMore</h2>
 <p>Load more notifications</p>
-<pre><code>      service.loadMore = (queue, skip) -&gt;
+<pre><code class="coffeescript">      service.loadMore = (queue, skip) -&gt;
 
         rpc.call(
           'shrub-ui/notifications'
@@ -1753,36 +1811,41 @@ deregistration function to any shrubSkinLink consumers.</p>
           _queues[queue] ?= new NotificationQueue()
           _queues[queue].add notifications
 </code></pre>
+
 <p>Add in initial notifications from config.</p>
-<pre><code>      for queue, notifications of config.get(
+<pre><code class="coffeescript">      for queue, notifications of config.get(
         'packageConfig:shrub-ui:notifications'
       )
         _queues[queue] ?= new NotificationQueue()
         _queues[queue].add notifications
 </code></pre>
+
 <p>Accept notifications from the server.</p>
-<pre><code>      socket.on 'shrub-ui/notifications', (data) -&gt;
+<pre><code class="coffeescript">      socket.on 'shrub-ui/notifications', (data) -&gt;
         {queue, notifications} = data
 
         _queues[queue] ?= new NotificationQueue()
         _queues[queue].add notifications
 </code></pre>
+
 <p>Remove notifications.</p>
-<pre><code>      socket.on 'shrub-ui/notifications/remove', (data) -&gt;
+<pre><code class="coffeescript">      socket.on 'shrub-ui/notifications/remove', (data) -&gt;
         {queue, ids} = data
 
         _queues[queue] ?= new NotificationQueue()
         _queues[queue].remove ids
 </code></pre>
+
 <p>Mark notifications as read.</p>
-<pre><code>      socket.on 'shrub-ui/notifications/markAsRead', (data) -&gt;
+<pre><code class="coffeescript">      socket.on 'shrub-ui/notifications/markAsRead', (data) -&gt;
         {queue, ids, markedAsRead} = data
 
         _queues[queue] ?= new NotificationQueue()
         _queues[queue].markAsRead ids, markedAsRead
 </code></pre>
+
 <p>Mark notifications as acknowledged.</p>
-<pre><code>      socket.on 'shrub-ui/notifications/acknowledged', (data) -&gt;
+<pre><code class="coffeescript">      socket.on 'shrub-ui/notifications/acknowledged', (data) -&gt;
         {queue, ids} = data
 
         _queues[queue] ?= new NotificationQueue()

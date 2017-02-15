@@ -916,6 +916,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1304,7 +1326,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1319,21 +1341,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../../packages/shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../../packages/shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../../packages/shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1343,9 +1365,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../../packages/shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1369,42 +1470,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1417,27 +1483,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../packages/shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../packages/shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1595,7 +1640,7 @@
 functional <a href="http://en.wikipedia.org/wiki/WebSocket">WebSocket</a> using
 <a href="https://github.com/einaros/ws/">ws</a>, and generally makes spinning up
 arbitrary DOM contexts a pleasant breeze.</p>
-<pre><code>config = require 'config'
+<pre><code class="coffeescript">config = require 'config'
 Promise = require 'bluebird'
 WebSocket = require 'ws/lib/WebSocket'
 
@@ -1604,44 +1649,53 @@ logging = require 'logging'
 
 {jsdom} = require 'jsdom'
 </code></pre>
+
 <p>Hax: Fix document.domain since jsdom has a stub here.</p>
-<pre><code>{HTMLDocument} = require 'jsdom/lib/jsdom/living'
+<pre><code class="coffeescript">{HTMLDocument} = require 'jsdom/lib/jsdom/living'
 Object.defineProperties(
   HTMLDocument.prototype
   domain: get: -&gt; 'localhost'
 )
 </code></pre>
+
 <p>This class is responsible for creating and cleaning up DOMs, and provides
 some methods to inspect the state of the document.</p>
-<pre><code>exports.Sandbox = class Sandbox
+<pre><code class="coffeescript">exports.Sandbox = class Sandbox
 </code></pre>
+
 <h2 id="constructor"><em>constructor</em></h2>
 <p><em>Spin up a DOM.</em></p>
-<pre><code>  constructor: -&gt;
+<pre><code class="coffeescript">  constructor: -&gt;
 
     @_cleanupFunctions = []
     @_window = null
 </code></pre>
+
 <h2 id="sandboxclose">Sandbox#close</h2>
 <p><em>Close a DOM.</em></p>
-<pre><code>  close: -&gt;
+<pre><code class="coffeescript">  close: -&gt;
 </code></pre>
+
 <p>If the window is already gone, nope out.</p>
-<pre><code>    return Promise.resolve() unless @_window?
+<pre><code class="coffeescript">    return Promise.resolve() unless @_window?
 </code></pre>
+
 <p>Run all the registered cleanup functions.</p>
-<pre><code>    Promise.all(
+<pre><code class="coffeescript">    Promise.all(
       fn() for fn in @_cleanupFunctions
 </code></pre>
+
 <p>Suppress cleanup errors.</p>
-<pre><code>    ).catch(-&gt;
+<pre><code class="coffeescript">    ).catch(-&gt;
 </code></pre>
+
 <p>Actually close the window and null it out.</p>
-<pre><code>    ).finally =&gt;
+<pre><code class="coffeescript">    ).finally =&gt;
 
       @_window.close()
       @_window = null
 </code></pre>
+
 <h2 id="sandboxcreatedocument">Sandbox#createDocument</h2>
 <ul>
 <li>
@@ -1655,26 +1709,31 @@ some methods to inspect the state of the document.</p>
     * (string) <code>cookie</code> - Cookie string.
     * (string) <code>cookieDomain</code> - The domain the cookie applies to.
     * (string) <code>url</code> - The canonical URL of the HTML document.</p>
+<pre><code class="coffeescript"></code></pre>
+
 <p><em>Create a DOM from an HTML document.</em></p>
-<pre><code>  createDocument: (html, options = {}) -&gt;
+<pre><code class="coffeescript">  createDocument: (html, options = {}) -&gt;
 </code></pre>
+
 <p>Set up a DOM, forwarding our cookie.</p>
-<pre><code>    document = jsdom(
+<pre><code class="coffeescript">    document = jsdom(
       html
 
       cookie: options.cookie
       cookieDomain: options.cookieDomain ? 'localhost'
 
-      url: options.url ? "http://localhost:#{config.get 'packageSettings:shrub-http:port'}/"
+      url: options.url ? &quot;http://localhost:#{config.get 'packageSettings:shrub-http:port'}/&quot;
     )
     @_window = window = document.defaultView
 </code></pre>
+
 <p>Capture "client" console logs.</p>
-<pre><code>    for level in ['info', 'log', 'debug', 'warn', 'error']
+<pre><code class="coffeescript">    for level in ['info', 'log', 'debug', 'warn', 'error']
       do (level) -&gt; window.console[level] = (args...) -&gt;
 </code></pre>
+
 <p>Make errors as detailed as possible.</p>
-<pre><code>        for arg, i in args
+<pre><code class="coffeescript">        for arg, i in args
           if arg instanceof Error
             args[i] = errors.stack arg
           else
@@ -1682,42 +1741,48 @@ some methods to inspect the state of the document.</p>
 
         console[level] args...
 </code></pre>
+
 <p>Hack in WebSocket.</p>
-<pre><code>    window.WebSocket = WebSocket
+<pre><code class="coffeescript">    window.WebSocket = WebSocket
 
     sandbox = this
     new Promise (resolve, reject) -&gt;
 </code></pre>
+
 <p>When the window is loaded, we'll reject with any error, or resolve.</p>
-<pre><code>      window.onload = -&gt;
+<pre><code class="coffeescript">      window.onload = -&gt;
 
         for documentError in window.document.errors ? []
           if documentError.data?.error?
-            error = new Error "#{documentError.message}\n#{errors.stack documentError.data.error}"
+            error = new Error &quot;#{documentError.message}\n#{errors.stack documentError.data.error}&quot;
 
         if error?
           reject error
         else
           resolve sandbox
 </code></pre>
+
 <h2 id="sandboxemithtml">Sandbox#emitHtml</h2>
 <p><em>Emit the document as HTML.</em></p>
-<pre><code>  emitHtml: -&gt; """
+<pre><code class="coffeescript">  emitHtml: -&gt; &quot;&quot;&quot;
 &lt;!doctype html&gt;
 </code></pre>
+
 <p>@_window.document.innerHTML}</p>
-<pre><code>"""
+<pre><code class="coffeescript">&quot;&quot;&quot;
 </code></pre>
+
 <h2 id="sandboxregistercleanupfunction">Sandbox#registerCleanupFunction</h2>
 <ul>
 <li>(function) <code>fn</code> - The function to run when the sandbox is closing.</li>
 </ul>
 <p><em>Register a function to run when the sandbox is closing.</em></p>
-<pre><code>  registerCleanupFunction: (fn) -&gt; @_cleanupFunctions.push fn
+<pre><code class="coffeescript">  registerCleanupFunction: (fn) -&gt; @_cleanupFunctions.push fn
 </code></pre>
+
 <h2 id="sandboxurl">Sandbox#url</h2>
 <p><em>The current URL the sandbox is at.</em></p>
-<pre><code>  url: -&gt; @_window.location.href
+<pre><code class="coffeescript">  url: -&gt; @_window.location.href
 </code></pre>
               
             </div>

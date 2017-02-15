@@ -916,6 +916,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1339,7 +1361,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1354,21 +1376,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1378,9 +1400,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1404,42 +1505,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1452,27 +1518,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1606,7 +1651,7 @@
             <div class="section">
               
                 <h1 id="ui-notifications">UI - Notifications</h1>
-<pre><code>Promise = null
+<pre><code class="coffeescript">Promise = null
 
 orm = null
 
@@ -1614,15 +1659,17 @@ notificationQueues = {}
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+
 <h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <code>shrubCorePreBootstrap</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubCorePreBootstrap', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubCorePreBootstrap', -&gt;
 
     Promise = require 'bluebird'
 
     orm = require 'shrub-orm'
 </code></pre>
+
 <h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <code>shrubCoreBootstrapMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubCoreBootstrapMiddleware', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubCoreBootstrapMiddleware', -&gt;
 
     pkgman = require 'pkgman'
 
@@ -1631,8 +1678,9 @@ exports.pkgmanRegister = (registrar) -&gt;
 
       (next) -&gt;
 </code></pre>
+
 <h4 id="invoke-hook-shrubuinotificationqueues">Invoke hook <code>shrubUiNotificationQueues</code>.</h4>
-<pre><code>        for path, queues of pkgman.invoke 'shrubUiNotificationQueues'
+<pre><code class="coffeescript">        for path, queues of pkgman.invoke 'shrubUiNotificationQueues'
           for name, queue of queues
             notificationQueues[pkgman.normalizePath name] = queue
 
@@ -1640,16 +1688,18 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     ]
 </code></pre>
+
 <p>Broadcast a notification event.</p>
-<pre><code>  broadcastNotificationsEvent = (req, args) -&gt;
+<pre><code class="coffeescript">  broadcastNotificationsEvent = (req, args) -&gt;
 
     {manager: socketManager} = require 'shrub-socket'
 
     {data, event, includeSelf, notifications} = args
     data ?= {}
 </code></pre>
+
 <p>Broadcast for each queue.</p>
-<pre><code>    queueMap = {}
+<pre><code class="coffeescript">    queueMap = {}
     for notification in notifications
       queueMap[notification.queue] ?= []
       queueMap[notification.queue].push notification.id
@@ -1666,50 +1716,60 @@ exports.pkgmanRegister = (registrar) -&gt;
       else
         req.socket.broadcast.to(channel).emit event, data
 </code></pre>
+
 <h4 id="implements-hook-shrubormcollections">Implements hook <code>shrubOrmCollections</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubOrmCollections', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubOrmCollections', -&gt;
 </code></pre>
+
 <h2 id="notification">Notification</h2>
-<pre><code>    Notification =
+<pre><code class="coffeescript">    Notification =
 
       attributes:
 </code></pre>
+
 <h2 id="notificationacknowledged">Notification#acknowledged</h2>
 <p><em>Has the notification been acknowledged?</em></p>
-<pre><code>        acknowledged:
+<pre><code class="coffeescript">        acknowledged:
           type: 'boolean'
           defaultsTo: false
 </code></pre>
+
 <h2 id="notificationmarkedasread">Notification#markedAsRead</h2>
 <p><em>Has the notification been read?</em></p>
-<pre><code>        markedAsRead:
+<pre><code class="coffeescript">        markedAsRead:
           type: 'boolean'
           defaultsTo: false
 </code></pre>
+
 <h2 id="notificationmayremove">Notification#mayRemove</h2>
 <p><em>May this notification be removed?</em></p>
-<pre><code>        mayRemove:
+<pre><code class="coffeescript">        mayRemove:
           type: 'boolean'
           defaultsTo: true
 </code></pre>
+
 <h2 id="notificationchannel">Notification#channel</h2>
 <p><em>Which channel owns this notification? Built by the queue.</em></p>
-<pre><code>        channel: 'string'
+<pre><code class="coffeescript">        channel: 'string'
 </code></pre>
+
 <h2 id="notificationpath">Notification#path</h2>
 <p><em>To where does this notification link?</em></p>
-<pre><code>        path: 'string'
+<pre><code class="coffeescript">        path: 'string'
 </code></pre>
+
 <h2 id="notificationqueue">Notification#queue</h2>
 <p><em>To which queue does this notification belong?</em></p>
-<pre><code>        queue:
+<pre><code class="coffeescript">        queue:
           type: 'string'
           notEmpty: true
 </code></pre>
+
 <h2 id="notificationvariables">Notification#variables</h2>
 <p><em>Variables, can be any type.</em></p>
-<pre><code>        variables: 'json'
+<pre><code class="coffeescript">        variables: 'json'
 </code></pre>
+
 <h2 id="notificationcreatefromrequest">Notification#createFromRequest</h2>
 <ul>
 <li>
@@ -1732,24 +1792,28 @@ queue by</li>
 </ul>
 <p>the user? Defaults to <code>true</code>. <em>Create a notification from a request
 object.</em></p>
-<pre><code>      createFromRequest: (req, queueName, variables, path, mayRemove) -&gt;
+<pre><code class="coffeescript">      createFromRequest: (req, queueName, variables, path, mayRemove) -&gt;
 </code></pre>
+
 <p>Check that the queue is valid.</p>
-<pre><code>        unless queue = notificationQueues[queueName]
+<pre><code class="coffeescript">        unless queue = notificationQueues[queueName]
           return Promise.reject new Error(
-            "Notification queue `#{queue}' doesn't exist."
+            &quot;Notification queue `#{queue}' doesn't exist.&quot;
           )
 </code></pre>
+
 <p>Defaults.</p>
-<pre><code>        mayRemove ?= true
+<pre><code class="coffeescript">        mayRemove ?= true
         path ?= 'javascript:void(0)'
         variables ?= {}
 </code></pre>
+
 <p>Get the channel from the request.</p>
-<pre><code>        return unless (channel = queue.channelFromRequest req)?
+<pre><code class="coffeescript">        return unless (channel = queue.channelFromRequest req)?
 </code></pre>
+
 <p>Create the notification.</p>
-<pre><code>        @create(
+<pre><code class="coffeescript">        @create(
           mayRemove: mayRemove
           channel: channel
           path: path
@@ -1759,8 +1823,9 @@ object.</em></p>
         ).then (notification) -&gt;
           return unless req.socket?
 </code></pre>
+
 <p>Broadcast to others.</p>
-<pre><code>          notification.redactFor(req.user).then (notification) -&gt;
+<pre><code class="coffeescript">          notification.redactFor(req.user).then (notification) -&gt;
             broadcastNotificationsEvent(
               req
               data: notifications: [notification]
@@ -1769,38 +1834,43 @@ object.</em></p>
               notifications: [notification]
             )
 </code></pre>
+
 <h2 id="notificationqueuefromrequest">Notification#queueFromRequest</h2>
 <ul>
 <li>(http.IncomingMessage) <code>req</code> - The request object.</li>
 </ul>
 <p><em>Get a queue's notifications from a request.</em></p>
-<pre><code>      queueFromRequest: (req) -&gt;
+<pre><code class="coffeescript">      queueFromRequest: (req) -&gt;
 </code></pre>
+
 <p>Empty queue if none was defined.</p>
-<pre><code>        unless (queue = notificationQueues[req.body.queue])?
+<pre><code class="coffeescript">        unless (queue = notificationQueues[req.body.queue])?
           return Promise.resolve []
 
         unless (channel = queue.channelFromRequest req)?
           return Promise.resolve []
 </code></pre>
+
 <p>Return the 20 newest notifications from the queue for the request's
 channel, skipping as many records as requested.</p>
-<pre><code>        query = @find()
+<pre><code class="coffeescript">        query = @find()
         query = query.where(channel: channel)
         query = query.where(queue: req.body.queue)
         query = query.skip(req.body.skip ? 0)
         query = query.limit(20)
         query.sort('createdAt DESC')
 </code></pre>
+
 <p>Redact the notifications before sending them over the wire.</p>
-<pre><code>        query.then (notifications) -&gt;
+<pre><code class="coffeescript">        query.then (notifications) -&gt;
           Promise.all(
             notifications.map (notification) -&gt;
               notification.redactFor req.user
           )
 </code></pre>
+
 <p>Remove unnecessary details.</p>
-<pre><code>      redactors: [(redactFor) -&gt;
+<pre><code class="coffeescript">      redactors: [(redactFor) -&gt;
         self = this
 
         delete self.channel
@@ -1810,47 +1880,53 @@ channel, skipping as many records as requested.</p>
 
     'shrub-ui-notification': Notification
 </code></pre>
+
 <h4 id="implements-hook-shrubconfigclient">Implements hook <code>shrubConfigClient</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubConfigClient', (req) -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubConfigClient', (req) -&gt;
 </code></pre>
+
 <p>Make sure ORM is up (it won't be when grunt is running).</p>
-<pre><code>    return unless Notification = orm?.collection 'shrub-ui-notification'
+<pre><code class="coffeescript">    return unless Notification = orm?.collection 'shrub-ui-notification'
 </code></pre>
+
 <p>Get all the notification queues.</p>
-<pre><code>    promiseKeys = []
+<pre><code class="coffeescript">    promiseKeys = []
     promises = for key, queue of notificationQueues
       promiseKeys.push key
 
       (req.body ?= {}).queue = key
       Notification.queueFromRequest req
 </code></pre>
+
 <p>Load any queues into the config.</p>
-<pre><code>    Promise.all(promises).then (notificationsList) -&gt;
+<pre><code class="coffeescript">    Promise.all(promises).then (notificationsList) -&gt;
       queuesConfig = null
 
       for notifications, index in notificationsList
         continue if notifications.length is 0
 </code></pre>
+
 <p>Reverse the notifications because the client will prepend new
 notifications, not append.</p>
-<pre><code>        queuesConfig ?= {}
+<pre><code class="coffeescript">        queuesConfig ?= {}
         queuesConfig[promiseKeys[index]] = notifications.reverse()
 
       queuesConfig
 </code></pre>
+
 <p>Ensure that the requested notification is owned by the request.</p>
-<pre><code>  ensureNotificationsOwnedByRequest = (req, res, next) -&gt;
+<pre><code class="coffeescript">  ensureNotificationsOwnedByRequest = (req, res, next) -&gt;
 
     Notification = orm.collection 'shrub-ui-notification'
     Notification.findById(req.body.ids).then((notifications) -&gt;
 
       for notification in notifications
         return next new Error(
-          "Notification queue `#{notification.queue}' doesn't exist."
+          &quot;Notification queue `#{notification.queue}' doesn't exist.&quot;
         ) unless queue = notificationQueues[notification.queue]
 
         return next new Error(
-          "You don't own those notifications."
+          &quot;You don't own those notifications.&quot;
         ) unless notification.channel is queue.channelFromRequest req
 
       req.notifications = notifications
@@ -1858,8 +1934,9 @@ notifications, not append.</p>
 
     ).catch next
 </code></pre>
+
 <h4 id="implements-hook-shrubrpcroutes">Implements hook <code>shrubRpcRoutes</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubRpcRoutes', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubRpcRoutes', -&gt;
 
     routes = []
 
@@ -1869,10 +1946,11 @@ notifications, not append.</p>
 
       middleware: [
 </code></pre>
+
 <p>Ensure that the queue exists.</p>
-<pre><code>        (req, res, next) -&gt;
+<pre><code class="coffeescript">        (req, res, next) -&gt;
           return next new Error(
-            "Notification queue `#{req.body.queue}' doesn't exist."
+            &quot;Notification queue `#{req.body.queue}' doesn't exist.&quot;
           ) unless queue = notificationQueues[req.body.queue]
 
           req.queue = queue
@@ -1880,16 +1958,18 @@ notifications, not append.</p>
 
         (req, res, next) -&gt;
 </code></pre>
+
 <p>Mark all notifications in a queue owned by the request as
 acknowledged.</p>
-<pre><code>          Notification = orm.collection 'shrub-ui-notification'
+<pre><code class="coffeescript">          Notification = orm.collection 'shrub-ui-notification'
           query = Notification.find()
           query = query.where(channel: req.queue.channelFromRequest req)
           query = query.where(queue: req.body.queue)
           query.then((notifications) -&gt;
 </code></pre>
+
 <p>Broadcast to others.</p>
-<pre><code>            broadcastNotificationsEvent(
+<pre><code class="coffeescript">            broadcastNotificationsEvent(
               req
               event: 'shrub-ui/notifications/acknowledged'
               notifications: notifications
@@ -1915,8 +1995,9 @@ acknowledged.</p>
 
         (req, res, next) -&gt;
 </code></pre>
+
 <p>Broadcast to others.</p>
-<pre><code>          broadcastNotificationsEvent(
+<pre><code class="coffeescript">          broadcastNotificationsEvent(
             req
             data: markedAsRead: req.body.markedAsRead
             event: 'shrub-ui/notifications/markAsRead'
@@ -1940,8 +2021,9 @@ acknowledged.</p>
 
         ensureNotificationsOwnedByRequest
 </code></pre>
+
 <p>Ensure that the requested notifications may be removed.</p>
-<pre><code>        (req, res, next) -&gt;
+<pre><code class="coffeescript">        (req, res, next) -&gt;
 
           for notification in req.notifications
             return next new Error(
@@ -1952,8 +2034,9 @@ acknowledged.</p>
 
         (req, res, next) -&gt;
 </code></pre>
+
 <p>Broadcast to others.</p>
-<pre><code>          broadcastNotificationsEvent(
+<pre><code class="coffeescript">          broadcastNotificationsEvent(
             req
             event: 'shrub-ui/notifications/remove'
             notifications: req.notifications
@@ -1989,7 +2072,7 @@ acknowledged.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../shrub-user/client/email/forgot/" class="btn btn-neutral float-right" title="forgot.coffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../../shrub-user-local/client/email/forgot/" class="btn btn-neutral float-right" title="forgot.coffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../" class="btn btn-neutral" title="index.coffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -2023,7 +2106,7 @@ acknowledged.</p>
         <span><a href="../" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../../shrub-user/client/email/forgot/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../../shrub-user-local/client/email/forgot/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

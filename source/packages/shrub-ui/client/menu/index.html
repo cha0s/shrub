@@ -916,6 +916,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1317,7 +1339,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1332,21 +1354,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1356,9 +1378,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../../../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1382,42 +1483,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1430,27 +1496,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1585,15 +1630,17 @@
               
                 <h1 id="ui-menu">UI - Menu</h1>
 <p><em>Manage menus; essentially recursive lists with an emphasis on navigation.</em></p>
-<pre><code>exports.pkgmanRegister = (registrar) -&gt;
+<pre><code class="coffeescript">exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+
 <h4 id="implements-hook-shrubangularcontroller">Implements hook <code>shrubAngularController</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubAngularController', -&gt; [
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAngularController', -&gt; [
     '$compile', '$location', '$scope'
     class MenuController
 </code></pre>
+
 <h2 id="constructor"><em>constructor</em></h2>
-<pre><code>      constructor: ($compile, $location, $scope) -&gt;
+<pre><code class="coffeescript">      constructor: ($compile, $location, $scope) -&gt;
         self = this
 
         self.linkMap = {}
@@ -1611,28 +1658,32 @@
           ]
           (newValues, oldValues) -&gt;
 </code></pre>
+
 <p>Paths without the leading slash.</p>
-<pre><code>            if oldPath = oldValues[0]
+<pre><code class="coffeescript">            if oldPath = oldValues[0]
               oldPath = oldPath.substr 1
 </code></pre>
+
 <p>Remove the active class if we navigated away.</p>
-<pre><code>              if self.linkMap[oldPath]?[0].attributes?.class?
+<pre><code class="coffeescript">              if self.linkMap[oldPath]?[0].attributes?.class?
                 attributes = self.linkMap[oldPath][0].attributes
                 if attributes.class.length
                   index = attributes.class.indexOf 'active'
                   attributes.class.splice index, 1
 </code></pre>
+
 <p>Add the active class if we navigated to.</p>
-<pre><code>            newPath = newValues[0].substr 1
+<pre><code class="coffeescript">            newPath = newValues[0].substr 1
             if self.linkMap[newPath]?
               attributes = self.linkMap[newPath][0].attributes
               (attributes.class ?= []).push 'active'
 
         )
 </code></pre>
+
 <h2 id="menucontrollerrebuildlisttree">MenuController#rebuildListTree</h2>
 <p><em>Rebuild the list tree from the menu tree.</em></p>
-<pre><code>      rebuildListTree: ($compile, $scope) -&gt;
+<pre><code class="coffeescript">      rebuildListTree: ($compile, $scope) -&gt;
         self = this
 
         rebuildBranch = (list, branch) -&gt;
@@ -1665,8 +1716,9 @@
 
             (self.linkMap[leaf.path] ?= []).push item
 </code></pre>
+
 <p>Recur.</p>
-<pre><code>            if leaf.list?
+<pre><code class="coffeescript">            if leaf.list?
 
               item.list = angular.copy leaf.list
               rebuildBranch item.list, leaf.list
@@ -1684,8 +1736,9 @@
 
   ]
 </code></pre>
+
 <h4 id="implements-hook-shrubangulardirective">Implements hook <code>shrubAngularDirective</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubAngularDirective', -&gt; [
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAngularDirective', -&gt; [
 
     '$compile', '$timeout'
     ($compile, $timeout) -&gt;
@@ -1706,8 +1759,8 @@
 
 &lt;ul
   data-shrub-ui-list
-  data-shrub-ui-attributes="list.attributes"
-  data-list="list"
+  data-shrub-ui-attributes=&quot;list.attributes&quot;
+  data-list=&quot;list&quot;
 &gt;&lt;/ul&gt;
 
 '''

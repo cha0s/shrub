@@ -916,6 +916,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1313,7 +1335,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1328,21 +1350,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../../../../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../../../../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../../../../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1352,9 +1374,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../../../../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1378,42 +1479,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1426,27 +1492,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../../../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1580,10 +1625,11 @@
             <div class="section">
               
                 <h1 id="ui-notifications-item">UI - Notifications item</h1>
-<pre><code>exports.pkgmanRegister = (registrar) -&gt;
+<pre><code class="coffeescript">exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+
 <h4 id="implements-hook-shrubangulardirective">Implements hook <code>shrubAngularDirective</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubAngularDirective', -&gt; [
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAngularDirective', -&gt; [
     'shrub-ui/notifications', 'shrub-rpc'
     (notifications, rpc) -&gt;
 
@@ -1597,8 +1643,9 @@
 
       directive.link = (scope, element) -&gt;
 </code></pre>
+
 <p>Remove the notification from the queue.</p>
-<pre><code>        scope.remove = ($event) -&gt;
+<pre><code class="coffeescript">        scope.remove = ($event) -&gt;
           $event.stopPropagation()
 
           ids = [scope.notification.id]
@@ -1608,16 +1655,18 @@
           )
           index = scope.queue.remove ids
 </code></pre>
+
 <p>Toggle the notification's marked-as-read state.</p>
-<pre><code>        scope.toggleMarkedAsRead = ($event) -&gt;
+<pre><code class="coffeescript">        scope.toggleMarkedAsRead = ($event) -&gt;
           $event.stopPropagation()
 
           scope.markAsRead(
             scope.notification, not scope.notification.markedAsRead
           )
 </code></pre>
+
 <p>Watch the marked-as-read state and make some changes.</p>
-<pre><code>        scope.$watch 'notification.markedAsRead', (markedAsRead) -&gt;
+<pre><code class="coffeescript">        scope.$watch 'notification.markedAsRead', (markedAsRead) -&gt;
 
           if markedAsRead
             element.addClass 'marked-as-read'
@@ -1633,29 +1682,29 @@
       directive.template = '''
 
 &lt;a
-  data-ng-click="remove($event)"
-  data-ng-if="notification.mayRemove"
+  data-ng-click=&quot;remove($event)&quot;
+  data-ng-if=&quot;notification.mayRemove&quot;
 &gt;
   &lt;span
-    class="remove glyphicon glyphicon-remove"
-    tabindex="0"
-    title="Remove"
+    class=&quot;remove glyphicon glyphicon-remove&quot;
+    tabindex=&quot;0&quot;
+    title=&quot;Remove&quot;
   &gt;&lt;/span&gt;
 &lt;/a&gt;
 
 &lt;a
-  data-ng-click="toggleMarkedAsRead($event)"
+  data-ng-click=&quot;toggleMarkedAsRead($event)&quot;
 &gt;
   &lt;span
-    class="mark-as-read glyphicon"
-    data-ng-class="iconClass"
-    tabindex="0"
-    title="{{title}}"
+    class=&quot;mark-as-read glyphicon&quot;
+    data-ng-class=&quot;iconClass&quot;
+    tabindex=&quot;0&quot;
+    title=&quot;{{title}}&quot;
   &gt;&lt;/span&gt;
 &lt;/a&gt;
 
 &lt;div
-  data-ng-bind="notification.variables | json"
+  data-ng-bind=&quot;notification.variables | json&quot;
 &gt;&lt;/div&gt;
 
 '''

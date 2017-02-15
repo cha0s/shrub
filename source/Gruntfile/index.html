@@ -937,6 +937,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../packages/shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../packages/shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1325,7 +1347,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1340,21 +1362,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../packages/shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../packages/shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../packages/shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../packages/shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../packages/shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../packages/shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1364,9 +1386,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../packages/shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../packages/shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../packages/shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../packages/shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../packages/shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../packages/shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../packages/shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../packages/shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../packages/shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../packages/shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../packages/shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1390,42 +1491,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../packages/shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../packages/shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../packages/shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../packages/shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../packages/shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1438,27 +1504,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../packages/shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../packages/shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../packages/shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../packages/shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1593,12 +1638,13 @@
               
                 <h1 id="gruntfile">Gruntfile</h1>
 <p><em>Entry point for the Grunt build process.</em></p>
-<pre><code>{fork} = require "#{__dirname}/server/bootstrap"
+<pre><code class="coffeescript">{fork} = require &quot;#{__dirname}/server/bootstrap&quot;
 
 module.exports = (grunt) -&gt;
 </code></pre>
+
 <p>Fork so we can bootstrap a Shrub environment.</p>
-<pre><code>  if child = fork()
+<pre><code class="coffeescript">  if child = fork()
     grunt.registerTask 'bootstrap', -&gt;
 
       done = @async()
@@ -1609,8 +1655,9 @@ module.exports = (grunt) -&gt;
 
         grunt.fail.fatal 'Child process failed', code
 </code></pre>
+
 <p>Forward all tasks.</p>
-<pre><code>    {tasks} = require 'grunt/lib/grunt/cli'
+<pre><code class="coffeescript">    {tasks} = require 'grunt/lib/grunt/cli'
     grunt.registerTask tasks[0] ? 'default', ['bootstrap']
     grunt.registerTask(task, (-&gt;)) for task in tasks.slice 1
 
@@ -1619,15 +1666,18 @@ module.exports = (grunt) -&gt;
   config = require 'config'
   pkgman = require 'pkgman'
 </code></pre>
+
 <p>Load configuration.</p>
-<pre><code>  config.load()
+<pre><code class="coffeescript">  config.load()
   config.loadPackageSettings()
 </code></pre>
+
 <h2 id="gruntconfiguration">GruntConfiguration</h2>
-<pre><code>  class GruntConfiguration
+<pre><code class="coffeescript">  class GruntConfiguration
 </code></pre>
+
 <h2 id="constructor"><em>constructor</em></h2>
-<pre><code>    constructor: -&gt;
+<pre><code class="coffeescript">    constructor: -&gt;
 
       @_npmTasks = []
       @_taskConfig = {}
@@ -1635,6 +1685,7 @@ module.exports = (grunt) -&gt;
 
       @pkg = grunt.file.readJSON 'package.json'
 </code></pre>
+
 <h2 id="gruntconfigurationconfiguretask">GruntConfiguration#configureTask</h2>
 <ul>
 <li>
@@ -1651,12 +1702,13 @@ it.</p>
 </li>
 </ul>
 <p><em>Configure a Grunt task.</em></p>
-<pre><code>    configureTask: (task, key, config_) -&gt;
+<pre><code class="coffeescript">    configureTask: (task, key, config_) -&gt;
 
       (@_taskConfig[task] ?= {})[key] = config_
 
       return
 </code></pre>
+
 <h2 id="gruntconfigurationtaskconfiguration">GruntConfiguration#taskConfiguration</h2>
 <ul>
 <li>
@@ -1668,19 +1720,21 @@ This is generally the name of the package, but can be anything.</p>
 </li>
 </ul>
 <p><em>Get the configuration for a Grunt task.</em></p>
-<pre><code>    taskConfiguration: (task, key) -&gt; @_taskConfig[task]?[key]
+<pre><code class="coffeescript">    taskConfiguration: (task, key) -&gt; @_taskConfig[task]?[key]
 </code></pre>
+
 <h2 id="gruntconfigurationloadnpmtasks">GruntConfiguration#loadNpmTasks</h2>
 <ul>
 <li>(String Array) <code>tasks</code> - The list of NPM tasks to load.</li>
 </ul>
 <p><em>Load NPM tasks.</em></p>
-<pre><code>    loadNpmTasks: (tasks) -&gt;
+<pre><code class="coffeescript">    loadNpmTasks: (tasks) -&gt;
 
       @_npmTasks.push task for task in tasks
 
       return
 </code></pre>
+
 <h2 id="gruntconfigurationregistertask">GruntConfiguration#registerTask</h2>
 <ul>
 <li>
@@ -1693,7 +1747,7 @@ will be executed for the task.</p>
 </li>
 </ul>
 <p><em>Register a Grunt task.</em></p>
-<pre><code>    registerTask: (task, subtasksOrFunction) -&gt;
+<pre><code class="coffeescript">    registerTask: (task, subtasksOrFunction) -&gt;
 
       if 'function' is typeof subtasksOrFunction
         @_tasks[task] = subtasksOrFunction
@@ -1702,6 +1756,7 @@ will be executed for the task.</p>
 
       return
 </code></pre>
+
 <h2 id="gruntconfigurationcopyappfiles">GruntConfiguration#copyAppFiles</h2>
 <ul>
 <li>
@@ -1717,7 +1772,7 @@ Defaults to <code>'app'</code>.</p>
 </li>
 </ul>
 <p><em>Copy package files to <code>app</code>.</em></p>
-<pre><code>    copyAppFiles: (path, key, dest = 'app') -&gt;
+<pre><code class="coffeescript">    copyAppFiles: (path, key, dest = 'app') -&gt;
 
       dest ?= 'app'
 
@@ -1732,9 +1787,9 @@ Defaults to <code>'app'</code>.</p>
         'watch', key
 
         files: [
-          "#{path}/**/*"
+          &quot;#{path}/**/*&quot;
         ]
-        tasks: ["build:#{key}"]
+        tasks: [&quot;build:#{key}&quot;]
       )
 
   gruntConfig = new GruntConfiguration()
@@ -1750,24 +1805,29 @@ Defaults to <code>'app'</code>.</p>
 
     grunt.task.run 'build'
 </code></pre>
+
 <h4 id="invoke-hook-shrubgruntconfig">Invoke hook <code>shrubGruntConfig</code>.</h4>
-<pre><code>  pkgman.invoke 'shrubGruntConfig', gruntConfig, grunt
+<pre><code class="coffeescript">  pkgman.invoke 'shrubGruntConfig', gruntConfig, grunt
 </code></pre>
+
 <h4 id="invoke-hook-shrubgruntconfigalter">Invoke hook <code>shrubGruntConfigAlter</code>.</h4>
-<pre><code>  pkgman.invoke 'shrubGruntConfigAlter', gruntConfig, grunt
+<pre><code class="coffeescript">  pkgman.invoke 'shrubGruntConfigAlter', gruntConfig, grunt
 </code></pre>
+
 <p>Initialize configuration.</p>
-<pre><code>  grunt.initConfig gruntConfig._taskConfig
+<pre><code class="coffeescript">  grunt.initConfig gruntConfig._taskConfig
 </code></pre>
+
 <p>Load NPM tasks.</p>
-<pre><code>  npmTasksLoaded = {}
+<pre><code class="coffeescript">  npmTasksLoaded = {}
   for task in gruntConfig._npmTasks
     continue if npmTasksLoaded[task]?
     npmTasksLoaded[task] = true
     grunt.loadNpmTasks task
 </code></pre>
+
 <p>Register custom tasks.</p>
-<pre><code>  grunt.registerTask task, actions for task, actions of gruntConfig._tasks
+<pre><code class="coffeescript">  grunt.registerTask task, actions for task, actions of gruntConfig._tasks
 </code></pre>
               
             </div>

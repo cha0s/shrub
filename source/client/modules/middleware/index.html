@@ -935,6 +935,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1323,7 +1345,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1338,21 +1360,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../../../packages/shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../../../packages/shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../../../packages/shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1362,9 +1384,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../../../packages/shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1388,42 +1489,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1436,27 +1502,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../../packages/shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../../../packages/shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1590,11 +1635,12 @@
             <div class="section">
               
                 <h1 id="abstract-middleware-stacks">Abstract middleware stacks</h1>
-<pre><code>{EventEmitter} = require 'events'
+<pre><code class="coffeescript">{EventEmitter} = require 'events'
 
 config = require 'config'
 pkgman = require 'pkgman'
 </code></pre>
+
 <p>Implements a middleware stack. Middleware functions can be added to the
 stack with <code>use</code>. Calling <code>dispatch</code> invokes the middleware functions
 serially.</p>
@@ -1608,19 +1654,22 @@ additional parameter at the beginning of the function signature: <code>error</co
 Error-handling middleware are only called if a previous middleware threw
 or passed an error. Conversely, non-error-handling middleware are skipped
 if a previous error occurred.</p>
-<pre><code>exports.Middleware = class Middleware extends EventEmitter
+<pre><code class="coffeescript">exports.Middleware = class Middleware extends EventEmitter
 </code></pre>
+
 <h2 id="constructor"><em>constructor</em></h2>
 <p><em>Create a middleware stack.</em></p>
-<pre><code>  constructor: -&gt; @_middleware = []
+<pre><code class="coffeescript">  constructor: -&gt; @_middleware = []
 </code></pre>
+
 <h2 id="middlwareuse">Middlware#use</h2>
 <ul>
 <li>(function) <code>fn</code> - A middleware function.</li>
 </ul>
 <p><em>Add a middleware function to the stack.</em></p>
-<pre><code>  use: (fn) -&gt; @_middleware.push fn
+<pre><code class="coffeescript">  use: (fn) -&gt; @_middleware.push fn
 </code></pre>
+
 <h2 id="middlewaredispatch">Middleware#dispatch</h2>
 <ul>
 <li>
@@ -1632,7 +1681,7 @@ finished. If an error occurred, it will be passed as the first argument.</p>
 </li>
 </ul>
 <p><em>Invoke the middleware functions serially.</em></p>
-<pre><code>  dispatch: (args..., fn) -&gt;
+<pre><code class="coffeescript">  dispatch: (args..., fn) -&gt;
     self = this
 
     index = 0
@@ -1641,20 +1690,24 @@ finished. If an error occurred, it will be passed as the first argument.</p>
 
       self.emit 'invoked', self._middleware[index - 1] if index &gt; 0
 </code></pre>
+
 <p>Call <code>fn</code> with any error if we're done.</p>
-<pre><code>      return fn error if index is self._middleware.length
+<pre><code class="coffeescript">      return fn error if index is self._middleware.length
 
       current = self._middleware[index++]
 </code></pre>
+
 <p>Error-handling middleware.</p>
-<pre><code>      if current.length is args.length + 2
+<pre><code class="coffeescript">      if current.length is args.length + 2
 </code></pre>
+
 <p>An error occurred previously.</p>
-<pre><code>        if error?
+<pre><code class="coffeescript">        if error?
 </code></pre>
+
 <p>Try to invoke the middleware, if it throws, just catch the error
 and pass it along.</p>
-<pre><code>          try
+<pre><code class="coffeescript">          try
             localArgs = args.concat()
             localArgs.unshift error
             localArgs.push invoke
@@ -1663,25 +1716,30 @@ and pass it along.</p>
           catch error
             invoke error
 </code></pre>
+
 <p>No previous error; skip this middleware.</p>
-<pre><code>        else
+<pre><code class="coffeescript">        else
 
           invoke error
 </code></pre>
+
 <p>Non-error-handling middleware.</p>
-<pre><code>      else
+<pre><code class="coffeescript">      else
 </code></pre>
+
 <p>An error occurred previously, skip this middleware.</p>
-<pre><code>        if error?
+<pre><code class="coffeescript">        if error?
 
           invoke error
 </code></pre>
+
 <p>No previous error.</p>
-<pre><code>        else
+<pre><code class="coffeescript">        else
 </code></pre>
+
 <p>Try to invoke the middleware, if it throws, just catch the error
 and pass it along.</p>
-<pre><code>          try
+<pre><code class="coffeescript">          try
             localArgs = args.concat()
             localArgs.push invoke
             self.emit 'invoking', current
@@ -1689,40 +1747,45 @@ and pass it along.</p>
           catch error
             invoke error
 </code></pre>
+
 <p>Kick things off.</p>
-<pre><code>    invoke()
+<pre><code class="coffeescript">    invoke()
 </code></pre>
+
 <h2 id="middlewarefromhook">middleware.fromHook</h2>
 <p><em>Create a middleware stack from the results of a hook and path
 configuration.</em></p>
-<pre><code>exports.fromHook = (hook, paths, args...) -&gt;
+<pre><code class="coffeescript">exports.fromHook = (hook, paths, args...) -&gt;
 
   debugSilly = require('debug') 'shrub-silly:middleware'
 
   middleware = new Middleware()
 </code></pre>
+
 <p>Invoke the hook and <code>use</code> the middleware in the paths configuration order.</p>
-<pre><code>  args.unshift hook
+<pre><code class="coffeescript">  args.unshift hook
   hookResults = pkgman.invoke args...
   for path in paths ? []
     continue unless (spec = hookResults[path])?
 
-    debugSilly "- - #{spec.label}"
+    debugSilly &quot;- - #{spec.label}&quot;
 
     middleware.use fn for fn in spec.middleware ? []
 
   middleware
 </code></pre>
+
 <h2 id="middlewarefromconfig">middleware.fromConfig</h2>
 <p><em>Create a middleware stack from a configuration path.</em></p>
-<pre><code>exports.fromConfig = (path, args...) -&gt;
+<pre><code class="coffeescript">exports.fromConfig = (path, args...) -&gt;
 </code></pre>
+
 <h6 id="todo-unify-on-packages">TODO: Unify on <code>'packages'</code>.</h6>
-<pre><code>  configKey = if global? then 'packageSettings' else 'packageConfig'
+<pre><code class="coffeescript">  configKey = if global? then 'packageSettings' else 'packageConfig'
 
   exports.fromHook(
     pkgman.normalizePath path
-    config.get "#{configKey}:#{path}"
+    config.get &quot;#{configKey}:#{path}&quot;
   )
 </code></pre>
               

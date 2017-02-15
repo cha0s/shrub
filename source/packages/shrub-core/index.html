@@ -935,6 +935,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1323,7 +1345,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1338,21 +1360,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1362,9 +1384,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1388,42 +1489,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1436,27 +1502,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1591,47 +1636,57 @@
               
                 <h1 id="core-server-functionality">Core server functionality</h1>
 <p><em>Coordinate various core functionality.</em></p>
-<pre><code>config = require 'config'
+<pre><code class="coffeescript">config = require 'config'
 
 pkgman = require 'pkgman'
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+
 <h4 id="implements-hook-shrubconfigclient">Implements hook <code>shrubConfigClient</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubConfigClient', (req) -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubConfigClient', (req) -&gt;
 </code></pre>
+
 <p>The URL that the site was accessed at.</p>
-<pre><code>    hostname: if req.headers?.host?
-      "//#{req.headers.host}"
+<pre><code class="coffeescript">    hostname: if req.headers?.host?
+      &quot;//#{req.headers.host}&quot;
     else
-      "//#{config.get 'packageSettings:shrub-core:siteHostname'}"
+      &quot;//#{config.get 'packageSettings:shrub-core:siteHostname'}&quot;
 </code></pre>
+
 <p>Is the server running in test mode?</p>
-<pre><code>    testMode: if (config.get 'E2E')? then 'e2e' else false
+<pre><code class="coffeescript">    testMode: if (config.get 'E2E')? then 'e2e' else false
 </code></pre>
+
 <p>The process ID of this worker.</p>
-<pre><code>    pid: process.pid if 'production' isnt config.get 'NODE_ENV'
+<pre><code class="coffeescript">    pid: process.pid if 'production' isnt config.get 'NODE_ENV'
 </code></pre>
+
 <p>Execution environment, <code>production</code>, or...</p>
-<pre><code>    environment: config.get 'NODE_ENV'
+<pre><code class="coffeescript">    environment: config.get 'NODE_ENV'
 </code></pre>
+
 <p>The user-visible site name.</p>
-<pre><code>    siteName: config.get 'packageSettings:shrub-core:siteName'
+<pre><code class="coffeescript">    siteName: config.get 'packageSettings:shrub-core:siteName'
 </code></pre>
+
 <h4 id="implements-hook-shrubauditfingerprint">Implements hook <code>shrubAuditFingerprint</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubAuditFingerprint', (req) -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAuditFingerprint', (req) -&gt;
 </code></pre>
+
 <p>The IP address.</p>
-<pre><code>    ip: req?.normalizedIp
+<pre><code class="coffeescript">    ip: req?.normalizedIp
 </code></pre>
+
 <h4 id="implements-hook-shrubhttpmiddleware">Implements hook <code>shrubHttpMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubHttpMiddleware', (http) -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubHttpMiddleware', (http) -&gt;
 
     label: 'Normalize request variables'
     middleware: [
 </code></pre>
+
 <p>Normalize IP address.</p>
-<pre><code>      (req, res, next) -&gt;
+<pre><code class="coffeescript">      (req, res, next) -&gt;
 
         req.normalizedIp = trustedAddress(
           req.connection.remoteAddress
@@ -1642,44 +1697,51 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     ]
 </code></pre>
+
 <h4 id="implements-hook-shrubconfigserver">Implements hook <code>shrubConfigServer</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubConfigServer', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubConfigServer', -&gt;
 </code></pre>
+
 <p>Middleware for server bootstrap phase.</p>
-<pre><code>    bootstrapMiddleware: [
+<pre><code class="coffeescript">    bootstrapMiddleware: [
       'shrub-orm'
       'shrub-install'
       'shrub-http-express/session'
       'shrub-http'
       'shrub-socket'
       'shrub-rpc'
-      'shrub-user/login'
-      'shrub-user/logout'
+      'shrub-passport'
       'shrub-angular'
       'shrub-ui/notifications'
       'shrub-nodemailer'
       'shrub-repl'
     ]
 </code></pre>
+
 <p>Global site crypto key.</p>
-<pre><code>    cryptoKey: '***CHANGE THIS***'
+<pre><code class="coffeescript">    cryptoKey: '***CHANGE THIS***'
 </code></pre>
+
 <p>The default hostname of this application. Includes port if any.</p>
-<pre><code>    siteHostname: 'localhost:4201'
+<pre><code class="coffeescript">    siteHostname: 'localhost:4201'
 </code></pre>
+
 <p>The name of the site, used in various places.</p>
-<pre><code>    siteName: 'Shrub example application'
+<pre><code class="coffeescript">    siteName: 'Shrub example application'
 </code></pre>
+
 <p>A list of the IP addresses of trusted proxies between clients.</p>
-<pre><code>    trustedProxies: []
+<pre><code class="coffeescript">    trustedProxies: []
 </code></pre>
+
 <p>The amount of workers to create. Defaults to 0 meaning no workers, only
 the master.</p>
-<pre><code>    workers: 0
+<pre><code class="coffeescript">    workers: 0
 </code></pre>
+
 <h4 id="implements-hook-shrubrpcroutesalter">Implements hook <code>shrubRpcRoutesAlter</code>.</h4>
 <p>Patch in express-specific variables that will be required by middleware.</p>
-<pre><code>  registrar.registerHook 'shrubRpcRoutesAlter', (routes) -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubRpcRoutesAlter', (routes) -&gt;
 
     coreMiddleware = (req, res, next) -&gt;
 
@@ -1698,14 +1760,16 @@ the master.</p>
 
     return
 </code></pre>
+
 <h4 id="implements-hook-shrubsocketconnectionmiddleware">Implements hook <code>shrubSocketConnectionMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubSocketConnectionMiddleware', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubSocketConnectionMiddleware', -&gt;
 
     label: 'Normalize request variables'
     middleware: [
 </code></pre>
+
 <p>Normalize IP address.</p>
-<pre><code>      (req, res, next) -&gt;
+<pre><code class="coffeescript">      (req, res, next) -&gt;
 
         req.normalizedIp = trustedAddress(
           req.socket.client.conn.remoteAddress
@@ -1722,8 +1786,9 @@ trustedAddress = (address, forwardedFor) -&gt; resolveAddress(
   forwardedFor
 )
 </code></pre>
+
 <p>Walk up the X-Forwarded-For header until we hit an untrusted address.</p>
-<pre><code>resolveAddress = (trustedProxies, address, forwardedFor) -&gt;
+<pre><code class="coffeescript">resolveAddress = (trustedProxies, address, forwardedFor) -&gt;
   return address unless forwardedFor?
   return address if trustedProxies.length is 0
 

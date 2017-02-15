@@ -916,6 +916,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1321,7 +1343,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1336,21 +1358,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1360,9 +1382,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1386,42 +1487,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1434,27 +1500,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1589,18 +1634,21 @@
               
                 <h1 id="socket">Socket</h1>
 <p><em>Manage socket connections.</em></p>
-<pre><code>config = require 'config'
+<pre><code class="coffeescript">config = require 'config'
 </code></pre>
+
 <p>The socket manager.</p>
-<pre><code>socketManager = null
+<pre><code class="coffeescript">socketManager = null
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+
 <h4 id="implements-hook-shrubconfigclient">Implements hook <code>shrubConfigClient</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubConfigClient', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubConfigClient', -&gt;
 </code></pre>
+
 <p>If we're doing end-to-end testing, mock out the socket manager.</p>
-<pre><code>    socketModule = if (config.get 'E2E')?
+<pre><code class="coffeescript">    socketModule = if (config.get 'E2E')?
 
       'shrub-socket/dummy'
 
@@ -1610,8 +1658,9 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     manager: module: socketModule
 </code></pre>
+
 <h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <code>shrubCoreBootstrapMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubCoreBootstrapMiddleware', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubCoreBootstrapMiddleware', -&gt;
 
     label: 'Socket server'
     middleware: [
@@ -1622,8 +1671,9 @@ exports.pkgmanRegister = (registrar) -&gt;
 
         {Manager} = require config.get 'packageSettings:shrub-socket:manager:module'
 </code></pre>
+
 <p>Spin up the socket server, and have it listen on the HTTP server.</p>
-<pre><code>        socketManager = new Manager()
+<pre><code class="coffeescript">        socketManager = new Manager()
         socketManager.loadMiddleware()
         socketManager.listen httpManager()
 
@@ -1631,11 +1681,13 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     ]
 </code></pre>
+
 <h4 id="implements-hook-shrubconfigserver">Implements hook <code>shrubConfigServer</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubConfigServer', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubConfigServer', -&gt;
 </code></pre>
+
 <p>Middleware stack dispatched for a socket connection.</p>
-<pre><code>    connectionMiddleware: [
+<pre><code class="coffeescript">    connectionMiddleware: [
       'shrub-core'
       'shrub-http-express/session'
       'shrub-session'
@@ -1644,23 +1696,28 @@ exports.pkgmanRegister = (registrar) -&gt;
       'shrub-rpc'
     ]
 </code></pre>
+
 <p>Middleware stack dispatched when socket disconnects.</p>
-<pre><code>    disconnectionMiddleware: []
+<pre><code class="coffeescript">    disconnectionMiddleware: []
 
     manager:
 </code></pre>
+
 <p>Module implementing the socket manager. Defaults to socket.io.</p>
-<pre><code>      module: 'shrub-socket-socket.io'
+<pre><code class="coffeescript">      module: 'shrub-socket-socket.io'
 </code></pre>
+
 <h4 id="implements-hook-shrubreplcontext">Implements hook <code>shrubReplContext</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubReplContext', (context) -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubReplContext', (context) -&gt;
 </code></pre>
+
 <p>Provide the socketManager to REPL.</p>
-<pre><code>    context.socketManager = socketManager
+<pre><code class="coffeescript">    context.socketManager = socketManager
 </code></pre>
+
 <h2 id="manager">manager</h2>
 <p><em>Get the socket manager.</em></p>
-<pre><code>exports.manager = -&gt; socketManager
+<pre><code class="coffeescript">exports.manager = -&gt; socketManager
 </code></pre>
               
             </div>

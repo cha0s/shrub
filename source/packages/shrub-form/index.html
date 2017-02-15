@@ -927,6 +927,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1315,7 +1337,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1330,21 +1352,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1354,9 +1376,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1380,42 +1481,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1428,27 +1494,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1584,15 +1629,16 @@
                 <h1 id="form-processing">Form processing</h1>
 <p><em>Handle form and method parsing, and submission of POST'ed data into the
 Angular sandbox.</em></p>
-<pre><code>bodyParser = require 'body-parser'
+<pre><code class="coffeescript">bodyParser = require 'body-parser'
 methodOverride = require 'method-override'
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+
 <h4 id="implements-hook-shrubangularsandboxnavigationmiddleware">Implements hook <code>shrubAngularSandboxNavigationMiddleware</code>.</h4>
 <p>If the client made a POST request, inject that request into the Angular
 sandbox and let it do its thing.</p>
-<pre><code>  registrar.registerHook 'shrubAngularSandboxNavigationMiddleware', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAngularSandboxNavigationMiddleware', -&gt;
 
     label: 'Handle form submission'
     middleware: [
@@ -1601,12 +1647,14 @@ sandbox and let it do its thing.</p>
 
         {body, sandbox} = req
 </code></pre>
+
 <p>Make sure there's a formKey in the submission.</p>
 <h6 id="todo-crsf-check-needed-here">TODO: CRSF check needed here.</h6>
-<pre><code>        return next() unless body.formKey?
+<pre><code class="coffeescript">        return next() unless body.formKey?
 </code></pre>
+
 <p>Lookup the cached form.</p>
-<pre><code>        formService = null
+<pre><code class="coffeescript">        formService = null
 
         sandbox.inject [
           'shrub-form'
@@ -1622,7 +1670,7 @@ sandbox and let it do its thing.</p>
         for k, v of body
           continue if 'formKey' is k
 
-          element = element.find "[name='#{k}']"
+          element = element.find &quot;[name='#{k}']&quot;
 
           formService.widgets[form.fields[k].type].assignToElement(
             element
@@ -1631,16 +1679,18 @@ sandbox and let it do its thing.</p>
 
           element.trigger 'change'
 </code></pre>
+
 <p>Submit the form into Angular.</p>
-<pre><code>        scope.$digest()
+<pre><code class="coffeescript">        scope.$digest()
         scope.$apply -&gt;
           scope.$shrubSubmit[body.formKey]().finally -&gt; next()
 
     ]
 </code></pre>
+
 <h4 id="implements-hook-shrubhttpmiddleware">Implements hook <code>shrubHttpMiddleware</code>.</h4>
 <p>Parse POST submissions, and allow arbitrary method form attribute.</p>
-<pre><code>  registrar.registerHook 'shrubHttpMiddleware', (http) -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubHttpMiddleware', (http) -&gt;
 
     express = require 'express'
 

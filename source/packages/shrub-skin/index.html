@@ -916,6 +916,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1329,7 +1351,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1344,21 +1366,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1368,9 +1390,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1394,42 +1495,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1442,27 +1508,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1597,7 +1642,7 @@
               
                 <h1 id="skin">Skin</h1>
 <p><em>Allows the visual aspects of the site to be controlled by skin packages.</em></p>
-<pre><code>fs = require 'fs'
+<pre><code class="coffeescript">fs = require 'fs'
 path = require 'path'
 
 config = require 'config'
@@ -1605,8 +1650,9 @@ pkgman = require 'pkgman'
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+
 <h4 id="implements-hook-shrubconfigclient">Implements hook <code>shrubConfigClient</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubConfigClient', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubConfigClient', -&gt;
 
     skinAssets = {}
     for packagePath in pkgman.packagesImplementing 'shrubSkinAssets'
@@ -1615,23 +1661,26 @@ exports.pkgmanRegister = (registrar) -&gt;
     default: config.get 'packageSettings:shrub-skin:default'
     assets: skinAssets
 </code></pre>
+
 <h4 id="implements-hook-shrubhttpmiddleware">Implements hook <code>shrubHttpMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'path', 'shrubHttpMiddleware', (http) -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'path', 'shrubHttpMiddleware', (http) -&gt;
 
     label: 'Skin path handling'
     middleware: [
 
       (req, res, next) -&gt;
 </code></pre>
+
 <p>If we get here and it's a skin URL, it must be a 404 otherwise,
 express/static would have picked it up already.</p>
-<pre><code>        return res.sendStatus 404 if req.path.match /^\/skin\//
+<pre><code class="coffeescript">        return res.sendStatus 404 if req.path.match /^\/skin\//
 
         next()
     ]
 </code></pre>
+
 <h4 id="implements-hook-shrubhttpmiddleware_1">Implements hook <code>shrubHttpMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'render', 'shrubHttpMiddleware', (http) -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'render', 'shrubHttpMiddleware', (http) -&gt;
 
     label: 'Render skinned page HTML'
     middleware: [
@@ -1645,23 +1694,27 @@ express/static would have picked it up already.</p>
 
   ]
 </code></pre>
+
 <h4 id="implements-hook-shrubconfigserver">Implements hook <code>shrubConfigServer</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubConfigServer', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubConfigServer', -&gt;
 </code></pre>
+
 <p>Default skin.</p>
-<pre><code>    default: 'shrub-skin-strapped'
+<pre><code class="coffeescript">    default: 'shrub-skin-strapped'
 </code></pre>
+
 <h2 id="activekey">activeKey</h2>
 <p><em>Get the active skin's key</em></p>
-<pre><code>exports.activeKey = -&gt; config.get 'packageSettings:shrub-skin:default'
+<pre><code class="coffeescript">exports.activeKey = -&gt; config.get 'packageSettings:shrub-skin:default'
 </code></pre>
+
 <h2 id="gruntskin">gruntSkin</h2>
 <p><em>Helper function to copy skin assets. Configures a grunt task, e.g. if your
 skin is named <code>my-special-skin</code>, the configured task is named
 <code>my-special-skinCopy</code>. This is not automatically added to the build
 dependencies, you do it manually so you can control exactly when it
 happens.</em></p>
-<pre><code>exports.gruntSkin = (gruntConfig, key) -&gt;
+<pre><code class="coffeescript">exports.gruntSkin = (gruntConfig, key) -&gt;
 
   skinPath = path.dirname require.resolve key
 
@@ -1670,37 +1723,38 @@ happens.</em></p>
   gruntConfig.watch ?= {}
 
   gruntConfig.configureTask 'clean', key, [
-    "app/skin/#{key}"
+    &quot;app/skin/#{key}&quot;
   ]
 
   copyFiles = []
 
   copyFiles.push(
     expand: true
-    cwd: "#{skinPath}/app"
-    src: ["#{verbatim}/**/*"]
-    dest: "app/skin/#{key}"
+    cwd: &quot;#{skinPath}/app&quot;
+    src: [&quot;#{verbatim}/**/*&quot;]
+    dest: &quot;app/skin/#{key}&quot;
   ) for verbatim in ['css', 'fonts', 'img', 'js', 'lib']
 
   gruntConfig.configureTask 'copy', key, files: copyFiles
 
   gruntConfig.configureTask(
-    'watch', "#{key}Copy"
+    'watch', &quot;#{key}Copy&quot;
 
     files: copyFiles.concat(
-      src: "template/**/*"
+      src: &quot;template/**/*&quot;
     ).map(
-      (copyFile) -&gt; "#{skinPath}/app/#{copyFile.src}"
+      (copyFile) -&gt; &quot;#{skinPath}/app/#{copyFile.src}&quot;
     )
     tasks: [
-      "newer:copy:#{key}"
+      &quot;newer:copy:#{key}&quot;
     ]
     options: livereload: true
   )
 </code></pre>
+
 <h2 id="renderapphtml">renderAppHtml</h2>
 <p><em>Render the application HTML.</em></p>
-<pre><code>exports.renderAppHtml = -&gt;
+<pre><code class="coffeescript">exports.renderAppHtml = -&gt;
 
   Promise = require 'bluebird'
 
@@ -1716,10 +1770,11 @@ happens.</em></p>
   else
     'default'
 </code></pre>
+
 <p>Read the app HTML.</p>
-<pre><code>  readFile = Promise.promisify fs.readFile, fs
+<pre><code class="coffeescript">  readFile = Promise.promisify fs.readFile, fs
   readFile(
-    "#{skinDirectory}/app/template/app.html", encoding: 'utf8'
+    &quot;#{skinDirectory}/app/template/app.html&quot;, encoding: 'utf8'
   ).then (html) -&gt;
 
     $ = cheerio.load html
@@ -1729,8 +1784,9 @@ happens.</em></p>
     $head = $('head')
     $body = $('body')
 </code></pre>
+
 <p>Inject the application-level assets first.</p>
-<pre><code>    appAssets = assets.assets()
+<pre><code class="coffeescript">    appAssets = assets.assets()
 
     $head.append $('&lt;link /&gt;').attr(
       type: 'text/css'
@@ -1742,38 +1798,42 @@ happens.</em></p>
       src: script
     ) for script in appAssets.scripts
 </code></pre>
+
 <p>Inject the skin-level assets.</p>
-<pre><code>    skinAssets = exports.assets skinKey
+<pre><code class="coffeescript">    skinAssets = exports.assets skinKey
 
     $head.append $('&lt;link /&gt;').attr(
       class: 'skin'
       type: 'text/css'
       rel: 'stylesheet'
-      href: "/skin/#{skinKey}/#{styleSheet}"
+      href: &quot;/skin/#{skinKey}/#{styleSheet}&quot;
     ) for styleSheet in skinAssets.styleSheets[environmentKey] ? []
 
     $body.append $('&lt;script /&gt;').attr(
       class: 'skin'
-      src: "/skin/#{skinKey}/#{script}"
+      src: &quot;/skin/#{skinKey}/#{script}&quot;
     ) for script in skinAssets.scripts[environmentKey] ? []
 </code></pre>
+
 <p>Return the full HTML.</p>
-<pre><code>    return $.html()
+<pre><code class="coffeescript">    return $.html()
 </code></pre>
+
 <h2 id="skindirectory">skinDirectory</h2>
 <ul>
 <li>(String) <code>key</code> - The skin key.</li>
 </ul>
 <p><em>Get the directory a skin lives within.</em></p>
-<pre><code>exports.skinDirectory = (key) -&gt; path.dirname require.resolve key
+<pre><code class="coffeescript">exports.skinDirectory = (key) -&gt; path.dirname require.resolve key
 </code></pre>
+
 <h2 id="assets">assets</h2>
 <ul>
 <li>(String) <code>key</code> - The skin key.</li>
 </ul>
 <p><em>Get the assets for a skin.</em></p>
 <h6 id="todo-this-needs-caching">TODO: This needs caching.</h6>
-<pre><code>exports.assets = (skinKey) -&gt;
+<pre><code class="coffeescript">exports.assets = (skinKey) -&gt;
 
   glob = require 'simple-glob'
   pkgman = require 'pkgman'
@@ -1781,51 +1841,56 @@ happens.</em></p>
   skinPath = path.dirname require.resolve skinKey
   skinModule = require skinKey
 </code></pre>
+
 <p>Read in all the templates.</p>
-<pre><code>  templates = {}
-  for templatePath in glob cwd: "#{skinPath}/app/template", [
+<pre><code class="coffeescript">  templates = {}
+  for templatePath in glob cwd: &quot;#{skinPath}/app/template&quot;, [
     '**/*.html', '!app.html'
   ]
 </code></pre>
+
 <p>Strip out most of the unnecessary whitespace.</p>
-<pre><code>    templates[templatePath] = fs.readFileSync(
-      "#{skinPath}/app/template/#{templatePath}"
+<pre><code class="coffeescript">    templates[templatePath] = fs.readFileSync(
+      &quot;#{skinPath}/app/template/#{templatePath}&quot;
     ).toString('utf8').replace /\s+/g, ' '
 </code></pre>
+
 <p>Assets currently default to .js/.css for default and .min.js and .min.css
 for production.</p>
-<pre><code>  skinAssets =
+<pre><code class="coffeescript">  skinAssets =
 
     templates: templates
 
     scripts:
 
-      default: glob cwd: "#{skinPath}/app", [
+      default: glob cwd: &quot;#{skinPath}/app&quot;, [
         'js/**/*.js', '!js/**/*.min.js'
       ]
 
-      production: glob cwd: "#{skinPath}/app", [
+      production: glob cwd: &quot;#{skinPath}/app&quot;, [
         'js/**/*.min.js'
       ]
 
     styleSheets:
 
-      default: glob cwd: "#{skinPath}/app", [
+      default: glob cwd: &quot;#{skinPath}/app&quot;, [
         'css/**/*.css', '!css/**/*.min.css'
       ]
 
-      production: glob cwd: "#{skinPath}/app", [
+      production: glob cwd: &quot;#{skinPath}/app&quot;, [
         'css/**/*.min.css'
       ]
 </code></pre>
+
 <p>Make script and stylesheet paths absolute.</p>
-<pre><code>  for type in ['scripts', 'styleSheets']
+<pre><code class="coffeescript">  for type in ['scripts', 'styleSheets']
     for env in ['default', 'production']
       for asset, i in skinAssets[type][env]
-        skinAssets[type][env][i] = "/#{asset}"
+        skinAssets[type][env][i] = &quot;/#{asset}&quot;
 </code></pre>
+
 <h4 id="invoke-hook-shrubskinassets">Invoke hook <code>shrubSkinAssets</code>.</h4>
-<pre><code>  pkgman.invokePackage skinKey, 'shrubSkinAssets', skinAssets
+<pre><code class="coffeescript">  pkgman.invokePackage skinKey, 'shrubSkinAssets', skinAssets
 
   return skinAssets
 </code></pre>

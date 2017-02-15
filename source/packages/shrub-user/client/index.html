@@ -916,6 +916,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1304,7 +1326,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1319,21 +1341,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="email/forgot/">forgot.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="email/">index.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="email/register/">register.coffee</a>
+        <a class="" href="../../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1343,9 +1365,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="forgot/">forgot.coffee</a>
+        <a class="" href="../../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1372,11 +1473,6 @@
                 
                     <li><a class="toctree-l4" href="#userinstance">user.instance</a></li>
                 
-                    <li><a class="toctree-l4" href="#userfakelogin">user.fakeLogin</a></li>
-                
-            
-                <li class="toctree-l3"><a href="#secure-by-default">Secure by default.</a></li>
-                
             
             </ul>
         
@@ -1397,42 +1493,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1445,27 +1506,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../reset/">reset.coffee</a>
         
     </li>
 
@@ -1600,42 +1640,57 @@
               
                 <h1 id="user">User</h1>
 <p><em>User operations, model, etc.</em></p>
-<pre><code>exports.pkgmanRegister = (registrar) -&gt;
+<pre><code class="coffeescript">{TransmittableError} = require 'errors'
+
+exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+
 <h4 id="implements-hook-shrubormcollections">Implements hook <code>shrubOrmCollections</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubOrmCollections', exports.shrubOrmCollections
+<pre><code class="coffeescript">  registrar.registerHook 'shrubOrmCollections', exports.shrubOrmCollections
 </code></pre>
+
 <h4 id="implements-hook-shrubormcollectionsalter">Implements hook <code>shrubOrmCollectionsAlter</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubOrmCollectionsAlter', exports.shrubOrmCollectionsAlter
+<pre><code class="coffeescript">  registrar.registerHook 'shrubOrmCollectionsAlter', exports.shrubOrmCollectionsAlter
 </code></pre>
+
 <h4 id="implements-hook-shrubangulardirective">Implements hook <code>shrubAngularDirective</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubAngularDirective', -&gt; [
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAngularDirective', -&gt; [
     'shrub-user'
     (user) -&gt;
 
       directive = {}
+</code></pre>
 
-      directive.link = (scope) -&gt; scope.user = user
+<h6 id="todo-make-it-possible-to-override-directive-namepath">TODO: Make it possible to override directive name/path</h6>
+<p>directive.name = 'shrub-user-actions'</p>
+<pre><code class="coffeescript">      directive.link = (scope) -&gt;
+
+        scope.user = user
+
+        scope.username = -&gt; user.instance()?.instances?[0]?.name or 'Anonymous'
 
       directive.scope = {}
 
       directive.template = '''
 
-&lt;span class="user"&gt;
-  &lt;span class="username" data-ng-bind="user.instance().name"&gt;&lt;/span&gt;
+&lt;span class=&quot;user&quot;&gt;
+  &lt;span
+    class=&quot;username&quot;
+    data-ng-bind=&quot;username()&quot;
+  &gt;&lt;/span&gt;
 
   &lt;span
-    class="actions"
-    data-ng-if="!user.isLoggedIn()"
+    class=&quot;actions&quot;
+    data-ng-if=&quot;!user.isLoggedIn()&quot;
   &gt;
-    [&lt;a href="/user/login"&gt;Log in&lt;/a&gt; · &lt;a href="/user/register"&gt;Register&lt;/a&gt;]
+    [&lt;a href=&quot;/user/login&quot;&gt;Log in&lt;/a&gt; · &lt;a href=&quot;/user/register&quot;&gt;Register&lt;/a&gt;]
   &lt;/span&gt;
 
   &lt;span
-    class="actions"
-    data-ng-if="user.isLoggedIn()"
+    class=&quot;actions&quot;
+    data-ng-if=&quot;user.isLoggedIn()&quot;
   &gt;
-    [&lt;a href="/user/logout"&gt;Log out&lt;/a&gt;]
+    [&lt;a href=&quot;/user/logout&quot;&gt;Log out&lt;/a&gt;]
   &lt;/span&gt;
 
 &lt;/span&gt;
@@ -1646,8 +1701,9 @@
 
   ]
 </code></pre>
+
 <h4 id="implements-hook-shrubangularservice">Implements hook <code>shrubAngularService</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubAngularService', -&gt; [
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAngularService', -&gt; [
     'shrub-orm', 'shrub-rpc', 'shrub-socket'
     (orm, rpc, socket) -&gt;
 
@@ -1662,8 +1718,9 @@
         config.get 'packageConfig:shrub-user'
       )
 </code></pre>
+
 <p>Log a user out if we get a socket call.</p>
-<pre><code>      logout = -&gt;
+<pre><code class="coffeescript">      logout = -&gt;
 
         blank = User.instantiate()
         delete _instance[k] for k of _instance
@@ -1673,65 +1730,52 @@
 
       socket.on 'shrub-user/logout', logout
 </code></pre>
+
 <h2 id="userisloggedin">user.isLoggedIn</h2>
 <p><em>Whether the current application user is logged in.</em></p>
-<pre><code>      service.isLoggedIn = -&gt; _instance.id?
+<pre><code class="coffeescript">      service.isLoggedIn = -&gt; _instance.id?
 </code></pre>
+
 <h2 id="userlogin">user.login</h2>
-<p><em>Log in with method and args.</em></p>
-<h6 id="todo-username-and-password-are-tightly-coupled-to-local-strategy-change-that">TODO: username and password are tightly coupled to local strategy. Change that.</h6>
-<pre><code>      service.login = (method, username, password) -&gt;
+<p><em>Log in with strategy values.</em></p>
+<pre><code class="coffeescript">      service.login = (values) -&gt;
 
-        rpc.call(
-          'shrub-user/login'
-          method: method
-          username: username
-          password: password
-
-        ).then (O) -&gt;
+        rpc.call('shrub-user/login', values).then (O) -&gt;
           _instance[k] = v for k, v of O
           return
 </code></pre>
+
 <h2 id="userlogout">user.logout</h2>
 <p><em>Log out.</em></p>
-<pre><code>      service.logout = -&gt;
+<pre><code class="coffeescript">      service.logout = -&gt;
 
         rpc.call(
           'shrub-user/logout'
 
         ).then logout
 </code></pre>
+
 <h2 id="userinstance">user.instance</h2>
 <p><em>Retrieve the user instance.</em></p>
-<pre><code>      service.instance = -&gt; _instance
+<pre><code class="coffeescript">      service.instance = -&gt; _instance
 
-      if config.get 'packageConfig:shrub-core:testMode'
-</code></pre>
-<h2 id="userfakelogin">user.fakeLogin</h2>
-<p><em>Mock a login process.</em></p>
-<h6 id="todo-this-will-change-when-login-method-generalization-happens">TODO: This will change when login method generalization happens.</h6>
-<pre><code>        service.fakeLogin = (username, password, id) -&gt;
-          password ?= 'password'
-          id ?= 1
-
-          socket.catchEmit 'shrub-rpc', ({path, data}, fn) -&gt;
-            return unless 'shrub-user/login' is path
-
-            fn result: id: id, name: username
-
-          service.login 'local', username, password
-
-      service
+      return service
 
   ]
+</code></pre>
+
+<h4 id="implements-hook-shrubtransmittableerrors">Implements hook <code>shrubTransmittableErrors</code>.</h4>
+<pre><code class="coffeescript">  registrar.registerHook 'shrubTransmittableErrors', exports.shrubTransmittableErrors
 
   registrar.recur [
-    'email', 'forgot', 'login', 'logout', 'register', 'reset'
+    'login', 'logout'
   ]
 
 exports.shrubOrmCollections = -&gt;
+</code></pre>
 
-  Group =
+<h6 id="todo-finish-these-docs">TODO: Finish these docs.</h6>
+<pre><code class="coffeescript">  Group =
 
     associations: [
       alias: 'permissions'
@@ -1755,63 +1799,72 @@ exports.shrubOrmCollections = -&gt;
       permission: 'string'
 
       group: model: 'shrub-group'
-</code></pre>
-<h6 id="todo-finish-collection-docs">TODO: Finish collection docs.</h6>
-<pre><code>  User =
+
+  User =
 
     associations: [
       alias: 'groups'
+    ,
+      alias: 'instances'
     ,
       alias: 'permissions'
     ]
 
     attributes:
 </code></pre>
-<p>Last time this user was accessed.</p>
-<pre><code>      lastAccessed:
-        type: 'datetime'
-        defaultsTo: -&gt; new Date()
-</code></pre>
-<p>Email address.</p>
-<pre><code>      email:
-        type: 'string'
-        index: true
-</code></pre>
-<p>Name.</p>
-<pre><code>      name:
-        type: 'string'
-        defaultsTo: 'Anonymous'
-        size: 24
-        maxLength: 24
-</code></pre>
+
 <p>Groups this user belongs to.</p>
-<pre><code>      groups:
+<pre><code class="coffeescript">      groups:
         collection: 'shrub-user-group'
         via: 'user'
 </code></pre>
+
+<p>User instances.</p>
+<pre><code class="coffeescript">      instances:
+        collection: 'shrub-user-instance'
+        via: 'user'
+</code></pre>
+
 <p>Groups this user belongs to.</p>
-<pre><code>      permissions:
+<pre><code class="coffeescript">      permissions:
         collection: 'shrub-user-permission'
         via: 'user'
 </code></pre>
+
 <p>Check whether a user has a permission.</p>
-<pre><code>      hasPermission: (permission) -&gt;
+<pre><code class="coffeescript">      hasPermission: (permission) -&gt;
 </code></pre>
+
 <p>Superuser?</p>
-<pre><code>        return true if @id is 1
+<pre><code class="coffeescript">        return true if @id is 1
 </code></pre>
+
 <p>Check group permissions.</p>
-<pre><code>        for {permissions} in @groups
+<pre><code class="coffeescript">        for {permissions} in @groups
           return true if ~permissions.indexOf permission
 </code></pre>
+
 <p>Check inline permissions.</p>
-<pre><code>        return ~@permissions.indexOf permission
+<pre><code class="coffeescript">        return ~@permissions.indexOf permission
 
   UserGroup =
 
     attributes:
 
       group: model: 'shrub-group'
+
+      user: model: 'shrub-user'
+
+  UserInstance =
+
+    attributes:
+
+      model:
+        type: 'string'
+        size: '24'
+
+      modelId:
+        type: 'integer'
 
       user: model: 'shrub-user'
 
@@ -1827,146 +1880,27 @@ exports.shrubOrmCollections = -&gt;
   'shrub-group-permission': GroupPermission
   'shrub-user': User
   'shrub-user-group': UserGroup
+  'shrub-user-instance': UserInstance
   'shrub-user-permission': UserPermission
-
-exports.shrubOrmCollectionsAlter = (collections) -&gt;
-
-  Promise = require 'bluebird'
-
-  {'shrub-user': User} = collections
 </code></pre>
-<p>Implement all the built-in collection methods as authenticated versions,
-which take a user.</p>
-<h6 id="todo-this-is-legacy-from-having-full-orm-in-browser-what-do">TODO: This is legacy from having full ORM in browser. What do?</h6>
-<pre><code>  for identity, collection of collections
-    do (identity, collection) -&gt;
+
+<p>Transmittable login conflict error.</p>
+<pre><code class="coffeescript">class LoginConflictError extends TransmittableError
+
+  key: 'shrub-user-login-conflict'
+  template: 'That account already belongs to another user. First log out and then log in with that account.'
 </code></pre>
-<p>validateUser = (user) -&gt;</p>
-<pre><code>new Promise (resolve, reject) -&gt;
 
+<p>Transmittable redundant login error.</p>
+<pre><code class="coffeescript">class RedundantLoginError extends TransmittableError
 
-    # `TODO`: See if we can do this without using the internal
-    # _model property.
-    return resolve()# if user instanceof User._model
+  key: 'shrub-user-login-redundant'
+  template: 'You are already logged in with that account.'
 
-
-    error = new Error "Invalid user."
-    error.code = 500
-    reject error
-</code></pre>
-<p>checkPermission = (user, perm) -&gt;</p>
-<pre><code>return if user.hasPermission perm
-
-
-error = new Error "Forbidden."
-error.code = 403
-throw error
-</code></pre>
-<h1 id="secure-by-default">Secure by default.</h1>
-<p>collection.attributes.isAccessibleBy ?= (user) -&gt; false</p>
-<p>collection.authenticatedAll = (user, params) -&gt;</p>
-<pre><code>validateUser(user).then(-&gt;
-    checkPermission user, "shrub-orm:#{name}:all"
-
-
-).then(-&gt;
-    orm.collection(identity).all params
-
-
-).then (models) -&gt;
-    return models if models.length &gt; 0
-
-
-    error = new Error "Collection not found."
-    error.code = 404
-    Promise.reject error
-</code></pre>
-<p>collection.authenticatedCount = (user) -&gt;</p>
-<pre><code>validateUser(user).then(-&gt;
-    checkPermission user, "shrub-orm:#{name}:count"
-
-
-).then -&gt; orm.collection(identity).count()
-</code></pre>
-<p>collection.authenticatedCreate = (user, attributes) -&gt;</p>
-<pre><code>validateUser(user).then(-&gt;
-    checkPermission user, "shrub-orm:#{name}:create"
-
-
-).then -&gt; orm.collection(identity).create attributes
-</code></pre>
-<p>collection.authenticatedDestroy = (user, id) -&gt;</p>
-<pre><code>validateUser(user).then(-&gt;
-    checkPermission user, "shrub-orm:#{name}:create"
-
-
-).then(-&gt;
-    collection.authenticatedFind user, id
-
-
-).then (model) -&gt;
-    return model.destroy() if model.isDeletableBy user
-
-
-    if model.isAccessibleBy user
-        error = new Error "Access denied."
-        error.code = 403
-    else
-        error = new Error "Resource not found."
-        error.code = 404
-
-
-    Promise.reject error
-</code></pre>
-<p>collection.authenticatedDestroyAll = (user) -&gt;</p>
-<pre><code>validateUser(user).then(-&gt;
-    checkPermission "shrub-orm:#{name}:destroyAll"
-
-
-).then -&gt; orm.collection(identity).destroyAll()
-</code></pre>
-<p>collection.authenticatedFind = (user, id) -&gt;</p>
-<pre><code>validateUser(user).then(-&gt;
-    orm.collection(identity).find id
-
-
-).then (model) -&gt;
-    return model if model? and model.isAccessibleBy user
-
-
-    error = new Error "Resource not found."
-    error.code = 404
-    Promise.reject error
-</code></pre>
-<p>collection.authenticatedUpdate = (user, id, attributes) -&gt;</p>
-<pre><code>validateUser(user).then(-&gt;
-    collection.authenticatedFind user, id
-
-
-).then (model) -&gt;
-    if model.isEditableBy user
-        for k, v of attributes
-            model[k] = v
-        model.id = id
-        return model.save()
-
-
-    if model.isAccessibleBy user
-        error = new Error "Access denied."
-        error.code = 403
-    else
-        error = new Error "Resource not found."
-        error.code = 404
-
-
-    Promise.reject error
-
-
-      collection.attributes.isAccessibleBy ?= (user) -&gt; false
-      collection.attributes.isEditableBy ?= (user) -&gt; false
-      collection.attributes.isDeletableBy ?= (user) -&gt; false
-
-  return
+exports.shrubTransmittableErrors = -&gt; [
+  LoginConflictError
+  RedundantLoginError
+]
 </code></pre>
               
             </div>
@@ -1978,7 +1912,7 @@ throw error
         <a href="login/" class="btn btn-neutral float-right" title="login.coffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="forgot/" class="btn btn-neutral" title="forgot.coffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../shrub-user-local/reset/" class="btn btn-neutral" title="reset.coffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -2006,7 +1940,7 @@ throw error
           <a class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="forgot/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../../shrub-user-local/reset/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
         <span style="margin-left: 15px"><a href="login/" style="color: #fcfcfc">Next &raquo;</a></span>

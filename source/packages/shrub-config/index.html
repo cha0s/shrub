@@ -929,6 +929,28 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-passport</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-passport/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-passport/logout/">logout.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-repl</span></li>
 
         
@@ -1317,7 +1339,7 @@
         
             
     <ul class="subnav">
-    <li><span>shrub-user</span></li>
+    <li><span>shrub-user-local</span></li>
 
         
             
@@ -1332,21 +1354,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/forgot/">forgot.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/forgot/">forgot.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/">index.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/email/register/">register.coffee</a>
+        <a class="" href="../shrub-user-local/client/email/register/">register.coffee</a>
         
     </li>
 
@@ -1356,9 +1378,88 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/forgot/">forgot.coffee</a>
+        <a class="" href="../shrub-user-local/client/forgot/">forgot.coffee</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/test-e2e/">test-e2e.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/client/test-unit/">test-unit.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/forgot/">forgot.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/">index.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/register/">register.coffee</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
 
         
             
@@ -1382,42 +1483,7 @@
     </li>
 
         
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/reset/">reset.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/test-e2e/">test-e2e.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/client/test-unit/">test-unit.coffee</a>
-        
-    </li>
-
-        
     </ul>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/forgot/">forgot.coffee</a>
-        
-    </li>
 
         
             
@@ -1430,27 +1496,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../shrub-user/login/">login.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/logout/">logout.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/register/">register.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user/reset/">reset.coffee</a>
         
     </li>
 
@@ -1585,7 +1630,7 @@
               
                 <h1 id="configuration">Configuration</h1>
 <p><em>Gathers configuration and serves it as an Angular module for clients.</em></p>
-<pre><code>_ = require 'lodash'
+<pre><code class="coffeescript">_ = require 'lodash'
 Promise = require 'bluebird'
 url = require 'url'
 
@@ -1596,8 +1641,9 @@ pkgman = require 'pkgman'
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
+
 <h4 id="implements-hook-shrubassetsmiddleware">Implements hook <code>shrubAssetsMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubAssetsMiddleware', -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAssetsMiddleware', -&gt;
 
     label: 'Config'
     middleware: [
@@ -1610,40 +1656,46 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     ]
 </code></pre>
+
 <h4 id="implements-hook-shrubhttpmiddleware">Implements hook <code>shrubHttpMiddleware</code>.</h4>
-<pre><code>  registrar.registerHook 'shrubHttpMiddleware', (http) -&gt;
+<pre><code class="coffeescript">  registrar.registerHook 'shrubHttpMiddleware', (http) -&gt;
 
     label: 'Serve package configuration'
     middleware: [
 </code></pre>
+
 <p>Serve the configuration module.</p>
-<pre><code>      (req, res, next) -&gt;
+<pre><code class="coffeescript">      (req, res, next) -&gt;
 </code></pre>
+
 <p>Only if the path matches.</p>
-<pre><code>        return next() unless req.url is '/js/config.js'
+<pre><code class="coffeescript">        return next() unless req.url is '/js/config.js'
 
         exports.renderPackageConfig(req).then((code) -&gt;
 </code></pre>
+
 <p>Emit the configuration module.</p>
-<pre><code>          res.setHeader 'Content-Type', 'text/javascript'
+<pre><code class="coffeescript">          res.setHeader 'Content-Type', 'text/javascript'
           res.send code
 
         ).catch next
 
     ]
 </code></pre>
+
 <h2 id="shrub-configrenderpackageconfig">shrub-config.renderPackageConfig</h2>
 <ul>
 <li>(http.IncomingRequest) <code>req</code> - The request object.</li>
 </ul>
 <p>Use a client's request object to render configuration.</p>
-<pre><code>exports.renderPackageConfig = (req) -&gt;
+<pre><code class="coffeescript">exports.renderPackageConfig = (req) -&gt;
 </code></pre>
+
 <h4 id="invoke-hook-shrubconfigclient">Invoke hook <code>shrubConfigClient</code>.</h4>
 <p>Allows packages to specify configuration that will be sent to the client.
 Implementations may return an object, or a promise that resolves to an
 object.</p>
-<pre><code>  subconfigs = pkgman.invoke 'shrubConfigClient', req
+<pre><code class="coffeescript">  subconfigs = pkgman.invoke 'shrubConfigClient', req
 
   Promise.all(
 
@@ -1653,28 +1705,32 @@ object.</p>
 
     config_ = new Config()
 </code></pre>
+
 <p>Package-independent...</p>
-<pre><code>    config_.set 'packageList', config.get 'packageList'
+<pre><code class="coffeescript">    config_.set 'packageList', config.get 'packageList'
 </code></pre>
+
 <p>Merge in the subconfigs.</p>
-<pre><code>    index = 0
+<pre><code class="coffeescript">    index = 0
     for path of subconfigs
 
       subconfig = fulfilledSubconfigs[index++]
       for key, value of subconfig
         continue unless value?
 
-        config_.set "packageConfig:#{
+        config_.set &quot;packageConfig:#{
           path.replace /\//g, ':'
         }:#{
           key.replace /\//g, ':'
-        }", value
+        }&quot;, value
 </code></pre>
+
 <h4 id="invoke-hook-shrubconfigclientalter">Invoke hook <code>shrubConfigClientAlter</code>.</h4>
-<pre><code>    pkgman.invoke 'shrubConfigClientAlter', req, config_
+<pre><code class="coffeescript">    pkgman.invoke 'shrubConfigClientAlter', req, config_
 </code></pre>
+
 <p>Format the configuration to look nice.</p>
-<pre><code>    prettyPrintConfig = -&gt;
+<pre><code class="coffeescript">    prettyPrintConfig = -&gt;
 
       jsonArgs = [config_]
 
@@ -1685,13 +1741,13 @@ object.</p>
       [first, rest...] = stringified.split '\n'
       ([first].concat rest.map (line) -&gt; '    ' + line).join '\n'
 
-    """
+    &quot;&quot;&quot;
 angular.module('shrub.config', ['shrub.require']).config([
   'shrub-requireProvider', function(requireProvider) {
     requireProvider.require('config').from(#{prettyPrintConfig()});
   }
 ]);
-  """
+  &quot;&quot;&quot;
 </code></pre>
               
             </div>
