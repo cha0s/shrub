@@ -1619,12 +1619,14 @@
           <div role="main">
             <div class="section">
               
-                <p>describe 'core', -&gt;</p>
-<p>it 'should be running the server in E2E mode', -&gt;</p>
-<pre><code>browser.get '/e2e/sanity-check'
-expect(browser.getCurrentUrl()).toContain '/e2e/sanity-check'
+                <pre><code class="coffeescript">
+describe 'core', -&gt;
+
+  it 'should be running the server in E2E mode', -&gt;
+
+    browser.get '/e2e/sanity-check'
+    expect(browser.getCurrentUrl()).toContain '/e2e/sanity-check'
 </code></pre>
-<p>```</p>
               
             </div>
           </div>

@@ -1619,15 +1619,18 @@
           <div role="main">
             <div class="section">
               
-                <p>describe 'form', -&gt;</p>
-<p>it 'should automagically register a form when compiling a directive', -&gt;</p>
-<pre><code>inject [
-  '$compile', '$rootScope', 'shrub-form'
-  ($compile, $rootScope, shrubForm) -&gt;
+                <pre><code class="coffeescript">
+describe 'form', -&gt;
+
+  it 'should automagically register a form when compiling a directive', -&gt;
+
+    inject [
+      '$compile', '$rootScope', 'shrub-form'
+      ($compile, $rootScope, shrubForm) -&gt;
 </code></pre>
-<pre><code>Sanity
-```coffeescript
-        expect(shrubForm.forms.test).not.toBeDefined()
+
+<p>Sanity</p>
+<pre><code class="coffeescript">        expect(shrubForm.forms.test).not.toBeDefined()
 
         element = angular.element(
           '&lt;div data-shrub-form data-form=&quot;testAuto&quot;&gt;&lt;/div&gt;'
@@ -1681,39 +1684,39 @@
 
 <form> exists
 
-wzxhzdk:2
+wzxhzdk:3
 
 Assert actual input type.
 
-wzxhzdk:3
+wzxhzdk:4
 
 Check required fields.
 
-wzxhzdk:4
+wzxhzdk:5
 
 Check default values.
 
-wzxhzdk:5
+wzxhzdk:6
 
 All children present.
 
-wzxhzdk:6
+wzxhzdk:7
 
 Form key generated.
 
-wzxhzdk:7
-
-Form was submitted with correct values.
-
 wzxhzdk:8
 
-RPC received correct data.
+Form was submitted with correct values.
 
 wzxhzdk:9
 
-Form was submitted with correct values.
+RPC received correct data.
 
 wzxhzdk:10
+
+Form was submitted with correct values.
+
+wzxhzdk:11
               
             </div>
           </div>

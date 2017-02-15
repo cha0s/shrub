@@ -999,13 +999,13 @@
         
             <ul>
             
-                <li class="toctree-l3"><a href="#implements-hook-shrubconfigclient">Implements hook shrubConfigClient</a></li>
+                <li class="toctree-l3"><a href="#rest-api-for-database-schema">REST API for database schema</a></li>
                 
-            
-                <li class="toctree-l3"><a href="#implements-hook-shrubhttproutes">Implements hook shrubHttpRoutes</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubconfigclient">Implements hook shrubConfigClient</a></li>
                 
-            
-                <li class="toctree-l3"><a href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubhttproutes">Implements hook shrubHttpRoutes</a></li>
+                
+                    <li><a class="toctree-l4" href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer</a></li>
                 
             
             </ul>
@@ -1628,11 +1628,11 @@
           <div role="main">
             <div class="section">
               
-                <pre><code># REST API for database schema
+                <pre><code class="coffeescript"></code></pre>
 
-Serve the database schema over a REST API.
-```coffeescript
-i8n = require 'inflection'
+<h1 id="rest-api-for-database-schema">REST API for database schema</h1>
+<p>Serve the database schema over a REST API.</p>
+<pre><code class="coffeescript">i8n = require 'inflection'
 
 config = require 'config'
 

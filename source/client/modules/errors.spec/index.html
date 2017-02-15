@@ -1619,43 +1619,50 @@
           <div role="main">
             <div class="section">
               
-                <p>errors = require 'errors'</p>
-<p>describe 'errors', -&gt;</p>
-<p>error = null</p>
-<p>beforeEach -&gt;</p>
-<pre><code>error = errors.instantiate 'unknown', 'Test'
-</code></pre>
-<p>it 'instantiates errors', -&gt;</p>
-<pre><code>expect(error instanceof Error).toBe true
-</code></pre>
-<p>it "handles (even abstract errors') messages", -&gt;</p>
-<pre><code>expect(errors.message error).toBe 'Unknown error: Test'
+                <pre><code class="coffeescript">errors = require 'errors'
 
-expect(errors.message new Error 'Foo').toBe 'Unknown error: Foo'
+describe 'errors', -&gt;
 
-expect(errors.message 'Blah').toBe 'Unknown error: Blah'
+  error = null
+
+  beforeEach -&gt;
+
+    error = errors.instantiate 'unknown', 'Test'
+
+  it 'instantiates errors', -&gt;
+
+    expect(error instanceof Error).toBe true
+
+  it &quot;handles (even abstract errors') messages&quot;, -&gt;
+
+    expect(errors.message error).toBe 'Unknown error: Test'
+
+    expect(errors.message new Error 'Foo').toBe 'Unknown error: Foo'
+
+    expect(errors.message 'Blah').toBe 'Unknown error: Blah'
+
+  it 'serializes (even abstract) errors', -&gt;
+
+    O = errors.serialize error
+    expect(O[0]).toBe error.key
+    expect(O[1]).toBe error.message
+
+    O = errors.serialize new Error 'Foobar'
+    expect(O[0]).not.toBeDefined()
+    expect(O[1]).toBe 'Foobar'
+
+    O = errors.serialize 'Hmm'
+    expect(O[0]).not.toBeDefined()
+    expect(O[1]).toBe 'Hmm'
+
+  it 'unserializes (even abstract) errors', -&gt;
+
+    O = errors.serialize error
+    expect(errors.message errors.unserialize O).toBe errors.message error
+
+    O = [undefined, 'Blah']
+    expect(errors.message errors.unserialize O).toBe 'Unknown error: Blah'
 </code></pre>
-<p>it 'serializes (even abstract) errors', -&gt;</p>
-<pre><code>O = errors.serialize error
-expect(O[0]).toBe error.key
-expect(O[1]).toBe error.message
-
-O = errors.serialize new Error 'Foobar'
-expect(O[0]).not.toBeDefined()
-expect(O[1]).toBe 'Foobar'
-
-O = errors.serialize 'Hmm'
-expect(O[0]).not.toBeDefined()
-expect(O[1]).toBe 'Hmm'
-</code></pre>
-<p>it 'unserializes (even abstract) errors', -&gt;</p>
-<pre><code>O = errors.serialize error
-expect(errors.message errors.unserialize O).toBe errors.message error
-
-O = [undefined, 'Blah']
-expect(errors.message errors.unserialize O).toBe 'Unknown error: Blah'
-</code></pre>
-<p>```</p>
               
             </div>
           </div>

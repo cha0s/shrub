@@ -1,3 +1,4 @@
+```coffeescript
 
 {TransmittableError} = require 'errors'
 

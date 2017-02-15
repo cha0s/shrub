@@ -1,3 +1,4 @@
+```coffeescript
 
 crypto = require 'server/crypto'
 Promise = require 'bluebird'

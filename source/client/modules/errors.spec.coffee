@@ -1,3 +1,4 @@
+```coffeescript
 errors = require 'errors'
 
 describe 'errors', ->

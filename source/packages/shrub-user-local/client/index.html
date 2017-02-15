@@ -1376,6 +1376,9 @@
         
             <ul>
             
+                <li class="toctree-l3"><a href="#implements-hook-shrubtransmittableerrors">Implements hook shrubTransmittableErrors.</a></li>
+                
+            
                 <li class="toctree-l3"><a href="#implements-hook-shrubuserloginstrategies">Implements hook shrubUserLoginStrategies.</a></li>
                 
             
@@ -1622,11 +1625,14 @@
           <div role="main">
             <div class="section">
               
-                <p>{TransmittableError} = require 'errors'</p>
-<p>exports.pkgmanRegister = (registrar) -&gt;</p>
-<pre><code>#### Implements hook `shrubTransmittableErrors`.
-```coffeescript
-  registrar.registerHook 'shrubTransmittableErrors', exports.shrubTransmittableErrors
+                <pre><code class="coffeescript">
+{TransmittableError} = require 'errors'
+
+exports.pkgmanRegister = (registrar) -&gt;
+</code></pre>
+
+<h4 id="implements-hook-shrubtransmittableerrors">Implements hook <code>shrubTransmittableErrors</code>.</h4>
+<pre><code class="coffeescript">  registrar.registerHook 'shrubTransmittableErrors', exports.shrubTransmittableErrors
 </code></pre>
 
 <h4 id="implements-hook-shrubuserloginstrategies">Implements hook <code>shrubUserLoginStrategies</code>.</h4>

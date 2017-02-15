@@ -1,3 +1,4 @@
+```coffeescript
 ```
 # Client application entry point.
 

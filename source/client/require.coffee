@@ -1,3 +1,4 @@
+```coffeescript
 ```
 # Require system for Angular
 

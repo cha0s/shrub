@@ -1619,55 +1619,59 @@
           <div role="main">
             <div class="section">
               
-                <p>crypto = require 'server/crypto'
-Promise = require 'bluebird'</p>
-<p>cryptoKey = 'This should be a sufficiently long encryption key. For testing.'</p>
-<p>describe 'crypto', -&gt;</p>
-<p>it 'can encrypt and decrypt information', -&gt;</p>
-<pre><code>texts = []
+                <pre><code class="coffeescript">
+crypto = require 'server/crypto'
+Promise = require 'bluebird'
 
-for i in [0...100]
+cryptoKey = 'This should be a sufficiently long encryption key. For testing.'
 
-  texts[i] = String.fromCharCode Math.floor Math.random() * 256
-  texts[i] += texts[i - 1] if i &gt; 0
+describe 'crypto', -&gt;
 
-ciphertexts = []
-ciphertextsPromise = null
+  it 'can encrypt and decrypt information', -&gt;
 
-runs -&gt;
+    texts = []
 
-  ciphertexts = for text in texts
+    for i in [0...100]
 
-    crypto.encrypt text, cryptoKey
+      texts[i] = String.fromCharCode Math.floor Math.random() * 256
+      texts[i] += texts[i - 1] if i &gt; 0
 
-  ciphertextsPromise = Promise.all ciphertexts
+    ciphertexts = []
+    ciphertextsPromise = null
 
-waitsFor -&gt; ciphertextsPromise.isFulfilled()
+    runs -&gt;
 
-deciphertexts = []
-deciphertextsPromise = null
+      ciphertexts = for text in texts
 
-runs -&gt;
+        crypto.encrypt text, cryptoKey
 
-  ciphertexts = ciphertextsPromise.inspect().value()
+      ciphertextsPromise = Promise.all ciphertexts
 
-  deciphertexts = for ciphertext in ciphertexts
+    waitsFor -&gt; ciphertextsPromise.isFulfilled()
 
-    crypto.decrypt ciphertext, cryptoKey
+    deciphertexts = []
+    deciphertextsPromise = null
 
-  deciphertextsPromise = Promise.all deciphertexts
+    runs -&gt;
 
-waitsFor -&gt; deciphertextsPromise.isFulfilled()
+      ciphertexts = ciphertextsPromise.inspect().value()
 
-runs -&gt;
+      deciphertexts = for ciphertext in ciphertexts
 
-  deciphertexts = deciphertextsPromise.inspect().value()
+        crypto.decrypt ciphertext, cryptoKey
 
-  for text, i in texts
+      deciphertextsPromise = Promise.all deciphertexts
 
-    expect(text).toBe deciphertexts[i]
+    waitsFor -&gt; deciphertextsPromise.isFulfilled()
+
+    runs -&gt;
+
+      deciphertexts = deciphertextsPromise.inspect().value()
+
+      for text, i in texts
+
+        expect(text).toBe deciphertexts[i]
 </code></pre>
-<p>```</p>
               
             </div>
           </div>

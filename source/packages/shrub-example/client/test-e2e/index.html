@@ -1619,21 +1619,27 @@
           <div role="main">
             <div class="section">
               
-                <p>describe 'home', -&gt;</p>
-<p>beforeEach -&gt;</p>
-<pre><code>browser.get '/home'
+                <pre><code class="coffeescript">
+describe 'home', -&gt;
+
+  beforeEach -&gt;
+
+    browser.get '/home'
+
+  it 'should render home when user navigates to /home', -&gt;
+
+    expect(shrub.text 'h1').toBe 'Shrub'
+
+describe 'about', -&gt;
+
+  beforeEach -&gt;
+
+    browser.get '/about'
+
+  it 'should render about when user navigates to /about', -&gt;
+
+    expect(shrub.text 'h2').toBe 'Shrub'
 </code></pre>
-<p>it 'should render home when user navigates to /home', -&gt;</p>
-<pre><code>expect(shrub.text 'h1').toBe 'Shrub'
-</code></pre>
-<p>describe 'about', -&gt;</p>
-<p>beforeEach -&gt;</p>
-<pre><code>browser.get '/about'
-</code></pre>
-<p>it 'should render about when user navigates to /about', -&gt;</p>
-<pre><code>expect(shrub.text 'h2').toBe 'Shrub'
-</code></pre>
-<p>```</p>
               
             </div>
           </div>

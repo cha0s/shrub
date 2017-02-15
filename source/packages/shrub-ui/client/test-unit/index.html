@@ -1619,85 +1619,101 @@
           <div role="main">
             <div class="section">
               
-                <p>describe 'md', -&gt;</p>
-<p>markdown = null</p>
-<p>beforeEach -&gt;</p>
-<pre><code>inject (shrubUiMarkdownFilter) -&gt; markdown = shrubUiMarkdownFilter
-</code></pre>
-<p>it 'should be able to parse markdown into HTML', -&gt;</p>
-<pre><code>expect(markdown('Oh, *hello*')).toEqual('&lt;p&gt;Oh, &lt;em&gt;hello&lt;/em&gt;&lt;/p&gt;\n');
-</code></pre>
-<p>it 'should sanitize HTML by default', -&gt;</p>
-<pre><code>expect(markdown('Oh, &lt;div&gt;hello&lt;/div&gt;')).toEqual('&lt;p&gt;Oh, &amp;lt;div&amp;gt;hello&amp;lt;/div&amp;gt;&lt;/p&gt;\n');
-</code></pre>
-<p>it 'should allow unsanitized HTML, if requested', -&gt;</p>
-<pre><code>expect(markdown('Oh, &lt;div&gt;hello&lt;/div&gt;', false)).toEqual('&lt;p&gt;Oh, &lt;div&gt;hello&lt;/div&gt;&lt;/p&gt;\n');
-</code></pre>
-<p>describe 'messages', -&gt;</p>
-<p>messages = null</p>
-<p>beforeEach -&gt;</p>
-<pre><code>inject [
-  'shrub-ui/messages'
-  (_messages_) -&gt; messages = _messages_
-]
-</code></pre>
-<p>it 'should allow adding and removing messages', -&gt;</p>
-<pre><code>messages.add text: 'Testing'
-expect(messages.top().text).toBe 'Testing'
-expect(messages.count()).toBe 1
+                <pre><code class="coffeescript">
+describe 'md', -&gt;
 
-messages.removeTop()
-expect(messages.top()).toBe undefined
-expect(messages.count()).toBe 0
-</code></pre>
-<p>it 'should accept message batches from the socket', -&gt;</p>
-<pre><code>inject [
-  '$timeout', 'shrub-socket'
-  ($timeout, socket) -&gt;
+  markdown = null
 
-    socket.stimulateOn(
+  beforeEach -&gt;
+
+    inject (shrubUiMarkdownFilter) -&gt; markdown = shrubUiMarkdownFilter
+
+  it 'should be able to parse markdown into HTML', -&gt;
+
+    expect(markdown('Oh, *hello*')).toEqual('&lt;p&gt;Oh, &lt;em&gt;hello&lt;/em&gt;&lt;/p&gt;\n');
+
+  it 'should sanitize HTML by default', -&gt;
+
+    expect(markdown('Oh, &lt;div&gt;hello&lt;/div&gt;')).toEqual('&lt;p&gt;Oh, &amp;lt;div&amp;gt;hello&amp;lt;/div&amp;gt;&lt;/p&gt;\n');
+
+  it 'should allow unsanitized HTML, if requested', -&gt;
+
+    expect(markdown('Oh, &lt;div&gt;hello&lt;/div&gt;', false)).toEqual('&lt;p&gt;Oh, &lt;div&gt;hello&lt;/div&gt;&lt;/p&gt;\n');
+
+describe 'messages', -&gt;
+
+  messages = null
+
+  beforeEach -&gt;
+
+    inject [
       'shrub-ui/messages'
-      messages: [
-        text: 'Testing'
-      ,
-        text: 'Testing'
-      ,
-        text: 'Testing'
-      ,
-        text: 'Testing'
-      ]
-    )
+      (_messages_) -&gt; messages = _messages_
+    ]
 
-    $timeout.flush()
+  it 'should allow adding and removing messages', -&gt;
 
-    expect(messages.count()).toBe 4
-]
-</code></pre>
-<p>describe 'title', -&gt;</p>
-<p>windowTitle = null</p>
-<p>beforeEach -&gt;</p>
-<pre><code>inject [
-  'shrub-ui/window-title'
-  (_windowTitle_) -&gt; windowTitle = _windowTitle_
-]
-</code></pre>
-<p>it 'should set window title to page title [separator] site title by default when the page title is set', -&gt;</p>
-<pre><code>windowTitle.setPage 'Home'
+    messages.add text: 'Testing'
+    expect(messages.top().text).toBe 'Testing'
+    expect(messages.count()).toBe 1
 
-expect(windowTitle.get()).toBe "#{
-  windowTitle.page()
-}#{
-  windowTitle.separator()
-}#{
-  windowTitle.site()
-}"
-</code></pre>
-<p>it 'should allow page title to be set without altering the window title', -&gt;</p>
-<pre><code>windowTitle.setPage 'Home', false
+    messages.removeTop()
+    expect(messages.top()).toBe undefined
+    expect(messages.count()).toBe 0
 
-expect(windowTitle.get()).not.toContain 'Home'
+  it 'should accept message batches from the socket', -&gt;
+
+    inject [
+      '$timeout', 'shrub-socket'
+      ($timeout, socket) -&gt;
+
+        socket.stimulateOn(
+          'shrub-ui/messages'
+          messages: [
+            text: 'Testing'
+          ,
+            text: 'Testing'
+          ,
+            text: 'Testing'
+          ,
+            text: 'Testing'
+          ]
+        )
+
+        $timeout.flush()
+
+        expect(messages.count()).toBe 4
+    ]
+
+describe 'title', -&gt;
+
+  windowTitle = null
+
+  beforeEach -&gt;
+
+    inject [
+      'shrub-ui/window-title'
+      (_windowTitle_) -&gt; windowTitle = _windowTitle_
+    ]
+
+  it 'should set window title to page title [separator] site title by default when the page title is set', -&gt;
+
+    windowTitle.setPage 'Home'
+
+    expect(windowTitle.get()).toBe &quot;#{
+      windowTitle.page()
+    }#{
+      windowTitle.separator()
+    }#{
+      windowTitle.site()
+    }&quot;
+
+  it 'should allow page title to be set without altering the window title', -&gt;
+
+    windowTitle.setPage 'Home', false
+
+    expect(windowTitle.get()).not.toContain 'Home'
 </code></pre>
-<p>```</p>
               
             </div>
           </div>

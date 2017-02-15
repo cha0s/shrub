@@ -1,3 +1,4 @@
+```coffeescript
 ```
 # REST API for database schema
 

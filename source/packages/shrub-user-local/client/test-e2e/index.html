@@ -1619,15 +1619,17 @@
           <div role="main">
             <div class="section">
               
-                <p>describe 'user', -&gt;</p>
-<p>it 'should show a password reset page, but only if a token is provided', -&gt;</p>
-<pre><code>browser.get '/user/local/reset'
-expect(shrub.count '.shrub-user-local-reset').toBe 0
+                <pre><code class="coffeescript">
+describe 'user', -&gt;
 
-browser.get '/user/local/reset/token'
-expect(shrub.count '.shrub-user-local-reset').toBe 1
+  it 'should show a password reset page, but only if a token is provided', -&gt;
+
+    browser.get '/user/local/reset'
+    expect(shrub.count '.shrub-user-local-reset').toBe 0
+
+    browser.get '/user/local/reset/token'
+    expect(shrub.count '.shrub-user-local-reset').toBe 1
 </code></pre>
-<p>```</p>
               
             </div>
           </div>

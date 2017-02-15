@@ -1,3 +1,4 @@
+```coffeescript
 ```
 # Package management for Angular
 

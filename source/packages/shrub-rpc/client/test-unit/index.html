@@ -1619,61 +1619,66 @@
           <div role="main">
             <div class="section">
               
-                <p>describe 'rpc', -&gt;</p>
-<p>rpc = null</p>
-<p>beforeEach -&gt;</p>
-<pre><code>inject [
-  'shrub-rpc'
-  (_rpc_) -&gt; rpc = _rpc_
-]
+                <pre><code class="coffeescript">
+describe 'rpc', -&gt;
+
+  rpc = null
+
+  beforeEach -&gt;
+
+    inject [
+      'shrub-rpc'
+      (_rpc_) -&gt; rpc = _rpc_
+    ]
+
+  it 'should send and receive data back from rpc calls', -&gt;
+
+    inject [
+      '$rootScope', '$timeout', 'shrub-socket'
+      ($rootScope, $timeout, socket) -&gt;
+
+        socket.catchEmit 'shrub-rpc', ({path, data}, fn) -&gt;
+          expect(path).toBe 'test'
+
+          fn result: data.foo
+
+        result = null
+        error = 'invalid'
+
+        promise = rpc.call 'test', foo: 420
+        promise.then (_) -&gt; result = _
+        promise.catch (_) -&gt; error = _
+
+        $timeout.flush()
+        $rootScope.$apply()
+
+        expect(result).toBe 420
+        expect(error).toBe 'invalid'
+    ]
+
+  it 'should handle errors gracefully', -&gt;
+
+    inject [
+      '$rootScope', 'shrub-socket'
+      ($rootScope, socket) -&gt;
+
+        socket.catchEmit 'shrub-rpc', ({data}, fn) -&gt;
+          fn error: new Error()
+
+        result = 'invalid'
+        error = null
+
+        promise = rpc.call 'test'
+        promise.then (_) -&gt; result = _
+        promise.catch (_) -&gt; error = _
+
+        $rootScope.$apply()
+
+        expect(result).toBe 'invalid'
+        expect(error).toBeDefined()
+
+    ]
 </code></pre>
-<p>it 'should send and receive data back from rpc calls', -&gt;</p>
-<pre><code>inject [
-  '$rootScope', '$timeout', 'shrub-socket'
-  ($rootScope, $timeout, socket) -&gt;
-
-    socket.catchEmit 'shrub-rpc', ({path, data}, fn) -&gt;
-      expect(path).toBe 'test'
-
-      fn result: data.foo
-
-    result = null
-    error = 'invalid'
-
-    promise = rpc.call 'test', foo: 420
-    promise.then (_) -&gt; result = _
-    promise.catch (_) -&gt; error = _
-
-    $timeout.flush()
-    $rootScope.$apply()
-
-    expect(result).toBe 420
-    expect(error).toBe 'invalid'
-]
-</code></pre>
-<p>it 'should handle errors gracefully', -&gt;</p>
-<pre><code>inject [
-  '$rootScope', 'shrub-socket'
-  ($rootScope, socket) -&gt;
-
-    socket.catchEmit 'shrub-rpc', ({data}, fn) -&gt;
-      fn error: new Error()
-
-    result = 'invalid'
-    error = null
-
-    promise = rpc.call 'test'
-    promise.then (_) -&gt; result = _
-    promise.catch (_) -&gt; error = _
-
-    $rootScope.$apply()
-
-    expect(result).toBe 'invalid'
-    expect(error).toBeDefined()
-
-]
-</code></pre>
-<p>```</p>
               
             </div>
           </div>

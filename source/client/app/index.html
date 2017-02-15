@@ -160,10 +160,11 @@
         
             <ul>
             
-                <li class="toctree-l3"><a href="#invoke-hook-shrubangularappconfig">Invoke hook shrubAngularAppConfig.</a></li>
+                <li class="toctree-l3"><a href="#client-application-entry-point">Client application entry point.</a></li>
                 
-            
-                <li class="toctree-l3"><a href="#invoke-hook-shrubangularapprun">Invoke hook shrubAngularAppRun.</a></li>
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubangularappconfig">Invoke hook shrubAngularAppConfig.</a></li>
+                
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubangularapprun">Invoke hook shrubAngularAppRun.</a></li>
                 
             
             </ul>
@@ -1625,14 +1626,13 @@
           <div role="main">
             <div class="section">
               
-                <pre><code># Client application entry point.
+                <pre><code class="coffeescript"></code></pre>
 
-*Definition of the main top-level Angular module, with dependency gathering
-and config/run hook invocation.*
-
-Top-level module.
-```coffeescript
-angular.module 'shrub', ['shrub.core']
+<h1 id="client-application-entry-point">Client application entry point.</h1>
+<p><em>Definition of the main top-level Angular module, with dependency gathering
+and config/run hook invocation.</em></p>
+<p>Top-level module.</p>
+<pre><code class="coffeescript">angular.module 'shrub', ['shrub.core']
 </code></pre>
 
 <p>Include core Angular dependencies.</p>

@@ -1,3 +1,4 @@
+```coffeescript
 
 config = require './config'
 

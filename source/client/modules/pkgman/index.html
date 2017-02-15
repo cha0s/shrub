@@ -228,40 +228,31 @@
         
             <ul>
             
-                <li class="toctree-l3"><a href="#constructor">constructor</a></li>
+                <li class="toctree-l3"><a href="#package-manager">Package manager</a></li>
                 
-            
-                <li class="toctree-l3"><a href="#pkgmanregistrarpath">PkgmanRegistrar#path</a></li>
+                    <li><a class="toctree-l4" href="#constructor">constructor</a></li>
                 
-            
-                <li class="toctree-l3"><a href="#pkgmanregistrarrecur">PkgmanRegistrar#recur</a></li>
+                    <li><a class="toctree-l4" href="#pkgmanregistrarpath">PkgmanRegistrar#path</a></li>
                 
-            
-                <li class="toctree-l3"><a href="#pkgmanregistrarregisterhook">PkgmanRegistrar#registerHook</a></li>
+                    <li><a class="toctree-l4" href="#pkgmanregistrarrecur">PkgmanRegistrar#recur</a></li>
                 
-            
-                <li class="toctree-l3"><a href="#pkgmanrebuildpackagecache">pkgman.rebuildPackageCache</a></li>
+                    <li><a class="toctree-l4" href="#pkgmanregistrarregisterhook">PkgmanRegistrar#registerHook</a></li>
                 
-            
-                <li class="toctree-l3"><a href="#pkgmanregisterpackagelist">pkgman.registerPackageList</a></li>
+                    <li><a class="toctree-l4" href="#pkgmanrebuildpackagecache">pkgman.rebuildPackageCache</a></li>
                 
-            
-                <li class="toctree-l3"><a href="#pkgmaninvoke">pkgman.invoke</a></li>
+                    <li><a class="toctree-l4" href="#pkgmanregisterpackagelist">pkgman.registerPackageList</a></li>
                 
-            
-                <li class="toctree-l3"><a href="#pkgmaninvokeflat">pkgman.invokeFlat</a></li>
+                    <li><a class="toctree-l4" href="#pkgmaninvoke">pkgman.invoke</a></li>
                 
-            
-                <li class="toctree-l3"><a href="#pkgmaninvokepackage">pkgman.invokePackage</a></li>
+                    <li><a class="toctree-l4" href="#pkgmaninvokeflat">pkgman.invokeFlat</a></li>
                 
-            
-                <li class="toctree-l3"><a href="#pkgmanpackageexists">pkgman.packageExists</a></li>
+                    <li><a class="toctree-l4" href="#pkgmaninvokepackage">pkgman.invokePackage</a></li>
                 
-            
-                <li class="toctree-l3"><a href="#pkgmanpackagesimplementing">pkgman.packagesImplementing</a></li>
+                    <li><a class="toctree-l4" href="#pkgmanpackageexists">pkgman.packageExists</a></li>
                 
-            
-                <li class="toctree-l3"><a href="#pkgmannormalizepath">pkgman.normalizePath</a></li>
+                    <li><a class="toctree-l4" href="#pkgmanpackagesimplementing">pkgman.packagesImplementing</a></li>
+                
+                    <li><a class="toctree-l4" href="#pkgmannormalizepath">pkgman.normalizePath</a></li>
                 
             
             </ul>
@@ -1655,12 +1646,12 @@
           <div role="main">
             <div class="section">
               
-                <pre><code># Package manager
+                <pre><code class="coffeescript"></code></pre>
 
-*Registers packages and handles hook registration and invocation as well as
-introspection.*
-```coffeescript
-debug = require('debug') 'shrub:pkgman'
+<h1 id="package-manager">Package manager</h1>
+<p><em>Registers packages and handles hook registration and invocation as well as
+introspection.</em></p>
+<pre><code class="coffeescript">debug = require('debug') 'shrub:pkgman'
 debugSilly = require('debug') 'shrub-silly:pkgman'
 </code></pre>
 

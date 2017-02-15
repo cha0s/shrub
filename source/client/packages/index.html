@@ -238,22 +238,19 @@
         
             <ul>
             
-                <li class="toctree-l3"><a href="#invoke-hook-shrubangularcontroller">Invoke hook shrubAngularController.</a></li>
+                <li class="toctree-l3"><a href="#package-management-for-angular">Package management for Angular</a></li>
                 
-            
-                <li class="toctree-l3"><a href="#invoke-hook-shrubangulardirective">Invoke hook shrubAngularDirective.</a></li>
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubangularcontroller">Invoke hook shrubAngularController.</a></li>
                 
-            
-                <li class="toctree-l3"><a href="#invoke-hook-shrubangularfilter">Invoke hook shrubAngularFilter.</a></li>
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubangulardirective">Invoke hook shrubAngularDirective.</a></li>
                 
-            
-                <li class="toctree-l3"><a href="#invoke-hook-shrubangularprovider">Invoke hook shrubAngularProvider.</a></li>
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubangularfilter">Invoke hook shrubAngularFilter.</a></li>
                 
-            
-                <li class="toctree-l3"><a href="#invoke-hook-shrubangularservice">Invoke hook shrubAngularService.</a></li>
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubangularprovider">Invoke hook shrubAngularProvider.</a></li>
                 
-            
-                <li class="toctree-l3"><a href="#invoke-hook-shrubangulardirectivealter">Invoke hook shrubAngularDirectiveAlter.</a></li>
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubangularservice">Invoke hook shrubAngularService.</a></li>
+                
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubangulardirectivealter">Invoke hook shrubAngularDirectiveAlter.</a></li>
                 
             
             </ul>
@@ -1637,13 +1634,13 @@
           <div role="main">
             <div class="section">
               
-                <pre><code># Package management for Angular
+                <pre><code class="coffeescript"></code></pre>
 
-*This is where shrub's package system meets Angular's module system.
+<h1 id="package-management-for-angular">Package management for Angular</h1>
+<p><em>This is where shrub's package system meets Angular's module system.
 Packages' implementations of controllers, services, filters, providers, and
-directives are gathered and registered into Angular.*
-```coffeescript
-angular.module('shrub.packages', [
+directives are gathered and registered into Angular.</em></p>
+<pre><code class="coffeescript">angular.module('shrub.packages', [
   'shrub.directive'
   'shrub.require'
   'shrub.pkgman'

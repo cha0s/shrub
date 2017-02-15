@@ -1619,89 +1619,93 @@
           <div role="main">
             <div class="section">
               
-                <p>middleware = require 'middleware'</p>
-<p>describe 'middleware', -&gt;</p>
-<p>it 'can use and dispatch', -&gt;</p>
-<pre><code>middleware_ = new middleware.Middleware()
+                <pre><code class="coffeescript">
+middleware = require 'middleware'
 
-first = false
-second = false
-third = false
+describe 'middleware', -&gt;
 
-middleware_.use (req, res, next) -&gt;
+  it 'can use and dispatch', -&gt;
 
-  first = req.foo is 69 and res.foo is 420
+    middleware_ = new middleware.Middleware()
 
-  next()
+    first = false
+    second = false
+    third = false
 
-middleware_.use (req, res, next) -&gt;
+    middleware_.use (req, res, next) -&gt;
 
-  second = req.foo is 69 and res.foo is 420
+      first = req.foo is 69 and res.foo is 420
 
-  next()
+      next()
 
-req = foo: 69
-res = foo: 420
+    middleware_.use (req, res, next) -&gt;
 
-middleware_.dispatch req, res, (error) -&gt;
+      second = req.foo is 69 and res.foo is 420
 
-  third = not error?
+      next()
 
-expect(first).toBe true
-expect(second).toBe true
-expect(third).toBe true
+    req = foo: 69
+    res = foo: 420
+
+    middleware_.dispatch req, res, (error) -&gt;
+
+      third = not error?
+
+    expect(first).toBe true
+    expect(second).toBe true
+    expect(third).toBe true
+
+  it 'can properly handle errors', -&gt;
+
+    middleware_ = new middleware.Middleware()
+
+    first = true
+    second = false
+    third = true
+    fourth = false
+    fifth = false
+
+    middleware_.use (req, res, next) -&gt;
+
+      next new Error()
+
+    middleware_.use (req, res, next) -&gt;
+
+      first = false
+
+      next()
+
+    middleware_.use (error, req, res, next) -&gt;
+
+      second = true
+
+      throw new Error()
+
+    middleware_.use (req, res, next) -&gt;
+
+      third = false
+
+      next()
+
+    middleware_.use (error, req, res, next) -&gt;
+
+      fourth = true
+
+      next error
+
+    req = null
+    res = null
+
+    middleware_.dispatch req, res, (error) -&gt;
+
+      fifth = error?
+
+    expect(first).toBe true
+    expect(second).toBe true
+    expect(third).toBe true
+    expect(fourth).toBe true
+    expect(fifth).toBe true
 </code></pre>
-<p>it 'can properly handle errors', -&gt;</p>
-<pre><code>middleware_ = new middleware.Middleware()
-
-first = true
-second = false
-third = true
-fourth = false
-fifth = false
-
-middleware_.use (req, res, next) -&gt;
-
-  next new Error()
-
-middleware_.use (req, res, next) -&gt;
-
-  first = false
-
-  next()
-
-middleware_.use (error, req, res, next) -&gt;
-
-  second = true
-
-  throw new Error()
-
-middleware_.use (req, res, next) -&gt;
-
-  third = false
-
-  next()
-
-middleware_.use (error, req, res, next) -&gt;
-
-  fourth = true
-
-  next error
-
-req = null
-res = null
-
-middleware_.dispatch req, res, (error) -&gt;
-
-  fifth = error?
-
-expect(first).toBe true
-expect(second).toBe true
-expect(third).toBe true
-expect(fourth).toBe true
-expect(fifth).toBe true
-</code></pre>
-<p>```</p>
               
             </div>
           </div>

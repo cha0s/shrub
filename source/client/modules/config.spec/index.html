@@ -1619,39 +1619,45 @@
           <div role="main">
             <div class="section">
               
-                <p>config = require './config'</p>
-<p>describe 'config', -&gt;</p>
-<p>beforeEach -&gt;</p>
-<pre><code>config.from(
-  test: 69
-  another:
-    foo:
-      420
-    bar:
-      null
-)
-</code></pre>
-<p>it 'gets variables', -&gt;</p>
-<pre><code>expect(config.get 'test').toBe 69
-expect(config.get 'another:foo').toBe 420
-</code></pre>
-<p>it 'checks variables', -&gt;</p>
-<pre><code>expect(config.has 'test').toBe true
-expect(config.has 'sd').toBe false
-expect(config.has 'another:foo').toBe true
-expect(config.has 'another:bar').toBe true
-</code></pre>
-<p>it 'sets variables', -&gt;</p>
-<pre><code>config.set 'test', 'blah'
-expect(config.get 'test').toBe 'blah'
+                <pre><code class="coffeescript">
+config = require './config'
 
-config.set 'another:foo', 421
-expect(config.get 'another:foo').toBe 421
+describe 'config', -&gt;
 
-config.set 'another:baz:blah', 311
-expect(config.get 'another:baz:blah').toBe 311
+  beforeEach -&gt;
+
+    config.from(
+      test: 69
+      another:
+        foo:
+          420
+        bar:
+          null
+    )
+
+  it 'gets variables', -&gt;
+
+    expect(config.get 'test').toBe 69
+    expect(config.get 'another:foo').toBe 420
+
+  it 'checks variables', -&gt;
+
+    expect(config.has 'test').toBe true
+    expect(config.has 'sd').toBe false
+    expect(config.has 'another:foo').toBe true
+    expect(config.has 'another:bar').toBe true
+
+  it 'sets variables', -&gt;
+
+    config.set 'test', 'blah'
+    expect(config.get 'test').toBe 'blah'
+
+    config.set 'another:foo', 421
+    expect(config.get 'another:foo').toBe 421
+
+    config.set 'another:baz:blah', 311
+    expect(config.get 'another:baz:blah').toBe 311
 </code></pre>
-<p>```</p>
               
             </div>
           </div>

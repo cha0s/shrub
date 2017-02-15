@@ -1739,7 +1739,7 @@ caches lines to be able to build context around each TODO item.</p>
     else
 
       @hanging = [] if @commenting
-      @push &quot;```#{@highlight}\n&quot; if @commenting
+      @push &quot;```#{@highlight}\n&quot; if @commenting or not @hasWrittenCode
 
       if line.length is 0
         @hanging.push '' unless @commenting

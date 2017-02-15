@@ -1486,6 +1486,9 @@
         
             <ul>
             
+                <li class="toctree-l3"><a href="#implements-hook-shrubcoreprebootstrap">Implements hook shrubCorePreBootstrap.</a></li>
+                
+            
                 <li class="toctree-l3"><a href="#implements-hook-shrubrpcroutes">Implements hook shrubRpcRoutes.</a></li>
                 
             
@@ -1622,15 +1625,20 @@
           <div role="main">
             <div class="section">
               
-                <p>errors = require 'errors'</p>
-<p>orm = null
-Promise = null</p>
-<p>clientModule = require './client/login'
-userPackage = require './index'</p>
-<p>exports.pkgmanRegister = (registrar) -&gt;</p>
-<pre><code>#### Implements hook `shrubCorePreBootstrap`.
-```coffeescript
-  registrar.registerHook 'shrubCorePreBootstrap', -&gt;
+                <pre><code class="coffeescript">
+errors = require 'errors'
+
+orm = null
+Promise = null
+
+clientModule = require './client/login'
+userPackage = require './index'
+
+exports.pkgmanRegister = (registrar) -&gt;
+</code></pre>
+
+<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <code>shrubCorePreBootstrap</code>.</h4>
+<pre><code class="coffeescript">  registrar.registerHook 'shrubCorePreBootstrap', -&gt;
 
     orm = require 'shrub-orm'
     Promise = require 'bluebird'
