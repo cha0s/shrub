@@ -106,7 +106,7 @@ class LitcoffeeConversion extends Transform
     else
 
       @hanging = [] if @commenting
-      @push "```#{@highlight}\n" if @commenting
+      @push "```#{@highlight}\n" if @commenting or not @hasWrittenCode
 
       if line.length is 0
         @hanging.push '' unless @commenting
