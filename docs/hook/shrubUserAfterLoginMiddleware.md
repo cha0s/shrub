@@ -5,7 +5,12 @@ This hook allows packages to act after a user is logged in.
 The `req` parameter to the middleware is an instance of
 [http.IncomingMessage](http://nodejs.org/api/http.html#http_http_incomingmessage).
 
-`req.user` will be populated with the newly logged in user at this point.
+<div class="admonition warning"><p class="admonition-title">Note</p>
+  <p>
+    `req.user` as well as `req.loggingInUser` will be populated with the newly
+    logged in user at this point.
+  </p>
+</div>
 
 <h3>Implementations must return</h3>
 
