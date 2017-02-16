@@ -7,8 +7,9 @@ The `req` parameter to the middleware is an instance of
 
 <div class="admonition warning"><p class="admonition-title">Note</p>
   <p>
-    `req.user` will **not** be populated with the previously logged out user
-    at this point, but `req.loggingOutUser` will.
+    <code>req.user</code> will <strong>not</strong> be populated with the
+    previously logged-out user at this point, but
+    <code>req.loggingOutUser</code> will.
   </p>
 </div>
 

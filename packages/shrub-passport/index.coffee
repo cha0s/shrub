@@ -78,7 +78,12 @@ exports.pkgmanRegister = (registrar) ->
         # #### Invoke hook `shrubUserLoginStrategies`.
         #
         # Use passport authorization strategies.
-        for packageName, strategy of pkgman.invoke 'shrubUserLoginStrategies'
+        strategies = pkgman.invoke 'shrubUserLoginStrategies'
+
+        # #### Invoke hook `shrubUserLoginStrategiesAlter`.
+        pkgman.invoke 'shrubUserLoginStrategiesAlter', strategies
+
+        for packageName, strategy of strategies
           passport.use strategy.passportStrategy
 
         # Passport serialization callback. Store the user ID.

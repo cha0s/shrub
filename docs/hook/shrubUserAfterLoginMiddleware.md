@@ -7,8 +7,8 @@ The `req` parameter to the middleware is an instance of
 
 <div class="admonition warning"><p class="admonition-title">Note</p>
   <p>
-    `req.user` as well as `req.loggingInUser` will be populated with the newly
-    logged in user at this point.
+    <code>req.user</code> as well as <code>req.loggingInUser</code> will be
+    populated with the newly logged-in user at this point.
   </p>
 </div>
 

@@ -21,6 +21,9 @@ exports.pkgmanRegister = (registrar) ->
           # #### Invoke hook `shrubUserLoginStrategies`.
           strategies = pkgman.invoke 'shrubUserLoginStrategies'
 
+          # #### Invoke hook `shrubUserLoginStrategiesAlter`.
+          pkgman.invoke 'shrubUserLoginStrategiesAlter', strategies
+
           # Count the active strategies.
           strategiesCount = pkgman.packagesImplementing(
             'shrubUserLoginStrategies'
