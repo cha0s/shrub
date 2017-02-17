@@ -3,6 +3,8 @@
 # *Manage transient UI messages.*
 #
 # ###### TODO: I don't really like this. Think about it some more.
+
+config = require 'config'
 errors = require 'errors'
 
 exports.pkgmanRegister = (registrar) ->
@@ -97,6 +99,13 @@ exports.pkgmanRegister = (registrar) ->
 
         _messages.push notification
 
+      # ## messages.addError
+      #
+      # *Add an error notification to be displayed.*
+      service.addError = (error) -> @add(
+        class: 'alert-danger', text: errors.message error
+      )
+
       # ## messages.top
       #
       # *Get the top notification.*
@@ -117,5 +126,18 @@ exports.pkgmanRegister = (registrar) ->
         service.add message for message in data.messages
 
       service
+
+  ]
+
+  # #### Implements hook `shrubAngularAppRun`.
+  registrar.registerHook 'shrubAngularAppRun', -> [
+    'shrub-ui/messages'
+    (messages) ->
+
+      errorMessages = config.get 'packageConfig:shrub-ui:errorMessages'
+      for errorMessage in errorMessages ? []
+        messages.addError errors.unserialize errorMessage
+
+      return
 
   ]
