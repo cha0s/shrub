@@ -45,8 +45,8 @@ Head into the directory you just cloned and issue:
 `npm install`
 
 The next step is to create a configuration file. Look in the `config` directory
-and you will see a file called `default.settings.json`. Create a copy of that
-file called `settings.json`. Shrub **requires** a configuration file at this
+and you will see a file called `default.settings.yml`. Create a copy of that
+file called `settings.yml`. Shrub **requires** a configuration file at this
 time, so this is not an optional step.
 
 Finally, to build and run the code you can do this:
