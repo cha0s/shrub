@@ -55,4 +55,4 @@ unless fork()
     # Log and throw any error. This will be caught by the unhandledException
     # listener below.
     console.error errors.stack error
-    throw error
+    process.exit()
