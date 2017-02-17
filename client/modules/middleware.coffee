@@ -35,7 +35,7 @@ exports.Middleware = class Middleware extends EventEmitter
 
   # ## Middleware#dispatch
   #
-  # * (mixed) `...` - One or more values to pass to the middleware.
+  # * (mixed) `...` - Zero or more values to pass to the middleware.
   #
   # * (function) `fn` - A function invoked when the middleware stack has
   # finished. If an error occurred, it will be passed as the first argument.
