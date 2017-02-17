@@ -33,28 +33,6 @@ exports.pkgmanRegister = (registrar) ->
 
       (next) ->
 
-        {IncomingMessage} = require 'http'
-
-        # ## IncomingMessage::authorize
-        #
-        # * (string) `method` - The authorization method.
-        #
-        # * (response) `res` - The HTTP/socket response object.
-        #
-        # *Authorize a user instance.*
-        IncomingMessage::authorize = (method, res) ->
-          self = this
-
-          new Promise (resolve, reject) ->
-
-            self._passport.instance.authenticate(
-              method
-              (error, user, info) ->
-                return reject error if error?
-                resolve user, info
-
-            ) self, res
-
         # #### Invoke hook `shrubUserBeforeLoginMiddleware`.
         beforeLoginMiddleware = middleware.fromConfig(
           'shrub-user:beforeLoginMiddleware'
@@ -168,6 +146,35 @@ passportMiddleware = -> [
   # Passport middleware.
   passport.initialize()
   passport.session()
+
+  (req, res, next) ->
+
+    # ## req.authorize
+    #
+    # * (string) `method` - The authorization method.
+    #
+    # * (response) `res` - The HTTP/socket response object.
+    #
+    # *Authorize a user instance.*
+    req.authorize = (method, options, res) ->
+      self = this
+
+      unless res?
+        res = options
+        options = {}
+
+      new Promise (resolve, reject) ->
+
+        self._passport.instance.authenticate(
+          method
+          options
+          (error, user, info) ->
+            return reject error if error?
+            resolve user, info
+
+        ) self, res
+
+    next()
 
   # Invoke after login middleware if a user already exists in the session.
   (req, res, next) ->
