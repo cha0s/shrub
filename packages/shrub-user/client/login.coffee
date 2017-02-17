@@ -97,11 +97,15 @@ exports.pkgmanRegister = (registrar) ->
               fields.method.methodOptions[packageName] = methodLabel
 
           # Inject a fieldgroup for every login strategy.
-          fields[packageName] = {
-            type: 'group'
-            collapse: false
-            fields: strategy.fields
-          } for packageName, strategy of strategies
+          for packageName, strategy of strategies
+            do (packageName) -> fields[packageName] =
+              type: 'group'
+              collapse: false
+              isVisible: ->
+                console.log fields.method.value
+                fields.method.value is packageName
+              fields: strategy.fields
+
 
       ]
 

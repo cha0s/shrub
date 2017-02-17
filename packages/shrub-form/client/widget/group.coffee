@@ -13,6 +13,7 @@ exports.pkgmanRegister = (registrar) ->
         scope.$watch 'field', (field) ->
 
           field.collapse ?= true
+          field.isVisible ?= -> true
 
         scope.$watchCollection(
           -> scope.field.fields
@@ -44,8 +45,10 @@ exports.pkgmanRegister = (registrar) ->
 
 <div
   data-#{widget.directive}
+  data-ng-show="field.isVisible()"
   data-field="field.fields['#{name}']"
   data-form="form"
+  data-shrub-ui-attributes="field.attributes"
 ></div><span> </span>
 
 """
