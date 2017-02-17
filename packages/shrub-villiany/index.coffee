@@ -44,6 +44,8 @@ exports.pkgmanRegister = (registrar) ->
     Fingerprint = require 'fingerprint'
 
     # Bans.
+    #
+    # ###### TODO: Bans don't actually work at the moment.
     Ban = attributes: expires: 'date'
 
     # The structure of a ban is dictated by the fingerprint structure.
