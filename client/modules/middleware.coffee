@@ -51,7 +51,13 @@ exports.Middleware = class Middleware extends EventEmitter
       self.emit 'invoked', self._middleware[index - 1] if index > 0
 
       # Call `fn` with any error if we're done.
-      return fn error if index is self._middleware.length
+      if index is self._middleware.length
+
+        # Ignore any final error, as we don't want it to cascade back up the
+        # recursive invocation path.
+        try
+          return fn error
+        catch error
 
       current = self._middleware[index++]
 
