@@ -79,6 +79,9 @@ exports.Sandbox = class Sandbox
     )
     @_window = window = document.defaultView
 
+    @_window.addEventListener 'error', startupErrorHandler = (errorEvent) ->
+      (window.__shrubStartupErrors ?= []).push errorEvent.error
+
     # Capture "client" console logs.
     for level in ['info', 'log', 'debug', 'warn', 'error']
       do (level) -> window.console[level] = (args...) ->
@@ -101,14 +104,14 @@ exports.Sandbox = class Sandbox
       # When the window is loaded, we'll reject with any error, or resolve.
       window.onload = ->
 
-        for documentError in window.document.errors ? []
-          if documentError.data?.error?
-            error = new Error "#{documentError.message}\n#{errors.stack documentError.data.error}"
+        unless window.__shrubStartupErrors?
+          window.removeEventListener 'error', startupErrorHandler
+          return resolve sandbox
 
-        if error?
-          reject error
-        else
-          resolve sandbox
+        # Just emit the first error.
+        #
+        # ###### TODO: How can we collapse multiple errors into one?
+        reject window.__shrubStartupErrors[0]
 
   # ## Sandbox#emitHtml
   #
