@@ -1441,6 +1441,36 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-user-reddit</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-reddit/client/">index.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-reddit/">index.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-user</span></li>
 
         
@@ -1467,6 +1497,8 @@
                     <li><a class="toctree-l4" href="#implements-hook-shrubangularroutes">Implements hook shrubAngularRoutes.</a></li>
                 
                     <li><a class="toctree-l4" href="#invoke-hook-shrubuserloginstrategies">Invoke hook shrubUserLoginStrategies.</a></li>
+                
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubuserloginstrategiesalter">Invoke hook shrubUserLoginStrategiesAlter.</a></li>
                 
             
             </ul>
@@ -1650,6 +1682,10 @@ exports.pkgmanRegister = (registrar) -&gt;
 
 <h4 id="invoke-hook-shrubuserloginstrategies">Invoke hook <code>shrubUserLoginStrategies</code>.</h4>
 <pre><code class="coffeescript">          strategies = pkgman.invoke 'shrubUserLoginStrategies'
+</code></pre>
+
+<h4 id="invoke-hook-shrubuserloginstrategiesalter">Invoke hook <code>shrubUserLoginStrategiesAlter</code>.</h4>
+<pre><code class="coffeescript">          pkgman.invoke 'shrubUserLoginStrategiesAlter', strategies
 </code></pre>
 
 <p>Count the active strategies.</p>

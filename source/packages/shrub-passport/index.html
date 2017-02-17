@@ -931,7 +931,25 @@
                 
                     <li><a class="toctree-l4" href="#implements-hook-shrubcorebootstrapmiddleware">Implements hook shrubCoreBootstrapMiddleware.</a></li>
                 
-                    <li><a class="toctree-l4" href="#incomingmessageauthorize">IncomingMessage::authorize</a></li>
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubuserbeforeloginmiddleware">Invoke hook shrubUserBeforeLoginMiddleware.</a></li>
+                
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubuserafterloginmiddleware">Invoke hook shrubUserAfterLoginMiddleware.</a></li>
+                
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubuserbeforelogoutmiddleware">Invoke hook shrubUserBeforeLogoutMiddleware.</a></li>
+                
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubuserafterlogoutmiddleware">Invoke hook shrubUserAfterLogoutMiddleware.</a></li>
+                
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubuserloginstrategies">Invoke hook shrubUserLoginStrategies.</a></li>
+                
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubuserloginstrategiesalter">Invoke hook shrubUserLoginStrategiesAlter.</a></li>
+                
+                    <li><a class="toctree-l4" href="#implements-hook-shrubhttpmiddleware">Implements hook shrubHttpMiddleware.</a></li>
+                
+                    <li><a class="toctree-l4" href="#implements-hook-shrubrpcroutesalter">Implements hook shrubRpcRoutesAlter.</a></li>
+                
+                    <li><a class="toctree-l4" href="#implements-hook-shrubsocketconnectionmiddleware">Implements hook shrubSocketConnectionMiddleware.</a></li>
+                
+                    <li><a class="toctree-l4" href="#reqauthorize">req.authorize</a></li>
                 
             
             </ul>
@@ -1454,6 +1472,36 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-user-reddit</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-reddit/client/">index.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-reddit/">index.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-user</span></li>
 
         
@@ -1664,32 +1712,6 @@ exports.pkgmanRegister = (registrar) -&gt;
     middleware: [
 
       (next) -&gt;
-
-        {IncomingMessage} = require 'http'
-</code></pre>
-
-<h2 id="incomingmessageauthorize">IncomingMessage::authorize</h2>
-<ul>
-<li>
-<p>(string) <code>method</code> - The authorization method.</p>
-</li>
-<li>
-<p>(response) <code>res</code> - The HTTP/socket response object.</p>
-</li>
-</ul>
-<p><em>Authorize a user instance.</em></p>
-<pre><code class="coffeescript">        IncomingMessage::authorize = (method, res) -&gt;
-          self = this
-
-          new Promise (resolve, reject) -&gt;
-
-            self._passport.instance.authenticate(
-              method
-              (error, user, info) -&gt;
-                return reject error if error?
-                resolve user, info
-
-            ) self, res
 </code></pre>
 
 <h4 id="invoke-hook-shrubuserbeforeloginmiddleware">Invoke hook <code>shrubUserBeforeLoginMiddleware</code>.</h4>
@@ -1718,7 +1740,13 @@ exports.pkgmanRegister = (registrar) -&gt;
 
 <h4 id="invoke-hook-shrubuserloginstrategies">Invoke hook <code>shrubUserLoginStrategies</code>.</h4>
 <p>Use passport authorization strategies.</p>
-<pre><code class="coffeescript">        for packageName, strategy of pkgman.invoke 'shrubUserLoginStrategies'
+<pre><code class="coffeescript">        strategies = pkgman.invoke 'shrubUserLoginStrategies'
+</code></pre>
+
+<h4 id="invoke-hook-shrubuserloginstrategiesalter">Invoke hook <code>shrubUserLoginStrategiesAlter</code>.</h4>
+<pre><code class="coffeescript">        pkgman.invoke 'shrubUserLoginStrategiesAlter', strategies
+
+        for packageName, strategy of strategies
           passport.use strategy.passportStrategy
 </code></pre>
 
@@ -1819,6 +1847,39 @@ passportMiddleware = -&gt; [
 <p>Passport middleware.</p>
 <pre><code class="coffeescript">  passport.initialize()
   passport.session()
+
+  (req, res, next) -&gt;
+</code></pre>
+
+<h2 id="reqauthorize">req.authorize</h2>
+<ul>
+<li>
+<p>(string) <code>method</code> - The authorization method.</p>
+</li>
+<li>
+<p>(response) <code>res</code> - The HTTP/socket response object.</p>
+</li>
+</ul>
+<p><em>Authorize a user instance.</em></p>
+<pre><code class="coffeescript">    req.authorize = (method, options, res) -&gt;
+      self = this
+
+      unless res?
+        res = options
+        options = {}
+
+      new Promise (resolve, reject) -&gt;
+
+        self._passport.instance.authenticate(
+          method
+          options
+          (error, user, info) -&gt;
+            return reject error if error?
+            resolve user, info
+
+        ) self, res
+
+    next()
 </code></pre>
 
 <p>Invoke after login middleware if a user already exists in the session.</p>

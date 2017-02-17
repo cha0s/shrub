@@ -39,7 +39,7 @@ exports.Middleware = class Middleware extends EventEmitter
 ```
 ## Middleware#dispatch
 
-* (mixed) `...` - One or more values to pass to the middleware.
+* (mixed) `...` - Zero or more values to pass to the middleware.
 
 * (function) `fn` - A function invoked when the middleware stack has
 finished. If an error occurred, it will be passed as the first argument.
@@ -57,7 +57,14 @@ finished. If an error occurred, it will be passed as the first argument.
 ```
 Call `fn` with any error if we're done.
 ```coffeescript
-      return fn error if index is self._middleware.length
+      if index is self._middleware.length
+```
+Ignore any final error, as we don't want it to cascade back up the
+recursive invocation path.
+```coffeescript
+        try
+          return fn error
+        catch error
 
       current = self._middleware[index++]
 ```

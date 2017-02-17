@@ -1315,6 +1315,8 @@
             
                 <li class="toctree-l3"><a href="#user-interface">User Interface</a></li>
                 
+                    <li><a class="toctree-l4" href="#implements-hook-shrubconfigclient">Implements hook shrubConfigClient.</a></li>
+                
             
             </ul>
         
@@ -1439,6 +1441,36 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../shrub-user-local/reset/">reset.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>shrub-user-reddit</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-reddit/client/">index.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-user-reddit/">index.coffee</a>
         
     </li>
 
@@ -1623,7 +1655,20 @@
             <div class="section">
               
                 <h1 id="user-interface">User Interface</h1>
-<pre><code class="coffeescript">exports.pkgmanRegister = (registrar) -&gt;
+<pre><code class="coffeescript">errors = require 'errors'
+
+exports.pkgmanRegister = (registrar) -&gt;
+</code></pre>
+
+<h4 id="implements-hook-shrubconfigclient">Implements hook <code>shrubConfigClient</code>.</h4>
+<pre><code class="coffeescript">  registrar.registerHook 'shrubConfigClient', (req) -&gt;
+    config = {}
+
+    errorMessages = req.session.errorMessages
+    delete req.session.errorMessages
+    config.errorMessages = errorMessages
+
+    return config
 
   registrar.recur [
     'notifications'

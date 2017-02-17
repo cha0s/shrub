@@ -1460,6 +1460,36 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-user-reddit</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-reddit/client/">index.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../packages/shrub-user-reddit/">index.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-user</span></li>
 
         
@@ -1673,7 +1703,7 @@ if a previous error occurred.</p>
 <h2 id="middlewaredispatch">Middleware#dispatch</h2>
 <ul>
 <li>
-<p>(mixed) <code>...</code> - One or more values to pass to the middleware.</p>
+<p>(mixed) <code>...</code> - Zero or more values to pass to the middleware.</p>
 </li>
 <li>
 <p>(function) <code>fn</code> - A function invoked when the middleware stack has
@@ -1692,7 +1722,14 @@ finished. If an error occurred, it will be passed as the first argument.</p>
 </code></pre>
 
 <p>Call <code>fn</code> with any error if we're done.</p>
-<pre><code class="coffeescript">      return fn error if index is self._middleware.length
+<pre><code class="coffeescript">      if index is self._middleware.length
+</code></pre>
+
+<p>Ignore any final error, as we don't want it to cascade back up the
+recursive invocation path.</p>
+<pre><code class="coffeescript">        try
+          return fn error
+        catch error
 
       current = self._middleware[index++]
 </code></pre>

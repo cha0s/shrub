@@ -241,6 +241,9 @@
                     <li><a class="toctree-l4" href="#implements-hook-shrubrpcroutes_2">Implements hook shrubRpcRoutes.</a></li>
                 
             
+                <li class="toctree-l3"><a href="#shrub-user-reddit">shrub-user-reddit</a></li>
+                
+            
                 <li class="toctree-l3"><a href="#shrub-userlogin">shrub-user/login</a></li>
                 
             
@@ -1559,6 +1562,36 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-user-reddit</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../source/packages/shrub-user-reddit/client/">index.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../source/packages/shrub-user-reddit/">index.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-user</span></li>
 
         
@@ -2380,6 +2413,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     &lt;tr class=&quot;even&quot;&gt;&lt;td&gt;&lt;a href=&quot;../hooks/#shrubangulardirective&quot;&gt;shrubAngularDirective&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;&lt;a href=&quot;../source/packages/shrub-ui/client/messages#implements-hook-shrubangulardirective&quot;&gt;implementation&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
     &lt;tr class=&quot;odd&quot;&gt;&lt;td&gt;&lt;a href=&quot;../hooks/#shrubrpccall&quot;&gt;shrubRpcCall&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;&lt;a href=&quot;../source/packages/shrub-ui/client/messages#implements-hook-shrubrpccall&quot;&gt;implementation&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
     &lt;tr class=&quot;even&quot;&gt;&lt;td&gt;&lt;a href=&quot;../hooks/#shrubangularservice&quot;&gt;shrubAngularService&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;&lt;a href=&quot;../source/packages/shrub-ui/client/messages#implements-hook-shrubangularservice&quot;&gt;implementation&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr class=&quot;odd&quot;&gt;&lt;td&gt;&lt;a href=&quot;../hooks/#shrubangularapprun&quot;&gt;shrubAngularAppRun&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;&lt;a href=&quot;../source/packages/shrub-ui/client/messages#implements-hook-shrubangularapprun&quot;&gt;implementation&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
   &lt;/table&gt;
 &lt;/div&gt;
 
@@ -2528,6 +2562,13 @@ errors = require 'errors'&lt;/span&gt;
 
 &gt; ## [&lt;small&gt;shrub-user-local/&lt;/small&gt;client/test-unit](source/packages/shrub-user-local/client/test-unit)
 
+## [shrub-user-reddit/client](source/packages/shrub-user-reddit/client)
+
+&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;Implements hooks&lt;/p&gt;  &lt;table&gt;
+    &lt;tr class=&quot;even&quot;&gt;&lt;td&gt;&lt;a href=&quot;../hooks/#shrubuserloginstrategies&quot;&gt;shrubUserLoginStrategies&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;&lt;a href=&quot;../source/packages/shrub-user-reddit/client#implements-hook-shrubuserloginstrategies&quot;&gt;implementation&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;/table&gt;
+&lt;/div&gt;
+
 ## [shrub-user/client](source/packages/shrub-user/client)
 
 &lt;span class=&quot;package-title&quot;&gt;User&lt;/span&gt;
@@ -2559,6 +2600,7 @@ pkgman = require 'pkgman'&lt;/span&gt;
 
 &gt; &lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;Invokes hooks&lt;/p&gt;  &lt;table&gt;
     &lt;tr class=&quot;even&quot;&gt;&lt;td&gt;&lt;a href=&quot;../hooks/#shrubuserloginstrategies&quot;&gt;shrubUserLoginStrategies&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;&lt;a href=&quot;../source/packages/shrub-user/client/login#invoke-hook-shrubuserloginstrategies&quot;&gt;invocation&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr class=&quot;odd&quot;&gt;&lt;td&gt;&lt;a href=&quot;../hooks/#shrubuserloginstrategiesalter&quot;&gt;shrubUserLoginStrategiesAlter&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;&lt;a href=&quot;../source/packages/shrub-user/client/login#invoke-hook-shrubuserloginstrategiesalter&quot;&gt;invocation&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
   &lt;/table&gt;
 &lt;/div&gt;
 
@@ -3096,6 +3138,7 @@ pkgman = require 'pkgman'&lt;/span&gt;
     &lt;tr class=&quot;even&quot;&gt;&lt;td&gt;&lt;a href=&quot;../hooks/#shrubuserbeforelogoutmiddleware&quot;&gt;shrubUserBeforeLogoutMiddleware&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;&lt;a href=&quot;../source/packages/shrub-passport#invoke-hook-shrubuserbeforelogoutmiddleware&quot;&gt;invocation&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
     &lt;tr class=&quot;odd&quot;&gt;&lt;td&gt;&lt;a href=&quot;../hooks/#shrubuserafterlogoutmiddleware&quot;&gt;shrubUserAfterLogoutMiddleware&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;&lt;a href=&quot;../source/packages/shrub-passport#invoke-hook-shrubuserafterlogoutmiddleware&quot;&gt;invocation&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
     &lt;tr class=&quot;even&quot;&gt;&lt;td&gt;&lt;a href=&quot;../hooks/#shrubuserloginstrategies&quot;&gt;shrubUserLoginStrategies&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;&lt;a href=&quot;../source/packages/shrub-passport#invoke-hook-shrubuserloginstrategies&quot;&gt;invocation&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr class=&quot;odd&quot;&gt;&lt;td&gt;&lt;a href=&quot;../hooks/#shrubuserloginstrategiesalter&quot;&gt;shrubUserLoginStrategiesAlter&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;&lt;a href=&quot;../source/packages/shrub-passport#invoke-hook-shrubuserloginstrategiesalter&quot;&gt;invocation&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
   &lt;/table&gt;
 &lt;/div&gt;
 
@@ -3293,7 +3336,12 @@ server (e.g. <a href="../source/packages/shrub-socket-socket.io">Socket.io</a>).
 
 &lt;span class=&quot;package-title&quot;&gt;User Interface
 ```coffeescript
-exports.pkgmanRegister = (registrar) -&gt;&lt;/span&gt;
+errors = require 'errors'&lt;/span&gt;
+
+&lt;div class=&quot;admonition note&quot;&gt;&lt;p class=&quot;admonition-title&quot;&gt;Implements hooks&lt;/p&gt;  &lt;table&gt;
+    &lt;tr class=&quot;even&quot;&gt;&lt;td&gt;&lt;a href=&quot;../hooks/#shrubconfigclient&quot;&gt;shrubConfigClient&lt;/a&gt;&lt;/td&gt;&lt;td align=&quot;right&quot;&gt;&lt;a href=&quot;../source/packages/shrub-ui#implements-hook-shrubconfigclient&quot;&gt;implementation&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;/table&gt;
+&lt;/div&gt;
 
 &gt; ## [&lt;small&gt;shrub-ui/&lt;/small&gt;notifications](source/packages/shrub-ui/notifications)
 
@@ -3396,6 +3444,19 @@ exports.pkgmanRegister = (registrar) -&gt;
     <tr class="even"><td><a href="../hooks/#shrubrpcroutes">shrubRpcRoutes</a></td><td align="right"><a href="../source/packages/shrub-user-local/reset#implements-hook-shrubrpcroutes">implementation</a></td></tr>
   </table>
 </div></p>
+</blockquote>
+<h2 id="shrub-user-reddit"><a href="../source/packages/shrub-user-reddit">shrub-user-reddit</a></h2>
+<div class="admonition note"><p class="admonition-title">Implements hooks</p>  <table>
+    <tr class="even"><td><a href="../hooks/#shrubconfigserver">shrubConfigServer</a></td><td align="right"><a href="../source/packages/shrub-user-reddit#implements-hook-shrubconfigserver">implementation</a></td></tr>
+    <tr class="odd"><td><a href="../hooks/#shrubcoreprebootstrap">shrubCorePreBootstrap</a></td><td align="right"><a href="../source/packages/shrub-user-reddit#implements-hook-shrubcoreprebootstrap">implementation</a></td></tr>
+    <tr class="even"><td><a href="../hooks/#shrubuserloginstrategies">shrubUserLoginStrategies</a></td><td align="right"><a href="../source/packages/shrub-user-reddit#implements-hook-shrubuserloginstrategies">implementation</a></td></tr>
+    <tr class="odd"><td><a href="../hooks/#shrubhttproutes">shrubHttpRoutes</a></td><td align="right"><a href="../source/packages/shrub-user-reddit#implements-hook-shrubhttproutes">implementation</a></td></tr>
+    <tr class="even"><td><a href="../hooks/#shrubuserredactors">shrubUserRedactors</a></td><td align="right"><a href="../source/packages/shrub-user-reddit#implements-hook-shrubuserredactors">implementation</a></td></tr>
+    <tr class="odd"><td><a href="../hooks/#shrubormcollections">shrubOrmCollections</a></td><td align="right"><a href="../source/packages/shrub-user-reddit#implements-hook-shrubormcollections">implementation</a></td></tr>
+  </table>
+</div>
+
+<blockquote>
 <h2 id="shrub-userlogin"><a href="../source/packages/shrub-user/login"><small>shrub-user/</small>login</a></h2>
 <p><div class="admonition note"><p class="admonition-title">Implements hooks</p>  <table>
     <tr class="even"><td><a href="../hooks/#shrubcoreprebootstrap">shrubCorePreBootstrap</a></td><td align="right"><a href="../source/packages/shrub-user/login#implements-hook-shrubcoreprebootstrap">implementation</a></td></tr>

@@ -1441,6 +1441,36 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-user-reddit</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-reddit/client/">index.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../shrub-user-reddit/">index.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-user</span></li>
 
         
@@ -1671,83 +1701,90 @@ exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
 <p>Authorize a user instance.</p>
-<pre><code class="coffeescript">          req.authorize(req.body.method, res).bind({}).then((@instance, info) -&gt;
+<pre><code class="coffeescript">          promise = req.authorize(
+            req.body.method, res
+          )
+
+          exports.loginWithInstance(promise, req).then((user) -&gt;
+</code></pre>
+
+<p>Redact the user for sending over the wire.</p>
+<pre><code class="coffeescript">            user.redactObject 'shrub-user', user
+</code></pre>
+
+<p>End the request, sending the redacted user.</p>
+<pre><code class="coffeescript">          ).then((redactedUser) -&gt; res.end redactedUser).catch next
+
+
+      ]
+
+    return routes
+
+exports.loginWithInstance = (promise, req) -&gt;
+
+  promise.then((instance, info) -&gt;
 </code></pre>
 
 <p>Get any associated user.</p>
-<pre><code class="coffeescript">            @instance.associatedUser()
+<pre><code class="coffeescript">    instance.associatedUser()
 
-          ).then((associatedUser) -&gt;
-            self = this
+  ).then((associatedUser) -&gt;
 
-            if associatedUser?
+    if associatedUser?
 
-              if req.user?
+      if req.user?
 </code></pre>
 
 <p>If the user is already logged in and the instance has an
 associated user, they're either already logged in with
 the instance, or the instance belongs to another user. Throw
 a relevant error either way.</p>
-<pre><code class="coffeescript">                if req.user.id is associatedUser.id
+<pre><code class="coffeescript">        if req.user.id is associatedUser.id
 
-                  throw errors.instantiate('shrub-user-login-redundant')
+          throw errors.instantiate('shrub-user-login-redundant')
 
-                else
+        else
 
-                  throw errors.instantiate('shrub-user-login-conflict')
+          throw errors.instantiate('shrub-user-login-conflict')
 </code></pre>
 
 <p>If the user isn't already logged in, just return the user
 associated with the instance.</p>
-<pre><code class="coffeescript">              else
+<pre><code class="coffeescript">      else
 
-                return associatedUser
+        return associatedUser
 
-            else
+    else
 </code></pre>
 
 <p>If the instance isn't already associated with a user, either
 target the logged-in user, or if the user isn't already
 logged in, target a new user.</p>
-<pre><code class="coffeescript">              promise = if req.user?
+<pre><code class="coffeescript">      promise = if req.user?
 
-                Promise.resolve req.user
+        Promise.resolve req.user
 
-              else
+      else
 
-                orm.collection('shrub-user').create()
+        orm.collection('shrub-user').create()
 </code></pre>
 
 <p>Associate the instance with the user targeted just above.</p>
-<pre><code class="coffeescript">              promise.then (user) -&gt;
+<pre><code class="coffeescript">      promise.then (user) -&gt;
 
-                user.instances.add(
-                  model: self.instance.model
-                  modelId: self.instance.id
-                )
+        user.instances.add(
+          model: instance.model
+          modelId: instance.id
+        )
 
-                return user
+        user.save().then -&gt; return user
 </code></pre>
 
 <p>Log in the user if not already logged in.</p>
-<pre><code class="coffeescript">          ).then((@user) -&gt;
+<pre><code class="coffeescript">  ).then (user) -&gt;
 
-            req.logIn @user unless req.user?
-</code></pre>
-
-<p>Redact the user object for delivery to the client.</p>
-<pre><code class="coffeescript">          ).then(-&gt;
-
-            @user.redactObject 'shrub-user', @user
-</code></pre>
-
-<p>End the request, sending the redacted user.</p>
-<pre><code class="coffeescript">          ).then((redactedUser) -&gt; res.end redactedUser).catch next
-
-      ]
-
-    return routes
+    req.logIn user unless req.user?
+    return user
 </code></pre>
               
             </div>

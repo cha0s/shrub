@@ -1441,6 +1441,36 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-user-reddit</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-user-reddit/client/">index.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../packages/shrub-user-reddit/">index.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-user</span></li>
 
         
@@ -1725,6 +1755,9 @@ some methods to inspect the state of the document.</p>
       url: options.url ? &quot;http://localhost:#{config.get 'packageSettings:shrub-http:port'}/&quot;
     )
     @_window = window = document.defaultView
+
+    @_window.addEventListener 'error', startupErrorHandler = (errorEvent) -&gt;
+      (window.__shrubStartupErrors ?= []).push errorEvent.error
 </code></pre>
 
 <p>Capture "client" console logs.</p>
@@ -1752,14 +1785,14 @@ some methods to inspect the state of the document.</p>
 <p>When the window is loaded, we'll reject with any error, or resolve.</p>
 <pre><code class="coffeescript">      window.onload = -&gt;
 
-        for documentError in window.document.errors ? []
-          if documentError.data?.error?
-            error = new Error &quot;#{documentError.message}\n#{errors.stack documentError.data.error}&quot;
+        unless window.__shrubStartupErrors?
+          window.removeEventListener 'error', startupErrorHandler
+          return resolve sandbox
+</code></pre>
 
-        if error?
-          reject error
-        else
-          resolve sandbox
+<p>Just emit the first error.</p>
+<h6 id="todo-how-can-we-collapse-multiple-errors-into-one">TODO: How can we collapse multiple errors into one?</h6>
+<pre><code class="coffeescript">        reject window.__shrubStartupErrors[0]
 </code></pre>
 
 <h2 id="sandboxemithtml">Sandbox#emitHtml</h2>

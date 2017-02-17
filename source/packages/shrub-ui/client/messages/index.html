@@ -1272,6 +1272,8 @@
                 
                     <li><a class="toctree-l4" href="#messagesadd">messages.add</a></li>
                 
+                    <li><a class="toctree-l4" href="#messagesadderror">messages.addError</a></li>
+                
                     <li><a class="toctree-l4" href="#messagestop">messages.top</a></li>
                 
                     <li><a class="toctree-l4" href="#messagesremovetop">messages.removeTop</a></li>
@@ -1464,6 +1466,36 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-user-reddit</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-reddit/client/">index.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../shrub-user-reddit/">index.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-user</span></li>
 
         
@@ -1641,7 +1673,8 @@
                 <h1 id="ui-messages">UI - Messages</h1>
 <p><em>Manage transient UI messages.</em></p>
 <h6 id="todo-i-dont-really-like-this-think-about-it-some-more">TODO: I don't really like this. Think about it some more.</h6>
-<pre><code class="coffeescript">errors = require 'errors'
+<pre><code class="coffeescript">config = require 'config'
+errors = require 'errors'
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
@@ -1743,6 +1776,13 @@ exports.pkgmanRegister = (registrar) -&gt;
         _messages.push notification
 </code></pre>
 
+<h2 id="messagesadderror">messages.addError</h2>
+<p><em>Add an error notification to be displayed.</em></p>
+<pre><code class="coffeescript">      service.addError = (error) -&gt; @add(
+        class: 'alert-danger', text: errors.message error
+      )
+</code></pre>
+
 <h2 id="messagestop">messages.top</h2>
 <p><em>Get the top notification.</em></p>
 <pre><code class="coffeescript">      service.top = -&gt; _messages[0]
@@ -1763,6 +1803,20 @@ exports.pkgmanRegister = (registrar) -&gt;
         service.add message for message in data.messages
 
       service
+
+  ]
+</code></pre>
+
+<h4 id="implements-hook-shrubangularapprun">Implements hook <code>shrubAngularAppRun</code>.</h4>
+<pre><code class="coffeescript">  registrar.registerHook 'shrubAngularAppRun', -&gt; [
+    'shrub-ui/messages'
+    (messages) -&gt;
+
+      errorMessages = config.get 'packageConfig:shrub-ui:errorMessages'
+      for errorMessage in errorMessages ? []
+        messages.addError errors.unserialize errorMessage
+
+      return
 
   ]
 </code></pre>

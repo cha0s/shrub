@@ -35,29 +35,6 @@ exports.pkgmanRegister = (registrar) ->
     middleware: [
 
       (next) ->
-
-        {IncomingMessage} = require 'http'
-```
-## IncomingMessage::authorize
-
-* (string) `method` - The authorization method.
-
-* (response) `res` - The HTTP/socket response object.
-
-*Authorize a user instance.*
-```coffeescript
-        IncomingMessage::authorize = (method, res) ->
-          self = this
-
-          new Promise (resolve, reject) ->
-
-            self._passport.instance.authenticate(
-              method
-              (error, user, info) ->
-                return reject error if error?
-                resolve user, info
-
-            ) self, res
 ```
 #### Invoke hook `shrubUserBeforeLoginMiddleware`.
 ```coffeescript
@@ -87,7 +64,13 @@ exports.pkgmanRegister = (registrar) ->
 
 Use passport authorization strategies.
 ```coffeescript
-        for packageName, strategy of pkgman.invoke 'shrubUserLoginStrategies'
+        strategies = pkgman.invoke 'shrubUserLoginStrategies'
+```
+#### Invoke hook `shrubUserLoginStrategiesAlter`.
+```coffeescript
+        pkgman.invoke 'shrubUserLoginStrategiesAlter', strategies
+
+        for packageName, strategy of strategies
           passport.use strategy.passportStrategy
 ```
 Passport serialization callback. Store the user ID.
@@ -188,6 +171,36 @@ Passport middleware.
 ```coffeescript
   passport.initialize()
   passport.session()
+
+  (req, res, next) ->
+```
+## req.authorize
+
+* (string) `method` - The authorization method.
+
+* (response) `res` - The HTTP/socket response object.
+
+*Authorize a user instance.*
+```coffeescript
+    req.authorize = (method, options, res) ->
+      self = this
+
+      unless res?
+        res = options
+        options = {}
+
+      new Promise (resolve, reject) ->
+
+        self._passport.instance.authenticate(
+          method
+          options
+          (error, user, info) ->
+            return reject error if error?
+            resolve user, info
+
+        ) self, res
+
+    next()
 ```
 Invoke after login middleware if a user already exists in the session.
 ```coffeescript

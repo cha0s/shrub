@@ -4,6 +4,7 @@
 
 ###### TODO: I don't really like this. Think about it some more.
 ```coffeescript
+config = require 'config'
 errors = require 'errors'
 
 exports.pkgmanRegister = (registrar) ->
@@ -106,6 +107,14 @@ Add a message with the error text, if any.
 
         _messages.push notification
 ```
+## messages.addError
+
+*Add an error notification to be displayed.*
+```coffeescript
+      service.addError = (error) -> @add(
+        class: 'alert-danger', text: errors.message error
+      )
+```
 ## messages.top
 
 *Get the top notification.*
@@ -130,6 +139,20 @@ Accept messages from the server.
         service.add message for message in data.messages
 
       service
+
+  ]
+```
+#### Implements hook `shrubAngularAppRun`.
+```coffeescript
+  registrar.registerHook 'shrubAngularAppRun', -> [
+    'shrub-ui/messages'
+    (messages) ->
+
+      errorMessages = config.get 'packageConfig:shrub-ui:errorMessages'
+      for errorMessage in errorMessages ? []
+        messages.addError errors.unserialize errorMessage
+
+      return
 
   ]
 ```

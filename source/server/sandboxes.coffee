@@ -90,6 +90,9 @@ Set up a DOM, forwarding our cookie.
       url: options.url ? "http://localhost:#{config.get 'packageSettings:shrub-http:port'}/"
     )
     @_window = window = document.defaultView
+
+    @_window.addEventListener 'error', startupErrorHandler = (errorEvent) ->
+      (window.__shrubStartupErrors ?= []).push errorEvent.error
 ```
 Capture "client" console logs.
 ```coffeescript
@@ -117,14 +120,15 @@ When the window is loaded, we'll reject with any error, or resolve.
 ```coffeescript
       window.onload = ->
 
-        for documentError in window.document.errors ? []
-          if documentError.data?.error?
-            error = new Error "#{documentError.message}\n#{errors.stack documentError.data.error}"
+        unless window.__shrubStartupErrors?
+          window.removeEventListener 'error', startupErrorHandler
+          return resolve sandbox
+```
+Just emit the first error.
 
-        if error?
-          reject error
-        else
-          resolve sandbox
+###### TODO: How can we collapse multiple errors into one?
+```coffeescript
+        reject window.__shrubStartupErrors[0]
 ```
 ## Sandbox#emitHtml
 

@@ -402,7 +402,7 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="about/">about.coffee</a>
+        <a class="" href="../shrub-example/about/">about.coffee</a>
         
     </li>
 
@@ -414,28 +414,28 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="client/about/">about.coffee</a>
+        <a class="" href="../shrub-example/client/about/">about.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="client/home/">home.coffee</a>
+        <a class="" href="../shrub-example/client/home/">home.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="client/">index.coffee</a>
+        <a class="" href="../shrub-example/client/">index.coffee</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="client/test-e2e/">test-e2e.coffee</a>
+        <a class="" href="../shrub-example/client/test-e2e/">test-e2e.coffee</a>
         
     </li>
 
@@ -444,19 +444,8 @@
 
         
             
-    <li class="toctree-l1 current">
-        <a class="current" href="./">index.coffee</a>
-        
-            <ul>
-            
-                <li class="toctree-l3"><a href="#example-package">Example package</a></li>
-                
-                    <li><a class="toctree-l4" href="#implements-hook-shrubrpcroutesalter">Implements hook shrubRpcRoutesAlter.</a></li>
-                
-                    <li><a class="toctree-l4" href="#implements-hook-shrubuinotificationqueues">Implements hook shrubUiNotificationQueues.</a></li>
-                
-            
-            </ul>
+    <li class="toctree-l1 ">
+        <a class="" href="../shrub-example/">index.coffee</a>
         
     </li>
 
@@ -1462,7 +1451,7 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../shrub-user-reddit/client/">index.coffee</a>
+        <a class="" href="client/">index.coffee</a>
         
     </li>
 
@@ -1471,8 +1460,35 @@
 
         
             
-    <li class="toctree-l1 ">
-        <a class="" href="../shrub-user-reddit/">index.coffee</a>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">index.coffee</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer.</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#implements-hook-shrubcoreprebootstrap">Implements hook shrubCorePreBootstrap.</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#implements-hook-shrubuserloginstrategies">Implements hook shrubUserLoginStrategies.</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#implements-hook-shrubhttproutes">Implements hook shrubHttpRoutes.</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#implements-hook-shrubuserredactors">Implements hook shrubUserRedactors.</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#implements-hook-shrubormcollections">Implements hook shrubOrmCollections.</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#userredditassociateduser">UserReddit#associatedUser</a></li>
+                
+                    <li><a class="toctree-l4" href="#todo-this-should-be-in-a-superclass">TODO: This should be in a superclass.</a></li>
+                
+            
+            </ul>
         
     </li>
 
@@ -1638,7 +1654,7 @@
     
       
         
-          <li>shrub-example &raquo;</li>
+          <li>shrub-user-reddit &raquo;</li>
         
       
     
@@ -1656,36 +1672,208 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="example-package">Example package</h1>
+                <p>reddit user authentication.</p>
+<pre><code class="coffeescript"></code></pre>
+
+<p><em>Authorize using a reddit account.</em></p>
+<pre><code class="coffeescript">config = require 'config'
+errors = require 'errors'
+
+orm = null
+passport = null
+Promise = null
+
+clientModule = require './client'
+</code></pre>
+
+<p><em>ORM collection and passport strategy for local authentication.</em></p>
 <pre><code class="coffeescript">exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubrpcroutesalter">Implements hook <code>shrubRpcRoutesAlter</code>.</h4>
-<p>Our notification queue uses the session, so we'll alter those routes to
-load the session if it's for the shrubExampleGeneral queue.</p>
-<pre><code class="coffeescript">  registrar.registerHook 'shrubRpcRoutesAlter', (routes) -&gt;
+<h4 id="implements-hook-shrubconfigserver">Implements hook <code>shrubConfigServer</code>.</h4>
+<pre><code class="coffeescript">  registrar.registerHook 'shrubConfigServer', -&gt;
 
-    for path, route of routes
-      if path.match /^shrub-ui\/notifications.*/
-        route.middleware.unshift (req, res, next) -&gt;
-          if 'shrubExampleGeneral' is req.body.queue
-            return req.loadSession next
-          next()
-
-    return
+    siteHostname = config.get 'packageSettings:shrub-core:siteHostname'
 </code></pre>
 
-<h4 id="implements-hook-shrubuinotificationqueues">Implements hook <code>shrubUiNotificationQueues</code>.</h4>
-<p>Implement the <code>general</code> queue, used to show some notifications.</p>
-<pre><code class="coffeescript">  registrar.registerHook 'shrubUiNotificationQueues', -&gt;
+<p>See: <a href="https://github.com/Slotos/passport-reddit">passport-reddit</a> for
+more information about which configuration options are available.</p>
+<pre><code class="coffeescript">    constructionOptions:
+</code></pre>
 
-    shrubExampleGeneral:
+<p>The path that the client gets sent back to from reddit authorization.</p>
+<pre><code class="coffeescript">      callbackURL: &quot;http://#{siteHostname}/user/reddit/auth/callback&quot;
+</code></pre>
 
-      channelFromRequest: (req) -&gt; req.session?.id
+<p>Public client ID.</p>
+<pre><code class="coffeescript">      clientID: 'REDDIT_CLIENT_ID'
+</code></pre>
 
-  registrar.recur [
-    'about'
-  ]
+<p>Client secret.</p>
+<pre><code class="coffeescript">      clientSecret: 'REDDIT_CLIENT_SECRET'
+</code></pre>
+
+<p>Adjust scope configuration (by default, identity is provided).</p>
+<pre><code class="coffeescript">      scope: []
+
+    authorizationOptions:
+</code></pre>
+
+<p>How long the authorization should persist.</p>
+<pre><code class="coffeescript">      duration: 'temporary'
+</code></pre>
+
+<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <code>shrubCorePreBootstrap</code>.</h4>
+<pre><code class="coffeescript">  registrar.registerHook 'shrubCorePreBootstrap', -&gt;
+
+    orm = require 'shrub-orm'
+    passport = require 'passport'
+    Promise = require 'bluebird'
+</code></pre>
+
+<h4 id="implements-hook-shrubuserloginstrategies">Implements hook <code>shrubUserLoginStrategies</code>.</h4>
+<pre><code class="coffeescript">  registrar.registerHook 'shrubUserLoginStrategies', -&gt;
+    strategy = clientModule.shrubUserLoginStrategies()
+
+    RedditStrategy = require('passport-reddit').Strategy
+    UserReddit = orm.collection 'shrub-user-reddit'
+</code></pre>
+
+<p>Implement a reddit passport strategy.</p>
+<pre><code class="coffeescript">    options = config.get(
+      'packageSettings:shrub-user-reddit:constructionOptions'
+    )
+    options.passReqToCallback = true
+</code></pre>
+
+<p>Verification callback: find or create a reddit user instance and pass
+it along.</p>
+<pre><code class="coffeescript">    verifyCallback = (req, accessToken, refreshToken, profile, done) -&gt;
+
+      UserReddit.findOrCreate(
+
+        redditId: profile.id
+      ,
+        redditId: profile.id
+        name: profile.name
+        accessToken: accessToken
+        refreshToken: refreshToken
+
+      ).then((instance) -&gt;
+
+        instance.model = 'shrub-user-reddit'
+        return instance
+
+      ).nodeify done
+</code></pre>
+
+<p>Implement a <a href="https://github.com/Slotos/passport-reddit">reddit Passport</a>
+login strategy.</p>
+<pre><code class="coffeescript">    passportStrategy = new RedditStrategy options, verifyCallback
+    passportStrategy.name = 'shrub-user-reddit'
+    strategy.passportStrategy = passportStrategy
+
+    return strategy
+</code></pre>
+
+<h4 id="implements-hook-shrubhttproutes">Implements hook <code>shrubHttpRoutes</code>.</h4>
+<pre><code class="coffeescript">  registrar.registerHook 'shrubHttpRoutes', (http) -&gt;
+    routes = []
+
+    crypto = require 'server/crypto'
+</code></pre>
+
+<p>Provide the reddit authorization entry point.</p>
+<pre><code class="coffeescript">    routes.push
+      path: '/user/reddit/auth'
+      receiver: (req, res, next) -&gt;
+</code></pre>
+
+<p>Generate a random string to send as the 'state' token, so we can
+verify we were the source of this authentication request.</p>
+<pre><code class="coffeescript">        crypto.randomBytes(32).then (bytes) -&gt;
+
+          options = config.get(
+            'packageSettings:shrub-user-reddit:authorizationOptions'
+          )
+          options.state = req.session.state = bytes.toString 'hex'
+
+          req.authorize(
+            'shrub-user-reddit', options, res
+          ).nodeify next
+</code></pre>
+
+<p>Provide the reddit authorization callback.</p>
+<pre><code class="coffeescript">    routes.push
+      path: '/user/reddit/auth/callback'
+      receiver: (req, res, next) -&gt;
+
+        if req.query.state isnt req.session.state
+          error = new Error(
+            &quot;Your reddit session state didn't match on the callback&quot;
+          )
+          error.code = 403
+          return next error
+
+        promise = req.authorize(
+          'shrub-user-reddit', res
+        )
+
+        require('shrub-user/login').loginWithInstance(
+          promise, req
+        ).then(-&gt; next()).catch (error) -&gt;
+</code></pre>
+
+<p>In case of an authorization error, we want to send it to the
+client; it's not a server error.</p>
+<pre><code class="coffeescript">          (req.session.errorMessages ?= []).push errors.serialize error
+          return res.redirect '/'
+
+    return routes
+</code></pre>
+
+<h4 id="implements-hook-shrubuserredactors">Implements hook <code>shrubUserRedactors</code>.</h4>
+<pre><code class="coffeescript">  registrar.registerHook 'shrubUserRedactors', -&gt;
+
+    'shrub-user-reddit': [
+
+      (object, user) -&gt;
+
+        redacted = name: object.name
+        return redacted
+
+    ]
+</code></pre>
+
+<h4 id="implements-hook-shrubormcollections">Implements hook <code>shrubOrmCollections</code>.</h4>
+<pre><code class="coffeescript">  registrar.registerHook 'shrubOrmCollections', -&gt;
+
+    crypto = require 'server/crypto'
+</code></pre>
+
+<p>Invoke the client hook implementation.</p>
+<pre><code class="coffeescript">    collections = clientModule.shrubOrmCollections()
+
+    {
+      'shrub-user-reddit': UserReddit
+    } = collections
+</code></pre>
+
+<h2 id="userredditassociateduser">UserReddit#associatedUser</h2>
+<h6 id="todo-this-should-be-in-a-superclass">TODO: This should be in a superclass.</h6>
+<p><em>Get the user (if any) associated with this instance.</em></p>
+<pre><code class="coffeescript">    UserReddit.attributes.associatedUser = -&gt;
+      {
+        'shrub-user-instance': UserInstance
+        'shrub-user': User
+      } = orm.collections()
+
+      UserInstance.findOne(
+        model: 'shrub-user-reddit'
+        modelId: @id
+      ).then (userInstance) -&gt; User.findOnePopulated id: userInstance?.user
+
+    collections
 </code></pre>
               
             </div>
@@ -1694,10 +1882,10 @@ load the session if it's for the shrubExampleGeneral queue.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../shrub-form/client/" class="btn btn-neutral float-right" title="index.coffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../shrub-user/client/" class="btn btn-neutral float-right" title="index.coffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="client/test-e2e/" class="btn btn-neutral" title="test-e2e.coffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="client/" class="btn btn-neutral" title="index.coffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -1725,10 +1913,10 @@ load the session if it's for the shrubExampleGeneral queue.</p>
           <a class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="client/test-e2e/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="client/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../shrub-form/client/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../shrub-user/client/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

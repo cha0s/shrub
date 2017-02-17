@@ -239,6 +239,9 @@
                 <li class="toctree-l3"><a href="#todo-https_1">TODO: HTTPS</a></li>
                 
             
+                <li class="toctree-l3"><a href="#todo-this-should-be-in-a-superclass_1">TODO: This should be in a superclass.</a></li>
+                
+            
                 <li class="toctree-l3"><a href="#todo-includemerge-permissions">TODO: Include/merge permissions.</a></li>
                 
             
@@ -249,6 +252,9 @@
                 
             
                 <li class="toctree-l3"><a href="#todo-unify-config-key-on-packages">TODO: Unify config key on 'packages'.</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#todo-how-can-we-collapse-multiple-errors-into-one">TODO: How can we collapse multiple errors into one?</a></li>
                 
             
             </ul>
@@ -1556,6 +1562,36 @@
         
             
     <ul class="subnav">
+    <li><span>shrub-user-reddit</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>client</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../source/packages/shrub-user-reddit/client/">index.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../source/packages/shrub-user-reddit/">index.coffee</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>shrub-user</span></li>
 
         
@@ -1782,7 +1818,7 @@ exports.fromConfig = (path, args...) -&gt;
   exports.fromHook(
 </code></pre>
 
-<p><a href="../source/client/modules/middleware#todo-unify-on-packages">the above found in client/modules/middleware.coffee:130</a></p>
+<p><a href="../source/client/modules/middleware#todo-unify-on-packages">the above found in client/modules/middleware.coffee:136</a></p>
 <hr />
 <pre><code class="coffeescript">
       # Completely override the $q service with Bluebird, because it's
@@ -1889,9 +1925,9 @@ debug = require('debug') 'shrub:socket.io'
 </code></pre>
 
 <h2 id="todo-i-dont-really-like-this-think-about-it-some-more">TODO: I don't really like this. Think about it some more.</h2>
-<pre><code class="coffeescript">errors = require 'errors'
-
-exports.pkgmanRegister = (registrar) -&gt;
+<pre><code class="coffeescript">
+config = require 'config'
+errors = require 'errors'
 </code></pre>
 
 <p><a href="../source/packages/shrub-ui/client/messages#todo-i-dont-really-like-this-think-about-it-some-more">the above found in packages/shrub-ui/client/messages.coffee:4</a></p>
@@ -1936,7 +1972,7 @@ exports.shrubOrmCollections = -&gt;
             fields.method =
 </code></pre>
 
-<p><a href="../source/packages/shrub-user/client/login#todo-this-is-janky-from-ux-perspective-rely-on-skin-at-least-hide-inactive-strategies-fieldgroups">the above found in packages/shrub-user/client/login.coffee:76</a></p>
+<p><a href="../source/packages/shrub-user/client/login#todo-this-is-janky-from-ux-perspective-rely-on-skin-at-least-hide-inactive-strategies-fieldgroups">the above found in packages/shrub-user/client/login.coffee:79</a></p>
 <hr />
 <pre><code class="coffeescript"># # Angular sandbox
 #
@@ -2147,6 +2183,20 @@ config = require 'config'
 
 <p><a href="../source/packages/shrub-user-local/register#todo-http">the above found in packages/shrub-user-local/register.coffee:57</a></p>
 <hr />
+<pre><code class="coffeescript">    } = collections
+
+    # ## UserReddit#associatedUser
+    #
+</code></pre>
+
+<h2 id="todo-this-should-be-in-a-superclass_1">TODO: This should be in a superclass.</h2>
+<pre><code class="coffeescript">    #
+    # *Get the user (if any) associated with this instance.*
+    UserReddit.attributes.associatedUser = -&gt;
+</code></pre>
+
+<p><a href="../source/packages/shrub-user-reddit#todo-this-should-be-in-a-superclass">the above found in packages/shrub-user-reddit/index.coffee:169</a></p>
+<hr />
 <pre><code class="coffeescript">
         redacted =
           id: object.id
@@ -2202,6 +2252,20 @@ fs = require 'fs'
 </code></pre>
 
 <p><a href="../source/server/config#todo-unify-config-key-on-packages">the above found in server/config.coffee:57</a></p>
+<hr />
+<pre><code class="coffeescript">          return resolve sandbox
+
+        # Just emit the first error.
+        #
+</code></pre>
+
+<h2 id="todo-how-can-we-collapse-multiple-errors-into-one">TODO: How can we collapse multiple errors into one?</h2>
+<pre><code class="coffeescript">        reject window.__shrubStartupErrors[0]
+
+  # ## Sandbox#emitHtml
+</code></pre>
+
+<p><a href="../source/server/sandboxes#todo-how-can-we-collapse-multiple-errors-into-one">the above found in server/sandboxes.coffee:112</a></p>
               
             </div>
           </div>

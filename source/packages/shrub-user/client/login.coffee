@@ -24,6 +24,10 @@ exports.pkgmanRegister = (registrar) ->
 ```coffeescript
           strategies = pkgman.invoke 'shrubUserLoginStrategies'
 ```
+#### Invoke hook `shrubUserLoginStrategiesAlter`.
+```coffeescript
+          pkgman.invoke 'shrubUserLoginStrategiesAlter', strategies
+```
 Count the active strategies.
 ```coffeescript
           strategiesCount = pkgman.packagesImplementing(
