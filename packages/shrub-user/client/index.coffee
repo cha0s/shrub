@@ -234,13 +234,13 @@ exports.shrubOrmCollections = ->
 # Transmittable login conflict error.
 class LoginConflictError extends TransmittableError
 
-  key: 'shrub-user-login-conflict'
+  errorType: 'shrub-user-login-conflict'
   template: 'That account already belongs to another user. First log out and then log in with that account.'
 
 # Transmittable redundant login error.
 class RedundantLoginError extends TransmittableError
 
-  key: 'shrub-user-login-redundant'
+  errorType: 'shrub-user-login-redundant'
   template: 'You are already logged in with that account.'
 
 exports.shrubTransmittableErrors = -> [

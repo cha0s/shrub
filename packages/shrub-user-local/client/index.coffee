@@ -61,7 +61,7 @@ exports.shrubOrmCollections = ->
 # Transmittable login error.
 class LoginError extends TransmittableError
 
-  key: 'shrub-user-local-login'
+  errorType: 'shrub-user-local-login'
   template: 'No such username/password.'
 
 exports.shrubTransmittableErrors = -> [

@@ -6,18 +6,16 @@ pkgman = require 'pkgman'
 # Extend this class if you'd like to implement an error.
 exports.TransmittableError = class TransmittableError extends Error
 
-  # ## *constructor*
+  # ## TransmittableError#constructor
   #
   # See:
   # [https://github.com/jashkenas/coffee-script/issues/2359](https://github.com/jashkenas/coffee-script/issues/2359)
   constructor: (@message) ->
 
-  # ## TransmittableError#key
+  # ## TransmittableError#errorType
   #
   # A unique key for this error.
-  #
-  # ###### TODO: `key` should be called errorType or something similar.
-  key: 'unknown'
+  errorType: 'unknown'
 
   # ## TransmittableError#template
   #
@@ -26,25 +24,25 @@ exports.TransmittableError = class TransmittableError extends Error
 
   # ## TransmittableError#toJSON
   #
-  # Implement this if you need to transmit more than just the key and the
-  # message. Shrub uses the result from this function to serialize the error
-  # over the wire.
-  toJSON: -> [@key, @message]
+  # Implement this if you need to transmit more than just the error type and
+  # the message. Shrub uses the result from this function to serialize the
+  # error over the wire.
+  toJSON: -> [@errorType, @message]
 
 # ## errors.instantiate
 #
-# * (string) `key` - The error type.
+# * (string) `errorType` - The error type.
 #
 # * (any) `args...` - Additional arguments to pass to the error type's
 #
-# constructor. *Instantiate an error based on key, passing along args to the
-# error's constructor.*
-exports.instantiate = (key, args...) ->
+# constructor. *Instantiate an error based on error type, passing along args
+# to the error's constructor.*
+exports.instantiate = (errorType, args...) ->
 
   # Look up the error type and use it. If it's not registered, fall back to
   # the TransmittableError superclass.
   Types = exports.transmittableErrors()
-  Type = if Types[key]? then Types[key] else TransmittableError
+  Type = if Types[errorType]? then Types[errorType] else TransmittableError
 
   # Trickery to be able to essentially call `new` with `Function::apply`.
   IType = do (Type) ->
@@ -141,7 +139,7 @@ exports.transmittableErrors = ->
   # return a subclass of `TransmittableError`.
   Types = {}
 
-  Types[Type::key] = Type for Type in [TransmittableError].concat(
+  Types[Type::errorType] = Type for Type in [TransmittableError].concat(
     _.flatten pkgman.invokeFlat 'shrubTransmittableErrors'
   )
 

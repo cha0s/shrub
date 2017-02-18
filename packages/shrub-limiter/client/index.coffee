@@ -9,9 +9,9 @@ class LimiterThresholdError extends TransmittableError
 
   constructor: (message, @time) -> super
 
-  key: 'limiterThreshold'
+  errorType: 'limiterThreshold'
   template: ':message You may try again :time.'
-  toJSON: -> [@key, @message, @time]
+  toJSON: -> [@errorType, @message, @time]
 
 exports.pkgmanRegister = (registrar) ->
 
