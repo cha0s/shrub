@@ -8,9 +8,11 @@ exports.pkgmanRegister = (registrar) ->
   registrar.registerHook 'shrubConfigClient', (req) ->
     config = {}
 
-    errorMessages = req.session.errorMessages
-    delete req.session.errorMessages
-    config.errorMessages = errorMessages
+    if req.session?
+
+      errorMessages = req.session.errorMessages ? []
+      delete req.session.errorMessages
+      config.errorMessages = errorMessages
 
     return config
 
