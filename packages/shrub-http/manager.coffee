@@ -1,8 +1,6 @@
 # # HTTP Manager
 #
 # *Manage an HTTP server instance.*
-#
-# ###### TODO: Rename to AbstractHttp
 Promise = require 'bluebird'
 
 config = require 'config'
