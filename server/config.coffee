@@ -1,8 +1,6 @@
 # # Server configuration
 #
 # *Manages server and package configuration.*
-#
-# ###### TODO: Rename all config `key` uses to `path`.
 debug = require('debug') 'shrub:config'
 nconf = require 'nconf'
 fs = require 'fs'
@@ -15,17 +13,17 @@ pkgman = require 'pkgman'
 
 # ## config.get
 #
-# * (string) `key` - The key whose value to get.
+# * (string) `path` - The path whose value to get.
 #
 # *Get a configuration value.*
-exports.get = (key) -> nconf.get key
+exports.get = (path) -> nconf.get path
 
 # ## config.has
 #
-# * (string) `key` - The key to check.
+# * (string) `path` - The path to check.
 #
-# *Check if a configuration key exists.*
-exports.has = (key) -> nconf.has key
+# *Check if a configuration path exists.*
+exports.has = (path) -> nconf.has path
 
 # ## config.load
 #
@@ -55,10 +53,9 @@ exports.loadPackageSettings = ->
 
   debug 'Packages registered.'
 
-  # ###### TODO: Unify config key on `'packages'`.
   packageConfig = new Config()
-  for key, value of pkgman.invoke 'shrubConfigServer'
-    packageConfig.set key.replace(/\//g, ':'), value
+  for path, value of pkgman.invoke 'shrubConfigServer'
+    packageConfig.set path.replace(/\//g, ':'), value
 
   nconf.defaults
 
@@ -71,7 +68,7 @@ exports.loadPackageSettings = ->
 
 # ## config.set
 #
-# * (string) `key` - The key whose value to set.
+# * (string) `path` - The path whose value to set.
 #
 # *Set a configuration value.*
-exports.set = (key, value) -> nconf.set key, value
+exports.set = (path, value) -> nconf.set path, value
