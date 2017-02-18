@@ -8,6 +8,9 @@ pkgman = require 'pkgman'
 
 exports.pkgmanRegister = (registrar) ->
 
+  currentSkinKey = null
+  defaultSkinKey = config.get 'packageConfig:shrub-skin:default'
+
   # #### Implements hook `shrubAngularDirectiveAlter`.
   registrar.registerHook 'shrubAngularDirectiveAlter', (directive, path) -> [
 
@@ -17,9 +20,6 @@ exports.pkgmanRegister = (registrar) ->
       # Ensure ID is a candidate.
       directive.candidateKeys ?= []
       directive.candidateKeys.unshift 'id'
-
-      currentSkinKey = null
-      defaultSkinKey = config.get 'packageConfig:shrub-skin:default'
 
       # Proxy link function to add our own directive retrieval and compilation
       # step.
@@ -129,15 +129,16 @@ exports.pkgmanRegister = (registrar) ->
               )
 
         applySkin = (skinKey) ->
+          return if currentSkinKey is skinKey
           currentSkinKey = skinKey
+
+          candidateHooksInvoked = {}
           recalculateCandidate()
 
         applySkin defaultSkinKey
 
         # Relink again every time the skin changes.
-        $rootScope.$on 'shrub-skin.changed', (event, skinKey) ->
-          candidateHooksInvoked = {}
-          applySkin skinKey
+        $rootScope.$on 'shrub-skin.changed', (_, skinKey) -> applySkin skinKey
 
         # Set watches for all candidate-related values.
         keysSeen = {}
@@ -187,7 +188,7 @@ exports.pkgmanRegister = (registrar) ->
             element = $window.document.createElement 'link'
             element.type = 'text/css'
             element.rel = 'stylesheet'
-            element.href = "/skin/shrub-skin-strapped/#{href}"
+            element.href = "/skin/#{currentSkinKey}/#{href}"
             element.className = 'skin'
             angular.element('head').append element
 
@@ -281,9 +282,8 @@ exports.pkgmanRegister = (registrar) ->
           #
           # (String) `skinKey` - The key of the skin to change to *Change
           # skin.*
-          #
-          # ###### TODO: Need to track current, this should be a nop in that case.
           service.change = (skinKey) ->
+            return if skinKey is currentSkinKey
 
             # Cloak the body.
             addBodyCloak()
