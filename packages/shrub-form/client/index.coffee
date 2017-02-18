@@ -18,8 +18,6 @@ exports.pkgmanRegister = (registrar) ->
 
         # Keep a reference to the form scope, if the form attribute value
         # changes, it'll need to be rebuilt.
-        #
-        # ###### TODO: It shouldn't be trashed as it is now, it should be moved over to a new scope non-destructively.
         formScope = null
         scope.$watch attrs.form, (form) ->
           return unless form?
