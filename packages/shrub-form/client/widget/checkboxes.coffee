@@ -18,8 +18,12 @@ exports.pkgmanRegister = (registrar) ->
             for checkbox in scope.field.checkboxes
               checkbox.childName ?= checkbox.name
 
-              # ###### TODO: Multiline
-              checkbox.name = "#{scope.field.name}[#{checkbox.childName}]"
+              checkbox.name = "#{
+                scope.field.name
+              }[#{
+                checkbox.childName
+              }]"
+
               checkbox.type = 'checkbox'
 
             return
