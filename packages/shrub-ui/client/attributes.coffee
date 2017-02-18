@@ -23,10 +23,6 @@ exports.pkgmanRegister = (registrar) ->
 
             if 'class' is k
 
-              # ###### TODO: We should do a proper _.intersects check here.
-              for class_ in oldAttributes?.class ? []
-                dummy.removeClass class_
-
               v = [v] unless angular.isArray v
               dummy.addClass v.join ' '
 
