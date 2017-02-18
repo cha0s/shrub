@@ -76,8 +76,6 @@ exports.pkgmanRegister = (registrar) ->
 
           # If there's more than one method, use a dropdown to select the
           # login strategy.
-          #
-          # ###### TODO: This is janky from UX perspective. Rely on skin? At least hide inactive strategies' fieldgroups...
           else
 
             fields.method =
