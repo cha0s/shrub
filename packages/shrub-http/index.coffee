@@ -18,7 +18,7 @@ exports.pkgmanRegister = (registrar) ->
 
       (next) ->
 
-        {manager, port} = config.get 'packageSettings:shrub-http'
+        {manager, port} = config.get 'packageConfig:shrub-http'
 
         {Manager} = require manager.module
 

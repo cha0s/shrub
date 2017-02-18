@@ -36,7 +36,7 @@ exports.pkgmanRegister = (registrar) ->
 
       (next) ->
 
-        settings = config.get 'packageSettings:shrub-nodemailer'
+        settings = config.get 'packageConfig:shrub-nodemailer'
 
         # Instantiate the email transport.
         transport = nodemailer.createTransport(
@@ -51,7 +51,7 @@ exports.pkgmanRegister = (registrar) ->
           sandbox = new Sandbox()
 
           sandbox.createDocument html, url: "http://localhost:#{
-            config.get 'packageSettings:shrub-http:port'
+            config.get 'packageConfig:shrub-http:port'
           }/home"
 
         ).then(->
@@ -97,7 +97,7 @@ exports.pkgmanRegister = (registrar) ->
 exports.sendMail = (directive, mail, scope) ->
 
   path = config.get 'path'
-  siteEmail = config.get 'packageSettings:shrub-nodemailer:siteEmail'
+  siteEmail = config.get 'packageConfig:shrub-nodemailer:siteEmail'
 
   Promise.resolve().then(->
 

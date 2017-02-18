@@ -12,7 +12,7 @@ exports.pkgmanRegister = (registrar) ->
   # ## Implements hook `shrubConfigClient`
   registrar.registerHook 'shrubConfigClient', ->
 
-    apiRoot: config.get 'packageSettings:shrub-schema:apiRoot'
+    apiRoot: config.get 'packageConfig:shrub-schema:apiRoot'
 
   # ## Implements hook `shrubHttpRoutes`
   #
@@ -28,7 +28,7 @@ exports.pkgmanRegister = (registrar) ->
     serveJson = (res, code, data) ->
 
       # CORS policy enforcement.
-      corsHeaders = config.get 'packageSettings:shrub-schema:corsHeaders'
+      corsHeaders = config.get 'packageConfig:shrub-schema:corsHeaders'
       res.set corsHeaders if corsHeaders?
 
       # Serve JSON manually, breaking it to protect against XSRF.
@@ -57,7 +57,7 @@ exports.pkgmanRegister = (registrar) ->
         # 	resourcePath = "/api/user/:id"
         #
         # We'll assume these defaults for each path's explanation.
-        apiRoot = config.get 'packageSettings:shrub-schema:apiRoot'
+        apiRoot = config.get 'packageConfig:shrub-schema:apiRoot'
         collectionPath = "#{apiRoot}/#{collection}"
         resourcePath = "#{apiRoot}/#{resource}/:id"
 

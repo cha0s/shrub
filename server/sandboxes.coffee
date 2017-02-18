@@ -75,7 +75,9 @@ exports.Sandbox = class Sandbox
       cookie: options.cookie
       cookieDomain: options.cookieDomain ? 'localhost'
 
-      url: options.url ? "http://localhost:#{config.get 'packageSettings:shrub-http:port'}/"
+      url: options.url ? "http://localhost:#{
+        config.get 'packageConfig:shrub-http:port'
+      }/"
     )
     @_window = window = document.defaultView
 

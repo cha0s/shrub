@@ -14,7 +14,7 @@ exports.pkgmanRegister = (registrar) ->
     hostname: if req.headers?.host?
       "//#{req.headers.host}"
     else
-      "//#{config.get 'packageSettings:shrub-core:siteHostname'}"
+      "//#{config.get 'packageConfig:shrub-core:siteHostname'}"
 
     # Is the server running in test mode?
     testMode: if (config.get 'E2E')? then 'e2e' else false
@@ -26,7 +26,7 @@ exports.pkgmanRegister = (registrar) ->
     environment: config.get 'NODE_ENV'
 
     # The user-visible site name.
-    siteName: config.get 'packageSettings:shrub-core:siteName'
+    siteName: config.get 'packageConfig:shrub-core:siteName'
 
   # #### Implements hook `shrubAuditFingerprint`.
   registrar.registerHook 'shrubAuditFingerprint', (req) ->
@@ -127,7 +127,7 @@ exports.pkgmanRegister = (registrar) ->
     ]
 
 trustedAddress = (address, forwardedFor) -> resolveAddress(
-  config.get 'packageSettings:shrub-core:trustedProxies'
+  config.get 'packageConfig:shrub-core:trustedProxies'
   address
   forwardedFor
 )

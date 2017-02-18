@@ -41,7 +41,7 @@ exports.pkgmanRegister = (registrar) ->
 
       (next) ->
 
-        settings = config.get 'packageSettings:shrub-repl'
+        settings = config.get 'packageConfig:shrub-repl'
 
         server = net.createServer (socket) ->
 

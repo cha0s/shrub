@@ -76,7 +76,7 @@ exports.pkgmanRegister = (registrar) ->
         # Pass the environment to the child process.
         options = env: process.env
         options.env['E2E'] = 'true'
-        options.env['packageSettings:shrub-http:port'] = port
+        options.env['packageConfig:shrub-http:port'] = port
 
         # Fork it.
         e2eServerChild = fork(

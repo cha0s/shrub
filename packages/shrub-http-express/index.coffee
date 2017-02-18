@@ -81,7 +81,7 @@ exports.Manager = class Express extends HttpManager
   # *Spawn workers and tie them together into a cluster.*
   cluster: ->
 
-    coreConfig = config.get 'packageSettings:shrub-core'
+    coreConfig = config.get 'packageConfig:shrub-core'
     @_server = sticky(
       num: coreConfig.workers
       trustedAddresses: coreConfig.trustedProxies

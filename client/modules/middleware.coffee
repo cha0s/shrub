@@ -134,10 +134,7 @@ exports.fromHook = (hook, paths, args...) ->
 # *Create a middleware stack from a configuration path.*
 exports.fromConfig = (path, args...) ->
 
-  # ###### TODO: Unify on `'packages'`.
-  configKey = if global? then 'packageSettings' else 'packageConfig'
-
   exports.fromHook(
     pkgman.normalizePath path
-    config.get "#{configKey}:#{path}"
+    config.get "packageConfig:#{path}"
   )

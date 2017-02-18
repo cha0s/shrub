@@ -18,7 +18,7 @@ exports.pkgmanRegister = (registrar) ->
 
     else
 
-      config.get 'packageSettings:shrub-socket:manager:module'
+      config.get 'packageConfig:shrub-socket:manager:module'
 
     manager: module: socketModule
 
@@ -32,7 +32,7 @@ exports.pkgmanRegister = (registrar) ->
 
         {manager: httpManager} = require 'shrub-http'
 
-        {Manager} = require config.get 'packageSettings:shrub-socket:manager:module'
+        {Manager} = require config.get 'packageConfig:shrub-socket:manager:module'
 
         # Spin up the socket server, and have it listen on the HTTP server.
         socketManager = new Manager()

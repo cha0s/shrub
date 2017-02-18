@@ -56,14 +56,14 @@ exports.loadPackageSettings = ->
   debug 'Packages registered.'
 
   # ###### TODO: Unify config key on `'packages'`.
-  packageSettings = new Config()
+  packageConfig = new Config()
   for key, value of pkgman.invoke 'shrubConfigServer'
-    packageSettings.set key.replace(/\//g, ':'), value
+    packageConfig.set key.replace(/\//g, ':'), value
 
   nconf.defaults
 
     # #### Invoke hook `shrubConfigServer`.
-    packageSettings: packageSettings.toJSON()
+    packageConfig: packageConfig.toJSON()
 
     path: "#{__dirname}/.."
 

@@ -16,7 +16,7 @@ exports.pkgmanRegister = (registrar) ->
     for packagePath in pkgman.packagesImplementing 'shrubSkinAssets'
       skinAssets[packagePath] = exports.assets packagePath
 
-    default: config.get 'packageSettings:shrub-skin:default'
+    default: config.get 'packageConfig:shrub-skin:default'
     assets: skinAssets
 
   # #### Implements hook `shrubHttpMiddleware`.
@@ -58,7 +58,7 @@ exports.pkgmanRegister = (registrar) ->
 # ## activeKey
 #
 # *Get the active skin's key*
-exports.activeKey = -> config.get 'packageSettings:shrub-skin:default'
+exports.activeKey = -> config.get 'packageConfig:shrub-skin:default'
 
 # ## gruntSkin
 #

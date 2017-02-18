@@ -25,7 +25,7 @@ exports.pkgmanRegister = (registrar) ->
         signature = require 'cookie-signature'
 
         {cookie} = config.get(
-          'packageSettings:shrub-session'
+          'packageConfig:shrub-session'
         )
 
         cookieParser = CookieParser cookie.cryptoKey
@@ -82,7 +82,7 @@ exports.pkgmanRegister = (registrar) ->
 
 sessionMiddleware = ->
 
-  {cookie, key} = config.get 'packageSettings:shrub-session'
+  {cookie, key} = config.get 'packageConfig:shrub-session'
 
   return [
 

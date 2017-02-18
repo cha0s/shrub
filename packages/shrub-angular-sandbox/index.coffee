@@ -57,7 +57,7 @@ exports.pkgmanRegister = (registrar) ->
       (req, res, next) ->
 
         # Skip render in a sandbox?
-        settings = config.get 'packageSettings:shrub-angular'
+        settings = config.get 'packageConfig:shrub-angular'
         return next() unless settings.render
 
         # Thrown when a request is complete.
@@ -73,7 +73,7 @@ exports.pkgmanRegister = (registrar) ->
             cookie: req.headers.cookie
 
             url: "http://localhost:#{
-              config.get 'packageSettings:shrub-http:port'
+              config.get 'packageConfig:shrub-http:port'
             }/shrub-angular-entry-point"
           ,
             req.session.id
@@ -129,7 +129,7 @@ exports.pkgmanRegister = (registrar) ->
 
         # Always disable sandbox rendering in end-to-end testing mode.
         if config.get 'E2E'
-          config.set 'packageSettings:shrub-angular:render', false
+          config.set 'packageConfig:shrub-angular:render', false
 
         # #### Invoke hook `shrubAngularSandboxNavigationMiddleware`.
         #
@@ -230,7 +230,7 @@ augmentSandbox = (sandbox) ->
   # ## Sandbox#touch
   #
   # *Reset the time-to-live for a sandbox.*
-  ttl = config.get 'packageSettings:shrub-angular:ttl'
+  ttl = config.get 'packageConfig:shrub-angular:ttl'
   toucher = _.debounce (-> sandbox.close()), ttl
   do sandbox.touch = ->
     debug "Touched sandbox ID: #{id}"

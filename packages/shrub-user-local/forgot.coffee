@@ -72,7 +72,7 @@ exports.pkgmanRegister = (registrar) ->
           ).then((email) ->
 
             # Send an email to the user's email with a one-time login link.
-            siteHostname = config.get 'packageSettings:shrub-core:siteHostname'
+            siteHostname = config.get 'packageConfig:shrub-core:siteHostname'
             siteUrl = "http://#{siteHostname}"
 
             scope =

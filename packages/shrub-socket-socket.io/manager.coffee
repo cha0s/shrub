@@ -27,7 +27,7 @@ module.exports = class SocketIoManager extends SocketManager
 
     socketLogger ?= logging.create 'logs/socket.io.log'
 
-    options = config.get 'packageSettings:shrub-socket:manager:options'
+    options = config.get 'packageConfig:shrub-socket:manager:options'
 
     # Load the adapter.
     @_adapter = switch options?.store ? 'redis'
@@ -93,7 +93,7 @@ module.exports = class SocketIoManager extends SocketManager
   # *Listen for socket connections coming through the HTTP server.*
   listen: (http) ->
 
-    options = config.get 'packageSettings:shrub-socket:manager:options'
+    options = config.get 'packageConfig:shrub-socket:manager:options'
 
     # Set up the socket.io server.
     @io = require('socket.io') http.server()

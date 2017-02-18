@@ -80,7 +80,7 @@ exports.pkgmanRegister = (registrar) ->
 # *Spin up Waterline with our configuration.*
 exports.initialize = (fn) ->
 
-  config_ = config.get 'packageSettings:shrub-orm'
+  config_ = config.get 'packageConfig:shrub-orm'
 
   waterlineConfig = adapters: {}, connections: {}
 

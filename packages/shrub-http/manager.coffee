@@ -27,7 +27,7 @@ exports.Manager = class HttpManager
   constructor: ->
 
     # ###### TODO: Keeping a reference here means HTTP stuff can't be updated at run-time.
-    @_config = config.get 'packageSettings:shrub-http'
+    @_config = config.get 'packageConfig:shrub-http'
 
     @_middleware = null
 

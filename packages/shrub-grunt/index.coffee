@@ -13,7 +13,7 @@ exports.pkgmanRegister = (registrar) ->
 
         return next() if 'production' is config.get 'NODE_ENV'
 
-        hostname = config.get 'packageSettings:shrub-core:siteHostname'
+        hostname = config.get 'packageConfig:shrub-core:siteHostname'
         [hostname] = hostname.split ':'
         assets.scripts.push "http://#{hostname}:35729/livereload.js"
 

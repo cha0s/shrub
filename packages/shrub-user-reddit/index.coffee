@@ -18,7 +18,7 @@ exports.pkgmanRegister = (registrar) ->
   # #### Implements hook `shrubConfigServer`.
   registrar.registerHook 'shrubConfigServer', ->
 
-    siteHostname = config.get 'packageSettings:shrub-core:siteHostname'
+    siteHostname = config.get 'packageConfig:shrub-core:siteHostname'
 
     # See: [passport-reddit](https://github.com/Slotos/passport-reddit) for
     # more information about which configuration options are available.
@@ -58,7 +58,7 @@ exports.pkgmanRegister = (registrar) ->
 
     # Implement a reddit passport strategy.
     options = config.get(
-      'packageSettings:shrub-user-reddit:constructionOptions'
+      'packageConfig:shrub-user-reddit:constructionOptions'
     )
     options.passReqToCallback = true
 
@@ -106,7 +106,7 @@ exports.pkgmanRegister = (registrar) ->
         crypto.randomBytes(32).then (bytes) ->
 
           options = config.get(
-            'packageSettings:shrub-user-reddit:authorizationOptions'
+            'packageConfig:shrub-user-reddit:authorizationOptions'
           )
           options.state = req.session.state = bytes.toString 'hex'
 

@@ -31,7 +31,7 @@ exports.pkgmanRegister = (registrar) ->
     {
       thresholdScore
       thresholdMs
-    } = config.get 'packageSettings:shrub-villiany:ban'
+    } = config.get 'packageConfig:shrub-villiany:ban'
 
     villianyLimiter = new Limiter(
       'villiany'
@@ -91,7 +91,7 @@ exports.pkgmanRegister = (registrar) ->
     Ban.createFromFingerprint = (fingerprint, expires) ->
 
       unless expires?
-        settings = config.get 'packageSettings:shrub-villiany:ban'
+        settings = config.get 'packageConfig:shrub-villiany:ban'
         expires = parseInt settings.thresholdMs
 
       data = expires: new Date Date.now() + expires
