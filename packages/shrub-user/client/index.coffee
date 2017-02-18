@@ -13,14 +13,11 @@ exports.pkgmanRegister = (registrar) ->
   registrar.registerHook 'shrubOrmCollectionsAlter', exports.shrubOrmCollectionsAlter
 
   # #### Implements hook `shrubAngularDirective`.
-  registrar.registerHook 'shrubAngularDirective', -> [
+  registrar.registerHook 'actions', 'shrubAngularDirective', -> [
     'shrub-user'
     (user) ->
 
       directive = {}
-
-      # ###### TODO: Make it possible to override directive name/path
-      # directive.name = 'shrub-user-actions'
 
       directive.link = (scope) ->
 

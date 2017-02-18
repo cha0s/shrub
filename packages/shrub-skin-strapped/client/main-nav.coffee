@@ -60,7 +60,7 @@ exports.pkgmanRegister = (registrar) ->
       >
         Hi,
         <span
-          data-shrub-user
+          data-shrub-user-actions
         >
         </span>
       </div>
