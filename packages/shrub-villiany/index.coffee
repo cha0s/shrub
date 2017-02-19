@@ -8,6 +8,8 @@ config = require 'config'
 
 orm = null
 
+{AuthorizationFailure} = require 'shrub-socket/manager'
+
 Fingerprint = require 'fingerprint'
 logger = null
 villianyLimiter = null
@@ -44,9 +46,7 @@ exports.pkgmanRegister = (registrar) ->
     Fingerprint = require 'fingerprint'
 
     # Bans.
-    #
-    # ###### TODO: Bans don't actually work at the moment.
-    Ban = attributes: expires: 'date'
+    Ban = attributes: expires: 'dateTime'
 
     # The structure of a ban is dictated by the fingerprint structure.
     Fingerprint.keys().forEach (key) ->
@@ -132,8 +132,6 @@ exports.pkgmanRegister = (registrar) ->
 
   # #### Implements hook `shrubSocketConnectionMiddleware`.
   registrar.registerHook 'shrubSocketConnectionMiddleware', ->
-
-    {AuthorizationFailure} = require 'shrub-socket/manager'
 
     label: 'Provide villiany management'
     middleware: socketMiddleware()
@@ -225,7 +223,7 @@ buildBanMessage = (subject, ttl) ->
     'You are banned.'
 
   message += " The ban will be lifted #{
-    moment().add('seconds', ttl).fromNow()
+    moment().add(ttl, 'seconds').fromNow()
   }." if ttl?
 
   message
