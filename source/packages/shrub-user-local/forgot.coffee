@@ -1,8 +1,11 @@
 # User - Forgot password
+
 ```coffeescript
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubRpcRoutes`.
+
+#### Implements hook [`shrubRpcRoutes`](../../hooks#shrubrpcroutes)
+
 ```coffeescript
   registrar.registerHook 'shrubRpcRoutes', ->
 
@@ -34,16 +37,22 @@ exports.pkgmanRegister = (registrar) ->
 
         (req, res, next) ->
 ```
+
 Cancel promise flow if the user doesn't exist.
+
 ```coffeescript
           class NoSuchUser extends Error
             constructor: (@message) ->
 ```
+
 Look up the user.
+
 ```coffeescript
           Promise.resolve().then(->
 ```
+
 Search for username or encrypted email.
+
 ```coffeescript
             if -1 is req.body.usernameOrEmail.indexOf '@'
 
@@ -58,14 +67,18 @@ Search for username or encrypted email.
 
           ).then((filter) ->
 ```
+
 Find the local user.
+
 ```coffeescript
             orm.collection('shrub-user-local').findOne filter
 
           ).then((@localUser) ->
             throw new NoSuchUser unless @localUser?
 ```
+
 Generate a one-time login token.
+
 ```coffeescript
             crypto.randomBytes 24
 
@@ -73,22 +86,28 @@ Generate a one-time login token.
 
             @localUser.resetPasswordToken = token.toString 'hex'
 ```
+
 Decrypt the user's email address.
+
 ```coffeescript
             crypto.decrypt @localUser.email
 
           ).then((email) ->
 ```
+
 Send an email to the user's email with a one-time login link.
+
 ```coffeescript
-            siteHostname = config.get 'packageSettings:shrub-core:siteHostname'
+            siteHostname = config.get 'packageConfig:shrub-core:siteHostname'
             siteUrl = "http://#{siteHostname}"
 
             scope =
 
               email: email
 ```
+
 ###### TODO: HTTPS
+
 ```coffeescript
               loginUrl: "#{siteUrl}/user/reset/#{localUser.resetPasswordToken}"
 

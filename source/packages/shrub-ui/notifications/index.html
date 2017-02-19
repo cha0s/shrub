@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -1322,13 +1315,13 @@
             
                 <li class="toctree-l3"><a href="#ui-notifications">UI - Notifications</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubcoreprebootstrap">Implements hook shrubCorePreBootstrap.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubcoreprebootstrap">Implements hook shrubCorePreBootstrap</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubcorebootstrapmiddleware">Implements hook shrubCoreBootstrapMiddleware.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubcorebootstrapmiddleware">Implements hook shrubCoreBootstrapMiddleware</a></li>
                 
-                    <li><a class="toctree-l4" href="#invoke-hook-shrubuinotificationqueues">Invoke hook shrubUiNotificationQueues.</a></li>
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubuinotificationqueues">Invoke hook shrubUiNotificationQueues</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubormcollections">Implements hook shrubOrmCollections.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubormcollections">Implements hook shrubOrmCollections</a></li>
                 
                     <li><a class="toctree-l4" href="#notification">Notification</a></li>
                 
@@ -1690,7 +1683,7 @@ notificationQueues = {}
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <code>shrubCorePreBootstrap</code>.</h4>
+<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <a href="../../../hooks#shrubcoreprebootstrap"><code>shrubCorePreBootstrap</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubCorePreBootstrap', -&gt;
 
     Promise = require 'bluebird'
@@ -1698,7 +1691,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     orm = require 'shrub-orm'
 </code></pre>
 
-<h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <code>shrubCoreBootstrapMiddleware</code>.</h4>
+<h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <a href="../../../hooks#shrubcorebootstrapmiddleware"><code>shrubCoreBootstrapMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubCoreBootstrapMiddleware', -&gt;
 
     pkgman = require 'pkgman'
@@ -1709,7 +1702,7 @@ exports.pkgmanRegister = (registrar) -&gt;
       (next) -&gt;
 </code></pre>
 
-<h4 id="invoke-hook-shrubuinotificationqueues">Invoke hook <code>shrubUiNotificationQueues</code>.</h4>
+<h4 id="invoke-hook-shrubuinotificationqueues">Invoke hook <a href="../../../hooks#shrubuinotificationqueues"><code>shrubUiNotificationQueues</code></a></h4>
 <pre><code class="coffeescript">        for path, queues of pkgman.invoke 'shrubUiNotificationQueues'
           for name, queue of queues
             notificationQueues[pkgman.normalizePath name] = queue
@@ -1747,7 +1740,7 @@ exports.pkgmanRegister = (registrar) -&gt;
         req.socket.broadcast.to(channel).emit event, data
 </code></pre>
 
-<h4 id="implements-hook-shrubormcollections">Implements hook <code>shrubOrmCollections</code>.</h4>
+<h4 id="implements-hook-shrubormcollections">Implements hook <a href="../../../hooks#shrubormcollections"><code>shrubOrmCollections</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubOrmCollections', -&gt;
 </code></pre>
 
@@ -1911,7 +1904,7 @@ channel, skipping as many records as requested.</p>
     'shrub-ui-notification': Notification
 </code></pre>
 
-<h4 id="implements-hook-shrubconfigclient">Implements hook <code>shrubConfigClient</code>.</h4>
+<h4 id="implements-hook-shrubconfigclient">Implements hook <a href="../../../hooks#shrubconfigclient"><code>shrubConfigClient</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubConfigClient', (req) -&gt;
 </code></pre>
 
@@ -1965,7 +1958,7 @@ notifications, not append.</p>
     ).catch next
 </code></pre>
 
-<h4 id="implements-hook-shrubrpcroutes">Implements hook <code>shrubRpcRoutes</code>.</h4>
+<h4 id="implements-hook-shrubrpcroutes">Implements hook <a href="../../../hooks#shrubrpcroutes"><code>shrubRpcRoutes</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubRpcRoutes', -&gt;
 
     routes = []

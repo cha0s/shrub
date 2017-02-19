@@ -1,10 +1,13 @@
 # Form - Radios
+
 ```coffeescript
 _ = require 'lodash'
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubAngularDirective`.
+
+#### Implements hook [`shrubAngularDirective`](../../../../hooks#shrubangulardirective)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularDirective', -> [
     ->
@@ -21,7 +24,9 @@ exports.pkgmanRegister = (registrar) ->
               radio.name = field.name
               radio.type = 'radio'
 ```
+
 Sync the radio value with field.value
+
 ```coffeescript
             $radios = angular.element('.radio input', element)
             $radios.off 'change'
@@ -66,7 +71,9 @@ Sync the radio value with field.value
 
       element.find('.radio input[name"' + k + '"]').prop 'checked', true
 ```
-#### Implements hook `shrubFormWidgets`.
+
+#### Implements hook [`shrubFormWidgets`](../../../../hooks#shrubformwidgets)
+
 ```coffeescript
   registrar.registerHook 'shrubFormWidgets', ->
 

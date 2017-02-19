@@ -1,6 +1,7 @@
 # Dummy socket
 
 *Mock out the socket manager.*
+
 ```coffeescript
 Socket = require 'shrub-socket/socket'
 

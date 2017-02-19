@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -786,13 +779,13 @@
             
                 <li class="toctree-l3"><a href="#express-routes">Express - routes</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubcorebootstrapmiddleware">Implements hook shrubCoreBootstrapMiddleware.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubcorebootstrapmiddleware">Implements hook shrubCoreBootstrapMiddleware</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubhttpmiddleware">Implements hook shrubHttpMiddleware.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubhttpmiddleware">Implements hook shrubHttpMiddleware</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubrpcroutesalter">Implements hook shrubRpcRoutesAlter.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubrpcroutesalter">Implements hook shrubRpcRoutesAlter</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubsocketconnectionmiddleware">Implements hook shrubSocketConnectionMiddleware.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubsocketconnectionmiddleware">Implements hook shrubSocketConnectionMiddleware</a></li>
                 
             
             </ul>
@@ -1676,7 +1669,7 @@ signature = null
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <code>shrubCoreBootstrapMiddleware</code>.</h4>
+<h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <a href="../../../hooks#shrubcorebootstrapmiddleware"><code>shrubCoreBootstrapMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubCoreBootstrapMiddleware', -&gt;
 
     label: 'Bootstrap session handling'
@@ -1688,7 +1681,7 @@ exports.pkgmanRegister = (registrar) -&gt;
         signature = require 'cookie-signature'
 
         {cookie} = config.get(
-          'packageSettings:shrub-session'
+          'packageConfig:shrub-session'
         )
 
         cookieParser = CookieParser cookie.cryptoKey
@@ -1701,7 +1694,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     ]
 </code></pre>
 
-<h4 id="implements-hook-shrubhttpmiddleware">Implements hook <code>shrubHttpMiddleware</code>.</h4>
+<h4 id="implements-hook-shrubhttpmiddleware">Implements hook <a href="../../../hooks#shrubhttpmiddleware"><code>shrubHttpMiddleware</code></a></h4>
 <p>Parse cookies and load any session.</p>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubHttpMiddleware', (http) -&gt;
 
@@ -1709,7 +1702,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     middleware: sessionMiddleware()
 </code></pre>
 
-<h4 id="implements-hook-shrubrpcroutesalter">Implements hook <code>shrubRpcRoutesAlter</code>.</h4>
+<h4 id="implements-hook-shrubrpcroutesalter">Implements hook <a href="../../../hooks#shrubrpcroutesalter"><code>shrubRpcRoutesAlter</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubRpcRoutesAlter', (routes) -&gt;
 
     {spliceRouteMiddleware} = require 'shrub-rpc'
@@ -1739,7 +1732,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     return
 </code></pre>
 
-<h4 id="implements-hook-shrubsocketconnectionmiddleware">Implements hook <code>shrubSocketConnectionMiddleware</code>.</h4>
+<h4 id="implements-hook-shrubsocketconnectionmiddleware">Implements hook <a href="../../../hooks#shrubsocketconnectionmiddleware"><code>shrubSocketConnectionMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubSocketConnectionMiddleware', -&gt;
 
     label: 'Load session from cookie'
@@ -1747,7 +1740,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 
 sessionMiddleware = -&gt;
 
-  {cookie, key} = config.get 'packageSettings:shrub-session'
+  {cookie, key} = config.get 'packageConfig:shrub-session'
 
   return [
 </code></pre>

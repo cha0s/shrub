@@ -1,6 +1,7 @@
 # REPL
 
 *Runs a REPL and allows packages to add values to its context.*
+
 ```coffeescript
 CoffeeScript = require 'coffee-script'
 fs = require 'fs'
@@ -12,33 +13,47 @@ pkgman = require 'pkgman'
 
 debug = require('debug') 'shrub:repl'
 ```
+
 The socket server.
+
 ```coffeescript
 server = null
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubConfigServer`.
+
+#### Implements hook [`shrubConfigServer`](../../hooks#shrubconfigserver)
+
 ```coffeescript
   registrar.registerHook 'shrubConfigServer', ->
 ```
+
 The prompt display for REPL clients.
+
 ```coffeescript
     prompt: 'shrub> '
 ```
+
 The location of the socket.
+
 ```coffeescript
     socket: "#{__dirname}/socket"
 ```
+
 Use a CoffeeScript REPL?
+
 ```coffeescript
     useCoffee: true
 ```
-#### Implements hook `shrubCoreProcessExit`.
+
+#### Implements hook [`shrubCoreProcessExit`](../../hooks#shrubcoreprocessexit)
+
 ```coffeescript
   registrar.registerHook 'shrubCoreProcessExit', -> server?.close()
 ```
-#### Implements hook `shrubCoreBootstrapMiddleware`.
+
+#### Implements hook [`shrubCoreBootstrapMiddleware`](../../hooks#shrubcorebootstrapmiddleware)
+
 ```coffeescript
   registrar.registerHook 'shrubCoreBootstrapMiddleware', ->
 
@@ -49,15 +64,19 @@ Use a CoffeeScript REPL?
 
       (next) ->
 
-        settings = config.get 'packageSettings:shrub-repl'
+        settings = config.get 'packageConfig:shrub-repl'
 
         server = net.createServer (socket) ->
 ```
-#### Invoke hook `shrubReplContext`.
+
+#### Invoke hook [`shrubReplContext`](../../hooks#shrubreplcontext)
+
 ```coffeescript
           pkgman.invoke 'shrubReplContext', context = {}
 ```
+
 REPL server options.
+
 ```coffeescript
           opts =
             prompt: settings.prompt
@@ -65,21 +84,29 @@ REPL server options.
             output: socket
             ignoreUndefined: true
 ```
+
 CoffeeScript?
+
 ```coffeescript
           if settings.useCoffee
 
             opts.prompt = "(coffee) #{settings.prompt}"
 ```
+
 Define our own eval function, using CoffeeScript.
+
 ```coffeescript
             opts.eval = (cmd, context, filename, callback) ->
 ```
+
 Handle blank lines correctly.
+
 ```coffeescript
               return callback null, undefined if cmd is '(\n)'
 ```
+
 Forward the input to CoffeeScript for evalulation.
+
 ```coffeescript
               try
 
@@ -93,22 +120,30 @@ Forward the input to CoffeeScript for evalulation.
 
                 callback error
 ```
+
 Spin up the server, inject the values from `shrubReplContext`, and
 prepare for later cleanup.
+
 ```coffeescript
           repl = replServer.start opts
           repl.context[key] = value for key, value of context
           repl.on 'exit', -> socket.end()
 ```
+
 Try to be tidy about things.
+
 ```coffeescript
         fs.unlink settings.socket, (error) ->
 ```
+
 Ignore the error if it's just saying the socket didn't exist.
+
 ```coffeescript
           return next error if error.code isnt 'ENOENT' if error?
 ```
+
 Bind the REPL server socket.
+
 ```coffeescript
           server.listen settings.socket, (error) ->
             return next error if error?

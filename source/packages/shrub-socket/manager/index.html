@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -1691,13 +1684,13 @@ no real error occurred, but authorization failed.</p>
     middleware = require 'middleware'
 </code></pre>
 
-<h4 id="invoke-hook-shrubsocketconnectionmiddleware">Invoke hook <code>shrubSocketConnectionMiddleware</code>.</h4>
+<h4 id="invoke-hook-shrubsocketconnectionmiddleware">Invoke hook <a href="../../../hooks#shrubsocketconnectionmiddleware"><code>shrubSocketConnectionMiddleware</code></a></h4>
 <pre><code class="coffeescript">    @_connectionMiddleware = middleware.fromConfig(
       'shrub-socket:connectionMiddleware'
     )
 </code></pre>
 
-<h4 id="invoke-hook-shrubsocketdisconnectionmiddleware">Invoke hook <code>shrubSocketDisconnectionMiddleware</code>.</h4>
+<h4 id="invoke-hook-shrubsocketdisconnectionmiddleware">Invoke hook <a href="../../../hooks#shrubsocketdisconnectionmiddleware"><code>shrubSocketDisconnectionMiddleware</code></a></h4>
 <pre><code class="coffeescript">    @_disconnectionMiddleware = middleware.fromConfig(
       'shrub-socket:disconnectionMiddleware'
     )

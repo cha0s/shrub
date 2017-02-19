@@ -1,8 +1,11 @@
 # UI - list item
+
 ```coffeescript
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubAngularController`.
+
+#### Implements hook [`shrubAngularController`](../../../../hooks#shrubangularcontroller)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularController', -> [
 
@@ -16,7 +19,9 @@ exports.pkgmanRegister = (registrar) ->
 
             for child in element.children()
 ```
+
 Child list?
+
 ```coffeescript
               $child = angular.element child
               continue if $child.attr('data-shrub-ui-list')?
@@ -29,7 +34,9 @@ Child list?
 
   ]
 ```
-#### Implements hook `shrubAngularDirective`.
+
+#### Implements hook [`shrubAngularDirective`](../../../../hooks#shrubangulardirective)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularDirective', -> [
 

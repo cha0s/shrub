@@ -1,10 +1,13 @@
 # UI - Notifications
+
 ```coffeescript
 config = require 'config'
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubAngularDirective`.
+
+#### Implements hook [`shrubAngularDirective`](../../../../hooks#shrubangulardirective)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularDirective', -> [
     'shrub-rpc', 'shrub-ui/notifications'
@@ -18,29 +21,39 @@ exports.pkgmanRegister = (registrar) ->
 
       directive.link = (scope, element, attr) ->
 ```
+
 Put the queue name into the scope.
+
 ```coffeescript
         scope.queueName = attr.queueName
         scope.queue = notifications.queue scope.queueName
 ```
+
 When notifications are akcnowledged.
+
 ```coffeescript
         scope.$on 'shrub.ui.notifications.acknowledged', ->
           return unless scope.unacknowledged
 ```
+
 Tell the server.
+
 ```coffeescript
           rpc.call(
             'shrub-ui/notifications/acknowledged'
             queue: attr.queueName
           )
 ```
+
 Mark client notifications as acknowledged.
+
 ```coffeescript
           for notification in scope.queue.notifications()
             notification.acknowledged = true
 ```
+
 Mark the notification as read.
+
 ```coffeescript
         scope.markAsRead = (notification, markedAsRead) ->
           return if markedAsRead is notification.markedAsRead
@@ -53,9 +66,11 @@ Mark the notification as read.
             markedAsRead: markedAsRead
           )
 ```
+
 Hide the popover when any notification is clicked. Feel free to
 catch the `shrub.ui.notification.clicked` event in your
 shrubSkinLink implementation.
+
 ```coffeescript
         scope.notificationClicked = ($event, notification) ->
 
@@ -64,19 +79,25 @@ shrubSkinLink implementation.
             $event, notification
           )
 ```
+
 Set up default behavior on a click event, and provide the
 deregistration function to any shrubSkinLink consumers.
+
 ```coffeescript
         scope.$deregisterDefaultClickHandler = scope.$on(
           'shrub.ui.notification.clicked'
           ($event, $clickEvent, notification) ->
 ```
+
 Mark the notification as read.
+
 ```coffeescript
             scope.markAsRead notification, true
         )
 ```
+
 Keep track of unread items.
+
 ```coffeescript
         scope.$watch 'queue.notifications()', (notifications) ->
           unacknowledged = notifications.filter (notification) ->
@@ -149,7 +170,9 @@ Keep track of unread items.
 
   ]
 ```
-#### Implements hook `shrubAngularService`.
+
+#### Implements hook [`shrubAngularService`](../../../../hooks#shrubangularservice)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularService', -> [
     '$q', 'shrub-rpc', 'shrub-socket'
@@ -159,16 +182,20 @@ Keep track of unread items.
 
       _queues = {}
 ```
+
 ## notifications.list
 
 Get a queue of notifications.
+
 ```coffeescript
       service.queue = (queue) ->
         _queues[queue] ?= new NotificationQueue()
 ```
+
 ## notifications.loadMore
 
 Load more notifications
+
 ```coffeescript
       service.loadMore = (queue, skip) ->
 
@@ -182,7 +209,9 @@ Load more notifications
           _queues[queue] ?= new NotificationQueue()
           _queues[queue].add notifications
 ```
+
 Add in initial notifications from config.
+
 ```coffeescript
       for queue, notifications of config.get(
         'packageConfig:shrub-ui:notifications'
@@ -190,7 +219,9 @@ Add in initial notifications from config.
         _queues[queue] ?= new NotificationQueue()
         _queues[queue].add notifications
 ```
+
 Accept notifications from the server.
+
 ```coffeescript
       socket.on 'shrub-ui/notifications', (data) ->
         {queue, notifications} = data
@@ -198,7 +229,9 @@ Accept notifications from the server.
         _queues[queue] ?= new NotificationQueue()
         _queues[queue].add notifications
 ```
+
 Remove notifications.
+
 ```coffeescript
       socket.on 'shrub-ui/notifications/remove', (data) ->
         {queue, ids} = data
@@ -206,7 +239,9 @@ Remove notifications.
         _queues[queue] ?= new NotificationQueue()
         _queues[queue].remove ids
 ```
+
 Mark notifications as read.
+
 ```coffeescript
       socket.on 'shrub-ui/notifications/markAsRead', (data) ->
         {queue, ids, markedAsRead} = data
@@ -214,7 +249,9 @@ Mark notifications as read.
         _queues[queue] ?= new NotificationQueue()
         _queues[queue].markAsRead ids, markedAsRead
 ```
+
 Mark notifications as acknowledged.
+
 ```coffeescript
       socket.on 'shrub-ui/notifications/acknowledged', (data) ->
         {queue, ids} = data

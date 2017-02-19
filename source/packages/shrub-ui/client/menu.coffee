@@ -1,16 +1,21 @@
 # UI - Menu
 
 *Manage menus; essentially recursive lists with an emphasis on navigation.*
+
 ```coffeescript
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubAngularController`.
+
+#### Implements hook [`shrubAngularController`](../../../hooks#shrubangularcontroller)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularController', -> [
     '$compile', '$location', '$scope'
     class MenuController
 ```
+
 ## *constructor*
+
 ```coffeescript
       constructor: ($compile, $location, $scope) ->
         self = this
@@ -30,12 +35,16 @@ exports.pkgmanRegister = (registrar) ->
           ]
           (newValues, oldValues) ->
 ```
+
 Paths without the leading slash.
+
 ```coffeescript
             if oldPath = oldValues[0]
               oldPath = oldPath.substr 1
 ```
+
 Remove the active class if we navigated away.
+
 ```coffeescript
               if self.linkMap[oldPath]?[0].attributes?.class?
                 attributes = self.linkMap[oldPath][0].attributes
@@ -43,7 +52,9 @@ Remove the active class if we navigated away.
                   index = attributes.class.indexOf 'active'
                   attributes.class.splice index, 1
 ```
+
 Add the active class if we navigated to.
+
 ```coffeescript
             newPath = newValues[0].substr 1
             if self.linkMap[newPath]?
@@ -52,9 +63,11 @@ Add the active class if we navigated to.
 
         )
 ```
+
 ## MenuController#rebuildListTree
 
 *Rebuild the list tree from the menu tree.*
+
 ```coffeescript
       rebuildListTree: ($compile, $scope) ->
         self = this
@@ -89,7 +102,9 @@ Add the active class if we navigated to.
 
             (self.linkMap[leaf.path] ?= []).push item
 ```
+
 Recur.
+
 ```coffeescript
             if leaf.list?
 
@@ -109,7 +124,9 @@ Recur.
 
   ]
 ```
-#### Implements hook `shrubAngularDirective`.
+
+#### Implements hook [`shrubAngularDirective`](../../../hooks#shrubangulardirective)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularDirective', -> [
 

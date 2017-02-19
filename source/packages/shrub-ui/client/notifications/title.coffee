@@ -1,8 +1,11 @@
 # UI - Notifications title
+
 ```coffeescript
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubAngularDirective`.
+
+#### Implements hook [`shrubAngularDirective`](../../../../hooks#shrubangulardirective)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularDirective', -> [
     'shrub-ui/notifications', 'shrub-rpc'
@@ -23,16 +26,22 @@ exports.pkgmanRegister = (registrar) ->
           (notification) -> not notification.markedAsRead
         )
 ```
+
 Mark all notifications as read.
+
 ```coffeescript
         scope.markAllRead = ->
           notAlreadyRead = @notAlreadyRead()
 ```
+
 Early out if there's nothing to do.
+
 ```coffeescript
           return if notAlreadyRead.length is 0
 ```
+
 Mark notifications as read, and tell the server.
+
 ```coffeescript
           scope.queue.markAsRead ids = _.map(
             notAlreadyRead, (notification) -> notification.id

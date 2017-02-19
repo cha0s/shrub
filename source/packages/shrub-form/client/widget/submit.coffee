@@ -1,8 +1,11 @@
 # Form - Submit
+
 ```coffeescript
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubAngularDirective`.
+
+#### Implements hook [`shrubAngularDirective`](../../../../hooks#shrubangulardirective)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularDirective', -> [
     ->
@@ -35,7 +38,9 @@ exports.pkgmanRegister = (registrar) ->
 
   assignToElement = (element, value) -> element.val value
 ```
-#### Implements hook `shrubFormWidgets`.
+
+#### Implements hook [`shrubFormWidgets`](../../../../hooks#shrubformwidgets)
+
 ```coffeescript
   registrar.registerHook 'shrubFormWidgets', ->
 

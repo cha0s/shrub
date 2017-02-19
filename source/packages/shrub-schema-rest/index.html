@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -1672,7 +1665,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 <h2 id="implements-hook-shrubconfigclient">Implements hook <code>shrubConfigClient</code></h2>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubConfigClient', -&gt;
 
-    apiRoot: config.get 'packageSettings:shrub-schema:apiRoot'
+    apiRoot: config.get 'packageConfig:shrub-schema:apiRoot'
 </code></pre>
 
 <h2 id="implements-hook-shrubhttproutes">Implements hook <code>shrubHttpRoutes</code></h2>
@@ -1691,7 +1684,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
 <p>CORS policy enforcement.</p>
-<pre><code class="coffeescript">      corsHeaders = config.get 'packageSettings:shrub-schema:corsHeaders'
+<pre><code class="coffeescript">      corsHeaders = config.get 'packageConfig:shrub-schema:corsHeaders'
       res.set corsHeaders if corsHeaders?
 </code></pre>
 
@@ -1722,7 +1715,7 @@ default (<code>/api</code>), the values will be:</p>
 resourcePath = "/api/user/:id"
 </code></pre>
 <p>We'll assume these defaults for each path's explanation.</p>
-<pre><code class="coffeescript">        apiRoot = config.get 'packageSettings:shrub-schema:apiRoot'
+<pre><code class="coffeescript">        apiRoot = config.get 'packageConfig:shrub-schema:apiRoot'
         collectionPath = &quot;#{apiRoot}/#{collection}&quot;
         resourcePath = &quot;#{apiRoot}/#{resource}/:id&quot;
 </code></pre>

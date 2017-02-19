@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -1430,11 +1423,11 @@
             
                 <li class="toctree-l3"><a href="#user-registration">User - Registration</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubcoreprebootstrap">Implements hook shrubCorePreBootstrap.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubcoreprebootstrap">Implements hook shrubCorePreBootstrap</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubrpcroutes">Implements hook shrubRpcRoutes.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubrpcroutes">Implements hook shrubRpcRoutes</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubreplcontext">Implements hook shrubReplContext.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubreplcontext">Implements hook shrubReplContext</a></li>
                 
             
             </ul>
@@ -1664,13 +1657,13 @@
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <code>shrubCorePreBootstrap</code>.</h4>
+<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <a href="../../../hooks#shrubcoreprebootstrap"><code>shrubCorePreBootstrap</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubCorePreBootstrap', -&gt;
 
     orm = require 'shrub-orm'
 </code></pre>
 
-<h4 id="implements-hook-shrubrpcroutes">Implements hook <code>shrubRpcRoutes</code>.</h4>
+<h4 id="implements-hook-shrubrpcroutes">Implements hook <a href="../../../hooks#shrubrpcroutes"><code>shrubRpcRoutes</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubRpcRoutes', -&gt;
 
     config = require 'config'
@@ -1712,7 +1705,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 
 <p>Send an email to the new user's email with a one-time login
 link.</p>
-<pre><code class="coffeescript">            siteHostname = config.get 'packageSettings:shrub-core:siteHostname'
+<pre><code class="coffeescript">            siteHostname = config.get 'packageConfig:shrub-core:siteHostname'
             siteUrl = &quot;http://#{siteHostname}&quot;
 
             scope =
@@ -1751,7 +1744,7 @@ link.</p>
     return routes
 </code></pre>
 
-<h4 id="implements-hook-shrubreplcontext">Implements hook <code>shrubReplContext</code>.</h4>
+<h4 id="implements-hook-shrubreplcontext">Implements hook <a href="../../../hooks#shrubreplcontext"><code>shrubReplContext</code></a></h4>
 <pre><code class="coffeescript">    registrar.registerHook 'shrubReplContext', (context) -&gt;
       orm = require 'shrub-orm'
       User = orm.collection 'shrub-user'

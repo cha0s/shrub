@@ -2,6 +2,7 @@
 
 *This is mostly stubbed for the browser. I can't justify sending a 400k ORM
 library to the client, even though it would be awesome.*
+
 ```coffeescript
 Promise = require 'bluebird'
 
@@ -11,7 +12,9 @@ collections = {}
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubAngularService`.
+
+#### Implements hook [`shrubAngularService`](../../../hooks#shrubangularservice)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularService', -> [
     '$http'
@@ -21,17 +24,21 @@ exports.pkgmanRegister = (registrar) ->
 
       exports.initialize()
 ```
+
 ## orm.collection
 
 * (String) `identity` - Collection identity. e.g. `'shrub-user'`
 
 *Get a collection by identity.*
+
 ```coffeescript
       service.collection = (identity) -> collections[identity]
 ```
+
 ## orm.collections
 
 *Get all collections.*
+
 ```coffeescript
       service.collections = -> collections
 
@@ -41,18 +48,24 @@ exports.pkgmanRegister = (registrar) ->
 
 exports.initialize = ->
 ```
-#### Invoke hook `shrubOrmCollections`.
+
+#### Invoke hook [`shrubOrmCollections`](../../../hooks#shrubormcollections)
+
 ```coffeescript
   collections_ = {}
   for collectionList in pkgman.invokeFlat 'shrubOrmCollections'
     for identity, collection of collectionList
 ```
+
 Collection defaults.
+
 ```coffeescript
       collection.identity ?= identity
       collections_[collection.identity] = collection
 ```
+
 Instantiate a model with defaults supplied.
+
 ```coffeescript
       collection.instantiate = (values = {}) ->
         model = JSON.parse JSON.stringify values
@@ -65,11 +78,15 @@ Instantiate a model with defaults supplied.
 
         for key, value of @attributes
 ```
+
 Set functions.
+
 ```coffeescript
           model[key] = value if 'function' is typeof value
 ```
+
 Set any model defaults.
+
 ```coffeescript
           if value.defaultsTo?
             model[key] ?= if 'function' is typeof value.defaultsTo
@@ -77,14 +94,18 @@ Set any model defaults.
             else
               JSON.parse JSON.stringify value.defaultsTo
 ```
+
 Handle dates.
+
 ```coffeescript
           if model[key]? and 'date' is value or 'date' is value.type
             model[key] = new Date model[key]
 
         model
 ```
-#### Invoke hook `shrubOrmCollectionsAlter`.
+
+#### Invoke hook [`shrubOrmCollectionsAlter`](../../../hooks#shrubormcollectionsalter)
+
 ```coffeescript
   pkgman.invoke 'shrubOrmCollectionsAlter', collections_
 

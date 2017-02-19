@@ -1,12 +1,15 @@
 # HTML5 notification
 
 *Build and serve the HTML5 notification support.*
+
 ```coffeescript
 config = require 'config'
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubGruntConfig`.
+
+#### Implements hook [`shrubGruntConfig`](../../hooks#shrubgruntconfig)
+
 ```coffeescript
   registrar.registerHook 'shrubGruntConfig', (gruntConfig) ->
 
@@ -18,7 +21,9 @@ exports.pkgmanRegister = (registrar) ->
 
     gruntConfig.registerTask 'build', ['build:shrub-html5-notification']
 ```
-#### Implements hook `shrubAssetsMiddleware`.
+
+#### Implements hook [`shrubAssetsMiddleware`](../../hooks#shrubassetsmiddleware)
+
 ```coffeescript
   registrar.registerHook 'shrubAssetsMiddleware', ->
 
@@ -36,7 +41,9 @@ exports.pkgmanRegister = (registrar) ->
 
     ]
 ```
-#### Implements hook `shrubAngularPackageDependencies`.
+
+#### Implements hook [`shrubAngularPackageDependencies`](../../hooks#shrubangularpackagedependencies)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularPackageDependencies', -> [
     'notification'

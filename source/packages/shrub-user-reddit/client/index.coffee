@@ -1,8 +1,11 @@
+
 ```coffeescript
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubUserLoginStrategies`.
+
+#### Implements hook [`shrubUserLoginStrategies`](../../../hooks#shrubuserloginstrategies)
+
 ```coffeescript
   registrar.registerHook 'shrubUserLoginStrategies', ->
 
@@ -24,24 +27,32 @@ exports.shrubOrmCollections = ->
 
     attributes:
 ```
+
 reddit ID.
+
 ```coffeescript
       redditId:
         type: 'string'
         required: true
 ```
+
 reddit username.
+
 ```coffeescript
       name:
         type: 'string'
         required: true
 ```
+
 OAuth2 access token.
+
 ```coffeescript
       accessToken:
         type: 'longtext'
 ```
+
 OAuth2 refresh token.
+
 ```coffeescript
       refreshToken:
         type: 'longtext'

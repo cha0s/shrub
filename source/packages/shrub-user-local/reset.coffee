@@ -1,8 +1,11 @@
 # User - Password reset
+
 ```coffeescript
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubRpcRoutes`.
+
+#### Implements hook [`shrubRpcRoutes`](../../hooks#shrubrpcroutes)
+
 ```coffeescript
   registrar.registerHook 'shrubRpcRoutes', ->
 
@@ -32,12 +35,16 @@ exports.pkgmanRegister = (registrar) ->
 
           User =
 ```
+
 Cancel promise flow if the user doesn't exist.
+
 ```coffeescript
           class NoSuchUser extends Error
             constructor: (@message) ->
 ```
+
 Look up the user.
+
 ```coffeescript
           Promise.cast(
             orm.collection('shrub-user-local').findOne(
@@ -46,7 +53,9 @@ Look up the user.
           ).bind({}).then((@localUser) ->
             throw new NoSuchUser unless @localUser?
 ```
+
 Recalculate the password hashing details.
+
 ```coffeescript
             crypto.hasher plaintext: req.body.password
 

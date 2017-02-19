@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -1693,7 +1686,7 @@ module.exports = class SocketIoManager extends SocketManager
 
     socketLogger ?= logging.create 'logs/socket.io.log'
 
-    options = config.get 'packageSettings:shrub-socket:manager:options'
+    options = config.get 'packageConfig:shrub-socket:manager:options'
 </code></pre>
 
 <p>Load the adapter.</p>
@@ -1773,7 +1766,7 @@ module.exports = class SocketIoManager extends SocketManager
 <p><em>Listen for socket connections coming through the HTTP server.</em></p>
 <pre><code class="coffeescript">  listen: (http) -&gt;
 
-    options = config.get 'packageSettings:shrub-socket:manager:options'
+    options = config.get 'packageConfig:shrub-socket:manager:options'
 </code></pre>
 
 <p>Set up the socket.io server.</p>

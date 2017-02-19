@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -1185,13 +1178,13 @@
             
                 <li class="toctree-l3"><a href="#socket">Socket</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubconfigclient">Implements hook shrubConfigClient.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubconfigclient">Implements hook shrubConfigClient</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubcorebootstrapmiddleware">Implements hook shrubCoreBootstrapMiddleware.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubcorebootstrapmiddleware">Implements hook shrubCoreBootstrapMiddleware</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubreplcontext">Implements hook shrubReplContext.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubreplcontext">Implements hook shrubReplContext</a></li>
                 
                     <li><a class="toctree-l4" href="#manager">manager</a></li>
                 
@@ -1673,7 +1666,7 @@
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubconfigclient">Implements hook <code>shrubConfigClient</code>.</h4>
+<h4 id="implements-hook-shrubconfigclient">Implements hook <a href="../../../hooks#shrubconfigclient"><code>shrubConfigClient</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubConfigClient', -&gt;
 </code></pre>
 
@@ -1684,12 +1677,12 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     else
 
-      config.get 'packageSettings:shrub-socket:manager:module'
+      config.get 'packageConfig:shrub-socket:manager:module'
 
     manager: module: socketModule
 </code></pre>
 
-<h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <code>shrubCoreBootstrapMiddleware</code>.</h4>
+<h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <a href="../../../hooks#shrubcorebootstrapmiddleware"><code>shrubCoreBootstrapMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubCoreBootstrapMiddleware', -&gt;
 
     label: 'Socket server'
@@ -1699,7 +1692,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 
         {manager: httpManager} = require 'shrub-http'
 
-        {Manager} = require config.get 'packageSettings:shrub-socket:manager:module'
+        {Manager} = require config.get 'packageConfig:shrub-socket:manager:module'
 </code></pre>
 
 <p>Spin up the socket server, and have it listen on the HTTP server.</p>
@@ -1712,7 +1705,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     ]
 </code></pre>
 
-<h4 id="implements-hook-shrubconfigserver">Implements hook <code>shrubConfigServer</code>.</h4>
+<h4 id="implements-hook-shrubconfigserver">Implements hook <a href="../../../hooks#shrubconfigserver"><code>shrubConfigServer</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubConfigServer', -&gt;
 </code></pre>
 
@@ -1737,7 +1730,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 <pre><code class="coffeescript">      module: 'shrub-socket-socket.io'
 </code></pre>
 
-<h4 id="implements-hook-shrubreplcontext">Implements hook <code>shrubReplContext</code>.</h4>
+<h4 id="implements-hook-shrubreplcontext">Implements hook <a href="../../../hooks#shrubreplcontext"><code>shrubReplContext</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubReplContext', (context) -&gt;
 </code></pre>
 

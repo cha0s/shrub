@@ -1,14 +1,19 @@
 # User logout
+
 ```coffeescript
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubRpcRoutes`.
+
+#### Implements hook [`shrubRpcRoutes`](../../hooks#shrubrpcroutes)
+
 ```coffeescript
   registrar.registerHook 'shrubRpcRoutes', ->
 
     routes = []
 ```
+
 Log out.
+
 ```coffeescript
     routes.push
 

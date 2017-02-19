@@ -1,14 +1,19 @@
+
 ```coffeescript
 
 {TransmittableError} = require 'errors'
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubTransmittableErrors`.
+
+#### Implements hook [`shrubTransmittableErrors`](../../../hooks#shrubtransmittableerrors)
+
 ```coffeescript
   registrar.registerHook 'shrubTransmittableErrors', exports.shrubTransmittableErrors
 ```
-#### Implements hook `shrubUserLoginStrategies`.
+
+#### Implements hook [`shrubUserLoginStrategies`](../../../hooks#shrubuserloginstrategies)
+
 ```coffeescript
   registrar.registerHook 'shrubUserLoginStrategies', ->
 
@@ -48,13 +53,17 @@ exports.shrubOrmCollections = ->
 
     attributes:
 ```
+
 Email address.
+
 ```coffeescript
       email:
         type: 'string'
         index: true
 ```
+
 Name.
+
 ```coffeescript
       name:
         type: 'string'
@@ -63,11 +72,13 @@ Name.
 
   'shrub-user-local': UserLocal
 ```
+
 Transmittable login error.
+
 ```coffeescript
 class LoginError extends TransmittableError
 
-  key: 'shrub-user-local-login'
+  errorType: 'shrub-user-local-login'
   template: 'No such username/password.'
 
 exports.shrubTransmittableErrors = -> [

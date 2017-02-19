@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -850,7 +843,7 @@
             
                 <li class="toctree-l3"><a href="#limiter">Limiter</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubtransmittableerrors">Implements hook shrubTransmittableErrors.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubtransmittableerrors">Implements hook shrubTransmittableErrors</a></li>
                 
             
             </ul>
@@ -1665,14 +1658,14 @@ passing.</p>
 
   constructor: (message, @time) -&gt; super
 
-  key: 'limiterThreshold'
+  errorType: 'limiterThreshold'
   template: ':message You may try again :time.'
-  toJSON: -&gt; [@key, @message, @time]
+  toJSON: -&gt; [@errorType, @message, @time]
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubtransmittableerrors">Implements hook <code>shrubTransmittableErrors</code>.</h4>
+<h4 id="implements-hook-shrubtransmittableerrors">Implements hook <a href="../../../../hooks#shrubtransmittableerrors"><code>shrubTransmittableErrors</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubTransmittableErrors', exports.shrubTransmittableErrors
 
 exports.shrubTransmittableErrors = -&gt; [

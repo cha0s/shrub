@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -1094,15 +1087,15 @@
             
                 <li class="toctree-l3"><a href="#skinning">Skinning</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubangulardirectivealter">Implements hook shrubAngularDirectiveAlter.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubangulardirectivealter">Implements hook shrubAngularDirectiveAlter</a></li>
                 
-                    <li><a class="toctree-l4" href="#invoke-hook-shrubskinlink">Invoke hook shrubSkinLink.</a></li>
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubskinlink">Invoke hook shrubSkinLink</a></li>
                 
-                    <li><a class="toctree-l4" href="#invoke-hook-shrubskinlink-directive">Invoke hook shrubSkinLink--DIRECTIVE.</a></li>
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubskinlink-directive">Invoke hook shrubSkinLink--DIRECTIVE</a></li>
                 
-                    <li><a class="toctree-l4" href="#invoke-hook-shrubskinlink-directive-id">Invoke hook shrubSkinLink--DIRECTIVE--ID.</a></li>
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubskinlink-directive-id">Invoke hook shrubSkinLink--DIRECTIVE--ID</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubangularprovider">Implements hook shrubAngularProvider.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubangularprovider">Implements hook shrubAngularProvider</a></li>
                 
                     <li><a class="toctree-l4" href="#skinaddstylesheet">skin.addStylesheet</a></li>
                 
@@ -1676,9 +1669,12 @@ page load.</em></p>
 pkgman = require 'pkgman'
 
 exports.pkgmanRegister = (registrar) -&gt;
+
+  currentSkinKey = null
+  defaultSkinKey = config.get 'packageConfig:shrub-skin:default'
 </code></pre>
 
-<h4 id="implements-hook-shrubangulardirectivealter">Implements hook <code>shrubAngularDirectiveAlter</code>.</h4>
+<h4 id="implements-hook-shrubangulardirectivealter">Implements hook <a href="../../../../hooks#shrubangulardirectivealter"><code>shrubAngularDirectiveAlter</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAngularDirectiveAlter', (directive, path) -&gt; [
 
     '$cacheFactory', '$compile', '$http', '$injector', '$interpolate', '$q', '$rootScope'
@@ -1688,9 +1684,6 @@ exports.pkgmanRegister = (registrar) -&gt;
 <p>Ensure ID is a candidate.</p>
 <pre><code class="coffeescript">      directive.candidateKeys ?= []
       directive.candidateKeys.unshift 'id'
-
-      currentSkinKey = null
-      defaultSkinKey = config.get 'packageConfig:shrub-skin:default'
 </code></pre>
 
 <p>Proxy link function to add our own directive retrieval and compilation
@@ -1797,9 +1790,9 @@ specificity.</p>
             candidateHooksInvoked[hook] = true
 </code></pre>
 
-<h4 id="invoke-hook-shrubskinlink">Invoke hook <code>shrubSkinLink</code>.</h4>
-<h4 id="invoke-hook-shrubskinlink-directive">Invoke hook <code>shrubSkinLink--DIRECTIVE</code>.</h4>
-<h4 id="invoke-hook-shrubskinlink-directive-id">Invoke hook <code>shrubSkinLink--DIRECTIVE--ID</code>.</h4>
+<h4 id="invoke-hook-shrubskinlink">Invoke hook <a href="../../../../hooks#shrubskinlink"><code>shrubSkinLink</code></a></h4>
+<h4 id="invoke-hook-shrubskinlink-directive">Invoke hook <a href="../../../../hooks#shrubskinlink--directive"><code>shrubSkinLink--DIRECTIVE</code></a></h4>
+<h4 id="invoke-hook-shrubskinlink-directive-id">Invoke hook <a href="../../../../hooks#shrubskinlink--directive--id"><code>shrubSkinLink--DIRECTIVE--ID</code></a></h4>
 <pre><code class="coffeescript">            for f in pkgman.invokeFlat hook
 
               $injector.invoke(
@@ -1813,16 +1806,17 @@ specificity.</p>
               )
 
         applySkin = (skinKey) -&gt;
+          return if currentSkinKey is skinKey
           currentSkinKey = skinKey
+
+          candidateHooksInvoked = {}
           recalculateCandidate()
 
         applySkin defaultSkinKey
 </code></pre>
 
 <p>Relink again every time the skin changes.</p>
-<pre><code class="coffeescript">        $rootScope.$on 'shrub-skin.changed', (event, skinKey) -&gt;
-          candidateHooksInvoked = {}
-          applySkin skinKey
+<pre><code class="coffeescript">        $rootScope.$on 'shrub-skin.changed', (_, skinKey) -&gt; applySkin skinKey
 </code></pre>
 
 <p>Set watches for all candidate-related values.</p>
@@ -1843,7 +1837,7 @@ specificity.</p>
   ]
 </code></pre>
 
-<h4 id="implements-hook-shrubangularprovider">Implements hook <code>shrubAngularProvider</code>.</h4>
+<h4 id="implements-hook-shrubangularprovider">Implements hook <a href="../../../../hooks#shrubangularprovider"><code>shrubAngularProvider</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAngularProvider', -&gt; [
 
     '$injector', '$provide'
@@ -1875,7 +1869,7 @@ changes.</p>
 <pre><code class="coffeescript">            element = $window.document.createElement 'link'
             element.type = 'text/css'
             element.rel = 'stylesheet'
-            element.href = &quot;/skin/shrub-skin-strapped/#{href}&quot;
+            element.href = &quot;/skin/#{currentSkinKey}/#{href}&quot;
             element.className = 'skin'
             angular.element('head').append element
 
@@ -1975,8 +1969,8 @@ a list of skin stylesheets.</em></p>
 <h2 id="skinchange">skin.change</h2>
 <p>(String) <code>skinKey</code> - The key of the skin to change to <em>Change
 skin.</em></p>
-<h6 id="todo-need-to-track-current-this-should-be-a-nop-in-that-case">TODO: Need to track current, this should be a nop in that case.</h6>
 <pre><code class="coffeescript">          service.change = (skinKey) -&gt;
+            return if skinKey is currentSkinKey
 </code></pre>
 
 <p>Cloak the body.</p>

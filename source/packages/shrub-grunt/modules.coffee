@@ -1,8 +1,11 @@
 # Grunt build process - Modules
+
 ```coffeescript
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubGruntConfig`.
+
+#### Implements hook [`shrubGruntConfig`](../../hooks#shrubgruntconfig)
+
 ```coffeescript
   registrar.registerHook 'shrubGruntConfig', (gruntConfig) ->
 

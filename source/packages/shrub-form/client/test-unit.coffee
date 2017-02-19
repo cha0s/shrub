@@ -1,3 +1,4 @@
+
 ```coffeescript
 
 describe 'form', ->
@@ -8,7 +9,9 @@ describe 'form', ->
       '$compile', '$rootScope', 'shrub-form'
       ($compile, $rootScope, shrubForm) ->
 ```
+
 Sanity
+
 ```coffeescript
         expect(shrubForm.forms.test).not.toBeDefined()
 
@@ -22,7 +25,9 @@ Sanity
         $compile(element)(scope)
         scope.$digest()
 ```
+
 Registered.
+
 ```coffeescript
         expect(shrubForm.forms.testAuto).toBeDefined()
 
@@ -61,7 +66,9 @@ Registered.
 
         $form = element.find 'form'
 ```
+
 <form> exists
+
 ```coffeescript
         expect($form.length).toBe 1
 
@@ -76,29 +83,39 @@ Registered.
           if -1 isnt ['email', 'password', 'text'].indexOf name
             childrenCount += 1
 ```
+
 Assert actual input type.
+
 ```coffeescript
             expect(input.type).toBe input.name
 ```
+
 Check required fields.
+
 ```coffeescript
           if scope['testElements'].fields[name]?.required
             expect($input.attr 'required').toBeDefined()
           else
             expect($input.attr 'required').not.toBeDefined()
 ```
+
 Check default values.
+
 ```coffeescript
           if scope['testElements'].fields[name]?.value?
             expect(scope['testElements'].fields[name].value).toBe input.value
 
           hasFormKey = true if name is 'formKey'
 ```
+
 All children present.
+
 ```coffeescript
         expect(childrenCount).toBe 3
 ```
+
 Form key generated.
+
 ```coffeescript
         expect(hasFormKey).toBe true
 
@@ -150,7 +167,9 @@ Form key generated.
           $input = angular.element input
           input.click() if 'submit' is input.type
 ```
+
 Form was submitted with correct values.
+
 ```coffeescript
         expect(submissionCleared).toBe true
 
@@ -211,11 +230,15 @@ Form was submitted with correct values.
 
         $timeout.flush()
 ```
+
 RPC received correct data.
+
 ```coffeescript
         expect(rpcSubmission).toBe 'test'
 ```
+
 Form was submitted with correct values.
+
 ```coffeescript
         expect(submissionCleared).toBe true
 

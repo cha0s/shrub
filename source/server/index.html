@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -1546,11 +1539,11 @@
             
                 <li class="toctree-l3"><a href="#server-application-entry-point">Server application entry point</a></li>
                 
-                    <li><a class="toctree-l4" href="#invoke-hook-shrubcoreprocessexit">Invoke hook shrubCoreProcessExit.</a></li>
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubcoreprocessexit">Invoke hook shrubCoreProcessExit</a></li>
                 
-                    <li><a class="toctree-l4" href="#invoke-hook-shrubcoreprebootstrap">Invoke hook shrubCorePreBootstrap.</a></li>
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubcoreprebootstrap">Invoke hook shrubCorePreBootstrap</a></li>
                 
-                    <li><a class="toctree-l4" href="#invoke-hook-shrubcorebootstrapmiddleware">Invoke hook shrubCoreBootstrapMiddleware.</a></li>
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubcorebootstrapmiddleware">Invoke hook shrubCoreBootstrapMiddleware</a></li>
                 
             
             </ul>
@@ -1678,7 +1671,7 @@ unless fork()
 </code></pre>
 
 <p>Set up exit hooks.</p>
-<h4 id="invoke-hook-shrubcoreprocessexit">Invoke hook <code>shrubCoreProcessExit</code>.</h4>
+<h4 id="invoke-hook-shrubcoreprocessexit">Invoke hook <a href="../../hooks#shrubcoreprocessexit"><code>shrubCoreProcessExit</code></a></h4>
 <pre><code class="coffeescript">  process.on 'exit', -&gt; pkgman.invoke 'shrubCoreProcessExit'
 
   process.on 'SIGINT', -&gt; process.exit()
@@ -1695,13 +1688,13 @@ unless fork()
   debug 'Config loaded.'
 </code></pre>
 
-<h4 id="invoke-hook-shrubcoreprebootstrap">Invoke hook <code>shrubCorePreBootstrap</code>.</h4>
+<h4 id="invoke-hook-shrubcoreprebootstrap">Invoke hook <a href="../../hooks#shrubcoreprebootstrap"><code>shrubCorePreBootstrap</code></a></h4>
 <pre><code class="coffeescript">  debugSilly 'Pre bootstrap phase...'
   pkgman.invoke 'shrubCorePreBootstrap'
   debugSilly 'Pre bootstrap phase completed.'
 </code></pre>
 
-<h4 id="invoke-hook-shrubcorebootstrapmiddleware">Invoke hook <code>shrubCoreBootstrapMiddleware</code>.</h4>
+<h4 id="invoke-hook-shrubcorebootstrapmiddleware">Invoke hook <a href="../../hooks#shrubcorebootstrapmiddleware"><code>shrubCoreBootstrapMiddleware</code></a></h4>
 <pre><code class="coffeescript">  debugSilly 'Loading bootstrap middleware...'
 
   bootstrapMiddleware = middleware.fromConfig(

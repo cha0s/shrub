@@ -1,10 +1,13 @@
+
 ```coffeescript
 ```
+
 # Package management for Angular
 
 *This is where shrub's package system meets Angular's module system.
 Packages' implementations of controllers, services, filters, providers, and
 directives are gathered and registered into Angular.*
+
 ```coffeescript
 angular.module('shrub.packages', [
   'shrub.directive'
@@ -24,7 +27,9 @@ angular.module('shrub.packages', [
       config = require 'config'
       debug = require('debug') 'shrub:angular'
 ```
-#### Invoke hook `shrubAngularController`.
+
+#### Invoke hook [`shrubAngularController`](../hooks#shrubangularcontroller)
+
 ```coffeescript
       debug 'Registering controllers...'
 
@@ -35,7 +40,9 @@ angular.module('shrub.packages', [
 
       debug 'Controllers registered.'
 ```
-#### Invoke hook `shrubAngularDirective`.
+
+#### Invoke hook [`shrubAngularDirective`](../hooks#shrubangulardirective)
+
 ```coffeescript
       debug 'Registering directives...'
 
@@ -44,7 +51,9 @@ angular.module('shrub.packages', [
 
       debug 'Directives registered.'
 ```
-#### Invoke hook `shrubAngularFilter`.
+
+#### Invoke hook [`shrubAngularFilter`](../hooks#shrubangularfilter)
+
 ```coffeescript
       debug 'Registering filters...'
 
@@ -55,7 +64,9 @@ angular.module('shrub.packages', [
 
       debug 'Filters registered.'
 ```
-#### Invoke hook `shrubAngularProvider`.
+
+#### Invoke hook [`shrubAngularProvider`](../hooks#shrubangularprovider)
+
 ```coffeescript
       debug 'Registering providers...'
 
@@ -65,7 +76,9 @@ angular.module('shrub.packages', [
 
       debug 'Providers registered.'
 ```
-#### Invoke hook `shrubAngularService`.
+
+#### Invoke hook [`shrubAngularService`](../hooks#shrubangularservice)
+
 ```coffeescript
       debug 'Registering services...'
 
@@ -77,7 +90,9 @@ angular.module('shrub.packages', [
 
   ])
 ```
+
 Set an injector so that Angular injection can occur out of band.
+
 ```coffeescript
   .run([
     '$injector', 'shrub-require'
@@ -88,7 +103,9 @@ Set an injector so that Angular injection can occur out of band.
 
   ])
 ```
+
 Provide Shrub's directive definition API.
+
 ```coffeescript
 angular.module('shrub.directive', [
   'shrub.pkgman'
@@ -102,23 +119,31 @@ angular.module('shrub.directive', [
 
       debug = require('debug') 'shrub:angular'
 ```
+
 Normalize, augment, and register a directive.
+
 ```coffeescript
       prepareDirective = (name, path, injected) -> ($injector) ->
 ```
+
 Normalize the directive to Directive Definition Object form.
+
 ```coffeescript
         directive = $injector.invoke injected
         directive = link: directive if angular.isFunction directive
 ```
+
 Ensure a compilation function exists for the directive which by
 default returns the `link` function.
+
 ```coffeescript
         directive.compile ?= -> directive.link
 ```
+
 Proxy any defined link function, firing any attached any
 controllers' `link` method, as well as passing execution on to the
 original `link` function.
+
 ```coffeescript
         link = directive.link
         directive.link = (scope, element, attrs, controllers) ->
@@ -128,21 +153,27 @@ original `link` function.
 
           link? arguments...
 ```
+
 Ensure the directive has a name. Defaults to the normalized path of
 the implementing package.
+
 ```coffeescript
         directive.name ?= name
 ```
+
 If controller binding is specified, the controller defaults to the
 directive name. In other words, if you define a directive and a
 controller in the same package, and specify
 `directive.bindToController = true`, your directive will include the
 controller automatically.
+
 ```coffeescript
         if directive.bindToController
           directive.controller ?= directive.name
 ```
+
 Handle a bunch of internal Angular normalization.
+
 ```coffeescript
         directive.require ?= directive.controller and directive.name
         directive.priority ?= 0
@@ -151,20 +182,26 @@ Handle a bunch of internal Angular normalization.
         if angular.isObject directive.scope
           directive.$$isolateBindings = isolateBindingsFor directive
 ```
-#### Invoke hook `shrubAngularDirectiveAlter`.
+
+#### Invoke hook [`shrubAngularDirectiveAlter`](../hooks#shrubangulardirectivealter)
+
 ```coffeescript
         for injectedDirective in pkgman.invokeFlat(
           'shrubAngularDirectiveAlter', directive, path
         )
           $injector.invoke injectedDirective
 ```
+
 Haven't gone deep enough into Angular to understand why this has to
 be, but it does.
+
 ```coffeescript
         directive.index = 0
         return [directive]
 ```
+
 Internal Angular state that we have to reset.
+
 ```coffeescript
       isolateBindingsFor = (directive) ->
 
@@ -192,30 +229,40 @@ Internal Angular state that we have to reset.
 
         return bindings
 ```
+
 Build the directive provider.
+
 ```coffeescript
       directive = {}
 ```
+
 Define a directive.
+
 ```coffeescript
       directive.define = (path, injected) ->
         directiveName = pkgman.normalizePath path
         debug directiveName
 ```
+
 First, register it through Angular's normal registration mechanism.
 This sets a bunch of internal state we don't have access to.
+
 ```coffeescript
         $compileProvider.directive directiveName, injected
 ```
+
 Follow that by normalizing, augmenting, and registering the
 directive again. It will run over the previous definition, ensuring
 everything works nicely.
+
 ```coffeescript
         $provide.factory "#{directiveName}Directive", [
           '$injector', prepareDirective directiveName, path, injected
         ]
 ```
+
 Provide the service.
+
 ```coffeescript
       directive.$get = -> directive
 
@@ -223,7 +270,9 @@ Provide the service.
 
   ]
 ```
+
 Provide Angular with access to Shrub's package manager.
+
 ```coffeescript
 angular.module('shrub.pkgman', [
   'shrub.require'
@@ -237,7 +286,9 @@ angular.module('shrub.pkgman', [
       debug = require('debug') 'shrub:pkgman'
       pkgman = require 'pkgman'
 ```
+
 Load the package list from configuration.
+
 ```coffeescript
       debug 'Loading packages...'
 
@@ -245,7 +296,9 @@ Load the package list from configuration.
 
       debug 'Packages loaded.'
 ```
+
 Simply pass along pkgman as the 'service'.
+
 ```coffeescript
       pkgman.$get = -> pkgman
 

@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -1511,17 +1504,17 @@
             
                 <li class="toctree-l3"><a href="#user">User</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubcoreprebootstrap">Implements hook shrubCorePreBootstrap.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubcoreprebootstrap">Implements hook shrubCorePreBootstrap</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubconfigclient">Implements hook shrubConfigClient.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubconfigclient">Implements hook shrubConfigClient</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubuserredactors">Implements hook shrubUserRedactors.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubuserredactors">Implements hook shrubUserRedactors</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubauditfingerprint">Implements hook shrubAuditFingerprint.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubauditfingerprint">Implements hook shrubAuditFingerprint</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubormcollections">Implements hook shrubOrmCollections.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubormcollections">Implements hook shrubOrmCollections</a></li>
                 
                     <li><a class="toctree-l4" href="#userfindonepopulated">User.findOnePopulated</a></li>
                 
@@ -1689,7 +1682,7 @@ clientModule = require './client'
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <code>shrubCorePreBootstrap</code>.</h4>
+<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <a href="../../../hooks#shrubcoreprebootstrap"><code>shrubCorePreBootstrap</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubCorePreBootstrap', -&gt;
 
     Promise = require 'bluebird'
@@ -1697,7 +1690,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     orm = require 'shrub-orm'
 </code></pre>
 
-<h4 id="implements-hook-shrubconfigclient">Implements hook <code>shrubConfigClient</code>.</h4>
+<h4 id="implements-hook-shrubconfigclient">Implements hook <a href="../../../hooks#shrubconfigclient"><code>shrubConfigClient</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubConfigClient', (req) -&gt;
 </code></pre>
 
@@ -1705,7 +1698,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 <pre><code class="coffeescript">    req.user.redactObject 'shrub-user', req.user if req.user?
 </code></pre>
 
-<h4 id="implements-hook-shrubconfigserver">Implements hook <code>shrubConfigServer</code>.</h4>
+<h4 id="implements-hook-shrubconfigserver">Implements hook <a href="../../../hooks#shrubconfigserver"><code>shrubConfigServer</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubConfigServer', -&gt;
 
     beforeLoginMiddleware: [
@@ -1723,7 +1716,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     ]
 </code></pre>
 
-<h4 id="implements-hook-shrubuserredactors">Implements hook <code>shrubUserRedactors</code>.</h4>
+<h4 id="implements-hook-shrubuserredactors">Implements hook <a href="../../../hooks#shrubuserredactors"><code>shrubUserRedactors</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubUserRedactors', -&gt;
 
     'shrub-user': [
@@ -1754,7 +1747,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     ]
 </code></pre>
 
-<h4 id="implements-hook-shrubauditfingerprint">Implements hook <code>shrubAuditFingerprint</code>.</h4>
+<h4 id="implements-hook-shrubauditfingerprint">Implements hook <a href="../../../hooks#shrubauditfingerprint"><code>shrubAuditFingerprint</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAuditFingerprint', (req) -&gt;
 </code></pre>
 
@@ -1762,7 +1755,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 <pre><code class="coffeescript">    user: if req?.user?.id? then req.user.id
 </code></pre>
 
-<h4 id="implements-hook-shrubormcollections">Implements hook <code>shrubOrmCollections</code>.</h4>
+<h4 id="implements-hook-shrubormcollections">Implements hook <a href="../../../hooks#shrubormcollections"><code>shrubOrmCollections</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubOrmCollections', -&gt;
 </code></pre>
 
@@ -1877,7 +1870,7 @@ exports.pkgmanRegister = (registrar) -&gt;
         redactors = {}
 </code></pre>
 
-<h4 id="invoke-hook-shrubuserredactors">Invoke hook <code>shrubUserRedactors</code>.</h4>
+<h4 id="invoke-hook-shrubuserredactors">Invoke hook <a href="../../../hooks#shrubuserredactors"><code>shrubUserRedactors</code></a></h4>
 <pre><code class="coffeescript">        for redactorTypes in pkgman.invokeFlat 'shrubUserRedactors'
           for type_, redactors_ of redactorTypes
             (redactors[type_] ?= []).push redactors_...
@@ -1932,11 +1925,11 @@ exports.pkgmanRegister = (registrar) -&gt;
     collections
 </code></pre>
 
-<h4 id="implements-hook-shrubtransmittableerrors">Implements hook <code>shrubTransmittableErrors</code>.</h4>
+<h4 id="implements-hook-shrubtransmittableerrors">Implements hook <a href="../../../hooks#shrubtransmittableerrors"><code>shrubTransmittableErrors</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubTransmittableErrors', clientModule.shrubTransmittableErrors
 </code></pre>
 
-<h4 id="implements-hook-shrubuserbeforeloginmiddleware">Implements hook <code>shrubUserBeforeLoginMiddleware</code>.</h4>
+<h4 id="implements-hook-shrubuserbeforeloginmiddleware">Implements hook <a href="../../../hooks#shrubuserbeforeloginmiddleware"><code>shrubUserBeforeLoginMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubUserBeforeLoginMiddleware', -&gt;
 
     label: 'Join user channel'
@@ -1947,7 +1940,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     ]
 </code></pre>
 
-<h4 id="implements-hook-shrubuserbeforelogoutmiddleware">Implements hook <code>shrubUserBeforeLogoutMiddleware</code>.</h4>
+<h4 id="implements-hook-shrubuserbeforelogoutmiddleware">Implements hook <a href="../../../hooks#shrubuserbeforelogoutmiddleware"><code>shrubUserBeforeLogoutMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubUserBeforeLogoutMiddleware', -&gt;
 
     label: 'Tell client to log out, and leave the user channel'

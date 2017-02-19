@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -471,13 +464,13 @@
             
                 <li class="toctree-l3"><a href="#form-processing">Form processing</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubangulardirective">Implements hook shrubAngularDirective.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubangulardirective">Implements hook shrubAngularDirective</a></li>
                 
-                    <li><a class="toctree-l4" href="#invoke-hook-shrubformalter">Invoke hook shrubFormAlter.</a></li>
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubformalter">Invoke hook shrubFormAlter</a></li>
                 
-                    <li><a class="toctree-l4" href="#invoke-hook-shrubformformkeyalter">Invoke hook shrubFormFormKeyAlter.</a></li>
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubformformkeyalter">Invoke hook shrubFormFormKeyAlter</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubangularservice">Implements hook shrubAngularService.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubangularservice">Implements hook shrubAngularService</a></li>
                 
                     <li><a class="toctree-l4" href="#formcache">form.cache</a></li>
                 
@@ -1673,7 +1666,7 @@ pkgman = require 'pkgman'
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubangulardirective">Implements hook <code>shrubAngularDirective</code>.</h4>
+<h4 id="implements-hook-shrubangulardirective">Implements hook <a href="../../../../hooks#shrubangulardirective"><code>shrubAngularDirective</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAngularDirective', -&gt; [
     '$compile', '$exceptionHandler', '$injector', '$log', '$q', 'shrub-form', 'shrub-require'
     ($compile, $exceptionHandler, $injector, $log, $q, formService, require) -&gt;
@@ -1683,7 +1676,6 @@ exports.pkgmanRegister = (registrar) -&gt;
 
 <p>Keep a reference to the form scope, if the form attribute value
 changes, it'll need to be rebuilt.</p>
-<h6 id="todo-it-shouldnt-be-trashed-as-it-is-now-it-should-be-moved-over-to-a-new-scope-non-destructively">TODO: It shouldn't be trashed as it is now, it should be moved over to a new scope non-destructively.</h6>
 <pre><code class="coffeescript">        formScope = null
         scope.$watch attrs.form, (form) -&gt;
           return unless form?
@@ -1727,11 +1719,11 @@ changes, it'll need to be rebuilt.</p>
               $exceptionHandler error
 </code></pre>
 
-<h4 id="invoke-hook-shrubformalter">Invoke hook <code>shrubFormAlter</code>.</h4>
+<h4 id="invoke-hook-shrubformalter">Invoke hook <a href="../../../../hooks#shrubformalter"><code>shrubFormAlter</code></a></h4>
 <pre><code class="coffeescript">          pkgman.invokeFlat 'shrubFormAlter', form
 </code></pre>
 
-<h4 id="invoke-hook-shrubformformkeyalter">Invoke hook <code>shrubFormFormKeyAlter</code>.</h4>
+<h4 id="invoke-hook-shrubformformkeyalter">Invoke hook <a href="../../../../hooks#shrubformformkeyalter"><code>shrubFormFormKeyAlter</code></a></h4>
 <pre><code class="coffeescript">          pkgman.invokeFlat &quot;shrubForm#{
             pkgman.normalizePath form.key, true
           }Alter&quot;, form
@@ -1822,7 +1814,7 @@ changes, it'll need to be rebuilt.</p>
   ]
 </code></pre>
 
-<h4 id="implements-hook-shrubangularservice">Implements hook <code>shrubAngularService</code>.</h4>
+<h4 id="implements-hook-shrubangularservice">Implements hook <a href="../../../../hooks#shrubangularservice"><code>shrubAngularService</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAngularService', -&gt; [
 
     -&gt;
@@ -1847,7 +1839,7 @@ changes, it'll need to be rebuilt.</p>
         service.forms[key] = scope: scope, element: element
 </code></pre>
 
-<h4 id="invoke-hook-shrubformwidgets">Invoke hook <code>shrubFormWidgets</code>.</h4>
+<h4 id="invoke-hook-shrubformwidgets">Invoke hook <a href="../../../../hooks#shrubformwidgets"><code>shrubFormWidgets</code></a></h4>
 <pre><code class="coffeescript">      for formWidgets in pkgman.invokeFlat 'shrubFormWidgets'
         formWidgets = [formWidgets] unless _.isArray formWidgets
 

@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -376,9 +369,9 @@
             
                 <li class="toctree-l3"><a href="#core-client-functionality">Core client functionality.</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubangularapprun">Implements hook shrubAngularAppRun.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubangularapprun">Implements hook shrubAngularAppRun</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubangularroutes">Implements hook shrubAngularRoutes.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubangularroutes">Implements hook shrubAngularRoutes</a></li>
                 
             
             </ul>
@@ -1663,7 +1656,7 @@
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubangularapprun">Implements hook <code>shrubAngularAppRun</code>.</h4>
+<h4 id="implements-hook-shrubangularapprun">Implements hook <a href="../../../../hooks#shrubangularapprun"><code>shrubAngularAppRun</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAngularAppRun', -&gt; [
     '$rootScope', '$location', '$window', 'shrub-socket'
     ($rootScope, $location, $window, socket) -&gt;
@@ -1701,7 +1694,7 @@ exports.pkgmanRegister = (registrar) -&gt;
   ]
 </code></pre>
 
-<h4 id="implements-hook-shrubangularroutes">Implements hook <code>shrubAngularRoutes</code>.</h4>
+<h4 id="implements-hook-shrubangularroutes">Implements hook <a href="../../../../hooks#shrubangularroutes"><code>shrubAngularRoutes</code></a></h4>
 <p>A simple path definition to make sure we're running in e2e testing mode.</p>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAngularRoutes', -&gt;
 

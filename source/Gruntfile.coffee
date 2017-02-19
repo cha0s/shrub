@@ -1,12 +1,15 @@
 # Gruntfile
 
 *Entry point for the Grunt build process.*
+
 ```coffeescript
 {fork} = require "#{__dirname}/server/bootstrap"
 
 module.exports = (grunt) ->
 ```
+
 Fork so we can bootstrap a Shrub environment.
+
 ```coffeescript
   if child = fork()
     grunt.registerTask 'bootstrap', ->
@@ -19,7 +22,9 @@ Fork so we can bootstrap a Shrub environment.
 
         grunt.fail.fatal 'Child process failed', code
 ```
+
 Forward all tasks.
+
 ```coffeescript
     {tasks} = require 'grunt/lib/grunt/cli'
     grunt.registerTask tasks[0] ? 'default', ['bootstrap']
@@ -30,16 +35,22 @@ Forward all tasks.
   config = require 'config'
   pkgman = require 'pkgman'
 ```
+
 Load configuration.
+
 ```coffeescript
   config.load()
   config.loadPackageSettings()
 ```
+
 ## GruntConfiguration
+
 ```coffeescript
   class GruntConfiguration
 ```
+
 ## *constructor*
+
 ```coffeescript
     constructor: ->
 
@@ -49,6 +60,7 @@ Load configuration.
 
       @pkg = grunt.file.readJSON 'package.json'
 ```
+
 ## GruntConfiguration#configureTask
 
 * (String) `task` - The name of the task to configure.
@@ -61,6 +73,7 @@ for the particular grunt task being configured to learn how to configure
 it.
 
 *Configure a Grunt task.*
+
 ```coffeescript
     configureTask: (task, key, config_) ->
 
@@ -68,6 +81,7 @@ it.
 
       return
 ```
+
 ## GruntConfiguration#taskConfiguration
 
 * (String) `task` - The name of the task to configure.
@@ -76,14 +90,17 @@ it.
 This is generally the name of the package, but can be anything.
 
 *Get the configuration for a Grunt task.*
+
 ```coffeescript
     taskConfiguration: (task, key) -> @_taskConfig[task]?[key]
 ```
+
 ## GruntConfiguration#loadNpmTasks
 
 * (String Array) `tasks` - The list of NPM tasks to load.
 
 *Load NPM tasks.*
+
 ```coffeescript
     loadNpmTasks: (tasks) ->
 
@@ -91,6 +108,7 @@ This is generally the name of the package, but can be anything.
 
       return
 ```
+
 ## GruntConfiguration#registerTask
 
 * (String) `task` - The name of the task to configure.
@@ -100,6 +118,7 @@ strings which define the dependencies for the task, or a function which
 will be executed for the task.
 
 *Register a Grunt task.*
+
 ```coffeescript
     registerTask: (task, subtasksOrFunction) ->
 
@@ -110,6 +129,7 @@ will be executed for the task.
 
       return
 ```
+
 ## GruntConfiguration#copyAppFiles
 
 * (String) `path` - The path of the files to copy.
@@ -121,6 +141,7 @@ This is generally the name of the package, but can be anything.
 Defaults to `'app'`.
 
 *Copy package files to `app`.*
+
 ```coffeescript
     copyAppFiles: (path, key, dest = 'app') ->
 
@@ -155,19 +176,27 @@ Defaults to `'app'`.
 
     grunt.task.run 'build'
 ```
-#### Invoke hook `shrubGruntConfig`.
+
+#### Invoke hook [`shrubGruntConfig`](../hooks#shrubgruntconfig)
+
 ```coffeescript
   pkgman.invoke 'shrubGruntConfig', gruntConfig, grunt
 ```
-#### Invoke hook `shrubGruntConfigAlter`.
+
+#### Invoke hook [`shrubGruntConfigAlter`](../hooks#shrubgruntconfigalter)
+
 ```coffeescript
   pkgman.invoke 'shrubGruntConfigAlter', gruntConfig, grunt
 ```
+
 Initialize configuration.
+
 ```coffeescript
   grunt.initConfig gruntConfig._taskConfig
 ```
+
 Load NPM tasks.
+
 ```coffeescript
   npmTasksLoaded = {}
   for task in gruntConfig._npmTasks
@@ -175,7 +204,9 @@ Load NPM tasks.
     npmTasksLoaded[task] = true
     grunt.loadNpmTasks task
 ```
+
 Register custom tasks.
+
 ```coffeescript
   grunt.registerTask task, actions for task, actions of gruntConfig._tasks
 ```

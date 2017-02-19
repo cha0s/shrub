@@ -2,6 +2,7 @@
 
 *An [Express](http://expressjs.com/) HTTP server implementation, with
 middleware for sessions, routing, logging, etc.*
+
 ```coffeescript
 config = require 'config'
 
@@ -16,7 +17,9 @@ Promise = null
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubCorePreBootstrap`.
+
+#### Implements hook [`shrubCorePreBootstrap`](../../hooks#shrubcoreprebootstrap)
+
 ```coffeescript
   registrar.registerHook 'shrubCorePreBootstrap', ->
 
@@ -27,9 +30,11 @@ exports.pkgmanRegister = (registrar) ->
 
     Promise = require 'bluebird'
 ```
-#### Implements hook `shrubRpcRoutesAlter`.
+
+#### Implements hook [`shrubRpcRoutesAlter`](../../hooks#shrubrpcroutesalter)
 
 Patch in express-specific variables that will be required by middleware.
+
 ```coffeescript
   registrar.registerHook 'shrubRpcRoutesAlter', (routes) ->
 
@@ -52,46 +57,60 @@ Patch in express-specific variables that will be required by middleware.
     'errors', 'logger', 'routes', 'session', 'static'
   ]
 ```
+
 An implementation of [HttpManager](../http/manager) using the Express
 framework.
+
 ```coffeescript
 {Manager: HttpManager} = require '../shrub-http/manager'
 exports.Manager = class Express extends HttpManager
 ```
+
 ## *constructor*
 
 *Create the server.*
+
 ```coffeescript
   constructor: ->
     super
 ```
+
 Create the Express instance.
+
 ```coffeescript
     @_app = express()
 ```
+
 Register middleware.
+
 ```coffeescript
     @registerMiddleware()
 
     @_routes = []
 ```
+
 Spin up an HTTP server.
+
 ```coffeescript
     @_server = http.createServer @_app
 ```
+
 ## Express#addRoute
 
 *Add HTTP routes.*
+
 ```coffeescript
   addRoute: (route) -> @_routes.push route
 ```
+
 ## Express#cluster
 
 *Spawn workers and tie them together into a cluster.*
+
 ```coffeescript
   cluster: ->
 
-    coreConfig = config.get 'packageSettings:shrub-core'
+    coreConfig = config.get 'packageConfig:shrub-core'
     @_server = sticky(
       num: coreConfig.workers
       trustedAddresses: coreConfig.trustedProxies
@@ -103,7 +122,9 @@ Spin up an HTTP server.
   initialize: ->
     listenPromise = super
 ```
+
 Connect (no pun) Express's middleware system to ours.
+
 ```coffeescript
     for fn in @_middleware._middleware
       if fn is routeSentinel
@@ -115,9 +136,11 @@ Connect (no pun) Express's middleware system to ours.
 
     return listenPromise
 ```
+
 ## Express#listener
 
 *Listen for HTTP connections.*
+
 ```coffeescript
   listener: ->
 
@@ -129,13 +152,17 @@ Connect (no pun) Express's middleware system to ours.
         @_server.removeListener 'error', reject
         resolve()
 ```
+
 } Bind to the listen port.
+
 ```coffeescript
       @_server.listen @port()
 ```
+
 ## Express#server
 
 *The node HTTP server instance.*
+
 ```coffeescript
   server: -> @_server
 ```

@@ -1,4 +1,5 @@
 # Grunt build process - Dynamic documentation
+
 ```coffeescript
 {exec} = require 'child_process'
 fs = require 'fs'
@@ -10,8 +11,10 @@ _ = require 'lodash'
 glob = require 'grunt/node_modules/glob'
 Promise = require 'bluebird'
 ```
+
 Implement a Transform stream to accumulate hook invocations from a source
 file.
+
 ```coffeescript
 class HookInvocations extends Transform
 
@@ -22,13 +25,15 @@ class HookInvocations extends Transform
 
   _transform: (chunk, encoding, done) ->
     line = chunk.toString('utf8')
-    if matches = line.match /^\s*# \#\#\#\# Invoke hook `([^`]+)`/
+    if matches = line.match /^\s*# #### Invoke hook `([^`]+)`/
       @list.push matches[1]
 
     done()
 ```
+
 Implement a Transform stream to accumulate hook implementations from a
 source file.
+
 ```coffeescript
 class HookImplementations extends Transform
 
@@ -39,13 +44,15 @@ class HookImplementations extends Transform
 
   _transform: (chunk, encoding, done) ->
     line = chunk.toString('utf8')
-    if matches = line.match /^\s*# \#\#\#\# Implements hook `([^`]+)`/
+    if matches = line.match /^\s*# #### Implements hook `([^`]+)`/
       @list.push matches[1]
 
     done()
 ```
-Implement a Transform stream fo accumulate TODOs from a source file. Also
+
+Implement a Transform stream to accumulate TODOs from a source file. Also
 caches lines to be able to build context around each TODO item.
+
 ```coffeescript
 class Todos extends Transform
 
@@ -59,7 +66,7 @@ class Todos extends Transform
 
   _transform: (chunk, encoding, done) ->
     @lines.push line = chunk.toString('utf8')
-    if matches = line.match /^\s*# \#\#\#\#\#\# TODO/
+    if matches = line.match /^\s*# ###### TODO/
       @todos.push @lines.length - 1
 
     done()
@@ -74,16 +81,60 @@ class Todos extends Transform
       index: todo
       lines: @lines.slice start, end
 ```
+
+Implement a Transform stream to parse title and description for a file.
+
+```coffeescript
+class TitleAndDescription extends Transform
+
+  constructor: ->
+    super
+
+    @hasFinishedParsing = false
+
+    @title = ''
+    @description = ''
+
+  _transform: (chunk, encoding, done) ->
+
+    return done() if @hasFinishedParsing
+
+    line = chunk.toString('utf8').trim()
+    return done() if line.length is 0
+
+    if 35 is line.charCodeAt(0)
+
+      if 35 is line.charCodeAt(2)
+        @title = line.substr 4
+
+      else if 42 is line.charCodeAt(2)
+        @description = line.substr 2
+
+      else if @description?
+        @description += ' ' + line.substr 2
+
+      if 42 is @description.charCodeAt @description.length - 1
+        @hasFinishedParsing = true
+        return done()
+
+    else
+
+      @hasFinishedParsing = true
+
+    return done()
+```
+
 Implement a transform stream to convert a .coffee file to .litcoffee
+
 ```coffeescript
 class LitcoffeeConversion extends Transform
 
-  constructor: (filename) ->
+  constructor: (@filename) ->
     super
 
-    @highlight = if filename.match /\.(?:lit)?coffee$/
+    @highlight = if @filename.match /\.(?:lit)?coffee$/
       'coffeescript'
-    else if filename.match /\.js$/
+    else if @filename.match /\.js$/
       'javascript'
     else
       'no-highlight'
@@ -98,21 +149,39 @@ class LitcoffeeConversion extends Transform
 
     line = chunk.toString 'utf8'
 ```
+
 Comment.
+
 ```coffeescript
     if '#'.charCodeAt(0) is line.trim().charCodeAt(0)
 
-      @push "```\n" if @hasWrittenCode and not @commenting
+      @push "```\n\n" if @hasWrittenCode and not @commenting
 
       comment = line.trim().substr 2
-      @push "#{comment}\n"
+
+      matches = comment.match /^#### (I(?:nvoke|mplements)) hook `([^`]+)`/
+      if matches
+
+        @push "#### #{
+          matches[1]
+        } hook [`#{
+          matches[2]
+        }`](#{
+          path.dirname(@filename).split('/').map(-> '..').join '/'
+        }/hooks##{
+          matches[2].toLowerCase()
+        })\n"
+
+      else
+
+        @push "#{comment}\n"
 
       @commenting = true
 
     else
 
       @hanging = [] if @commenting
-      @push "```#{@highlight}\n" if @commenting or not @hasWrittenCode
+      @push "\n```#{@highlight}\n" if @commenting or not @hasWrittenCode
 
       if line.length is 0
         @hanging.push '' unless @commenting
@@ -126,7 +195,9 @@ Comment.
 
     done()
 ```
+
 Gather all source files.
+
 ```coffeescript
 _allSourceFiles = ->
   new Promise (resolve, reject) ->
@@ -137,7 +208,9 @@ _allSourceFiles = ->
         resolve files
     )
 ```
+
 Generate an HTML ID from a string.
+
 ```coffeescript
 _idFromString = (string) -> string.replace(
   /[/'']/g, ''
@@ -149,8 +222,10 @@ _idFromString = (string) -> string.replace(
   /\-+/g, '-'
 ).toLowerCase()
 ```
+
 Get the source path from a filename. This removes the extension and any
 /index portion from the end of the filename.
+
 ```coffeescript
 _sourcePath = (filename) ->
 
@@ -163,7 +238,9 @@ _sourcePath = (filename) ->
     parts.pop() if parts[parts.length - 1] is 'index'
     return parts.join '/'
 ```
+
 Collate a list of files by type (client or server).
+
 ```coffeescript
 _collateFilesByType = (files) ->
 
@@ -184,7 +261,9 @@ _collateFilesByType = (files) ->
 
   client: client, server: server
 ```
+
 Add all the source files to a generated mkdocs.yml
+
 ```coffeescript
 generatedFilesPromise = _allSourceFiles().then (files) ->
 
@@ -199,7 +278,9 @@ generatedFilesPromise = _allSourceFiles().then (files) ->
     fstream = fs.createReadStream file
     fstream.pipe lineStream = new LineStream keepEmptyLines: true
 ```
+
 Convert to litcoffee.
+
 ```coffeescript
     lineStream.pipe litcoffeeConversion = new LitcoffeeConversion file
     writeStream = fs.createWriteStream "docs/source/#{file}"
@@ -211,7 +292,9 @@ Convert to litcoffee.
 
   Promise.all promises
 ```
+
 Gather statistics for all files.
+
 ```coffeescript
 fileStatsListPromise = generatedFilesPromise.then (allFiles) ->
 
@@ -224,18 +307,23 @@ fileStatsListPromise = generatedFilesPromise.then (allFiles) ->
         fstream = fs.createReadStream file
         fstream.pipe lineStream = new LineStream keepEmptyLines: true
 ```
+
 Pass all files through the Transform list to parse out relevant
 information.
+
 ```coffeescript
         lineStream.pipe hookImplementations = new HookImplementations()
         lineStream.pipe hookInvocations = new HookInvocations()
         lineStream.pipe todos = new Todos()
+        lineStream.pipe titleAndDescription = new TitleAndDescription()
 
         fstream.on 'error', reject
 
         fstream.on 'end', ->
 ```
+
 Include all information from Transform streams in the statistics.
+
 ```coffeescript
           resolve(
             type: type
@@ -243,6 +331,8 @@ Include all information from Transform streams in the statistics.
             implementations: hookImplementations.list
             invocations: hookInvocations.list
             todos: todos.withContext()
+            title: titleAndDescription.title
+            description: titleAndDescription.description
           )
 
     Promise.all typePromises
@@ -250,7 +340,9 @@ Include all information from Transform streams in the statistics.
   Promise.all(allFilesPromises).then (fileStatsLists) ->
     _.flatten fileStatsLists
 ```
+
 Massage the statistics to help rendering the hooks page.
+
 ```coffeescript
 fileStatsListPromise.then((fileStatsList) ->
 
@@ -301,7 +393,9 @@ fileStatsListPromise.then((fileStatsList) ->
 
   return O
 ```
+
 Render the hooks page.
+
 ```coffeescript
 ).then((O) ->
 
@@ -324,7 +418,12 @@ Render the hooks page.
       pluralKey = "#{key}s"
 
       if O[pluralKey][hook]?
+```
 
+console.log pluralKey, hook
+console.log O[pluralKey][hook]
+
+```coffeescript
         count = 0
         for file, {types} of O[pluralKey][hook]
           count += types.length
@@ -338,15 +437,70 @@ Render the hooks page.
         stripe = 0
         instances = for file, {fullName, types} of O[pluralKey][hook]
 ```
+
 Remove packages and file part.
+
 ```coffeescript
           parts = fullName.split '/'
-          parts.shift()
-          parts.pop()
-          packageName = parts.join '/'
+```
 
-          types = types.map (type) ->
-            "    <tr class=\"#{if stripe++ % 2 then 'odd' else 'even'}\"><td><a href=\"../source/#{_sourcePath fullName}\">#{_sourcePath file} (#{type})</a></td><td align=\"right\"><a href=\"../source/#{_sourcePath fullName}##{wordingFor[key]}-hook-#{_idFromString hook}\">#{key}</a></td></tr>"
+parts.shift()
+parts.pop()
+
+```coffeescript
+          for remove in ['client']
+            if ~(index = parts.indexOf remove)
+              parts.splice index, 1
+          fullName = parts.join '/'
+
+          parts = file.split '/'
+```
+
+parts.shift()
+parts.pop()
+
+```coffeescript
+          for remove in ['client']
+            if ~(index = parts.indexOf remove)
+              parts.splice index, 1
+          file = parts.join '/'
+```
+
+if hook is 'shrubUserLoginStrategies'
+  console.log O[pluralKey][hook]
+
+```coffeescript
+```
+
+  parts = file.split '/'
+  mergeFile = parts.join '/'
+  console.log mergeFile, _sourcePath mergeFile
+  console.log fullName, _sourcePath fullName
+  console.log types
+
+```coffeescript
+          do (fullName) -> types = types.map (type) ->
+            "    <tr class=\"#{
+              if stripe++ % 2 then 'odd' else 'even'
+            }\"><td><a href=\"../source/#{
+              _sourcePath fullName
+            }#{
+              if type is 'client' then '/client' else ''
+            }\">#{
+              _sourcePath file
+            } (#{
+              type
+            })</a></td><td align=\"right\"><a href=\"../source/#{
+              _sourcePath fullName
+            }#{
+              if type is 'client' then '/client' else ''
+            }##{
+              wordingFor[key]
+            }-hook-#{
+              _idFromString hook
+            }\">#{
+              key
+            }</a></td></tr>"
           types.join ''
 
         render += instances.join ''
@@ -362,7 +516,9 @@ Remove packages and file part.
 
 ).done()
 ```
+
 Render the TODOs page.
+
 ```coffeescript
 fileStatsListPromise.then((fileStatsList) ->
 
@@ -370,8 +526,10 @@ fileStatsListPromise.then((fileStatsList) ->
 
   for fileStats in fileStatsList
 ```
+
 Keep track of used IDs, it will be necessary to link to the correct
 location hash in the case of multiple TODO items with the same wording.
+
 ```coffeescript
     idMap = {}
 
@@ -391,8 +549,10 @@ location hash in the case of multiple TODO items with the same wording.
       id = ''
       for line, index in todo.lines
 ```
+
 If this is the line with the TODO, parse the ID from the TODO item
 text, and render it as h2 (TODO are h6) to increase visibility.
+
 ```coffeescript
         if index is Todos.context
           id = _idFromString(line).slice 1, -1
@@ -404,8 +564,10 @@ text, and render it as h2 (TODO are h6) to increase visibility.
 
       render += '```\n\n'
 ```
+
 Keep track of ID usage and modify the location hash for subsequent
 uses.
+
 ```coffeescript
       if idMap[id]?
         idMap[id] += 1
@@ -466,11 +628,15 @@ _allSourceFiles().then (files) ->
   renderHierarchy output, hierarchy
   fs.writeFileSync 'mkdocs.yml', yml + output.join "\n"
 ```
+
 Render the packages page.
+
 ```coffeescript
 fileStatsListPromise.then((fileStatsList) ->
 ```
+
 Sort by package name first.
+
 ```coffeescript
   newList = []
 
@@ -514,7 +680,9 @@ Sort by package name first.
     pkgParts = fileStats.pkg.split '/'
     isSubpackage = pkgParts.length isnt 1 and pkgParts.pop() isnt 'client'
 ```
+
 Link to the package.
+
 ```coffeescript
     sourcePath = _sourcePath fileStats.file
 
@@ -526,27 +694,17 @@ Link to the package.
       render += "## [<small>#{parentPkg}/</small>#{subPkg}](source/#{sourcePath})"
     else
       render += "## [#{fileStats.pkg}](source/#{sourcePath})"
-```
-Naively parse out the file description. It must be wrapped in asterisks,
-i.e. italicized in markdown.
 
-###### TODO: This 'chunk' parsing should be done with a Transform like the others.
-```coffeescript
-    data = fs.readFileSync "docs/source/#{fileStats.file}", 'utf8'
-    chunks = data.split '\n\n'
-
-    title = chunks[0]
-    if 35 is title.charCodeAt 0
+    if fileStats.title?
       render += '\n\n'
       render += '> ' if isSubpackage
-      render += "<span class=\"package-title\">#{title.substr 2}</span>"
+      render += "<span class=\"package-title\">#{fileStats.title}</span>"
 
     render += '\n\n'
 
-    description = chunks[1] ? ''
-    if 42 is description.charCodeAt 0 and 42 is description.charCodeAt description.length - 1
+    if fileStats.description?
       render += '> ' if isSubpackage
-      render += "#{description}\n\n"
+      render += "#{fileStats.description}\n\n"
 
     if fileStats.implementations.length > 0
       render += '> ' if isSubpackage
@@ -555,6 +713,7 @@ i.e. italicized in markdown.
       render += '  <table>\n'
       render += fileStats.implementations.map((hook, index) ->
         "    <tr class=\"#{if index % 2 then 'odd' else 'even'}\"><td><a href=\"../hooks/##{_idFromString hook}\">#{hook}</a></td><td align=\"right\"><a href=\"../source/#{sourcePath}#implements-hook-#{hook.toLowerCase()}\">implementation</a></td></tr>\n"
+```
       ).join ''
       render += '  </table>\n'
       render += '</div>'
@@ -571,10 +730,7 @@ i.e. italicized in markdown.
       render += '  </table>\n'
       render += '</div>'
       render += '\n\n'
-```
-###### TODO: We should do some preprocessing hre with a transform, namely linking the hook headers to their respective documentation.
-```coffeescript
+
   fs.writeFileSync 'docs/packages.md', render
 
 )
-```

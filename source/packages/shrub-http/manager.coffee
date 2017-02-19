@@ -2,7 +2,6 @@
 
 *Manage an HTTP server instance.*
 
-###### TODO: Rename to AbstractHttp
 ```coffeescript
 Promise = require 'bluebird'
 
@@ -16,32 +15,42 @@ httpDebug = require('debug') 'shrub:http'
 httpDebugSilly = require('debug') 'shrub-silly:http'
 httpMiddlewareDebug = require('debug') 'shrub-silly:http:middleware'
 ```
+
 ## HttpManager
 
 An abstract interface to be implemented by an HTTP server (e.g.
 [Express](source/packages/shrub-http-express)).
+
 ```coffeescript
 exports.Manager = class HttpManager
 ```
+
 ## *constructor*
 
 *Create the server.*
+
 ```coffeescript
   constructor: ->
 ```
+
 ###### TODO: Keeping a reference here means HTTP stuff can't be updated at run-time.
+
 ```coffeescript
-    @_config = config.get 'packageSettings:shrub-http'
+    @_config = config.get 'packageConfig:shrub-http'
 
     @_middleware = null
 ```
+
 ## HttpManager#initialize
 
 *Initialize the server.*
+
 ```coffeescript
   initialize: ->
 ```
-#### Invoke hook `shrubHttpRoutes`.
+
+#### Invoke hook [`shrubHttpRoutes`](../../hooks#shrubhttproutes)
+
 ```coffeescript
     httpDebugSilly '- Registering routes...'
     for routeList in pkgman.invokeFlat 'shrubHttpRoutes', this
@@ -54,13 +63,17 @@ exports.Manager = class HttpManager
         @addRoute route
     httpDebugSilly '- Routes registered.'
 ```
+
 Start listening.
+
 ```coffeescript
     @listen()
 ```
+
 ## HttpManager#listen
 
 *Listen for HTTP connections.*
+
 ```coffeescript
   listen: ->
     self = this
@@ -80,21 +93,27 @@ Start listening.
 
         )
 ```
+
 ## HttpManager#path
 
 *The path where static files are served from.*
+
 ```coffeescript
   path: -> @_config.path
 ```
+
 ## HttpManager#port
 
 *Get the port this server (is|will be) listening on.*
+
 ```coffeescript
   port: -> @_config.port
 ```
+
 ## HttpManager#registerMiddleware
 
 *Gather and initialize HTTP middleware.*
+
 ```coffeescript
   registerMiddleware: ->
 
@@ -102,13 +121,17 @@ Start listening.
 
     httpMiddleware = @_config.middleware.concat()
 ```
+
 Make absolutely sure the requests are finalized.
+
 ```coffeescript
     httpMiddleware.push 'shrub-http'
 ```
-#### Invoke hook `shrubHttpMiddleware`.
+
+#### Invoke hook [`shrubHttpMiddleware`](../../hooks#shrubhttpmiddleware)
 
 Invoked every time an HTTP connection is established.
+
 ```coffeescript
     @_middleware = middleware.fromHook(
       'shrubHttpMiddleware', httpMiddleware, this
@@ -116,7 +139,9 @@ Invoked every time an HTTP connection is established.
 
     httpMiddlewareDebug '- HTTP middleware loaded.'
 ```
+
 Ensure any subclass implements these "pure virtual" methods.
+
 ```coffeescript
   this::[method] = (-> throw new ReferenceError(
     "HttpManager::#{method} is a pure virtual method!"

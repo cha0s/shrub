@@ -197,9 +197,9 @@
                 
                     <li><a class="toctree-l4" href="#transmittableerror">TransmittableError</a></li>
                 
-                    <li><a class="toctree-l4" href="#constructor">constructor</a></li>
+                    <li><a class="toctree-l4" href="#transmittableerrorconstructor">TransmittableError#constructor</a></li>
                 
-                    <li><a class="toctree-l4" href="#transmittableerrorkey">TransmittableError#key</a></li>
+                    <li><a class="toctree-l4" href="#transmittableerrorerrortype">TransmittableError#errorType</a></li>
                 
                     <li><a class="toctree-l4" href="#transmittableerrortemplate">TransmittableError#template</a></li>
                 
@@ -226,13 +226,6 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../errors.spec/">errors.spec.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="../logging/">logging.coffee</a>
         
     </li>
 
@@ -1683,16 +1676,15 @@
 <pre><code class="coffeescript">exports.TransmittableError = class TransmittableError extends Error
 </code></pre>
 
-<h2 id="constructor"><em>constructor</em></h2>
+<h2 id="transmittableerrorconstructor">TransmittableError#constructor</h2>
 <p>See:
 <a href="https://github.com/jashkenas/coffee-script/issues/2359">https://github.com/jashkenas/coffee-script/issues/2359</a></p>
 <pre><code class="coffeescript">  constructor: (@message) -&gt;
 </code></pre>
 
-<h2 id="transmittableerrorkey">TransmittableError#key</h2>
+<h2 id="transmittableerrorerrortype">TransmittableError#errorType</h2>
 <p>A unique key for this error.</p>
-<h6 id="todo-key-should-be-called-errortype-or-something-similar">TODO: <code>key</code> should be called errorType or something similar.</h6>
-<pre><code class="coffeescript">  key: 'unknown'
+<pre><code class="coffeescript">  errorType: 'unknown'
 </code></pre>
 
 <h2 id="transmittableerrortemplate">TransmittableError#template</h2>
@@ -1701,30 +1693,30 @@
 </code></pre>
 
 <h2 id="transmittableerrortojson">TransmittableError#toJSON</h2>
-<p>Implement this if you need to transmit more than just the key and the
-message. Shrub uses the result from this function to serialize the error
-over the wire.</p>
-<pre><code class="coffeescript">  toJSON: -&gt; [@key, @message]
+<p>Implement this if you need to transmit more than just the error type and
+the message. Shrub uses the result from this function to serialize the
+error over the wire.</p>
+<pre><code class="coffeescript">  toJSON: -&gt; [@errorType, @message]
 </code></pre>
 
 <h2 id="errorsinstantiate">errors.instantiate</h2>
 <ul>
 <li>
-<p>(string) <code>key</code> - The error type.</p>
+<p>(string) <code>errorType</code> - The error type.</p>
 </li>
 <li>
 <p>(any) <code>args...</code> - Additional arguments to pass to the error type's</p>
 </li>
 </ul>
-<p>constructor. <em>Instantiate an error based on key, passing along args to the
-error's constructor.</em></p>
-<pre><code class="coffeescript">exports.instantiate = (key, args...) -&gt;
+<p>constructor. <em>Instantiate an error based on error type, passing along args
+to the error's constructor.</em></p>
+<pre><code class="coffeescript">exports.instantiate = (errorType, args...) -&gt;
 </code></pre>
 
 <p>Look up the error type and use it. If it's not registered, fall back to
 the TransmittableError superclass.</p>
 <pre><code class="coffeescript">  Types = exports.transmittableErrors()
-  Type = if Types[key]? then Types[key] else TransmittableError
+  Type = if Types[errorType]? then Types[errorType] else TransmittableError
 </code></pre>
 
 <p>Trickery to be able to essentially call <code>new</code> with <code>Function::apply</code>.</p>
@@ -1832,12 +1824,12 @@ with it anyway.</p>
   _ = require 'lodash'
 </code></pre>
 
-<h4 id="invoke-hook-shrubtransmittableerrors">Invoke hook <code>shrubTransmittableErrors</code>.</h4>
+<h4 id="invoke-hook-shrubtransmittableerrors">Invoke hook <a href="../../../hooks#shrubtransmittableerrors"><code>shrubTransmittableErrors</code></a></h4>
 <p>Allows packages to specify transmittable errors. Implementations should
 return a subclass of <code>TransmittableError</code>.</p>
 <pre><code class="coffeescript">  Types = {}
 
-  Types[Type::key] = Type for Type in [TransmittableError].concat(
+  Types[Type::errorType] = Type for Type in [TransmittableError].concat(
     _.flatten pkgman.invokeFlat 'shrubTransmittableErrors'
   )
 

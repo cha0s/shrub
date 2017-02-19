@@ -2,10 +2,13 @@
 
 *Install shrub if it hasn't been done so yet. This is essentially a hack for
 now, but will be fleshed out as we go.*
+
 ```coffeescript
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubCoreBootstrapMiddleware`.
+
+#### Implements hook [`shrubCoreBootstrapMiddleware`](../../hooks#shrubcorebootstrapmiddleware)
+
 ```coffeescript
   registrar.registerHook 'shrubCoreBootstrapMiddleware', (context) ->
 
@@ -16,9 +19,11 @@ exports.pkgmanRegister = (registrar) ->
 
       (next) ->
 ```
+
 No superuser? Install...
 
 ###### TODO: There should be a more robust check than just 'is there a superuser?'.
+
 ```coffeescript
         User = orm.collection 'shrub-user'
         User.findOne(id: 1).then((user) ->
@@ -30,7 +35,9 @@ No superuser? Install...
 
     ]
 ```
-#### Implements hook `shrubReplContext`.
+
+#### Implements hook [`shrubReplContext`](../../hooks#shrubreplcontext)
+
 ```coffeescript
   registrar.registerHook 'shrubReplContext', (context) ->
 
@@ -42,11 +49,15 @@ reinstall = (name = 'admin', email = 'admin@example.com', password = 'admin') ->
 
   orm = require 'shrub-orm'
 ```
+
 Refresh all collections.
+
 ```coffeescript
   Promise.all(
 ```
+
 Drop all collections and data.
+
 ```coffeescript
     for identity, collection of orm.collections()
       new Promise (resolve, reject) ->
@@ -56,7 +67,9 @@ Drop all collections and data.
 
   ).then(->
 ```
+
 Teardown the schema.
+
 ```coffeescript
     new Promise (resolve, reject) ->
       orm.teardown (error) ->
@@ -65,7 +78,9 @@ Teardown the schema.
 
   ).then(->
 ```
+
 Rebuild the schema.
+
 ```coffeescript
     new Promise (resolve, reject) ->
       orm.initialize (error) ->
@@ -82,13 +97,17 @@ Rebuild the schema.
 
     Promise.all [
 ```
+
 Create groups.
+
 ```coffeescript
       Group.create name: 'Anonymous'
       Group.create name: 'Authenticated'
       Group.create name: 'Administrator'
 ```
+
 Create superuser.
+
 ```coffeescript
       UserLocal.register(name, email, password).bind({}).then((@localUser) ->
 

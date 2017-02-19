@@ -1,10 +1,13 @@
 # Form - checkboxes
+
 ```coffeescript
 _ = require 'lodash'
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubAngularDirective`.
+
+#### Implements hook [`shrubAngularDirective`](../../../../hooks#shrubangulardirective)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularDirective', -> [
     ->
@@ -19,10 +22,13 @@ exports.pkgmanRegister = (registrar) ->
 
             for checkbox in scope.field.checkboxes
               checkbox.childName ?= checkbox.name
-```
-###### TODO: Multiline
-```coffeescript
-              checkbox.name = "#{scope.field.name}[#{checkbox.childName}]"
+
+              checkbox.name = "#{
+                scope.field.name
+              }[#{
+                checkbox.childName
+              }]"
+
               checkbox.type = 'checkbox'
 
             return
@@ -77,7 +83,9 @@ exports.pkgmanRegister = (registrar) ->
 
       element.find('.checkbox input[name"' + k + '"]').prop 'checked', true
 ```
-#### Implements hook `shrubFormWidgets`.
+
+#### Implements hook [`shrubFormWidgets`](../../../../hooks#shrubformwidgets)
+
 ```coffeescript
   registrar.registerHook 'shrubFormWidgets', ->
 

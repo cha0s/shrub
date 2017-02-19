@@ -3,58 +3,75 @@
 *Implement the skin system, allowing clients to change the look and feel of
 the site on-the-fly, as well as quickly load assets from the default skin on
 page load.*
+
 ```coffeescript
 config = require 'config'
 pkgman = require 'pkgman'
 
 exports.pkgmanRegister = (registrar) ->
+
+  currentSkinKey = null
+  defaultSkinKey = config.get 'packageConfig:shrub-skin:default'
 ```
-#### Implements hook `shrubAngularDirectiveAlter`.
+
+#### Implements hook [`shrubAngularDirectiveAlter`](../../../hooks#shrubangulardirectivealter)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularDirectiveAlter', (directive, path) -> [
 
     '$cacheFactory', '$compile', '$http', '$injector', '$interpolate', '$q', '$rootScope'
     ($cacheFactory, $compile, $http, $injector, $interpolate, $q, $rootScope) ->
 ```
+
 Ensure ID is a candidate.
+
 ```coffeescript
       directive.candidateKeys ?= []
       directive.candidateKeys.unshift 'id'
-
-      currentSkinKey = null
-      defaultSkinKey = config.get 'packageConfig:shrub-skin:default'
 ```
+
 Proxy link function to add our own directive retrieval and compilation
 step.
+
 ```coffeescript
       link = directive.link
       directive.link = (scope, element, attr, controller, transclude) ->
 
         candidateHooksInvoked = {}
 ```
+
 Save top-level arguments for later calls to link functions.
+
 ```coffeescript
         topLevelArgs = arguments
 ```
+
 Current template candidate.
+
 ```coffeescript
         candidate = undefined
 
         recalculateCandidate = ->
 ```
+
 Get the skin assets.
+
 ```coffeescript
           skinAssets = config.get(
             "packageConfig:shrub-skin:assets:#{currentSkinKey}"
           )
 ```
+
 Track changes to the current template candidate.
+
 ```coffeescript
           oldCandidate = candidate
 ```
+
 Build a list of all candidates by first attempting to interpolate
 candidate keys, and falling back to attribute values, if any.
 Candidate arrays are joined by single dashes.
+
 ```coffeescript
           candidateList = do ->
             list = []
@@ -75,15 +92,19 @@ Candidate arrays are joined by single dashes.
 
             list
 ```
+
 Map the candidate list to template filenames and add the base path
 template candidate.
+
 ```coffeescript
           candidateTemplates = for candidate_ in candidateList
             "#{path}--#{candidate_}.html"
           candidateTemplates.push "#{path}.html"
 ```
+
 Return the first existing template. The asset templates are
 already sorted by descending specificity.
+
 ```coffeescript
           candidate = do ->
             for uri in candidateTemplates
@@ -91,34 +112,46 @@ already sorted by descending specificity.
 
             return null
 ```
+
 If the candidate changed, clear the hook invocation cache and
 relink.
+
 ```coffeescript
           if candidate isnt oldCandidate
             candidateHooksInvoked = {}
 ```
+
 Insert and compile the template HTML if it exists.
+
 ```coffeescript
             if skinAssets?.templates?[candidate]
 ```
+
 Insert and compile HTML.
+
 ```coffeescript
               element.html skinAssets.templates[candidate]
               $compile(element.contents())(scope)
 ```
+
 Call directive link function.
+
 ```coffeescript
             link topLevelArgs... if link?
 ```
+
 Invoke the candidate link hooks.
+
 ```coffeescript
           invocations = [
             'shrubSkinLink'
             "shrubSkinLink--#{directive.name}"
           ]
 ```
+
 Add the candidates in reverse order, so they ascend in
 specificity.
+
 ```coffeescript
           invocations.push(
             "shrubSkinLink--#{directive.name}--#{c}"
@@ -128,11 +161,13 @@ specificity.
             continue if candidateHooksInvoked[hook]
             candidateHooksInvoked[hook] = true
 ```
-#### Invoke hook `shrubSkinLink`.
 
-#### Invoke hook `shrubSkinLink--DIRECTIVE`.
+#### Invoke hook [`shrubSkinLink`](../../../hooks#shrubskinlink)
 
-#### Invoke hook `shrubSkinLink--DIRECTIVE--ID`.
+#### Invoke hook [`shrubSkinLink--DIRECTIVE`](../../../hooks#shrubskinlink--directive)
+
+#### Invoke hook [`shrubSkinLink--DIRECTIVE--ID`](../../../hooks#shrubskinlink--directive--id)
+
 ```coffeescript
             for f in pkgman.invokeFlat hook
 
@@ -147,18 +182,23 @@ specificity.
               )
 
         applySkin = (skinKey) ->
+          return if currentSkinKey is skinKey
           currentSkinKey = skinKey
+
+          candidateHooksInvoked = {}
           recalculateCandidate()
 
         applySkin defaultSkinKey
 ```
+
 Relink again every time the skin changes.
+
 ```coffeescript
-        $rootScope.$on 'shrub-skin.changed', (event, skinKey) ->
-          candidateHooksInvoked = {}
-          applySkin skinKey
+        $rootScope.$on 'shrub-skin.changed', (_, skinKey) -> applySkin skinKey
 ```
+
 Set watches for all candidate-related values.
+
 ```coffeescript
         keysSeen = {}
         watchers = []
@@ -176,7 +216,9 @@ Set watches for all candidate-related values.
 
   ]
 ```
-#### Implements hook `shrubAngularProvider`.
+
+#### Implements hook [`shrubAngularProvider`](../../../hooks#shrubangularprovider)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularProvider', -> [
 
@@ -191,10 +233,12 @@ Set watches for all candidate-related values.
 
           service = {}
 ```
+
 ## skin.addStylesheet
 
 (String) `href` - The href of the stylesheet to add. *Add a skin
 stylesheet.*
+
 ```coffeescript
           service.addStylesheet = (href) ->
 
@@ -203,20 +247,24 @@ stylesheet.*
             styleSheets = $window.document.styleSheets
             index = styleSheets.length
 ```
+
 Insert the stylesheed as a link element in the head element,
 classed with 'skin' so we can easily remove it if the skin
 changes.
+
 ```coffeescript
             element = $window.document.createElement 'link'
             element.type = 'text/css'
             element.rel = 'stylesheet'
-            element.href = "/skin/shrub-skin-strapped/#{href}"
+            element.href = "/skin/#{currentSkinKey}/#{href}"
             element.className = 'skin'
             angular.element('head').append element
 
             resolve = -> deferred.resolve()
 ```
+
 A rare case where IE actually does the right thing! (and Opera).
+
 ```coffeescript
             if $window.opera or ~$window.navigator.userAgent.indexOf 'MSIE'
 
@@ -226,7 +274,9 @@ A rare case where IE actually does the right thing! (and Opera).
                   when 'loaded', 'complete'
                     resolve()
 ```
+
 Everyone else needs to resort to polling.
+
 ```coffeescript
             else
 
@@ -258,29 +308,37 @@ Everyone else needs to resort to polling.
 
             deferred.promise
 ```
+
 ## skin.addStylesheets
 
 (String Array) `hrefs` - The hrefs of the stylesheets to add. *Add
 a list of skin stylesheets.*
+
 ```coffeescript
           service.addStylesheets = (hrefs) ->
             $q.all (service.addStylesheet href for href in hrefs)
 ```
+
 CLoak the body during the skin transition.
+
 ```coffeescript
           addBodyCloak = ->
 
             $body = angular.element 'body'
             $body.addClass 'shrub-skin-cloak'
 ```
+
 Remove the cloak after the transition is complete.
+
 ```coffeescript
           removeBodyCloak = ->
 
             $body = angular.element 'body'
             $body.removeClass 'shrub-skin-cloak'
 ```
+
 Remove all current skin stylesheets.
+
 ```coffeescript
           removeSkinStylesheets = ->
 
@@ -300,23 +358,28 @@ Remove all current skin stylesheets.
 
             return
 ```
+
 Use the correct assets for the environment.
+
 ```coffeescript
           environmentKey = if 'production' is cache.get 'environment'
             'production'
           else
             'default'
 ```
+
 ## skin.change
 
 (String) `skinKey` - The key of the skin to change to *Change
 skin.*
 
-###### TODO: Need to track current, this should be a nop in that case.
 ```coffeescript
           service.change = (skinKey) ->
+            return if skinKey is currentSkinKey
 ```
+
 Cloak the body.
+
 ```coffeescript
             addBodyCloak()
             removeSkinStylesheets()
@@ -325,7 +388,9 @@ Cloak the body.
               "packageConfig:shrub-skin:assets:#{skinKey}"
             )
 ```
+
 Uncloak and notify when finished.
+
 ```coffeescript
             service.addStylesheets(
               skinAssets.styleSheets[environmentKey]

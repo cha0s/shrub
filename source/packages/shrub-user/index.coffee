@@ -1,7 +1,10 @@
 # User
+
 ```coffeescript
 ```
+
 *User operations.*
+
 ```coffeescript
 Promise = null
 
@@ -13,7 +16,9 @@ clientModule = require './client'
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubCorePreBootstrap`.
+
+#### Implements hook [`shrubCorePreBootstrap`](../../hooks#shrubcoreprebootstrap)
+
 ```coffeescript
   registrar.registerHook 'shrubCorePreBootstrap', ->
 
@@ -21,15 +26,21 @@ exports.pkgmanRegister = (registrar) ->
 
     orm = require 'shrub-orm'
 ```
-#### Implements hook `shrubConfigClient`.
+
+#### Implements hook [`shrubConfigClient`](../../hooks#shrubconfigclient)
+
 ```coffeescript
   registrar.registerHook 'shrubConfigClient', (req) ->
 ```
+
 Send a redacted version of the request user.
+
 ```coffeescript
     req.user.redactObject 'shrub-user', req.user if req.user?
 ```
-#### Implements hook `shrubConfigServer`.
+
+#### Implements hook [`shrubConfigServer`](../../hooks#shrubconfigserver)
+
 ```coffeescript
   registrar.registerHook 'shrubConfigServer', ->
 
@@ -47,7 +58,9 @@ Send a redacted version of the request user.
     afterLogoutMiddleware: [
     ]
 ```
-#### Implements hook `shrubUserRedactors`.
+
+#### Implements hook [`shrubUserRedactors`](../../hooks#shrubuserredactors)
+
 ```coffeescript
   registrar.registerHook 'shrubUserRedactors', ->
 
@@ -57,13 +70,17 @@ Send a redacted version of the request user.
         redacted =
           id: object.id
 ```
+
 ###### TODO: Include/merge permissions.
+
 ```coffeescript
         for group in object.groups
 
           (redacted.groups ?= []).push group.name
 ```
+
 Redact instances.
+
 ```coffeescript
         return Promise.all(
 
@@ -78,19 +95,27 @@ Redact instances.
 
     ]
 ```
-#### Implements hook `shrubAuditFingerprint`.
+
+#### Implements hook [`shrubAuditFingerprint`](../../hooks#shrubauditfingerprint)
+
 ```coffeescript
   registrar.registerHook 'shrubAuditFingerprint', (req) ->
 ```
+
 User (ID).
+
 ```coffeescript
     user: if req?.user?.id? then req.user.id
 ```
-#### Implements hook `shrubOrmCollections`.
+
+#### Implements hook [`shrubOrmCollections`](../../hooks#shrubormcollections)
+
 ```coffeescript
   registrar.registerHook 'shrubOrmCollections', ->
 ```
+
 Invoke the client hook implementation.
+
 ```coffeescript
     collections = clientModule.shrubOrmCollections()
 
@@ -102,7 +127,9 @@ Invoke the client hook implementation.
       'shrub-user-permission': UserPermission
     } = collections
 ```
+
 Store case-insensitive name.
+
 ```coffeescript
     autoIname = (values, cb) ->
       values.iname = values.name.toLowerCase()
@@ -111,44 +138,58 @@ Store case-insensitive name.
     Group.beforeCreate = autoIname
     Group.beforeUpdate = autoIname
 ```
+
 Case-insensitive name.
+
 ```coffeescript
     Group.attributes.iname =
       type: 'string'
       size: 24
       index: true
 ```
+
 Disable the default createdAt/updatedAt attributes.
+
 ```coffeescript
     Group.autoCreatedAt = false
     Group.autoUpdatedAt = false
 ```
+
 Disable the default createdAt/updatedAt attributes.
+
 ```coffeescript
     GroupPermission.autoCreatedAt = false
     GroupPermission.autoUpdatedAt = false
 ```
+
 ## User.findOnePopulated
 
 * (object) `where` - Query conditions.
 
 *Find a user in the system and fully populate it.*
+
 ```coffeescript
     User.findOnePopulated = (where) ->
       @findOne(where).populateAll().then (user) -> user?.populateAll()
 ```
+
 ## User#populateAll
 
 *Fully populate a user.*
+
 ```coffeescript
     User.attributes.populateAll = ->
       self = this
 ```
+
 Populate permissions.
+
 ```coffeescript
       @permissions = @permissions.map ({permission}) -> permission
 ```
+
 Load and populate groups.
+
 ```coffeescript
       Group_ = orm.collection 'shrub-group'
 
@@ -158,7 +199,9 @@ Load and populate groups.
 
       ).then (groups) -> self.groups[index] = group for group, index in groups
 ```
+
 Load and populate user instances.
+
 ```coffeescript
       instancesPromise = Promise.all(
 
@@ -180,6 +223,7 @@ Load and populate user instances.
 
     redactors = null
 ```
+
 ## User#redactObject
 
 * (string) `type` - The type of object to redact.
@@ -187,30 +231,39 @@ Load and populate user instances.
 * (object) `object` - The object to redact.
 
 *Redact an object based on a user's permission.*
+
 ```coffeescript
     User.attributes.redactObject = (type, object) ->
       self = this
 
       pkgman = require 'pkgman'
 ```
+
 Collect redactors.
 
 ###### TODO: Caching.
+
 ```coffeescript
       unless redactors?
         redactors = {}
 ```
-#### Invoke hook `shrubUserRedactors`.
+
+#### Invoke hook [`shrubUserRedactors`](../../hooks#shrubuserredactors)
+
 ```coffeescript
         for redactorTypes in pkgman.invokeFlat 'shrubUserRedactors'
           for type_, redactors_ of redactorTypes
             (redactors[type_] ?= []).push redactors_...
 ```
+
 No redactors? Just promise the original object.
+
 ```coffeescript
       return Promise.resolve object if redactors[type].length is 0
 ```
+
 Walk down the list of redactors promising and returning them serially.
+
 ```coffeescript
       promise = Promise.resolve object
       for redactor in redactors[type]
@@ -219,9 +272,11 @@ Walk down the list of redactors promising and returning them serially.
 
       return promise
 ```
+
 ## User#toJSON
 
 *Render the user as a POD object.*
+
 ```coffeescript
     User.attributes.toJSON = ->
       O = @toObject()
@@ -232,14 +287,18 @@ Walk down the list of redactors promising and returning them serially.
 
       O
 ```
+
 Disable the default createdAt/updatedAt attributes.
+
 ```coffeescript
     UserGroup.autoCreatedAt = false
     UserGroup.autoUpdatedAt = false
 ```
+
 ## UserGroup#populateAll
 
 *Fully populate a user group.*
+
 ```coffeescript
     UserGroup.attributes.populateAll = ->
       self = this
@@ -250,18 +309,24 @@ Disable the default createdAt/updatedAt attributes.
 
         return self
 ```
+
 Disable the default createdAt/updatedAt attributes.
+
 ```coffeescript
     UserPermission.autoCreatedAt = false
     UserPermission.autoUpdatedAt = false
 
     collections
 ```
-#### Implements hook `shrubTransmittableErrors`.
+
+#### Implements hook [`shrubTransmittableErrors`](../../hooks#shrubtransmittableerrors)
+
 ```coffeescript
   registrar.registerHook 'shrubTransmittableErrors', clientModule.shrubTransmittableErrors
 ```
-#### Implements hook `shrubUserBeforeLoginMiddleware`.
+
+#### Implements hook [`shrubUserBeforeLoginMiddleware`](../../hooks#shrubuserbeforeloginmiddleware)
+
 ```coffeescript
   registrar.registerHook 'shrubUserBeforeLoginMiddleware', ->
 
@@ -272,7 +337,9 @@ Disable the default createdAt/updatedAt attributes.
         req.socket.join "user/#{req.loggingInUser.id}", next
     ]
 ```
-#### Implements hook `shrubUserBeforeLogoutMiddleware`.
+
+#### Implements hook [`shrubUserBeforeLogoutMiddleware`](../../hooks#shrubuserbeforelogoutmiddleware)
+
 ```coffeescript
   registrar.registerHook 'shrubUserBeforeLogoutMiddleware', ->
 
@@ -282,7 +349,9 @@ Disable the default createdAt/updatedAt attributes.
       (req, next) ->
         return next() unless req.socket.emit?
 ```
+
 Tell client to log out.
+
 ```coffeescript
         req.socket.emit 'shrub-user/logout'
         next()
@@ -290,7 +359,9 @@ Tell client to log out.
       (req, next) ->
         return next() unless req.socket.leave?
 ```
+
 Leave the user channel.
+
 ```coffeescript
         if req.user.id?
           req.socket.leave "user/#{req.loggingOutUser.id}", next

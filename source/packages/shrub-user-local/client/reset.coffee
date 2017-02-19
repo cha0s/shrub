@@ -1,10 +1,13 @@
 # User - Reset password
+
 ```coffeescript
 errors = require 'errors'
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubAngularRoutes`.
+
+#### Implements hook [`shrubAngularRoutes`](../../../hooks#shrubangularroutes)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularRoutes', ->
 

@@ -1,11 +1,13 @@
 # Crypto
 
 *Cryptographic helper functions.*
+
 ```coffeescript
 crypto = require 'crypto'
 config = require 'config'
 Promise = require 'bluebird'
 ```
+
 ## crypto.encrypt
 
 * (string) `message` - The message to encrypt.
@@ -14,6 +16,7 @@ Promise = require 'bluebird'
 
 Defaults to the site's global crypto key. *AES encrypt a message with a
 password.*
+
 ```coffeescript
 exports.encrypt = (message, password) ->
 
@@ -21,7 +24,7 @@ exports.encrypt = (message, password) ->
 
     cipher = crypto.createCipher(
       'aes256'
-      password ? config.get 'packageSettings:shrub-core:cryptoKey'
+      password ? config.get 'packageConfig:shrub-core:cryptoKey'
     )
 
     cipherText = []
@@ -29,6 +32,7 @@ exports.encrypt = (message, password) ->
     cipherText.push cipher.final 'hex'
     resolve cipherText.join ''
 ```
+
 ## crypto.decrypt
 
 * (string) `message` - The message to decrypt.
@@ -37,6 +41,7 @@ exports.encrypt = (message, password) ->
 
 Defaults to the site's global crypto key. *AES decrypt a message with a
 password.*
+
 ```coffeescript
 exports.decrypt = (message, password) ->
 
@@ -44,7 +49,7 @@ exports.decrypt = (message, password) ->
 
     decipher = crypto.createDecipher(
       'aes256'
-      password ? config.get 'packageSettings:shrub-core:cryptoKey'
+      password ? config.get 'packageConfig:shrub-core:cryptoKey'
     )
     decipher.setAutoPadding false
 
@@ -53,13 +58,16 @@ exports.decrypt = (message, password) ->
     decipherText.push decipher.final 'binary'
     decipherText = decipherText.join ''
 ```
+
 Slice off any padding.
+
 ```coffeescript
     if 16 >= code = decipherText.charCodeAt decipherText.length - 1
       decipherText = decipherText.slice 0, -code
 
     resolve decipherText
 ```
+
 ## crypto.hasher
 
 CREDIT:
@@ -82,13 +90,18 @@ the following values:
     * `iterations`: The number of iterations to use for the PBKDF. Defaults
       to 10000\. **NOTE:** This ***must*** be the same number when
       generating and verifying hashes, otherwise verification will fail.
+
 ```coffeescript
 ```
+
 *Cryptographic authentication functionality.*
+
 ```coffeescript
 exports.hasher = (options = {}) ->
 ```
+
 Generate random 8-character base64 password if none provided
+
 ```coffeescript
   unless options.plaintext?
 
@@ -97,7 +110,9 @@ Generate random 8-character base64 password if none provided
       exports.hasher options
     )
 ```
+
 Generate random 512-bit salt if no salt provided
+
 ```coffeescript
   unless options.salt?
 
@@ -116,7 +131,9 @@ Generate random 512-bit salt if no salt provided
     options.key = new Buffer key
     options
 ```
+
 Promisify some useful node.js crypto functions.
+
 ```coffeescript
 exports.pbkdf2 = Promise.promisify crypto.pbkdf2, crypto
 exports.randomBytes = Promise.promisify crypto.randomBytes, crypto

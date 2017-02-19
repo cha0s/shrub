@@ -1,17 +1,22 @@
 # Example - About page
 
 *Define a route to access the README.md page.*
+
 ```coffeescript
 fs = require 'fs'
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubHttpRoutes`.
+
+#### Implements hook [`shrubHttpRoutes`](../../hooks#shrubhttproutes)
+
 ```coffeescript
   registrar.registerHook 'shrubHttpRoutes', (http) ->
     routes = []
 ```
+
 Provide the README file.
+
 ```coffeescript
     routes.push
       path: '/shrub-example/about/README.md'

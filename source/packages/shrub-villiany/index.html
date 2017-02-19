@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -1533,19 +1526,19 @@
             
                 <li class="toctree-l3"><a href="#villiany">Villiany</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubcoreprebootstrap">Implements hook shrubCorePreBootstrap.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubcoreprebootstrap">Implements hook shrubCorePreBootstrap</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubormcollections">Implements hook shrubOrmCollections.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubormcollections">Implements hook shrubOrmCollections</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubhttpmiddleware">Implements hook shrubHttpMiddleware.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubhttpmiddleware">Implements hook shrubHttpMiddleware</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubsocketconnectionmiddleware">Implements hook shrubSocketConnectionMiddleware.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubsocketconnectionmiddleware">Implements hook shrubSocketConnectionMiddleware</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubrpcroutesalter">Implements hook shrubRpcRoutesAlter.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubrpcroutesalter">Implements hook shrubRpcRoutesAlter</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubvillianyreport">Implements hook shrubVillianyReport.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubvillianyreport">Implements hook shrubVillianyReport</a></li>
                 
             
             </ul>
@@ -1682,7 +1675,7 @@ villianyLimiter = null
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <code>shrubCorePreBootstrap</code>.</h4>
+<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <a href="../../../hooks#shrubcoreprebootstrap"><code>shrubCorePreBootstrap</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubCorePreBootstrap', -&gt;
 
     i8n = require 'inflection'
@@ -1699,7 +1692,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     {
       thresholdScore
       thresholdMs
-    } = config.get 'packageSettings:shrub-villiany:ban'
+    } = config.get 'packageConfig:shrub-villiany:ban'
 
     villianyLimiter = new Limiter(
       'villiany'
@@ -1707,13 +1700,14 @@ exports.pkgmanRegister = (registrar) -&gt;
     )
 </code></pre>
 
-<h4 id="implements-hook-shrubormcollections">Implements hook <code>shrubOrmCollections</code>.</h4>
+<h4 id="implements-hook-shrubormcollections">Implements hook <a href="../../../hooks#shrubormcollections"><code>shrubOrmCollections</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubOrmCollections', -&gt;
 
     Fingerprint = require 'fingerprint'
 </code></pre>
 
 <p>Bans.</p>
+<h6 id="todo-bans-dont-actually-work-at-the-moment">TODO: Bans don't actually work at the moment.</h6>
 <pre><code class="coffeescript">    Ban = attributes: expires: 'date'
 </code></pre>
 
@@ -1766,7 +1760,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 <pre><code class="coffeescript">    Ban.createFromFingerprint = (fingerprint, expires) -&gt;
 
       unless expires?
-        settings = config.get 'packageSettings:shrub-villiany:ban'
+        settings = config.get 'packageConfig:shrub-villiany:ban'
         expires = parseInt settings.thresholdMs
 
       data = expires: new Date Date.now() + expires
@@ -1776,7 +1770,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     'shrub-ban': Ban
 </code></pre>
 
-<h4 id="implements-hook-shrubhttpmiddleware">Implements hook <code>shrubHttpMiddleware</code>.</h4>
+<h4 id="implements-hook-shrubhttpmiddleware">Implements hook <a href="../../../hooks#shrubhttpmiddleware"><code>shrubHttpMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubHttpMiddleware', -&gt;
 
     label: 'Provide villiany management'
@@ -1796,7 +1790,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     ]
 </code></pre>
 
-<h4 id="implements-hook-shrubconfigserver">Implements hook <code>shrubConfigServer</code>.</h4>
+<h4 id="implements-hook-shrubconfigserver">Implements hook <a href="../../../hooks#shrubconfigserver"><code>shrubConfigServer</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubConfigServer', -&gt;
 
     ban:
@@ -1810,7 +1804,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 <pre><code class="coffeescript">      thresholdMs: 1000 * 60 * 10
 </code></pre>
 
-<h4 id="implements-hook-shrubsocketconnectionmiddleware">Implements hook <code>shrubSocketConnectionMiddleware</code>.</h4>
+<h4 id="implements-hook-shrubsocketconnectionmiddleware">Implements hook <a href="../../../hooks#shrubsocketconnectionmiddleware"><code>shrubSocketConnectionMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubSocketConnectionMiddleware', -&gt;
 
     {AuthorizationFailure} = require 'shrub-socket/manager'
@@ -1819,7 +1813,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     middleware: socketMiddleware()
 </code></pre>
 
-<h4 id="implements-hook-shrubrpcroutesalter">Implements hook <code>shrubRpcRoutesAlter</code>.</h4>
+<h4 id="implements-hook-shrubrpcroutesalter">Implements hook <a href="../../../hooks#shrubrpcroutesalter"><code>shrubRpcRoutesAlter</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubRpcRoutesAlter', (routes) -&gt;
 
     {spliceRouteMiddleware} = require 'shrub-rpc'
@@ -1830,7 +1824,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     return
 </code></pre>
 
-<h4 id="implements-hook-shrubvillianyreport">Implements hook <code>shrubVillianyReport</code>.</h4>
+<h4 id="implements-hook-shrubvillianyreport">Implements hook <a href="../../../hooks#shrubvillianyreport"><code>shrubVillianyReport</code></a></h4>
 <p>Catch villiany reports.</p>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubVillianyReport', (req, score, type, excluded = []) -&gt;
 

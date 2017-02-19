@@ -1,4 +1,5 @@
 # User - email
+
 ```coffeescript
 exports.pkgmanRegister = (registrar) ->
 

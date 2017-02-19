@@ -1,8 +1,11 @@
 # Form - Group
+
 ```coffeescript
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubAngularDirective`.
+
+#### Implements hook [`shrubAngularDirective`](../../../../hooks#shrubangulardirective)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularDirective', -> [
     '$compile', '$log', 'shrub-form'
@@ -15,6 +18,7 @@ exports.pkgmanRegister = (registrar) ->
         scope.$watch 'field', (field) ->
 
           field.collapse ?= true
+          field.isVisible ?= -> true
 
         scope.$watchCollection(
           -> scope.field.fields
@@ -24,7 +28,9 @@ exports.pkgmanRegister = (registrar) ->
 
             for name, field of fields
 ```
+
 Look up the widget definition and warn if it doesn't exist.
+
 ```coffeescript
               unless (widget = formService.widgets[field.type])?
 
@@ -37,11 +43,15 @@ Look up the widget definition and warn if it doesn't exist.
                 }`!"
                 continue
 ```
+
 Default name to the key.
+
 ```coffeescript
               field.name ?= name
 ```
+
 Inherit method.
+
 ```coffeescript
               field.syncModel = scope.field.syncModel
 
@@ -49,8 +59,10 @@ Inherit method.
 
 <div
   data-#{widget.directive}
+  data-ng-show="field.isVisible()"
   data-field="field.fields['#{name}']"
   data-form="form"
+  data-shrub-ui-attributes="field.attributes"
 ></div><span> </span>
 
 """
@@ -70,7 +82,9 @@ Inherit method.
 
   ]
 ```
-#### Implements hook `shrubFormWidgets`.
+
+#### Implements hook [`shrubFormWidgets`](../../../../hooks#shrubformwidgets)
+
 ```coffeescript
   registrar.registerHook 'shrubFormWidgets', ->
 

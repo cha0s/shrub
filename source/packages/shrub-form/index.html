@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -573,9 +566,9 @@
             
                 <li class="toctree-l3"><a href="#form-processing">Form processing</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubangularsandboxnavigationmiddleware">Implements hook shrubAngularSandboxNavigationMiddleware.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubangularsandboxnavigationmiddleware">Implements hook shrubAngularSandboxNavigationMiddleware</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubhttpmiddleware">Implements hook shrubHttpMiddleware.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubhttpmiddleware">Implements hook shrubHttpMiddleware</a></li>
                 
             
             </ul>
@@ -1665,7 +1658,7 @@ methodOverride = require 'method-override'
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubangularsandboxnavigationmiddleware">Implements hook <code>shrubAngularSandboxNavigationMiddleware</code>.</h4>
+<h4 id="implements-hook-shrubangularsandboxnavigationmiddleware">Implements hook <a href="../../../hooks#shrubangularsandboxnavigationmiddleware"><code>shrubAngularSandboxNavigationMiddleware</code></a></h4>
 <p>If the client made a POST request, inject that request into the Angular
 sandbox and let it do its thing.</p>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAngularSandboxNavigationMiddleware', -&gt;
@@ -1718,7 +1711,7 @@ sandbox and let it do its thing.</p>
     ]
 </code></pre>
 
-<h4 id="implements-hook-shrubhttpmiddleware">Implements hook <code>shrubHttpMiddleware</code>.</h4>
+<h4 id="implements-hook-shrubhttpmiddleware">Implements hook <a href="../../../hooks#shrubhttpmiddleware"><code>shrubHttpMiddleware</code></a></h4>
 <p>Parse POST submissions, and allow arbitrary method form attribute.</p>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubHttpMiddleware', (http) -&gt;
 

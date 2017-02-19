@@ -1,8 +1,11 @@
 # Form - Markup
+
 ```coffeescript
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubAngularDirective`.
+
+#### Implements hook [`shrubAngularDirective`](../../../../hooks#shrubangulardirective)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularDirective', -> [
     '$compile'
@@ -35,7 +38,9 @@ exports.pkgmanRegister = (registrar) ->
 
   ]
 ```
-#### Implements hook `shrubFormWidgets`.
+
+#### Implements hook [`shrubFormWidgets`](../../../../hooks#shrubformwidgets)
+
 ```coffeescript
   registrar.registerHook 'shrubFormWidgets', ->
 

@@ -1,3 +1,4 @@
+
 ```coffeescript
 errors = require 'errors'
 
@@ -24,7 +25,7 @@ describe 'errors', ->
   it 'serializes (even abstract) errors', ->
 
     O = errors.serialize error
-    expect(O[0]).toBe error.key
+    expect(O[0]).toBe error.errorType
     expect(O[1]).toBe error.message
 
     O = errors.serialize new Error 'Foobar'

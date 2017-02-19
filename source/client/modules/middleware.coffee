@@ -1,10 +1,12 @@
 # Abstract middleware stacks
+
 ```coffeescript
 {EventEmitter} = require 'events'
 
 config = require 'config'
 pkgman = require 'pkgman'
 ```
+
 Implements a middleware stack. Middleware functions can be added to the
 stack with `use`. Calling `dispatch` invokes the middleware functions
 serially.
@@ -20,23 +22,29 @@ additional parameter at the beginning of the function signature: `error`.
 Error-handling middleware are only called if a previous middleware threw
 or passed an error. Conversely, non-error-handling middleware are skipped
 if a previous error occurred.
+
 ```coffeescript
 exports.Middleware = class Middleware extends EventEmitter
 ```
+
 ## *constructor*
 
 *Create a middleware stack.*
+
 ```coffeescript
   constructor: -> @_middleware = []
 ```
+
 ## Middlware#use
 
 * (function) `fn` - A middleware function.
 
 *Add a middleware function to the stack.*
+
 ```coffeescript
   use: (fn) -> @_middleware.push fn
 ```
+
 ## Middleware#dispatch
 
 * (mixed) `...` - Zero or more values to pass to the middleware.
@@ -45,6 +53,7 @@ exports.Middleware = class Middleware extends EventEmitter
 finished. If an error occurred, it will be passed as the first argument.
 
 *Invoke the middleware functions serially.*
+
 ```coffeescript
   dispatch: (args..., fn) ->
     self = this
@@ -55,12 +64,16 @@ finished. If an error occurred, it will be passed as the first argument.
 
       self.emit 'invoked', self._middleware[index - 1] if index > 0
 ```
+
 Call `fn` with any error if we're done.
+
 ```coffeescript
       if index is self._middleware.length
 ```
+
 Ignore any final error, as we don't want it to cascade back up the
 recursive invocation path.
+
 ```coffeescript
         try
           return fn error
@@ -68,16 +81,22 @@ recursive invocation path.
 
       current = self._middleware[index++]
 ```
+
 Error-handling middleware.
+
 ```coffeescript
       if current.length is args.length + 2
 ```
+
 An error occurred previously.
+
 ```coffeescript
         if error?
 ```
+
 Try to invoke the middleware, if it throws, just catch the error
 and pass it along.
+
 ```coffeescript
           try
             localArgs = args.concat()
@@ -88,28 +107,38 @@ and pass it along.
           catch error
             invoke error
 ```
+
 No previous error; skip this middleware.
+
 ```coffeescript
         else
 
           invoke error
 ```
+
 Non-error-handling middleware.
+
 ```coffeescript
       else
 ```
+
 An error occurred previously, skip this middleware.
+
 ```coffeescript
         if error?
 
           invoke error
 ```
+
 No previous error.
+
 ```coffeescript
         else
 ```
+
 Try to invoke the middleware, if it throws, just catch the error
 and pass it along.
+
 ```coffeescript
           try
             localArgs = args.concat()
@@ -119,14 +148,18 @@ and pass it along.
           catch error
             invoke error
 ```
+
 Kick things off.
+
 ```coffeescript
     invoke()
 ```
+
 ## middleware.fromHook
 
 *Create a middleware stack from the results of a hook and path
 configuration.*
+
 ```coffeescript
 exports.fromHook = (hook, paths, args...) ->
 
@@ -134,7 +167,9 @@ exports.fromHook = (hook, paths, args...) ->
 
   middleware = new Middleware()
 ```
+
 Invoke the hook and `use` the middleware in the paths configuration order.
+
 ```coffeescript
   args.unshift hook
   hookResults = pkgman.invoke args...
@@ -147,18 +182,16 @@ Invoke the hook and `use` the middleware in the paths configuration order.
 
   middleware
 ```
+
 ## middleware.fromConfig
 
 *Create a middleware stack from a configuration path.*
+
 ```coffeescript
 exports.fromConfig = (path, args...) ->
-```
-###### TODO: Unify on `'packages'`.
-```coffeescript
-  configKey = if global? then 'packageSettings' else 'packageConfig'
 
   exports.fromHook(
     pkgman.normalizePath path
-    config.get "#{configKey}:#{path}"
+    config.get "packageConfig:#{path}"
   )
 ```

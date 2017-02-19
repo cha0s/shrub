@@ -7,6 +7,7 @@
 * (string) `filename` - The filename where the log will be written.
 
 *Create a new logger instance.*
+
 ```coffeescript
 exports.create = (filename) ->
 
@@ -17,7 +18,9 @@ exports.create = (filename) ->
     new winston.transports.File level: 'silly', filename: filename
   ]
 ```
+
 Create a default logger, for convenience.
+
 ```coffeescript
 defaultLogger = exports.create 'logs/shrub.log'
 exports.defaultLogger = defaultLogger

@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -743,11 +736,11 @@
             
                 <li class="toctree-l3"><a href="#html5-notification">HTML5 notification</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubgruntconfig">Implements hook shrubGruntConfig.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubgruntconfig">Implements hook shrubGruntConfig</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubassetsmiddleware">Implements hook shrubAssetsMiddleware.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubassetsmiddleware">Implements hook shrubAssetsMiddleware</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubangularpackagedependencies">Implements hook shrubAngularPackageDependencies.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubangularpackagedependencies">Implements hook shrubAngularPackageDependencies</a></li>
                 
             
             </ul>
@@ -1665,7 +1658,7 @@
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubgruntconfig">Implements hook <code>shrubGruntConfig</code>.</h4>
+<h4 id="implements-hook-shrubgruntconfig">Implements hook <a href="../../../hooks#shrubgruntconfig"><code>shrubGruntConfig</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubGruntConfig', (gruntConfig) -&gt;
 
     gruntConfig.copyAppFiles &quot;#{__dirname}/app&quot;, 'shrub-html5-notification'
@@ -1677,7 +1670,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     gruntConfig.registerTask 'build', ['build:shrub-html5-notification']
 </code></pre>
 
-<h4 id="implements-hook-shrubassetsmiddleware">Implements hook <code>shrubAssetsMiddleware</code>.</h4>
+<h4 id="implements-hook-shrubassetsmiddleware">Implements hook <a href="../../../hooks#shrubassetsmiddleware"><code>shrubAssetsMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAssetsMiddleware', -&gt;
 
     label: 'Angular HTML5 notifications'
@@ -1695,7 +1688,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     ]
 </code></pre>
 
-<h4 id="implements-hook-shrubangularpackagedependencies">Implements hook <code>shrubAngularPackageDependencies</code>.</h4>
+<h4 id="implements-hook-shrubangularpackagedependencies">Implements hook <a href="../../../hooks#shrubangularpackagedependencies"><code>shrubAngularPackageDependencies</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAngularPackageDependencies', -&gt; [
     'notification'
   ]

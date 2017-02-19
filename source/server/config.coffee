@@ -2,7 +2,6 @@
 
 *Manages server and package configuration.*
 
-###### TODO: Rename all config `key` uses to `path`.
 ```coffeescript
 debug = require('debug') 'shrub:config'
 nconf = require 'nconf'
@@ -14,29 +13,37 @@ pkgman = require 'pkgman'
 
 {Config} = require 'client/modules/config'
 ```
+
 ## config.get
 
-* (string) `key` - The key whose value to get.
+* (string) `path` - The path whose value to get.
 
 *Get a configuration value.*
+
 ```coffeescript
-exports.get = (key) -> nconf.get key
+exports.get = (path) -> nconf.get path
 ```
+
 ## config.has
 
-* (string) `key` - The key to check.
+* (string) `path` - The path to check.
 
-*Check if a configuration key exists.*
+*Check if a configuration path exists.*
+
 ```coffeescript
-exports.has = (key) -> nconf.has key
+exports.has = (path) -> nconf.has path
 ```
+
 ## config.load
 
 *Load configuration from the settings file and set package defaults.*
+
 ```coffeescript
 exports.load = ->
 ```
+
 Ensure the configuration file exists.
+
 ```coffeescript
   unless fs.existsSync settingsFilename = './config/settings.yml'
     throw new Error 'Settings file not found! You should copy config/default.settings.yml to config/settings.yml'
@@ -48,41 +55,47 @@ Ensure the configuration file exists.
 
   return
 ```
+
 ## config.loadPackageSettings
 
 *Load package settings as defaults in the configuration.*
+
 ```coffeescript
 exports.loadPackageSettings = ->
 ```
+
 Register packages.
+
 ```coffeescript
   debug 'Registering packages...'
 
   pkgman.registerPackageList nconf.get 'packageList'
 
   debug 'Packages registered.'
-```
-###### TODO: Unify config key on `'packages'`.
-```coffeescript
-  packageSettings = new Config()
-  for key, value of pkgman.invoke 'shrubConfigServer'
-    packageSettings.set key.replace(/\//g, ':'), value
+
+  packageConfig = new Config()
+  for path, value of pkgman.invoke 'shrubConfigServer'
+    packageConfig.set path.replace(/\//g, ':'), value
 
   nconf.defaults
 ```
-#### Invoke hook `shrubConfigServer`.
+
+#### Invoke hook [`shrubConfigServer`](../hooks#shrubconfigserver)
+
 ```coffeescript
-    packageSettings: packageSettings.toJSON()
+    packageConfig: packageConfig.toJSON()
 
     path: "#{__dirname}/.."
 
   return
 ```
+
 ## config.set
 
-* (string) `key` - The key whose value to set.
+* (string) `path` - The path whose value to set.
 
 *Set a configuration value.*
+
 ```coffeescript
-exports.set = (key, value) -> nconf.set key, value
+exports.set = (path, value) -> nconf.set path, value
 ```

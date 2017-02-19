@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -1262,13 +1255,11 @@
             
                 <li class="toctree-l3"><a href="#ui-messages">UI - Messages</a></li>
                 
-                    <li><a class="toctree-l4" href="#todo-i-dont-really-like-this-think-about-it-some-more">TODO: I don't really like this. Think about it some more.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubangulardirective">Implements hook shrubAngularDirective</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubangulardirective">Implements hook shrubAngularDirective.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubrpccall">Implements hook shrubRpcCall</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubrpccall">Implements hook shrubRpcCall.</a></li>
-                
-                    <li><a class="toctree-l4" href="#implements-hook-shrubangularservice">Implements hook shrubAngularService.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubangularservice">Implements hook shrubAngularService</a></li>
                 
                     <li><a class="toctree-l4" href="#messagesadd">messages.add</a></li>
                 
@@ -1672,14 +1663,13 @@
               
                 <h1 id="ui-messages">UI - Messages</h1>
 <p><em>Manage transient UI messages.</em></p>
-<h6 id="todo-i-dont-really-like-this-think-about-it-some-more">TODO: I don't really like this. Think about it some more.</h6>
 <pre><code class="coffeescript">config = require 'config'
 errors = require 'errors'
 
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubangulardirective">Implements hook <code>shrubAngularDirective</code>.</h4>
+<h4 id="implements-hook-shrubangulardirective">Implements hook <a href="../../../../hooks#shrubangulardirective"><code>shrubAngularDirective</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAngularDirective', -&gt; [
     '$timeout', 'shrub-ui/messages'
     ($timeout, {count, removeTop, top}) -&gt;
@@ -1743,7 +1733,7 @@ exports.pkgmanRegister = (registrar) -&gt;
   ]
 </code></pre>
 
-<h4 id="implements-hook-shrubrpccall">Implements hook <code>shrubRpcCall</code>.</h4>
+<h4 id="implements-hook-shrubrpccall">Implements hook <a href="../../../../hooks#shrubrpccall"><code>shrubRpcCall</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubRpcCall', -&gt; [
     'shrub-ui/messages', 'result'
     (messages, result) -&gt;
@@ -1757,7 +1747,7 @@ exports.pkgmanRegister = (registrar) -&gt;
   ]
 </code></pre>
 
-<h4 id="implements-hook-shrubangularservice">Implements hook <code>shrubAngularService</code>.</h4>
+<h4 id="implements-hook-shrubangularservice">Implements hook <a href="../../../../hooks#shrubangularservice"><code>shrubAngularService</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAngularService', -&gt; [
     'shrub-socket'
     (socket) -&gt;
@@ -1807,7 +1797,7 @@ exports.pkgmanRegister = (registrar) -&gt;
   ]
 </code></pre>
 
-<h4 id="implements-hook-shrubangularapprun">Implements hook <code>shrubAngularAppRun</code>.</h4>
+<h4 id="implements-hook-shrubangularapprun">Implements hook <a href="../../../../hooks#shrubangularapprun"><code>shrubAngularAppRun</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAngularAppRun', -&gt; [
     'shrub-ui/messages'
     (messages) -&gt;

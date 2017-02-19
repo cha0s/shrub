@@ -1,10 +1,13 @@
 # User - Forgot password email
+
 ```coffeescript
 config = require 'config'
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubAngularDirective`.
+
+#### Implements hook [`shrubAngularDirective`](../../../../hooks#shrubangulardirective)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularDirective', -> [
     'shrub-ui/window-title'

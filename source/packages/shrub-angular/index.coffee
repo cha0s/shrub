@@ -1,10 +1,13 @@
 # Angular
+
 ```coffeescript
 config = require 'config'
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubAssetsMiddleware`.
+
+#### Implements hook [`shrubAssetsMiddleware`](../../hooks#shrubassetsmiddleware)
+
 ```coffeescript
   registrar.registerHook 'shrubAssetsMiddleware', ->
 
@@ -29,7 +32,9 @@ exports.pkgmanRegister = (registrar) ->
 
     ]
 ```
-#### Implements hook `shrubGruntConfig`.
+
+#### Implements hook [`shrubGruntConfig`](../../hooks#shrubgruntconfig)
+
 ```coffeescript
   registrar.registerHook 'shrubGruntConfig', (gruntConfig, grunt) ->
 
@@ -74,14 +79,18 @@ exports.pkgmanRegister = (registrar) ->
       options: livereload: true
     )
 ```
+
 Build the list of third-party Angular modules to be injected as
 dependencies of the Angular application.
+
 ```coffeescript
     gruntConfig.registerTask 'shrubAngularPackageDependencies:angular', ->
 
       pkgman = require 'pkgman'
 ```
-#### Invoke hook `shrubAngularPackageDependencies`.
+
+#### Invoke hook [`shrubAngularPackageDependencies`](../../hooks#shrubangularpackagedependencies)
+
 ```coffeescript
       dependencies = []
       for dependenciesList in pkgman.invokeFlat 'shrubAngularPackageDependencies'

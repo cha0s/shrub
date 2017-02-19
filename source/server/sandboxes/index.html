@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -1752,7 +1745,9 @@ some methods to inspect the state of the document.</p>
       cookie: options.cookie
       cookieDomain: options.cookieDomain ? 'localhost'
 
-      url: options.url ? &quot;http://localhost:#{config.get 'packageSettings:shrub-http:port'}/&quot;
+      url: options.url ? &quot;http://localhost:#{
+        config.get 'packageConfig:shrub-http:port'
+      }/&quot;
     )
     @_window = window = document.defaultView
 

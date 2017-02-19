@@ -1,19 +1,26 @@
 # Example - Home page
+
 ```coffeescript
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubAngularAppConfig`.
+
+#### Implements hook [`shrubAngularAppConfig`](../../../hooks#shrubangularappconfig)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularAppConfig', -> [
     '$routeProvider'
     ($routeProvider) ->
 ```
+
 We'll gank the default route.
+
 ```coffeescript
       $routeProvider.otherwise redirectTo: '/home'
   ]
 ```
-#### Implements hook `shrubAngularRoutes`.
+
+#### Implements hook [`shrubAngularRoutes`](../../../hooks#shrubangularroutes)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularRoutes', ->
 

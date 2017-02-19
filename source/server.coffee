@@ -4,6 +4,7 @@
 and process exit.* The core bootstrap phase injects environment into a
 forked copy of the application including require paths to allow core and
 custom packages to be included without qualification.
+
 ```coffeescript
 {fork} = require "./server/bootstrap"
 unless fork()
@@ -18,9 +19,11 @@ unless fork()
   middleware = require 'middleware'
   pkgman = require 'pkgman'
 ```
+
 Set up exit hooks.
 
-#### Invoke hook `shrubCoreProcessExit`.
+#### Invoke hook [`shrubCoreProcessExit`](../hooks#shrubcoreprocessexit)
+
 ```coffeescript
   process.on 'exit', -> pkgman.invoke 'shrubCoreProcessExit'
 
@@ -28,7 +31,9 @@ Set up exit hooks.
   process.on 'SIGTERM', -> process.exit()
   process.on 'unhandledException', -> process.exit()
 ```
+
 Load the configuration.
+
 ```coffeescript
   debug 'Loading config...'
 
@@ -37,13 +42,17 @@ Load the configuration.
 
   debug 'Config loaded.'
 ```
-#### Invoke hook `shrubCorePreBootstrap`.
+
+#### Invoke hook [`shrubCorePreBootstrap`](../hooks#shrubcoreprebootstrap)
+
 ```coffeescript
   debugSilly 'Pre bootstrap phase...'
   pkgman.invoke 'shrubCorePreBootstrap'
   debugSilly 'Pre bootstrap phase completed.'
 ```
-#### Invoke hook `shrubCoreBootstrapMiddleware`.
+
+#### Invoke hook [`shrubCoreBootstrapMiddleware`](../hooks#shrubcorebootstrapmiddleware)
+
 ```coffeescript
   debugSilly 'Loading bootstrap middleware...'
 
@@ -53,13 +62,17 @@ Load the configuration.
 
   debugSilly 'Bootstrap middleware loaded.'
 ```
+
 Dispatch the bootstrap middleware stack and log if everything is okay.
+
 ```coffeescript
   bootstrapMiddleware.dispatch (error) ->
     return debug 'Bootstrap complete.' unless error?
 ```
+
 Log and throw any error. This will be caught by the unhandledException
 listener below.
+
 ```coffeescript
     console.error errors.stack error
     process.exit()

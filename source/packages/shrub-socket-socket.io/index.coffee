@@ -1,10 +1,13 @@
 # Socket.IO
 
 *Build and serve [Socket.IO](http://socket.io/).*
+
 ```coffeescript
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubAssetsMiddleware`.
+
+#### Implements hook [`shrubAssetsMiddleware`](../../hooks#shrubassetsmiddleware)
+
 ```coffeescript
   registrar.registerHook 'shrubAssetsMiddleware', ->
 
@@ -27,7 +30,9 @@ exports.pkgmanRegister = (registrar) ->
 
     ]
 ```
-#### Implements hook `shrubGruntConfig`.
+
+#### Implements hook [`shrubGruntConfig`](../../hooks#shrubgruntconfig)
+
 ```coffeescript
   registrar.registerHook 'shrubGruntConfig', (gruntConfig) ->
 

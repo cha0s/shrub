@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -1104,13 +1097,13 @@
             
                 <li class="toctree-l3"><a href="#skin">Skin</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubconfigclient">Implements hook shrubConfigClient.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubconfigclient">Implements hook shrubConfigClient</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubhttpmiddleware">Implements hook shrubHttpMiddleware.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubhttpmiddleware">Implements hook shrubHttpMiddleware</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubhttpmiddleware_1">Implements hook shrubHttpMiddleware.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubhttpmiddleware_1">Implements hook shrubHttpMiddleware</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer</a></li>
                 
                     <li><a class="toctree-l4" href="#activekey">activeKey</a></li>
                 
@@ -1681,18 +1674,18 @@ pkgman = require 'pkgman'
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubconfigclient">Implements hook <code>shrubConfigClient</code>.</h4>
+<h4 id="implements-hook-shrubconfigclient">Implements hook <a href="../../../hooks#shrubconfigclient"><code>shrubConfigClient</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubConfigClient', -&gt;
 
     skinAssets = {}
     for packagePath in pkgman.packagesImplementing 'shrubSkinAssets'
       skinAssets[packagePath] = exports.assets packagePath
 
-    default: config.get 'packageSettings:shrub-skin:default'
+    default: config.get 'packageConfig:shrub-skin:default'
     assets: skinAssets
 </code></pre>
 
-<h4 id="implements-hook-shrubhttpmiddleware">Implements hook <code>shrubHttpMiddleware</code>.</h4>
+<h4 id="implements-hook-shrubhttpmiddleware">Implements hook <a href="../../../hooks#shrubhttpmiddleware"><code>shrubHttpMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'path', 'shrubHttpMiddleware', (http) -&gt;
 
     label: 'Skin path handling'
@@ -1709,7 +1702,7 @@ express/static would have picked it up already.</p>
     ]
 </code></pre>
 
-<h4 id="implements-hook-shrubhttpmiddleware_1">Implements hook <code>shrubHttpMiddleware</code>.</h4>
+<h4 id="implements-hook-shrubhttpmiddleware_1">Implements hook <a href="../../../hooks#shrubhttpmiddleware"><code>shrubHttpMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'render', 'shrubHttpMiddleware', (http) -&gt;
 
     label: 'Render skinned page HTML'
@@ -1725,7 +1718,7 @@ express/static would have picked it up already.</p>
   ]
 </code></pre>
 
-<h4 id="implements-hook-shrubconfigserver">Implements hook <code>shrubConfigServer</code>.</h4>
+<h4 id="implements-hook-shrubconfigserver">Implements hook <a href="../../../hooks#shrubconfigserver"><code>shrubConfigServer</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubConfigServer', -&gt;
 </code></pre>
 
@@ -1735,7 +1728,7 @@ express/static would have picked it up already.</p>
 
 <h2 id="activekey">activeKey</h2>
 <p><em>Get the active skin's key</em></p>
-<pre><code class="coffeescript">exports.activeKey = -&gt; config.get 'packageSettings:shrub-skin:default'
+<pre><code class="coffeescript">exports.activeKey = -&gt; config.get 'packageConfig:shrub-skin:default'
 </code></pre>
 
 <h2 id="gruntskin">gruntSkin</h2>
@@ -1919,7 +1912,7 @@ for production.</p>
         skinAssets[type][env][i] = &quot;/#{asset}&quot;
 </code></pre>
 
-<h4 id="invoke-hook-shrubskinassets">Invoke hook <code>shrubSkinAssets</code>.</h4>
+<h4 id="invoke-hook-shrubskinassets">Invoke hook <a href="../../../hooks#shrubskinassets"><code>shrubSkinAssets</code></a></h4>
 <pre><code class="coffeescript">  pkgman.invokePackage skinKey, 'shrubSkinAssets', skinAssets
 
   return skinAssets

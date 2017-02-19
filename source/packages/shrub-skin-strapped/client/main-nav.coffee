@@ -1,8 +1,11 @@
 # Strapped - Main navigation
+
 ```coffeescript
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubAngularDirective`.
+
+#### Implements hook [`shrubAngularDirective`](../../../hooks#shrubangulardirective)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularDirective', -> [
     'shrub-ui/window-title'
@@ -10,7 +13,9 @@ exports.pkgmanRegister = (registrar) ->
 
       link: (scope, elm, attr) ->
 ```
+
 Add some useful links to the nav.
+
 ```coffeescript
         scope.menu =
 
@@ -63,7 +68,7 @@ Add some useful links to the nav.
       >
         Hi,
         <span
-          data-shrub-user
+          data-shrub-user-actions
         >
         </span>
       </div>

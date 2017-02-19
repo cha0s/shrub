@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -1494,11 +1487,11 @@
             
                 <li class="toctree-l3"><a href="#user-login">User login</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubangularroutes">Implements hook shrubAngularRoutes.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubangularroutes">Implements hook shrubAngularRoutes</a></li>
                 
-                    <li><a class="toctree-l4" href="#invoke-hook-shrubuserloginstrategies">Invoke hook shrubUserLoginStrategies.</a></li>
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubuserloginstrategies">Invoke hook shrubUserLoginStrategies</a></li>
                 
-                    <li><a class="toctree-l4" href="#invoke-hook-shrubuserloginstrategiesalter">Invoke hook shrubUserLoginStrategiesAlter.</a></li>
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubuserloginstrategiesalter">Invoke hook shrubUserLoginStrategiesAlter</a></li>
                 
             
             </ul>
@@ -1665,7 +1658,7 @@ pkgman = require 'pkgman'
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubangularroutes">Implements hook <code>shrubAngularRoutes</code>.</h4>
+<h4 id="implements-hook-shrubangularroutes">Implements hook <a href="../../../../hooks#shrubangularroutes"><code>shrubAngularRoutes</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAngularRoutes', -&gt;
 
     routes = []
@@ -1680,11 +1673,11 @@ exports.pkgmanRegister = (registrar) -&gt;
         ($location, $scope, messages, user) -&gt;
 </code></pre>
 
-<h4 id="invoke-hook-shrubuserloginstrategies">Invoke hook <code>shrubUserLoginStrategies</code>.</h4>
+<h4 id="invoke-hook-shrubuserloginstrategies">Invoke hook <a href="../../../../hooks#shrubuserloginstrategies"><code>shrubUserLoginStrategies</code></a></h4>
 <pre><code class="coffeescript">          strategies = pkgman.invoke 'shrubUserLoginStrategies'
 </code></pre>
 
-<h4 id="invoke-hook-shrubuserloginstrategiesalter">Invoke hook <code>shrubUserLoginStrategiesAlter</code>.</h4>
+<h4 id="invoke-hook-shrubuserloginstrategiesalter">Invoke hook <a href="../../../../hooks#shrubuserloginstrategiesalter"><code>shrubUserLoginStrategiesAlter</code></a></h4>
 <pre><code class="coffeescript">          pkgman.invoke 'shrubUserLoginStrategiesAlter', strategies
 </code></pre>
 
@@ -1750,7 +1743,6 @@ into the form as a hidden field.</p>
 
 <p>If there's more than one method, use a dropdown to select the
 login strategy.</p>
-<h6 id="todo-this-is-janky-from-ux-perspective-rely-on-skin-at-least-hide-inactive-strategies-fieldgroups">TODO: This is janky from UX perspective. Rely on skin? At least hide inactive strategies' fieldgroups...</h6>
 <pre><code class="coffeescript">          else
 
             fields.method =
@@ -1774,11 +1766,15 @@ will inject a blank element.</p>
 </code></pre>
 
 <p>Inject a fieldgroup for every login strategy.</p>
-<pre><code class="coffeescript">          fields[packageName] = {
-            type: 'group'
-            collapse: false
-            fields: strategy.fields
-          } for packageName, strategy of strategies
+<pre><code class="coffeescript">          for packageName, strategy of strategies
+            do (packageName) -&gt; fields[packageName] =
+              type: 'group'
+              collapse: false
+              isVisible: -&gt;
+                console.log fields.method.value
+                fields.method.value is packageName
+              fields: strategy.fields
+
 
       ]
 

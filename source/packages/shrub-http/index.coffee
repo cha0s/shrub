@@ -1,6 +1,7 @@
 # HTTP
 
 Manage HTTP connections.
+
 ```coffeescript
 config = require 'config'
 pkgman = require 'pkgman'
@@ -11,7 +12,9 @@ httpManager = null
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubCoreBootstrapMiddleware`.
+
+#### Implements hook [`shrubCoreBootstrapMiddleware`](../../hooks#shrubcorebootstrapmiddleware)
+
 ```coffeescript
   registrar.registerHook 'shrubCoreBootstrapMiddleware', ->
 
@@ -20,15 +23,19 @@ exports.pkgmanRegister = (registrar) ->
 
       (next) ->
 
-        {manager, port} = config.get 'packageSettings:shrub-http'
+        {manager, port} = config.get 'packageConfig:shrub-http'
 
         {Manager} = require manager.module
 ```
+
 Spin up the HTTP server, and initialize it.
+
 ```coffeescript
         httpManager = new Manager()
 ```
+
 Spawn workers into a cluster.
+
 ```coffeescript
         httpManager.cluster()
 
@@ -41,7 +48,9 @@ Spawn workers into a cluster.
 
     ]
 ```
-#### Implements hook `shrubHttpMiddleware`.
+
+#### Implements hook [`shrubHttpMiddleware`](../../hooks#shrubhttpmiddleware)
+
 ```coffeescript
   registrar.registerHook 'shrubHttpMiddleware', (http) ->
 
@@ -61,13 +70,17 @@ Spawn workers into a cluster.
 
     ]
 ```
-#### Implements hook `shrubConfigServer`.
+
+#### Implements hook [`shrubConfigServer`](../../hooks#shrubconfigserver)
+
 ```coffeescript
   registrar.registerHook 'shrubConfigServer', ->
 
     manager:
 ```
+
 Module implementing the socket manager.
+
 ```coffeescript
       module: 'shrub-http-express'
 

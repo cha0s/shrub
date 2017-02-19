@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -1212,7 +1205,7 @@
             
                 <li class="toctree-l3"><a href="#ui-attributes">UI - Attributes</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubangulardirective">Implements hook shrubAngularDirective.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubangulardirective">Implements hook shrubAngularDirective</a></li>
                 
             
             </ul>
@@ -1659,7 +1652,7 @@
 <pre><code class="coffeescript">exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubangulardirective">Implements hook <code>shrubAngularDirective</code>.</h4>
+<h4 id="implements-hook-shrubangulardirective">Implements hook <a href="../../../../hooks#shrubangulardirective"><code>shrubAngularDirective</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAngularDirective', -&gt; [
     '$compile'
     ($compile) -&gt;
@@ -1679,11 +1672,6 @@ to apply then directly to the element is potentially problematic.</p>
           for k, v of attributes
 
             if 'class' is k
-</code></pre>
-
-<h6 id="todo-we-should-do-a-proper-_intersects-check-here">TODO: We should do a proper _.intersects check here.</h6>
-<pre><code class="coffeescript">              for class_ in oldAttributes?.class ? []
-                dummy.removeClass class_
 
               v = [v] unless angular.isArray v
               dummy.addClass v.join ' '

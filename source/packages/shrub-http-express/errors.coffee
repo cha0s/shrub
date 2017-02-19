@@ -1,10 +1,13 @@
 # Express - error handler
+
 ```coffeescript
 errorHandler = require 'errorhandler'
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubHttpMiddleware`.
+
+#### Implements hook [`shrubHttpMiddleware`](../../hooks#shrubhttpmiddleware)
+
 ```coffeescript
   registrar.registerHook 'shrubHttpMiddleware', (http) ->
 
@@ -19,7 +22,9 @@ exports.pkgmanRegister = (registrar) ->
     label: 'Error handling'
     middleware: [
 ```
+
 In production, we'll just log the error and continue.
+
 ```coffeescript
       if 'production' is config.get 'NODE_ENV'
 
@@ -28,7 +33,9 @@ In production, we'll just log the error and continue.
           logger.error errors.stack error
           next error
 ```
+
 Otherwise, we'll let Express format the error all pretty-like.
+
 ```coffeescript
       else
 

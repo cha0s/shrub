@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -319,11 +312,11 @@
             
                 <li class="toctree-l3"><a href="#angular">Angular</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubassetsmiddleware">Implements hook shrubAssetsMiddleware.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubassetsmiddleware">Implements hook shrubAssetsMiddleware</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubgruntconfig">Implements hook shrubGruntConfig.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubgruntconfig">Implements hook shrubGruntConfig</a></li>
                 
-                    <li><a class="toctree-l4" href="#invoke-hook-shrubangularpackagedependencies">Invoke hook shrubAngularPackageDependencies.</a></li>
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubangularpackagedependencies">Invoke hook shrubAngularPackageDependencies</a></li>
                 
             
             </ul>
@@ -1664,7 +1657,7 @@
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubassetsmiddleware">Implements hook <code>shrubAssetsMiddleware</code>.</h4>
+<h4 id="implements-hook-shrubassetsmiddleware">Implements hook <a href="../../../hooks#shrubassetsmiddleware"><code>shrubAssetsMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAssetsMiddleware', -&gt;
 
     label: 'Angular'
@@ -1689,7 +1682,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     ]
 </code></pre>
 
-<h4 id="implements-hook-shrubgruntconfig">Implements hook <code>shrubGruntConfig</code>.</h4>
+<h4 id="implements-hook-shrubgruntconfig">Implements hook <a href="../../../hooks#shrubgruntconfig"><code>shrubGruntConfig</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubGruntConfig', (gruntConfig, grunt) -&gt;
 
     gruntConfig.configureTask(
@@ -1741,7 +1734,7 @@ dependencies of the Angular application.</p>
       pkgman = require 'pkgman'
 </code></pre>
 
-<h4 id="invoke-hook-shrubangularpackagedependencies">Invoke hook <code>shrubAngularPackageDependencies</code>.</h4>
+<h4 id="invoke-hook-shrubangularpackagedependencies">Invoke hook <a href="../../../hooks#shrubangularpackagedependencies"><code>shrubAngularPackageDependencies</code></a></h4>
 <pre><code class="coffeescript">      dependencies = []
       for dependenciesList in pkgman.invokeFlat 'shrubAngularPackageDependencies'
         dependencies.push.apply dependencies, dependenciesList

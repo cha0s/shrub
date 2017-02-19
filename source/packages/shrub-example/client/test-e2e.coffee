@@ -1,3 +1,4 @@
+
 ```coffeescript
 
 describe 'home', ->

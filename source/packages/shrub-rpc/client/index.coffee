@@ -2,10 +2,13 @@
 
 Define an Angular service to issue [remote procedure
 calls](http://en.wikipedia.org/wiki/Remote_procedure_call#Message_passing).
+
 ```coffeescript
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubAngularService`.
+
+#### Implements hook [`shrubAngularService`](../../../hooks#shrubangularservice)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularService', -> [
     '$injector', '$q', 'shrub-pkgman', 'shrub-socket'
@@ -15,6 +18,7 @@ exports.pkgmanRegister = (registrar) ->
 
       service = {}
 ```
+
 ## rpc.call
 
 * (String) `path` - The RPC route path, e.g. `shrub-user/login`.
@@ -24,6 +28,7 @@ exports.pkgmanRegister = (registrar) ->
 *Call the server with some data.* Returns a promise, either resolved
 with the result of the response from the server, or rejected with the
 error from the server.
+
 ```coffeescript
       service.call = (path, data) ->
 
@@ -37,7 +42,9 @@ error from the server.
             deferred.resolve result
         )
 ```
-#### Invoke hook `shrubRpcCall`.
+
+#### Invoke hook [`shrubRpcCall`](../../../hooks#shrubrpccall)
+
 ```coffeescript
         invoke(
           injectable, null
@@ -50,6 +57,7 @@ error from the server.
 
         deferred.promise
 ```
+
 ## rpc.on
 
 * (String) `eventName` - The name of the event to listen for.
@@ -57,9 +65,11 @@ error from the server.
 * (optional Function) `fn` - Callback called with the event data.
 
 *Listen for an event.* Proxies directly to `socket.on`.
+
 ```coffeescript
       service.on = (eventName, fn) -> socket.on eventName, fn
 ```
+
 ## rpc.formSubmitHandler
 
 * (String) `path` - The RPC route path, e.g. `shrub-user/login`.
@@ -68,6 +78,7 @@ error from the server.
 
 *Helper function to call an RPC route with the result of a form
 submission.*
+
 ```coffeescript
       service.formSubmitHandler = (path, fn) ->
 

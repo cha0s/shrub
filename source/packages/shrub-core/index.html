@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -393,17 +386,17 @@
             
                 <li class="toctree-l3"><a href="#core-server-functionality">Core server functionality</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubconfigclient">Implements hook shrubConfigClient.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubconfigclient">Implements hook shrubConfigClient</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubauditfingerprint">Implements hook shrubAuditFingerprint.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubauditfingerprint">Implements hook shrubAuditFingerprint</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubhttpmiddleware">Implements hook shrubHttpMiddleware.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubhttpmiddleware">Implements hook shrubHttpMiddleware</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubrpcroutesalter">Implements hook shrubRpcRoutesAlter.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubrpcroutesalter">Implements hook shrubRpcRoutesAlter</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubsocketconnectionmiddleware">Implements hook shrubSocketConnectionMiddleware.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubsocketconnectionmiddleware">Implements hook shrubSocketConnectionMiddleware</a></li>
                 
             
             </ul>
@@ -1673,7 +1666,7 @@ pkgman = require 'pkgman'
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubconfigclient">Implements hook <code>shrubConfigClient</code>.</h4>
+<h4 id="implements-hook-shrubconfigclient">Implements hook <a href="../../../hooks#shrubconfigclient"><code>shrubConfigClient</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubConfigClient', (req) -&gt;
 </code></pre>
 
@@ -1681,7 +1674,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 <pre><code class="coffeescript">    hostname: if req.headers?.host?
       &quot;//#{req.headers.host}&quot;
     else
-      &quot;//#{config.get 'packageSettings:shrub-core:siteHostname'}&quot;
+      &quot;//#{config.get 'packageConfig:shrub-core:siteHostname'}&quot;
 </code></pre>
 
 <p>Is the server running in test mode?</p>
@@ -1697,10 +1690,10 @@ exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
 <p>The user-visible site name.</p>
-<pre><code class="coffeescript">    siteName: config.get 'packageSettings:shrub-core:siteName'
+<pre><code class="coffeescript">    siteName: config.get 'packageConfig:shrub-core:siteName'
 </code></pre>
 
-<h4 id="implements-hook-shrubauditfingerprint">Implements hook <code>shrubAuditFingerprint</code>.</h4>
+<h4 id="implements-hook-shrubauditfingerprint">Implements hook <a href="../../../hooks#shrubauditfingerprint"><code>shrubAuditFingerprint</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAuditFingerprint', (req) -&gt;
 </code></pre>
 
@@ -1708,7 +1701,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 <pre><code class="coffeescript">    ip: req?.normalizedIp
 </code></pre>
 
-<h4 id="implements-hook-shrubhttpmiddleware">Implements hook <code>shrubHttpMiddleware</code>.</h4>
+<h4 id="implements-hook-shrubhttpmiddleware">Implements hook <a href="../../../hooks#shrubhttpmiddleware"><code>shrubHttpMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubHttpMiddleware', (http) -&gt;
 
     label: 'Normalize request variables'
@@ -1728,7 +1721,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     ]
 </code></pre>
 
-<h4 id="implements-hook-shrubconfigserver">Implements hook <code>shrubConfigServer</code>.</h4>
+<h4 id="implements-hook-shrubconfigserver">Implements hook <a href="../../../hooks#shrubconfigserver"><code>shrubConfigServer</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubConfigServer', -&gt;
 </code></pre>
 
@@ -1769,7 +1762,7 @@ the master.</p>
 <pre><code class="coffeescript">    workers: 0
 </code></pre>
 
-<h4 id="implements-hook-shrubrpcroutesalter">Implements hook <code>shrubRpcRoutesAlter</code>.</h4>
+<h4 id="implements-hook-shrubrpcroutesalter">Implements hook <a href="../../../hooks#shrubrpcroutesalter"><code>shrubRpcRoutesAlter</code></a></h4>
 <p>Patch in express-specific variables that will be required by middleware.</p>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubRpcRoutesAlter', (routes) -&gt;
 
@@ -1791,7 +1784,7 @@ the master.</p>
     return
 </code></pre>
 
-<h4 id="implements-hook-shrubsocketconnectionmiddleware">Implements hook <code>shrubSocketConnectionMiddleware</code>.</h4>
+<h4 id="implements-hook-shrubsocketconnectionmiddleware">Implements hook <a href="../../../hooks#shrubsocketconnectionmiddleware"><code>shrubSocketConnectionMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubSocketConnectionMiddleware', -&gt;
 
     label: 'Normalize request variables'
@@ -1811,7 +1804,7 @@ the master.</p>
     ]
 
 trustedAddress = (address, forwardedFor) -&gt; resolveAddress(
-  config.get 'packageSettings:shrub-core:trustedProxies'
+  config.get 'packageConfig:shrub-core:trustedProxies'
   address
   forwardedFor
 )

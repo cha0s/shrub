@@ -1,19 +1,24 @@
 # Core client functionality.
 
 *Coordinate various core functionality.*
+
 ```coffeescript
 config = require 'config'
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubAngularAppRun`.
+
+#### Implements hook [`shrubAngularAppRun`](../../../hooks#shrubangularapprun)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularAppRun', -> [
     '$rootScope', '$location', '$window', 'shrub-socket'
     ($rootScope, $location, $window, socket) ->
 ```
+
 Split the path into the corresponding classes, e.g. `foo/bar/baz` ->
 `class="foo foo-bar foo-bar-baz"`
+
 ```coffeescript
       $rootScope.$watch (-> $location.path()), ->
 
@@ -25,15 +30,21 @@ Split the path into the corresponding classes, e.g. `foo/bar/baz` ->
 
         $rootScope.pathClass = classes.join ' '
 ```
+
 Navigate the client to `href`.
+
 ```coffeescript
       socket.on 'core.navigateTo', (href) -> $window.location.href = href
 ```
+
 Reload the client.
+
 ```coffeescript
       socket.on 'core.reload', -> $window.location.reload()
 ```
+
 Set up application close behavior.
+
 ```coffeescript
       $window.addEventListener 'beforeunload', (event) ->
         appCloseEvent = $rootScope.$emit 'shrub.core.appClose'
@@ -44,9 +55,11 @@ Set up application close behavior.
 
   ]
 ```
-#### Implements hook `shrubAngularRoutes`.
+
+#### Implements hook [`shrubAngularRoutes`](../../../hooks#shrubangularroutes)
 
 A simple path definition to make sure we're running in e2e testing mode.
+
 ```coffeescript
   registrar.registerHook 'shrubAngularRoutes', ->
 

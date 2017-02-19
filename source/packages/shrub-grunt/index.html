@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -610,13 +603,13 @@
             
                 <li class="toctree-l3"><a href="#grunt-build-process">Grunt build process</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubassetsmiddleware">Implements hook shrubAssetsMiddleware.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubassetsmiddleware">Implements hook shrubAssetsMiddleware</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubconfigclientalter">Implements hook shrubConfigClientAlter.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubconfigclientalter">Implements hook shrubConfigClientAlter</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubgruntconfig">Implements hook shrubGruntConfig.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubgruntconfig">Implements hook shrubGruntConfig</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubgruntconfigalter">Implements hook shrubGruntConfigAlter.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubgruntconfigalter">Implements hook shrubGruntConfigAlter</a></li>
                 
             
             </ul>
@@ -1666,7 +1659,7 @@
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubassetsmiddleware">Implements hook <code>shrubAssetsMiddleware</code>.</h4>
+<h4 id="implements-hook-shrubassetsmiddleware">Implements hook <a href="../../../hooks#shrubassetsmiddleware"><code>shrubAssetsMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAssetsMiddleware', -&gt;
 
     label: 'Livereload'
@@ -1676,7 +1669,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 
         return next() if 'production' is config.get 'NODE_ENV'
 
-        hostname = config.get 'packageSettings:shrub-core:siteHostname'
+        hostname = config.get 'packageConfig:shrub-core:siteHostname'
         [hostname] = hostname.split ':'
         assets.scripts.push &quot;http://#{hostname}:35729/livereload.js&quot;
 
@@ -1685,7 +1678,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     ]
 </code></pre>
 
-<h4 id="implements-hook-shrubconfigclientalter">Implements hook <code>shrubConfigClientAlter</code>.</h4>
+<h4 id="implements-hook-shrubconfigclientalter">Implements hook <a href="../../../hooks#shrubconfigclientalter"><code>shrubConfigClientAlter</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubConfigClientAlter', (req, config_) -&gt;
     return unless req.grunt?
 
@@ -1693,7 +1686,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     config_.set 'packageConfig:shrub-user', name: 'Anonymous'
 </code></pre>
 
-<h4 id="implements-hook-shrubgruntconfig">Implements hook <code>shrubGruntConfig</code>.</h4>
+<h4 id="implements-hook-shrubgruntconfig">Implements hook <a href="../../../hooks#shrubgruntconfig"><code>shrubGruntConfig</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubGruntConfig', (gruntConfig, grunt) -&gt;
 
     gruntConfig.configureTask 'clean', 'shrub', [
@@ -1761,7 +1754,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     ]
 </code></pre>
 
-<h4 id="implements-hook-shrubgruntconfigalter">Implements hook <code>shrubGruntConfigAlter</code>.</h4>
+<h4 id="implements-hook-shrubgruntconfigalter">Implements hook <a href="../../../hooks#shrubgruntconfigalter"><code>shrubGruntConfigAlter</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubGruntConfigAlter', (gruntConfig) -&gt;
 
     gruntConfig.registerTask 'build', [

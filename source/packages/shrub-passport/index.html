@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -927,27 +920,27 @@
             
                 <li class="toctree-l3"><a href="#passport-integration">Passport integration</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubcoreprebootstrap">Implements hook shrubCorePreBootstrap.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubcoreprebootstrap">Implements hook shrubCorePreBootstrap</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubcorebootstrapmiddleware">Implements hook shrubCoreBootstrapMiddleware.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubcorebootstrapmiddleware">Implements hook shrubCoreBootstrapMiddleware</a></li>
                 
-                    <li><a class="toctree-l4" href="#invoke-hook-shrubuserbeforeloginmiddleware">Invoke hook shrubUserBeforeLoginMiddleware.</a></li>
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubuserbeforeloginmiddleware">Invoke hook shrubUserBeforeLoginMiddleware</a></li>
                 
-                    <li><a class="toctree-l4" href="#invoke-hook-shrubuserafterloginmiddleware">Invoke hook shrubUserAfterLoginMiddleware.</a></li>
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubuserafterloginmiddleware">Invoke hook shrubUserAfterLoginMiddleware</a></li>
                 
-                    <li><a class="toctree-l4" href="#invoke-hook-shrubuserbeforelogoutmiddleware">Invoke hook shrubUserBeforeLogoutMiddleware.</a></li>
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubuserbeforelogoutmiddleware">Invoke hook shrubUserBeforeLogoutMiddleware</a></li>
                 
-                    <li><a class="toctree-l4" href="#invoke-hook-shrubuserafterlogoutmiddleware">Invoke hook shrubUserAfterLogoutMiddleware.</a></li>
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubuserafterlogoutmiddleware">Invoke hook shrubUserAfterLogoutMiddleware</a></li>
                 
-                    <li><a class="toctree-l4" href="#invoke-hook-shrubuserloginstrategies">Invoke hook shrubUserLoginStrategies.</a></li>
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubuserloginstrategies">Invoke hook shrubUserLoginStrategies</a></li>
                 
-                    <li><a class="toctree-l4" href="#invoke-hook-shrubuserloginstrategiesalter">Invoke hook shrubUserLoginStrategiesAlter.</a></li>
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubuserloginstrategiesalter">Invoke hook shrubUserLoginStrategiesAlter</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubhttpmiddleware">Implements hook shrubHttpMiddleware.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubhttpmiddleware">Implements hook shrubHttpMiddleware</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubrpcroutesalter">Implements hook shrubRpcRoutesAlter.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubrpcroutesalter">Implements hook shrubRpcRoutesAlter</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubsocketconnectionmiddleware">Implements hook shrubSocketConnectionMiddleware.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubsocketconnectionmiddleware">Implements hook shrubSocketConnectionMiddleware</a></li>
                 
                     <li><a class="toctree-l4" href="#reqauthorize">req.authorize</a></li>
                 
@@ -1695,7 +1688,7 @@ afterLogoutMiddleware = null
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <code>shrubCorePreBootstrap</code>.</h4>
+<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <a href="../../../hooks#shrubcoreprebootstrap"><code>shrubCorePreBootstrap</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubCorePreBootstrap', -&gt;
 
     orm = require 'shrub-orm'
@@ -1703,7 +1696,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     Promise = require 'bluebird'
 </code></pre>
 
-<h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <code>shrubCoreBootstrapMiddleware</code>.</h4>
+<h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <a href="../../../hooks#shrubcorebootstrapmiddleware"><code>shrubCoreBootstrapMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubCoreBootstrapMiddleware', -&gt;
 
     Promise = require 'bluebird'
@@ -1714,36 +1707,36 @@ exports.pkgmanRegister = (registrar) -&gt;
       (next) -&gt;
 </code></pre>
 
-<h4 id="invoke-hook-shrubuserbeforeloginmiddleware">Invoke hook <code>shrubUserBeforeLoginMiddleware</code>.</h4>
+<h4 id="invoke-hook-shrubuserbeforeloginmiddleware">Invoke hook <a href="../../../hooks#shrubuserbeforeloginmiddleware"><code>shrubUserBeforeLoginMiddleware</code></a></h4>
 <pre><code class="coffeescript">        beforeLoginMiddleware = middleware.fromConfig(
           'shrub-user:beforeLoginMiddleware'
         )
 </code></pre>
 
-<h4 id="invoke-hook-shrubuserafterloginmiddleware">Invoke hook <code>shrubUserAfterLoginMiddleware</code>.</h4>
+<h4 id="invoke-hook-shrubuserafterloginmiddleware">Invoke hook <a href="../../../hooks#shrubuserafterloginmiddleware"><code>shrubUserAfterLoginMiddleware</code></a></h4>
 <pre><code class="coffeescript">        afterLoginMiddleware = middleware.fromConfig(
           'shrub-user:afterLoginMiddleware'
         )
 </code></pre>
 
-<h4 id="invoke-hook-shrubuserbeforelogoutmiddleware">Invoke hook <code>shrubUserBeforeLogoutMiddleware</code>.</h4>
+<h4 id="invoke-hook-shrubuserbeforelogoutmiddleware">Invoke hook <a href="../../../hooks#shrubuserbeforelogoutmiddleware"><code>shrubUserBeforeLogoutMiddleware</code></a></h4>
 <pre><code class="coffeescript">        beforeLogoutMiddleware = middleware.fromConfig(
           'shrub-user:beforeLogoutMiddleware'
         )
 </code></pre>
 
-<h4 id="invoke-hook-shrubuserafterlogoutmiddleware">Invoke hook <code>shrubUserAfterLogoutMiddleware</code>.</h4>
+<h4 id="invoke-hook-shrubuserafterlogoutmiddleware">Invoke hook <a href="../../../hooks#shrubuserafterlogoutmiddleware"><code>shrubUserAfterLogoutMiddleware</code></a></h4>
 <pre><code class="coffeescript">        afterLogoutMiddleware = middleware.fromConfig(
           'shrub-user:afterLogoutMiddleware'
         )
 </code></pre>
 
-<h4 id="invoke-hook-shrubuserloginstrategies">Invoke hook <code>shrubUserLoginStrategies</code>.</h4>
+<h4 id="invoke-hook-shrubuserloginstrategies">Invoke hook <a href="../../../hooks#shrubuserloginstrategies"><code>shrubUserLoginStrategies</code></a></h4>
 <p>Use passport authorization strategies.</p>
 <pre><code class="coffeescript">        strategies = pkgman.invoke 'shrubUserLoginStrategies'
 </code></pre>
 
-<h4 id="invoke-hook-shrubuserloginstrategiesalter">Invoke hook <code>shrubUserLoginStrategiesAlter</code>.</h4>
+<h4 id="invoke-hook-shrubuserloginstrategiesalter">Invoke hook <a href="../../../hooks#shrubuserloginstrategiesalter"><code>shrubUserLoginStrategiesAlter</code></a></h4>
 <pre><code class="coffeescript">        pkgman.invoke 'shrubUserLoginStrategiesAlter', strategies
 
         for packageName, strategy of strategies
@@ -1783,14 +1776,14 @@ exports.pkgmanRegister = (registrar) -&gt;
     ]
 </code></pre>
 
-<h4 id="implements-hook-shrubhttpmiddleware">Implements hook <code>shrubHttpMiddleware</code>.</h4>
+<h4 id="implements-hook-shrubhttpmiddleware">Implements hook <a href="../../../hooks#shrubhttpmiddleware"><code>shrubHttpMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubHttpMiddleware', -&gt;
 
     label: 'Load user using passport'
     middleware: passportMiddleware()
 </code></pre>
 
-<h4 id="implements-hook-shrubrpcroutesalter">Implements hook <code>shrubRpcRoutesAlter</code>.</h4>
+<h4 id="implements-hook-shrubrpcroutesalter">Implements hook <a href="../../../hooks#shrubrpcroutesalter"><code>shrubRpcRoutesAlter</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubRpcRoutesAlter', (routes) -&gt;
 
     {spliceRouteMiddleware} = require 'shrub-rpc'
@@ -1828,7 +1821,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     return
 </code></pre>
 
-<h4 id="implements-hook-shrubsocketconnectionmiddleware">Implements hook <code>shrubSocketConnectionMiddleware</code>.</h4>
+<h4 id="implements-hook-shrubsocketconnectionmiddleware">Implements hook <a href="../../../hooks#shrubsocketconnectionmiddleware"><code>shrubSocketConnectionMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubSocketConnectionMiddleware', -&gt;
 
     label: 'Load user using passport'

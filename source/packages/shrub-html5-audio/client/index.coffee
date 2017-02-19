@@ -1,4 +1,5 @@
 # HTML5 audio
+
 ```coffeescript
 config = require 'config'
 
@@ -24,7 +25,9 @@ exports.pkgmanRegister = (registrar) ->
 
           service = {}
 ```
+
 ###### TODO: Configure filetype priorities per browser.
+
 ```coffeescript
           service.loadFile = (filename) ->
 
@@ -44,7 +47,9 @@ exports.pkgmanRegister = (registrar) ->
           service.playFile = (filename) ->
             @loadFile(filename).then (audio) -> audio.play()
 ```
+
 Load audio files that aren't marked as deferred.
+
 ```coffeescript
           for filename, extensions of audioFiles
             continue if provider.isFileDeferred filename

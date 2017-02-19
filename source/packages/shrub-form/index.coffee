@@ -2,16 +2,19 @@
 
 *Handle form and method parsing, and submission of POST'ed data into the
 Angular sandbox.*
+
 ```coffeescript
 bodyParser = require 'body-parser'
 methodOverride = require 'method-override'
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubAngularSandboxNavigationMiddleware`.
+
+#### Implements hook [`shrubAngularSandboxNavigationMiddleware`](../../hooks#shrubangularsandboxnavigationmiddleware)
 
 If the client made a POST request, inject that request into the Angular
 sandbox and let it do its thing.
+
 ```coffeescript
   registrar.registerHook 'shrubAngularSandboxNavigationMiddleware', ->
 
@@ -22,13 +25,17 @@ sandbox and let it do its thing.
 
         {body, sandbox} = req
 ```
+
 Make sure there's a formKey in the submission.
 
 ###### TODO: CRSF check needed here.
+
 ```coffeescript
         return next() unless body.formKey?
 ```
+
 Lookup the cached form.
+
 ```coffeescript
         formService = null
 
@@ -55,7 +62,9 @@ Lookup the cached form.
 
           element.trigger 'change'
 ```
+
 Submit the form into Angular.
+
 ```coffeescript
         scope.$digest()
         scope.$apply ->
@@ -63,9 +72,11 @@ Submit the form into Angular.
 
     ]
 ```
-#### Implements hook `shrubHttpMiddleware`.
+
+#### Implements hook [`shrubHttpMiddleware`](../../hooks#shrubhttpmiddleware)
 
 Parse POST submissions, and allow arbitrary method form attribute.
+
 ```coffeescript
   registrar.registerHook 'shrubHttpMiddleware', (http) ->
 

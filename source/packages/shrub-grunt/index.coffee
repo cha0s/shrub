@@ -1,10 +1,13 @@
 # Grunt build process
+
 ```coffeescript
 config = require 'config'
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubAssetsMiddleware`.
+
+#### Implements hook [`shrubAssetsMiddleware`](../../hooks#shrubassetsmiddleware)
+
 ```coffeescript
   registrar.registerHook 'shrubAssetsMiddleware', ->
 
@@ -15,7 +18,7 @@ exports.pkgmanRegister = (registrar) ->
 
         return next() if 'production' is config.get 'NODE_ENV'
 
-        hostname = config.get 'packageSettings:shrub-core:siteHostname'
+        hostname = config.get 'packageConfig:shrub-core:siteHostname'
         [hostname] = hostname.split ':'
         assets.scripts.push "http://#{hostname}:35729/livereload.js"
 
@@ -23,7 +26,9 @@ exports.pkgmanRegister = (registrar) ->
 
     ]
 ```
-#### Implements hook `shrubConfigClientAlter`.
+
+#### Implements hook [`shrubConfigClientAlter`](../../hooks#shrubconfigclientalter)
+
 ```coffeescript
   registrar.registerHook 'shrubConfigClientAlter', (req, config_) ->
     return unless req.grunt?
@@ -31,7 +36,9 @@ exports.pkgmanRegister = (registrar) ->
     config_.set 'packageConfig:shrub-socket', manager: module: 'shrub-socket/dummy'
     config_.set 'packageConfig:shrub-user', name: 'Anonymous'
 ```
-#### Implements hook `shrubGruntConfig`.
+
+#### Implements hook [`shrubGruntConfig`](../../hooks#shrubgruntconfig)
+
 ```coffeescript
   registrar.registerHook 'shrubGruntConfig', (gruntConfig, grunt) ->
 
@@ -57,15 +64,21 @@ exports.pkgmanRegister = (registrar) ->
     gruntConfig.registerTask 'executeFunction:shrub', ->
       done = @async()
 ```
+
 Pass arguments to the child process.
+
 ```coffeescript
       args = process.argv.slice 2
 ```
+
 Pass the environment to the child process.
+
 ```coffeescript
       options = env: process.env
 ```
+
 Fork it.
+
 ```coffeescript
       {fork} = require 'child_process'
       child = fork "#{__dirname}/../../server.coffee", args, options
@@ -99,7 +112,9 @@ Fork it.
       'grunt-wrap'
     ]
 ```
-#### Implements hook `shrubGruntConfigAlter`.
+
+#### Implements hook [`shrubGruntConfigAlter`](../../hooks#shrubgruntconfigalter)
+
 ```coffeescript
   registrar.registerHook 'shrubGruntConfigAlter', (gruntConfig) ->
 

@@ -1,6 +1,7 @@
 # Assets management
 
 *Gather, build, and serve assets defined by packages.*
+
 ```coffeescript
 config = require 'config'
 
@@ -8,7 +9,9 @@ assets = null
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubAssetsMiddleware`.
+
+#### Implements hook [`shrubAssetsMiddleware`](../../hooks#shrubassetsmiddleware)
+
 ```coffeescript
   registrar.registerHook 'shrubAssetsMiddleware', ->
 
@@ -28,7 +31,9 @@ exports.pkgmanRegister = (registrar) ->
 
     ]
 ```
-#### Implements hook `shrubGruntConfig`.
+
+#### Implements hook [`shrubGruntConfig`](../../hooks#shrubgruntconfig)
+
 ```coffeescript
   registrar.registerHook 'shrubGruntConfig', (gruntConfig) ->
 
@@ -40,7 +45,9 @@ exports.pkgmanRegister = (registrar) ->
 
     gruntConfig.registerTask 'build', ['build:shrub-assets']
 ```
-#### Implements hook `shrubConfigServer`.
+
+#### Implements hook [`shrubConfigServer`](../../hooks#shrubconfigserver)
+
 ```coffeescript
   registrar.registerHook 'shrubConfigServer', ->
 
@@ -68,7 +75,9 @@ exports.assets = ->
 
   assets = scripts: [], styleSheets: []
 ```
-#### Invoke hook `shrubAssetsMiddleware`.
+
+#### Invoke hook [`shrubAssetsMiddleware`](../../hooks#shrubassetsmiddleware)
+
 ```coffeescript
   debug '- Loading asset middleware...'
 

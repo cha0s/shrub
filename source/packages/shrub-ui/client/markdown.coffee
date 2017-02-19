@@ -1,10 +1,13 @@
 # UI - Markdown
+
 ```coffeescript
 marked = require 'marked'
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubAngularFilter`
+
+#### Implements hook [`shrubAngularFilter`](../../../hooks#shrubangularfilter)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularFilter', -> ->
 

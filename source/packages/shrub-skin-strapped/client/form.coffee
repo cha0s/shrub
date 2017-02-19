@@ -1,8 +1,11 @@
 # Strapped - Notifications
+
 ```coffeescript
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubSkinLink`.
+
+#### Implements hook [`shrubSkinLink`](../../../hooks#shrubskinlink)
+
 ```coffeescript
   registrar.registerHook 'shrubSkinLink', -> [
     '$directive', '$element'
@@ -18,7 +21,9 @@ exports.pkgmanRegister = (registrar) ->
       element.addClass 'form-group'
   ]
 ```
-#### Implements hook `shrubSkinLink--DIRECTIVE`.
+
+#### Implements hook [`shrubSkinLink--DIRECTIVE`](../../../hooks#shrubskinlink--directive)
+
 ```coffeescript
   registrar.registerHook 'shrubSkinLink--shrubFormWidgetGroup', -> [
     '$element'

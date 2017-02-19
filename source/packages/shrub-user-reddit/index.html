@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -1465,22 +1458,22 @@
         
             <ul>
             
-                <li class="toctree-l3"><a href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer.</a></li>
+                <li class="toctree-l3"><a href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer</a></li>
                 
             
-                <li class="toctree-l3"><a href="#implements-hook-shrubcoreprebootstrap">Implements hook shrubCorePreBootstrap.</a></li>
+                <li class="toctree-l3"><a href="#implements-hook-shrubcoreprebootstrap">Implements hook shrubCorePreBootstrap</a></li>
                 
             
-                <li class="toctree-l3"><a href="#implements-hook-shrubuserloginstrategies">Implements hook shrubUserLoginStrategies.</a></li>
+                <li class="toctree-l3"><a href="#implements-hook-shrubuserloginstrategies">Implements hook shrubUserLoginStrategies</a></li>
                 
             
-                <li class="toctree-l3"><a href="#implements-hook-shrubhttproutes">Implements hook shrubHttpRoutes.</a></li>
+                <li class="toctree-l3"><a href="#implements-hook-shrubhttproutes">Implements hook shrubHttpRoutes</a></li>
                 
             
-                <li class="toctree-l3"><a href="#implements-hook-shrubuserredactors">Implements hook shrubUserRedactors.</a></li>
+                <li class="toctree-l3"><a href="#implements-hook-shrubuserredactors">Implements hook shrubUserRedactors</a></li>
                 
             
-                <li class="toctree-l3"><a href="#implements-hook-shrubormcollections">Implements hook shrubOrmCollections.</a></li>
+                <li class="toctree-l3"><a href="#implements-hook-shrubormcollections">Implements hook shrubOrmCollections</a></li>
                 
             
                 <li class="toctree-l3"><a href="#userredditassociateduser">UserReddit#associatedUser</a></li>
@@ -1690,10 +1683,10 @@ clientModule = require './client'
 <pre><code class="coffeescript">exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubconfigserver">Implements hook <code>shrubConfigServer</code>.</h4>
+<h4 id="implements-hook-shrubconfigserver">Implements hook <a href="../../../hooks#shrubconfigserver"><code>shrubConfigServer</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubConfigServer', -&gt;
 
-    siteHostname = config.get 'packageSettings:shrub-core:siteHostname'
+    siteHostname = config.get 'packageConfig:shrub-core:siteHostname'
 </code></pre>
 
 <p>See: <a href="https://github.com/Slotos/passport-reddit">passport-reddit</a> for
@@ -1723,7 +1716,7 @@ more information about which configuration options are available.</p>
 <pre><code class="coffeescript">      duration: 'temporary'
 </code></pre>
 
-<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <code>shrubCorePreBootstrap</code>.</h4>
+<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <a href="../../../hooks#shrubcoreprebootstrap"><code>shrubCorePreBootstrap</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubCorePreBootstrap', -&gt;
 
     orm = require 'shrub-orm'
@@ -1731,7 +1724,7 @@ more information about which configuration options are available.</p>
     Promise = require 'bluebird'
 </code></pre>
 
-<h4 id="implements-hook-shrubuserloginstrategies">Implements hook <code>shrubUserLoginStrategies</code>.</h4>
+<h4 id="implements-hook-shrubuserloginstrategies">Implements hook <a href="../../../hooks#shrubuserloginstrategies"><code>shrubUserLoginStrategies</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubUserLoginStrategies', -&gt;
     strategy = clientModule.shrubUserLoginStrategies()
 
@@ -1741,7 +1734,7 @@ more information about which configuration options are available.</p>
 
 <p>Implement a reddit passport strategy.</p>
 <pre><code class="coffeescript">    options = config.get(
-      'packageSettings:shrub-user-reddit:constructionOptions'
+      'packageConfig:shrub-user-reddit:constructionOptions'
     )
     options.passReqToCallback = true
 </code></pre>
@@ -1776,7 +1769,7 @@ login strategy.</p>
     return strategy
 </code></pre>
 
-<h4 id="implements-hook-shrubhttproutes">Implements hook <code>shrubHttpRoutes</code>.</h4>
+<h4 id="implements-hook-shrubhttproutes">Implements hook <a href="../../../hooks#shrubhttproutes"><code>shrubHttpRoutes</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubHttpRoutes', (http) -&gt;
     routes = []
 
@@ -1794,7 +1787,7 @@ verify we were the source of this authentication request.</p>
 <pre><code class="coffeescript">        crypto.randomBytes(32).then (bytes) -&gt;
 
           options = config.get(
-            'packageSettings:shrub-user-reddit:authorizationOptions'
+            'packageConfig:shrub-user-reddit:authorizationOptions'
           )
           options.state = req.session.state = bytes.toString 'hex'
 
@@ -1832,7 +1825,7 @@ client; it's not a server error.</p>
     return routes
 </code></pre>
 
-<h4 id="implements-hook-shrubuserredactors">Implements hook <code>shrubUserRedactors</code>.</h4>
+<h4 id="implements-hook-shrubuserredactors">Implements hook <a href="../../../hooks#shrubuserredactors"><code>shrubUserRedactors</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubUserRedactors', -&gt;
 
     'shrub-user-reddit': [
@@ -1845,7 +1838,7 @@ client; it's not a server error.</p>
     ]
 </code></pre>
 
-<h4 id="implements-hook-shrubormcollections">Implements hook <code>shrubOrmCollections</code>.</h4>
+<h4 id="implements-hook-shrubormcollections">Implements hook <a href="../../../hooks#shrubormcollections"><code>shrubOrmCollections</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubOrmCollections', -&gt;
 
     crypto = require 'server/crypto'

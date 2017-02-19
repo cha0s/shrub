@@ -1,4 +1,5 @@
 # Abstract Socket
+
 ```coffeescript
 module.exports = class Socket
 

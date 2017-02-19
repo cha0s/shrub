@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -1315,7 +1308,7 @@
             
                 <li class="toctree-l3"><a href="#user-interface">User Interface</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubconfigclient">Implements hook shrubConfigClient.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubconfigclient">Implements hook shrubConfigClient</a></li>
                 
             
             </ul>
@@ -1660,13 +1653,15 @@
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubconfigclient">Implements hook <code>shrubConfigClient</code>.</h4>
+<h4 id="implements-hook-shrubconfigclient">Implements hook <a href="../../../hooks#shrubconfigclient"><code>shrubConfigClient</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubConfigClient', (req) -&gt;
     config = {}
 
-    errorMessages = req.session.errorMessages
-    delete req.session.errorMessages
-    config.errorMessages = errorMessages
+    if req.session?
+
+      errorMessages = req.session.errorMessages ? []
+      delete req.session.errorMessages
+      config.errorMessages = errorMessages
 
     return config
 

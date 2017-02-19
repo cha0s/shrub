@@ -1,7 +1,10 @@
 reddit user authentication.
+
 ```coffeescript
 ```
+
 *Authorize using a reddit account.*
+
 ```coffeescript
 config = require 'config'
 errors = require 'errors'
@@ -12,44 +15,62 @@ Promise = null
 
 clientModule = require './client'
 ```
+
 *ORM collection and passport strategy for local authentication.*
+
 ```coffeescript
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubConfigServer`.
+
+#### Implements hook [`shrubConfigServer`](../../hooks#shrubconfigserver)
+
 ```coffeescript
   registrar.registerHook 'shrubConfigServer', ->
 
-    siteHostname = config.get 'packageSettings:shrub-core:siteHostname'
+    siteHostname = config.get 'packageConfig:shrub-core:siteHostname'
 ```
+
 See: [passport-reddit](https://github.com/Slotos/passport-reddit) for
 more information about which configuration options are available.
+
 ```coffeescript
     constructionOptions:
 ```
+
 The path that the client gets sent back to from reddit authorization.
+
 ```coffeescript
       callbackURL: "http://#{siteHostname}/user/reddit/auth/callback"
 ```
+
 Public client ID.
+
 ```coffeescript
       clientID: 'REDDIT_CLIENT_ID'
 ```
+
 Client secret.
+
 ```coffeescript
       clientSecret: 'REDDIT_CLIENT_SECRET'
 ```
+
 Adjust scope configuration (by default, identity is provided).
+
 ```coffeescript
       scope: []
 
     authorizationOptions:
 ```
+
 How long the authorization should persist.
+
 ```coffeescript
       duration: 'temporary'
 ```
-#### Implements hook `shrubCorePreBootstrap`.
+
+#### Implements hook [`shrubCorePreBootstrap`](../../hooks#shrubcoreprebootstrap)
+
 ```coffeescript
   registrar.registerHook 'shrubCorePreBootstrap', ->
 
@@ -57,7 +78,9 @@ How long the authorization should persist.
     passport = require 'passport'
     Promise = require 'bluebird'
 ```
-#### Implements hook `shrubUserLoginStrategies`.
+
+#### Implements hook [`shrubUserLoginStrategies`](../../hooks#shrubuserloginstrategies)
+
 ```coffeescript
   registrar.registerHook 'shrubUserLoginStrategies', ->
     strategy = clientModule.shrubUserLoginStrategies()
@@ -65,15 +88,19 @@ How long the authorization should persist.
     RedditStrategy = require('passport-reddit').Strategy
     UserReddit = orm.collection 'shrub-user-reddit'
 ```
+
 Implement a reddit passport strategy.
+
 ```coffeescript
     options = config.get(
-      'packageSettings:shrub-user-reddit:constructionOptions'
+      'packageConfig:shrub-user-reddit:constructionOptions'
     )
     options.passReqToCallback = true
 ```
+
 Verification callback: find or create a reddit user instance and pass
 it along.
+
 ```coffeescript
     verifyCallback = (req, accessToken, refreshToken, profile, done) ->
 
@@ -93,8 +120,10 @@ it along.
 
       ).nodeify done
 ```
+
 Implement a [reddit Passport](https://github.com/Slotos/passport-reddit)
 login strategy.
+
 ```coffeescript
     passportStrategy = new RedditStrategy options, verifyCallback
     passportStrategy.name = 'shrub-user-reddit'
@@ -102,26 +131,32 @@ login strategy.
 
     return strategy
 ```
-#### Implements hook `shrubHttpRoutes`.
+
+#### Implements hook [`shrubHttpRoutes`](../../hooks#shrubhttproutes)
+
 ```coffeescript
   registrar.registerHook 'shrubHttpRoutes', (http) ->
     routes = []
 
     crypto = require 'server/crypto'
 ```
+
 Provide the reddit authorization entry point.
+
 ```coffeescript
     routes.push
       path: '/user/reddit/auth'
       receiver: (req, res, next) ->
 ```
+
 Generate a random string to send as the 'state' token, so we can
 verify we were the source of this authentication request.
+
 ```coffeescript
         crypto.randomBytes(32).then (bytes) ->
 
           options = config.get(
-            'packageSettings:shrub-user-reddit:authorizationOptions'
+            'packageConfig:shrub-user-reddit:authorizationOptions'
           )
           options.state = req.session.state = bytes.toString 'hex'
 
@@ -129,7 +164,9 @@ verify we were the source of this authentication request.
             'shrub-user-reddit', options, res
           ).nodeify next
 ```
+
 Provide the reddit authorization callback.
+
 ```coffeescript
     routes.push
       path: '/user/reddit/auth/callback'
@@ -150,15 +187,19 @@ Provide the reddit authorization callback.
           promise, req
         ).then(-> next()).catch (error) ->
 ```
+
 In case of an authorization error, we want to send it to the
 client; it's not a server error.
+
 ```coffeescript
           (req.session.errorMessages ?= []).push errors.serialize error
           return res.redirect '/'
 
     return routes
 ```
-#### Implements hook `shrubUserRedactors`.
+
+#### Implements hook [`shrubUserRedactors`](../../hooks#shrubuserredactors)
+
 ```coffeescript
   registrar.registerHook 'shrubUserRedactors', ->
 
@@ -171,13 +212,17 @@ client; it's not a server error.
 
     ]
 ```
-#### Implements hook `shrubOrmCollections`.
+
+#### Implements hook [`shrubOrmCollections`](../../hooks#shrubormcollections)
+
 ```coffeescript
   registrar.registerHook 'shrubOrmCollections', ->
 
     crypto = require 'server/crypto'
 ```
+
 Invoke the client hook implementation.
+
 ```coffeescript
     collections = clientModule.shrubOrmCollections()
 
@@ -185,11 +230,13 @@ Invoke the client hook implementation.
       'shrub-user-reddit': UserReddit
     } = collections
 ```
+
 ## UserReddit#associatedUser
 
 ###### TODO: This should be in a superclass.
 
 *Get the user (if any) associated with this instance.*
+
 ```coffeescript
     UserReddit.attributes.associatedUser = ->
       {

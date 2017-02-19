@@ -1,16 +1,21 @@
 # User - Registration
+
 ```coffeescript
 orm = null
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubCorePreBootstrap`.
+
+#### Implements hook [`shrubCorePreBootstrap`](../../hooks#shrubcoreprebootstrap)
+
 ```coffeescript
   registrar.registerHook 'shrubCorePreBootstrap', ->
 
     orm = require 'shrub-orm'
 ```
-#### Implements hook `shrubRpcRoutes`.
+
+#### Implements hook [`shrubRpcRoutes`](../../hooks#shrubrpcroutes)
+
 ```coffeescript
   registrar.registerHook 'shrubRpcRoutes', ->
 
@@ -46,21 +51,27 @@ exports.pkgmanRegister = (registrar) ->
             'shrub-user-local': UserLocal
           } = orm.collections()
 ```
+
 Register a new user.
+
 ```coffeescript
           UserLocal.register(username, email, password).then((localUser) ->
 ```
+
 Send an email to the new user's email with a one-time login
 link.
+
 ```coffeescript
-            siteHostname = config.get 'packageSettings:shrub-core:siteHostname'
+            siteHostname = config.get 'packageConfig:shrub-core:siteHostname'
             siteUrl = "http://#{siteHostname}"
 
             scope =
 
               email: email
 ```
+
 ###### TODO: HTTPS
+
 ```coffeescript
               loginUrl: "#{siteUrl}/user/reset/#{user.resetPasswordToken}"
 
@@ -91,7 +102,9 @@ link.
 
     return routes
 ```
-#### Implements hook `shrubReplContext`.
+
+#### Implements hook [`shrubReplContext`](../../hooks#shrubreplcontext)
+
 ```coffeescript
     registrar.registerHook 'shrubReplContext', (context) ->
       orm = require 'shrub-orm'

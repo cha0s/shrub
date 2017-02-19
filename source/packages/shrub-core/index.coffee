@@ -1,6 +1,7 @@
 # Core server functionality
 
 *Coordinate various core functionality.*
+
 ```coffeescript
 config = require 'config'
 
@@ -8,49 +9,69 @@ pkgman = require 'pkgman'
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubConfigClient`.
+
+#### Implements hook [`shrubConfigClient`](../../hooks#shrubconfigclient)
+
 ```coffeescript
   registrar.registerHook 'shrubConfigClient', (req) ->
 ```
+
 The URL that the site was accessed at.
+
 ```coffeescript
     hostname: if req.headers?.host?
       "//#{req.headers.host}"
     else
-      "//#{config.get 'packageSettings:shrub-core:siteHostname'}"
+      "//#{config.get 'packageConfig:shrub-core:siteHostname'}"
 ```
+
 Is the server running in test mode?
+
 ```coffeescript
     testMode: if (config.get 'E2E')? then 'e2e' else false
 ```
+
 The process ID of this worker.
+
 ```coffeescript
     pid: process.pid if 'production' isnt config.get 'NODE_ENV'
 ```
+
 Execution environment, `production`, or...
+
 ```coffeescript
     environment: config.get 'NODE_ENV'
 ```
+
 The user-visible site name.
+
 ```coffeescript
-    siteName: config.get 'packageSettings:shrub-core:siteName'
+    siteName: config.get 'packageConfig:shrub-core:siteName'
 ```
-#### Implements hook `shrubAuditFingerprint`.
+
+#### Implements hook [`shrubAuditFingerprint`](../../hooks#shrubauditfingerprint)
+
 ```coffeescript
   registrar.registerHook 'shrubAuditFingerprint', (req) ->
 ```
+
 The IP address.
+
 ```coffeescript
     ip: req?.normalizedIp
 ```
-#### Implements hook `shrubHttpMiddleware`.
+
+#### Implements hook [`shrubHttpMiddleware`](../../hooks#shrubhttpmiddleware)
+
 ```coffeescript
   registrar.registerHook 'shrubHttpMiddleware', (http) ->
 
     label: 'Normalize request variables'
     middleware: [
 ```
+
 Normalize IP address.
+
 ```coffeescript
       (req, res, next) ->
 
@@ -63,11 +84,15 @@ Normalize IP address.
 
     ]
 ```
-#### Implements hook `shrubConfigServer`.
+
+#### Implements hook [`shrubConfigServer`](../../hooks#shrubconfigserver)
+
 ```coffeescript
   registrar.registerHook 'shrubConfigServer', ->
 ```
+
 Middleware for server bootstrap phase.
+
 ```coffeescript
     bootstrapMiddleware: [
       'shrub-orm'
@@ -83,30 +108,42 @@ Middleware for server bootstrap phase.
       'shrub-repl'
     ]
 ```
+
 Global site crypto key.
+
 ```coffeescript
     cryptoKey: '***CHANGE THIS***'
 ```
+
 The default hostname of this application. Includes port if any.
+
 ```coffeescript
     siteHostname: 'localhost:4201'
 ```
+
 The name of the site, used in various places.
+
 ```coffeescript
     siteName: 'Shrub example application'
 ```
+
 A list of the IP addresses of trusted proxies between clients.
+
 ```coffeescript
     trustedProxies: []
 ```
+
 The amount of workers to create. Defaults to 0 meaning no workers, only
 the master.
+
 ```coffeescript
     workers: 0
 ```
-#### Implements hook `shrubRpcRoutesAlter`.
+
+#### Implements hook [`shrubRpcRoutesAlter`](../../hooks#shrubrpcroutesalter)
 
 Patch in express-specific variables that will be required by middleware.
+
 ```coffeescript
   registrar.registerHook 'shrubRpcRoutesAlter', (routes) ->
 
@@ -127,14 +164,18 @@ Patch in express-specific variables that will be required by middleware.
 
     return
 ```
-#### Implements hook `shrubSocketConnectionMiddleware`.
+
+#### Implements hook [`shrubSocketConnectionMiddleware`](../../hooks#shrubsocketconnectionmiddleware)
+
 ```coffeescript
   registrar.registerHook 'shrubSocketConnectionMiddleware', ->
 
     label: 'Normalize request variables'
     middleware: [
 ```
+
 Normalize IP address.
+
 ```coffeescript
       (req, res, next) ->
 
@@ -148,12 +189,14 @@ Normalize IP address.
     ]
 
 trustedAddress = (address, forwardedFor) -> resolveAddress(
-  config.get 'packageSettings:shrub-core:trustedProxies'
+  config.get 'packageConfig:shrub-core:trustedProxies'
   address
   forwardedFor
 )
 ```
+
 Walk up the X-Forwarded-For header until we hit an untrusted address.
+
 ```coffeescript
 resolveAddress = (trustedProxies, address, forwardedFor) ->
   return address unless forwardedFor?

@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -240,17 +233,17 @@
             
                 <li class="toctree-l3"><a href="#package-management-for-angular">Package management for Angular</a></li>
                 
-                    <li><a class="toctree-l4" href="#invoke-hook-shrubangularcontroller">Invoke hook shrubAngularController.</a></li>
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubangularcontroller">Invoke hook shrubAngularController</a></li>
                 
-                    <li><a class="toctree-l4" href="#invoke-hook-shrubangulardirective">Invoke hook shrubAngularDirective.</a></li>
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubangulardirective">Invoke hook shrubAngularDirective</a></li>
                 
-                    <li><a class="toctree-l4" href="#invoke-hook-shrubangularfilter">Invoke hook shrubAngularFilter.</a></li>
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubangularfilter">Invoke hook shrubAngularFilter</a></li>
                 
-                    <li><a class="toctree-l4" href="#invoke-hook-shrubangularprovider">Invoke hook shrubAngularProvider.</a></li>
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubangularprovider">Invoke hook shrubAngularProvider</a></li>
                 
-                    <li><a class="toctree-l4" href="#invoke-hook-shrubangularservice">Invoke hook shrubAngularService.</a></li>
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubangularservice">Invoke hook shrubAngularService</a></li>
                 
-                    <li><a class="toctree-l4" href="#invoke-hook-shrubangulardirectivealter">Invoke hook shrubAngularDirectiveAlter.</a></li>
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubangulardirectivealter">Invoke hook shrubAngularDirectiveAlter</a></li>
                 
             
             </ul>
@@ -1689,7 +1682,7 @@ directives are gathered and registered into Angular.</em></p>
       debug = require('debug') 'shrub:angular'
 </code></pre>
 
-<h4 id="invoke-hook-shrubangularcontroller">Invoke hook <code>shrubAngularController</code>.</h4>
+<h4 id="invoke-hook-shrubangularcontroller">Invoke hook <a href="../../hooks#shrubangularcontroller"><code>shrubAngularController</code></a></h4>
 <pre><code class="coffeescript">      debug 'Registering controllers...'
 
       for path, injected of pkgman.invoke 'shrubAngularController'
@@ -1700,7 +1693,7 @@ directives are gathered and registered into Angular.</em></p>
       debug 'Controllers registered.'
 </code></pre>
 
-<h4 id="invoke-hook-shrubangulardirective">Invoke hook <code>shrubAngularDirective</code>.</h4>
+<h4 id="invoke-hook-shrubangulardirective">Invoke hook <a href="../../hooks#shrubangulardirective"><code>shrubAngularDirective</code></a></h4>
 <pre><code class="coffeescript">      debug 'Registering directives...'
 
       for path, injected of pkgman.invoke 'shrubAngularDirective'
@@ -1709,7 +1702,7 @@ directives are gathered and registered into Angular.</em></p>
       debug 'Directives registered.'
 </code></pre>
 
-<h4 id="invoke-hook-shrubangularfilter">Invoke hook <code>shrubAngularFilter</code>.</h4>
+<h4 id="invoke-hook-shrubangularfilter">Invoke hook <a href="../../hooks#shrubangularfilter"><code>shrubAngularFilter</code></a></h4>
 <pre><code class="coffeescript">      debug 'Registering filters...'
 
       for path, injected of pkgman.invoke 'shrubAngularFilter'
@@ -1720,7 +1713,7 @@ directives are gathered and registered into Angular.</em></p>
       debug 'Filters registered.'
 </code></pre>
 
-<h4 id="invoke-hook-shrubangularprovider">Invoke hook <code>shrubAngularProvider</code>.</h4>
+<h4 id="invoke-hook-shrubangularprovider">Invoke hook <a href="../../hooks#shrubangularprovider"><code>shrubAngularProvider</code></a></h4>
 <pre><code class="coffeescript">      debug 'Registering providers...'
 
       for path, provider of pkgman.invoke 'shrubAngularProvider'
@@ -1730,7 +1723,7 @@ directives are gathered and registered into Angular.</em></p>
       debug 'Providers registered.'
 </code></pre>
 
-<h4 id="invoke-hook-shrubangularservice">Invoke hook <code>shrubAngularService</code>.</h4>
+<h4 id="invoke-hook-shrubangularservice">Invoke hook <a href="../../hooks#shrubangularservice"><code>shrubAngularService</code></a></h4>
 <pre><code class="coffeescript">      debug 'Registering services...'
 
       for path, injected of pkgman.invoke 'shrubAngularService'
@@ -1816,7 +1809,7 @@ controller automatically.</p>
           directive.$$isolateBindings = isolateBindingsFor directive
 </code></pre>
 
-<h4 id="invoke-hook-shrubangulardirectivealter">Invoke hook <code>shrubAngularDirectiveAlter</code>.</h4>
+<h4 id="invoke-hook-shrubangulardirectivealter">Invoke hook <a href="../../hooks#shrubangulardirectivealter"><code>shrubAngularDirectiveAlter</code></a></h4>
 <pre><code class="coffeescript">        for injectedDirective in pkgman.invokeFlat(
           'shrubAngularDirectiveAlter', directive, path
         )

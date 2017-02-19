@@ -1,12 +1,15 @@
 # Express - logger
+
 ```coffeescript
 morgan = require 'morgan'
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubHttpMiddleware`.
+
+#### Implements hook [`shrubHttpMiddleware`](../../hooks#shrubhttpmiddleware)
 
 Log requests, differentiating between client and sandbox requests.
+
 ```coffeescript
   registrar.registerHook 'shrubHttpMiddleware', (http) ->
 
@@ -14,7 +17,9 @@ Log requests, differentiating between client and sandbox requests.
 
     logging = require 'logging'
 ```
+
 Differentiate between remote clients and our own sandbox clients.
+
 ```coffeescript
     remoteRequestLogger = logging.create 'logs/express.remote.log'
     sandboxRequestLogger = logging.create 'logs/express.sandbox.log'

@@ -207,13 +207,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../middleware/">middleware.coffee</a>
         
     </li>
@@ -1674,7 +1667,7 @@ describe 'errors', -&gt;
   it 'serializes (even abstract) errors', -&gt;
 
     O = errors.serialize error
-    expect(O[0]).toBe error.key
+    expect(O[0]).toBe error.errorType
     expect(O[1]).toBe error.message
 
     O = errors.serialize new Error 'Foobar'
@@ -1700,7 +1693,7 @@ describe 'errors', -&gt;
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../logging/" class="btn btn-neutral float-right" title="logging.coffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../middleware/" class="btn btn-neutral float-right" title="middleware.coffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../errors/" class="btn btn-neutral" title="errors.coffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -1734,7 +1727,7 @@ describe 'errors', -&gt;
         <span><a href="../errors/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../logging/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../middleware/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

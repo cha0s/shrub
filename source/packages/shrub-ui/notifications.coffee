@@ -1,4 +1,5 @@
 # UI - Notifications
+
 ```coffeescript
 Promise = null
 
@@ -8,7 +9,9 @@ notificationQueues = {}
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubCorePreBootstrap`.
+
+#### Implements hook [`shrubCorePreBootstrap`](../../hooks#shrubcoreprebootstrap)
+
 ```coffeescript
   registrar.registerHook 'shrubCorePreBootstrap', ->
 
@@ -16,7 +19,9 @@ exports.pkgmanRegister = (registrar) ->
 
     orm = require 'shrub-orm'
 ```
-#### Implements hook `shrubCoreBootstrapMiddleware`.
+
+#### Implements hook [`shrubCoreBootstrapMiddleware`](../../hooks#shrubcorebootstrapmiddleware)
+
 ```coffeescript
   registrar.registerHook 'shrubCoreBootstrapMiddleware', ->
 
@@ -27,7 +32,9 @@ exports.pkgmanRegister = (registrar) ->
 
       (next) ->
 ```
-#### Invoke hook `shrubUiNotificationQueues`.
+
+#### Invoke hook [`shrubUiNotificationQueues`](../../hooks#shrubuinotificationqueues)
+
 ```coffeescript
         for path, queues of pkgman.invoke 'shrubUiNotificationQueues'
           for name, queue of queues
@@ -37,7 +44,9 @@ exports.pkgmanRegister = (registrar) ->
 
     ]
 ```
+
 Broadcast a notification event.
+
 ```coffeescript
   broadcastNotificationsEvent = (req, args) ->
 
@@ -46,7 +55,9 @@ Broadcast a notification event.
     {data, event, includeSelf, notifications} = args
     data ?= {}
 ```
+
 Broadcast for each queue.
+
 ```coffeescript
     queueMap = {}
     for notification in notifications
@@ -65,66 +76,85 @@ Broadcast for each queue.
       else
         req.socket.broadcast.to(channel).emit event, data
 ```
-#### Implements hook `shrubOrmCollections`.
+
+#### Implements hook [`shrubOrmCollections`](../../hooks#shrubormcollections)
+
 ```coffeescript
   registrar.registerHook 'shrubOrmCollections', ->
 ```
+
 ## Notification
+
 ```coffeescript
     Notification =
 
       attributes:
 ```
+
 ## Notification#acknowledged
 
 *Has the notification been acknowledged?*
+
 ```coffeescript
         acknowledged:
           type: 'boolean'
           defaultsTo: false
 ```
+
 ## Notification#markedAsRead
 
 *Has the notification been read?*
+
 ```coffeescript
         markedAsRead:
           type: 'boolean'
           defaultsTo: false
 ```
+
 ## Notification#mayRemove
 
 *May this notification be removed?*
+
 ```coffeescript
         mayRemove:
           type: 'boolean'
           defaultsTo: true
 ```
+
 ## Notification#channel
 
 *Which channel owns this notification? Built by the queue.*
+
 ```coffeescript
         channel: 'string'
 ```
+
 ## Notification#path
 
 *To where does this notification link?*
+
 ```coffeescript
         path: 'string'
 ```
+
 ## Notification#queue
 
 *To which queue does this notification belong?*
+
 ```coffeescript
         queue:
           type: 'string'
           notEmpty: true
 ```
+
 ## Notification#variables
 
 *Variables, can be any type.*
+
 ```coffeescript
         variables: 'json'
 ```
+
 ## Notification#createFromRequest
 
 * (http.IncomingMessage) `req` - The request object.
@@ -142,27 +172,36 @@ queue by
 
 the user? Defaults to `true`. *Create a notification from a request
 object.*
+
 ```coffeescript
       createFromRequest: (req, queueName, variables, path, mayRemove) ->
 ```
+
 Check that the queue is valid.
+
 ```coffeescript
         unless queue = notificationQueues[queueName]
           return Promise.reject new Error(
             "Notification queue `#{queue}' doesn't exist."
           )
 ```
+
 Defaults.
+
 ```coffeescript
         mayRemove ?= true
         path ?= 'javascript:void(0)'
         variables ?= {}
 ```
+
 Get the channel from the request.
+
 ```coffeescript
         return unless (channel = queue.channelFromRequest req)?
 ```
+
 Create the notification.
+
 ```coffeescript
         @create(
           mayRemove: mayRemove
@@ -174,7 +213,9 @@ Create the notification.
         ).then (notification) ->
           return unless req.socket?
 ```
+
 Broadcast to others.
+
 ```coffeescript
           notification.redactFor(req.user).then (notification) ->
             broadcastNotificationsEvent(
@@ -185,15 +226,19 @@ Broadcast to others.
               notifications: [notification]
             )
 ```
+
 ## Notification#queueFromRequest
 
 * (http.IncomingMessage) `req` - The request object.
 
 *Get a queue's notifications from a request.*
+
 ```coffeescript
       queueFromRequest: (req) ->
 ```
+
 Empty queue if none was defined.
+
 ```coffeescript
         unless (queue = notificationQueues[req.body.queue])?
           return Promise.resolve []
@@ -201,8 +246,10 @@ Empty queue if none was defined.
         unless (channel = queue.channelFromRequest req)?
           return Promise.resolve []
 ```
+
 Return the 20 newest notifications from the queue for the request's
 channel, skipping as many records as requested.
+
 ```coffeescript
         query = @find()
         query = query.where(channel: channel)
@@ -211,7 +258,9 @@ channel, skipping as many records as requested.
         query = query.limit(20)
         query.sort('createdAt DESC')
 ```
+
 Redact the notifications before sending them over the wire.
+
 ```coffeescript
         query.then (notifications) ->
           Promise.all(
@@ -219,7 +268,9 @@ Redact the notifications before sending them over the wire.
               notification.redactFor req.user
           )
 ```
+
 Remove unnecessary details.
+
 ```coffeescript
       redactors: [(redactFor) ->
         self = this
@@ -231,15 +282,21 @@ Remove unnecessary details.
 
     'shrub-ui-notification': Notification
 ```
-#### Implements hook `shrubConfigClient`.
+
+#### Implements hook [`shrubConfigClient`](../../hooks#shrubconfigclient)
+
 ```coffeescript
   registrar.registerHook 'shrubConfigClient', (req) ->
 ```
+
 Make sure ORM is up (it won't be when grunt is running).
+
 ```coffeescript
     return unless Notification = orm?.collection 'shrub-ui-notification'
 ```
+
 Get all the notification queues.
+
 ```coffeescript
     promiseKeys = []
     promises = for key, queue of notificationQueues
@@ -248,7 +305,9 @@ Get all the notification queues.
       (req.body ?= {}).queue = key
       Notification.queueFromRequest req
 ```
+
 Load any queues into the config.
+
 ```coffeescript
     Promise.all(promises).then (notificationsList) ->
       queuesConfig = null
@@ -256,15 +315,19 @@ Load any queues into the config.
       for notifications, index in notificationsList
         continue if notifications.length is 0
 ```
+
 Reverse the notifications because the client will prepend new
 notifications, not append.
+
 ```coffeescript
         queuesConfig ?= {}
         queuesConfig[promiseKeys[index]] = notifications.reverse()
 
       queuesConfig
 ```
+
 Ensure that the requested notification is owned by the request.
+
 ```coffeescript
   ensureNotificationsOwnedByRequest = (req, res, next) ->
 
@@ -285,7 +348,9 @@ Ensure that the requested notification is owned by the request.
 
     ).catch next
 ```
-#### Implements hook `shrubRpcRoutes`.
+
+#### Implements hook [`shrubRpcRoutes`](../../hooks#shrubrpcroutes)
+
 ```coffeescript
   registrar.registerHook 'shrubRpcRoutes', ->
 
@@ -297,7 +362,9 @@ Ensure that the requested notification is owned by the request.
 
       middleware: [
 ```
+
 Ensure that the queue exists.
+
 ```coffeescript
         (req, res, next) ->
           return next new Error(
@@ -309,8 +376,10 @@ Ensure that the queue exists.
 
         (req, res, next) ->
 ```
+
 Mark all notifications in a queue owned by the request as
 acknowledged.
+
 ```coffeescript
           Notification = orm.collection 'shrub-ui-notification'
           query = Notification.find()
@@ -318,7 +387,9 @@ acknowledged.
           query = query.where(queue: req.body.queue)
           query.then((notifications) ->
 ```
+
 Broadcast to others.
+
 ```coffeescript
             broadcastNotificationsEvent(
               req
@@ -346,7 +417,9 @@ Broadcast to others.
 
         (req, res, next) ->
 ```
+
 Broadcast to others.
+
 ```coffeescript
           broadcastNotificationsEvent(
             req
@@ -372,7 +445,9 @@ Broadcast to others.
 
         ensureNotificationsOwnedByRequest
 ```
+
 Ensure that the requested notifications may be removed.
+
 ```coffeescript
         (req, res, next) ->
 
@@ -385,7 +460,9 @@ Ensure that the requested notifications may be removed.
 
         (req, res, next) ->
 ```
+
 Broadcast to others.
+
 ```coffeescript
           broadcastNotificationsEvent(
             req

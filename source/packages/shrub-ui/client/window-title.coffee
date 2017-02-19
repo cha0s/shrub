@@ -1,12 +1,15 @@
 # UI - Window title
 
 *Manage the window and page titles.*
+
 ```coffeescript
 config = require 'config'
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubAngularController`.
+
+#### Implements hook [`shrubAngularController`](../../../hooks#shrubangularcontroller)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularController', -> [
     'shrub-ui/window-title'
@@ -24,7 +27,9 @@ exports.pkgmanRegister = (registrar) ->
 
   ]
 ```
-#### Implements hook `shrubAngularDirective`.
+
+#### Implements hook [`shrubAngularDirective`](../../../hooks#shrubangulardirective)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularDirective', -> [
 
@@ -40,13 +45,17 @@ exports.pkgmanRegister = (registrar) ->
 
   ]
 ```
-#### Implements hook `shrubAngularAppRun`.
+
+#### Implements hook [`shrubAngularAppRun`](../../../hooks#shrubangularapprun)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularAppRun', -> [
     '$rootScope', 'shrub-ui/window-title'
     ($rootScope, windowTitle) ->
 ```
+
 Set the site name into the window title.
+
 ```coffeescript
       windowTitle.setSite config.get 'packageConfig:shrub-core:siteName'
 
@@ -56,7 +65,9 @@ Set the site name into the window title.
 
   ]
 ```
-#### Implements hook `shrubAngularService`.
+
+#### Implements hook [`shrubAngularService`](../../../hooks#shrubangularservice)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularService', -> [
     '$interval'
@@ -66,12 +77,15 @@ Set the site name into the window title.
 
       _page = ''
 ```
+
 ## windowTitle.page
 
 *Get the page title.*
+
 ```coffeescript
       service.page = -> _page
 ```
+
 ## windowTitle.setPage
 
 * (String) `page` - The page title.
@@ -79,6 +93,7 @@ Set the site name into the window title.
 * (Boolean) `setWindow` - Update the window title.
 
 *Set the page title.*
+
 ```coffeescript
       service.setPage = (page, setWindow = true) ->
 
@@ -87,54 +102,68 @@ Set the site name into the window title.
 
       _separator = ' · '
 ```
+
 ## windowTitle.separator
 
 *Get the token that separates the window and page titles.*
+
 ```coffeescript
       service.separator = -> _separator
 ```
+
 ## windowTitle.setSeparator
 
 * (String) `separator` - The separator.
 
 *Set the token that separates the window and page titles.*
+
 ```coffeescript
       service.setSeparator = (separator) -> _separator = separator
 
       _site = ''
 ```
+
 ## windowTitle.site
 
 *Get the site name.*
+
 ```coffeescript
       service.site = -> _site
 ```
+
 ## windowTitle.setSite
 
 * (String) `site` - The site name.
 
 *Set the site name.*
+
 ```coffeescript
       service.setSite = (site) -> _site = site
 
       _window = ''
 ```
+
 ## windowTitle.get
 
 *Get the window title.*
+
 ```coffeescript
       service.get = -> _windowTitleWrapper _window
 ```
+
 ## windowTitle.set
 
 * (String) `window` - The window title.
 
 *Set the window title.*
+
 ```coffeescript
       service.set = (window) -> _window = window
 ```
+
 If you want to make the window/tab title flash for attention, use this
 API.
+
 ```coffeescript
       _flashUpWrapper = (text) -> "¯¯¯#{text.toUpperCase()}¯¯¯"
       _flashDownWrapper = (text) -> "___#{text}___"
@@ -142,9 +171,11 @@ API.
 
       flashInProgress = null
 ```
+
 ## windowTitle.startFlashing
 
 *Start flashing the window title.*
+
 ```coffeescript
       service.startFlashing = ->
         return if flashInProgress?
@@ -160,9 +191,11 @@ API.
           600
         )
 ```
+
 ## windowTitle.stopFlashing
 
 *Stop flashing the window title.*
+
 ```coffeescript
       service.stopFlashing = ->
 
@@ -171,6 +204,7 @@ API.
 
         _windowWrapper = angular.identity
 ```
+
 The wrappers below handle rendering the window title and flash states.
 The wrappers are passed in a single argument, the title text. The
 wrapper function returns another string, which is the text after
@@ -179,9 +213,11 @@ whatever wrapping you'd like to do.
 ## windowTitle.flashDownWrapper
 
 *Get the transformation function for the 'down' flash.*
+
 ```coffeescript
       service.flashDownWrapper = -> _flashDownWrapper
 ```
+
 ## windowTitle.setFlashDownWrapper
 
 * (Function) `flashDownWrapper` - Transformation function. Takes the
@@ -189,16 +225,20 @@ window
 
 title as argument and returns a transformed window title. *Set the
 transformation function for the 'down' flash.*
+
 ```coffeescript
       service.setFlashDownWrapper = (flashDownWrapper) ->
         _flashDownWrapper = flashDownWrapper
 ```
+
 ## windowTitle.flashUpWrapper
 
 *Get the transformation function for the 'up' flash.*
+
 ```coffeescript
       service.flashUpWrapper = -> _flashUpWrapper
 ```
+
 ## windowTitle.setFlashUpWrapper
 
 * (Function) `flashUpWrapper` - Transformation function. Takes the
@@ -206,6 +246,7 @@ window
 
 title as argument and returns a transformed window title. *Set the
 transformation function for the 'up' flash.*
+
 ```coffeescript
       service.setFlashUpWrapper = (flashUpWrapper) ->
         _flashUpWrapper = flashUpWrapper

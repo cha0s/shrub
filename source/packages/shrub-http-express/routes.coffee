@@ -1,10 +1,13 @@
 # Express - routes
+
 ```coffeescript
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubHttpMiddleware`.
+
+#### Implements hook [`shrubHttpMiddleware`](../../hooks#shrubhttpmiddleware)
 
 Serve Express routes.
+
 ```coffeescript
   registrar.registerHook 'shrubHttpMiddleware', (http) ->
 

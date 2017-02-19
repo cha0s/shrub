@@ -1,10 +1,13 @@
 # Form - Select
+
 ```coffeescript
 _ = require 'lodash'
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubAngularDirective`.
+
+#### Implements hook [`shrubAngularDirective`](../../../../hooks#shrubangulardirective)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularDirective', -> [
     ->
@@ -43,7 +46,9 @@ exports.pkgmanRegister = (registrar) ->
 
     element.find("option[value=\"#{value}\"]").prop 'selected', true
 ```
-#### Implements hook `shrubFormWidgets`.
+
+#### Implements hook [`shrubFormWidgets`](../../../../hooks#shrubformwidgets)
+
 ```coffeescript
   registrar.registerHook 'shrubFormWidgets', ->
 

@@ -1,4 +1,5 @@
 # Express - routes
+
 ```coffeescript
 CookieParser = require 'cookie-parser'
 ExpressSession = require 'express-session'
@@ -14,7 +15,9 @@ signature = null
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubCoreBootstrapMiddleware`.
+
+#### Implements hook [`shrubCoreBootstrapMiddleware`](../../hooks#shrubcorebootstrapmiddleware)
+
 ```coffeescript
   registrar.registerHook 'shrubCoreBootstrapMiddleware', ->
 
@@ -27,7 +30,7 @@ exports.pkgmanRegister = (registrar) ->
         signature = require 'cookie-signature'
 
         {cookie} = config.get(
-          'packageSettings:shrub-session'
+          'packageConfig:shrub-session'
         )
 
         cookieParser = CookieParser cookie.cryptoKey
@@ -39,16 +42,20 @@ exports.pkgmanRegister = (registrar) ->
 
     ]
 ```
-#### Implements hook `shrubHttpMiddleware`.
+
+#### Implements hook [`shrubHttpMiddleware`](../../hooks#shrubhttpmiddleware)
 
 Parse cookies and load any session.
+
 ```coffeescript
   registrar.registerHook 'shrubHttpMiddleware', (http) ->
 
     label: 'Load session from cookie'
     middleware: sessionMiddleware()
 ```
-#### Implements hook `shrubRpcRoutesAlter`.
+
+#### Implements hook [`shrubRpcRoutesAlter`](../../hooks#shrubrpcroutesalter)
+
 ```coffeescript
   registrar.registerHook 'shrubRpcRoutesAlter', (routes) ->
 
@@ -78,7 +85,9 @@ Parse cookies and load any session.
 
     return
 ```
-#### Implements hook `shrubSocketConnectionMiddleware`.
+
+#### Implements hook [`shrubSocketConnectionMiddleware`](../../hooks#shrubsocketconnectionmiddleware)
+
 ```coffeescript
   registrar.registerHook 'shrubSocketConnectionMiddleware', ->
 
@@ -87,15 +96,19 @@ Parse cookies and load any session.
 
 sessionMiddleware = ->
 
-  {cookie, key} = config.get 'packageSettings:shrub-session'
+  {cookie, key} = config.get 'packageConfig:shrub-session'
 
   return [
 ```
+
 Express cookie parser.
+
 ```coffeescript
     cookieParser
 ```
+
 Session reification.
+
 ```coffeescript
     ExpressSession(
       cookie: cookie

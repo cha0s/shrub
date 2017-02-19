@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -1016,13 +1009,13 @@
             
                 <li class="toctree-l3"><a href="#session">Session</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubormcollections">Implements hook shrubOrmCollections.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubormcollections">Implements hook shrubOrmCollections</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubauditfingerprint">Implements hook shrubAuditFingerprint.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubauditfingerprint">Implements hook shrubAuditFingerprint</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubsocketconnectionmiddleware">Implements hook shrubSocketConnectionMiddleware.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubsocketconnectionmiddleware">Implements hook shrubSocketConnectionMiddleware</a></li>
                 
             
             </ul>
@@ -1667,7 +1660,7 @@
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubormcollections">Implements hook <code>shrubOrmCollections</code>.</h4>
+<h4 id="implements-hook-shrubormcollections">Implements hook <a href="../../../hooks#shrubormcollections"><code>shrubOrmCollections</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubOrmCollections', -&gt;
 
     Session =
@@ -1695,7 +1688,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     'shrub-session': Session
 </code></pre>
 
-<h4 id="implements-hook-shrubauditfingerprint">Implements hook <code>shrubAuditFingerprint</code>.</h4>
+<h4 id="implements-hook-shrubauditfingerprint">Implements hook <a href="../../../hooks#shrubauditfingerprint"><code>shrubAuditFingerprint</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAuditFingerprint', (req) -&gt;
 </code></pre>
 
@@ -1703,7 +1696,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 <pre><code class="coffeescript">    session: if req?.session? then req.session.id
 </code></pre>
 
-<h4 id="implements-hook-shrubconfigserver">Implements hook <code>shrubConfigServer</code>.</h4>
+<h4 id="implements-hook-shrubconfigserver">Implements hook <a href="../../../hooks#shrubconfigserver"><code>shrubConfigServer</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubConfigServer', -&gt;
 </code></pre>
 
@@ -1723,7 +1716,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 <pre><code class="coffeescript">      maxAge: 1000 * 60 * 60 * 24 * 14
 </code></pre>
 
-<h4 id="implements-hook-shrubsocketconnectionmiddleware">Implements hook <code>shrubSocketConnectionMiddleware</code>.</h4>
+<h4 id="implements-hook-shrubsocketconnectionmiddleware">Implements hook <a href="../../../hooks#shrubsocketconnectionmiddleware"><code>shrubSocketConnectionMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubSocketConnectionMiddleware', -&gt;
 
     label: 'Join channel for session'

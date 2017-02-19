@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -1565,8 +1558,6 @@
             
                 <li class="toctree-l3"><a href="#server-configuration">Server configuration</a></li>
                 
-                    <li><a class="toctree-l4" href="#todo-rename-all-config-key-uses-to-path">TODO: Rename all config key uses to path.</a></li>
-                
                     <li><a class="toctree-l4" href="#configget">config.get</a></li>
                 
                     <li><a class="toctree-l4" href="#confighas">config.has</a></li>
@@ -1666,7 +1657,6 @@
               
                 <h1 id="server-configuration">Server configuration</h1>
 <p><em>Manages server and package configuration.</em></p>
-<h6 id="todo-rename-all-config-key-uses-to-path">TODO: Rename all config <code>key</code> uses to <code>path</code>.</h6>
 <pre><code class="coffeescript">debug = require('debug') 'shrub:config'
 nconf = require 'nconf'
 fs = require 'fs'
@@ -1680,18 +1670,18 @@ pkgman = require 'pkgman'
 
 <h2 id="configget">config.get</h2>
 <ul>
-<li>(string) <code>key</code> - The key whose value to get.</li>
+<li>(string) <code>path</code> - The path whose value to get.</li>
 </ul>
 <p><em>Get a configuration value.</em></p>
-<pre><code class="coffeescript">exports.get = (key) -&gt; nconf.get key
+<pre><code class="coffeescript">exports.get = (path) -&gt; nconf.get path
 </code></pre>
 
 <h2 id="confighas">config.has</h2>
 <ul>
-<li>(string) <code>key</code> - The key to check.</li>
+<li>(string) <code>path</code> - The path to check.</li>
 </ul>
-<p><em>Check if a configuration key exists.</em></p>
-<pre><code class="coffeescript">exports.has = (key) -&gt; nconf.has key
+<p><em>Check if a configuration path exists.</em></p>
+<pre><code class="coffeescript">exports.has = (path) -&gt; nconf.has path
 </code></pre>
 
 <h2 id="configload">config.load</h2>
@@ -1722,18 +1712,16 @@ pkgman = require 'pkgman'
   pkgman.registerPackageList nconf.get 'packageList'
 
   debug 'Packages registered.'
-</code></pre>
 
-<h6 id="todo-unify-config-key-on-packages">TODO: Unify config key on <code>'packages'</code>.</h6>
-<pre><code class="coffeescript">  packageSettings = new Config()
-  for key, value of pkgman.invoke 'shrubConfigServer'
-    packageSettings.set key.replace(/\//g, ':'), value
+  packageConfig = new Config()
+  for path, value of pkgman.invoke 'shrubConfigServer'
+    packageConfig.set path.replace(/\//g, ':'), value
 
   nconf.defaults
 </code></pre>
 
-<h4 id="invoke-hook-shrubconfigserver">Invoke hook <code>shrubConfigServer</code>.</h4>
-<pre><code class="coffeescript">    packageSettings: packageSettings.toJSON()
+<h4 id="invoke-hook-shrubconfigserver">Invoke hook <a href="../../hooks#shrubconfigserver"><code>shrubConfigServer</code></a></h4>
+<pre><code class="coffeescript">    packageConfig: packageConfig.toJSON()
 
     path: &quot;#{__dirname}/..&quot;
 
@@ -1742,10 +1730,10 @@ pkgman = require 'pkgman'
 
 <h2 id="configset">config.set</h2>
 <ul>
-<li>(string) <code>key</code> - The key whose value to set.</li>
+<li>(string) <code>path</code> - The path whose value to set.</li>
 </ul>
 <p><em>Set a configuration value.</em></p>
-<pre><code class="coffeescript">exports.set = (key, value) -&gt; nconf.set key, value
+<pre><code class="coffeescript">exports.set = (path, value) -&gt; nconf.set path, value
 </code></pre>
               
             </div>

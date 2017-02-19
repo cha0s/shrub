@@ -1,10 +1,13 @@
 # Form - checkbox
+
 ```coffeescript
 _ = require 'lodash'
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubAngularDirective`.
+
+#### Implements hook [`shrubAngularDirective`](../../../../hooks#shrubangulardirective)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularDirective', -> [
     ->
@@ -52,7 +55,9 @@ exports.pkgmanRegister = (registrar) ->
 
   assignToElement = (element, value) -> element.prop 'checked', 'on' is value
 ```
-#### Implements hook `shrubFormWidgets`.
+
+#### Implements hook [`shrubFormWidgets`](../../../../hooks#shrubformwidgets)
+
 ```coffeescript
   registrar.registerHook 'shrubFormWidgets', ->
 

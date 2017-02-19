@@ -1,8 +1,11 @@
 # Grunt build process - Run tests
+
 ```coffeescript
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubGruntConfig`.
+
+#### Implements hook [`shrubGruntConfig`](../../../hooks#shrubgruntconfig)
+
 ```coffeescript
   registrar.registerHook 'shrubGruntConfig', (gruntConfig, grunt) ->
 
@@ -72,17 +75,23 @@ exports.pkgmanRegister = (registrar) ->
 
       openServerPort().then (port) ->
 ```
+
 Pass arguments to the child process.
+
 ```coffeescript
         args = process.argv.slice 2
 ```
+
 Pass the environment to the child process.
+
 ```coffeescript
         options = env: process.env
         options.env['E2E'] = 'true'
-        options.env['packageSettings:shrub-http:port'] = port
+        options.env['packageConfig:shrub-http:port'] = port
 ```
+
 Fork it.
+
 ```coffeescript
         e2eServerChild = fork(
           "#{__dirname}/../../../node_modules/coffee-script/bin/coffee"
@@ -90,7 +99,9 @@ Fork it.
           options
         )
 ```
+
 Inject the port configuration.
+
 ```coffeescript
         protractorConfig = gruntConfig.taskConfiguration(
           'protractor', 'testsE2e'
@@ -98,7 +109,9 @@ Inject the port configuration.
         baseUrl = "http://localhost:#{port}/"
         protractorConfig.options.args = baseUrl: baseUrl
 ```
+
 Wait for the server to come up.
+
 ```coffeescript
         grunt.log.write 'Waiting for E2E server to come up...'
         require('tcp-port-used').waitUntilUsed(port, 400, 30000).then(
@@ -152,7 +165,9 @@ Wait for the server to come up.
 
       done = @async()
 ```
+
 Spawn node Jasmine.
+
 ```coffeescript
       spawn(
         'node'

@@ -1,14 +1,19 @@
 # Strapped - Notifications
+
 ```coffeescript
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubSkinLink--DIRECTIVE`.
+
+#### Implements hook [`shrubSkinLink--DIRECTIVE`](../../../hooks#shrubskinlink--directive)
+
 ```coffeescript
   registrar.registerHook 'shrubSkinLink--shrubUiNotifications', -> [
     '$compile', '$scope', '$element', '$attr'
     ($compile, scope, element, attr) ->
 ```
+
 Initialize the popover.
+
 ```coffeescript
       ($button = element.find 'button').popover
 
@@ -38,12 +43,16 @@ Initialize the popover.
 
           $compile(tpl)(scope)
 ```
+
 When the notifications are opened, acknowledge them.
+
 ```coffeescript
       $button.on 'show.bs.popover', -> scope.$emit 'shrub.ui.notifications.acknowledged'
 ```
+
 Wait for the new queue to be compiled into the DOM, and then
 reposition the popover, since the new content may shift it.
+
 ```coffeescript
       scope.$watch(
         'queue.notifications()', -> scope.$$postDigest ->
@@ -60,7 +69,9 @@ reposition the popover, since the new content may shift it.
         true
       )
 ```
+
 Hide the popover if any notification is clicked.
+
 ```coffeescript
       scope.$on 'shrub.ui.notification.clicked', -> $button.popover 'hide'
 

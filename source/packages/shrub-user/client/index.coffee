@@ -1,30 +1,34 @@
 # User
 
 *User operations, model, etc.*
+
 ```coffeescript
 {TransmittableError} = require 'errors'
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubOrmCollections`.
+
+#### Implements hook [`shrubOrmCollections`](../../../hooks#shrubormcollections)
+
 ```coffeescript
   registrar.registerHook 'shrubOrmCollections', exports.shrubOrmCollections
 ```
-#### Implements hook `shrubOrmCollectionsAlter`.
+
+#### Implements hook [`shrubOrmCollectionsAlter`](../../../hooks#shrubormcollectionsalter)
+
 ```coffeescript
   registrar.registerHook 'shrubOrmCollectionsAlter', exports.shrubOrmCollectionsAlter
 ```
-#### Implements hook `shrubAngularDirective`.
+
+#### Implements hook [`shrubAngularDirective`](../../../hooks#shrubangulardirective)
+
 ```coffeescript
-  registrar.registerHook 'shrubAngularDirective', -> [
+  registrar.registerHook 'actions', 'shrubAngularDirective', -> [
     'shrub-user'
     (user) ->
 
       directive = {}
-```
-###### TODO: Make it possible to override directive name/path
-directive.name = 'shrub-user-actions'
-```coffeescript
+
       directive.link = (scope) ->
 
         scope.user = user
@@ -63,7 +67,9 @@ directive.name = 'shrub-user-actions'
 
   ]
 ```
-#### Implements hook `shrubAngularService`.
+
+#### Implements hook [`shrubAngularService`](../../../hooks#shrubangularservice)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularService', -> [
     'shrub-orm', 'shrub-rpc', 'shrub-socket'
@@ -80,7 +86,9 @@ directive.name = 'shrub-user-actions'
         config.get 'packageConfig:shrub-user'
       )
 ```
+
 Log a user out if we get a socket call.
+
 ```coffeescript
       logout = ->
 
@@ -92,15 +100,19 @@ Log a user out if we get a socket call.
 
       socket.on 'shrub-user/logout', logout
 ```
+
 ## user.isLoggedIn
 
 *Whether the current application user is logged in.*
+
 ```coffeescript
       service.isLoggedIn = -> _instance.id?
 ```
+
 ## user.login
 
 *Log in with strategy values.*
+
 ```coffeescript
       service.login = (values) ->
 
@@ -108,9 +120,11 @@ Log a user out if we get a socket call.
           _instance[k] = v for k, v of O
           return
 ```
+
 ## user.logout
 
 *Log out.*
+
 ```coffeescript
       service.logout = ->
 
@@ -119,9 +133,11 @@ Log a user out if we get a socket call.
 
         ).then logout
 ```
+
 ## user.instance
 
 *Retrieve the user instance.*
+
 ```coffeescript
       service.instance = -> _instance
 
@@ -129,7 +145,9 @@ Log a user out if we get a socket call.
 
   ]
 ```
-#### Implements hook `shrubTransmittableErrors`.
+
+#### Implements hook [`shrubTransmittableErrors`](../../../hooks#shrubtransmittableerrors)
+
 ```coffeescript
   registrar.registerHook 'shrubTransmittableErrors', exports.shrubTransmittableErrors
 
@@ -139,7 +157,9 @@ Log a user out if we get a socket call.
 
 exports.shrubOrmCollections = ->
 ```
+
 ###### TODO: Finish these docs.
+
 ```coffeescript
   Group =
 
@@ -178,38 +198,52 @@ exports.shrubOrmCollections = ->
 
     attributes:
 ```
+
 Groups this user belongs to.
+
 ```coffeescript
       groups:
         collection: 'shrub-user-group'
         via: 'user'
 ```
+
 User instances.
+
 ```coffeescript
       instances:
         collection: 'shrub-user-instance'
         via: 'user'
 ```
+
 Groups this user belongs to.
+
 ```coffeescript
       permissions:
         collection: 'shrub-user-permission'
         via: 'user'
 ```
+
 Check whether a user has a permission.
+
 ```coffeescript
       hasPermission: (permission) ->
 ```
+
 Superuser?
+
 ```coffeescript
         return true if @id is 1
 ```
+
 Check group permissions.
+
 ```coffeescript
         for {permissions} in @groups
           return true if ~permissions.indexOf permission
 ```
+
 Check inline permissions.
+
 ```coffeescript
         return ~@permissions.indexOf permission
 
@@ -249,18 +283,22 @@ Check inline permissions.
   'shrub-user-instance': UserInstance
   'shrub-user-permission': UserPermission
 ```
+
 Transmittable login conflict error.
+
 ```coffeescript
 class LoginConflictError extends TransmittableError
 
-  key: 'shrub-user-login-conflict'
+  errorType: 'shrub-user-login-conflict'
   template: 'That account already belongs to another user. First log out and then log in with that account.'
 ```
+
 Transmittable redundant login error.
+
 ```coffeescript
 class RedundantLoginError extends TransmittableError
 
-  key: 'shrub-user-login-redundant'
+  errorType: 'shrub-user-login-redundant'
   template: 'You are already logged in with that account.'
 
 exports.shrubTransmittableErrors = -> [

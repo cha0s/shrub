@@ -202,13 +202,6 @@
 
         
             
-    <li class="toctree-l1 ">
-        <a class="" href="../logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
     <li class="toctree-l1 current">
         <a class="current" href="./">middleware.coffee</a>
         
@@ -1815,14 +1808,10 @@ configuration.</em></p>
 <h2 id="middlewarefromconfig">middleware.fromConfig</h2>
 <p><em>Create a middleware stack from a configuration path.</em></p>
 <pre><code class="coffeescript">exports.fromConfig = (path, args...) -&gt;
-</code></pre>
-
-<h6 id="todo-unify-on-packages">TODO: Unify on <code>'packages'</code>.</h6>
-<pre><code class="coffeescript">  configKey = if global? then 'packageSettings' else 'packageConfig'
 
   exports.fromHook(
     pkgman.normalizePath path
-    config.get &quot;#{configKey}:#{path}&quot;
+    config.get &quot;packageConfig:#{path}&quot;
   )
 </code></pre>
               
@@ -1835,7 +1824,7 @@ configuration.</em></p>
         <a href="../middleware.spec/" class="btn btn-neutral float-right" title="middleware.spec.coffee"/>Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../logging/" class="btn btn-neutral" title="logging.coffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../errors.spec/" class="btn btn-neutral" title="errors.spec.coffee"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -1863,7 +1852,7 @@ configuration.</em></p>
           <a class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../logging/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../errors.spec/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
         <span style="margin-left: 15px"><a href="../middleware.spec/" style="color: #fcfcfc">Next &raquo;</a></span>

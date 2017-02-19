@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -793,7 +786,7 @@
             
                 <li class="toctree-l3"><a href="#express-static-files">Express - static files</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubhttpmiddleware">Implements hook shrubHttpMiddleware.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubhttpmiddleware">Implements hook shrubHttpMiddleware</a></li>
                 
             
             </ul>
@@ -1658,7 +1651,7 @@
 <pre><code class="coffeescript">exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubhttpmiddleware">Implements hook <code>shrubHttpMiddleware</code>.</h4>
+<h4 id="implements-hook-shrubhttpmiddleware">Implements hook <a href="../../../hooks#shrubhttpmiddleware"><code>shrubHttpMiddleware</code></a></h4>
 <p>Serve static files.</p>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubHttpMiddleware', (http) -&gt;
 
@@ -1668,7 +1661,7 @@
 
     label: 'Serve static files'
     middleware: [
-      express.static config.get 'packageSettings:shrub-http:path'
+      express.static config.get 'packageConfig:shrub-http:path'
     ]
 </code></pre>
               

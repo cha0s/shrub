@@ -1,4 +1,5 @@
 # Strapped - client
+
 ```coffeescript
 exports.pkgmanRegister = (registrar) ->
 

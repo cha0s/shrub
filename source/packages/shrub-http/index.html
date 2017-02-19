@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -808,11 +801,11 @@
             
                 <li class="toctree-l3"><a href="#http">HTTP</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubcorebootstrapmiddleware">Implements hook shrubCoreBootstrapMiddleware.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubcorebootstrapmiddleware">Implements hook shrubCoreBootstrapMiddleware</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubhttpmiddleware">Implements hook shrubHttpMiddleware.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubhttpmiddleware">Implements hook shrubHttpMiddleware</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer</a></li>
                 
             
             </ul>
@@ -1670,7 +1663,7 @@ httpManager = null
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <code>shrubCoreBootstrapMiddleware</code>.</h4>
+<h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <a href="../../../hooks#shrubcorebootstrapmiddleware"><code>shrubCoreBootstrapMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubCoreBootstrapMiddleware', -&gt;
 
     label: 'Bootstrap HTTP server'
@@ -1678,7 +1671,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 
       (next) -&gt;
 
-        {manager, port} = config.get 'packageSettings:shrub-http'
+        {manager, port} = config.get 'packageConfig:shrub-http'
 
         {Manager} = require manager.module
 </code></pre>
@@ -1700,7 +1693,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     ]
 </code></pre>
 
-<h4 id="implements-hook-shrubhttpmiddleware">Implements hook <code>shrubHttpMiddleware</code>.</h4>
+<h4 id="implements-hook-shrubhttpmiddleware">Implements hook <a href="../../../hooks#shrubhttpmiddleware"><code>shrubHttpMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubHttpMiddleware', (http) -&gt;
 
     label: 'Finalize HTTP request'
@@ -1720,7 +1713,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     ]
 </code></pre>
 
-<h4 id="implements-hook-shrubconfigserver">Implements hook <code>shrubConfigServer</code>.</h4>
+<h4 id="implements-hook-shrubconfigserver">Implements hook <a href="../../../hooks#shrubconfigserver"><code>shrubConfigServer</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubConfigServer', -&gt;
 
     manager:

@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -1682,7 +1675,7 @@ password.</em></p>
 
     cipher = crypto.createCipher(
       'aes256'
-      password ? config.get 'packageSettings:shrub-core:cryptoKey'
+      password ? config.get 'packageConfig:shrub-core:cryptoKey'
     )
 
     cipherText = []
@@ -1708,7 +1701,7 @@ password.</em></p>
 
     decipher = crypto.createDecipher(
       'aes256'
-      password ? config.get 'packageSettings:shrub-core:cryptoKey'
+      password ? config.get 'packageConfig:shrub-core:cryptoKey'
     )
     decipher.setAutoPadding false
 

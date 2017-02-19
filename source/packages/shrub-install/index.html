@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -830,9 +823,9 @@
             
                 <li class="toctree-l3"><a href="#installation">Installation</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubcorebootstrapmiddleware">Implements hook shrubCoreBootstrapMiddleware.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubcorebootstrapmiddleware">Implements hook shrubCoreBootstrapMiddleware</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubreplcontext">Implements hook shrubReplContext.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubreplcontext">Implements hook shrubReplContext</a></li>
                 
             
             </ul>
@@ -1662,7 +1655,7 @@ now, but will be fleshed out as we go.</em></p>
 <pre><code class="coffeescript">exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <code>shrubCoreBootstrapMiddleware</code>.</h4>
+<h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <a href="../../../hooks#shrubcorebootstrapmiddleware"><code>shrubCoreBootstrapMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubCoreBootstrapMiddleware', (context) -&gt;
 
     orm = require 'shrub-orm'
@@ -1686,7 +1679,7 @@ now, but will be fleshed out as we go.</em></p>
     ]
 </code></pre>
 
-<h4 id="implements-hook-shrubreplcontext">Implements hook <code>shrubReplContext</code>.</h4>
+<h4 id="implements-hook-shrubreplcontext">Implements hook <a href="../../../hooks#shrubreplcontext"><code>shrubReplContext</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubReplContext', (context) -&gt;
 
     context.install = reinstall

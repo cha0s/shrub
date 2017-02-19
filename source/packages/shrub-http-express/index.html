@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -765,9 +758,9 @@
             
                 <li class="toctree-l3"><a href="#express">Express</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubcoreprebootstrap">Implements hook shrubCorePreBootstrap.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubcoreprebootstrap">Implements hook shrubCorePreBootstrap</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubrpcroutesalter">Implements hook shrubRpcRoutesAlter.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubrpcroutesalter">Implements hook shrubRpcRoutesAlter</a></li>
                 
                     <li><a class="toctree-l4" href="#constructor">constructor</a></li>
                 
@@ -1683,7 +1676,7 @@ Promise = null
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <code>shrubCorePreBootstrap</code>.</h4>
+<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <a href="../../../hooks#shrubcoreprebootstrap"><code>shrubCorePreBootstrap</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubCorePreBootstrap', -&gt;
 
     http = require 'http'
@@ -1694,7 +1687,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     Promise = require 'bluebird'
 </code></pre>
 
-<h4 id="implements-hook-shrubrpcroutesalter">Implements hook <code>shrubRpcRoutesAlter</code>.</h4>
+<h4 id="implements-hook-shrubrpcroutesalter">Implements hook <a href="../../../hooks#shrubrpcroutesalter"><code>shrubRpcRoutesAlter</code></a></h4>
 <p>Patch in express-specific variables that will be required by middleware.</p>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubRpcRoutesAlter', (routes) -&gt;
 
@@ -1753,7 +1746,7 @@ exports.Manager = class Express extends HttpManager
 <p><em>Spawn workers and tie them together into a cluster.</em></p>
 <pre><code class="coffeescript">  cluster: -&gt;
 
-    coreConfig = config.get 'packageSettings:shrub-core'
+    coreConfig = config.get 'packageConfig:shrub-core'
     @_server = sticky(
       num: coreConfig.workers
       trustedAddresses: coreConfig.trustedProxies

@@ -1,6 +1,7 @@
 # Skin
 
 *Allows the visual aspects of the site to be controlled by skin packages.*
+
 ```coffeescript
 fs = require 'fs'
 path = require 'path'
@@ -10,7 +11,9 @@ pkgman = require 'pkgman'
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubConfigClient`.
+
+#### Implements hook [`shrubConfigClient`](../../hooks#shrubconfigclient)
+
 ```coffeescript
   registrar.registerHook 'shrubConfigClient', ->
 
@@ -18,10 +21,12 @@ exports.pkgmanRegister = (registrar) ->
     for packagePath in pkgman.packagesImplementing 'shrubSkinAssets'
       skinAssets[packagePath] = exports.assets packagePath
 
-    default: config.get 'packageSettings:shrub-skin:default'
+    default: config.get 'packageConfig:shrub-skin:default'
     assets: skinAssets
 ```
-#### Implements hook `shrubHttpMiddleware`.
+
+#### Implements hook [`shrubHttpMiddleware`](../../hooks#shrubhttpmiddleware)
+
 ```coffeescript
   registrar.registerHook 'path', 'shrubHttpMiddleware', (http) ->
 
@@ -30,15 +35,19 @@ exports.pkgmanRegister = (registrar) ->
 
       (req, res, next) ->
 ```
+
 If we get here and it's a skin URL, it must be a 404 otherwise,
 express/static would have picked it up already.
+
 ```coffeescript
         return res.sendStatus 404 if req.path.match /^\/skin\//
 
         next()
     ]
 ```
-#### Implements hook `shrubHttpMiddleware`.
+
+#### Implements hook [`shrubHttpMiddleware`](../../hooks#shrubhttpmiddleware)
+
 ```coffeescript
   registrar.registerHook 'render', 'shrubHttpMiddleware', (http) ->
 
@@ -54,20 +63,27 @@ express/static would have picked it up already.
 
   ]
 ```
-#### Implements hook `shrubConfigServer`.
+
+#### Implements hook [`shrubConfigServer`](../../hooks#shrubconfigserver)
+
 ```coffeescript
   registrar.registerHook 'shrubConfigServer', ->
 ```
+
 Default skin.
+
 ```coffeescript
     default: 'shrub-skin-strapped'
 ```
+
 ## activeKey
 
 *Get the active skin's key*
+
 ```coffeescript
-exports.activeKey = -> config.get 'packageSettings:shrub-skin:default'
+exports.activeKey = -> config.get 'packageConfig:shrub-skin:default'
 ```
+
 ## gruntSkin
 
 *Helper function to copy skin assets. Configures a grunt task, e.g. if your
@@ -75,6 +91,7 @@ skin is named `my-special-skin`, the configured task is named
 `my-special-skinCopy`. This is not automatically added to the build
 dependencies, you do it manually so you can control exactly when it
 happens.*
+
 ```coffeescript
 exports.gruntSkin = (gruntConfig, key) ->
 
@@ -113,9 +130,11 @@ exports.gruntSkin = (gruntConfig, key) ->
     options: livereload: true
   )
 ```
+
 ## renderAppHtml
 
 *Render the application HTML.*
+
 ```coffeescript
 exports.renderAppHtml = ->
 
@@ -133,7 +152,9 @@ exports.renderAppHtml = ->
   else
     'default'
 ```
+
 Read the app HTML.
+
 ```coffeescript
   readFile = Promise.promisify fs.readFile, fs
   readFile(
@@ -147,7 +168,9 @@ Read the app HTML.
     $head = $('head')
     $body = $('body')
 ```
+
 Inject the application-level assets first.
+
 ```coffeescript
     appAssets = assets.assets()
 
@@ -161,7 +184,9 @@ Inject the application-level assets first.
       src: script
     ) for script in appAssets.scripts
 ```
+
 Inject the skin-level assets.
+
 ```coffeescript
     skinAssets = exports.assets skinKey
 
@@ -177,18 +202,23 @@ Inject the skin-level assets.
       src: "/skin/#{skinKey}/#{script}"
     ) for script in skinAssets.scripts[environmentKey] ? []
 ```
+
 Return the full HTML.
+
 ```coffeescript
     return $.html()
 ```
+
 ## skinDirectory
 
 * (String) `key` - The skin key.
 
 *Get the directory a skin lives within.*
+
 ```coffeescript
 exports.skinDirectory = (key) -> path.dirname require.resolve key
 ```
+
 ## assets
 
 * (String) `key` - The skin key.
@@ -196,6 +226,7 @@ exports.skinDirectory = (key) -> path.dirname require.resolve key
 *Get the assets for a skin.*
 
 ###### TODO: This needs caching.
+
 ```coffeescript
 exports.assets = (skinKey) ->
 
@@ -205,21 +236,27 @@ exports.assets = (skinKey) ->
   skinPath = path.dirname require.resolve skinKey
   skinModule = require skinKey
 ```
+
 Read in all the templates.
+
 ```coffeescript
   templates = {}
   for templatePath in glob cwd: "#{skinPath}/app/template", [
     '**/*.html', '!app.html'
   ]
 ```
+
 Strip out most of the unnecessary whitespace.
+
 ```coffeescript
     templates[templatePath] = fs.readFileSync(
       "#{skinPath}/app/template/#{templatePath}"
     ).toString('utf8').replace /\s+/g, ' '
 ```
+
 Assets currently default to .js/.css for default and .min.js and .min.css
 for production.
+
 ```coffeescript
   skinAssets =
 
@@ -245,14 +282,18 @@ for production.
         'css/**/*.min.css'
       ]
 ```
+
 Make script and stylesheet paths absolute.
+
 ```coffeescript
   for type in ['scripts', 'styleSheets']
     for env in ['default', 'production']
       for asset, i in skinAssets[type][env]
         skinAssets[type][env][i] = "/#{asset}"
 ```
-#### Invoke hook `shrubSkinAssets`.
+
+#### Invoke hook [`shrubSkinAssets`](../../hooks#shrubskinassets)
+
 ```coffeescript
   pkgman.invokePackage skinKey, 'shrubSkinAssets', skinAssets
 

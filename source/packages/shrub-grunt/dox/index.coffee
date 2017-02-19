@@ -1,12 +1,15 @@
 # Grunt build process - Documentation
 
 *Build the documentation in `gh-pages`.*
+
 ```coffeescript
 {fork, spawn} = require 'child_process'
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubGruntConfig`.
+
+#### Implements hook [`shrubGruntConfig`](../../../hooks#shrubgruntconfig)
+
 ```coffeescript
   registrar.registerHook 'shrubGruntConfig', (gruntConfig, grunt) ->
 

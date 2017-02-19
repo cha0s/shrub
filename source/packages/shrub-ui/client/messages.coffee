@@ -2,14 +2,15 @@
 
 *Manage transient UI messages.*
 
-###### TODO: I don't really like this. Think about it some more.
 ```coffeescript
 config = require 'config'
 errors = require 'errors'
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubAngularDirective`.
+
+#### Implements hook [`shrubAngularDirective`](../../../hooks#shrubangulardirective)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularDirective', -> [
     '$timeout', 'shrub-ui/messages'
@@ -21,7 +22,9 @@ exports.pkgmanRegister = (registrar) ->
 
         $notificationWrapper = elm.find '.notification-wrapper'
 ```
+
 User closed the notification.
+
 ```coffeescript
         scope.close = ->
           $timeout.cancel activeNotification
@@ -34,12 +37,16 @@ User closed the notification.
           -> top()
           ->
 ```
+
 When we get a new notification, make it our active notification.
+
 ```coffeescript
             scope.notification = top()
             return if count() is 0
 ```
+
 Fade it in and keep it on the screen for 15 seconds.
+
 ```coffeescript
             $notificationWrapper.fadeIn '2000'
 
@@ -73,13 +80,17 @@ Fade it in and keep it on the screen for 15 seconds.
 
   ]
 ```
-#### Implements hook `shrubRpcCall`.
+
+#### Implements hook [`shrubRpcCall`](../../../hooks#shrubrpccall)
+
 ```coffeescript
   registrar.registerHook 'shrubRpcCall', -> [
     'shrub-ui/messages', 'result'
     (messages, result) ->
 ```
+
 Add a message with the error text, if any.
+
 ```coffeescript
       result.catch (error) -> messages.add(
         class: 'alert-danger', text: errors.message error
@@ -87,7 +98,9 @@ Add a message with the error text, if any.
 
   ]
 ```
-#### Implements hook `shrubAngularService`.
+
+#### Implements hook [`shrubAngularService`](../../../hooks#shrubangularservice)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularService', -> [
     'shrub-socket'
@@ -97,9 +110,11 @@ Add a message with the error text, if any.
 
       _messages = []
 ```
+
 ## messages.add
 
 *Add a notification to be displayed.*
+
 ```coffeescript
       service.add = (notification) ->
 
@@ -107,33 +122,43 @@ Add a message with the error text, if any.
 
         _messages.push notification
 ```
+
 ## messages.addError
 
 *Add an error notification to be displayed.*
+
 ```coffeescript
       service.addError = (error) -> @add(
         class: 'alert-danger', text: errors.message error
       )
 ```
+
 ## messages.top
 
 *Get the top notification.*
+
 ```coffeescript
       service.top = -> _messages[0]
 ```
+
 ## messages.removeTop
 
 *Remove the top notification.*
+
 ```coffeescript
       service.removeTop = -> _messages.shift()
 ```
+
 ## messages.count
 
 *The number of messages to show.*
+
 ```coffeescript
       service.count = -> _messages.length
 ```
+
 Accept messages from the server.
+
 ```coffeescript
       socket.on 'shrub-ui/messages', (data) ->
         service.add message for message in data.messages
@@ -142,7 +167,9 @@ Accept messages from the server.
 
   ]
 ```
-#### Implements hook `shrubAngularAppRun`.
+
+#### Implements hook [`shrubAngularAppRun`](../../../hooks#shrubangularapprun)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularAppRun', -> [
     'shrub-ui/messages'

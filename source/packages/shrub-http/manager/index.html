@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -814,8 +807,6 @@
             <ul>
             
                 <li class="toctree-l3"><a href="#http-manager">HTTP Manager</a></li>
-                
-                    <li><a class="toctree-l4" href="#todo-rename-to-abstracthttp">TODO: Rename to AbstractHttp</a></li>
                 
                     <li><a class="toctree-l4" href="#httpmanager">HttpManager</a></li>
                 
@@ -1670,7 +1661,6 @@
               
                 <h1 id="http-manager">HTTP Manager</h1>
 <p><em>Manage an HTTP server instance.</em></p>
-<h6 id="todo-rename-to-abstracthttp">TODO: Rename to AbstractHttp</h6>
 <pre><code class="coffeescript">Promise = require 'bluebird'
 
 config = require 'config'
@@ -1696,7 +1686,7 @@ httpMiddlewareDebug = require('debug') 'shrub-silly:http:middleware'
 </code></pre>
 
 <h6 id="todo-keeping-a-reference-here-means-http-stuff-cant-be-updated-at-run-time">TODO: Keeping a reference here means HTTP stuff can't be updated at run-time.</h6>
-<pre><code class="coffeescript">    @_config = config.get 'packageSettings:shrub-http'
+<pre><code class="coffeescript">    @_config = config.get 'packageConfig:shrub-http'
 
     @_middleware = null
 </code></pre>
@@ -1706,7 +1696,7 @@ httpMiddlewareDebug = require('debug') 'shrub-silly:http:middleware'
 <pre><code class="coffeescript">  initialize: -&gt;
 </code></pre>
 
-<h4 id="invoke-hook-shrubhttproutes">Invoke hook <code>shrubHttpRoutes</code>.</h4>
+<h4 id="invoke-hook-shrubhttproutes">Invoke hook <a href="../../../hooks#shrubhttproutes"><code>shrubHttpRoutes</code></a></h4>
 <pre><code class="coffeescript">    httpDebugSilly '- Registering routes...'
     for routeList in pkgman.invokeFlat 'shrubHttpRoutes', this
 
@@ -1767,7 +1757,7 @@ httpMiddlewareDebug = require('debug') 'shrub-silly:http:middleware'
 <pre><code class="coffeescript">    httpMiddleware.push 'shrub-http'
 </code></pre>
 
-<h4 id="invoke-hook-shrubhttpmiddleware">Invoke hook <code>shrubHttpMiddleware</code>.</h4>
+<h4 id="invoke-hook-shrubhttpmiddleware">Invoke hook <a href="../../../hooks#shrubhttpmiddleware"><code>shrubHttpMiddleware</code></a></h4>
 <p>Invoked every time an HTTP connection is established.</p>
 <pre><code class="coffeescript">    @_middleware = middleware.fromHook(
       'shrubHttpMiddleware', httpMiddleware, this

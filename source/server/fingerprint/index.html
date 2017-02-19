@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -1770,7 +1763,7 @@
     _excluded[key] = true for key in excluded
 </code></pre>
 
-<h4 id="invoke-hook-shrubauditfingerprint">Invoke hook <code>shrubAuditFingerprint</code>.</h4>
+<h4 id="invoke-hook-shrubauditfingerprint">Invoke hook <a href="../../hooks#shrubauditfingerprint"><code>shrubAuditFingerprint</code></a></h4>
 <pre><code class="coffeescript">    for keys in pkgman.invokeFlat 'shrubAuditFingerprint', req
       for key, value of keys ? {}
         continue if _excluded[key]

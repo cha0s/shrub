@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -882,13 +875,13 @@
             
                 <li class="toctree-l3"><a href="#nodemailer">nodemailer</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubcoreprebootstrap">Implements hook shrubCorePreBootstrap.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubcoreprebootstrap">Implements hook shrubCorePreBootstrap</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubcorebootstrapmiddleware">Implements hook shrubCoreBootstrapMiddleware.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubcorebootstrapmiddleware">Implements hook shrubCoreBootstrapMiddleware</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubreplcontext">Implements hook shrubReplContext.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubreplcontext">Implements hook shrubReplContext</a></li>
                 
                     <li><a class="toctree-l4" href="#sendmail">sendMail</a></li>
                 
@@ -1689,7 +1682,7 @@ skin = null
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <code>shrubCorePreBootstrap</code>.</h4>
+<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <a href="../../../hooks#shrubcoreprebootstrap"><code>shrubCorePreBootstrap</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubCorePreBootstrap', -&gt;
 
     Promise = require 'bluebird'
@@ -1699,7 +1692,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     skin = require 'shrub-skin'
 </code></pre>
 
-<h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <code>shrubCoreBootstrapMiddleware</code>.</h4>
+<h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <a href="../../../hooks#shrubcorebootstrapmiddleware"><code>shrubCoreBootstrapMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubCoreBootstrapMiddleware', -&gt;
 
     nodemailer = require 'nodemailer'
@@ -1711,7 +1704,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 
       (next) -&gt;
 
-        settings = config.get 'packageSettings:shrub-nodemailer'
+        settings = config.get 'packageConfig:shrub-nodemailer'
 </code></pre>
 
 <p>Instantiate the email transport.</p>
@@ -1728,7 +1721,7 @@ exports.pkgmanRegister = (registrar) -&gt;
           sandbox = new Sandbox()
 
           sandbox.createDocument html, url: &quot;http://localhost:#{
-            config.get 'packageSettings:shrub-http:port'
+            config.get 'packageConfig:shrub-http:port'
           }/home&quot;
 
         ).then(-&gt;
@@ -1742,7 +1735,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     ]
 </code></pre>
 
-<h4 id="implements-hook-shrubconfigserver">Implements hook <code>shrubConfigServer</code>.</h4>
+<h4 id="implements-hook-shrubconfigserver">Implements hook <a href="../../../hooks#shrubconfigserver"><code>shrubConfigServer</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubConfigServer', -&gt;
 </code></pre>
 
@@ -1758,7 +1751,7 @@ exports.pkgmanRegister = (registrar) -&gt;
       options: {}
 </code></pre>
 
-<h4 id="implements-hook-shrubreplcontext">Implements hook <code>shrubReplContext</code>.</h4>
+<h4 id="implements-hook-shrubreplcontext">Implements hook <a href="../../../hooks#shrubreplcontext"><code>shrubReplContext</code></a></h4>
 <p>Provide mail sending to the REPL context.</p>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubReplContext', (context) -&gt;
     context.sendMail = exports.sendMail
@@ -1782,7 +1775,7 @@ example</a></p>
 <pre><code class="coffeescript">exports.sendMail = (directive, mail, scope) -&gt;
 
   path = config.get 'path'
-  siteEmail = config.get 'packageSettings:shrub-nodemailer:siteEmail'
+  siteEmail = config.get 'packageConfig:shrub-nodemailer:siteEmail'
 
   Promise.resolve().then(-&gt;
 
@@ -1948,7 +1941,7 @@ modify the output.</em></p>
 <pre><code class="coffeescript">    $body = $('body').clone()
 </code></pre>
 
-<h4 id="invoke-hook-shrubnodemailerhtml">Invoke hook <code>shrubNodemailerHtml</code>.</h4>
+<h4 id="invoke-hook-shrubnodemailerhtml">Invoke hook <a href="../../../hooks#shrubnodemailerhtml"><code>shrubNodemailerHtml</code></a></h4>
 <p>Let the skin manage the mail HTML.</p>
 <pre><code class="coffeescript">    pkgman = require 'pkgman'
     pkgman.invokePackage skin.activeKey(), 'shrubNodemailerHtml', $body, html, $

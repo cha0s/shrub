@@ -1,10 +1,13 @@
 # HTML5 local storage
 
 *Build and serve the HTML5 localStorage support.*
+
 ```coffeescript
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubGruntConfig`.
+
+#### Implements hook [`shrubGruntConfig`](../../hooks#shrubgruntconfig)
+
 ```coffeescript
   registrar.registerHook 'shrubGruntConfig', (gruntConfig) ->
 
@@ -16,7 +19,9 @@ exports.pkgmanRegister = (registrar) ->
 
     gruntConfig.registerTask 'build', ['build:shrub-html5-local-storage']
 ```
-#### Implements hook `shrubAssetsMiddleware`.
+
+#### Implements hook [`shrubAssetsMiddleware`](../../hooks#shrubassetsmiddleware)
+
 ```coffeescript
   registrar.registerHook 'shrubAssetsMiddleware', ->
 
@@ -36,7 +41,9 @@ exports.pkgmanRegister = (registrar) ->
 
     ]
 ```
-#### Implements hook `shrubAngularPackageDependencies`.
+
+#### Implements hook [`shrubAngularPackageDependencies`](../../hooks#shrubangularpackagedependencies)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularPackageDependencies', -> [
     'LocalStorageModule'

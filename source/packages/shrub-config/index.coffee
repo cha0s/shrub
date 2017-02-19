@@ -1,6 +1,7 @@
 # Configuration
 
 *Gathers configuration and serves it as an Angular module for clients.*
+
 ```coffeescript
 _ = require 'lodash'
 Promise = require 'bluebird'
@@ -13,7 +14,9 @@ pkgman = require 'pkgman'
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubAssetsMiddleware`.
+
+#### Implements hook [`shrubAssetsMiddleware`](../../hooks#shrubassetsmiddleware)
+
 ```coffeescript
   registrar.registerHook 'shrubAssetsMiddleware', ->
 
@@ -28,24 +31,32 @@ exports.pkgmanRegister = (registrar) ->
 
     ]
 ```
-#### Implements hook `shrubHttpMiddleware`.
+
+#### Implements hook [`shrubHttpMiddleware`](../../hooks#shrubhttpmiddleware)
+
 ```coffeescript
   registrar.registerHook 'shrubHttpMiddleware', (http) ->
 
     label: 'Serve package configuration'
     middleware: [
 ```
+
 Serve the configuration module.
+
 ```coffeescript
       (req, res, next) ->
 ```
+
 Only if the path matches.
+
 ```coffeescript
         return next() unless req.url is '/js/config.js'
 
         exports.renderPackageConfig(req).then((code) ->
 ```
+
 Emit the configuration module.
+
 ```coffeescript
           res.setHeader 'Content-Type', 'text/javascript'
           res.send code
@@ -54,19 +65,23 @@ Emit the configuration module.
 
     ]
 ```
+
 ## shrub-config.renderPackageConfig
 
 * (http.IncomingRequest) `req` - The request object.
 
 Use a client's request object to render configuration.
+
 ```coffeescript
 exports.renderPackageConfig = (req) ->
 ```
-#### Invoke hook `shrubConfigClient`.
+
+#### Invoke hook [`shrubConfigClient`](../../hooks#shrubconfigclient)
 
 Allows packages to specify configuration that will be sent to the client.
 Implementations may return an object, or a promise that resolves to an
 object.
+
 ```coffeescript
   subconfigs = pkgman.invoke 'shrubConfigClient', req
 
@@ -78,11 +93,15 @@ object.
 
     config_ = new Config()
 ```
+
 Package-independent...
+
 ```coffeescript
     config_.set 'packageList', config.get 'packageList'
 ```
+
 Merge in the subconfigs.
+
 ```coffeescript
     index = 0
     for path of subconfigs
@@ -97,11 +116,15 @@ Merge in the subconfigs.
           key.replace /\//g, ':'
         }", value
 ```
-#### Invoke hook `shrubConfigClientAlter`.
+
+#### Invoke hook [`shrubConfigClientAlter`](../../hooks#shrubconfigclientalter)
+
 ```coffeescript
     pkgman.invoke 'shrubConfigClientAlter', req, config_
 ```
+
 Format the configuration to look nice.
+
 ```coffeescript
     prettyPrintConfig = ->
 

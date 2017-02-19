@@ -1,23 +1,30 @@
 # HTML5 local storage
 
 *Provide an Angular service to consume the HTML5 localStorage API.*
+
 ```coffeescript
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubAngularAppConfig`.
+
+#### Implements hook [`shrubAngularAppConfig`](../../../hooks#shrubangularappconfig)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularAppConfig', -> [
     'shrub-html5-local-storageProvider'
     (localStorageProvider) ->
 ```
+
 Set a default prefix and turn off all notification.
+
 ```coffeescript
       localStorageProvider.setPrefix 'shrub'
       localStorageProvider.setNotify false, false
 
   ]
 ```
-#### Implements hook `shrubAngularProvider`.
+
+#### Implements hook [`shrubAngularProvider`](../../../hooks#shrubangularprovider)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularProvider', -> [
     'localStorageServiceProvider'
@@ -25,7 +32,9 @@ Set a default prefix and turn off all notification.
 
       provider = {}
 ```
+
 Forward all methods.
+
 ```coffeescript
       for staticMethod in [
         'setPrefix', 'setStorageType', 'setStorageCookie'

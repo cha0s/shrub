@@ -1,8 +1,11 @@
 # Example - About page
+
 ```coffeescript
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubAngularRoutes`.
+
+#### Implements hook [`shrubAngularRoutes`](../../../hooks#shrubangularroutes)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularRoutes', ->
 
@@ -19,7 +22,9 @@ exports.pkgmanRegister = (registrar) ->
 
           $scope.about = ''
 ```
+
 Hit the route we created in the server-side of this package.
+
 ```coffeescript
           $http.get('/shrub-example/about/README.md').success((data) ->
             $scope.about = data

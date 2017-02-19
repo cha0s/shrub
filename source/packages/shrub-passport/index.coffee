@@ -1,7 +1,10 @@
 # Passport integration
+
 ```coffeescript
 ```
+
 *Authentication system, leaning on [passport](http://passportjs.org).*
+
 ```coffeescript
 middleware = require 'middleware'
 pkgman = require 'pkgman'
@@ -17,7 +20,9 @@ afterLogoutMiddleware = null
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubCorePreBootstrap`.
+
+#### Implements hook [`shrubCorePreBootstrap`](../../hooks#shrubcoreprebootstrap)
+
 ```coffeescript
   registrar.registerHook 'shrubCorePreBootstrap', ->
 
@@ -25,7 +30,9 @@ exports.pkgmanRegister = (registrar) ->
     passport = require 'passport'
     Promise = require 'bluebird'
 ```
-#### Implements hook `shrubCoreBootstrapMiddleware`.
+
+#### Implements hook [`shrubCoreBootstrapMiddleware`](../../hooks#shrubcorebootstrapmiddleware)
+
 ```coffeescript
   registrar.registerHook 'shrubCoreBootstrapMiddleware', ->
 
@@ -36,52 +43,70 @@ exports.pkgmanRegister = (registrar) ->
 
       (next) ->
 ```
-#### Invoke hook `shrubUserBeforeLoginMiddleware`.
+
+#### Invoke hook [`shrubUserBeforeLoginMiddleware`](../../hooks#shrubuserbeforeloginmiddleware)
+
 ```coffeescript
         beforeLoginMiddleware = middleware.fromConfig(
           'shrub-user:beforeLoginMiddleware'
         )
 ```
-#### Invoke hook `shrubUserAfterLoginMiddleware`.
+
+#### Invoke hook [`shrubUserAfterLoginMiddleware`](../../hooks#shrubuserafterloginmiddleware)
+
 ```coffeescript
         afterLoginMiddleware = middleware.fromConfig(
           'shrub-user:afterLoginMiddleware'
         )
 ```
-#### Invoke hook `shrubUserBeforeLogoutMiddleware`.
+
+#### Invoke hook [`shrubUserBeforeLogoutMiddleware`](../../hooks#shrubuserbeforelogoutmiddleware)
+
 ```coffeescript
         beforeLogoutMiddleware = middleware.fromConfig(
           'shrub-user:beforeLogoutMiddleware'
         )
 ```
-#### Invoke hook `shrubUserAfterLogoutMiddleware`.
+
+#### Invoke hook [`shrubUserAfterLogoutMiddleware`](../../hooks#shrubuserafterlogoutmiddleware)
+
 ```coffeescript
         afterLogoutMiddleware = middleware.fromConfig(
           'shrub-user:afterLogoutMiddleware'
         )
 ```
-#### Invoke hook `shrubUserLoginStrategies`.
+
+#### Invoke hook [`shrubUserLoginStrategies`](../../hooks#shrubuserloginstrategies)
 
 Use passport authorization strategies.
+
 ```coffeescript
         strategies = pkgman.invoke 'shrubUserLoginStrategies'
 ```
-#### Invoke hook `shrubUserLoginStrategiesAlter`.
+
+#### Invoke hook [`shrubUserLoginStrategiesAlter`](../../hooks#shrubuserloginstrategiesalter)
+
 ```coffeescript
         pkgman.invoke 'shrubUserLoginStrategiesAlter', strategies
 
         for packageName, strategy of strategies
           passport.use strategy.passportStrategy
 ```
+
 Passport serialization callback. Store the user ID.
+
 ```coffeescript
         passport.serializeUser (user, done) -> done null, user.id
 ```
+
 Passport deserialization callback.
+
 ```coffeescript
         passport.deserializeUser (req, id, done) ->
 ```
+
 Load user based on ID
+
 ```coffeescript
           promise = orm.collection(
             'shrub-user'
@@ -89,11 +114,15 @@ Load user based on ID
             id: id
           ).then((user) ->
 ```
+
 Pass in the user to be logged in through the request.
+
 ```coffeescript
             req.loggingInUser = user
 ```
+
 Invoke the `beforeLogin` middleware.
+
 ```coffeescript
             new Promise (resolve, reject) ->
               beforeLoginMiddleware.dispatch req, (error) ->
@@ -106,24 +135,32 @@ Invoke the `beforeLogin` middleware.
 
     ]
 ```
-#### Implements hook `shrubHttpMiddleware`.
+
+#### Implements hook [`shrubHttpMiddleware`](../../hooks#shrubhttpmiddleware)
+
 ```coffeescript
   registrar.registerHook 'shrubHttpMiddleware', ->
 
     label: 'Load user using passport'
     middleware: passportMiddleware()
 ```
-#### Implements hook `shrubRpcRoutesAlter`.
+
+#### Implements hook [`shrubRpcRoutesAlter`](../../hooks#shrubrpcroutesalter)
+
 ```coffeescript
   registrar.registerHook 'shrubRpcRoutesAlter', (routes) ->
 
     {spliceRouteMiddleware} = require 'shrub-rpc'
 ```
+
 Implement `req.loadUser`.
+
 ```coffeescript
     loadUserMiddleware = (req, res, next) ->
 ```
+
 Bootstrap Passport into a request.
+
 ```coffeescript
       req.loadUser = (done) -> req.loadSession ->
 
@@ -135,29 +172,39 @@ Bootstrap Passport into a request.
 
       next()
 ```
+
 Make sure loadUser is available early.
+
 ```coffeescript
     loadUserMiddleware.weight = -4999
 
     for path, route of routes
 ```
+
 Prepend the loadUser bootstrapping.
+
 ```coffeescript
       route.middleware.unshift loadUserMiddleware
 ```
+
 Splice in Passport middleware.
+
 ```coffeescript
       spliceRouteMiddleware route, 'shrub-passport', passportMiddleware()
 
     return
 ```
-#### Implements hook `shrubSocketConnectionMiddleware`.
+
+#### Implements hook [`shrubSocketConnectionMiddleware`](../../hooks#shrubsocketconnectionmiddleware)
+
 ```coffeescript
   registrar.registerHook 'shrubSocketConnectionMiddleware', ->
 
     label: 'Load user using passport'
 ```
+
 Join a channel for the username.
+
 ```coffeescript
     middleware: passportMiddleware()
 
@@ -167,13 +214,16 @@ Join a channel for the username.
 
 passportMiddleware = -> [
 ```
+
 Passport middleware.
+
 ```coffeescript
   passport.initialize()
   passport.session()
 
   (req, res, next) ->
 ```
+
 ## req.authorize
 
 * (string) `method` - The authorization method.
@@ -181,6 +231,7 @@ Passport middleware.
 * (response) `res` - The HTTP/socket response object.
 
 *Authorize a user instance.*
+
 ```coffeescript
     req.authorize = (method, options, res) ->
       self = this
@@ -202,7 +253,9 @@ Passport middleware.
 
     next()
 ```
+
 Invoke after login middleware if a user already exists in the session.
+
 ```coffeescript
   (req, res, next) ->
     return next() unless req.user?
@@ -216,8 +269,10 @@ Invoke after login middleware if a user already exists in the session.
 
     promise.finally -> delete req.loggingInUser
 ```
+
 Proxy req.log[iI]n to run our middleware, and
 return a promise.
+
 ```coffeescript
   (req, res, next) ->
 
@@ -243,8 +298,10 @@ return a promise.
 
     next()
 ```
+
 Proxy req.log[oO]ut to run our middleware, and
 return a promise.
+
 ```coffeescript
   (req, res, next) ->
 
@@ -269,7 +326,9 @@ return a promise.
 
     next()
 ```
+
 Save the user at the end of the request.
+
 ```coffeescript
   (req, res, next) ->
 

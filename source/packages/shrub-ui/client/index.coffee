@@ -1,6 +1,7 @@
 # User Interface
 
 *User interface components.*
+
 ```coffeescript
 exports.pkgmanRegister = (registrar) ->
 

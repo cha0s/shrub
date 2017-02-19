@@ -1,6 +1,7 @@
 # Strapped
 
 *Shrub's default skin.*
+
 ```coffeescript
 path = require 'path'
 
@@ -8,7 +9,9 @@ shrubSkin = require 'shrub-skin'
 
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubNodemailerHtml`.
+
+#### Implements hook [`shrubNodemailerHtml`](../../hooks#shrubnodemailerhtml)
+
 ```coffeescript
   registrar.registerHook 'shrubNodemailerHtml', ($body, html, $) ->
 
@@ -21,16 +24,22 @@ exports.pkgmanRegister = (registrar) ->
 
     $('noscript', $body).remove()
 ```
-#### Implements hook `shrubSkinAssets`.
+
+#### Implements hook [`shrubSkinAssets`](../../hooks#shrubskinassets)
+
 ```coffeescript
   registrar.registerHook 'shrubSkinAssets', (assets) ->
 ```
+
 Add our future-compiled LESS style sheets.
+
 ```coffeescript
     assets.styleSheets.default.push '/css/style.css'
     assets.styleSheets.production.push '/css/style.css'
 ```
-#### Implements hook `shrubGruntConfig`.
+
+#### Implements hook [`shrubGruntConfig`](../../hooks#shrubgruntconfig)
+
 ```coffeescript
   registrar.registerHook 'shrubGruntConfig', (gruntConfig) ->
 

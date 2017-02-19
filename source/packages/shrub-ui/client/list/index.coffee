@@ -1,8 +1,11 @@
 # UI - List
+
 ```coffeescript
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubAngularController`.
+
+#### Implements hook [`shrubAngularController`](../../../../hooks#shrubangularcontroller)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularController', -> [
 
@@ -10,7 +13,9 @@ exports.pkgmanRegister = (registrar) ->
 
       link: (scope, element, attr) ->
 ```
+
 Maintain the full ancestor path for list and item.
+
 ```coffeescript
         scope.$watchGroup(
           [
@@ -19,7 +24,9 @@ Maintain the full ancestor path for list and item.
           ]
           ->
 ```
+
 Keep track of the full ancestor path.
+
 ```coffeescript
             parts = []
             parts.push scope.parentAncestorPath if scope.parentAncestorPath
@@ -31,7 +38,9 @@ Keep track of the full ancestor path.
 
   ]
 ```
-#### Implements hook `shrubAngularDirective`.
+
+#### Implements hook [`shrubAngularDirective`](../../../../hooks#shrubangulardirective)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularDirective', -> [
 
@@ -48,7 +57,9 @@ Keep track of the full ancestor path.
         'ancestorPath'
       ]
 ```
+
 Prevent infinite recursion when compiling nested lists.
+
 ```coffeescript
       directive.compile = (cElement) ->
 

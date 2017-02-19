@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -636,9 +629,9 @@
             
                 <li class="toctree-l3"><a href="#grunt-build-process-build-tests">Grunt build process - Build tests</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubgruntconfig">Implements hook shrubGruntConfig.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubgruntconfig">Implements hook shrubGruntConfig</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubgruntconfigalter">Implements hook shrubGruntConfigAlter.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubgruntconfigalter">Implements hook shrubGruntConfigAlter</a></li>
                 
             
             </ul>
@@ -1660,7 +1653,7 @@
 <pre><code class="coffeescript">exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubgruntconfig">Implements hook <code>shrubGruntConfig</code>.</h4>
+<h4 id="implements-hook-shrubgruntconfig">Implements hook <a href="../../../../hooks#shrubgruntconfig"><code>shrubGruntConfig</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubGruntConfig', (gruntConfig) -&gt;
 
     gruntConfig.configureTask 'coffee', 'testsE2e', files: [
@@ -1820,7 +1813,7 @@
     gruntConfig.registerTask 'build', ['build:tests']
 </code></pre>
 
-<h4 id="implements-hook-shrubgruntconfigalter">Implements hook <code>shrubGruntConfigAlter</code>.</h4>
+<h4 id="implements-hook-shrubgruntconfigalter">Implements hook <a href="../../../../hooks#shrubgruntconfigalter"><code>shrubGruntConfigAlter</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubGruntConfigAlter', (gruntConfig) -&gt;
 
     ignoreFiles = (array, directory) -&gt;

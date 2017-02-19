@@ -1,8 +1,11 @@
 # UI - Notifications item
+
 ```coffeescript
 exports.pkgmanRegister = (registrar) ->
 ```
-#### Implements hook `shrubAngularDirective`.
+
+#### Implements hook [`shrubAngularDirective`](../../../../hooks#shrubangulardirective)
+
 ```coffeescript
   registrar.registerHook 'shrubAngularDirective', -> [
     'shrub-ui/notifications', 'shrub-rpc'
@@ -18,7 +21,9 @@ exports.pkgmanRegister = (registrar) ->
 
       directive.link = (scope, element) ->
 ```
+
 Remove the notification from the queue.
+
 ```coffeescript
         scope.remove = ($event) ->
           $event.stopPropagation()
@@ -30,7 +35,9 @@ Remove the notification from the queue.
           )
           index = scope.queue.remove ids
 ```
+
 Toggle the notification's marked-as-read state.
+
 ```coffeescript
         scope.toggleMarkedAsRead = ($event) ->
           $event.stopPropagation()
@@ -39,7 +46,9 @@ Toggle the notification's marked-as-read state.
             scope.notification, not scope.notification.markedAsRead
           )
 ```
+
 Watch the marked-as-read state and make some changes.
+
 ```coffeescript
         scope.$watch 'notification.markedAsRead', (markedAsRead) ->
 

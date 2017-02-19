@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -1305,13 +1298,13 @@
             
                 <li class="toctree-l3"><a href="#ui-window-title">UI - Window title</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubangularcontroller">Implements hook shrubAngularController.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubangularcontroller">Implements hook shrubAngularController</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubangulardirective">Implements hook shrubAngularDirective.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubangulardirective">Implements hook shrubAngularDirective</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubangularapprun">Implements hook shrubAngularAppRun.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubangularapprun">Implements hook shrubAngularAppRun</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubangularservice">Implements hook shrubAngularService.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubangularservice">Implements hook shrubAngularService</a></li>
                 
                     <li><a class="toctree-l4" href="#windowtitlepage">windowTitle.page</a></li>
                 
@@ -1695,7 +1688,7 @@
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubangularcontroller">Implements hook <code>shrubAngularController</code>.</h4>
+<h4 id="implements-hook-shrubangularcontroller">Implements hook <a href="../../../../hooks#shrubangularcontroller"><code>shrubAngularController</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAngularController', -&gt; [
     'shrub-ui/window-title'
     class WindowTitleController
@@ -1713,7 +1706,7 @@ exports.pkgmanRegister = (registrar) -&gt;
   ]
 </code></pre>
 
-<h4 id="implements-hook-shrubangulardirective">Implements hook <code>shrubAngularDirective</code>.</h4>
+<h4 id="implements-hook-shrubangulardirective">Implements hook <a href="../../../../hooks#shrubangulardirective"><code>shrubAngularDirective</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAngularDirective', -&gt; [
 
     -&gt;
@@ -1729,7 +1722,7 @@ exports.pkgmanRegister = (registrar) -&gt;
   ]
 </code></pre>
 
-<h4 id="implements-hook-shrubangularapprun">Implements hook <code>shrubAngularAppRun</code>.</h4>
+<h4 id="implements-hook-shrubangularapprun">Implements hook <a href="../../../../hooks#shrubangularapprun"><code>shrubAngularAppRun</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAngularAppRun', -&gt; [
     '$rootScope', 'shrub-ui/window-title'
     ($rootScope, windowTitle) -&gt;
@@ -1745,7 +1738,7 @@ exports.pkgmanRegister = (registrar) -&gt;
   ]
 </code></pre>
 
-<h4 id="implements-hook-shrubangularservice">Implements hook <code>shrubAngularService</code>.</h4>
+<h4 id="implements-hook-shrubangularservice">Implements hook <a href="../../../../hooks#shrubangularservice"><code>shrubAngularService</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAngularService', -&gt; [
     '$interval'
     ($interval) -&gt;

@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -291,15 +284,15 @@
                 
                     <li><a class="toctree-l4" href="#todo-sandbox-pool-might-be-better-handled-by-sandboxes">TODO: Sandbox pool, might be better handled by sandboxes.</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubrpcroutes">Implements hook shrubRpcRoutes.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubrpcroutes">Implements hook shrubRpcRoutes</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubhttpmiddleware">Implements hook shrubHttpMiddleware.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubhttpmiddleware">Implements hook shrubHttpMiddleware</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubcorebootstrapmiddleware">Implements hook shrubCoreBootstrapMiddleware.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubcorebootstrapmiddleware">Implements hook shrubCoreBootstrapMiddleware</a></li>
                 
-                    <li><a class="toctree-l4" href="#invoke-hook-shrubangularsandboxnavigationmiddleware">Invoke hook shrubAngularSandboxNavigationMiddleware.</a></li>
+                    <li><a class="toctree-l4" href="#invoke-hook-shrubangularsandboxnavigationmiddleware">Invoke hook shrubAngularSandboxNavigationMiddleware</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubconfigserver">Implements hook shrubConfigServer</a></li>
                 
                     <li><a class="toctree-l4" href="#constructor">constructor</a></li>
                 
@@ -1709,7 +1702,7 @@ middleware = require 'middleware'
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubrpcroutes">Implements hook <code>shrubRpcRoutes</code>.</h4>
+<h4 id="implements-hook-shrubrpcroutes">Implements hook <a href="../../../hooks#shrubrpcroutes"><code>shrubRpcRoutes</code></a></h4>
 <p>Allow a JSful client to call us back and inform us that we don't need to
 hold their sandbox.</p>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubRpcRoutes', -&gt;
@@ -1738,7 +1731,7 @@ hold their sandbox.</p>
     return routes
 </code></pre>
 
-<h4 id="implements-hook-shrubhttpmiddleware">Implements hook <code>shrubHttpMiddleware</code>.</h4>
+<h4 id="implements-hook-shrubhttpmiddleware">Implements hook <a href="../../../hooks#shrubhttpmiddleware"><code>shrubHttpMiddleware</code></a></h4>
 <p>If configuration dictates, render the client-side Angular application in a
 sandbox.</p>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubHttpMiddleware', (http) -&gt;
@@ -1750,7 +1743,7 @@ sandbox.</p>
 </code></pre>
 
 <p>Skip render in a sandbox?</p>
-<pre><code class="coffeescript">        settings = config.get 'packageSettings:shrub-angular'
+<pre><code class="coffeescript">        settings = config.get 'packageConfig:shrub-angular'
         return next() unless settings.render
 </code></pre>
 
@@ -1768,7 +1761,7 @@ sandbox.</p>
             cookie: req.headers.cookie
 
             url: &quot;http://localhost:#{
-              config.get 'packageSettings:shrub-http:port'
+              config.get 'packageConfig:shrub-http:port'
             }/shrub-angular-entry-point&quot;
           ,
             req.session.id
@@ -1820,7 +1813,7 @@ browser and save the emission for the next request.</p>
   ]
 </code></pre>
 
-<h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <code>shrubCoreBootstrapMiddleware</code>.</h4>
+<h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <a href="../../../hooks#shrubcorebootstrapmiddleware"><code>shrubCoreBootstrapMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubCoreBootstrapMiddleware', -&gt;
 
     label: 'Bootstrap Angular'
@@ -1831,10 +1824,10 @@ browser and save the emission for the next request.</p>
 
 <p>Always disable sandbox rendering in end-to-end testing mode.</p>
 <pre><code class="coffeescript">        if config.get 'E2E'
-          config.set 'packageSettings:shrub-angular:render', false
+          config.set 'packageConfig:shrub-angular:render', false
 </code></pre>
 
-<h4 id="invoke-hook-shrubangularsandboxnavigationmiddleware">Invoke hook <code>shrubAngularSandboxNavigationMiddleware</code>.</h4>
+<h4 id="invoke-hook-shrubangularsandboxnavigationmiddleware">Invoke hook <a href="../../../hooks#shrubangularsandboxnavigationmiddleware"><code>shrubAngularSandboxNavigationMiddleware</code></a></h4>
 <p>Load the navigation middleware.</p>
 <pre><code class="coffeescript">        navigationMiddleware = middleware.fromConfig(
           'shrub-angular-sandbox:navigationMiddleware'
@@ -1845,7 +1838,7 @@ browser and save the emission for the next request.</p>
     ]
 </code></pre>
 
-<h4 id="implements-hook-shrubconfigserver">Implements hook <code>shrubConfigServer</code>.</h4>
+<h4 id="implements-hook-shrubconfigserver">Implements hook <a href="../../../hooks#shrubconfigserver"><code>shrubConfigServer</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubConfigServer', -&gt;
 </code></pre>
 
@@ -1950,7 +1943,7 @@ ID.</em></p>
 
 <h2 id="sandboxtouch">Sandbox#touch</h2>
 <p><em>Reset the time-to-live for a sandbox.</em></p>
-<pre><code class="coffeescript">  ttl = config.get 'packageSettings:shrub-angular:ttl'
+<pre><code class="coffeescript">  ttl = config.get 'packageConfig:shrub-angular:ttl'
   toucher = _.debounce (-&gt; sandbox.close()), ttl
   do sandbox.touch = -&gt;
     debug &quot;Touched sandbox ID: #{id}&quot;

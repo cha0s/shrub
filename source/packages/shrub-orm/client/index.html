@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -902,7 +895,7 @@
             
                 <li class="toctree-l3"><a href="#object-relational-mapping">Object-relational mapping</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubangularservice">Implements hook shrubAngularService.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubangularservice">Implements hook shrubAngularService</a></li>
                 
                     <li><a class="toctree-l4" href="#ormcollection">orm.collection</a></li>
                 
@@ -1670,7 +1663,7 @@ collections = {}
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubangularservice">Implements hook <code>shrubAngularService</code>.</h4>
+<h4 id="implements-hook-shrubangularservice">Implements hook <a href="../../../../hooks#shrubangularservice"><code>shrubAngularService</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAngularService', -&gt; [
     '$http'
     ($http) -&gt;
@@ -1699,7 +1692,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 exports.initialize = -&gt;
 </code></pre>
 
-<h4 id="invoke-hook-shrubormcollections">Invoke hook <code>shrubOrmCollections</code>.</h4>
+<h4 id="invoke-hook-shrubormcollections">Invoke hook <a href="../../../../hooks#shrubormcollections"><code>shrubOrmCollections</code></a></h4>
 <pre><code class="coffeescript">  collections_ = {}
   for collectionList in pkgman.invokeFlat 'shrubOrmCollections'
     for identity, collection of collectionList
@@ -1742,7 +1735,7 @@ exports.initialize = -&gt;
         model
 </code></pre>
 
-<h4 id="invoke-hook-shrubormcollectionsalter">Invoke hook <code>shrubOrmCollectionsAlter</code>.</h4>
+<h4 id="invoke-hook-shrubormcollectionsalter">Invoke hook <a href="../../../../hooks#shrubormcollectionsalter"><code>shrubOrmCollectionsAlter</code></a></h4>
 <pre><code class="coffeescript">  pkgman.invoke 'shrubOrmCollectionsAlter', collections_
 
   collections = collections_

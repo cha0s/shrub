@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../../../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -504,9 +497,9 @@
             
                 <li class="toctree-l3"><a href="#form-group">Form - Group</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubangulardirective">Implements hook shrubAngularDirective.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubangulardirective">Implements hook shrubAngularDirective</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubformwidgets">Implements hook shrubFormWidgets.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubformwidgets">Implements hook shrubFormWidgets</a></li>
                 
             
             </ul>
@@ -1660,7 +1653,7 @@
 <pre><code class="coffeescript">exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubangulardirective">Implements hook <code>shrubAngularDirective</code>.</h4>
+<h4 id="implements-hook-shrubangulardirective">Implements hook <a href="../../../../../hooks#shrubangulardirective"><code>shrubAngularDirective</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAngularDirective', -&gt; [
     '$compile', '$log', 'shrub-form'
     ($compile, $log, formService) -&gt;
@@ -1672,6 +1665,7 @@
         scope.$watch 'field', (field) -&gt;
 
           field.collapse ?= true
+          field.isVisible ?= -&gt; true
 
         scope.$watchCollection(
           -&gt; scope.field.fields
@@ -1706,8 +1700,10 @@
 
 &lt;div
   data-#{widget.directive}
+  data-ng-show=&quot;field.isVisible()&quot;
   data-field=&quot;field.fields['#{name}']&quot;
   data-form=&quot;form&quot;
+  data-shrub-ui-attributes=&quot;field.attributes&quot;
 &gt;&lt;/div&gt;&lt;span&gt; &lt;/span&gt;
 
 &quot;&quot;&quot;
@@ -1728,7 +1724,7 @@
   ]
 </code></pre>
 
-<h4 id="implements-hook-shrubformwidgets">Implements hook <code>shrubFormWidgets</code>.</h4>
+<h4 id="implements-hook-shrubformwidgets">Implements hook <a href="../../../../../hooks#shrubformwidgets"><code>shrubFormWidgets</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubFormWidgets', -&gt;
 
     widgets = []

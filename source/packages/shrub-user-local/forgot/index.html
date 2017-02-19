@@ -203,13 +203,6 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../../client/modules/logging/">logging.coffee</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
         <a class="" href="../../../client/modules/middleware/">middleware.coffee</a>
         
     </li>
@@ -1416,7 +1409,7 @@
             
                 <li class="toctree-l3"><a href="#user-forgot-password">User - Forgot password</a></li>
                 
-                    <li><a class="toctree-l4" href="#implements-hook-shrubrpcroutes">Implements hook shrubRpcRoutes.</a></li>
+                    <li><a class="toctree-l4" href="#implements-hook-shrubrpcroutes">Implements hook shrubRpcRoutes</a></li>
                 
             
             </ul>
@@ -1658,7 +1651,7 @@
 <pre><code class="coffeescript">exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubrpcroutes">Implements hook <code>shrubRpcRoutes</code>.</h4>
+<h4 id="implements-hook-shrubrpcroutes">Implements hook <a href="../../../hooks#shrubrpcroutes"><code>shrubRpcRoutes</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubRpcRoutes', -&gt;
 
     Promise = require 'bluebird'
@@ -1736,7 +1729,7 @@
 </code></pre>
 
 <p>Send an email to the user's email with a one-time login link.</p>
-<pre><code class="coffeescript">            siteHostname = config.get 'packageSettings:shrub-core:siteHostname'
+<pre><code class="coffeescript">            siteHostname = config.get 'packageConfig:shrub-core:siteHostname'
             siteUrl = &quot;http://#{siteHostname}&quot;
 
             scope =
