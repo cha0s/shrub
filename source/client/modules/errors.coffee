@@ -208,7 +208,7 @@ exports.transmittableErrors = ->
   _ = require 'lodash'
 ```
 
-#### Invoke hook [`shrubTransmittableErrors`](../../hooks#shrubtransmittableerrors)
+#### Invoke hook [`shrubTransmittableErrors`](../../../hooks#shrubtransmittableerrors)
 
 Allows packages to specify transmittable errors. Implementations should
 return a subclass of `TransmittableError`.

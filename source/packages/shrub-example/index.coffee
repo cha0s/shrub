@@ -4,7 +4,7 @@
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubRpcRoutesAlter`](../../hooks#shrubrpcroutesalter)
+#### Implements hook [`shrubRpcRoutesAlter`](../../../hooks#shrubrpcroutesalter)
 
 Our notification queue uses the session, so we'll alter those routes to
 load the session if it's for the shrubExampleGeneral queue.
@@ -22,7 +22,7 @@ load the session if it's for the shrubExampleGeneral queue.
     return
 ```
 
-#### Implements hook [`shrubUiNotificationQueues`](../../hooks#shrubuinotificationqueues)
+#### Implements hook [`shrubUiNotificationQueues`](../../../hooks#shrubuinotificationqueues)
 
 Implement the `general` queue, used to show some notifications.
 

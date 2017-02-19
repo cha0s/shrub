@@ -12,7 +12,7 @@ userPackage = require './index'
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubCorePreBootstrap`](../../hooks#shrubcoreprebootstrap)
+#### Implements hook [`shrubCorePreBootstrap`](../../../hooks#shrubcoreprebootstrap)
 
 ```coffeescript
   registrar.registerHook 'shrubCorePreBootstrap', ->
@@ -21,7 +21,7 @@ exports.pkgmanRegister = (registrar) ->
     Promise = require 'bluebird'
 ```
 
-#### Implements hook [`shrubRpcRoutes`](../../hooks#shrubrpcroutes)
+#### Implements hook [`shrubRpcRoutes`](../../../hooks#shrubrpcroutes)
 
 ```coffeescript
   registrar.registerHook 'shrubRpcRoutes', ->

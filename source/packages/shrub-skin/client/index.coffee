@@ -14,7 +14,7 @@ exports.pkgmanRegister = (registrar) ->
   defaultSkinKey = config.get 'packageConfig:shrub-skin:default'
 ```
 
-#### Implements hook [`shrubAngularDirectiveAlter`](../../../hooks#shrubangulardirectivealter)
+#### Implements hook [`shrubAngularDirectiveAlter`](../../../../hooks#shrubangulardirectivealter)
 
 ```coffeescript
   registrar.registerHook 'shrubAngularDirectiveAlter', (directive, path) -> [
@@ -162,11 +162,11 @@ specificity.
             candidateHooksInvoked[hook] = true
 ```
 
-#### Invoke hook [`shrubSkinLink`](../../../hooks#shrubskinlink)
+#### Invoke hook [`shrubSkinLink`](../../../../hooks#shrubskinlink)
 
-#### Invoke hook [`shrubSkinLink--DIRECTIVE`](../../../hooks#shrubskinlink--directive)
+#### Invoke hook [`shrubSkinLink--DIRECTIVE`](../../../../hooks#shrubskinlink--directive)
 
-#### Invoke hook [`shrubSkinLink--DIRECTIVE--ID`](../../../hooks#shrubskinlink--directive--id)
+#### Invoke hook [`shrubSkinLink--DIRECTIVE--ID`](../../../../hooks#shrubskinlink--directive--id)
 
 ```coffeescript
             for f in pkgman.invokeFlat hook
@@ -217,7 +217,7 @@ Set watches for all candidate-related values.
   ]
 ```
 
-#### Implements hook [`shrubAngularProvider`](../../../hooks#shrubangularprovider)
+#### Implements hook [`shrubAngularProvider`](../../../../hooks#shrubangularprovider)
 
 ```coffeescript
   registrar.registerHook 'shrubAngularProvider', -> [

@@ -6,7 +6,7 @@ config = require 'config'
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubAssetsMiddleware`](../../hooks#shrubassetsmiddleware)
+#### Implements hook [`shrubAssetsMiddleware`](../../../hooks#shrubassetsmiddleware)
 
 ```coffeescript
   registrar.registerHook 'shrubAssetsMiddleware', ->
@@ -33,7 +33,7 @@ exports.pkgmanRegister = (registrar) ->
     ]
 ```
 
-#### Implements hook [`shrubGruntConfig`](../../hooks#shrubgruntconfig)
+#### Implements hook [`shrubGruntConfig`](../../../hooks#shrubgruntconfig)
 
 ```coffeescript
   registrar.registerHook 'shrubGruntConfig', (gruntConfig, grunt) ->
@@ -89,7 +89,7 @@ dependencies of the Angular application.
       pkgman = require 'pkgman'
 ```
 
-#### Invoke hook [`shrubAngularPackageDependencies`](../../hooks#shrubangularpackagedependencies)
+#### Invoke hook [`shrubAngularPackageDependencies`](../../../hooks#shrubangularpackagedependencies)
 
 ```coffeescript
       dependencies = []

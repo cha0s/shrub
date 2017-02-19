@@ -22,7 +22,7 @@ server = null
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubConfigServer`](../../hooks#shrubconfigserver)
+#### Implements hook [`shrubConfigServer`](../../../hooks#shrubconfigserver)
 
 ```coffeescript
   registrar.registerHook 'shrubConfigServer', ->
@@ -46,13 +46,13 @@ Use a CoffeeScript REPL?
     useCoffee: true
 ```
 
-#### Implements hook [`shrubCoreProcessExit`](../../hooks#shrubcoreprocessexit)
+#### Implements hook [`shrubCoreProcessExit`](../../../hooks#shrubcoreprocessexit)
 
 ```coffeescript
   registrar.registerHook 'shrubCoreProcessExit', -> server?.close()
 ```
 
-#### Implements hook [`shrubCoreBootstrapMiddleware`](../../hooks#shrubcorebootstrapmiddleware)
+#### Implements hook [`shrubCoreBootstrapMiddleware`](../../../hooks#shrubcorebootstrapmiddleware)
 
 ```coffeescript
   registrar.registerHook 'shrubCoreBootstrapMiddleware', ->
@@ -69,7 +69,7 @@ Use a CoffeeScript REPL?
         server = net.createServer (socket) ->
 ```
 
-#### Invoke hook [`shrubReplContext`](../../hooks#shrubreplcontext)
+#### Invoke hook [`shrubReplContext`](../../../hooks#shrubreplcontext)
 
 ```coffeescript
           pkgman.invoke 'shrubReplContext', context = {}

@@ -4,7 +4,7 @@
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubSkinLink--DIRECTIVE`](../../../hooks#shrubskinlink--directive)
+#### Implements hook [`shrubSkinLink--DIRECTIVE`](../../../../hooks#shrubskinlink--directive)
 
 ```coffeescript
   registrar.registerHook 'shrubSkinLink--shrubUiNotifications', -> [

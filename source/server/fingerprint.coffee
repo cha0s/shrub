@@ -112,7 +112,7 @@ See [Fingerprint.raw](#fingerprintraw_1)
     _excluded[key] = true for key in excluded
 ```
 
-#### Invoke hook [`shrubAuditFingerprint`](../hooks#shrubauditfingerprint)
+#### Invoke hook [`shrubAuditFingerprint`](../../hooks#shrubauditfingerprint)
 
 ```coffeescript
     for keys in pkgman.invokeFlat 'shrubAuditFingerprint', req

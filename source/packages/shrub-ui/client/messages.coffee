@@ -9,7 +9,7 @@ errors = require 'errors'
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubAngularDirective`](../../../hooks#shrubangulardirective)
+#### Implements hook [`shrubAngularDirective`](../../../../hooks#shrubangulardirective)
 
 ```coffeescript
   registrar.registerHook 'shrubAngularDirective', -> [
@@ -81,7 +81,7 @@ Fade it in and keep it on the screen for 15 seconds.
   ]
 ```
 
-#### Implements hook [`shrubRpcCall`](../../../hooks#shrubrpccall)
+#### Implements hook [`shrubRpcCall`](../../../../hooks#shrubrpccall)
 
 ```coffeescript
   registrar.registerHook 'shrubRpcCall', -> [
@@ -99,7 +99,7 @@ Add a message with the error text, if any.
   ]
 ```
 
-#### Implements hook [`shrubAngularService`](../../../hooks#shrubangularservice)
+#### Implements hook [`shrubAngularService`](../../../../hooks#shrubangularservice)
 
 ```coffeescript
   registrar.registerHook 'shrubAngularService', -> [
@@ -168,7 +168,7 @@ Accept messages from the server.
   ]
 ```
 
-#### Implements hook [`shrubAngularAppRun`](../../../hooks#shrubangularapprun)
+#### Implements hook [`shrubAngularAppRun`](../../../../hooks#shrubangularapprun)
 
 ```coffeescript
   registrar.registerHook 'shrubAngularAppRun', -> [

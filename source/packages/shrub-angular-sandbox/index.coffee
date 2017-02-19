@@ -23,7 +23,7 @@ navigationMiddleware = []
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubRpcRoutes`](../../hooks#shrubrpcroutes)
+#### Implements hook [`shrubRpcRoutes`](../../../hooks#shrubrpcroutes)
 
 Allow a JSful client to call us back and inform us that we don't need to
 hold their sandbox.
@@ -57,7 +57,7 @@ hold their sandbox.
     return routes
 ```
 
-#### Implements hook [`shrubHttpMiddleware`](../../hooks#shrubhttpmiddleware)
+#### Implements hook [`shrubHttpMiddleware`](../../../hooks#shrubhttpmiddleware)
 
 If configuration dictates, render the client-side Angular application in a
 sandbox.
@@ -158,7 +158,7 @@ The request was completed early.
   ]
 ```
 
-#### Implements hook [`shrubCoreBootstrapMiddleware`](../../hooks#shrubcorebootstrapmiddleware)
+#### Implements hook [`shrubCoreBootstrapMiddleware`](../../../hooks#shrubcorebootstrapmiddleware)
 
 ```coffeescript
   registrar.registerHook 'shrubCoreBootstrapMiddleware', ->
@@ -176,7 +176,7 @@ Always disable sandbox rendering in end-to-end testing mode.
           config.set 'packageConfig:shrub-angular:render', false
 ```
 
-#### Invoke hook [`shrubAngularSandboxNavigationMiddleware`](../../hooks#shrubangularsandboxnavigationmiddleware)
+#### Invoke hook [`shrubAngularSandboxNavigationMiddleware`](../../../hooks#shrubangularsandboxnavigationmiddleware)
 
 Load the navigation middleware.
 
@@ -190,7 +190,7 @@ Load the navigation middleware.
     ]
 ```
 
-#### Implements hook [`shrubConfigServer`](../../hooks#shrubconfigserver)
+#### Implements hook [`shrubConfigServer`](../../../hooks#shrubconfigserver)
 
 ```coffeescript
   registrar.registerHook 'shrubConfigServer', ->

@@ -10,7 +10,7 @@ pkgman = require 'pkgman'
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubConfigClient`](../../hooks#shrubconfigclient)
+#### Implements hook [`shrubConfigClient`](../../../hooks#shrubconfigclient)
 
 ```coffeescript
   registrar.registerHook 'shrubConfigClient', (req) ->
@@ -49,7 +49,7 @@ The user-visible site name.
     siteName: config.get 'packageConfig:shrub-core:siteName'
 ```
 
-#### Implements hook [`shrubAuditFingerprint`](../../hooks#shrubauditfingerprint)
+#### Implements hook [`shrubAuditFingerprint`](../../../hooks#shrubauditfingerprint)
 
 ```coffeescript
   registrar.registerHook 'shrubAuditFingerprint', (req) ->
@@ -61,7 +61,7 @@ The IP address.
     ip: req?.normalizedIp
 ```
 
-#### Implements hook [`shrubHttpMiddleware`](../../hooks#shrubhttpmiddleware)
+#### Implements hook [`shrubHttpMiddleware`](../../../hooks#shrubhttpmiddleware)
 
 ```coffeescript
   registrar.registerHook 'shrubHttpMiddleware', (http) ->
@@ -85,7 +85,7 @@ Normalize IP address.
     ]
 ```
 
-#### Implements hook [`shrubConfigServer`](../../hooks#shrubconfigserver)
+#### Implements hook [`shrubConfigServer`](../../../hooks#shrubconfigserver)
 
 ```coffeescript
   registrar.registerHook 'shrubConfigServer', ->
@@ -140,7 +140,7 @@ the master.
     workers: 0
 ```
 
-#### Implements hook [`shrubRpcRoutesAlter`](../../hooks#shrubrpcroutesalter)
+#### Implements hook [`shrubRpcRoutesAlter`](../../../hooks#shrubrpcroutesalter)
 
 Patch in express-specific variables that will be required by middleware.
 
@@ -165,7 +165,7 @@ Patch in express-specific variables that will be required by middleware.
     return
 ```
 
-#### Implements hook [`shrubSocketConnectionMiddleware`](../../hooks#shrubsocketconnectionmiddleware)
+#### Implements hook [`shrubSocketConnectionMiddleware`](../../../hooks#shrubsocketconnectionmiddleware)
 
 ```coffeescript
   registrar.registerHook 'shrubSocketConnectionMiddleware', ->

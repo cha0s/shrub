@@ -4,7 +4,7 @@
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubAngularAppConfig`](../../../hooks#shrubangularappconfig)
+#### Implements hook [`shrubAngularAppConfig`](../../../../hooks#shrubangularappconfig)
 
 ```coffeescript
   registrar.registerHook 'shrubAngularAppConfig', -> [
@@ -19,7 +19,7 @@ We'll gank the default route.
   ]
 ```
 
-#### Implements hook [`shrubAngularRoutes`](../../../hooks#shrubangularroutes)
+#### Implements hook [`shrubAngularRoutes`](../../../../hooks#shrubangularroutes)
 
 ```coffeescript
   registrar.registerHook 'shrubAngularRoutes', ->

@@ -1669,7 +1669,7 @@ errors = require 'errors'
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubangulardirective">Implements hook <a href="../../../../hooks#shrubangulardirective"><code>shrubAngularDirective</code></a></h4>
+<h4 id="implements-hook-shrubangulardirective">Implements hook <a href="../../../../../hooks#shrubangulardirective"><code>shrubAngularDirective</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAngularDirective', -&gt; [
     '$timeout', 'shrub-ui/messages'
     ($timeout, {count, removeTop, top}) -&gt;
@@ -1733,7 +1733,7 @@ exports.pkgmanRegister = (registrar) -&gt;
   ]
 </code></pre>
 
-<h4 id="implements-hook-shrubrpccall">Implements hook <a href="../../../../hooks#shrubrpccall"><code>shrubRpcCall</code></a></h4>
+<h4 id="implements-hook-shrubrpccall">Implements hook <a href="../../../../../hooks#shrubrpccall"><code>shrubRpcCall</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubRpcCall', -&gt; [
     'shrub-ui/messages', 'result'
     (messages, result) -&gt;
@@ -1747,7 +1747,7 @@ exports.pkgmanRegister = (registrar) -&gt;
   ]
 </code></pre>
 
-<h4 id="implements-hook-shrubangularservice">Implements hook <a href="../../../../hooks#shrubangularservice"><code>shrubAngularService</code></a></h4>
+<h4 id="implements-hook-shrubangularservice">Implements hook <a href="../../../../../hooks#shrubangularservice"><code>shrubAngularService</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAngularService', -&gt; [
     'shrub-socket'
     (socket) -&gt;
@@ -1797,7 +1797,7 @@ exports.pkgmanRegister = (registrar) -&gt;
   ]
 </code></pre>
 
-<h4 id="implements-hook-shrubangularapprun">Implements hook <a href="../../../../hooks#shrubangularapprun"><code>shrubAngularAppRun</code></a></h4>
+<h4 id="implements-hook-shrubangularapprun">Implements hook <a href="../../../../../hooks#shrubangularapprun"><code>shrubAngularAppRun</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAngularAppRun', -&gt; [
     'shrub-ui/messages'
     (messages) -&gt;

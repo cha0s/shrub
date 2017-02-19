@@ -1732,13 +1732,13 @@ when determining the total limit.</p>
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <a href="../../../hooks#shrubcoreprebootstrap"><code>shrubCorePreBootstrap</code></a></h4>
+<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <a href="../../../../hooks#shrubcoreprebootstrap"><code>shrubCorePreBootstrap</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubCorePreBootstrap', -&gt;
 
     orm = require 'shrub-orm'
 </code></pre>
 
-<h4 id="implements-hook-shrubormcollections">Implements hook <a href="../../../hooks#shrubormcollections"><code>shrubOrmCollections</code></a></h4>
+<h4 id="implements-hook-shrubormcollections">Implements hook <a href="../../../../hooks#shrubormcollections"><code>shrubOrmCollections</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubOrmCollections', -&gt;
 
     _ = require 'lodash'
@@ -1829,7 +1829,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     'shrub-limit-score': LimitScore
 </code></pre>
 
-<h4 id="implements-hook-shrubrpcroutesalter">Implements hook <a href="../../../hooks#shrubrpcroutesalter"><code>shrubRpcRoutesAlter</code></a></h4>
+<h4 id="implements-hook-shrubrpcroutesalter">Implements hook <a href="../../../../hooks#shrubrpcroutesalter"><code>shrubRpcRoutesAlter</code></a></h4>
 <p>Allow RPC routes definitions to specify rate limiters.</p>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubRpcRoutesAlter', (routes) -&gt;
 
@@ -1875,7 +1875,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
 <p>Allow packages to check and optionally skip the limiter.</p>
-<h4 id="invoke-hook-shrublimitercheck">Invoke hook <a href="../../../hooks#shrublimitercheck"><code>shrubLimiterCheck</code></a></h4>
+<h4 id="invoke-hook-shrublimitercheck">Invoke hook <a href="../../../../hooks#shrublimitercheck"><code>shrubLimiterCheck</code></a></h4>
 <pre><code class="coffeescript">          for rule in pkgman.invokeFlat 'shrubLimiterCheck', req
             continue unless rule?
             return next() if SKIP is rule
@@ -1901,7 +1901,7 @@ stop doing that.</p>
             return next() unless isLimited
 </code></pre>
 
-<h4 id="invoke-hook-shrubvillianyreport">Invoke hook <a href="../../../hooks#shrubvillianyreport"><code>shrubVillianyReport</code></a></h4>
+<h4 id="invoke-hook-shrubvillianyreport">Invoke hook <a href="../../../../hooks#shrubvillianyreport"><code>shrubVillianyReport</code></a></h4>
 <pre><code class="coffeescript">            Promise.all(
               pkgman.invokeFlat(
                 'shrubVillianyReport'
@@ -1921,7 +1921,7 @@ stop doing that.</p>
           ).catch next
 </code></pre>
 
-<h4 id="implements-hook-shrubtransmittableerrors">Implements hook <a href="../../../hooks#shrubtransmittableerrors"><code>shrubTransmittableErrors</code></a></h4>
+<h4 id="implements-hook-shrubtransmittableerrors">Implements hook <a href="../../../../hooks#shrubtransmittableerrors"><code>shrubTransmittableErrors</code></a></h4>
 <p>Just defer to client, where the error is defined.</p>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubTransmittableErrors', require('./client').shrubTransmittableErrors
 

@@ -6,7 +6,7 @@ errors = require 'errors'
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubConfigClient`](../../hooks#shrubconfigclient)
+#### Implements hook [`shrubConfigClient`](../../../hooks#shrubconfigclient)
 
 ```coffeescript
   registrar.registerHook 'shrubConfigClient', (req) ->

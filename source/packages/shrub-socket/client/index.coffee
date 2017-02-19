@@ -8,7 +8,7 @@ config = require 'config'
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubAngularService`](../../../hooks#shrubangularservice)
+#### Implements hook [`shrubAngularService`](../../../../hooks#shrubangularservice)
 
 ```coffeescript
   registrar.registerHook 'shrubAngularService', ->

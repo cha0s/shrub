@@ -22,7 +22,7 @@ unless fork()
 
 Set up exit hooks.
 
-#### Invoke hook [`shrubCoreProcessExit`](../hooks#shrubcoreprocessexit)
+#### Invoke hook [`shrubCoreProcessExit`](../../hooks#shrubcoreprocessexit)
 
 ```coffeescript
   process.on 'exit', -> pkgman.invoke 'shrubCoreProcessExit'
@@ -43,7 +43,7 @@ Load the configuration.
   debug 'Config loaded.'
 ```
 
-#### Invoke hook [`shrubCorePreBootstrap`](../hooks#shrubcoreprebootstrap)
+#### Invoke hook [`shrubCorePreBootstrap`](../../hooks#shrubcoreprebootstrap)
 
 ```coffeescript
   debugSilly 'Pre bootstrap phase...'
@@ -51,7 +51,7 @@ Load the configuration.
   debugSilly 'Pre bootstrap phase completed.'
 ```
 
-#### Invoke hook [`shrubCoreBootstrapMiddleware`](../hooks#shrubcorebootstrapmiddleware)
+#### Invoke hook [`shrubCoreBootstrapMiddleware`](../../hooks#shrubcorebootstrapmiddleware)
 
 ```coffeescript
   debugSilly 'Loading bootstrap middleware...'

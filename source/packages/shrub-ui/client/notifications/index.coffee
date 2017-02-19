@@ -6,7 +6,7 @@ config = require 'config'
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubAngularDirective`](../../../../hooks#shrubangulardirective)
+#### Implements hook [`shrubAngularDirective`](../../../../../hooks#shrubangulardirective)
 
 ```coffeescript
   registrar.registerHook 'shrubAngularDirective', -> [
@@ -171,7 +171,7 @@ Keep track of unread items.
   ]
 ```
 
-#### Implements hook [`shrubAngularService`](../../../../hooks#shrubangularservice)
+#### Implements hook [`shrubAngularService`](../../../../../hooks#shrubangularservice)
 
 ```coffeescript
   registrar.registerHook 'shrubAngularService', -> [

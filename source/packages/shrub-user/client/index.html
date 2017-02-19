@@ -1668,15 +1668,15 @@
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubormcollections">Implements hook <a href="../../../../hooks#shrubormcollections"><code>shrubOrmCollections</code></a></h4>
+<h4 id="implements-hook-shrubormcollections">Implements hook <a href="../../../../../hooks#shrubormcollections"><code>shrubOrmCollections</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubOrmCollections', exports.shrubOrmCollections
 </code></pre>
 
-<h4 id="implements-hook-shrubormcollectionsalter">Implements hook <a href="../../../../hooks#shrubormcollectionsalter"><code>shrubOrmCollectionsAlter</code></a></h4>
+<h4 id="implements-hook-shrubormcollectionsalter">Implements hook <a href="../../../../../hooks#shrubormcollectionsalter"><code>shrubOrmCollectionsAlter</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubOrmCollectionsAlter', exports.shrubOrmCollectionsAlter
 </code></pre>
 
-<h4 id="implements-hook-shrubangulardirective">Implements hook <a href="../../../../hooks#shrubangulardirective"><code>shrubAngularDirective</code></a></h4>
+<h4 id="implements-hook-shrubangulardirective">Implements hook <a href="../../../../../hooks#shrubangulardirective"><code>shrubAngularDirective</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'actions', 'shrubAngularDirective', -&gt; [
     'shrub-user'
     (user) -&gt;
@@ -1722,7 +1722,7 @@ exports.pkgmanRegister = (registrar) -&gt;
   ]
 </code></pre>
 
-<h4 id="implements-hook-shrubangularservice">Implements hook <a href="../../../../hooks#shrubangularservice"><code>shrubAngularService</code></a></h4>
+<h4 id="implements-hook-shrubangularservice">Implements hook <a href="../../../../../hooks#shrubangularservice"><code>shrubAngularService</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAngularService', -&gt; [
     'shrub-orm', 'shrub-rpc', 'shrub-socket'
     (orm, rpc, socket) -&gt;
@@ -1784,7 +1784,7 @@ exports.pkgmanRegister = (registrar) -&gt;
   ]
 </code></pre>
 
-<h4 id="implements-hook-shrubtransmittableerrors">Implements hook <a href="../../../../hooks#shrubtransmittableerrors"><code>shrubTransmittableErrors</code></a></h4>
+<h4 id="implements-hook-shrubtransmittableerrors">Implements hook <a href="../../../../../hooks#shrubtransmittableerrors"><code>shrubTransmittableErrors</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubTransmittableErrors', exports.shrubTransmittableErrors
 
   registrar.recur [

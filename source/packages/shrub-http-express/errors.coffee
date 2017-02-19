@@ -6,7 +6,7 @@ errorHandler = require 'errorhandler'
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubHttpMiddleware`](../../hooks#shrubhttpmiddleware)
+#### Implements hook [`shrubHttpMiddleware`](../../../hooks#shrubhttpmiddleware)
 
 ```coffeescript
   registrar.registerHook 'shrubHttpMiddleware', (http) ->

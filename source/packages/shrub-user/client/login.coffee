@@ -7,7 +7,7 @@ pkgman = require 'pkgman'
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubAngularRoutes`](../../../hooks#shrubangularroutes)
+#### Implements hook [`shrubAngularRoutes`](../../../../hooks#shrubangularroutes)
 
 ```coffeescript
   registrar.registerHook 'shrubAngularRoutes', ->
@@ -24,13 +24,13 @@ exports.pkgmanRegister = (registrar) ->
         ($location, $scope, messages, user) ->
 ```
 
-#### Invoke hook [`shrubUserLoginStrategies`](../../../hooks#shrubuserloginstrategies)
+#### Invoke hook [`shrubUserLoginStrategies`](../../../../hooks#shrubuserloginstrategies)
 
 ```coffeescript
           strategies = pkgman.invoke 'shrubUserLoginStrategies'
 ```
 
-#### Invoke hook [`shrubUserLoginStrategiesAlter`](../../../hooks#shrubuserloginstrategiesalter)
+#### Invoke hook [`shrubUserLoginStrategiesAlter`](../../../../hooks#shrubuserloginstrategiesalter)
 
 ```coffeescript
           pkgman.invoke 'shrubUserLoginStrategiesAlter', strategies

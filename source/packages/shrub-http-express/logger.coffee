@@ -6,7 +6,7 @@ morgan = require 'morgan'
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubHttpMiddleware`](../../hooks#shrubhttpmiddleware)
+#### Implements hook [`shrubHttpMiddleware`](../../../hooks#shrubhttpmiddleware)
 
 Log requests, differentiating between client and sandbox requests.
 

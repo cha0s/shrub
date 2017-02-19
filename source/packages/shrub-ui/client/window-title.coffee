@@ -8,7 +8,7 @@ config = require 'config'
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubAngularController`](../../../hooks#shrubangularcontroller)
+#### Implements hook [`shrubAngularController`](../../../../hooks#shrubangularcontroller)
 
 ```coffeescript
   registrar.registerHook 'shrubAngularController', -> [
@@ -28,7 +28,7 @@ exports.pkgmanRegister = (registrar) ->
   ]
 ```
 
-#### Implements hook [`shrubAngularDirective`](../../../hooks#shrubangulardirective)
+#### Implements hook [`shrubAngularDirective`](../../../../hooks#shrubangulardirective)
 
 ```coffeescript
   registrar.registerHook 'shrubAngularDirective', -> [
@@ -46,7 +46,7 @@ exports.pkgmanRegister = (registrar) ->
   ]
 ```
 
-#### Implements hook [`shrubAngularAppRun`](../../../hooks#shrubangularapprun)
+#### Implements hook [`shrubAngularAppRun`](../../../../hooks#shrubangularapprun)
 
 ```coffeescript
   registrar.registerHook 'shrubAngularAppRun', -> [
@@ -66,7 +66,7 @@ Set the site name into the window title.
   ]
 ```
 
-#### Implements hook [`shrubAngularService`](../../../hooks#shrubangularservice)
+#### Implements hook [`shrubAngularService`](../../../../hooks#shrubangularservice)
 
 ```coffeescript
   registrar.registerHook 'shrubAngularService', -> [

@@ -6,7 +6,7 @@
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubAssetsMiddleware`](../../hooks#shrubassetsmiddleware)
+#### Implements hook [`shrubAssetsMiddleware`](../../../hooks#shrubassetsmiddleware)
 
 ```coffeescript
   registrar.registerHook 'shrubAssetsMiddleware', ->
@@ -31,7 +31,7 @@ exports.pkgmanRegister = (registrar) ->
     ]
 ```
 
-#### Implements hook [`shrubGruntConfig`](../../hooks#shrubgruntconfig)
+#### Implements hook [`shrubGruntConfig`](../../../hooks#shrubgruntconfig)
 
 ```coffeescript
   registrar.registerHook 'shrubGruntConfig', (gruntConfig) ->

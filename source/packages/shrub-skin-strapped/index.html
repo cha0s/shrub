@@ -1660,7 +1660,7 @@ shrubSkin = require 'shrub-skin'
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubnodemailerhtml">Implements hook <a href="../../../hooks#shrubnodemailerhtml"><code>shrubNodemailerHtml</code></a></h4>
+<h4 id="implements-hook-shrubnodemailerhtml">Implements hook <a href="../../../../hooks#shrubnodemailerhtml"><code>shrubNodemailerHtml</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubNodemailerHtml', ($body, html, $) -&gt;
 
     $('.container &gt; .main', $body).html html
@@ -1673,7 +1673,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     $('noscript', $body).remove()
 </code></pre>
 
-<h4 id="implements-hook-shrubskinassets">Implements hook <a href="../../../hooks#shrubskinassets"><code>shrubSkinAssets</code></a></h4>
+<h4 id="implements-hook-shrubskinassets">Implements hook <a href="../../../../hooks#shrubskinassets"><code>shrubSkinAssets</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubSkinAssets', (assets) -&gt;
 </code></pre>
 
@@ -1682,7 +1682,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     assets.styleSheets.production.push '/css/style.css'
 </code></pre>
 
-<h4 id="implements-hook-shrubgruntconfig">Implements hook <a href="../../../hooks#shrubgruntconfig"><code>shrubGruntConfig</code></a></h4>
+<h4 id="implements-hook-shrubgruntconfig">Implements hook <a href="../../../../hooks#shrubgruntconfig"><code>shrubGruntConfig</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubGruntConfig', (gruntConfig) -&gt;
 
     gruntConfig.less ?= {}

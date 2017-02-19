@@ -6,13 +6,13 @@
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubTransmittableErrors`](../../../hooks#shrubtransmittableerrors)
+#### Implements hook [`shrubTransmittableErrors`](../../../../hooks#shrubtransmittableerrors)
 
 ```coffeescript
   registrar.registerHook 'shrubTransmittableErrors', exports.shrubTransmittableErrors
 ```
 
-#### Implements hook [`shrubUserLoginStrategies`](../../../hooks#shrubuserloginstrategies)
+#### Implements hook [`shrubUserLoginStrategies`](../../../../hooks#shrubuserloginstrategies)
 
 ```coffeescript
   registrar.registerHook 'shrubUserLoginStrategies', ->

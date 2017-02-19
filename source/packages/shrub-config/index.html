@@ -1665,7 +1665,7 @@ pkgman = require 'pkgman'
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubassetsmiddleware">Implements hook <a href="../../../hooks#shrubassetsmiddleware"><code>shrubAssetsMiddleware</code></a></h4>
+<h4 id="implements-hook-shrubassetsmiddleware">Implements hook <a href="../../../../hooks#shrubassetsmiddleware"><code>shrubAssetsMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAssetsMiddleware', -&gt;
 
     label: 'Config'
@@ -1680,7 +1680,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     ]
 </code></pre>
 
-<h4 id="implements-hook-shrubhttpmiddleware">Implements hook <a href="../../../hooks#shrubhttpmiddleware"><code>shrubHttpMiddleware</code></a></h4>
+<h4 id="implements-hook-shrubhttpmiddleware">Implements hook <a href="../../../../hooks#shrubhttpmiddleware"><code>shrubHttpMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubHttpMiddleware', (http) -&gt;
 
     label: 'Serve package configuration'
@@ -1714,7 +1714,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 <pre><code class="coffeescript">exports.renderPackageConfig = (req) -&gt;
 </code></pre>
 
-<h4 id="invoke-hook-shrubconfigclient">Invoke hook <a href="../../../hooks#shrubconfigclient"><code>shrubConfigClient</code></a></h4>
+<h4 id="invoke-hook-shrubconfigclient">Invoke hook <a href="../../../../hooks#shrubconfigclient"><code>shrubConfigClient</code></a></h4>
 <p>Allows packages to specify configuration that will be sent to the client.
 Implementations may return an object, or a promise that resolves to an
 object.</p>
@@ -1748,7 +1748,7 @@ object.</p>
         }&quot;, value
 </code></pre>
 
-<h4 id="invoke-hook-shrubconfigclientalter">Invoke hook <a href="../../../hooks#shrubconfigclientalter"><code>shrubConfigClientAlter</code></a></h4>
+<h4 id="invoke-hook-shrubconfigclientalter">Invoke hook <a href="../../../../hooks#shrubconfigclientalter"><code>shrubConfigClientAlter</code></a></h4>
 <pre><code class="coffeescript">    pkgman.invoke 'shrubConfigClientAlter', req, config_
 </code></pre>
 

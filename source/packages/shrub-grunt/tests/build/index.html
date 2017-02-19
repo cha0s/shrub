@@ -1653,7 +1653,7 @@
 <pre><code class="coffeescript">exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubgruntconfig">Implements hook <a href="../../../../hooks#shrubgruntconfig"><code>shrubGruntConfig</code></a></h4>
+<h4 id="implements-hook-shrubgruntconfig">Implements hook <a href="../../../../../hooks#shrubgruntconfig"><code>shrubGruntConfig</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubGruntConfig', (gruntConfig) -&gt;
 
     gruntConfig.configureTask 'coffee', 'testsE2e', files: [
@@ -1813,7 +1813,7 @@
     gruntConfig.registerTask 'build', ['build:tests']
 </code></pre>
 
-<h4 id="implements-hook-shrubgruntconfigalter">Implements hook <a href="../../../../hooks#shrubgruntconfigalter"><code>shrubGruntConfigAlter</code></a></h4>
+<h4 id="implements-hook-shrubgruntconfigalter">Implements hook <a href="../../../../../hooks#shrubgruntconfigalter"><code>shrubGruntConfigAlter</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubGruntConfigAlter', (gruntConfig) -&gt;
 
     ignoreFiles = (array, directory) -&gt;

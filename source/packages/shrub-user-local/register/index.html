@@ -1657,13 +1657,13 @@
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <a href="../../../hooks#shrubcoreprebootstrap"><code>shrubCorePreBootstrap</code></a></h4>
+<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <a href="../../../../hooks#shrubcoreprebootstrap"><code>shrubCorePreBootstrap</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubCorePreBootstrap', -&gt;
 
     orm = require 'shrub-orm'
 </code></pre>
 
-<h4 id="implements-hook-shrubrpcroutes">Implements hook <a href="../../../hooks#shrubrpcroutes"><code>shrubRpcRoutes</code></a></h4>
+<h4 id="implements-hook-shrubrpcroutes">Implements hook <a href="../../../../hooks#shrubrpcroutes"><code>shrubRpcRoutes</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubRpcRoutes', -&gt;
 
     config = require 'config'
@@ -1744,7 +1744,7 @@ link.</p>
     return routes
 </code></pre>
 
-<h4 id="implements-hook-shrubreplcontext">Implements hook <a href="../../../hooks#shrubreplcontext"><code>shrubReplContext</code></a></h4>
+<h4 id="implements-hook-shrubreplcontext">Implements hook <a href="../../../../hooks#shrubreplcontext"><code>shrubReplContext</code></a></h4>
 <pre><code class="coffeescript">    registrar.registerHook 'shrubReplContext', (context) -&gt;
       orm = require 'shrub-orm'
       User = orm.collection 'shrub-user'

@@ -1660,14 +1660,14 @@ userPackage = require './index'
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <a href="../../../hooks#shrubcoreprebootstrap"><code>shrubCorePreBootstrap</code></a></h4>
+<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <a href="../../../../hooks#shrubcoreprebootstrap"><code>shrubCorePreBootstrap</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubCorePreBootstrap', -&gt;
 
     orm = require 'shrub-orm'
     Promise = require 'bluebird'
 </code></pre>
 
-<h4 id="implements-hook-shrubrpcroutes">Implements hook <a href="../../../hooks#shrubrpcroutes"><code>shrubRpcRoutes</code></a></h4>
+<h4 id="implements-hook-shrubrpcroutes">Implements hook <a href="../../../../hooks#shrubrpcroutes"><code>shrubRpcRoutes</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubRpcRoutes', -&gt;
 
     {Limiter, LimiterMiddleware} = require 'shrub-limiter'

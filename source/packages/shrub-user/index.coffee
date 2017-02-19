@@ -17,7 +17,7 @@ clientModule = require './client'
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubCorePreBootstrap`](../../hooks#shrubcoreprebootstrap)
+#### Implements hook [`shrubCorePreBootstrap`](../../../hooks#shrubcoreprebootstrap)
 
 ```coffeescript
   registrar.registerHook 'shrubCorePreBootstrap', ->
@@ -27,7 +27,7 @@ exports.pkgmanRegister = (registrar) ->
     orm = require 'shrub-orm'
 ```
 
-#### Implements hook [`shrubConfigClient`](../../hooks#shrubconfigclient)
+#### Implements hook [`shrubConfigClient`](../../../hooks#shrubconfigclient)
 
 ```coffeescript
   registrar.registerHook 'shrubConfigClient', (req) ->
@@ -39,7 +39,7 @@ Send a redacted version of the request user.
     req.user.redactObject 'shrub-user', req.user if req.user?
 ```
 
-#### Implements hook [`shrubConfigServer`](../../hooks#shrubconfigserver)
+#### Implements hook [`shrubConfigServer`](../../../hooks#shrubconfigserver)
 
 ```coffeescript
   registrar.registerHook 'shrubConfigServer', ->
@@ -59,7 +59,7 @@ Send a redacted version of the request user.
     ]
 ```
 
-#### Implements hook [`shrubUserRedactors`](../../hooks#shrubuserredactors)
+#### Implements hook [`shrubUserRedactors`](../../../hooks#shrubuserredactors)
 
 ```coffeescript
   registrar.registerHook 'shrubUserRedactors', ->
@@ -96,7 +96,7 @@ Redact instances.
     ]
 ```
 
-#### Implements hook [`shrubAuditFingerprint`](../../hooks#shrubauditfingerprint)
+#### Implements hook [`shrubAuditFingerprint`](../../../hooks#shrubauditfingerprint)
 
 ```coffeescript
   registrar.registerHook 'shrubAuditFingerprint', (req) ->
@@ -108,7 +108,7 @@ User (ID).
     user: if req?.user?.id? then req.user.id
 ```
 
-#### Implements hook [`shrubOrmCollections`](../../hooks#shrubormcollections)
+#### Implements hook [`shrubOrmCollections`](../../../hooks#shrubormcollections)
 
 ```coffeescript
   registrar.registerHook 'shrubOrmCollections', ->
@@ -248,7 +248,7 @@ Collect redactors.
         redactors = {}
 ```
 
-#### Invoke hook [`shrubUserRedactors`](../../hooks#shrubuserredactors)
+#### Invoke hook [`shrubUserRedactors`](../../../hooks#shrubuserredactors)
 
 ```coffeescript
         for redactorTypes in pkgman.invokeFlat 'shrubUserRedactors'
@@ -319,13 +319,13 @@ Disable the default createdAt/updatedAt attributes.
     collections
 ```
 
-#### Implements hook [`shrubTransmittableErrors`](../../hooks#shrubtransmittableerrors)
+#### Implements hook [`shrubTransmittableErrors`](../../../hooks#shrubtransmittableerrors)
 
 ```coffeescript
   registrar.registerHook 'shrubTransmittableErrors', clientModule.shrubTransmittableErrors
 ```
 
-#### Implements hook [`shrubUserBeforeLoginMiddleware`](../../hooks#shrubuserbeforeloginmiddleware)
+#### Implements hook [`shrubUserBeforeLoginMiddleware`](../../../hooks#shrubuserbeforeloginmiddleware)
 
 ```coffeescript
   registrar.registerHook 'shrubUserBeforeLoginMiddleware', ->
@@ -338,7 +338,7 @@ Disable the default createdAt/updatedAt attributes.
     ]
 ```
 
-#### Implements hook [`shrubUserBeforeLogoutMiddleware`](../../hooks#shrubuserbeforelogoutmiddleware)
+#### Implements hook [`shrubUserBeforeLogoutMiddleware`](../../../hooks#shrubuserbeforelogoutmiddleware)
 
 ```coffeescript
   registrar.registerHook 'shrubUserBeforeLogoutMiddleware', ->

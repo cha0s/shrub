@@ -80,7 +80,7 @@ Register packages.
   nconf.defaults
 ```
 
-#### Invoke hook [`shrubConfigServer`](../hooks#shrubconfigserver)
+#### Invoke hook [`shrubConfigServer`](../../hooks#shrubconfigserver)
 
 ```coffeescript
     packageConfig: packageConfig.toJSON()

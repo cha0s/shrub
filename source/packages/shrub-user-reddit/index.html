@@ -1683,7 +1683,7 @@ clientModule = require './client'
 <pre><code class="coffeescript">exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubconfigserver">Implements hook <a href="../../../hooks#shrubconfigserver"><code>shrubConfigServer</code></a></h4>
+<h4 id="implements-hook-shrubconfigserver">Implements hook <a href="../../../../hooks#shrubconfigserver"><code>shrubConfigServer</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubConfigServer', -&gt;
 
     siteHostname = config.get 'packageConfig:shrub-core:siteHostname'
@@ -1716,7 +1716,7 @@ more information about which configuration options are available.</p>
 <pre><code class="coffeescript">      duration: 'temporary'
 </code></pre>
 
-<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <a href="../../../hooks#shrubcoreprebootstrap"><code>shrubCorePreBootstrap</code></a></h4>
+<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <a href="../../../../hooks#shrubcoreprebootstrap"><code>shrubCorePreBootstrap</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubCorePreBootstrap', -&gt;
 
     orm = require 'shrub-orm'
@@ -1724,7 +1724,7 @@ more information about which configuration options are available.</p>
     Promise = require 'bluebird'
 </code></pre>
 
-<h4 id="implements-hook-shrubuserloginstrategies">Implements hook <a href="../../../hooks#shrubuserloginstrategies"><code>shrubUserLoginStrategies</code></a></h4>
+<h4 id="implements-hook-shrubuserloginstrategies">Implements hook <a href="../../../../hooks#shrubuserloginstrategies"><code>shrubUserLoginStrategies</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubUserLoginStrategies', -&gt;
     strategy = clientModule.shrubUserLoginStrategies()
 
@@ -1769,7 +1769,7 @@ login strategy.</p>
     return strategy
 </code></pre>
 
-<h4 id="implements-hook-shrubhttproutes">Implements hook <a href="../../../hooks#shrubhttproutes"><code>shrubHttpRoutes</code></a></h4>
+<h4 id="implements-hook-shrubhttproutes">Implements hook <a href="../../../../hooks#shrubhttproutes"><code>shrubHttpRoutes</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubHttpRoutes', (http) -&gt;
     routes = []
 
@@ -1825,7 +1825,7 @@ client; it's not a server error.</p>
     return routes
 </code></pre>
 
-<h4 id="implements-hook-shrubuserredactors">Implements hook <a href="../../../hooks#shrubuserredactors"><code>shrubUserRedactors</code></a></h4>
+<h4 id="implements-hook-shrubuserredactors">Implements hook <a href="../../../../hooks#shrubuserredactors"><code>shrubUserRedactors</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubUserRedactors', -&gt;
 
     'shrub-user-reddit': [
@@ -1838,7 +1838,7 @@ client; it's not a server error.</p>
     ]
 </code></pre>
 
-<h4 id="implements-hook-shrubormcollections">Implements hook <a href="../../../hooks#shrubormcollections"><code>shrubOrmCollections</code></a></h4>
+<h4 id="implements-hook-shrubormcollections">Implements hook <a href="../../../../hooks#shrubormcollections"><code>shrubOrmCollections</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubOrmCollections', -&gt;
 
     crypto = require 'server/crypto'

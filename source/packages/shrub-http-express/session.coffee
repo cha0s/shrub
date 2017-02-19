@@ -16,7 +16,7 @@ signature = null
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubCoreBootstrapMiddleware`](../../hooks#shrubcorebootstrapmiddleware)
+#### Implements hook [`shrubCoreBootstrapMiddleware`](../../../hooks#shrubcorebootstrapmiddleware)
 
 ```coffeescript
   registrar.registerHook 'shrubCoreBootstrapMiddleware', ->
@@ -43,7 +43,7 @@ exports.pkgmanRegister = (registrar) ->
     ]
 ```
 
-#### Implements hook [`shrubHttpMiddleware`](../../hooks#shrubhttpmiddleware)
+#### Implements hook [`shrubHttpMiddleware`](../../../hooks#shrubhttpmiddleware)
 
 Parse cookies and load any session.
 
@@ -54,7 +54,7 @@ Parse cookies and load any session.
     middleware: sessionMiddleware()
 ```
 
-#### Implements hook [`shrubRpcRoutesAlter`](../../hooks#shrubrpcroutesalter)
+#### Implements hook [`shrubRpcRoutesAlter`](../../../hooks#shrubrpcroutesalter)
 
 ```coffeescript
   registrar.registerHook 'shrubRpcRoutesAlter', (routes) ->
@@ -86,7 +86,7 @@ Parse cookies and load any session.
     return
 ```
 
-#### Implements hook [`shrubSocketConnectionMiddleware`](../../hooks#shrubsocketconnectionmiddleware)
+#### Implements hook [`shrubSocketConnectionMiddleware`](../../../hooks#shrubsocketconnectionmiddleware)
 
 ```coffeescript
   registrar.registerHook 'shrubSocketConnectionMiddleware', ->

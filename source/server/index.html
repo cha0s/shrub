@@ -1671,7 +1671,7 @@ unless fork()
 </code></pre>
 
 <p>Set up exit hooks.</p>
-<h4 id="invoke-hook-shrubcoreprocessexit">Invoke hook <a href="../../hooks#shrubcoreprocessexit"><code>shrubCoreProcessExit</code></a></h4>
+<h4 id="invoke-hook-shrubcoreprocessexit">Invoke hook <a href="../../../hooks#shrubcoreprocessexit"><code>shrubCoreProcessExit</code></a></h4>
 <pre><code class="coffeescript">  process.on 'exit', -&gt; pkgman.invoke 'shrubCoreProcessExit'
 
   process.on 'SIGINT', -&gt; process.exit()
@@ -1688,13 +1688,13 @@ unless fork()
   debug 'Config loaded.'
 </code></pre>
 
-<h4 id="invoke-hook-shrubcoreprebootstrap">Invoke hook <a href="../../hooks#shrubcoreprebootstrap"><code>shrubCorePreBootstrap</code></a></h4>
+<h4 id="invoke-hook-shrubcoreprebootstrap">Invoke hook <a href="../../../hooks#shrubcoreprebootstrap"><code>shrubCorePreBootstrap</code></a></h4>
 <pre><code class="coffeescript">  debugSilly 'Pre bootstrap phase...'
   pkgman.invoke 'shrubCorePreBootstrap'
   debugSilly 'Pre bootstrap phase completed.'
 </code></pre>
 
-<h4 id="invoke-hook-shrubcorebootstrapmiddleware">Invoke hook <a href="../../hooks#shrubcorebootstrapmiddleware"><code>shrubCoreBootstrapMiddleware</code></a></h4>
+<h4 id="invoke-hook-shrubcorebootstrapmiddleware">Invoke hook <a href="../../../hooks#shrubcorebootstrapmiddleware"><code>shrubCoreBootstrapMiddleware</code></a></h4>
 <pre><code class="coffeescript">  debugSilly 'Loading bootstrap middleware...'
 
   bootstrapMiddleware = middleware.fromConfig(

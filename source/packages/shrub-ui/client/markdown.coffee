@@ -6,7 +6,7 @@ marked = require 'marked'
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubAngularFilter`](../../../hooks#shrubangularfilter)
+#### Implements hook [`shrubAngularFilter`](../../../../hooks#shrubangularfilter)
 
 ```coffeescript
   registrar.registerHook 'shrubAngularFilter', -> ->

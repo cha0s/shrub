@@ -4,7 +4,7 @@
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubAngularRoutes`](../../../hooks#shrubangularroutes)
+#### Implements hook [`shrubAngularRoutes`](../../../../hooks#shrubangularroutes)
 
 ```coffeescript
   registrar.registerHook 'shrubAngularRoutes', ->

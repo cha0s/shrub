@@ -1672,7 +1672,7 @@ debug = require('debug') 'shrub:repl'
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubconfigserver">Implements hook <a href="../../../hooks#shrubconfigserver"><code>shrubConfigServer</code></a></h4>
+<h4 id="implements-hook-shrubconfigserver">Implements hook <a href="../../../../hooks#shrubconfigserver"><code>shrubConfigServer</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubConfigServer', -&gt;
 </code></pre>
 
@@ -1688,11 +1688,11 @@ exports.pkgmanRegister = (registrar) -&gt;
 <pre><code class="coffeescript">    useCoffee: true
 </code></pre>
 
-<h4 id="implements-hook-shrubcoreprocessexit">Implements hook <a href="../../../hooks#shrubcoreprocessexit"><code>shrubCoreProcessExit</code></a></h4>
+<h4 id="implements-hook-shrubcoreprocessexit">Implements hook <a href="../../../../hooks#shrubcoreprocessexit"><code>shrubCoreProcessExit</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubCoreProcessExit', -&gt; server?.close()
 </code></pre>
 
-<h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <a href="../../../hooks#shrubcorebootstrapmiddleware"><code>shrubCoreBootstrapMiddleware</code></a></h4>
+<h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <a href="../../../../hooks#shrubcorebootstrapmiddleware"><code>shrubCoreBootstrapMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubCoreBootstrapMiddleware', -&gt;
 
     orm = require 'shrub-orm'
@@ -1707,7 +1707,7 @@ exports.pkgmanRegister = (registrar) -&gt;
         server = net.createServer (socket) -&gt;
 </code></pre>
 
-<h4 id="invoke-hook-shrubreplcontext">Invoke hook <a href="../../../hooks#shrubreplcontext"><code>shrubReplContext</code></a></h4>
+<h4 id="invoke-hook-shrubreplcontext">Invoke hook <a href="../../../../hooks#shrubreplcontext"><code>shrubReplContext</code></a></h4>
 <pre><code class="coffeescript">          pkgman.invoke 'shrubReplContext', context = {}
 </code></pre>
 

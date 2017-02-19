@@ -4,7 +4,7 @@
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubAngularAppConfig`](../../../hooks#shrubangularappconfig)
+#### Implements hook [`shrubAngularAppConfig`](../../../../hooks#shrubangularappconfig)
 
 ```coffeescript
   registrar.registerHook 'shrubAngularAppConfig', -> [
@@ -23,7 +23,7 @@ Shrub defaults.
   ]
 ```
 
-#### Implements hook [`shrubAngularProvider`](../../../hooks#shrubangularprovider)
+#### Implements hook [`shrubAngularProvider`](../../../../hooks#shrubangularprovider)
 
 ```coffeescript
   registrar.registerHook 'shrubAngularProvider', -> [

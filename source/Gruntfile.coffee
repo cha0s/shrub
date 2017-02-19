@@ -177,13 +177,13 @@ Defaults to `'app'`.
     grunt.task.run 'build'
 ```
 
-#### Invoke hook [`shrubGruntConfig`](../hooks#shrubgruntconfig)
+#### Invoke hook [`shrubGruntConfig`](../../hooks#shrubgruntconfig)
 
 ```coffeescript
   pkgman.invoke 'shrubGruntConfig', gruntConfig, grunt
 ```
 
-#### Invoke hook [`shrubGruntConfigAlter`](../hooks#shrubgruntconfigalter)
+#### Invoke hook [`shrubGruntConfigAlter`](../../hooks#shrubgruntconfigalter)
 
 ```coffeescript
   pkgman.invoke 'shrubGruntConfigAlter', gruntConfig, grunt

@@ -6,7 +6,7 @@ config = require 'config'
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubAssetsMiddleware`](../../hooks#shrubassetsmiddleware)
+#### Implements hook [`shrubAssetsMiddleware`](../../../hooks#shrubassetsmiddleware)
 
 ```coffeescript
   registrar.registerHook 'shrubAssetsMiddleware', ->
@@ -27,7 +27,7 @@ exports.pkgmanRegister = (registrar) ->
     ]
 ```
 
-#### Implements hook [`shrubConfigClientAlter`](../../hooks#shrubconfigclientalter)
+#### Implements hook [`shrubConfigClientAlter`](../../../hooks#shrubconfigclientalter)
 
 ```coffeescript
   registrar.registerHook 'shrubConfigClientAlter', (req, config_) ->
@@ -37,7 +37,7 @@ exports.pkgmanRegister = (registrar) ->
     config_.set 'packageConfig:shrub-user', name: 'Anonymous'
 ```
 
-#### Implements hook [`shrubGruntConfig`](../../hooks#shrubgruntconfig)
+#### Implements hook [`shrubGruntConfig`](../../../hooks#shrubgruntconfig)
 
 ```coffeescript
   registrar.registerHook 'shrubGruntConfig', (gruntConfig, grunt) ->
@@ -113,7 +113,7 @@ Fork it.
     ]
 ```
 
-#### Implements hook [`shrubGruntConfigAlter`](../../hooks#shrubgruntconfigalter)
+#### Implements hook [`shrubGruntConfigAlter`](../../../hooks#shrubgruntconfigalter)
 
 ```coffeescript
   registrar.registerHook 'shrubGruntConfigAlter', (gruntConfig) ->

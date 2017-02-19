@@ -4,7 +4,7 @@
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubAngularDirective`](../../../../hooks#shrubangulardirective)
+#### Implements hook [`shrubAngularDirective`](../../../../../hooks#shrubangulardirective)
 
 ```coffeescript
   registrar.registerHook 'shrubAngularDirective', -> [
@@ -29,7 +29,7 @@ exports.pkgmanRegister = (registrar) ->
   assignToElement = (element, value) -> element.attr 'value', value
 ```
 
-#### Implements hook [`shrubFormWidgets`](../../../../hooks#shrubformwidgets)
+#### Implements hook [`shrubFormWidgets`](../../../../../hooks#shrubformwidgets)
 
 ```coffeescript
   registrar.registerHook 'shrubFormWidgets', ->

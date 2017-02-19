@@ -15,7 +15,7 @@ pkgman = require 'pkgman'
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubAssetsMiddleware`](../../hooks#shrubassetsmiddleware)
+#### Implements hook [`shrubAssetsMiddleware`](../../../hooks#shrubassetsmiddleware)
 
 ```coffeescript
   registrar.registerHook 'shrubAssetsMiddleware', ->
@@ -32,7 +32,7 @@ exports.pkgmanRegister = (registrar) ->
     ]
 ```
 
-#### Implements hook [`shrubHttpMiddleware`](../../hooks#shrubhttpmiddleware)
+#### Implements hook [`shrubHttpMiddleware`](../../../hooks#shrubhttpmiddleware)
 
 ```coffeescript
   registrar.registerHook 'shrubHttpMiddleware', (http) ->
@@ -76,7 +76,7 @@ Use a client's request object to render configuration.
 exports.renderPackageConfig = (req) ->
 ```
 
-#### Invoke hook [`shrubConfigClient`](../../hooks#shrubconfigclient)
+#### Invoke hook [`shrubConfigClient`](../../../hooks#shrubconfigclient)
 
 Allows packages to specify configuration that will be sent to the client.
 Implementations may return an object, or a promise that resolves to an
@@ -117,7 +117,7 @@ Merge in the subconfigs.
         }", value
 ```
 
-#### Invoke hook [`shrubConfigClientAlter`](../../hooks#shrubconfigclientalter)
+#### Invoke hook [`shrubConfigClientAlter`](../../../hooks#shrubconfigclientalter)
 
 ```coffeescript
     pkgman.invoke 'shrubConfigClientAlter', req, config_

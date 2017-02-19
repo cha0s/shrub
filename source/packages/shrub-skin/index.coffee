@@ -12,7 +12,7 @@ pkgman = require 'pkgman'
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubConfigClient`](../../hooks#shrubconfigclient)
+#### Implements hook [`shrubConfigClient`](../../../hooks#shrubconfigclient)
 
 ```coffeescript
   registrar.registerHook 'shrubConfigClient', ->
@@ -25,7 +25,7 @@ exports.pkgmanRegister = (registrar) ->
     assets: skinAssets
 ```
 
-#### Implements hook [`shrubHttpMiddleware`](../../hooks#shrubhttpmiddleware)
+#### Implements hook [`shrubHttpMiddleware`](../../../hooks#shrubhttpmiddleware)
 
 ```coffeescript
   registrar.registerHook 'path', 'shrubHttpMiddleware', (http) ->
@@ -46,7 +46,7 @@ express/static would have picked it up already.
     ]
 ```
 
-#### Implements hook [`shrubHttpMiddleware`](../../hooks#shrubhttpmiddleware)
+#### Implements hook [`shrubHttpMiddleware`](../../../hooks#shrubhttpmiddleware)
 
 ```coffeescript
   registrar.registerHook 'render', 'shrubHttpMiddleware', (http) ->
@@ -64,7 +64,7 @@ express/static would have picked it up already.
   ]
 ```
 
-#### Implements hook [`shrubConfigServer`](../../hooks#shrubconfigserver)
+#### Implements hook [`shrubConfigServer`](../../../hooks#shrubconfigserver)
 
 ```coffeescript
   registrar.registerHook 'shrubConfigServer', ->
@@ -292,7 +292,7 @@ Make script and stylesheet paths absolute.
         skinAssets[type][env][i] = "/#{asset}"
 ```
 
-#### Invoke hook [`shrubSkinAssets`](../../hooks#shrubskinassets)
+#### Invoke hook [`shrubSkinAssets`](../../../hooks#shrubskinassets)
 
 ```coffeescript
   pkgman.invokePackage skinKey, 'shrubSkinAssets', skinAssets

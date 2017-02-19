@@ -49,7 +49,7 @@ exports.Manager = class HttpManager
   initialize: ->
 ```
 
-#### Invoke hook [`shrubHttpRoutes`](../../hooks#shrubhttproutes)
+#### Invoke hook [`shrubHttpRoutes`](../../../hooks#shrubhttproutes)
 
 ```coffeescript
     httpDebugSilly '- Registering routes...'
@@ -128,7 +128,7 @@ Make absolutely sure the requests are finalized.
     httpMiddleware.push 'shrub-http'
 ```
 
-#### Invoke hook [`shrubHttpMiddleware`](../../hooks#shrubhttpmiddleware)
+#### Invoke hook [`shrubHttpMiddleware`](../../../hooks#shrubhttpmiddleware)
 
 Invoked every time an HTTP connection is established.
 

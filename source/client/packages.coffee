@@ -28,7 +28,7 @@ angular.module('shrub.packages', [
       debug = require('debug') 'shrub:angular'
 ```
 
-#### Invoke hook [`shrubAngularController`](../hooks#shrubangularcontroller)
+#### Invoke hook [`shrubAngularController`](../../hooks#shrubangularcontroller)
 
 ```coffeescript
       debug 'Registering controllers...'
@@ -41,7 +41,7 @@ angular.module('shrub.packages', [
       debug 'Controllers registered.'
 ```
 
-#### Invoke hook [`shrubAngularDirective`](../hooks#shrubangulardirective)
+#### Invoke hook [`shrubAngularDirective`](../../hooks#shrubangulardirective)
 
 ```coffeescript
       debug 'Registering directives...'
@@ -52,7 +52,7 @@ angular.module('shrub.packages', [
       debug 'Directives registered.'
 ```
 
-#### Invoke hook [`shrubAngularFilter`](../hooks#shrubangularfilter)
+#### Invoke hook [`shrubAngularFilter`](../../hooks#shrubangularfilter)
 
 ```coffeescript
       debug 'Registering filters...'
@@ -65,7 +65,7 @@ angular.module('shrub.packages', [
       debug 'Filters registered.'
 ```
 
-#### Invoke hook [`shrubAngularProvider`](../hooks#shrubangularprovider)
+#### Invoke hook [`shrubAngularProvider`](../../hooks#shrubangularprovider)
 
 ```coffeescript
       debug 'Registering providers...'
@@ -77,7 +77,7 @@ angular.module('shrub.packages', [
       debug 'Providers registered.'
 ```
 
-#### Invoke hook [`shrubAngularService`](../hooks#shrubangularservice)
+#### Invoke hook [`shrubAngularService`](../../hooks#shrubangularservice)
 
 ```coffeescript
       debug 'Registering services...'
@@ -183,7 +183,7 @@ Handle a bunch of internal Angular normalization.
           directive.$$isolateBindings = isolateBindingsFor directive
 ```
 
-#### Invoke hook [`shrubAngularDirectiveAlter`](../hooks#shrubangulardirectivealter)
+#### Invoke hook [`shrubAngularDirectiveAlter`](../../hooks#shrubangulardirectivealter)
 
 ```coffeescript
         for injectedDirective in pkgman.invokeFlat(

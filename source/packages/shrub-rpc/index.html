@@ -1672,13 +1672,13 @@ pkgman = null
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <a href="../../../hooks#shrubcoreprebootstrap"><code>shrubCorePreBootstrap</code></a></h4>
+<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <a href="../../../../hooks#shrubcoreprebootstrap"><code>shrubCorePreBootstrap</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubCorePreBootstrap', -&gt;
 
     pkgman = require 'pkgman'
 </code></pre>
 
-<h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <a href="../../../hooks#shrubcorebootstrapmiddleware"><code>shrubCoreBootstrapMiddleware</code></a></h4>
+<h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <a href="../../../../hooks#shrubcorebootstrapmiddleware"><code>shrubCoreBootstrapMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubCoreBootstrapMiddleware', -&gt;
 
     _ = require 'lodash'
@@ -1694,7 +1694,7 @@ exports.pkgmanRegister = (registrar) -&gt;
       (next) -&gt;
 </code></pre>
 
-<h4 id="invoke-hook-shrubrpcroutes">Invoke hook <a href="../../../hooks#shrubrpcroutes"><code>shrubRpcRoutes</code></a></h4>
+<h4 id="invoke-hook-shrubrpcroutes">Invoke hook <a href="../../../../hooks#shrubrpcroutes"><code>shrubRpcRoutes</code></a></h4>
 <pre><code class="coffeescript">        debug '- Registering RPC routess...'
         for route in _.flatten pkgman.invokeFlat 'shrubRpcRoutes'
 
@@ -1710,7 +1710,7 @@ exports.pkgmanRegister = (registrar) -&gt;
         debug '- RPC routes registered.'
 </code></pre>
 
-<h4 id="invoke-hook-shrubrpcroutesalter">Invoke hook <a href="../../../hooks#shrubrpcroutesalter"><code>shrubRpcRoutesAlter</code></a></h4>
+<h4 id="invoke-hook-shrubrpcroutesalter">Invoke hook <a href="../../../../hooks#shrubrpcroutesalter"><code>shrubRpcRoutesAlter</code></a></h4>
 <pre><code class="coffeescript">        pkgman.invoke 'shrubRpcRoutesAlter', routes
 </code></pre>
 
@@ -1730,7 +1730,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     ]
 </code></pre>
 
-<h4 id="implements-hook-shrubsocketconnectionmiddleware">Implements hook <a href="../../../hooks#shrubsocketconnectionmiddleware"><code>shrubSocketConnectionMiddleware</code></a></h4>
+<h4 id="implements-hook-shrubsocketconnectionmiddleware">Implements hook <a href="../../../../hooks#shrubsocketconnectionmiddleware"><code>shrubSocketConnectionMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubSocketConnectionMiddleware', -&gt;
 
     Promise = require 'bluebird'

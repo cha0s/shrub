@@ -4,7 +4,7 @@
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubSkinLink`](../../../hooks#shrubskinlink)
+#### Implements hook [`shrubSkinLink`](../../../../hooks#shrubskinlink)
 
 ```coffeescript
   registrar.registerHook 'shrubSkinLink', -> [
@@ -22,7 +22,7 @@ exports.pkgmanRegister = (registrar) ->
   ]
 ```
 
-#### Implements hook [`shrubSkinLink--DIRECTIVE`](../../../hooks#shrubskinlink--directive)
+#### Implements hook [`shrubSkinLink--DIRECTIVE`](../../../../hooks#shrubskinlink--directive)
 
 ```coffeescript
   registrar.registerHook 'shrubSkinLink--shrubFormWidgetGroup', -> [

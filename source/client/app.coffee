@@ -49,7 +49,7 @@ angular.module('shrub.core', coreDependencies)
     ({invoke}, {invokeFlat}) ->
 ```
 
-#### Invoke hook [`shrubAngularAppConfig`](../hooks#shrubangularappconfig)
+#### Invoke hook [`shrubAngularAppConfig`](../../hooks#shrubangularappconfig)
 
 Invoked when the Angular application is in the configuration phase.
 Implementations should return an [annotated
@@ -68,7 +68,7 @@ function](http://docs.angularjs.org/guide/di#dependency-annotation).
     ({invoke}, {invokeFlat}) ->
 ```
 
-#### Invoke hook [`shrubAngularAppRun`](../hooks#shrubangularapprun)
+#### Invoke hook [`shrubAngularAppRun`](../../hooks#shrubangularapprun)
 
 Invoked when the Angular application is the run phase. Implementations
 should return an [annotated

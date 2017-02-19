@@ -6,7 +6,7 @@ _ = require 'lodash'
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubAngularDirective`](../../../../hooks#shrubangulardirective)
+#### Implements hook [`shrubAngularDirective`](../../../../../hooks#shrubangulardirective)
 
 ```coffeescript
   registrar.registerHook 'shrubAngularDirective', -> [
@@ -84,7 +84,7 @@ exports.pkgmanRegister = (registrar) ->
       element.find('.checkbox input[name"' + k + '"]').prop 'checked', true
 ```
 
-#### Implements hook [`shrubFormWidgets`](../../../../hooks#shrubformwidgets)
+#### Implements hook [`shrubFormWidgets`](../../../../../hooks#shrubformwidgets)
 
 ```coffeescript
   registrar.registerHook 'shrubFormWidgets', ->

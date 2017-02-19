@@ -44,7 +44,7 @@ no real error occurred, but authorization failed.
     middleware = require 'middleware'
 ```
 
-#### Invoke hook [`shrubSocketConnectionMiddleware`](../../hooks#shrubsocketconnectionmiddleware)
+#### Invoke hook [`shrubSocketConnectionMiddleware`](../../../hooks#shrubsocketconnectionmiddleware)
 
 ```coffeescript
     @_connectionMiddleware = middleware.fromConfig(
@@ -52,7 +52,7 @@ no real error occurred, but authorization failed.
     )
 ```
 
-#### Invoke hook [`shrubSocketDisconnectionMiddleware`](../../hooks#shrubsocketdisconnectionmiddleware)
+#### Invoke hook [`shrubSocketDisconnectionMiddleware`](../../../hooks#shrubsocketdisconnectionmiddleware)
 
 ```coffeescript
     @_disconnectionMiddleware = middleware.fromConfig(

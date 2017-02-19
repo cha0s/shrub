@@ -1696,7 +1696,7 @@ httpMiddlewareDebug = require('debug') 'shrub-silly:http:middleware'
 <pre><code class="coffeescript">  initialize: -&gt;
 </code></pre>
 
-<h4 id="invoke-hook-shrubhttproutes">Invoke hook <a href="../../../hooks#shrubhttproutes"><code>shrubHttpRoutes</code></a></h4>
+<h4 id="invoke-hook-shrubhttproutes">Invoke hook <a href="../../../../hooks#shrubhttproutes"><code>shrubHttpRoutes</code></a></h4>
 <pre><code class="coffeescript">    httpDebugSilly '- Registering routes...'
     for routeList in pkgman.invokeFlat 'shrubHttpRoutes', this
 
@@ -1757,7 +1757,7 @@ httpMiddlewareDebug = require('debug') 'shrub-silly:http:middleware'
 <pre><code class="coffeescript">    httpMiddleware.push 'shrub-http'
 </code></pre>
 
-<h4 id="invoke-hook-shrubhttpmiddleware">Invoke hook <a href="../../../hooks#shrubhttpmiddleware"><code>shrubHttpMiddleware</code></a></h4>
+<h4 id="invoke-hook-shrubhttpmiddleware">Invoke hook <a href="../../../../hooks#shrubhttpmiddleware"><code>shrubHttpMiddleware</code></a></h4>
 <p>Invoked every time an HTTP connection is established.</p>
 <pre><code class="coffeescript">    @_middleware = middleware.fromHook(
       'shrubHttpMiddleware', httpMiddleware, this

@@ -1682,7 +1682,7 @@ skin = null
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <a href="../../../hooks#shrubcoreprebootstrap"><code>shrubCorePreBootstrap</code></a></h4>
+<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <a href="../../../../hooks#shrubcoreprebootstrap"><code>shrubCorePreBootstrap</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubCorePreBootstrap', -&gt;
 
     Promise = require 'bluebird'
@@ -1692,7 +1692,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     skin = require 'shrub-skin'
 </code></pre>
 
-<h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <a href="../../../hooks#shrubcorebootstrapmiddleware"><code>shrubCoreBootstrapMiddleware</code></a></h4>
+<h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <a href="../../../../hooks#shrubcorebootstrapmiddleware"><code>shrubCoreBootstrapMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubCoreBootstrapMiddleware', -&gt;
 
     nodemailer = require 'nodemailer'
@@ -1735,7 +1735,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     ]
 </code></pre>
 
-<h4 id="implements-hook-shrubconfigserver">Implements hook <a href="../../../hooks#shrubconfigserver"><code>shrubConfigServer</code></a></h4>
+<h4 id="implements-hook-shrubconfigserver">Implements hook <a href="../../../../hooks#shrubconfigserver"><code>shrubConfigServer</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubConfigServer', -&gt;
 </code></pre>
 
@@ -1751,7 +1751,7 @@ exports.pkgmanRegister = (registrar) -&gt;
       options: {}
 </code></pre>
 
-<h4 id="implements-hook-shrubreplcontext">Implements hook <a href="../../../hooks#shrubreplcontext"><code>shrubReplContext</code></a></h4>
+<h4 id="implements-hook-shrubreplcontext">Implements hook <a href="../../../../hooks#shrubreplcontext"><code>shrubReplContext</code></a></h4>
 <p>Provide mail sending to the REPL context.</p>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubReplContext', (context) -&gt;
     context.sendMail = exports.sendMail
@@ -1941,7 +1941,7 @@ modify the output.</em></p>
 <pre><code class="coffeescript">    $body = $('body').clone()
 </code></pre>
 
-<h4 id="invoke-hook-shrubnodemailerhtml">Invoke hook <a href="../../../hooks#shrubnodemailerhtml"><code>shrubNodemailerHtml</code></a></h4>
+<h4 id="invoke-hook-shrubnodemailerhtml">Invoke hook <a href="../../../../hooks#shrubnodemailerhtml"><code>shrubNodemailerHtml</code></a></h4>
 <p>Let the skin manage the mail HTML.</p>
 <pre><code class="coffeescript">    pkgman = require 'pkgman'
     pkgman.invokePackage skin.activeKey(), 'shrubNodemailerHtml', $body, html, $

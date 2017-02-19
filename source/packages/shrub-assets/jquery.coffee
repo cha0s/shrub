@@ -6,7 +6,7 @@ config = require 'config'
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubAssetsMiddleware`](../../hooks#shrubassetsmiddleware)
+#### Implements hook [`shrubAssetsMiddleware`](../../../hooks#shrubassetsmiddleware)
 
 ```coffeescript
   registrar.registerHook 'shrubAssetsMiddleware', ->

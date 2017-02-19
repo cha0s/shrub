@@ -73,7 +73,7 @@ exports.LimiterMiddleware = class LimiterMiddleware
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubCorePreBootstrap`](../../hooks#shrubcoreprebootstrap)
+#### Implements hook [`shrubCorePreBootstrap`](../../../hooks#shrubcoreprebootstrap)
 
 ```coffeescript
   registrar.registerHook 'shrubCorePreBootstrap', ->
@@ -81,7 +81,7 @@ exports.pkgmanRegister = (registrar) ->
     orm = require 'shrub-orm'
 ```
 
-#### Implements hook [`shrubOrmCollections`](../../hooks#shrubormcollections)
+#### Implements hook [`shrubOrmCollections`](../../../hooks#shrubormcollections)
 
 ```coffeescript
   registrar.registerHook 'shrubOrmCollections', ->
@@ -192,7 +192,7 @@ exports.pkgmanRegister = (registrar) ->
     'shrub-limit-score': LimitScore
 ```
 
-#### Implements hook [`shrubRpcRoutesAlter`](../../hooks#shrubrpcroutesalter)
+#### Implements hook [`shrubRpcRoutesAlter`](../../../hooks#shrubrpcroutesalter)
 
 Allow RPC routes definitions to specify rate limiters.
 
@@ -250,7 +250,7 @@ Add a validator, where we'll check the threshold.
 
 Allow packages to check and optionally skip the limiter.
 
-#### Invoke hook [`shrubLimiterCheck`](../../hooks#shrublimitercheck)
+#### Invoke hook [`shrubLimiterCheck`](../../../hooks#shrublimitercheck)
 
 ```coffeescript
           for rule in pkgman.invokeFlat 'shrubLimiterCheck', req
@@ -282,7 +282,7 @@ Accrue a hit and check the threshold.
             return next() unless isLimited
 ```
 
-#### Invoke hook [`shrubVillianyReport`](../../hooks#shrubvillianyreport)
+#### Invoke hook [`shrubVillianyReport`](../../../hooks#shrubvillianyreport)
 
 ```coffeescript
             Promise.all(
@@ -306,7 +306,7 @@ Only send an error if the user wasn't banned for this.
           ).catch next
 ```
 
-#### Implements hook [`shrubTransmittableErrors`](../../hooks#shrubtransmittableerrors)
+#### Implements hook [`shrubTransmittableErrors`](../../../hooks#shrubtransmittableerrors)
 
 Just defer to client, where the error is defined.
 

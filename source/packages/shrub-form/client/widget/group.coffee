@@ -4,7 +4,7 @@
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubAngularDirective`](../../../../hooks#shrubangulardirective)
+#### Implements hook [`shrubAngularDirective`](../../../../../hooks#shrubangulardirective)
 
 ```coffeescript
   registrar.registerHook 'shrubAngularDirective', -> [
@@ -83,7 +83,7 @@ Inherit method.
   ]
 ```
 
-#### Implements hook [`shrubFormWidgets`](../../../../hooks#shrubformwidgets)
+#### Implements hook [`shrubFormWidgets`](../../../../../hooks#shrubformwidgets)
 
 ```coffeescript
   registrar.registerHook 'shrubFormWidgets', ->

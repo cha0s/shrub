@@ -1674,7 +1674,7 @@ pkgman = require 'pkgman'
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubconfigclient">Implements hook <a href="../../../hooks#shrubconfigclient"><code>shrubConfigClient</code></a></h4>
+<h4 id="implements-hook-shrubconfigclient">Implements hook <a href="../../../../hooks#shrubconfigclient"><code>shrubConfigClient</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubConfigClient', -&gt;
 
     skinAssets = {}
@@ -1685,7 +1685,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     assets: skinAssets
 </code></pre>
 
-<h4 id="implements-hook-shrubhttpmiddleware">Implements hook <a href="../../../hooks#shrubhttpmiddleware"><code>shrubHttpMiddleware</code></a></h4>
+<h4 id="implements-hook-shrubhttpmiddleware">Implements hook <a href="../../../../hooks#shrubhttpmiddleware"><code>shrubHttpMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'path', 'shrubHttpMiddleware', (http) -&gt;
 
     label: 'Skin path handling'
@@ -1702,7 +1702,7 @@ express/static would have picked it up already.</p>
     ]
 </code></pre>
 
-<h4 id="implements-hook-shrubhttpmiddleware_1">Implements hook <a href="../../../hooks#shrubhttpmiddleware"><code>shrubHttpMiddleware</code></a></h4>
+<h4 id="implements-hook-shrubhttpmiddleware_1">Implements hook <a href="../../../../hooks#shrubhttpmiddleware"><code>shrubHttpMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'render', 'shrubHttpMiddleware', (http) -&gt;
 
     label: 'Render skinned page HTML'
@@ -1718,7 +1718,7 @@ express/static would have picked it up already.</p>
   ]
 </code></pre>
 
-<h4 id="implements-hook-shrubconfigserver">Implements hook <a href="../../../hooks#shrubconfigserver"><code>shrubConfigServer</code></a></h4>
+<h4 id="implements-hook-shrubconfigserver">Implements hook <a href="../../../../hooks#shrubconfigserver"><code>shrubConfigServer</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubConfigServer', -&gt;
 </code></pre>
 
@@ -1912,7 +1912,7 @@ for production.</p>
         skinAssets[type][env][i] = &quot;/#{asset}&quot;
 </code></pre>
 
-<h4 id="invoke-hook-shrubskinassets">Invoke hook <a href="../../../hooks#shrubskinassets"><code>shrubSkinAssets</code></a></h4>
+<h4 id="invoke-hook-shrubskinassets">Invoke hook <a href="../../../../hooks#shrubskinassets"><code>shrubSkinAssets</code></a></h4>
 <pre><code class="coffeescript">  pkgman.invokePackage skinKey, 'shrubSkinAssets', skinAssets
 
   return skinAssets

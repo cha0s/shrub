@@ -1665,7 +1665,7 @@ config = require 'config'
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubangularahrefsanitizationwhitelist">Implements hook <a href="../../../../hooks#shrubangularahrefsanitizationwhitelist"><code>shrubAngularAHrefSanitizationWhitelist</code></a></h4>
+<h4 id="implements-hook-shrubangularahrefsanitizationwhitelist">Implements hook <a href="../../../../../hooks#shrubangularahrefsanitizationwhitelist"><code>shrubAngularAHrefSanitizationWhitelist</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAngularAHrefSanitizationWhitelist', -&gt; [
 </code></pre>
 
@@ -1678,13 +1678,13 @@ exports.pkgmanRegister = (registrar) -&gt;
   ]
 </code></pre>
 
-<h4 id="implements-hook-shrubangularappconfig">Implements hook <a href="../../../../hooks#shrubangularappconfig"><code>shrubAngularAppConfig</code></a></h4>
+<h4 id="implements-hook-shrubangularappconfig">Implements hook <a href="../../../../../hooks#shrubangularappconfig"><code>shrubAngularAppConfig</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAngularAppConfig', -&gt; [
     '$compileProvider', '$injector', '$provide', '$routeProvider', '$locationProvider', 'shrub-pkgmanProvider'
     ($compileProvider, $injector, $provide, $routeProvider, $locationProvider, pkgmanProvider) -&gt;
 </code></pre>
 
-<h4 id="invoke-hook-shrubangularahrefsanitizationwhitelist">Invoke hook <a href="../../../../hooks#shrubangularahrefsanitizationwhitelist"><code>shrubAngularAHrefSanitizationWhitelist</code></a></h4>
+<h4 id="invoke-hook-shrubangularahrefsanitizationwhitelist">Invoke hook <a href="../../../../../hooks#shrubangularahrefsanitizationwhitelist"><code>shrubAngularAHrefSanitizationWhitelist</code></a></h4>
 <pre><code class="coffeescript">      regexes = []
       for regexes_ in pkgmanProvider.invokeFlat(
         'shrubAngularAHrefSanitizationWhitelist'
@@ -1803,7 +1803,7 @@ with the resolved values from the promise.</p>
       ]
 </code></pre>
 
-<h4 id="invoke-hook-shrubangularroutes">Invoke hook <a href="../../../../hooks#shrubangularroutes"><code>shrubAngularRoutes</code></a></h4>
+<h4 id="invoke-hook-shrubangularroutes">Invoke hook <a href="../../../../../hooks#shrubangularroutes"><code>shrubAngularRoutes</code></a></h4>
 <p>Allow packages to define routes in the Angular application.</p>
 <pre><code class="coffeescript">      routes = {}
       for route in _.flatten pkgmanProvider.invokeFlat 'shrubAngularRoutes'

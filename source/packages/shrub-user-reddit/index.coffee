@@ -22,7 +22,7 @@ clientModule = require './client'
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubConfigServer`](../../hooks#shrubconfigserver)
+#### Implements hook [`shrubConfigServer`](../../../hooks#shrubconfigserver)
 
 ```coffeescript
   registrar.registerHook 'shrubConfigServer', ->
@@ -69,7 +69,7 @@ How long the authorization should persist.
       duration: 'temporary'
 ```
 
-#### Implements hook [`shrubCorePreBootstrap`](../../hooks#shrubcoreprebootstrap)
+#### Implements hook [`shrubCorePreBootstrap`](../../../hooks#shrubcoreprebootstrap)
 
 ```coffeescript
   registrar.registerHook 'shrubCorePreBootstrap', ->
@@ -79,7 +79,7 @@ How long the authorization should persist.
     Promise = require 'bluebird'
 ```
 
-#### Implements hook [`shrubUserLoginStrategies`](../../hooks#shrubuserloginstrategies)
+#### Implements hook [`shrubUserLoginStrategies`](../../../hooks#shrubuserloginstrategies)
 
 ```coffeescript
   registrar.registerHook 'shrubUserLoginStrategies', ->
@@ -132,7 +132,7 @@ login strategy.
     return strategy
 ```
 
-#### Implements hook [`shrubHttpRoutes`](../../hooks#shrubhttproutes)
+#### Implements hook [`shrubHttpRoutes`](../../../hooks#shrubhttproutes)
 
 ```coffeescript
   registrar.registerHook 'shrubHttpRoutes', (http) ->
@@ -198,7 +198,7 @@ client; it's not a server error.
     return routes
 ```
 
-#### Implements hook [`shrubUserRedactors`](../../hooks#shrubuserredactors)
+#### Implements hook [`shrubUserRedactors`](../../../hooks#shrubuserredactors)
 
 ```coffeescript
   registrar.registerHook 'shrubUserRedactors', ->
@@ -213,7 +213,7 @@ client; it's not a server error.
     ]
 ```
 
-#### Implements hook [`shrubOrmCollections`](../../hooks#shrubormcollections)
+#### Implements hook [`shrubOrmCollections`](../../../hooks#shrubormcollections)
 
 ```coffeescript
   registrar.registerHook 'shrubOrmCollections', ->

@@ -13,7 +13,7 @@ clientModule = require './client'
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubCorePreBootstrap`](../../hooks#shrubcoreprebootstrap)
+#### Implements hook [`shrubCorePreBootstrap`](../../../hooks#shrubcoreprebootstrap)
 
 ```coffeescript
   registrar.registerHook 'shrubCorePreBootstrap', ->
@@ -22,7 +22,7 @@ exports.pkgmanRegister = (registrar) ->
     Promise = require 'bluebird'
 ```
 
-#### Implements hook [`shrubUserLoginStrategies`](../../hooks#shrubuserloginstrategies)
+#### Implements hook [`shrubUserLoginStrategies`](../../../hooks#shrubuserloginstrategies)
 
 ```coffeescript
   registrar.registerHook 'shrubUserLoginStrategies', ->
@@ -100,7 +100,7 @@ Implement a [Passport](http://passportjs.org/) login strategy.
     return strategy
 ```
 
-#### Implements hook [`shrubUserRedactors`](../../hooks#shrubuserredactors)
+#### Implements hook [`shrubUserRedactors`](../../../hooks#shrubuserredactors)
 
 ```coffeescript
   registrar.registerHook 'shrubUserRedactors', ->
@@ -132,7 +132,7 @@ Decrypt the e-mail if redacting for the same user.
     ]
 ```
 
-#### Implements hook [`shrubOrmCollections`](../../hooks#shrubormcollections)
+#### Implements hook [`shrubOrmCollections`](../../../hooks#shrubormcollections)
 
 ```coffeescript
   registrar.registerHook 'shrubOrmCollections', ->
@@ -265,7 +265,7 @@ Generate a one-time login token.
     collections
 ```
 
-#### Implements hook [`shrubTransmittableErrors`](../../hooks#shrubtransmittableerrors)
+#### Implements hook [`shrubTransmittableErrors`](../../../hooks#shrubtransmittableerrors)
 
 ```coffeescript
   registrar.registerHook 'shrubTransmittableErrors', clientModule.shrubTransmittableErrors

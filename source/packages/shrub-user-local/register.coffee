@@ -6,7 +6,7 @@ orm = null
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubCorePreBootstrap`](../../hooks#shrubcoreprebootstrap)
+#### Implements hook [`shrubCorePreBootstrap`](../../../hooks#shrubcoreprebootstrap)
 
 ```coffeescript
   registrar.registerHook 'shrubCorePreBootstrap', ->
@@ -14,7 +14,7 @@ exports.pkgmanRegister = (registrar) ->
     orm = require 'shrub-orm'
 ```
 
-#### Implements hook [`shrubRpcRoutes`](../../hooks#shrubrpcroutes)
+#### Implements hook [`shrubRpcRoutes`](../../../hooks#shrubrpcroutes)
 
 ```coffeescript
   registrar.registerHook 'shrubRpcRoutes', ->
@@ -103,7 +103,7 @@ link.
     return routes
 ```
 
-#### Implements hook [`shrubReplContext`](../../hooks#shrubreplcontext)
+#### Implements hook [`shrubReplContext`](../../../hooks#shrubreplcontext)
 
 ```coffeescript
     registrar.registerHook 'shrubReplContext', (context) ->

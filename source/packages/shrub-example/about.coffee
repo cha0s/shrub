@@ -8,7 +8,7 @@ fs = require 'fs'
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubHttpRoutes`](../../hooks#shrubhttproutes)
+#### Implements hook [`shrubHttpRoutes`](../../../hooks#shrubhttproutes)
 
 ```coffeescript
   registrar.registerHook 'shrubHttpRoutes', (http) ->

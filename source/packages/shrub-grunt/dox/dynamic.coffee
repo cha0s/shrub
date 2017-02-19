@@ -166,7 +166,7 @@ Comment.
           matches[1]
         } hook [`#{
           matches[2]
-        }`](#{
+        }`](../#{
           path.dirname(@filename).split('/').map(-> '..').join '/'
         }/hooks##{
           matches[2].toLowerCase()

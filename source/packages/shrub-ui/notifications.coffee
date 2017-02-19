@@ -10,7 +10,7 @@ notificationQueues = {}
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubCorePreBootstrap`](../../hooks#shrubcoreprebootstrap)
+#### Implements hook [`shrubCorePreBootstrap`](../../../hooks#shrubcoreprebootstrap)
 
 ```coffeescript
   registrar.registerHook 'shrubCorePreBootstrap', ->
@@ -20,7 +20,7 @@ exports.pkgmanRegister = (registrar) ->
     orm = require 'shrub-orm'
 ```
 
-#### Implements hook [`shrubCoreBootstrapMiddleware`](../../hooks#shrubcorebootstrapmiddleware)
+#### Implements hook [`shrubCoreBootstrapMiddleware`](../../../hooks#shrubcorebootstrapmiddleware)
 
 ```coffeescript
   registrar.registerHook 'shrubCoreBootstrapMiddleware', ->
@@ -33,7 +33,7 @@ exports.pkgmanRegister = (registrar) ->
       (next) ->
 ```
 
-#### Invoke hook [`shrubUiNotificationQueues`](../../hooks#shrubuinotificationqueues)
+#### Invoke hook [`shrubUiNotificationQueues`](../../../hooks#shrubuinotificationqueues)
 
 ```coffeescript
         for path, queues of pkgman.invoke 'shrubUiNotificationQueues'
@@ -77,7 +77,7 @@ Broadcast for each queue.
         req.socket.broadcast.to(channel).emit event, data
 ```
 
-#### Implements hook [`shrubOrmCollections`](../../hooks#shrubormcollections)
+#### Implements hook [`shrubOrmCollections`](../../../hooks#shrubormcollections)
 
 ```coffeescript
   registrar.registerHook 'shrubOrmCollections', ->
@@ -283,7 +283,7 @@ Remove unnecessary details.
     'shrub-ui-notification': Notification
 ```
 
-#### Implements hook [`shrubConfigClient`](../../hooks#shrubconfigclient)
+#### Implements hook [`shrubConfigClient`](../../../hooks#shrubconfigclient)
 
 ```coffeescript
   registrar.registerHook 'shrubConfigClient', (req) ->
@@ -349,7 +349,7 @@ Ensure that the requested notification is owned by the request.
     ).catch next
 ```
 
-#### Implements hook [`shrubRpcRoutes`](../../hooks#shrubrpcroutes)
+#### Implements hook [`shrubRpcRoutes`](../../../hooks#shrubrpcroutes)
 
 ```coffeescript
   registrar.registerHook 'shrubRpcRoutes', ->

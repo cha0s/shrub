@@ -4,7 +4,7 @@
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubGruntConfig`](../../../hooks#shrubgruntconfig)
+#### Implements hook [`shrubGruntConfig`](../../../../hooks#shrubgruntconfig)
 
 ```coffeescript
   registrar.registerHook 'shrubGruntConfig', (gruntConfig) ->
@@ -166,7 +166,7 @@ exports.pkgmanRegister = (registrar) ->
     gruntConfig.registerTask 'build', ['build:tests']
 ```
 
-#### Implements hook [`shrubGruntConfigAlter`](../../../hooks#shrubgruntconfigalter)
+#### Implements hook [`shrubGruntConfigAlter`](../../../../hooks#shrubgruntconfigalter)
 
 ```coffeescript
   registrar.registerHook 'shrubGruntConfigAlter', (gruntConfig) ->

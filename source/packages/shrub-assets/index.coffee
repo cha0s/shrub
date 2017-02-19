@@ -10,7 +10,7 @@ assets = null
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubAssetsMiddleware`](../../hooks#shrubassetsmiddleware)
+#### Implements hook [`shrubAssetsMiddleware`](../../../hooks#shrubassetsmiddleware)
 
 ```coffeescript
   registrar.registerHook 'shrubAssetsMiddleware', ->
@@ -32,7 +32,7 @@ exports.pkgmanRegister = (registrar) ->
     ]
 ```
 
-#### Implements hook [`shrubGruntConfig`](../../hooks#shrubgruntconfig)
+#### Implements hook [`shrubGruntConfig`](../../../hooks#shrubgruntconfig)
 
 ```coffeescript
   registrar.registerHook 'shrubGruntConfig', (gruntConfig) ->
@@ -46,7 +46,7 @@ exports.pkgmanRegister = (registrar) ->
     gruntConfig.registerTask 'build', ['build:shrub-assets']
 ```
 
-#### Implements hook [`shrubConfigServer`](../../hooks#shrubconfigserver)
+#### Implements hook [`shrubConfigServer`](../../../hooks#shrubconfigserver)
 
 ```coffeescript
   registrar.registerHook 'shrubConfigServer', ->
@@ -76,7 +76,7 @@ exports.assets = ->
   assets = scripts: [], styleSheets: []
 ```
 
-#### Invoke hook [`shrubAssetsMiddleware`](../../hooks#shrubassetsmiddleware)
+#### Invoke hook [`shrubAssetsMiddleware`](../../../hooks#shrubassetsmiddleware)
 
 ```coffeescript
   debug '- Loading asset middleware...'
