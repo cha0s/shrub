@@ -4,7 +4,7 @@
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubUserLoginStrategies`](../../../../hooks#shrubuserloginstrategies)
+#### Implements hook [`shrubUserLoginStrategies`](../../../hooks#shrubuserloginstrategies)
 
 ```coffeescript
   registrar.registerHook 'shrubUserLoginStrategies', ->

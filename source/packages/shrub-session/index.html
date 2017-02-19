@@ -1660,7 +1660,7 @@
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubormcollections">Implements hook <a href="../../../../hooks#shrubormcollections"><code>shrubOrmCollections</code></a></h4>
+<h4 id="implements-hook-shrubormcollections">Implements hook <a href="../../../hooks#shrubormcollections"><code>shrubOrmCollections</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubOrmCollections', -&gt;
 
     Session =
@@ -1688,7 +1688,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     'shrub-session': Session
 </code></pre>
 
-<h4 id="implements-hook-shrubauditfingerprint">Implements hook <a href="../../../../hooks#shrubauditfingerprint"><code>shrubAuditFingerprint</code></a></h4>
+<h4 id="implements-hook-shrubauditfingerprint">Implements hook <a href="../../../hooks#shrubauditfingerprint"><code>shrubAuditFingerprint</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAuditFingerprint', (req) -&gt;
 </code></pre>
 
@@ -1696,7 +1696,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 <pre><code class="coffeescript">    session: if req?.session? then req.session.id
 </code></pre>
 
-<h4 id="implements-hook-shrubconfigserver">Implements hook <a href="../../../../hooks#shrubconfigserver"><code>shrubConfigServer</code></a></h4>
+<h4 id="implements-hook-shrubconfigserver">Implements hook <a href="../../../hooks#shrubconfigserver"><code>shrubConfigServer</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubConfigServer', -&gt;
 </code></pre>
 
@@ -1716,7 +1716,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 <pre><code class="coffeescript">      maxAge: 1000 * 60 * 60 * 24 * 14
 </code></pre>
 
-<h4 id="implements-hook-shrubsocketconnectionmiddleware">Implements hook <a href="../../../../hooks#shrubsocketconnectionmiddleware"><code>shrubSocketConnectionMiddleware</code></a></h4>
+<h4 id="implements-hook-shrubsocketconnectionmiddleware">Implements hook <a href="../../../hooks#shrubsocketconnectionmiddleware"><code>shrubSocketConnectionMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubSocketConnectionMiddleware', -&gt;
 
     label: 'Join channel for session'

@@ -6,7 +6,7 @@
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubGruntConfig`](../../../hooks#shrubgruntconfig)
+#### Implements hook [`shrubGruntConfig`](../../hooks#shrubgruntconfig)
 
 ```coffeescript
   registrar.registerHook 'shrubGruntConfig', (gruntConfig) ->
@@ -20,7 +20,7 @@ exports.pkgmanRegister = (registrar) ->
     gruntConfig.registerTask 'build', ['build:shrub-html5-local-storage']
 ```
 
-#### Implements hook [`shrubAssetsMiddleware`](../../../hooks#shrubassetsmiddleware)
+#### Implements hook [`shrubAssetsMiddleware`](../../hooks#shrubassetsmiddleware)
 
 ```coffeescript
   registrar.registerHook 'shrubAssetsMiddleware', ->
@@ -42,7 +42,7 @@ exports.pkgmanRegister = (registrar) ->
     ]
 ```
 
-#### Implements hook [`shrubAngularPackageDependencies`](../../../hooks#shrubangularpackagedependencies)
+#### Implements hook [`shrubAngularPackageDependencies`](../../hooks#shrubangularpackagedependencies)
 
 ```coffeescript
   registrar.registerHook 'shrubAngularPackageDependencies', -> [

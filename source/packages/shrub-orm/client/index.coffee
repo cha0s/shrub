@@ -13,7 +13,7 @@ collections = {}
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubAngularService`](../../../../hooks#shrubangularservice)
+#### Implements hook [`shrubAngularService`](../../../hooks#shrubangularservice)
 
 ```coffeescript
   registrar.registerHook 'shrubAngularService', -> [
@@ -49,7 +49,7 @@ exports.pkgmanRegister = (registrar) ->
 exports.initialize = ->
 ```
 
-#### Invoke hook [`shrubOrmCollections`](../../../../hooks#shrubormcollections)
+#### Invoke hook [`shrubOrmCollections`](../../../hooks#shrubormcollections)
 
 ```coffeescript
   collections_ = {}
@@ -104,7 +104,7 @@ Handle dates.
         model
 ```
 
-#### Invoke hook [`shrubOrmCollectionsAlter`](../../../../hooks#shrubormcollectionsalter)
+#### Invoke hook [`shrubOrmCollectionsAlter`](../../../hooks#shrubormcollectionsalter)
 
 ```coffeescript
   pkgman.invoke 'shrubOrmCollectionsAlter', collections_

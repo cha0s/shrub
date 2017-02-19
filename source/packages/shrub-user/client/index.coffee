@@ -8,19 +8,19 @@
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubOrmCollections`](../../../../hooks#shrubormcollections)
+#### Implements hook [`shrubOrmCollections`](../../../hooks#shrubormcollections)
 
 ```coffeescript
   registrar.registerHook 'shrubOrmCollections', exports.shrubOrmCollections
 ```
 
-#### Implements hook [`shrubOrmCollectionsAlter`](../../../../hooks#shrubormcollectionsalter)
+#### Implements hook [`shrubOrmCollectionsAlter`](../../../hooks#shrubormcollectionsalter)
 
 ```coffeescript
   registrar.registerHook 'shrubOrmCollectionsAlter', exports.shrubOrmCollectionsAlter
 ```
 
-#### Implements hook [`shrubAngularDirective`](../../../../hooks#shrubangulardirective)
+#### Implements hook [`shrubAngularDirective`](../../../hooks#shrubangulardirective)
 
 ```coffeescript
   registrar.registerHook 'actions', 'shrubAngularDirective', -> [
@@ -68,7 +68,7 @@ exports.pkgmanRegister = (registrar) ->
   ]
 ```
 
-#### Implements hook [`shrubAngularService`](../../../../hooks#shrubangularservice)
+#### Implements hook [`shrubAngularService`](../../../hooks#shrubangularservice)
 
 ```coffeescript
   registrar.registerHook 'shrubAngularService', -> [
@@ -146,7 +146,7 @@ Log a user out if we get a socket call.
   ]
 ```
 
-#### Implements hook [`shrubTransmittableErrors`](../../../../hooks#shrubtransmittableerrors)
+#### Implements hook [`shrubTransmittableErrors`](../../../hooks#shrubtransmittableerrors)
 
 ```coffeescript
   registrar.registerHook 'shrubTransmittableErrors', exports.shrubTransmittableErrors

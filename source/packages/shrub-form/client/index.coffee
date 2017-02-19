@@ -12,7 +12,7 @@ pkgman = require 'pkgman'
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubAngularDirective`](../../../../hooks#shrubangulardirective)
+#### Implements hook [`shrubAngularDirective`](../../../hooks#shrubangulardirective)
 
 ```coffeescript
   registrar.registerHook 'shrubAngularDirective', -> [
@@ -77,13 +77,13 @@ Call all the form submission handlers.
               $exceptionHandler error
 ```
 
-#### Invoke hook [`shrubFormAlter`](../../../../hooks#shrubformalter)
+#### Invoke hook [`shrubFormAlter`](../../../hooks#shrubformalter)
 
 ```coffeescript
           pkgman.invokeFlat 'shrubFormAlter', form
 ```
 
-#### Invoke hook [`shrubFormFormKeyAlter`](../../../../hooks#shrubformformkeyalter)
+#### Invoke hook [`shrubFormFormKeyAlter`](../../../hooks#shrubformformkeyalter)
 
 ```coffeescript
           pkgman.invokeFlat "shrubForm#{
@@ -196,7 +196,7 @@ Register the form in the system.
   ]
 ```
 
-#### Implements hook [`shrubAngularService`](../../../../hooks#shrubangularservice)
+#### Implements hook [`shrubAngularService`](../../../hooks#shrubangularservice)
 
 ```coffeescript
   registrar.registerHook 'shrubAngularService', -> [
@@ -221,7 +221,7 @@ Register the form in the system.
         service.forms[key] = scope: scope, element: element
 ```
 
-#### Invoke hook [`shrubFormWidgets`](../../../../hooks#shrubformwidgets)
+#### Invoke hook [`shrubFormWidgets`](../../../hooks#shrubformwidgets)
 
 ```coffeescript
       for formWidgets in pkgman.invokeFlat 'shrubFormWidgets'

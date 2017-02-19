@@ -1666,7 +1666,7 @@ pkgman = require 'pkgman'
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubconfigclient">Implements hook <a href="../../../../hooks#shrubconfigclient"><code>shrubConfigClient</code></a></h4>
+<h4 id="implements-hook-shrubconfigclient">Implements hook <a href="../../../hooks#shrubconfigclient"><code>shrubConfigClient</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubConfigClient', (req) -&gt;
 </code></pre>
 
@@ -1693,7 +1693,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 <pre><code class="coffeescript">    siteName: config.get 'packageConfig:shrub-core:siteName'
 </code></pre>
 
-<h4 id="implements-hook-shrubauditfingerprint">Implements hook <a href="../../../../hooks#shrubauditfingerprint"><code>shrubAuditFingerprint</code></a></h4>
+<h4 id="implements-hook-shrubauditfingerprint">Implements hook <a href="../../../hooks#shrubauditfingerprint"><code>shrubAuditFingerprint</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAuditFingerprint', (req) -&gt;
 </code></pre>
 
@@ -1701,7 +1701,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 <pre><code class="coffeescript">    ip: req?.normalizedIp
 </code></pre>
 
-<h4 id="implements-hook-shrubhttpmiddleware">Implements hook <a href="../../../../hooks#shrubhttpmiddleware"><code>shrubHttpMiddleware</code></a></h4>
+<h4 id="implements-hook-shrubhttpmiddleware">Implements hook <a href="../../../hooks#shrubhttpmiddleware"><code>shrubHttpMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubHttpMiddleware', (http) -&gt;
 
     label: 'Normalize request variables'
@@ -1721,7 +1721,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     ]
 </code></pre>
 
-<h4 id="implements-hook-shrubconfigserver">Implements hook <a href="../../../../hooks#shrubconfigserver"><code>shrubConfigServer</code></a></h4>
+<h4 id="implements-hook-shrubconfigserver">Implements hook <a href="../../../hooks#shrubconfigserver"><code>shrubConfigServer</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubConfigServer', -&gt;
 </code></pre>
 
@@ -1762,7 +1762,7 @@ the master.</p>
 <pre><code class="coffeescript">    workers: 0
 </code></pre>
 
-<h4 id="implements-hook-shrubrpcroutesalter">Implements hook <a href="../../../../hooks#shrubrpcroutesalter"><code>shrubRpcRoutesAlter</code></a></h4>
+<h4 id="implements-hook-shrubrpcroutesalter">Implements hook <a href="../../../hooks#shrubrpcroutesalter"><code>shrubRpcRoutesAlter</code></a></h4>
 <p>Patch in express-specific variables that will be required by middleware.</p>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubRpcRoutesAlter', (routes) -&gt;
 
@@ -1784,7 +1784,7 @@ the master.</p>
     return
 </code></pre>
 
-<h4 id="implements-hook-shrubsocketconnectionmiddleware">Implements hook <a href="../../../../hooks#shrubsocketconnectionmiddleware"><code>shrubSocketConnectionMiddleware</code></a></h4>
+<h4 id="implements-hook-shrubsocketconnectionmiddleware">Implements hook <a href="../../../hooks#shrubsocketconnectionmiddleware"><code>shrubSocketConnectionMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubSocketConnectionMiddleware', -&gt;
 
     label: 'Normalize request variables'

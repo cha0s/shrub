@@ -21,7 +21,7 @@ afterLogoutMiddleware = null
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubCorePreBootstrap`](../../../hooks#shrubcoreprebootstrap)
+#### Implements hook [`shrubCorePreBootstrap`](../../hooks#shrubcoreprebootstrap)
 
 ```coffeescript
   registrar.registerHook 'shrubCorePreBootstrap', ->
@@ -31,7 +31,7 @@ exports.pkgmanRegister = (registrar) ->
     Promise = require 'bluebird'
 ```
 
-#### Implements hook [`shrubCoreBootstrapMiddleware`](../../../hooks#shrubcorebootstrapmiddleware)
+#### Implements hook [`shrubCoreBootstrapMiddleware`](../../hooks#shrubcorebootstrapmiddleware)
 
 ```coffeescript
   registrar.registerHook 'shrubCoreBootstrapMiddleware', ->
@@ -44,7 +44,7 @@ exports.pkgmanRegister = (registrar) ->
       (next) ->
 ```
 
-#### Invoke hook [`shrubUserBeforeLoginMiddleware`](../../../hooks#shrubuserbeforeloginmiddleware)
+#### Invoke hook [`shrubUserBeforeLoginMiddleware`](../../hooks#shrubuserbeforeloginmiddleware)
 
 ```coffeescript
         beforeLoginMiddleware = middleware.fromConfig(
@@ -52,7 +52,7 @@ exports.pkgmanRegister = (registrar) ->
         )
 ```
 
-#### Invoke hook [`shrubUserAfterLoginMiddleware`](../../../hooks#shrubuserafterloginmiddleware)
+#### Invoke hook [`shrubUserAfterLoginMiddleware`](../../hooks#shrubuserafterloginmiddleware)
 
 ```coffeescript
         afterLoginMiddleware = middleware.fromConfig(
@@ -60,7 +60,7 @@ exports.pkgmanRegister = (registrar) ->
         )
 ```
 
-#### Invoke hook [`shrubUserBeforeLogoutMiddleware`](../../../hooks#shrubuserbeforelogoutmiddleware)
+#### Invoke hook [`shrubUserBeforeLogoutMiddleware`](../../hooks#shrubuserbeforelogoutmiddleware)
 
 ```coffeescript
         beforeLogoutMiddleware = middleware.fromConfig(
@@ -68,7 +68,7 @@ exports.pkgmanRegister = (registrar) ->
         )
 ```
 
-#### Invoke hook [`shrubUserAfterLogoutMiddleware`](../../../hooks#shrubuserafterlogoutmiddleware)
+#### Invoke hook [`shrubUserAfterLogoutMiddleware`](../../hooks#shrubuserafterlogoutmiddleware)
 
 ```coffeescript
         afterLogoutMiddleware = middleware.fromConfig(
@@ -76,7 +76,7 @@ exports.pkgmanRegister = (registrar) ->
         )
 ```
 
-#### Invoke hook [`shrubUserLoginStrategies`](../../../hooks#shrubuserloginstrategies)
+#### Invoke hook [`shrubUserLoginStrategies`](../../hooks#shrubuserloginstrategies)
 
 Use passport authorization strategies.
 
@@ -84,7 +84,7 @@ Use passport authorization strategies.
         strategies = pkgman.invoke 'shrubUserLoginStrategies'
 ```
 
-#### Invoke hook [`shrubUserLoginStrategiesAlter`](../../../hooks#shrubuserloginstrategiesalter)
+#### Invoke hook [`shrubUserLoginStrategiesAlter`](../../hooks#shrubuserloginstrategiesalter)
 
 ```coffeescript
         pkgman.invoke 'shrubUserLoginStrategiesAlter', strategies
@@ -136,7 +136,7 @@ Invoke the `beforeLogin` middleware.
     ]
 ```
 
-#### Implements hook [`shrubHttpMiddleware`](../../../hooks#shrubhttpmiddleware)
+#### Implements hook [`shrubHttpMiddleware`](../../hooks#shrubhttpmiddleware)
 
 ```coffeescript
   registrar.registerHook 'shrubHttpMiddleware', ->
@@ -145,7 +145,7 @@ Invoke the `beforeLogin` middleware.
     middleware: passportMiddleware()
 ```
 
-#### Implements hook [`shrubRpcRoutesAlter`](../../../hooks#shrubrpcroutesalter)
+#### Implements hook [`shrubRpcRoutesAlter`](../../hooks#shrubrpcroutesalter)
 
 ```coffeescript
   registrar.registerHook 'shrubRpcRoutesAlter', (routes) ->
@@ -195,7 +195,7 @@ Splice in Passport middleware.
     return
 ```
 
-#### Implements hook [`shrubSocketConnectionMiddleware`](../../../hooks#shrubsocketconnectionmiddleware)
+#### Implements hook [`shrubSocketConnectionMiddleware`](../../hooks#shrubsocketconnectionmiddleware)
 
 ```coffeescript
   registrar.registerHook 'shrubSocketConnectionMiddleware', ->

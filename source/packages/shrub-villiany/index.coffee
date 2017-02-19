@@ -17,7 +17,7 @@ villianyLimiter = null
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubCorePreBootstrap`](../../../hooks#shrubcoreprebootstrap)
+#### Implements hook [`shrubCorePreBootstrap`](../../hooks#shrubcoreprebootstrap)
 
 ```coffeescript
   registrar.registerHook 'shrubCorePreBootstrap', ->
@@ -44,7 +44,7 @@ exports.pkgmanRegister = (registrar) ->
     )
 ```
 
-#### Implements hook [`shrubOrmCollections`](../../../hooks#shrubormcollections)
+#### Implements hook [`shrubOrmCollections`](../../hooks#shrubormcollections)
 
 ```coffeescript
   registrar.registerHook 'shrubOrmCollections', ->
@@ -133,7 +133,7 @@ Create a ban from a fingerprint.
     'shrub-ban': Ban
 ```
 
-#### Implements hook [`shrubHttpMiddleware`](../../../hooks#shrubhttpmiddleware)
+#### Implements hook [`shrubHttpMiddleware`](../../hooks#shrubhttpmiddleware)
 
 ```coffeescript
   registrar.registerHook 'shrubHttpMiddleware', ->
@@ -155,7 +155,7 @@ Create a ban from a fingerprint.
     ]
 ```
 
-#### Implements hook [`shrubConfigServer`](../../../hooks#shrubconfigserver)
+#### Implements hook [`shrubConfigServer`](../../hooks#shrubconfigserver)
 
 ```coffeescript
   registrar.registerHook 'shrubConfigServer', ->
@@ -175,7 +175,7 @@ Villiany threshold score.
       thresholdMs: 1000 * 60 * 10
 ```
 
-#### Implements hook [`shrubSocketConnectionMiddleware`](../../../hooks#shrubsocketconnectionmiddleware)
+#### Implements hook [`shrubSocketConnectionMiddleware`](../../hooks#shrubsocketconnectionmiddleware)
 
 ```coffeescript
   registrar.registerHook 'shrubSocketConnectionMiddleware', ->
@@ -186,7 +186,7 @@ Villiany threshold score.
     middleware: socketMiddleware()
 ```
 
-#### Implements hook [`shrubRpcRoutesAlter`](../../../hooks#shrubrpcroutesalter)
+#### Implements hook [`shrubRpcRoutesAlter`](../../hooks#shrubrpcroutesalter)
 
 ```coffeescript
   registrar.registerHook 'shrubRpcRoutesAlter', (routes) ->
@@ -199,7 +199,7 @@ Villiany threshold score.
     return
 ```
 
-#### Implements hook [`shrubVillianyReport`](../../../hooks#shrubvillianyreport)
+#### Implements hook [`shrubVillianyReport`](../../hooks#shrubvillianyreport)
 
 Catch villiany reports.
 

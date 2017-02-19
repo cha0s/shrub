@@ -19,7 +19,7 @@ waterline = null
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubCorePreBootstrap`](../../../hooks#shrubcoreprebootstrap)
+#### Implements hook [`shrubCorePreBootstrap`](../../hooks#shrubcoreprebootstrap)
 
 ```coffeescript
   registrar.registerHook 'shrubCorePreBootstrap', ->
@@ -27,7 +27,7 @@ exports.pkgmanRegister = (registrar) ->
     Waterline = require 'waterline'
 ```
 
-#### Implements hook [`shrubCoreBootstrapMiddleware`](../../../hooks#shrubcorebootstrapmiddleware)
+#### Implements hook [`shrubCoreBootstrapMiddleware`](../../hooks#shrubcorebootstrapmiddleware)
 
 ```coffeescript
   registrar.registerHook 'shrubCoreBootstrapMiddleware', ->
@@ -42,7 +42,7 @@ exports.pkgmanRegister = (registrar) ->
     ]
 ```
 
-#### Implements hook [`shrubGruntConfig`](../../../hooks#shrubgruntconfig)
+#### Implements hook [`shrubGruntConfig`](../../hooks#shrubgruntconfig)
 
 ```coffeescript
   registrar.registerHook 'shrubGruntConfig', (gruntConfig) ->
@@ -56,7 +56,7 @@ exports.pkgmanRegister = (registrar) ->
     gruntConfig.registerTask 'build', ['build:shrub-orm']
 ```
 
-#### Implements hook [`shrubConfigServer`](../../../hooks#shrubconfigserver)
+#### Implements hook [`shrubConfigServer`](../../hooks#shrubconfigserver)
 
 ```coffeescript
   registrar.registerHook 'shrubConfigServer', ->
@@ -89,7 +89,7 @@ sails-redis adapter with defaults.
         database: null
 ```
 
-#### Implements hook [`shrubReplContext`](../../../hooks#shrubreplcontext)
+#### Implements hook [`shrubReplContext`](../../hooks#shrubreplcontext)
 
 Provide ORM to the REPL context.
 
@@ -120,7 +120,7 @@ exports.initialize = (fn) ->
   waterlineConfig.connections = config_.connections
 ```
 
-#### Invoke hook [`shrubOrmCollections`](../../../hooks#shrubormcollections)
+#### Invoke hook [`shrubOrmCollections`](../../hooks#shrubormcollections)
 
 ```coffeescript
   collections_ = {}
@@ -167,7 +167,7 @@ with a sane API for this.
         new @_model @_schema.cleanValues @_transformer.serialize values
 ```
 
-#### Invoke hook [`shrubOrmCollectionsAlter`](../../../hooks#shrubormcollectionsalter)
+#### Invoke hook [`shrubOrmCollectionsAlter`](../../hooks#shrubormcollectionsalter)
 
 ```coffeescript
   pkgman.invoke 'shrubOrmCollectionsAlter', collections_, waterline

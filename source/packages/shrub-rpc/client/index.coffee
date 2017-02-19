@@ -7,7 +7,7 @@ calls](http://en.wikipedia.org/wiki/Remote_procedure_call#Message_passing).
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubAngularService`](../../../../hooks#shrubangularservice)
+#### Implements hook [`shrubAngularService`](../../../hooks#shrubangularservice)
 
 ```coffeescript
   registrar.registerHook 'shrubAngularService', -> [
@@ -43,7 +43,7 @@ error from the server.
         )
 ```
 
-#### Invoke hook [`shrubRpcCall`](../../../../hooks#shrubrpccall)
+#### Invoke hook [`shrubRpcCall`](../../../hooks#shrubrpccall)
 
 ```coffeescript
         invoke(

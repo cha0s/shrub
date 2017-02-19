@@ -1687,13 +1687,13 @@ waterline = null
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <a href="../../../../hooks#shrubcoreprebootstrap"><code>shrubCorePreBootstrap</code></a></h4>
+<h4 id="implements-hook-shrubcoreprebootstrap">Implements hook <a href="../../../hooks#shrubcoreprebootstrap"><code>shrubCorePreBootstrap</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubCorePreBootstrap', -&gt;
 
     Waterline = require 'waterline'
 </code></pre>
 
-<h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <a href="../../../../hooks#shrubcorebootstrapmiddleware"><code>shrubCoreBootstrapMiddleware</code></a></h4>
+<h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <a href="../../../hooks#shrubcorebootstrapmiddleware"><code>shrubCoreBootstrapMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubCoreBootstrapMiddleware', -&gt;
 
     waterline = new Waterline()
@@ -1706,7 +1706,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     ]
 </code></pre>
 
-<h4 id="implements-hook-shrubgruntconfig">Implements hook <a href="../../../../hooks#shrubgruntconfig"><code>shrubGruntConfig</code></a></h4>
+<h4 id="implements-hook-shrubgruntconfig">Implements hook <a href="../../../hooks#shrubgruntconfig"><code>shrubGruntConfig</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubGruntConfig', (gruntConfig) -&gt;
 
     gruntConfig.copyAppFiles &quot;#{__dirname}/app&quot;, 'shrub-orm'
@@ -1718,7 +1718,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     gruntConfig.registerTask 'build', ['build:shrub-orm']
 </code></pre>
 
-<h4 id="implements-hook-shrubconfigserver">Implements hook <a href="../../../../hooks#shrubconfigserver"><code>shrubConfigServer</code></a></h4>
+<h4 id="implements-hook-shrubconfigserver">Implements hook <a href="../../../hooks#shrubconfigserver"><code>shrubConfigServer</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubConfigServer', -&gt;
 </code></pre>
 
@@ -1745,7 +1745,7 @@ sails-redis adapter with defaults.</p>
         database: null
 </code></pre>
 
-<h4 id="implements-hook-shrubreplcontext">Implements hook <a href="../../../../hooks#shrubreplcontext"><code>shrubReplContext</code></a></h4>
+<h4 id="implements-hook-shrubreplcontext">Implements hook <a href="../../../hooks#shrubreplcontext"><code>shrubReplContext</code></a></h4>
 <p>Provide ORM to the REPL context.</p>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubReplContext', (context) -&gt; context.orm = exports
 </code></pre>
@@ -1769,7 +1769,7 @@ sails-redis adapter with defaults.</p>
   waterlineConfig.connections = config_.connections
 </code></pre>
 
-<h4 id="invoke-hook-shrubormcollections">Invoke hook <a href="../../../../hooks#shrubormcollections"><code>shrubOrmCollections</code></a></h4>
+<h4 id="invoke-hook-shrubormcollections">Invoke hook <a href="../../../hooks#shrubormcollections"><code>shrubOrmCollections</code></a></h4>
 <pre><code class="coffeescript">  collections_ = {}
   for collectionList in pkgman.invokeFlat 'shrubOrmCollections', waterline
     for identity, collection of collectionList
@@ -1806,7 +1806,7 @@ with a sane API for this.</p>
 <pre><code class="coffeescript">        new @_model @_schema.cleanValues @_transformer.serialize values
 </code></pre>
 
-<h4 id="invoke-hook-shrubormcollectionsalter">Invoke hook <a href="../../../../hooks#shrubormcollectionsalter"><code>shrubOrmCollectionsAlter</code></a></h4>
+<h4 id="invoke-hook-shrubormcollectionsalter">Invoke hook <a href="../../../hooks#shrubormcollectionsalter"><code>shrubOrmCollectionsAlter</code></a></h4>
 <pre><code class="coffeescript">  pkgman.invoke 'shrubOrmCollectionsAlter', collections_, waterline
 </code></pre>
 

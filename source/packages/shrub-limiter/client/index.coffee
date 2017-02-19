@@ -21,7 +21,7 @@ class LimiterThresholdError extends TransmittableError
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubTransmittableErrors`](../../../../hooks#shrubtransmittableerrors)
+#### Implements hook [`shrubTransmittableErrors`](../../../hooks#shrubtransmittableerrors)
 
 ```coffeescript
   registrar.registerHook 'shrubTransmittableErrors', exports.shrubTransmittableErrors

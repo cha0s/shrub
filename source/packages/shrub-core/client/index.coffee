@@ -8,7 +8,7 @@ config = require 'config'
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubAngularAppRun`](../../../../hooks#shrubangularapprun)
+#### Implements hook [`shrubAngularAppRun`](../../../hooks#shrubangularapprun)
 
 ```coffeescript
   registrar.registerHook 'shrubAngularAppRun', -> [
@@ -56,7 +56,7 @@ Set up application close behavior.
   ]
 ```
 
-#### Implements hook [`shrubAngularRoutes`](../../../../hooks#shrubangularroutes)
+#### Implements hook [`shrubAngularRoutes`](../../../hooks#shrubangularroutes)
 
 A simple path definition to make sure we're running in e2e testing mode.
 

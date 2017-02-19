@@ -7,7 +7,7 @@ now, but will be fleshed out as we go.*
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubCoreBootstrapMiddleware`](../../../hooks#shrubcorebootstrapmiddleware)
+#### Implements hook [`shrubCoreBootstrapMiddleware`](../../hooks#shrubcorebootstrapmiddleware)
 
 ```coffeescript
   registrar.registerHook 'shrubCoreBootstrapMiddleware', (context) ->
@@ -36,7 +36,7 @@ No superuser? Install...
     ]
 ```
 
-#### Implements hook [`shrubReplContext`](../../../hooks#shrubreplcontext)
+#### Implements hook [`shrubReplContext`](../../hooks#shrubreplcontext)
 
 ```coffeescript
   registrar.registerHook 'shrubReplContext', (context) ->

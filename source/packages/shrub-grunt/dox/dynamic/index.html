@@ -1795,12 +1795,16 @@ caches lines to be able to build context around each TODO item.</p>
       matches = comment.match /^#### (I(?:nvoke|mplements)) hook `([^`]+)`/
       if matches
 
+        parts = path.dirname(@filename).split('/')
+        parts.push '' if 'index.coffee' isnt path.basename @filename
+        backpath = parts.map(-&gt; '..').join '/'
+
         @push &quot;#### #{
           matches[1]
         } hook [`#{
           matches[2]
-        }`](../#{
-          path.dirname(@filename).split('/').map(-&gt; '..').join '/'
+        }`](#{
+          backpath
         }/hooks##{
           matches[2].toLowerCase()
         })\n&quot;
@@ -2287,12 +2291,12 @@ _allSourceFiles().then (files) -&gt;
       render += '\n\n'
 
     if fileStats.invocations.length &gt; 0
-      render += '&gt; ' if isSubpackage
-      render += '&lt;div class=&quot;admonition note&quot;&gt;'
-      render += '&lt;p class=&quot;admonition-title&quot;&gt;Invokes hooks&lt;/p&gt;'
 </code></pre>
 
-<pre><code>  render += '  &lt;table&gt;\n'
+<pre><code>  render += '&gt; ' if isSubpackage
+  render += '&lt;div class="admonition note"&gt;'
+  render += '&lt;p class="admonition-title"&gt;Invokes hooks&lt;/p&gt;'
+  render += '  &lt;table&gt;\n'
   render += fileStats.invocations.map((hook, index) -&gt;
     "    &lt;tr class=\"#{if index % 2 then 'odd' else 'even'}\"&gt;&lt;td&gt;&lt;a href=\"../hooks/##{_idFromString hook}\"&gt;#{hook}&lt;/a&gt;&lt;/td&gt;&lt;td align=\"right\"&gt;&lt;a href=\"../source/#{sourcePath}#invoke-hook-#{hook.toLowerCase()}\"&gt;invocation&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;\n"
   ).join ''

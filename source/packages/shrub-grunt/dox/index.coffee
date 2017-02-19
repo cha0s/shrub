@@ -8,7 +8,7 @@
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubGruntConfig`](../../../../hooks#shrubgruntconfig)
+#### Implements hook [`shrubGruntConfig`](../../../hooks#shrubgruntconfig)
 
 ```coffeescript
   registrar.registerHook 'shrubGruntConfig', (gruntConfig, grunt) ->

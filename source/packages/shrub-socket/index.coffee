@@ -14,7 +14,7 @@ socketManager = null
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubConfigClient`](../../../hooks#shrubconfigclient)
+#### Implements hook [`shrubConfigClient`](../../hooks#shrubconfigclient)
 
 ```coffeescript
   registrar.registerHook 'shrubConfigClient', ->
@@ -34,7 +34,7 @@ If we're doing end-to-end testing, mock out the socket manager.
     manager: module: socketModule
 ```
 
-#### Implements hook [`shrubCoreBootstrapMiddleware`](../../../hooks#shrubcorebootstrapmiddleware)
+#### Implements hook [`shrubCoreBootstrapMiddleware`](../../hooks#shrubcorebootstrapmiddleware)
 
 ```coffeescript
   registrar.registerHook 'shrubCoreBootstrapMiddleware', ->
@@ -61,7 +61,7 @@ Spin up the socket server, and have it listen on the HTTP server.
     ]
 ```
 
-#### Implements hook [`shrubConfigServer`](../../../hooks#shrubconfigserver)
+#### Implements hook [`shrubConfigServer`](../../hooks#shrubconfigserver)
 
 ```coffeescript
   registrar.registerHook 'shrubConfigServer', ->
@@ -94,7 +94,7 @@ Module implementing the socket manager. Defaults to socket.io.
       module: 'shrub-socket-socket.io'
 ```
 
-#### Implements hook [`shrubReplContext`](../../../hooks#shrubreplcontext)
+#### Implements hook [`shrubReplContext`](../../hooks#shrubreplcontext)
 
 ```coffeescript
   registrar.registerHook 'shrubReplContext', (context) ->

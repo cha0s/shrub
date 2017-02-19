@@ -11,7 +11,7 @@ config = require 'config'
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubAngularAHrefSanitizationWhitelist`](../../../../hooks#shrubangularahrefsanitizationwhitelist)
+#### Implements hook [`shrubAngularAHrefSanitizationWhitelist`](../../../hooks#shrubangularahrefsanitizationwhitelist)
 
 ```coffeescript
   registrar.registerHook 'shrubAngularAHrefSanitizationWhitelist', -> [
@@ -30,7 +30,7 @@ Allow javascript:void(0).
   ]
 ```
 
-#### Implements hook [`shrubAngularAppConfig`](../../../../hooks#shrubangularappconfig)
+#### Implements hook [`shrubAngularAppConfig`](../../../hooks#shrubangularappconfig)
 
 ```coffeescript
   registrar.registerHook 'shrubAngularAppConfig', -> [
@@ -38,7 +38,7 @@ Allow javascript:void(0).
     ($compileProvider, $injector, $provide, $routeProvider, $locationProvider, pkgmanProvider) ->
 ```
 
-#### Invoke hook [`shrubAngularAHrefSanitizationWhitelist`](../../../../hooks#shrubangularahrefsanitizationwhitelist)
+#### Invoke hook [`shrubAngularAHrefSanitizationWhitelist`](../../../hooks#shrubangularahrefsanitizationwhitelist)
 
 ```coffeescript
       regexes = []
@@ -192,7 +192,7 @@ Return the service.
       ]
 ```
 
-#### Invoke hook [`shrubAngularRoutes`](../../../../hooks#shrubangularroutes)
+#### Invoke hook [`shrubAngularRoutes`](../../../hooks#shrubangularroutes)
 
 Allow packages to define routes in the Angular application.
 

@@ -1662,7 +1662,7 @@ assets = null
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubassetsmiddleware">Implements hook <a href="../../../../hooks#shrubassetsmiddleware"><code>shrubAssetsMiddleware</code></a></h4>
+<h4 id="implements-hook-shrubassetsmiddleware">Implements hook <a href="../../../hooks#shrubassetsmiddleware"><code>shrubAssetsMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAssetsMiddleware', -&gt;
 
     label: 'Shrub'
@@ -1682,7 +1682,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     ]
 </code></pre>
 
-<h4 id="implements-hook-shrubgruntconfig">Implements hook <a href="../../../../hooks#shrubgruntconfig"><code>shrubGruntConfig</code></a></h4>
+<h4 id="implements-hook-shrubgruntconfig">Implements hook <a href="../../../hooks#shrubgruntconfig"><code>shrubGruntConfig</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubGruntConfig', (gruntConfig) -&gt;
 
     gruntConfig.copyAppFiles &quot;#{__dirname}/app&quot;, 'shrub-assets'
@@ -1694,7 +1694,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     gruntConfig.registerTask 'build', ['build:shrub-assets']
 </code></pre>
 
-<h4 id="implements-hook-shrubconfigserver">Implements hook <a href="../../../../hooks#shrubconfigserver"><code>shrubConfigServer</code></a></h4>
+<h4 id="implements-hook-shrubconfigserver">Implements hook <a href="../../../hooks#shrubconfigserver"><code>shrubConfigServer</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubConfigServer', -&gt;
 
     middleware: [
@@ -1722,7 +1722,7 @@ exports.assets = -&gt;
   assets = scripts: [], styleSheets: []
 </code></pre>
 
-<h4 id="invoke-hook-shrubassetsmiddleware">Invoke hook <a href="../../../../hooks#shrubassetsmiddleware"><code>shrubAssetsMiddleware</code></a></h4>
+<h4 id="invoke-hook-shrubassetsmiddleware">Invoke hook <a href="../../../hooks#shrubassetsmiddleware"><code>shrubAssetsMiddleware</code></a></h4>
 <pre><code class="coffeescript">  debug '- Loading asset middleware...'
 
   assetsMiddleware = middleware.fromConfig 'shrub-assets:middleware'

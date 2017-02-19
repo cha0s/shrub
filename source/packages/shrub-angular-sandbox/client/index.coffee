@@ -4,7 +4,7 @@
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubAngularAppRun`](../../../../hooks#shrubangularapprun)
+#### Implements hook [`shrubAngularAppRun`](../../../hooks#shrubangularapprun)
 
 Hang up any sandbox if we don't need it anymore.
 

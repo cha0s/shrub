@@ -1653,7 +1653,7 @@
 <pre><code class="coffeescript">exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubrpcroutesalter">Implements hook <a href="../../../../hooks#shrubrpcroutesalter"><code>shrubRpcRoutesAlter</code></a></h4>
+<h4 id="implements-hook-shrubrpcroutesalter">Implements hook <a href="../../../hooks#shrubrpcroutesalter"><code>shrubRpcRoutesAlter</code></a></h4>
 <p>Our notification queue uses the session, so we'll alter those routes to
 load the session if it's for the shrubExampleGeneral queue.</p>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubRpcRoutesAlter', (routes) -&gt;
@@ -1668,7 +1668,7 @@ load the session if it's for the shrubExampleGeneral queue.</p>
     return
 </code></pre>
 
-<h4 id="implements-hook-shrubuinotificationqueues">Implements hook <a href="../../../../hooks#shrubuinotificationqueues"><code>shrubUiNotificationQueues</code></a></h4>
+<h4 id="implements-hook-shrubuinotificationqueues">Implements hook <a href="../../../hooks#shrubuinotificationqueues"><code>shrubUiNotificationQueues</code></a></h4>
 <p>Implement the <code>general</code> queue, used to show some notifications.</p>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubUiNotificationQueues', -&gt;
 

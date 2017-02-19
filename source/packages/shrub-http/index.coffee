@@ -13,7 +13,7 @@ httpManager = null
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubCoreBootstrapMiddleware`](../../../hooks#shrubcorebootstrapmiddleware)
+#### Implements hook [`shrubCoreBootstrapMiddleware`](../../hooks#shrubcorebootstrapmiddleware)
 
 ```coffeescript
   registrar.registerHook 'shrubCoreBootstrapMiddleware', ->
@@ -49,7 +49,7 @@ Spawn workers into a cluster.
     ]
 ```
 
-#### Implements hook [`shrubHttpMiddleware`](../../../hooks#shrubhttpmiddleware)
+#### Implements hook [`shrubHttpMiddleware`](../../hooks#shrubhttpmiddleware)
 
 ```coffeescript
   registrar.registerHook 'shrubHttpMiddleware', (http) ->
@@ -71,7 +71,7 @@ Spawn workers into a cluster.
     ]
 ```
 
-#### Implements hook [`shrubConfigServer`](../../../hooks#shrubconfigserver)
+#### Implements hook [`shrubConfigServer`](../../hooks#shrubconfigserver)
 
 ```coffeescript
   registrar.registerHook 'shrubConfigServer', ->

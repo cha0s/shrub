@@ -18,7 +18,7 @@ Promise = null
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubCorePreBootstrap`](../../../hooks#shrubcoreprebootstrap)
+#### Implements hook [`shrubCorePreBootstrap`](../../hooks#shrubcoreprebootstrap)
 
 ```coffeescript
   registrar.registerHook 'shrubCorePreBootstrap', ->
@@ -31,7 +31,7 @@ exports.pkgmanRegister = (registrar) ->
     Promise = require 'bluebird'
 ```
 
-#### Implements hook [`shrubRpcRoutesAlter`](../../../hooks#shrubrpcroutesalter)
+#### Implements hook [`shrubRpcRoutesAlter`](../../hooks#shrubrpcroutesalter)
 
 Patch in express-specific variables that will be required by middleware.
 

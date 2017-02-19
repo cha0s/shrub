@@ -162,12 +162,16 @@ Comment.
       matches = comment.match /^#### (I(?:nvoke|mplements)) hook `([^`]+)`/
       if matches
 
+        parts = path.dirname(@filename).split('/')
+        parts.push '' if 'index.coffee' isnt path.basename @filename
+        backpath = parts.map(-> '..').join '/'
+
         @push "#### #{
           matches[1]
         } hook [`#{
           matches[2]
-        }`](../#{
-          path.dirname(@filename).split('/').map(-> '..').join '/'
+        }`](#{
+          backpath
         }/hooks##{
           matches[2].toLowerCase()
         })\n"
@@ -692,10 +696,10 @@ Link to the package.
       render += '\n\n'
 
     if fileStats.invocations.length > 0
+```
       render += '> ' if isSubpackage
       render += '<div class="admonition note">'
       render += '<p class="admonition-title">Invokes hooks</p>'
-```
       render += '  <table>\n'
       render += fileStats.invocations.map((hook, index) ->
         "    <tr class=\"#{if index % 2 then 'odd' else 'even'}\"><td><a href=\"../hooks/##{_idFromString hook}\">#{hook}</a></td><td align=\"right\"><a href=\"../source/#{sourcePath}#invoke-hook-#{hook.toLowerCase()}\">invocation</a></td></tr>\n"

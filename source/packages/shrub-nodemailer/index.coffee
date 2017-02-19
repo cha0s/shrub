@@ -24,7 +24,7 @@ transport = null
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubCorePreBootstrap`](../../../hooks#shrubcoreprebootstrap)
+#### Implements hook [`shrubCorePreBootstrap`](../../hooks#shrubcoreprebootstrap)
 
 ```coffeescript
   registrar.registerHook 'shrubCorePreBootstrap', ->
@@ -36,7 +36,7 @@ exports.pkgmanRegister = (registrar) ->
     skin = require 'shrub-skin'
 ```
 
-#### Implements hook [`shrubCoreBootstrapMiddleware`](../../../hooks#shrubcorebootstrapmiddleware)
+#### Implements hook [`shrubCoreBootstrapMiddleware`](../../hooks#shrubcorebootstrapmiddleware)
 
 ```coffeescript
   registrar.registerHook 'shrubCoreBootstrapMiddleware', ->
@@ -87,7 +87,7 @@ Augment it with functionality we'll find useful and convenient.
     ]
 ```
 
-#### Implements hook [`shrubConfigServer`](../../../hooks#shrubconfigserver)
+#### Implements hook [`shrubConfigServer`](../../hooks#shrubconfigserver)
 
 ```coffeescript
   registrar.registerHook 'shrubConfigServer', ->
@@ -109,7 +109,7 @@ Passed through directly to nodemailer.
       options: {}
 ```
 
-#### Implements hook [`shrubReplContext`](../../../hooks#shrubreplcontext)
+#### Implements hook [`shrubReplContext`](../../hooks#shrubreplcontext)
 
 Provide mail sending to the REPL context.
 
@@ -343,7 +343,7 @@ Clone the body and insert the HTML into the main application area.
     $body = $('body').clone()
 ```
 
-#### Invoke hook [`shrubNodemailerHtml`](../../../hooks#shrubnodemailerhtml)
+#### Invoke hook [`shrubNodemailerHtml`](../../hooks#shrubnodemailerhtml)
 
 Let the skin manage the mail HTML.
 

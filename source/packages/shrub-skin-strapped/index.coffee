@@ -10,7 +10,7 @@ shrubSkin = require 'shrub-skin'
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubNodemailerHtml`](../../../hooks#shrubnodemailerhtml)
+#### Implements hook [`shrubNodemailerHtml`](../../hooks#shrubnodemailerhtml)
 
 ```coffeescript
   registrar.registerHook 'shrubNodemailerHtml', ($body, html, $) ->
@@ -25,7 +25,7 @@ exports.pkgmanRegister = (registrar) ->
     $('noscript', $body).remove()
 ```
 
-#### Implements hook [`shrubSkinAssets`](../../../hooks#shrubskinassets)
+#### Implements hook [`shrubSkinAssets`](../../hooks#shrubskinassets)
 
 ```coffeescript
   registrar.registerHook 'shrubSkinAssets', (assets) ->
@@ -38,7 +38,7 @@ Add our future-compiled LESS style sheets.
     assets.styleSheets.production.push '/css/style.css'
 ```
 
-#### Implements hook [`shrubGruntConfig`](../../../hooks#shrubgruntconfig)
+#### Implements hook [`shrubGruntConfig`](../../hooks#shrubgruntconfig)
 
 ```coffeescript
   registrar.registerHook 'shrubGruntConfig', (gruntConfig) ->

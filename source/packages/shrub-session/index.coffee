@@ -8,7 +8,7 @@ config = require 'config'
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubOrmCollections`](../../../hooks#shrubormcollections)
+#### Implements hook [`shrubOrmCollections`](../../hooks#shrubormcollections)
 
 ```coffeescript
   registrar.registerHook 'shrubOrmCollections', ->
@@ -46,7 +46,7 @@ The session ID, used as the primary key.
     'shrub-session': Session
 ```
 
-#### Implements hook [`shrubAuditFingerprint`](../../../hooks#shrubauditfingerprint)
+#### Implements hook [`shrubAuditFingerprint`](../../hooks#shrubauditfingerprint)
 
 ```coffeescript
   registrar.registerHook 'shrubAuditFingerprint', (req) ->
@@ -58,7 +58,7 @@ Session ID.
     session: if req?.session? then req.session.id
 ```
 
-#### Implements hook [`shrubConfigServer`](../../../hooks#shrubconfigserver)
+#### Implements hook [`shrubConfigServer`](../../hooks#shrubconfigserver)
 
 ```coffeescript
   registrar.registerHook 'shrubConfigServer', ->
@@ -88,7 +88,7 @@ The max age of this session. Defaults to two weeks.
       maxAge: 1000 * 60 * 60 * 24 * 14
 ```
 
-#### Implements hook [`shrubSocketConnectionMiddleware`](../../../hooks#shrubsocketconnectionmiddleware)
+#### Implements hook [`shrubSocketConnectionMiddleware`](../../hooks#shrubsocketconnectionmiddleware)
 
 ```coffeescript
   registrar.registerHook 'shrubSocketConnectionMiddleware', ->

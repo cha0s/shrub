@@ -1659,7 +1659,7 @@
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubassetsmiddleware">Implements hook <a href="../../../../hooks#shrubassetsmiddleware"><code>shrubAssetsMiddleware</code></a></h4>
+<h4 id="implements-hook-shrubassetsmiddleware">Implements hook <a href="../../../hooks#shrubassetsmiddleware"><code>shrubAssetsMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAssetsMiddleware', -&gt;
 
     label: 'Livereload'
@@ -1678,7 +1678,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     ]
 </code></pre>
 
-<h4 id="implements-hook-shrubconfigclientalter">Implements hook <a href="../../../../hooks#shrubconfigclientalter"><code>shrubConfigClientAlter</code></a></h4>
+<h4 id="implements-hook-shrubconfigclientalter">Implements hook <a href="../../../hooks#shrubconfigclientalter"><code>shrubConfigClientAlter</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubConfigClientAlter', (req, config_) -&gt;
     return unless req.grunt?
 
@@ -1686,7 +1686,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     config_.set 'packageConfig:shrub-user', name: 'Anonymous'
 </code></pre>
 
-<h4 id="implements-hook-shrubgruntconfig">Implements hook <a href="../../../../hooks#shrubgruntconfig"><code>shrubGruntConfig</code></a></h4>
+<h4 id="implements-hook-shrubgruntconfig">Implements hook <a href="../../../hooks#shrubgruntconfig"><code>shrubGruntConfig</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubGruntConfig', (gruntConfig, grunt) -&gt;
 
     gruntConfig.configureTask 'clean', 'shrub', [
@@ -1754,7 +1754,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     ]
 </code></pre>
 
-<h4 id="implements-hook-shrubgruntconfigalter">Implements hook <a href="../../../../hooks#shrubgruntconfigalter"><code>shrubGruntConfigAlter</code></a></h4>
+<h4 id="implements-hook-shrubgruntconfigalter">Implements hook <a href="../../../hooks#shrubgruntconfigalter"><code>shrubGruntConfigAlter</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubGruntConfigAlter', (gruntConfig) -&gt;
 
     gruntConfig.registerTask 'build', [

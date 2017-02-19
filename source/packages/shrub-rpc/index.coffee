@@ -18,7 +18,7 @@ routes = {}
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubCorePreBootstrap`](../../../hooks#shrubcoreprebootstrap)
+#### Implements hook [`shrubCorePreBootstrap`](../../hooks#shrubcoreprebootstrap)
 
 ```coffeescript
   registrar.registerHook 'shrubCorePreBootstrap', ->
@@ -26,7 +26,7 @@ exports.pkgmanRegister = (registrar) ->
     pkgman = require 'pkgman'
 ```
 
-#### Implements hook [`shrubCoreBootstrapMiddleware`](../../../hooks#shrubcorebootstrapmiddleware)
+#### Implements hook [`shrubCoreBootstrapMiddleware`](../../hooks#shrubcorebootstrapmiddleware)
 
 ```coffeescript
   registrar.registerHook 'shrubCoreBootstrapMiddleware', ->
@@ -44,7 +44,7 @@ exports.pkgmanRegister = (registrar) ->
       (next) ->
 ```
 
-#### Invoke hook [`shrubRpcRoutes`](../../../hooks#shrubrpcroutes)
+#### Invoke hook [`shrubRpcRoutes`](../../hooks#shrubrpcroutes)
 
 ```coffeescript
         debug '- Registering RPC routess...'
@@ -64,7 +64,7 @@ Normalize middleware to array form.
         debug '- RPC routes registered.'
 ```
 
-#### Invoke hook [`shrubRpcRoutesAlter`](../../../hooks#shrubrpcroutesalter)
+#### Invoke hook [`shrubRpcRoutesAlter`](../../hooks#shrubrpcroutesalter)
 
 ```coffeescript
         pkgman.invoke 'shrubRpcRoutesAlter', routes
@@ -88,7 +88,7 @@ Set up the middleware dispatcher.
     ]
 ```
 
-#### Implements hook [`shrubSocketConnectionMiddleware`](../../../hooks#shrubsocketconnectionmiddleware)
+#### Implements hook [`shrubSocketConnectionMiddleware`](../../hooks#shrubsocketconnectionmiddleware)
 
 ```coffeescript
   registrar.registerHook 'shrubSocketConnectionMiddleware', ->

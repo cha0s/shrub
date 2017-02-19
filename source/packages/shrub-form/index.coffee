@@ -10,7 +10,7 @@ methodOverride = require 'method-override'
 exports.pkgmanRegister = (registrar) ->
 ```
 
-#### Implements hook [`shrubAngularSandboxNavigationMiddleware`](../../../hooks#shrubangularsandboxnavigationmiddleware)
+#### Implements hook [`shrubAngularSandboxNavigationMiddleware`](../../hooks#shrubangularsandboxnavigationmiddleware)
 
 If the client made a POST request, inject that request into the Angular
 sandbox and let it do its thing.
@@ -73,7 +73,7 @@ Submit the form into Angular.
     ]
 ```
 
-#### Implements hook [`shrubHttpMiddleware`](../../../hooks#shrubhttpmiddleware)
+#### Implements hook [`shrubHttpMiddleware`](../../hooks#shrubhttpmiddleware)
 
 Parse POST submissions, and allow arbitrary method form attribute.
 

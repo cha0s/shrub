@@ -1702,7 +1702,7 @@ middleware = require 'middleware'
 exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
-<h4 id="implements-hook-shrubrpcroutes">Implements hook <a href="../../../../hooks#shrubrpcroutes"><code>shrubRpcRoutes</code></a></h4>
+<h4 id="implements-hook-shrubrpcroutes">Implements hook <a href="../../../hooks#shrubrpcroutes"><code>shrubRpcRoutes</code></a></h4>
 <p>Allow a JSful client to call us back and inform us that we don't need to
 hold their sandbox.</p>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubRpcRoutes', -&gt;
@@ -1731,7 +1731,7 @@ hold their sandbox.</p>
     return routes
 </code></pre>
 
-<h4 id="implements-hook-shrubhttpmiddleware">Implements hook <a href="../../../../hooks#shrubhttpmiddleware"><code>shrubHttpMiddleware</code></a></h4>
+<h4 id="implements-hook-shrubhttpmiddleware">Implements hook <a href="../../../hooks#shrubhttpmiddleware"><code>shrubHttpMiddleware</code></a></h4>
 <p>If configuration dictates, render the client-side Angular application in a
 sandbox.</p>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubHttpMiddleware', (http) -&gt;
@@ -1813,7 +1813,7 @@ browser and save the emission for the next request.</p>
   ]
 </code></pre>
 
-<h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <a href="../../../../hooks#shrubcorebootstrapmiddleware"><code>shrubCoreBootstrapMiddleware</code></a></h4>
+<h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <a href="../../../hooks#shrubcorebootstrapmiddleware"><code>shrubCoreBootstrapMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubCoreBootstrapMiddleware', -&gt;
 
     label: 'Bootstrap Angular'
@@ -1827,7 +1827,7 @@ browser and save the emission for the next request.</p>
           config.set 'packageConfig:shrub-angular:render', false
 </code></pre>
 
-<h4 id="invoke-hook-shrubangularsandboxnavigationmiddleware">Invoke hook <a href="../../../../hooks#shrubangularsandboxnavigationmiddleware"><code>shrubAngularSandboxNavigationMiddleware</code></a></h4>
+<h4 id="invoke-hook-shrubangularsandboxnavigationmiddleware">Invoke hook <a href="../../../hooks#shrubangularsandboxnavigationmiddleware"><code>shrubAngularSandboxNavigationMiddleware</code></a></h4>
 <p>Load the navigation middleware.</p>
 <pre><code class="coffeescript">        navigationMiddleware = middleware.fromConfig(
           'shrub-angular-sandbox:navigationMiddleware'
@@ -1838,7 +1838,7 @@ browser and save the emission for the next request.</p>
     ]
 </code></pre>
 
-<h4 id="implements-hook-shrubconfigserver">Implements hook <a href="../../../../hooks#shrubconfigserver"><code>shrubConfigServer</code></a></h4>
+<h4 id="implements-hook-shrubconfigserver">Implements hook <a href="../../../hooks#shrubconfigserver"><code>shrubConfigServer</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubConfigServer', -&gt;
 </code></pre>
 

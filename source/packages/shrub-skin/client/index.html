@@ -1674,7 +1674,7 @@ exports.pkgmanRegister = (registrar) -&gt;
   defaultSkinKey = config.get 'packageConfig:shrub-skin:default'
 </code></pre>
 
-<h4 id="implements-hook-shrubangulardirectivealter">Implements hook <a href="../../../../../hooks#shrubangulardirectivealter"><code>shrubAngularDirectiveAlter</code></a></h4>
+<h4 id="implements-hook-shrubangulardirectivealter">Implements hook <a href="../../../../hooks#shrubangulardirectivealter"><code>shrubAngularDirectiveAlter</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAngularDirectiveAlter', (directive, path) -&gt; [
 
     '$cacheFactory', '$compile', '$http', '$injector', '$interpolate', '$q', '$rootScope'
@@ -1790,9 +1790,9 @@ specificity.</p>
             candidateHooksInvoked[hook] = true
 </code></pre>
 
-<h4 id="invoke-hook-shrubskinlink">Invoke hook <a href="../../../../../hooks#shrubskinlink"><code>shrubSkinLink</code></a></h4>
-<h4 id="invoke-hook-shrubskinlink-directive">Invoke hook <a href="../../../../../hooks#shrubskinlink--directive"><code>shrubSkinLink--DIRECTIVE</code></a></h4>
-<h4 id="invoke-hook-shrubskinlink-directive-id">Invoke hook <a href="../../../../../hooks#shrubskinlink--directive--id"><code>shrubSkinLink--DIRECTIVE--ID</code></a></h4>
+<h4 id="invoke-hook-shrubskinlink">Invoke hook <a href="../../../../hooks#shrubskinlink"><code>shrubSkinLink</code></a></h4>
+<h4 id="invoke-hook-shrubskinlink-directive">Invoke hook <a href="../../../../hooks#shrubskinlink--directive"><code>shrubSkinLink--DIRECTIVE</code></a></h4>
+<h4 id="invoke-hook-shrubskinlink-directive-id">Invoke hook <a href="../../../../hooks#shrubskinlink--directive--id"><code>shrubSkinLink--DIRECTIVE--ID</code></a></h4>
 <pre><code class="coffeescript">            for f in pkgman.invokeFlat hook
 
               $injector.invoke(
@@ -1837,7 +1837,7 @@ specificity.</p>
   ]
 </code></pre>
 
-<h4 id="implements-hook-shrubangularprovider">Implements hook <a href="../../../../../hooks#shrubangularprovider"><code>shrubAngularProvider</code></a></h4>
+<h4 id="implements-hook-shrubangularprovider">Implements hook <a href="../../../../hooks#shrubangularprovider"><code>shrubAngularProvider</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubAngularProvider', -&gt; [
 
     '$injector', '$provide'
