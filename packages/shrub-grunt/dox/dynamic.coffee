@@ -112,12 +112,12 @@ class TitleAndDescription extends Transform
 # Implement a transform stream to convert a .coffee file to .litcoffee
 class LitcoffeeConversion extends Transform
 
-  constructor: (filename) ->
+  constructor: (@filename) ->
     super
 
-    @highlight = if filename.match /\.(?:lit)?coffee$/
+    @highlight = if @filename.match /\.(?:lit)?coffee$/
       'coffeescript'
-    else if filename.match /\.js$/
+    else if @filename.match /\.js$/
       'javascript'
     else
       'no-highlight'
@@ -138,7 +138,23 @@ class LitcoffeeConversion extends Transform
       @push "```\n\n" if @hasWrittenCode and not @commenting
 
       comment = line.trim().substr 2
-      @push "#{comment}\n"
+
+      matches = comment.match /^#### (I(?:nvoke|mplements)) hook `([^`]+)`/
+      if matches
+
+        @push "#### #{
+          matches[1]
+        } hook [`#{
+          matches[2]
+        }`](#{
+          path.dirname(@filename).split('/').map(-> '..').join '/'
+        }/hooks##{
+          matches[2].toLowerCase()
+        })\n"
+
+      else
+
+        @push "#{comment}\n"
 
       @commenting = true
 
@@ -579,7 +595,6 @@ fileStatsListPromise.then((fileStatsList) ->
       render += '</div>'
       render += '\n\n'
 
-  # ###### TODO: We should do some preprocessing hre with a transform, namely linking the hook headers to their respective documentation.
   fs.writeFileSync 'docs/packages.md', render
 
 )
