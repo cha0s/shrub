@@ -26,3 +26,7 @@ You would then find those values in the configuration at:
 config.get('packageSettings:my-package:one');
 config.get('packageSettings:my-package:two:three');
 ```
+
+See [the default configuration file](../source/config/default.settings) for
+an example of how settings may be overridden. This should always be preferred
+to actually changing the code in a given package's hook.
