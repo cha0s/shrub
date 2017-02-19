@@ -41,7 +41,7 @@ class HookImplementations extends Transform
 
     done()
 
-# Implement a Transform stream fo accumulate TODOs from a source file. Also
+# Implement a Transform stream to accumulate TODOs from a source file. Also
 # caches lines to be able to build context around each TODO item.
 class Todos extends Transform
 
@@ -69,6 +69,45 @@ class Todos extends Transform
 
       index: todo
       lines: @lines.slice start, end
+
+# Implement a Transform stream to parse title and description for a file.
+class TitleAndDescription extends Transform
+
+  constructor: ->
+    super
+
+    @hasFinishedParsing = false
+
+    @title = ''
+    @description = ''
+
+  _transform: (chunk, encoding, done) ->
+
+    return done() if @hasFinishedParsing
+
+    line = chunk.toString('utf8').trim()
+    return done() if line.length is 0
+
+    if 35 is line.charCodeAt(0)
+
+      if 35 is line.charCodeAt(2)
+        @title = line.substr 4
+
+      else if 42 is line.charCodeAt(2)
+        @description = line.substr 2
+
+      else if @description?
+        @description += ' ' + line.substr 2
+
+      if 42 is @description.charCodeAt @description.length - 1
+        @hasFinishedParsing = true
+        return done()
+
+    else
+
+      @hasFinishedParsing = true
+
+    return done()
 
 # Implement a transform stream to convert a .coffee file to .litcoffee
 class LitcoffeeConversion extends Transform
@@ -216,6 +255,7 @@ fileStatsListPromise = generatedFilesPromise.then (allFiles) ->
         lineStream.pipe hookImplementations = new HookImplementations()
         lineStream.pipe hookInvocations = new HookInvocations()
         lineStream.pipe todos = new Todos()
+        lineStream.pipe titleAndDescription = new TitleAndDescription()
 
         fstream.on 'error', reject
 
@@ -228,6 +268,8 @@ fileStatsListPromise = generatedFilesPromise.then (allFiles) ->
             implementations: hookImplementations.list
             invocations: hookInvocations.list
             todos: todos.withContext()
+            title: titleAndDescription.title
+            description: titleAndDescription.description
           )
 
     Promise.all typePromises
@@ -502,25 +544,16 @@ fileStatsListPromise.then((fileStatsList) ->
     else
       render += "## [#{fileStats.pkg}](source/#{sourcePath})"
 
-    # Naively parse out the file description. It must be wrapped in asterisks,
-    # i.e. italicized in markdown.
-    #
-    # ###### TODO: This 'chunk' parsing should be done with a Transform like the others.
-    data = fs.readFileSync "docs/source/#{fileStats.file}", 'utf8'
-    chunks = data.split '\n\n'
-
-    title = chunks[0]
-    if 35 is title.charCodeAt 0
+    if fileStats.title?
       render += '\n\n'
       render += '> ' if isSubpackage
-      render += "<span class=\"package-title\">#{title.substr 2}</span>"
+      render += "<span class=\"package-title\">#{fileStats.title}</span>"
 
     render += '\n\n'
 
-    description = chunks[1] ? ''
-    if 42 is description.charCodeAt 0 and 42 is description.charCodeAt description.length - 1
+    if fileStats.description?
       render += '> ' if isSubpackage
-      render += "#{description}\n\n"
+      render += "#{fileStats.description}\n\n"
 
     if fileStats.implementations.length > 0
       render += '> ' if isSubpackage
