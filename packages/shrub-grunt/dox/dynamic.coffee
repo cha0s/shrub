@@ -20,7 +20,7 @@ class HookInvocations extends Transform
 
   _transform: (chunk, encoding, done) ->
     line = chunk.toString('utf8')
-    if matches = line.match /^\s*# \#\#\#\# Invoke hook `([^`]+)`/
+    if matches = line.match /^\s*# #### Invoke hook `([^`]+)`/
       @list.push matches[1]
 
     done()
@@ -36,7 +36,7 @@ class HookImplementations extends Transform
 
   _transform: (chunk, encoding, done) ->
     line = chunk.toString('utf8')
-    if matches = line.match /^\s*# \#\#\#\# Implements hook `([^`]+)`/
+    if matches = line.match /^\s*# #### Implements hook `([^`]+)`/
       @list.push matches[1]
 
     done()
@@ -55,7 +55,7 @@ class Todos extends Transform
 
   _transform: (chunk, encoding, done) ->
     @lines.push line = chunk.toString('utf8')
-    if matches = line.match /^\s*# \#\#\#\#\#\# TODO/
+    if matches = line.match /^\s*# ###### TODO/
       @todos.push @lines.length - 1
 
     done()
