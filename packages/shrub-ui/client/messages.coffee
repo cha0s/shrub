@@ -1,8 +1,6 @@
 # # UI - Messages
 #
 # *Manage transient UI messages.*
-#
-# ###### TODO: I don't really like this. Think about it some more.
 
 config = require 'config'
 errors = require 'errors'
