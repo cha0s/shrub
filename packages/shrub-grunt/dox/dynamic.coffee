@@ -392,21 +392,24 @@ fileStatsListPromise.then((fileStatsList) ->
               parts.splice index, 1
           file = parts.join '/'
 
+          addClientToFullPath = (path) ->
+
+            parts = path.split '/'
+            return path if parts[0] isnt 'packages'
+            parts.splice 2, 0, 'client'
+            parts.join '/'
+
           do (fullName) -> types = types.map (type) ->
             "    <tr class=\"#{
               if stripe++ % 2 then 'odd' else 'even'
             }\"><td><a href=\"../source/#{
-              _sourcePath fullName
-            }#{
-              if type is 'client' then '/client' else ''
+              addClientToFullPath _sourcePath fullName
             }\">#{
               _sourcePath file
             } (#{
               type
             })</a></td><td align=\"right\"><a href=\"../source/#{
-              _sourcePath fullName
-            }#{
-              if type is 'client' then '/client' else ''
+              addClientToFullPath _sourcePath fullName
             }##{
               wordingFor[key]
             }-hook-#{
