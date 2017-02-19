@@ -379,14 +379,41 @@ fileStatsListPromise.then((fileStatsList) ->
         stripe = 0
         instances = for file, {fullName, types} of O[pluralKey][hook]
 
-          # Remove packages and file part.
+          # Remove client path part, only added when necessary.
           parts = fullName.split '/'
-          parts.shift()
-          parts.pop()
-          packageName = parts.join '/'
+          for remove in ['client']
+            if ~(index = parts.indexOf remove)
+              parts.splice index, 1
+          fullName = parts.join '/'
 
-          types = types.map (type) ->
-            "    <tr class=\"#{if stripe++ % 2 then 'odd' else 'even'}\"><td><a href=\"../source/#{_sourcePath fullName}\">#{_sourcePath file} (#{type})</a></td><td align=\"right\"><a href=\"../source/#{_sourcePath fullName}##{wordingFor[key]}-hook-#{_idFromString hook}\">#{key}</a></td></tr>"
+          parts = file.split '/'
+          for remove in ['client']
+            if ~(index = parts.indexOf remove)
+              parts.splice index, 1
+          file = parts.join '/'
+
+          do (fullName) -> types = types.map (type) ->
+            "    <tr class=\"#{
+              if stripe++ % 2 then 'odd' else 'even'
+            }\"><td><a href=\"../source/#{
+              _sourcePath fullName
+            }#{
+              if type is 'client' then '/client' else ''
+            }\">#{
+              _sourcePath file
+            } (#{
+              type
+            })</a></td><td align=\"right\"><a href=\"../source/#{
+              _sourcePath fullName
+            }#{
+              if type is 'client' then '/client' else ''
+            }##{
+              wordingFor[key]
+            }-hook-#{
+              _idFromString hook
+            }\">#{
+              key
+            }</a></td></tr>"
           types.join ''
 
         render += instances.join ''
