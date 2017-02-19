@@ -418,12 +418,7 @@ Render the hooks page.
       pluralKey = "#{key}s"
 
       if O[pluralKey][hook]?
-```
 
-console.log pluralKey, hook
-console.log O[pluralKey][hook]
-
-```coffeescript
         count = 0
         for file, {types} of O[pluralKey][hook]
           count += types.length
@@ -438,62 +433,39 @@ console.log O[pluralKey][hook]
         instances = for file, {fullName, types} of O[pluralKey][hook]
 ```
 
-Remove packages and file part.
+Remove client path part, only added when necessary.
 
 ```coffeescript
           parts = fullName.split '/'
-```
-
-parts.shift()
-parts.pop()
-
-```coffeescript
           for remove in ['client']
             if ~(index = parts.indexOf remove)
               parts.splice index, 1
           fullName = parts.join '/'
 
           parts = file.split '/'
-```
-
-parts.shift()
-parts.pop()
-
-```coffeescript
           for remove in ['client']
             if ~(index = parts.indexOf remove)
               parts.splice index, 1
           file = parts.join '/'
-```
 
-if hook is 'shrubUserLoginStrategies'
-  console.log O[pluralKey][hook]
+          addClientToFullPath = (path) ->
 
-```coffeescript
-```
+            parts = path.split '/'
+            return path if parts[0] isnt 'packages'
+            parts.splice 2, 0, 'client'
+            parts.join '/'
 
-  parts = file.split '/'
-  mergeFile = parts.join '/'
-  console.log mergeFile, _sourcePath mergeFile
-  console.log fullName, _sourcePath fullName
-  console.log types
-
-```coffeescript
           do (fullName) -> types = types.map (type) ->
             "    <tr class=\"#{
               if stripe++ % 2 then 'odd' else 'even'
             }\"><td><a href=\"../source/#{
-              _sourcePath fullName
-            }#{
-              if type is 'client' then '/client' else ''
+              addClientToFullPath _sourcePath fullName
             }\">#{
               _sourcePath file
             } (#{
               type
             })</a></td><td align=\"right\"><a href=\"../source/#{
-              _sourcePath fullName
-            }#{
-              if type is 'client' then '/client' else ''
+              addClientToFullPath _sourcePath fullName
             }##{
               wordingFor[key]
             }-hook-#{
@@ -713,7 +685,6 @@ Link to the package.
       render += '  <table>\n'
       render += fileStats.implementations.map((hook, index) ->
         "    <tr class=\"#{if index % 2 then 'odd' else 'even'}\"><td><a href=\"../hooks/##{_idFromString hook}\">#{hook}</a></td><td align=\"right\"><a href=\"../source/#{sourcePath}#implements-hook-#{hook.toLowerCase()}\">implementation</a></td></tr>\n"
-```
       ).join ''
       render += '  </table>\n'
       render += '</div>'
@@ -725,6 +696,7 @@ Link to the package.
       render += '<p class="admonition-title">Invokes hooks</p>'
       render += '  <table>\n'
       render += fileStats.invocations.map((hook, index) ->
+```
         "    <tr class=\"#{if index % 2 then 'odd' else 'even'}\"><td><a href=\"../hooks/##{_idFromString hook}\">#{hook}</a></td><td align=\"right\"><a href=\"../source/#{sourcePath}#invoke-hook-#{hook.toLowerCase()}\">invocation</a></td></tr>\n"
       ).join ''
       render += '  </table>\n'

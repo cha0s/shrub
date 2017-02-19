@@ -2029,11 +2029,8 @@ information.</p>
       pluralKey = &quot;#{key}s&quot;
 
       if O[pluralKey][hook]?
-</code></pre>
 
-<p>console.log pluralKey, hook
-console.log O[pluralKey][hook]</p>
-<pre><code class="coffeescript">        count = 0
+        count = 0
         for file, {types} of O[pluralKey][hook]
           count += types.length
 
@@ -2047,52 +2044,37 @@ console.log O[pluralKey][hook]</p>
         instances = for file, {fullName, types} of O[pluralKey][hook]
 </code></pre>
 
-<p>Remove packages and file part.</p>
+<p>Remove client path part, only added when necessary.</p>
 <pre><code class="coffeescript">          parts = fullName.split '/'
-</code></pre>
-
-<p>parts.shift()
-parts.pop()</p>
-<pre><code class="coffeescript">          for remove in ['client']
+          for remove in ['client']
             if ~(index = parts.indexOf remove)
               parts.splice index, 1
           fullName = parts.join '/'
 
           parts = file.split '/'
-</code></pre>
-
-<p>parts.shift()
-parts.pop()</p>
-<pre><code class="coffeescript">          for remove in ['client']
+          for remove in ['client']
             if ~(index = parts.indexOf remove)
               parts.splice index, 1
           file = parts.join '/'
-</code></pre>
 
-<p>if hook is 'shrubUserLoginStrategies'
-  console.log O[pluralKey][hook]</p>
-<pre><code class="coffeescript"></code></pre>
+          addClientToFullPath = (path) -&gt;
 
-<p>parts = file.split '/'
-  mergeFile = parts.join '/'
-  console.log mergeFile, _sourcePath mergeFile
-  console.log fullName, _sourcePath fullName
-  console.log types</p>
-<pre><code class="coffeescript">          do (fullName) -&gt; types = types.map (type) -&gt;
+            parts = path.split '/'
+            return path if parts[0] isnt 'packages'
+            parts.splice 2, 0, 'client'
+            parts.join '/'
+
+          do (fullName) -&gt; types = types.map (type) -&gt;
             &quot;    &lt;tr class=\&quot;#{
               if stripe++ % 2 then 'odd' else 'even'
             }\&quot;&gt;&lt;td&gt;&lt;a href=\&quot;../source/#{
-              _sourcePath fullName
-            }#{
-              if type is 'client' then '/client' else ''
+              addClientToFullPath _sourcePath fullName
             }\&quot;&gt;#{
               _sourcePath file
             } (#{
               type
             })&lt;/a&gt;&lt;/td&gt;&lt;td align=\&quot;right\&quot;&gt;&lt;a href=\&quot;../source/#{
-              _sourcePath fullName
-            }#{
-              if type is 'client' then '/client' else ''
+              addClientToFullPath _sourcePath fullName
             }##{
               wordingFor[key]
             }-hook-#{
@@ -2298,20 +2280,20 @@ _allSourceFiles().then (files) -&gt;
       render += '  &lt;table&gt;\n'
       render += fileStats.implementations.map((hook, index) -&gt;
         &quot;    &lt;tr class=\&quot;#{if index % 2 then 'odd' else 'even'}\&quot;&gt;&lt;td&gt;&lt;a href=\&quot;../hooks/##{_idFromString hook}\&quot;&gt;#{hook}&lt;/a&gt;&lt;/td&gt;&lt;td align=\&quot;right\&quot;&gt;&lt;a href=\&quot;../source/#{sourcePath}#implements-hook-#{hook.toLowerCase()}\&quot;&gt;implementation&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;\n&quot;
+      ).join ''
+      render += '  &lt;/table&gt;\n'
+      render += '&lt;/div&gt;'
+      render += '\n\n'
+
+    if fileStats.invocations.length &gt; 0
+      render += '&gt; ' if isSubpackage
+      render += '&lt;div class=&quot;admonition note&quot;&gt;'
+      render += '&lt;p class=&quot;admonition-title&quot;&gt;Invokes hooks&lt;/p&gt;'
+      render += '  &lt;table&gt;\n'
+      render += fileStats.invocations.map((hook, index) -&gt;
 </code></pre>
 
-<pre><code>  ).join ''
-  render += '  &lt;/table&gt;\n'
-  render += '&lt;/div&gt;'
-  render += '\n\n'
-
-if fileStats.invocations.length &gt; 0
-  render += '&gt; ' if isSubpackage
-  render += '&lt;div class="admonition note"&gt;'
-  render += '&lt;p class="admonition-title"&gt;Invokes hooks&lt;/p&gt;'
-  render += '  &lt;table&gt;\n'
-  render += fileStats.invocations.map((hook, index) -&gt;
-    "    &lt;tr class=\"#{if index % 2 then 'odd' else 'even'}\"&gt;&lt;td&gt;&lt;a href=\"../hooks/##{_idFromString hook}\"&gt;#{hook}&lt;/a&gt;&lt;/td&gt;&lt;td align=\"right\"&gt;&lt;a href=\"../source/#{sourcePath}#invoke-hook-#{hook.toLowerCase()}\"&gt;invocation&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;\n"
+<pre><code>    "    &lt;tr class=\"#{if index % 2 then 'odd' else 'even'}\"&gt;&lt;td&gt;&lt;a href=\"../hooks/##{_idFromString hook}\"&gt;#{hook}&lt;/a&gt;&lt;/td&gt;&lt;td align=\"right\"&gt;&lt;a href=\"../source/#{sourcePath}#invoke-hook-#{hook.toLowerCase()}\"&gt;invocation&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;\n"
   ).join ''
   render += '  &lt;/table&gt;\n'
   render += '&lt;/div&gt;'
