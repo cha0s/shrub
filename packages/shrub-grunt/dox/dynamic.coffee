@@ -142,12 +142,16 @@ class LitcoffeeConversion extends Transform
       matches = comment.match /^#### (I(?:nvoke|mplements)) hook `([^`]+)`/
       if matches
 
+        parts = path.dirname(@filename).split('/')
+        parts.push '' if 'index.coffee' isnt path.basename @filename
+        backpath = parts.map(-> '..').join '/'
+
         @push "#### #{
           matches[1]
         } hook [`#{
           matches[2]
-        }`](../#{
-          path.dirname(@filename).split('/').map(-> '..').join '/'
+        }`](#{
+          backpath
         }/hooks##{
           matches[2].toLowerCase()
         })\n"
