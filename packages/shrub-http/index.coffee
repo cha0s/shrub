@@ -28,6 +28,11 @@ exports.pkgmanRegister = (registrar) ->
         # Spawn workers into a cluster.
         httpManager.cluster()
 
+        # Trust prox(y|ies).
+        httpManager.trustProxy(
+          config.get 'packageConfig:shrub-core:trustedProxies'
+        )
+
         httpManager.initialize().then(->
 
           debug "Shrub HTTP server up and running on port #{port}!"

@@ -43,11 +43,7 @@ exports.pkgmanRegister = (registrar) ->
       # Normalize IP address.
       (req, res, next) ->
 
-        req.normalizedIp = trustedAddress(
-          req.connection.remoteAddress
-          req.headers['x-forwarded-for']
-        )
-
+        req.normalizedIp = req.ip
         next()
 
     ]

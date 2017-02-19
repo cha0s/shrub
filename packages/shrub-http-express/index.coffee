@@ -124,3 +124,8 @@ exports.Manager = class Express extends HttpManager
   #
   # *The node HTTP server instance.*
   server: -> @_server
+
+  # ## Express#trustProxy
+  #
+  # *Set IP addresses as trusted proxies.*
+  trustProxy: (proxyList) -> @_app.set 'trust proxy', proxyList
