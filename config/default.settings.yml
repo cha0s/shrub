@@ -1,3 +1,6 @@
+# # Default site configuration
+# ---
+# The list of packages active for this application.
 packageList: [
   "shrub-angular",
   "shrub-assets",
@@ -29,10 +32,19 @@ packageList: [
   "shrub-villiany",
 ]
 
-packageSettings:
+# Here you may set values for packages which correspond with the values
+# provided by packages' implementations of hook
+# [`shrubConfigServer`](../../hooks#shrubconfigserver).
+packageConfig:
 
+  # Use the package name as the settings key.
   shrub-core:
 
+    # It's not uncommon to run your node application behind a reverse proxy.
+    # By default, we'll provide both ipv4 and embedded ipv6 addresses for
+    # localhost. If a reverse proxy is running on the same machine you will
+    # therefore automatically see the correct IP address in `req.normalizedIp`
+    # which is provided to HTTP, socket connection, and RPC endpoint requests.
     trustedProxies: [
       "127.0.0.1",
       "::ffff:127.0.0.1",
