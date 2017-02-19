@@ -38,6 +38,14 @@ Spawn workers into a cluster.
 
 ```coffeescript
         httpManager.cluster()
+```
+
+Trust prox(y|ies).
+
+```coffeescript
+        httpManager.trustProxy(
+          config.get 'packageConfig:shrub-core:trustedProxies'
+        )
 
         httpManager.initialize().then(->
 

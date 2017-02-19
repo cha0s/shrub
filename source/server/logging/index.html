@@ -1664,23 +1664,65 @@
               
                 <h1 id="server-logging">Server logging</h1>
 <p><em>Provide a unified interface for logging messages.</em></p>
+<pre><code class="coffeescript">_ = require 'lodash'
+
+util = require 'util'
+
+config = require 'config'
+errors = require 'errors'
+
+debug = require('debug') 'shrub:logger'
+</code></pre>
+
 <h2 id="loggingcreate">logging.create</h2>
 <ul>
 <li>(string) <code>filename</code> - The filename where the log will be written.</li>
 </ul>
 <p><em>Create a new logger instance.</em></p>
-<pre><code class="coffeescript">exports.create = (filename) -&gt;
+<pre><code class="coffeescript">exports.create = (options) -&gt;
 
   winston = require 'winston'
+  {Transport} = require 'winston/lib/winston/transports/transport'
 
-  new winston.Logger transports: [
-    new winston.transports.Console level: 'warn', colorize: true
-    new winston.transports.File level: 'silly', filename: filename
-  ]
+  class DebugTransport extends Transport
+
+    log: (level, msg, meta, callback) -&gt;
+
+      output = &quot;#{level}: &quot;
+      if _.isString msg
+        output += msg
+      else if msg instanceof Error
+        output += errors.stack msg
+      else
+        output += util.inspect msg
+      debug output
+
+      @emit 'logged'
+      callback null, true
+
+  options ?= {}
+  options.transports ?= []
+
+  options.console ?= {}
+  options.console.level ?= if 'production' is config.get 'NODE_ENV'
+    'error'
+  else
+    'silly'
+  options.transports.push new DebugTransport options.console
+
+  options.file ?= {}
+  options.file.level ?= if 'production' is config.get 'NODE_ENV'
+    'error'
+  else
+    'silly'
+  if options.file.filename?
+    options.transports.push new winston.transports.File options.file
+
+  new winston.Logger transports: options.transports
 </code></pre>
 
 <p>Create a default logger, for convenience.</p>
-<pre><code class="coffeescript">defaultLogger = exports.create 'logs/shrub.log'
+<pre><code class="coffeescript">defaultLogger = exports.create file: filename: 'logs/shrub.log'
 exports.defaultLogger = defaultLogger
 </code></pre>
               

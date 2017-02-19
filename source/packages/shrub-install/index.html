@@ -1667,7 +1667,8 @@
                 <h1 id="installation">Installation</h1>
 <p><em>Install shrub if it hasn't been done so yet. This is essentially a hack for
 now, but will be fleshed out as we go.</em></p>
-<pre><code class="coffeescript">exports.pkgmanRegister = (registrar) -&gt;
+<pre><code class="coffeescript">{defaultLogger} = require 'logging'
+exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
 <h4 id="implements-hook-shrubcorebootstrapmiddleware">Implements hook <a href="../../../hooks#shrubcorebootstrapmiddleware"><code>shrubCoreBootstrapMiddleware</code></a></h4>
@@ -1773,7 +1774,11 @@ reinstall = (name = 'admin', email = 'admin@example.com', password = 'admin') -&
     user.groups.add group: groups[2].id
     user.save()
 
-  ).then(-&gt; console.log &quot;Site installed!&quot;).catch console.error
+  ).then(-&gt;
+
+    defaultLogger.error &quot;No site installed, so installed one.&quot;
+
+  ).catch console.error
 </code></pre>
               
             </div>

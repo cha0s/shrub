@@ -1754,7 +1754,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     errors = require 'errors'
     logging = require 'logging'
 
-    logger = logging.create 'logs/rpc.log'
+    logger = logging.create file: filename: 'logs/rpc.log'
     {TransmittableError} = errors
 
     label: 'Receive and dispatch RPC calls'
@@ -1814,17 +1814,16 @@ violate other routes' expectations.</p>
 <pre><code class="coffeescript">          emitError = (error) -&gt; routeRes.setError(error).end()
 </code></pre>
 
-<p>Send an error to the client, but don't notify them of the real
-underlying issue.</p>
-<pre><code class="coffeescript">          concealErrorFromClient = (error) -&gt;
-
-            emitError new Error 'Please try again later.'
-            logError error
+<p>Error transmission and logging.</p>
+<pre><code class="coffeescript">          handleError = (error) -&gt;
 </code></pre>
 
-<p>Transmit the error as it is directly to the client.</p>
-<pre><code class="coffeescript">          sendErrorToClient = (error) -&gt;
-            emitError error
+<p>Transmit transmittable errors to the client, otherwise conceal
+it.</p>
+<pre><code class="coffeescript">            if error instanceof TransmittableError
+              emitError error
+            else
+              emitError new Error 'Please try again later.'
 </code></pre>
 
 <p>Log the full error stack, because it might help track down any
@@ -1844,7 +1843,7 @@ problem.</p>
 
 <p>Dispatch the route.</p>
 <pre><code class="coffeescript">          route.dispatcher.dispatch routeReq, routeRes, (error) -&gt;
-            sendErrorToClient error if error?
+            handleError error if error?
 
         next()
 

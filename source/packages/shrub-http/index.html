@@ -1697,6 +1697,12 @@ exports.pkgmanRegister = (registrar) -&gt;
 
 <p>Spawn workers into a cluster.</p>
 <pre><code class="coffeescript">        httpManager.cluster()
+</code></pre>
+
+<p>Trust prox(y|ies).</p>
+<pre><code class="coffeescript">        httpManager.trustProxy(
+          config.get 'packageConfig:shrub-core:trustedProxies'
+        )
 
         httpManager.initialize().then(-&gt;
 

@@ -166,3 +166,11 @@ Connect (no pun) Express's middleware system to ours.
 ```coffeescript
   server: -> @_server
 ```
+
+## Express#trustProxy
+
+*Set IP addresses as trusted proxies.*
+
+```coffeescript
+  trustProxy: (proxyList) -> @_app.set 'trust proxy', proxyList
+```

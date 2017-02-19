@@ -146,6 +146,6 @@ Ensure any subclass implements these "pure virtual" methods.
   this::[method] = (-> throw new ReferenceError(
     "HttpManager::#{method} is a pure virtual method!"
   )) for method in [
-    'addRoute', 'cluster', 'listener', 'server'
+    'addRoute', 'cluster', 'listener', 'server', 'trustProxy'
   ]
 ```

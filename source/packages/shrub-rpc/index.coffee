@@ -99,7 +99,7 @@ Set up the middleware dispatcher.
     errors = require 'errors'
     logging = require 'logging'
 
-    logger = logging.create 'logs/rpc.log'
+    logger = logging.create file: filename: 'logs/rpc.log'
     {TransmittableError} = errors
 
     label: 'Receive and dispatch RPC calls'
@@ -169,21 +169,20 @@ Send an error to the client.
           emitError = (error) -> routeRes.setError(error).end()
 ```
 
-Send an error to the client, but don't notify them of the real
-underlying issue.
+Error transmission and logging.
 
 ```coffeescript
-          concealErrorFromClient = (error) ->
-
-            emitError new Error 'Please try again later.'
-            logError error
+          handleError = (error) ->
 ```
 
-Transmit the error as it is directly to the client.
+Transmit transmittable errors to the client, otherwise conceal
+it.
 
 ```coffeescript
-          sendErrorToClient = (error) ->
-            emitError error
+            if error instanceof TransmittableError
+              emitError error
+            else
+              emitError new Error 'Please try again later.'
 ```
 
 Log the full error stack, because it might help track down any
@@ -211,7 +210,7 @@ Dispatch the route.
 
 ```coffeescript
           route.dispatcher.dispatch routeReq, routeRes, (error) ->
-            sendErrorToClient error if error?
+            handleError error if error?
 
         next()
 

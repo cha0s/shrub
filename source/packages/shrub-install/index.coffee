@@ -4,6 +4,7 @@
 now, but will be fleshed out as we go.*
 
 ```coffeescript
+{defaultLogger} = require 'logging'
 exports.pkgmanRegister = (registrar) ->
 ```
 
@@ -129,5 +130,9 @@ Create superuser.
     user.groups.add group: groups[2].id
     user.save()
 
-  ).then(-> console.log "Site installed!").catch console.error
+  ).then(->
+
+    defaultLogger.error "No site installed, so installed one."
+
+  ).catch console.error
 ```

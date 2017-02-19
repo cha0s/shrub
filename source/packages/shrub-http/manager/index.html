@@ -1785,7 +1785,7 @@ httpMiddlewareDebug = require('debug') 'shrub-silly:http:middleware'
 <pre><code class="coffeescript">  this::[method] = (-&gt; throw new ReferenceError(
     &quot;HttpManager::#{method} is a pure virtual method!&quot;
   )) for method in [
-    'addRoute', 'cluster', 'listener', 'server'
+    'addRoute', 'cluster', 'listener', 'server', 'trustProxy'
   ]
 </code></pre>
               

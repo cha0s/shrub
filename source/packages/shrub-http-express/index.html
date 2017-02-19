@@ -787,6 +787,8 @@
                 
                     <li><a class="toctree-l4" href="#expressserver">Express#server</a></li>
                 
+                    <li><a class="toctree-l4" href="#expresstrustproxy">Express#trustProxy</a></li>
+                
             
             </ul>
         
@@ -1806,6 +1808,11 @@ exports.Manager = class Express extends HttpManager
 <h2 id="expressserver">Express#server</h2>
 <p><em>The node HTTP server instance.</em></p>
 <pre><code class="coffeescript">  server: -&gt; @_server
+</code></pre>
+
+<h2 id="expresstrustproxy">Express#trustProxy</h2>
+<p><em>Set IP addresses as trusted proxies.</em></p>
+<pre><code class="coffeescript">  trustProxy: (proxyList) -&gt; @_app.set 'trust proxy', proxyList
 </code></pre>
               
             </div>

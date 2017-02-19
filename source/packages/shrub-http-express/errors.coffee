@@ -17,7 +17,7 @@ exports.pkgmanRegister = (registrar) ->
     errors = require 'errors'
     logging = require 'logging'
 
-    logger = logging.create 'logs/error.log'
+    logger = logging.create file: filename: 'logs/error.log'
 
     label: 'Error handling'
     middleware: [

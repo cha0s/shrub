@@ -75,11 +75,7 @@ Normalize IP address.
 ```coffeescript
       (req, res, next) ->
 
-        req.normalizedIp = trustedAddress(
-          req.connection.remoteAddress
-          req.headers['x-forwarded-for']
-        )
-
+        req.normalizedIp = req.ip
         next()
 
     ]
