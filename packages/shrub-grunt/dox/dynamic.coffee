@@ -392,8 +392,9 @@ fileStatsListPromise.then((fileStatsList) ->
               parts.splice index, 1
           file = parts.join '/'
 
-          addClientToFullPath = (path) ->
+          addClientToFullPath = (isClient, path) ->
 
+            return path unless isClient
             parts = path.split '/'
             return path if parts[0] isnt 'packages'
             parts.splice 2, 0, 'client'
@@ -403,13 +404,13 @@ fileStatsListPromise.then((fileStatsList) ->
             "    <tr class=\"#{
               if stripe++ % 2 then 'odd' else 'even'
             }\"><td><a href=\"../source/#{
-              addClientToFullPath _sourcePath fullName
+              addClientToFullPath type is 'client', _sourcePath fullName
             }\">#{
               _sourcePath file
             } (#{
               type
             })</a></td><td align=\"right\"><a href=\"../source/#{
-              addClientToFullPath _sourcePath fullName
+              addClientToFullPath type is 'client', _sourcePath fullName
             }##{
               wordingFor[key]
             }-hook-#{
