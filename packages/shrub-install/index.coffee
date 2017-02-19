@@ -2,6 +2,8 @@
 #
 # *Install shrub if it hasn't been done so yet. This is essentially a hack for
 # now, but will be fleshed out as we go.*
+
+{defaultLogger} = require 'logging'
 exports.pkgmanRegister = (registrar) ->
 
   # #### Implements hook `shrubCoreBootstrapMiddleware`.
@@ -100,4 +102,8 @@ reinstall = (name = 'admin', email = 'admin@example.com', password = 'admin') ->
     user.groups.add group: groups[2].id
     user.save()
 
-  ).then(-> console.log "Site installed!").catch console.error
+  ).then(->
+
+    defaultLogger.error "No site installed, so installed one."
+
+  ).catch console.error

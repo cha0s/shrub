@@ -25,7 +25,7 @@ module.exports = class SocketIoManager extends SocketManager
     errors ?= require 'errors'
     logging ?= require 'logging'
 
-    socketLogger ?= logging.create 'logs/socket.io.log'
+    socketLogger ?= logging.create file: filename: 'logs/socket.io.log'
 
     options = config.get 'packageConfig:shrub-socket:manager:options'
 

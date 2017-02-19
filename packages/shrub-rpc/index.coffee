@@ -73,7 +73,7 @@ exports.pkgmanRegister = (registrar) ->
     errors = require 'errors'
     logging = require 'logging'
 
-    logger = logging.create 'logs/rpc.log'
+    logger = logging.create file: filename: 'logs/rpc.log'
     {TransmittableError} = errors
 
     label: 'Receive and dispatch RPC calls'
@@ -127,16 +127,15 @@ exports.pkgmanRegister = (registrar) ->
           # Send an error to the client.
           emitError = (error) -> routeRes.setError(error).end()
 
-          # Send an error to the client, but don't notify them of the real
-          # underlying issue.
-          concealErrorFromClient = (error) ->
+          # Error transmission and logging.
+          handleError = (error) ->
 
-            emitError new Error 'Please try again later.'
-            logError error
-
-          # Transmit the error as it is directly to the client.
-          sendErrorToClient = (error) ->
-            emitError error
+            # Transmit transmittable errors to the client, otherwise conceal
+            # it.
+            if error instanceof TransmittableError
+              emitError error
+            else
+              emitError new Error 'Please try again later.'
 
             # Log the full error stack, because it might help track down any
             # problem.
@@ -152,7 +151,7 @@ exports.pkgmanRegister = (registrar) ->
 
           # Dispatch the route.
           route.dispatcher.dispatch routeReq, routeRes, (error) ->
-            sendErrorToClient error if error?
+            handleError error if error?
 
         next()
 

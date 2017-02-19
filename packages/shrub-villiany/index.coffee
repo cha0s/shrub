@@ -26,7 +26,7 @@ exports.pkgmanRegister = (registrar) ->
 
     orm = require 'shrub-orm'
 
-    logger = logging.create 'logs/villiany.log'
+    logger = logging.create file: filename: 'logs/villiany.log'
 
     {Limiter} = require 'shrub-limiter'
 

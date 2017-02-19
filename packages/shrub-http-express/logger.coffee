@@ -13,8 +13,12 @@ exports.pkgmanRegister = (registrar) ->
     logging = require 'logging'
 
     # Differentiate between remote clients and our own sandbox clients.
-    remoteRequestLogger = logging.create 'logs/express.remote.log'
-    sandboxRequestLogger = logging.create 'logs/express.sandbox.log'
+    remoteRequestLogger = logging.create(
+      file: filename: 'logs/express.remote.log', level: 'info'
+    )
+    sandboxRequestLogger = logging.create(
+      file: filename: 'logs/express.sandbox.log', level: 'info'
+    )
 
     label: 'Log requests'
     middleware: [
