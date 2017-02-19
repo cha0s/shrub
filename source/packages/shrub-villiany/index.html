@@ -243,6 +243,21 @@
 
         
             
+    <ul class="subnav">
+    <li><span>config</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../config/default.settings/">default.settings.yml</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
     <li class="toctree-l1 ">
         <a class="" href="../../Gruntfile/">Gruntfile.coffee</a>
         
@@ -1668,6 +1683,8 @@ config = require 'config'
 
 orm = null
 
+{AuthorizationFailure} = require 'shrub-socket/manager'
+
 Fingerprint = require 'fingerprint'
 logger = null
 villianyLimiter = null
@@ -1707,8 +1724,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
 <p>Bans.</p>
-<h6 id="todo-bans-dont-actually-work-at-the-moment">TODO: Bans don't actually work at the moment.</h6>
-<pre><code class="coffeescript">    Ban = attributes: expires: 'date'
+<pre><code class="coffeescript">    Ban = attributes: expires: 'dateTime'
 </code></pre>
 
 <p>The structure of a ban is dictated by the fingerprint structure.</p>
@@ -1806,8 +1822,6 @@ exports.pkgmanRegister = (registrar) -&gt;
 
 <h4 id="implements-hook-shrubsocketconnectionmiddleware">Implements hook <a href="../../../hooks#shrubsocketconnectionmiddleware"><code>shrubSocketConnectionMiddleware</code></a></h4>
 <pre><code class="coffeescript">  registrar.registerHook 'shrubSocketConnectionMiddleware', -&gt;
-
-    {AuthorizationFailure} = require 'shrub-socket/manager'
 
     label: 'Provide villiany management'
     middleware: socketMiddleware()
@@ -1908,7 +1922,7 @@ exports.pkgmanRegister = (registrar) -&gt;
     'You are banned.'
 
   message += &quot; The ban will be lifted #{
-    moment().add('seconds', ttl).fromNow()
+    moment().add(ttl, 'seconds').fromNow()
   }.&quot; if ttl?
 
   message

@@ -243,6 +243,21 @@
 
         
             
+    <ul class="subnav">
+    <li><span>config</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../../../config/default.settings/">default.settings.yml</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
     <li class="toctree-l1 ">
         <a class="" href="../../../../Gruntfile/">Gruntfile.coffee</a>
         
@@ -1752,7 +1767,6 @@ caches lines to be able to build context around each TODO item.</p>
 
       if 42 is @description.charCodeAt @description.length - 1
         @hasFinishedParsing = true
-        return done()
 
     else
 
@@ -1837,7 +1851,7 @@ caches lines to be able to build context around each TODO item.</p>
 <pre><code class="coffeescript">_allSourceFiles = -&gt;
   new Promise (resolve, reject) -&gt;
     glob(
-      '{{client,custom,packages,server}/**/*.{coffee,litcoffee},*.{coffee,litcoffee}}'
+      '{{client,custom,packages,server}/**/*.{coffee,litcoffee},*.{coffee,litcoffee},config/default.settings.yml}'
       (error, files) -&gt;
         return reject error if error?
         resolve files

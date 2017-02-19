@@ -115,7 +115,6 @@ class TitleAndDescription extends Transform
 
       if 42 is @description.charCodeAt @description.length - 1
         @hasFinishedParsing = true
-        return done()
 
     else
 
@@ -206,7 +205,7 @@ Gather all source files.
 _allSourceFiles = ->
   new Promise (resolve, reject) ->
     glob(
-      '{{client,custom,packages,server}/**/*.{coffee,litcoffee},*.{coffee,litcoffee}}'
+      '{{client,custom,packages,server}/**/*.{coffee,litcoffee},*.{coffee,litcoffee},config/default.settings.yml}'
       (error, files) ->
         return reject error if error?
         resolve files
