@@ -448,8 +448,9 @@ Remove client path part, only added when necessary.
               parts.splice index, 1
           file = parts.join '/'
 
-          addClientToFullPath = (path) ->
+          addClientToFullPath = (isClient, path) ->
 
+            return path unless isClient
             parts = path.split '/'
             return path if parts[0] isnt 'packages'
             parts.splice 2, 0, 'client'
@@ -459,13 +460,13 @@ Remove client path part, only added when necessary.
             "    <tr class=\"#{
               if stripe++ % 2 then 'odd' else 'even'
             }\"><td><a href=\"../source/#{
-              addClientToFullPath _sourcePath fullName
+              addClientToFullPath type is 'client', _sourcePath fullName
             }\">#{
               _sourcePath file
             } (#{
               type
             })</a></td><td align=\"right\"><a href=\"../source/#{
-              addClientToFullPath _sourcePath fullName
+              addClientToFullPath type is 'client', _sourcePath fullName
             }##{
               wordingFor[key]
             }-hook-#{
@@ -694,9 +695,9 @@ Link to the package.
       render += '> ' if isSubpackage
       render += '<div class="admonition note">'
       render += '<p class="admonition-title">Invokes hooks</p>'
+```
       render += '  <table>\n'
       render += fileStats.invocations.map((hook, index) ->
-```
         "    <tr class=\"#{if index % 2 then 'odd' else 'even'}\"><td><a href=\"../hooks/##{_idFromString hook}\">#{hook}</a></td><td align=\"right\"><a href=\"../source/#{sourcePath}#invoke-hook-#{hook.toLowerCase()}\">invocation</a></td></tr>\n"
       ).join ''
       render += '  </table>\n'

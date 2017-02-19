@@ -2057,8 +2057,9 @@ information.</p>
               parts.splice index, 1
           file = parts.join '/'
 
-          addClientToFullPath = (path) -&gt;
+          addClientToFullPath = (isClient, path) -&gt;
 
+            return path unless isClient
             parts = path.split '/'
             return path if parts[0] isnt 'packages'
             parts.splice 2, 0, 'client'
@@ -2068,13 +2069,13 @@ information.</p>
             &quot;    &lt;tr class=\&quot;#{
               if stripe++ % 2 then 'odd' else 'even'
             }\&quot;&gt;&lt;td&gt;&lt;a href=\&quot;../source/#{
-              addClientToFullPath _sourcePath fullName
+              addClientToFullPath type is 'client', _sourcePath fullName
             }\&quot;&gt;#{
               _sourcePath file
             } (#{
               type
             })&lt;/a&gt;&lt;/td&gt;&lt;td align=\&quot;right\&quot;&gt;&lt;a href=\&quot;../source/#{
-              addClientToFullPath _sourcePath fullName
+              addClientToFullPath type is 'client', _sourcePath fullName
             }##{
               wordingFor[key]
             }-hook-#{
@@ -2289,11 +2290,11 @@ _allSourceFiles().then (files) -&gt;
       render += '&gt; ' if isSubpackage
       render += '&lt;div class=&quot;admonition note&quot;&gt;'
       render += '&lt;p class=&quot;admonition-title&quot;&gt;Invokes hooks&lt;/p&gt;'
-      render += '  &lt;table&gt;\n'
-      render += fileStats.invocations.map((hook, index) -&gt;
 </code></pre>
 
-<pre><code>    "    &lt;tr class=\"#{if index % 2 then 'odd' else 'even'}\"&gt;&lt;td&gt;&lt;a href=\"../hooks/##{_idFromString hook}\"&gt;#{hook}&lt;/a&gt;&lt;/td&gt;&lt;td align=\"right\"&gt;&lt;a href=\"../source/#{sourcePath}#invoke-hook-#{hook.toLowerCase()}\"&gt;invocation&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;\n"
+<pre><code>  render += '  &lt;table&gt;\n'
+  render += fileStats.invocations.map((hook, index) -&gt;
+    "    &lt;tr class=\"#{if index % 2 then 'odd' else 'even'}\"&gt;&lt;td&gt;&lt;a href=\"../hooks/##{_idFromString hook}\"&gt;#{hook}&lt;/a&gt;&lt;/td&gt;&lt;td align=\"right\"&gt;&lt;a href=\"../source/#{sourcePath}#invoke-hook-#{hook.toLowerCase()}\"&gt;invocation&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;\n"
   ).join ''
   render += '  &lt;/table&gt;\n'
   render += '&lt;/div&gt;'
