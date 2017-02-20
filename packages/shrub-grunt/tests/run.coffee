@@ -95,10 +95,7 @@ exports.pkgmanRegister = (registrar) ->
         protractorConfig = gruntConfig.taskConfiguration(
           'protractor', 'testsE2e'
         )
-        baseUrl = "http://#{
-          siteHostname
-        }/"
-        protractorConfig.options.args = baseUrl: baseUrl
+        protractorConfig.options.args = baseUrl: "http://#{siteHostname}/"
 
         # Wait for the server to come up.
         grunt.log.write 'Waiting for E2E server to come up...'
