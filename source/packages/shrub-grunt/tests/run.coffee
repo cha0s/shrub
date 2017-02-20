@@ -1,3 +1,9 @@
+
+```coffeescript
+
+config = require 'config'
+```
+
 # Grunt build process - Run tests
 
 ```coffeescript
@@ -87,7 +93,10 @@ Pass the environment to the child process.
 ```coffeescript
         options = env: process.env
         options.env['E2E'] = 'true'
-        options.env['packageConfig:shrub-http:port'] = port
+        options.env['packageConfig:shrub-http:listenTarget'] = port
+
+        siteHostname = "localhost:#{port}"
+        options.env['packageConfig:shrub-core:siteHostname'] = siteHostname
 ```
 
 Fork it.
@@ -106,7 +115,9 @@ Inject the port configuration.
         protractorConfig = gruntConfig.taskConfiguration(
           'protractor', 'testsE2e'
         )
-        baseUrl = "http://localhost:#{port}/"
+        baseUrl = "http://#{
+          siteHostname
+        }/"
         protractorConfig.options.args = baseUrl: baseUrl
 ```
 

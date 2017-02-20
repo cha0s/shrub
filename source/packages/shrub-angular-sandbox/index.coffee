@@ -95,8 +95,8 @@ After the template is rendered, lookup or create the sandbox.
           ,
             cookie: req.headers.cookie
 
-            url: "http://localhost:#{
-              config.get 'packageConfig:shrub-http:port'
+            url: "http://#{
+              config.get 'packageConfig:shrub-core:siteHostname'
             }/shrub-angular-entry-point"
           ,
             req.session.id

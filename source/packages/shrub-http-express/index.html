@@ -1801,8 +1801,10 @@ exports.Manager = class Express extends HttpManager
         resolve()
 </code></pre>
 
-<p>} Bind to the listen port.</p>
-<pre><code class="coffeescript">      @_server.listen @port()
+<p>Bind to the listen target.</p>
+<pre><code class="coffeescript">      listenTarget = @listenTarget()
+      listenTarget = [listenTarget] unless Array.isArray listenTarget
+      @_server.listen listenTarget...
 </code></pre>
 
 <h2 id="expressserver">Express#server</h2>

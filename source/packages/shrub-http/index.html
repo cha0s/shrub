@@ -1668,7 +1668,9 @@
               
                 <h1 id="http">HTTP</h1>
 <p>Manage HTTP connections.</p>
-<pre><code class="coffeescript">config = require 'config'
+<pre><code class="coffeescript">_ = require 'lodash'
+
+config = require 'config'
 pkgman = require 'pkgman'
 
 debug = require('debug') 'shrub:http'
@@ -1686,7 +1688,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 
       (next) -&gt;
 
-        {manager, port} = config.get 'packageConfig:shrub-http'
+        {manager, listenTarget} = config.get 'packageConfig:shrub-http'
 
         {Manager} = require manager.module
 </code></pre>
@@ -1706,7 +1708,18 @@ exports.pkgmanRegister = (registrar) -&gt;
 
         httpManager.initialize().then(-&gt;
 
-          debug &quot;Shrub HTTP server up and running on port #{port}!&quot;
+          listenTarget = [listenTarget] unless Array.isArray listenTarget
+
+          if listenTarget.length is 1
+
+            target = listenTarget[0]
+            target = &quot;port #{target}&quot; if _.isNumber listenTarget[0]
+
+          else
+
+            target = &quot;#{listenTarget[1]}:#{listenTarget[0]}&quot;
+
+          debug &quot;Shrub HTTP server up and running on #{target}!&quot;
           next()
 
         ).catch next
@@ -1762,7 +1775,7 @@ exports.pkgmanRegister = (registrar) -&gt;
 
     path: &quot;#{config.get 'path'}/app&quot;
 
-    port: 4201
+    listenTarget: [4201, '0.0.0.0']
 
 exports.manager = -&gt; httpManager
 </code></pre>

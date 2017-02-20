@@ -1760,8 +1760,8 @@ some methods to inspect the state of the document.</p>
       cookie: options.cookie
       cookieDomain: options.cookieDomain ? 'localhost'
 
-      url: options.url ? &quot;http://localhost:#{
-        config.get 'packageConfig:shrub-http:port'
+      url: options.url ? &quot;http://#{
+        config.get 'packageConfig:shrub-core:siteHostname'
       }/&quot;
     )
     @_window = window = document.defaultView

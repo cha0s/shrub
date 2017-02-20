@@ -1734,9 +1734,8 @@ exports.pkgmanRegister = (registrar) -&gt;
 <pre><code class="coffeescript">        skin.renderAppHtml().then((html) -&gt;
 
           sandbox = new Sandbox()
-
-          sandbox.createDocument html, url: &quot;http://localhost:#{
-            config.get 'packageConfig:shrub-http:port'
+          sandbox.createDocument html, url: &quot;http://#{
+            config.get 'packageConfig:shrub-core:siteHostname'
           }/home&quot;
 
         ).then(-&gt;

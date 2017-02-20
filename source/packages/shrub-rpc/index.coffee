@@ -111,7 +111,7 @@ Set up the middleware dispatcher.
 Log an error without transmitting it.
 
 ```coffeescript
-        logError = (error) -> logger.error errors.stack error
+        logError = (error) -> logger.error error
 ```
 
 Hub for RPC calls. Dispatch routes.

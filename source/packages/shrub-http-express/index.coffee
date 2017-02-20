@@ -153,10 +153,12 @@ Connect (no pun) Express's middleware system to ours.
         resolve()
 ```
 
-} Bind to the listen port.
+Bind to the listen target.
 
 ```coffeescript
-      @_server.listen @port()
+      listenTarget = @listenTarget()
+      listenTarget = [listenTarget] unless Array.isArray listenTarget
+      @_server.listen listenTarget...
 ```
 
 ## Express#server

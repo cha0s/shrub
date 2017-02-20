@@ -1689,12 +1689,12 @@ debug = require('debug') 'shrub:logger'
     log: (level, msg, meta, callback) -&gt;
 
       output = &quot;#{level}: &quot;
-      if _.isString msg
-        output += msg
-      else if msg instanceof Error
-        output += errors.stack msg
+      output += if _.isString msg
+        msg
       else
-        output += util.inspect msg
+        util.inspect msg
+      output += errors.stack meta if meta instanceof Error
+
       debug output
 
       @emit 'logged'

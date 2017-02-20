@@ -88,7 +88,7 @@ Start listening.
           (error) ->
             return reject error unless 'EADDRINUSE' is error.code
 
-            httpDebug 'HTTP port in use... retrying in 2 seconds'
+            httpDebug 'HTTP listen target in use... retrying in 2 seconds'
             setTimeout tryListener, 2000
 
         )
@@ -102,12 +102,12 @@ Start listening.
   path: -> @_config.path
 ```
 
-## HttpManager#port
+## HttpManager#listenTarget
 
-*Get the port this server (is|will be) listening on.*
+*Get the target this server (is|will be) listening on.*
 
 ```coffeescript
-  port: -> @_config.port
+  listenTarget: -> @_config.listenTarget
 ```
 
 ## HttpManager#registerMiddleware

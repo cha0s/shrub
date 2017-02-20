@@ -110,8 +110,8 @@ Set up a DOM, forwarding our cookie.
       cookie: options.cookie
       cookieDomain: options.cookieDomain ? 'localhost'
 
-      url: options.url ? "http://localhost:#{
-        config.get 'packageConfig:shrub-http:port'
+      url: options.url ? "http://#{
+        config.get 'packageConfig:shrub-core:siteHostname'
       }/"
     )
     @_window = window = document.defaultView

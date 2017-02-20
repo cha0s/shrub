@@ -833,7 +833,7 @@
                 
                     <li><a class="toctree-l4" href="#httpmanagerpath">HttpManager#path</a></li>
                 
-                    <li><a class="toctree-l4" href="#httpmanagerport">HttpManager#port</a></li>
+                    <li><a class="toctree-l4" href="#httpmanagerlistentarget">HttpManager#listenTarget</a></li>
                 
                     <li><a class="toctree-l4" href="#httpmanagerregistermiddleware">HttpManager#registerMiddleware</a></li>
                 
@@ -1743,7 +1743,7 @@ httpMiddlewareDebug = require('debug') 'shrub-silly:http:middleware'
           (error) -&gt;
             return reject error unless 'EADDRINUSE' is error.code
 
-            httpDebug 'HTTP port in use... retrying in 2 seconds'
+            httpDebug 'HTTP listen target in use... retrying in 2 seconds'
             setTimeout tryListener, 2000
 
         )
@@ -1754,9 +1754,9 @@ httpMiddlewareDebug = require('debug') 'shrub-silly:http:middleware'
 <pre><code class="coffeescript">  path: -&gt; @_config.path
 </code></pre>
 
-<h2 id="httpmanagerport">HttpManager#port</h2>
-<p><em>Get the port this server (is|will be) listening on.</em></p>
-<pre><code class="coffeescript">  port: -&gt; @_config.port
+<h2 id="httpmanagerlistentarget">HttpManager#listenTarget</h2>
+<p><em>Get the target this server (is|will be) listening on.</em></p>
+<pre><code class="coffeescript">  listenTarget: -&gt; @_config.listenTarget
 </code></pre>
 
 <h2 id="httpmanagerregistermiddleware">HttpManager#registerMiddleware</h2>

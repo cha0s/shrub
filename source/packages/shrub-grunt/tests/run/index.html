@@ -1662,7 +1662,11 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="grunt-build-process-run-tests">Grunt build process - Run tests</h1>
+                <pre><code class="coffeescript">
+config = require 'config'
+</code></pre>
+
+<h1 id="grunt-build-process-run-tests">Grunt build process - Run tests</h1>
 <pre><code class="coffeescript">exports.pkgmanRegister = (registrar) -&gt;
 </code></pre>
 
@@ -1743,7 +1747,10 @@
 <p>Pass the environment to the child process.</p>
 <pre><code class="coffeescript">        options = env: process.env
         options.env['E2E'] = 'true'
-        options.env['packageConfig:shrub-http:port'] = port
+        options.env['packageConfig:shrub-http:listenTarget'] = port
+
+        siteHostname = &quot;localhost:#{port}&quot;
+        options.env['packageConfig:shrub-core:siteHostname'] = siteHostname
 </code></pre>
 
 <p>Fork it.</p>
@@ -1758,7 +1765,9 @@
 <pre><code class="coffeescript">        protractorConfig = gruntConfig.taskConfiguration(
           'protractor', 'testsE2e'
         )
-        baseUrl = &quot;http://localhost:#{port}/&quot;
+        baseUrl = &quot;http://#{
+          siteHostname
+        }/&quot;
         protractorConfig.options.args = baseUrl: baseUrl
 </code></pre>
 

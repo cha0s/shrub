@@ -1775,8 +1775,8 @@ sandbox.</p>
           ,
             cookie: req.headers.cookie
 
-            url: &quot;http://localhost:#{
-              config.get 'packageConfig:shrub-http:port'
+            url: &quot;http://#{
+              config.get 'packageConfig:shrub-core:siteHostname'
             }/shrub-angular-entry-point&quot;
           ,
             req.session.id
