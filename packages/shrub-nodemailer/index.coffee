@@ -49,9 +49,8 @@ exports.pkgmanRegister = (registrar) ->
         skin.renderAppHtml().then((html) ->
 
           sandbox = new Sandbox()
-
-          sandbox.createDocument html, url: "http://localhost:#{
-            config.get 'packageConfig:shrub-http:port'
+          sandbox.createDocument html, url: "http://#{
+            config.get 'packageConfig:shrub-core:siteHostname'
           }/home"
 
         ).then(->

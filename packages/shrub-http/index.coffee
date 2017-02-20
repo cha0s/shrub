@@ -1,6 +1,8 @@
 # # HTTP
 #
 # Manage HTTP connections.
+_ = require 'lodash'
+
 config = require 'config'
 pkgman = require 'pkgman'
 
@@ -18,7 +20,7 @@ exports.pkgmanRegister = (registrar) ->
 
       (next) ->
 
-        {manager, port} = config.get 'packageConfig:shrub-http'
+        {manager, listenTarget} = config.get 'packageConfig:shrub-http'
 
         {Manager} = require manager.module
 
@@ -35,7 +37,18 @@ exports.pkgmanRegister = (registrar) ->
 
         httpManager.initialize().then(->
 
-          debug "Shrub HTTP server up and running on port #{port}!"
+          listenTarget = [listenTarget] unless Array.isArray listenTarget
+
+          if listenTarget.length is 1
+
+            target = listenTarget[0]
+            target = "port #{target}" if _.isNumber listenTarget[0]
+
+          else
+
+            target = "#{listenTarget[1]}:#{listenTarget[0]}"
+
+          debug "Shrub HTTP server up and running on #{target}!"
           next()
 
         ).catch next
@@ -88,6 +101,6 @@ exports.pkgmanRegister = (registrar) ->
 
     path: "#{config.get 'path'}/app"
 
-    port: 4201
+    listenTarget: [4201, '0.0.0.0']
 
 exports.manager = -> httpManager

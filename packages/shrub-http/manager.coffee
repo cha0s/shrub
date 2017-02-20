@@ -65,7 +65,7 @@ exports.Manager = class HttpManager
           (error) ->
             return reject error unless 'EADDRINUSE' is error.code
 
-            httpDebug 'HTTP port in use... retrying in 2 seconds'
+            httpDebug 'HTTP listen target in use... retrying in 2 seconds'
             setTimeout tryListener, 2000
 
         )
@@ -75,10 +75,10 @@ exports.Manager = class HttpManager
   # *The path where static files are served from.*
   path: -> @_config.path
 
-  # ## HttpManager#port
+  # ## HttpManager#listenTarget
   #
-  # *Get the port this server (is|will be) listening on.*
-  port: -> @_config.port
+  # *Get the target this server (is|will be) listening on.*
+  listenTarget: -> @_config.listenTarget
 
   # ## HttpManager#registerMiddleware
   #

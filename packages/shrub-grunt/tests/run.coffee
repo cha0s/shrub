@@ -1,3 +1,6 @@
+
+config = require 'config'
+
 # # Grunt build process - Run tests
 exports.pkgmanRegister = (registrar) ->
 
@@ -76,7 +79,10 @@ exports.pkgmanRegister = (registrar) ->
         # Pass the environment to the child process.
         options = env: process.env
         options.env['E2E'] = 'true'
-        options.env['packageConfig:shrub-http:port'] = port
+        options.env['packageConfig:shrub-http:listenTarget'] = port
+
+        siteHostname = "localhost:#{port}"
+        options.env['packageConfig:shrub-core:siteHostname'] = siteHostname
 
         # Fork it.
         e2eServerChild = fork(
@@ -89,7 +95,9 @@ exports.pkgmanRegister = (registrar) ->
         protractorConfig = gruntConfig.taskConfiguration(
           'protractor', 'testsE2e'
         )
-        baseUrl = "http://localhost:#{port}/"
+        baseUrl = "http://#{
+          siteHostname
+        }/"
         protractorConfig.options.args = baseUrl: baseUrl
 
         # Wait for the server to come up.

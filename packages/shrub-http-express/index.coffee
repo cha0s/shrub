@@ -117,8 +117,10 @@ exports.Manager = class Express extends HttpManager
         @_server.removeListener 'error', reject
         resolve()
 
-      # } Bind to the listen port.
-      @_server.listen @port()
+      # Bind to the listen target.
+      listenTarget = @listenTarget()
+      listenTarget = [listenTarget] unless Array.isArray listenTarget
+      @_server.listen listenTarget...
 
   # ## Express#server
   #
