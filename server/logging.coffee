@@ -52,6 +52,7 @@ exports.create = (options) ->
     'error'
   else
     'silly'
+  options.file.json ?= false
   if options.file.filename?
     options.transports.push new winston.transports.File options.file
 

@@ -50,14 +50,15 @@ exports.instantiate = (errorType, args...) ->
     F.prototype = Type.prototype
     (args) -> new F args
 
+  error = IType args
+
   # Throw so we have a (possibly) meaningful stack.
   try
     throw new Error()
-  catch error
-    stack = error.stack
+  catch stackError
+    stackError.message = exports.message error
+    error.stack = stackError.stack
 
-  error = IType args
-  error.stack = stack
   error
 
 # ## errors.message
