@@ -82,7 +82,7 @@ exports.pkgmanRegister = (registrar) ->
       (req, res, next) ->
 
         # Log an error without transmitting it.
-        logError = (error) -> logger.error errors.stack error
+        logError = (error) -> logger.error error
 
         # Hub for RPC calls. Dispatch routes.
         req.socket.on 'shrub-rpc', ({path, data}, fn) ->
