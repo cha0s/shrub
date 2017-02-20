@@ -26,12 +26,12 @@ exports.create = (options) ->
     log: (level, msg, meta, callback) ->
 
       output = "#{level}: "
-      if _.isString msg
-        output += msg
-      else if msg instanceof Error
-        output += errors.stack msg
+      output += if _.isString msg
+        msg
       else
-        output += util.inspect msg
+        util.inspect msg
+      output += errors.stack meta if meta instanceof Error
+
       debug output
 
       @emit 'logged'
