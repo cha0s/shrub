@@ -12,12 +12,15 @@ exports.pkgmanRegister = (registrar) ->
 
     $('.container > .main', $body).html html
 
-    $body.find('.navbar-toggle, .navbar-collapse').remove()
-    $body.find('[data-shrub-ui-messages]').remove()
-
-    $body.find('script').remove()
-
-    $('noscript', $body).remove()
+    hiddenClasses = [
+      '.navbar-toggle'
+      '.navbar-collapse'
+      '.notifications-container'
+      '[data-shrub-ui-messages]'
+      'noscript'
+      'script'
+    ]
+    $body.find(hiddenClasses.join ', ').remove()
 
   # #### Implements hook `shrubSkinAssets`.
   registrar.registerHook 'shrubSkinAssets', (assets) ->
