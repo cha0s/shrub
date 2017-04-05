@@ -76,7 +76,7 @@ exports.decrypt = (message, password) ->
 #       512-bit salt will be generated.
 #
 #     * `iterations`: The number of iterations to use for the PBKDF. Defaults
-#       to 10000\. **NOTE:** This ***must*** be the same number when
+#       to 20000\. **NOTE:** This ***must*** be the same number when
 #       generating and verifying hashes, otherwise verification will fail.
 
 # *Cryptographic authentication functionality.*
@@ -98,8 +98,8 @@ exports.hasher = (options = {}) ->
       exports.hasher options
     )
 
-  options.digest ?= 'sha1'
-  options.iterations ?= 10000
+  options.digest ?= 'sha512'
+  options.iterations ?= 20000
 
   exports.pbkdf2(
     options.plaintext, options.salt, options.iterations, 64, options.digest
